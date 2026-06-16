@@ -11,6 +11,7 @@ import Settings from './pages/Settings';
 import SurveyList from './pages/SurveyList';
 import SurveyPartners from './pages/SurveyPartners';
 import TermsOfService from './pages/TermsOfService';
+import EmployeeManagement from './pages/EmployeeManagement';
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/employees" element={<EmployeeManagement />} />
       </Route>
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

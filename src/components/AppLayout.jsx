@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, LogOut, Settings, ShieldCheck, User, Users } from 'lucide-react';
+import { BarChart3, ClipboardList, LogOut, Settings, ShieldCheck, User, Users, UserPlus } from 'lucide-react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { formatCoins } from '../utils/formatters';
@@ -9,6 +9,10 @@ const navItems = [
   { to: '/records', label: 'My Records', icon: ClipboardList },
   { to: '/profile', label: 'Profile', icon: User },
   { to: '/settings', label: 'Settings', icon: Settings },
+];
+
+const adminNavItems = [
+  { to: '/employees', label: 'Employee Management', icon: UserPlus },
 ];
 
 export default function AppLayout() {
@@ -70,17 +74,38 @@ export default function AppLayout() {
               );
             })}
             {user?.role === 'admin' && (
-              <NavLink
-                to="/admin"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                    isActive ? 'bg-green-50 text-green-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
-                  }`
-                }
-              >
-                <ShieldCheck size={18} />
-                Admin Dashboard
-              </NavLink>
+              <>
+                <div className="my-2 border-t border-slate-200" />
+                <div className="px-3 py-2 text-xs font-semibold uppercase text-slate-500">Admin</div>
+                {adminNavItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <NavLink
+                      key={item.to}
+                      to={item.to}
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                          isActive ? 'bg-green-50 text-green-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                        }`
+                      }
+                    >
+                      <Icon size={18} />
+                      {item.label}
+                    </NavLink>
+                  );
+                })}
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                      isActive ? 'bg-green-50 text-green-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                    }`
+                  }
+                >
+                  <ShieldCheck size={18} />
+                  Admin Dashboard
+                </NavLink>
+              </>
             )}
           </nav>
         </aside>
