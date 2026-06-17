@@ -134,6 +134,32 @@ export default function Landing() {
           animation: pulse 5s infinite;
         }
 
+        .landing-footer {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 32px;
+          padding: 24px 48px;
+          background: rgba(0, 20, 10, 0.4);
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .landing-footer a {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 13px;
+          text-decoration: none;
+          transition: color 0.2s ease;
+        }
+
+        .landing-footer a:hover {
+          color: #ffffff;
+        }
+
         @media (max-width: 720px) {
           .landing-nav {
             padding: 20px 24px;
@@ -147,6 +173,12 @@ export default function Landing() {
 
           .landing-headline {
             font-size: 42px;
+          }
+
+          .landing-footer {
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px 24px;
           }
         }
       `}</style>
@@ -173,6 +205,12 @@ export default function Landing() {
           Get Started
         </Link>
       </section>
+
+      <footer className="landing-footer">
+        <Link to="/privacy">Privacy Policy</Link>
+        <span style={{ color: 'rgba(255, 255, 255, 0.3)' }}>•</span>
+        <Link to="/terms">Terms & Conditions</Link>
+      </footer>
     </main>
   );
 }
