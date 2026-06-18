@@ -33,9 +33,13 @@ function PublicHomeRoute() {
 export default function App() {
   return (
     <Routes>
+      {/* Public routes */}
+      <Route path="/" element={<PublicHomeRoute />} />
       <Route path="/login" element={<Login />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
+
+      {/* Protected routes */}
       <Route
         element={
           <ProtectedRoute>
@@ -52,8 +56,9 @@ export default function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/employees" element={<EmployeeManagement />} />
       </Route>
-      <Route path="/" element={<PublicHomeRoute />} />
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+
+      {/* Fallback route - redirect unmatched paths to home */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
