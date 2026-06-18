@@ -99,6 +99,45 @@ export default function Landing() {
           font-weight: 300;
         }
 
+        .landing-stats {
+          display: flex;
+          gap: 20px;
+          margin-top: 40px;
+        }
+
+        .landing-stat-card {
+          flex: 1;
+          padding: 20px 24px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(10px);
+          text-align: center;
+          transition: all 0.3s ease;
+        }
+
+        .landing-stat-card:hover {
+          border-color: rgba(255, 255, 255, 0.4);
+          background: rgba(255, 255, 255, 0.12);
+          transform: translateY(-4px);
+        }
+
+        .landing-stat-number {
+          color: #ffffff;
+          font-size: 28px;
+          font-weight: 600;
+          display: block;
+        }
+
+        .landing-stat-label {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-top: 8px;
+        }
+
         .landing-cta {
           display: inline-flex;
           align-items: center;
@@ -160,6 +199,10 @@ export default function Landing() {
           color: #ffffff;
         }
 
+        .landing-stats {
+          flex-direction: column;
+        }
+
         @media (max-width: 720px) {
           .landing-nav {
             padding: 20px 24px;
@@ -173,6 +216,19 @@ export default function Landing() {
 
           .landing-headline {
             font-size: 42px;
+          }
+
+          .landing-stats {
+            flex-direction: row;
+            gap: 12px;
+          }
+
+          .landing-stat-card {
+            padding: 16px 12px;
+          }
+
+          .landing-stat-number {
+            font-size: 20px;
           }
 
           .landing-footer {
@@ -201,6 +257,22 @@ export default function Landing() {
           shapes the world
         </h1>
         <p className="landing-subtitle">Join our global research community. Earn rewards for every survey you complete.</p>
+        
+        <div className="landing-stats">
+          <div className="landing-stat-card">
+            <span className="landing-stat-number">10000+</span>
+            <span className="landing-stat-label">Members</span>
+          </div>
+          <div className="landing-stat-card">
+            <span className="landing-stat-number">500+</span>
+            <span className="landing-stat-label">Surveys</span>
+          </div>
+          <div className="landing-stat-card">
+            <span className="landing-stat-number">$2-5</span>
+            <span className="landing-stat-label">Per Survey</span>
+          </div>
+        </div>
+
         <Link className="landing-cta" to="/login">
           Get Started
         </Link>
