@@ -7,7 +7,7 @@ import { useAuth } from '../components/AuthContext';
 export default function Login() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
-  const [form, setForm] = useState({ email: 'admin@surveypanel.com', password: 'Admin@2026' });
+  const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -267,7 +267,7 @@ export default function Login() {
                   <input
                     className="login-input"
                     type="email"
-                    placeholder="admin@surveypanel.com"
+                    placeholder="Enter your email"
                     value={form.email}
                     onChange={(event) => setForm({ ...form, email: event.target.value })}
                     style={{ paddingLeft: '40px' }}
@@ -282,7 +282,7 @@ export default function Login() {
                   <input
                     className="login-input"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
+                    placeholder="Enter your password"
                     value={form.password}
                     onChange={(event) => setForm({ ...form, password: event.target.value })}
                     style={{ paddingRight: '40px' }}
