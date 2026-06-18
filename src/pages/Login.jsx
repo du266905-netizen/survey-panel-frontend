@@ -29,7 +29,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
       <style>{`
         @keyframes slideInLeft {
           from {
@@ -49,6 +49,7 @@ export default function Login() {
         .login-container {
           display: flex;
           min-height: 100vh;
+          width: 100%;
         }
 
         .login-form-section {
@@ -132,6 +133,7 @@ export default function Login() {
           font-size: 14px;
           font-family: inherit;
           transition: all 0.2s;
+          box-sizing: border-box;
         }
 
         .login-input:focus {
