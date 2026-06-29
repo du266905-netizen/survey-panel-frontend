@@ -17,7 +17,7 @@ export default function Logo({ size = 'md' }) {
         </svg>
       </div>
       <span className={`font-bold text-slate-800 ${s.font} tracking-tight`}>
-        Guanyi<span className="text-green-600">Media</span>
+        Guanyi<span className="text-green-600">Search</span>
       </span>
     </div>
   );

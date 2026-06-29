@@ -313,14 +313,12 @@ export default function Login() {
           </div>
           <div className="login-copy">
             <p className="login-copy-primary">Your opinion shapes the world.</p>
-            <p className="login-copy-secondary">Earn rewards for the time you invest.</p>
           </div>
 
           <hr className="login-divider" />
 
           <h1 className="login-title">Welcome back</h1>
           <p className="login-subtitle">Sign in to your account</p>
-          <p className="login-value-line">Your opinion shapes the world.</p>
 
           <form className="login-form" onSubmit={handleSubmit}>
             <label className="login-field">
@@ -378,9 +376,6 @@ export default function Login() {
             Contact admin <a href="mailto:heguanyi@guanyi-media.com">heguanyi@guanyi-media.com</a>
           </p>
         </div>
-        <p className="login-brand-note">
-          Earn rewards for the time you invest.
-        </p>
       </section>
 
       <section className="login-right" aria-label="Research participant">
