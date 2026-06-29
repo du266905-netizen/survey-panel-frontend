@@ -83,14 +83,6 @@ export default function Login() {
           font-style: italic;
         }
 
-        .login-copy-secondary {
-          margin-top: 4px;
-          color: #22c55e;
-          font-size: 12px;
-          font-weight: 500;
-          letter-spacing: 0.04em;
-        }
-
         .login-divider {
           margin: 24px 0;
           border: none;
@@ -107,12 +99,6 @@ export default function Login() {
           margin-top: 6px;
           color: #6b7280;
           font-size: 13px;
-        }
-
-        .login-value-line {
-          margin: 8px 0 0;
-          color: #94a3b8;
-          font-size: 14px;
         }
 
         .login-form {
@@ -192,41 +178,6 @@ export default function Login() {
           cursor: pointer;
         }
 
-        .login-button {
-          width: 100%;
-          margin-top: 16px;
-          padding: 13px;
-          border: none;
-          border-radius: 10px;
-          background: #22c55e;
-          color: #ffffff;
-          font-size: 14px;
-          font-weight: 600;
-          letter-spacing: 0.03em;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .login-button:hover:not(:disabled) {
-          background: #16a34a;
-        }
-
-        .login-button:disabled {
-          cursor: not-allowed;
-          opacity: 0.65;
-        }
-
-        .login-error {
-          margin-top: 12px;
-          border: 1px solid #fecaca;
-          border-radius: 10px;
-          background: #fef2f2;
-          padding: 10px 12px;
-          color: #b91c1c;
-          font-size: 12px;
-          font-weight: 600;
-        }
-
         .login-contact {
           margin-top: 16px;
           color: #9ca3af;
@@ -236,15 +187,6 @@ export default function Login() {
 
         .login-contact a {
           color: #22c55e;
-        }
-
-        .login-brand-note {
-          position: absolute;
-          bottom: 32px;
-          left: 32px;
-          color: #94a3b8;
-          font-size: 12px;
-          font-style: italic;
         }
 
         .login-right {
@@ -273,13 +215,6 @@ export default function Login() {
           bottom: 10%;
           left: 8%;
           z-index: 1;
-        }
-
-        .login-hero-title {
-          color: #ffffff;
-          font-size: 32px;
-          font-weight: 300;
-          letter-spacing: 0.06em;
         }
 
         .login-hero-subtitle {
@@ -327,16 +262,16 @@ export default function Login() {
           <form className="login-form" onSubmit={handleSubmit}>
             <label className="login-field">
               <span className="login-label">EMAIL ADDRESS</span>
-                <input
-                  className="login-input focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                  type="email"
-                  placeholder="enter your email"
-                  value={form.email}
-                  onChange={(event) => setForm({ ...form, email: event.target.value })}
-                  autoComplete="off"
-                  defaultValue=""
-                  required
-                />
+              <input
+                className="login-input focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                type="email"
+                placeholder="enter your email"
+                value={form.email}
+                onChange={(event) => setForm({ ...form, email: event.target.value })}
+                autoComplete="off"
+                defaultValue=""
+                required
+              />
             </label>
 
             <label className="login-field">
