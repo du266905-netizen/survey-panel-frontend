@@ -1,6 +1,6 @@
-export default function StatCard({ label, value, helper, icon: Icon }) {
+export default function StatCard({ label, value, helper, icon: Icon, className = '', iconClassName = 'bg-green-50 text-green-600' }) {
   return (
-    <section className="card p-5">
+    <section className={`card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${className}`}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-medium text-slate-500">{label}</p>
@@ -8,7 +8,7 @@ export default function StatCard({ label, value, helper, icon: Icon }) {
           {helper && <p className="mt-2 text-xs text-slate-500">{helper}</p>}
         </div>
         {Icon && (
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
+          <div className={`flex h-10 w-10 items-center justify-center rounded-full ${iconClassName}`}>
             <Icon size={20} />
           </div>
         )}

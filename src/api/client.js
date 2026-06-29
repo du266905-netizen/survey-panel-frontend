@@ -48,6 +48,8 @@ export function getStoredUser() {
 
 export function normalizeUser(user) {
   if (!user) return null;
+  const rawRole = String(user.role || '').toUpperCase();
+  const role = rawRole === 'ADMIN' ? 'admin' : 'employee';
 
   return {
     ...user,
@@ -55,6 +57,6 @@ export function normalizeUser(user) {
     coins: user.coinsBalance,
     group: user.groupName,
     team: user.teamName,
-    role: String(user.role || '').toLowerCase(),
+    role,
   };
 }

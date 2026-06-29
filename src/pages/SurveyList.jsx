@@ -2,11 +2,11 @@ import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import { getSurveysByPartner } from '../api/mockApi';
+import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';
 import ProxyActivationModal from '../components/ProxyActivationModal';
 import { useAsyncData } from '../hooks/useAsyncData';
-import { formatMoney } from '../utils/formatters';
 
 export default function SurveyList() {
   const { partnerId } = useParams();
@@ -18,12 +18,13 @@ export default function SurveyList() {
 
   const countries = useMemo(() => ['All', ...new Set(surveys.map((survey) => survey.country))], [surveys]);
   const filteredSurveys = surveys.filter((survey) => {
-    const matchesSearch = `${survey.surveyId} ${survey.surveyName} ${survey.pid}`.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = `${survey.surveyId} ${survey.surveyName} ${survey.pid} ${survey.partnerDisplayName || ''}`.toLowerCase().includes(search.toLowerCase());
     const matchesCountry = country === 'All' || survey.country === country;
     return matchesSearch && matchesCountry;
   });
 
   const columns = [
+    { key: 'partnerDisplayName', header: 'Channel' },
     { key: 'pid', header: 'PID' },
     { key: 'surveyId', header: 'Survey ID' },
     { key: 'surveyName', header: 'Survey Name' },
@@ -33,7 +34,7 @@ export default function SurveyList() {
     { key: 'clicks', header: 'Clicks' },
     { key: 'completes', header: 'Completes' },
     { key: 'quota', header: 'Quota' },
-    { key: 'reward', header: 'Reward', render: (row) => formatMoney(row.reward) },
+    { key: 'reward', header: 'Coins Reward', render: (row) => <CoinAmount value={row.reward} /> },
     {
       key: 'start',
       header: 'Start',

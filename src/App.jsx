@@ -3,16 +3,29 @@ import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import Dashboard from './pages/Dashboard';
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import MyRecords from './pages/MyRecords';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import SurveyList from './pages/SurveyList';
 import SurveyPartners from './pages/SurveyPartners';
+import Team from './pages/Team';
+import { isAdminRole } from './utils/roles';
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" replace />;
+}
+
+function AdminRoute({ children }) {
+  const { user } = useAuth();
+  return isAdminRole(user?.role) ? children : <Navigate to="/dashboard" replace />;
+}
+
+function PublicHomeRoute() {
+  const { user } = useAuth();
+  return user ? <Navigate to="/dashboard" replace /> : <Landing />;
 }
 
 export default function App() {
@@ -32,9 +45,24 @@ export default function App() {
         <Route path="/records" element={<MyRecords />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route
+          path="/team"
+          element={
+            <AdminRoute>
+              <Team />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
       </Route>
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<PublicHomeRoute />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );

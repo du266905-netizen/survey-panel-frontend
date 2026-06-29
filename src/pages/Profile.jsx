@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../components/AuthContext';
+import CoinAmount from '../components/CoinAmount';
 
 export default function Profile() {
   const { user, setUser } = useAuth();
   const [displayName, setDisplayName] = useState(user?.displayName || '');
 
   const fields = [
-    ['Member ID', user?.id],
+    ['Member ID', user?.memberId || user?.id],
     ['Group', user?.group],
     ['Team', user?.team],
     ['Login IP', user?.loginIp],
     ['Login Region', user?.loginRegion],
     ['Email', user?.email],
+    ['Coins Balance', <CoinAmount value={user?.coins} />],
   ];
 
   return (
@@ -26,6 +28,7 @@ export default function Profile() {
               <div key={label} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</p>
                 <p className="mt-2 text-sm font-bold text-slate-950">{value}</p>
+                {label === 'Coins Balance' && <p className="mt-1 text-xs font-semibold text-amber-700">1000 Coins = $1 USD</p>}
               </div>
             ))}
           </div>

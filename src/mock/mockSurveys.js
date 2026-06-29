@@ -2,9 +2,9 @@ const countries = ['US', 'UK', 'CA', 'AU', 'DE', 'FR', 'SG', 'JP'];
 const topics = ['Streaming Habits', 'Mobile Banking', 'Home Appliances', 'Travel Intent', 'Gaming Spend', 'Health Products', 'Retail Loyalty', 'B2B Software'];
 
 export const mockSurveys = Array.from({ length: 36 }, (_, index) => {
-  const partnerIds = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs'];
+  const partnerIds = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs', 'cpx-research'];
   const partnerId = partnerIds[index % partnerIds.length];
-  const reward = [1.25, 1.85, 2.1, 2.75, 3.4, 4.2][index % 6];
+  const reward = [1250, 1850, 2100, 2750, 3400, 4200][index % 6];
 
   return {
     pid: `PID-${String(7000 + index).padStart(5, '0')}`,

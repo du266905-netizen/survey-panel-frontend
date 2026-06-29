@@ -1,11 +1,11 @@
 export const earningsTrend = [
-  { day: 'Jun 06', coins: 680, amount: 6.8 },
-  { day: 'Jun 07', coins: 920, amount: 9.2 },
-  { day: 'Jun 08', coins: 780, amount: 7.8 },
-  { day: 'Jun 09', coins: 1120, amount: 11.2 },
-  { day: 'Jun 10', coins: 1380, amount: 13.8 },
-  { day: 'Jun 11', coins: 1240, amount: 12.4 },
-  { day: 'Jun 12', coins: 1590, amount: 15.9 },
+  { day: 'Jun 06', coins: 6800 },
+  { day: 'Jun 07', coins: 9200 },
+  { day: 'Jun 08', coins: 7800 },
+  { day: 'Jun 09', coins: 11200 },
+  { day: 'Jun 10', coins: 13800 },
+  { day: 'Jun 11', coins: 12400 },
+  { day: 'Jun 12', coins: 15900 },
 ];
 
 export const memberStats = {
