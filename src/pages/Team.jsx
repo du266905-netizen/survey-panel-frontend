@@ -100,11 +100,23 @@ function EmployeeFormModal({ employee, onClose, onSubmit, saving, error }) {
 export default function Team() {
   const { user } = useAuth();
   const [employees, setEmployees] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
   const [modalMode, setModalMode] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  const filteredEmployees = useMemo(() => {
+    if (!searchQuery.trim()) return employees;
+    const lowerQuery = searchQuery.toLowerCase();
+    return employees.filter(
+      (emp) =>
+        emp.name?.toLowerCase().includes(lowerQuery) ||
+        emp.email?.toLowerCase().includes(lowerQuery) ||
+        emp.id?.toLowerCase().includes(lowerQuery)
+    );
+  }, [employees, searchQuery]);
 
   const loadEmployees = async () => {
     setLoading(true);
@@ -255,7 +267,17 @@ export default function Team() {
 
       {error && !modalMode && <p className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
 
-      <DataTable columns={columns} rows={employees} loading={loading} emptyMessage="No employees found." />
+      <div className="mb-5">
+        <input
+          type="text"
+          placeholder="Search employees by name, email or ID..."
+          className="field"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      <DataTable columns={columns} rows={filteredEmployees} loading={loading} emptyMessage="No employees found." />
 
       {modalMode && (
         <EmployeeFormModal

@@ -8,7 +8,7 @@ import Logo from '../components/Logo';
 export default function Login() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
-  const [form, setForm] = useState({ email: 'admin@surveypanel.com', password: 'admin123' });
+  const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -252,9 +252,13 @@ export default function Login() {
           width: 55%;
           padding: 0;
           overflow: hidden;
-          background-image: url('/hero.jpg');
-          background-size: cover;
-          background-position: center;
+          background: #000;
+        }
+
+        .login-right-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         .login-right::before {
@@ -323,14 +327,16 @@ export default function Login() {
           <form className="login-form" onSubmit={handleSubmit}>
             <label className="login-field">
               <span className="login-label">EMAIL ADDRESS</span>
-              <input
-                className="login-input focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                type="email"
-                placeholder="enter your email"
-                value={form.email}
-                onChange={(event) => setForm({ ...form, email: event.target.value })}
-                required
-              />
+                <input
+                  className="login-input focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  type="email"
+                  placeholder="enter your email"
+                  value={form.email}
+                  onChange={(event) => setForm({ ...form, email: event.target.value })}
+                  autoComplete="off"
+                  defaultValue=""
+                  required
+                />
             </label>
 
             <label className="login-field">
@@ -342,6 +348,8 @@ export default function Login() {
                   placeholder="enter your password"
                   value={form.password}
                   onChange={(event) => setForm({ ...form, password: event.target.value })}
+                  autoComplete="off"
+                  defaultValue=""
                   required
                 />
                 <button
@@ -375,10 +383,16 @@ export default function Login() {
           <p className="login-contact">
             Contact admin <a href="mailto:heguanyi@guanyi-media.com">heguanyi@guanyi-media.com</a>
           </p>
+          <div className="text-center text-xs text-slate-400 mt-4">
+            <a href="/privacy" className="hover:text-slate-600">Privacy Policy</a>
+            <span className="mx-2">·</span>
+            <a href="/terms" className="hover:text-slate-600">Terms of Service</a>
+          </div>
         </div>
       </section>
 
       <section className="login-right" aria-label="Research participant">
+        <img src="/hero.jpg" alt="" className="login-right-img" />
         <div className="login-hero-copy">
           <div className="inline-flex rounded-2xl bg-white/80 p-3 backdrop-blur-sm">
             <Logo size="lg" />
