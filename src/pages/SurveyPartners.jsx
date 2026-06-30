@@ -1,5 +1,5 @@
 import { ArrowRight, Clock, Coins, Star } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getPartners } from '../api/mockApi';
 import { useAuth } from '../components/AuthContext';
@@ -23,7 +23,6 @@ export default function SurveyPartners() {
     setLoadingCpx(true);
     try {
       const response = await apiClient.get('/api/cpx/surveys');
-      // CPX API returns { surveys: [...] }
       setCpxSurveys(response.data.surveys || []);
       setShowCPX(true);
     } catch (error) {
@@ -31,6 +30,27 @@ export default function SurveyPartners() {
       alert('Failed to load surveys. Please try again later.');
     } finally {
       setLoadingCpx(false);
+    }
+  };
+
+  const handleStartSurvey = async (survey) => {
+    try {
+      const response = await apiClient.post('/api/survey/start', {
+        surveyId: survey.id,
+        partnerId: 'cpx-research',
+        cpi: survey.payout_publisher_usd || 0,
+        redirectUrl: survey.href,
+        country: null, // Targeting not provided by CPX API in simple call
+        targeting: null
+      });
+
+      if (response.data.success) {
+        window.location.href = response.data.redirectUrl;
+      }
+    } catch (error) {
+      console.error('Failed to start survey:', error);
+      // Fallback: direct jump if API fails
+      window.location.href = survey.href;
     }
   };
 
@@ -146,14 +166,12 @@ export default function SurveyPartners() {
                         <span className="text-sm">{survey.loi} minutes</span>
                       </div>
                       
-                      <a
-                        href={survey.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => handleStartSurvey(survey)}
                         className="block w-full text-center py-2 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors"
                       >
                         Start Survey
-                      </a>
+                      </button>
                     </div>
                   ))}
                 </div>
