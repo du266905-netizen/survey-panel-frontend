@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUANYISEARCH | Every Voice Shapes The World</title>
+    <style>
+        /* 全局重置与高端极简字体系 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            color: #1e293b; 
+            background-color: #ffffff; 
+            line-height: 1.625;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 响应式标准容器：左右大留白，营造呼吸感 */
+        .container { 
+            width: 100%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 40px; 
+        }
+        
+        /* 头部导航区 */
+        header { 
+            background-color: #ffffff; 
+            padding: 30px 0;
+        }
+        .nav-wrapper {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            font-size: 22px; 
+            font-weight: 800; 
+            letter-spacing: -0.5px; 
+            color: #0f172a; 
+            text-decoration: none; 
+        }
+        .nav-links { 
+            display: flex; 
+            gap: 40px; 
+            list-style: none; 
+        }
+        .nav-links a { 
+            text-decoration: none; 
+            color: #475569; 
+            font-weight: 500; 
+            font-size: 15px; 
+            transition: color 0.2s ease; 
+        }
+        .nav-links a:hover { color: #000000; }
+
+        /* 英雄主视觉区（富有人情味的文案） */
+        .hero { 
+            padding: 120px 0 90px 0; 
+            text-align: center; 
+        }
+        .hero h1 { 
+            font-size: 54px; 
+            font-weight: 800; 
+            line-height: 1.15; 
+            letter-spacing: -1.5px; 
+            color: #0f172a; 
+            max-width: 850px; 
+            margin: 0 auto 28px auto; 
+        }
+        .hero p { 
+            font-size: 20px; 
+            color: #64748b; 
+            max-width: 680px; 
+            margin: 0 auto 44px auto; 
+        }
+        
+        /* 全站唯一的独立核心按钮，直达登录系统 */
+        .btn-portal { 
+            display: inline-block; 
+            background-color: #000000; 
+            color: #ffffff; 
+            padding: 16px 40px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 16px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, background-color 0.2s ease; 
+        }
+        .btn-portal:hover { 
+            transform: translateY(-2px);
+            background-color: #1e293b;
+        }
+
+        /* 完美的“How was your day”响应式背景大图板块 */
+        .bg-banner-section {
+            margin: 40px 0 100px 0;
+        }
+        .bg-banner-card {
+            position: relative;
+            width: 100%;
+            min-height: 480px;
+            border-radius: 24px;
+            overflow: hidden;
+            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('celpax-1Lf5Adh9SCg-unsplash.jpg') no-repeat center center;
+            background-size: cover; /* 随浏览器大小自动缩放且不溢出变形 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .bg-banner-content {
+            text-align: center;
+            color: #ffffff;
+            max-width: 640px;
+        }
+        .bg-banner-content h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+        .bg-banner-content p {
+            font-size: 18px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* 响应式两栏图文混合排版（随浏览器大小平滑缩放） */
+        .split-section { 
+            padding: 90px 0; 
+        }
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 80px; 
+            align-items: center; 
+        }
+        .section-tag { 
+            color: #2563eb; 
+            font-weight: 700; 
+            font-size: 13px; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            margin-bottom: 16px; 
+            display: block; 
+        }
+        .section-title { 
+            font-size: 38px; 
+            font-weight: 800; 
+            color: #0f172a; 
+            line-height: 1.2; 
+            margin-bottom: 24px; 
+            letter-spacing: -0.5px;
+        }
+        .split-section p { 
+            font-size: 16px; 
+            color: #64748b; 
+            margin-bottom: 20px; 
+        }
+        
+        /* 智能响应式图片盒子 */
+        .image-container { 
+            position: relative; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+            width: 100%;
+        }
+        .image-container img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            object-fit: cover; 
+            aspect-ratio: 4/3; /* 保持完美现代黄金比例 */
+            transition: transform 0.3s ease;
+        }
+
+        /* 极具质感的深色调商务页脚（完美契合参考站风格） */
+        footer { 
+            background-color: #0f172a; 
+            color: #94a3b8; 
+            padding: 80px 0 40px 0; 
+            margin-top: 60px;
+        }
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: 1.5fr 1fr; 
+            gap: 60px; 
+            margin-bottom: 60px; 
+        }
+        .footer-brand h2 { 
+            font-size: 22px; 
+            font-weight: 800; 
+            margin-bottom: 16px; 
+            color: #ffffff;
+            letter-spacing: -0.5px; 
+        }
+        .footer-brand p { 
+            color: #94a3b8; 
+            max-width: 440px; 
+            font-size: 15px; 
+        }
+        .footer-contact h3 { 
+            font-size: 15px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-bottom: 18px; 
+            color: #3b82f6; 
+        }
+        .contact-mail-link {
+            color: #ffffff; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+        .contact-mail-link:hover {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+        
+        /* 法律隐私条款区域（清晰透明的底色处理） */
+        .footer-bottom { 
+            border-top: 1px solid #1e293b; 
+            padding-top: 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 14px; 
+        }
+        .footer-links a { 
+            color: #94a3b8; 
+            text-decoration: none; 
+            margin-left: 24px; 
+            transition: color 0.2s ease; 
+        }
+        .footer-links a:hover { color: #ffffff; }
+
+        /* 针对手机等移动设备的极致响应式适配规则 */
+        @media (max-width: 968px) { 
+            .grid-2, .footer-grid { grid-template-columns: 1fr; gap: 40px; } 
+            .hero h1 { font-size: 36px; } 
+            .bg-banner-card { min-height: 38px; }
+            .bg-banner-content h2 { font-size: 30px; }
+            .nav-links { display: none; } 
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; } 
+            .footer-links a { margin: 0 12px; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">GUANYISEARCH</a>
+            <ul class="nav-links">
+                <li><a href="#about">About Our Panel</a></li>
+                <li><a href="#rewards">Rewards & Benefits</a></li>
+                <li><a href="#network">Global Network</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Your Voice Matters.<br>Your Opinion Shapes the World.</h1>
+            <p>Guanyisearch connects real human perspectives with leading global media strategy. Every insight you provide fuels analytical research that shapes tomorrow's marketplace.</p>
+            <a href="/login" class="btn-portal">Begin Survey Portal</a>
+        </div>
+    </section>
+
+    <section id="about" class="container bg-banner-section">
+        <div class="bg-banner-card">
+            <div class="bg-banner-content">
+                <h2>How was your day?</h2>
+                <p>We believe every meaningful insight starts with personal reflection. Share your daily observations and consumer trends to help refine our international dataset, and get recognized for your time.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="rewards" class="split-section" style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+        <div class="container grid-2">
+            <div>
+                <span class="section-tag">Value Your Time</span>
+                <h2 class="section-title">Turn Your Perspectives Into Premium Earnings</h2>
+                <p>Your expertise is worth more than a generic thank-you. At Guanyisearch, we treat our panelists as critical data co-creators. Participate in tailored, high-fidelity questionnaires designed around your industry lifestyle.</p>
+                <p>Every fully completed session directly adds to your tiered account balance. Enjoy transparent payouts, consistent survey options, and a platform that rewards your accuracy with scalable bonuses.</p>
+            </div>
+            <div class="image-container">
+                <img src="dylan-gillis-KdeqA3aTnBY-unsplash.jpg" alt="Earn Rewards With Guanyisearch">
+            </div>
+        </div>
+    </section>
+
+    <section id="network" class="split-section">
+        <div class="container grid-2">
+            <div class="image-container">
+                <img src="priscilla-du-preez-XkKCui44iM0-unsplash.jpg" alt="Join Our Think Tank Network">
+            </div>
+            <div>
+                <span class="section-tag">Empowerment</span>
+                <h2 class="section-title">Join a Global Collective of Thought Leaders</h2>
+                <p>When you join our survey ecosystem, you're stepping into an elite global circle. Our contributors span multiple continents, industries, and creative domains, forming a powerhouse repository of actionable public metrics.</p>
+                <p>See the direct ripple effect of your submitted data. Monitor macro trends, gain early access to curated analytical findings, and see how your single voice shapes mainstream corporate directions.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h2>GUANYISEARCH</h2>
+                <p>A trusted baseline for international media assessment and public metric intelligence. We bridge consumer feedback and enterprise positioning through rigorous validation.</p>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact & Inquiries</h3>
+                <p style="color: #cbd5e1; margin-bottom: 8px; font-size: 15px;">Have questions regarding your panel eligibility? Reach us at:</p>
+                <a href="mailto:heguanyi@guanyi-media.com" class="contact-mail-link">heguanyi@guanyi-media.com</a>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 GUANYISEARCH. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

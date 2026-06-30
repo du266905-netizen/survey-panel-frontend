@@ -3,7 +3,7 @@ import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import Dashboard from './pages/Dashboard';
-import Landing from './pages/Landing';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import MyRecords from './pages/MyRecords';
 import Profile from './pages/Profile';
@@ -21,11 +21,6 @@ function ProtectedRoute({ children }) {
 function AdminRoute({ children }) {
   const { user } = useAuth();
   return isAdminRole(user?.role) ? children : <Navigate to="/dashboard" replace />;
-}
-
-function PublicHomeRoute() {
-  const { user } = useAuth();
-  return user ? <Navigate to="/dashboard" replace /> : <Landing />;
 }
 
 export default function App() {
@@ -62,7 +57,7 @@ export default function App() {
           }
         />
       </Route>
-      <Route path="/" element={<PublicHomeRoute />} />
+      <Route path="/" element={<Home />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
