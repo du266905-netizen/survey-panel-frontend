@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Play } from 'lucide-react';
-import { getSurveysByPartner } from '../api/mockApi';
+import { getSurveysByPartner } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';

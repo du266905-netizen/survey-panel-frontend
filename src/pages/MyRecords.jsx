@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { getRecords } from '../api/mockApi';
+import { getRecords } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';

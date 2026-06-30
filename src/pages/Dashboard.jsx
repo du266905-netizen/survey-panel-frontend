@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CheckCircle2, Clock3, Coins, XCircle } from 'lucide-react';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { getDashboard } from '../api/mockApi';
+import { getDashboard } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';

@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getPartners } from '../api/mockApi';
+import { getPartners } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../components/AuthContext';
 import { useAsyncData } from '../hooks/useAsyncData';

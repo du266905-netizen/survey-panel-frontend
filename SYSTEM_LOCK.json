@@ -1,0 +1,8 @@
+{
+  "mode": "production_only",
+  "allowed_mock": false,
+  "critical_routes": [
+    "/api/survey/start"
+  ],
+  "rule": "Do not regenerate mockApi or duplicate admin routes"
+}

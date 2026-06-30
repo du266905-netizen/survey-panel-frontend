@@ -1,6 +1,6 @@
 import { AlertTriangle, Play, X } from 'lucide-react';
 import { useState } from 'react';
-import { startSurvey } from '../api/mockApi';
+import { startSurvey } from '../api/realApi';
 
 export default function ProxyActivationModal({ survey, onClose }) {
   const [fingerprintBrowser, setFingerprintBrowser] = useState('Octo Browser');

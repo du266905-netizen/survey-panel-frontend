@@ -14,7 +14,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { getAdminDashboard } from '../api/mockApi';
+import { getAdminDashboard } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 import StatCard from '../components/StatCard';
 import { useAuth } from '../components/AuthContext';

@@ -1,26 +1,9 @@
-// LEGACY MOCK SYSTEM - DO NOT USE IN PRODUCTION
-// 已废弃，仅用于UI开发模拟数据
-// 所有业务数据迁移至 /api/realApi.js
-
 import { apiClient, getStoredUser, normalizeUser, persistSession } from './client';
 import { isAdminRole } from '../utils/roles';
 
-const channelPalette = ['#10b981', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6', '#14b8a6', '#64748b'];
+const channelPalette = ['#10b981', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6', '#14b8a6', '#7c3aed'];
 const channelNames = ['Channel A', 'Channel B', 'Channel C', 'Channel D', 'Channel E', 'Channel F', 'Channel G'];
-const partnerSlugs = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs', 'cpx-research', 'theoremreach'];
-
-const theoremReachPartner = {
-  id: 'theoremreach',
-  slug: 'theoremreach',
-  name: 'Theorem Reach',
-  displayName: 'Theorem Reach',
-  codeName: 'Channel G',
-  channelLetter: 'G',
-  channelColor: '#7c3aed',
-  activeSurveys: 0,
-  conversion: 'Active',
-  isSynthetic: false,
-};
+const partnerSlugs = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs', 'theoremreach'];
 
 const isAdmin = () => isAdminRole(getStoredUser()?.role);
 
@@ -33,42 +16,14 @@ const codeForIndex = (index) => {
   };
 };
 
-const codeForPartner = (partner) => codeForIndex(partnerSlugs.indexOf(partner?.slug));
+const codeForPartner = (partner, fallbackIndex = 0) => {
+  const slugIndex = partnerSlugs.indexOf(partner?.slug);
+  return codeForIndex(slugIndex >= 0 ? slugIndex : fallbackIndex);
+};
 
 const displayPartnerName = (partner) => {
   if (isAdmin()) return partner?.name || '-';
   return codeForPartner(partner).codeName;
-};
-
-const ensureCpxPartner = (partners) => {
-  const nextPartners = partners.some((partner) => partner.slug === 'cpx-research')
-    ? partners
-    : [
-        ...partners,
-        {
-          id: 'cpx-research',
-          name: 'CPX Research',
-          slug: 'cpx-research',
-          logoUrl: null,
-          isSynthetic: true,
-        },
-      ];
-
-  if (nextPartners.some((partner) => partner.slug === 'theoremreach')) return nextPartners;
-
-  return [...nextPartners, theoremReachPartner];
-};
-
-export const login = async ({ email, password }) => {
-  const response = await apiClient.post('/api/auth/login', { email, password });
-  persistSession(response.data);
-
-  return {
-    data: {
-      ...response.data,
-      user: normalizeUser(response.data.user),
-    },
-  };
 };
 
 const statusToUi = (status) => String(status || '').toLowerCase();
@@ -107,6 +62,18 @@ const mapEmployee = (user) => ({
   isActive: user.isActive !== false,
 });
 
+export const login = async ({ email, password }) => {
+  const response = await apiClient.post('/api/auth/login', { email, password });
+  persistSession(response.data);
+
+  return {
+    data: {
+      ...response.data,
+      user: normalizeUser(response.data.user),
+    },
+  };
+};
+
 export const getDashboard = async () => {
   const [statsResponse, chartResponse, recordsResponse] = await Promise.all([
     apiClient.get('/api/records/stats'),
@@ -132,35 +99,19 @@ export const getDashboard = async () => {
 
 export const getPartners = async () => {
   const response = await apiClient.get('/api/partners');
-  const partners = ensureCpxPartner(response.data.partners || []);
-  const counts = await Promise.all(
-    partners.map((partner) =>
-      partner.isSynthetic
-        ? Promise.resolve(0)
-        : apiClient
-            .get(`/api/partners/${partner.id}/surveys`, { params: { pageSize: 1 } })
-            .then((surveyResponse) => surveyResponse.data.meta?.total || 0)
-            .catch(() => 0)
-    )
-  );
+  const partners = response.data.partners || response.data.items || [];
 
   return {
     data: partners.map((partner, index) => {
-      const channelCode = partner.codeName
-        ? {
-            codeName: partner.codeName,
-            channelColor: partner.channelColor,
-            channelLetter: partner.channelLetter,
-          }
-        : codeForIndex(index);
+      const channelCode = codeForPartner(partner, index);
 
       return {
         ...partner,
         ...channelCode,
-        displayName: partner.displayName || partner.name,
+        displayName: partner.name,
         name: isAdmin() ? partner.name : channelCode.codeName,
-        activeSurveys: partner.activeSurveys ?? counts[index],
-        conversion: partner.conversion || 'Live',
+        activeSurveys: partner.activeSurveys ?? partner.surveyCount ?? 0,
+        conversion: partner.conversion || (partner.isActive === false ? 'Inactive' : 'Live'),
       };
     }),
   };

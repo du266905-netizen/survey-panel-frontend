@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Edit3, Plus, Trash2, X } from 'lucide-react';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';
-import { createEmployee, deleteEmployee, getEmployees, updateEmployee } from '../api/mockApi';
+import { createEmployee, deleteEmployee, getEmployees, updateEmployee } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 
 const emptyForm = {
