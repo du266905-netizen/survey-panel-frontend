@@ -7,10 +7,13 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import MyRecords from './pages/MyRecords';
 import Profile from './pages/Profile';
+import Register from './pages/Register';
 import Settings from './pages/Settings';
 import SurveyList from './pages/SurveyList';
 import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import { isAdminRole } from './utils/roles';
 
 function ProtectedRoute({ children }) {
@@ -32,6 +35,10 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/隐私" element={<Navigate to="/privacy" replace />} />
+      <Route path="/terms" element={<Terms />} />
       <Route
         element={
           <ProtectedRoute>

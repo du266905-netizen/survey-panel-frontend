@@ -47,6 +47,7 @@ const mapSurvey = (survey, partnerContext) => ({
   ...survey,
   pid: survey.clientId || survey.id,
   surveyId: survey.externalId,
+  partnerId: survey.partnerId || partnerContext?.id,
   partnerDisplayName: partnerContext?.displayName || partnerContext?.name || survey.partner?.name,
   partnerCodeName: partnerContext?.codeName,
   channelColor: partnerContext?.channelColor,
@@ -64,6 +65,24 @@ const mapEmployee = (user) => ({
 
 export const login = async ({ email, password }) => {
   const response = await apiClient.post('/api/auth/login', { email, password });
+  persistSession(response.data);
+
+  return {
+    data: {
+      ...response.data,
+      user: normalizeUser(response.data.user),
+    },
+  };
+};
+
+export const register = async ({ email, password, displayName, turnstileToken, agreedToTermsAt }) => {
+  const response = await apiClient.post('/api/auth/register', {
+    email,
+    password,
+    displayName,
+    turnstileToken,
+    agreedToTermsAt,
+  });
   persistSession(response.data);
 
   return {
@@ -119,7 +138,7 @@ export const getPartners = async () => {
 
 export const getSurveysByPartner = async (partnerId) => {
   const [partnerResponse, response] = await Promise.all([
-    apiClient.get(`/api/partners/${partnerId}`).catch(() => ({ data: { partner: null } })),
+    apiClient.get(`/api/partners/${partnerId}`),
     apiClient.get(`/api/partners/${partnerId}/surveys`, {
       params: { pageSize: 100 },
     }),
@@ -151,9 +170,10 @@ export const getRecords = async () => {
   };
 };
 
-export const startSurvey = async ({ surveyId, proxyIp, fingerprintBrowser, operatingSystem, linkType }) =>
-  apiClient.post('/api/surveys/start', {
+export const startSurvey = async ({ surveyId, partnerId, proxyIp, fingerprintBrowser, operatingSystem, linkType }) =>
+  apiClient.post('/api/survey/start', {
     surveyId,
+    partnerId,
     proxyIp,
     fingerprintBrowser,
     operatingSystem,

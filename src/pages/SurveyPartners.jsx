@@ -25,7 +25,6 @@ export default function SurveyPartners() {
   const isAdmin = isAdminRole(user?.role);
   const { data, loading } = useAsyncData(getPartners, []);
   const [search, setSearch] = useState('');
-  const [showTheoremReach, setShowTheoremReach] = useState(false);
   const partners = data || [];
   const filteredPartners = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -93,12 +92,12 @@ export default function SurveyPartners() {
                 </button>
               ) : partner.slug === 'theoremreach' ? (
                 <button
-                  className="btn-primary w-full rounded-xl"
+                  className="btn-secondary w-full rounded-xl"
                   type="button"
-                  onClick={() => setShowTheoremReach(true)}
+                  disabled
+                  title="Backend API missing for Theorem Reach launch."
                 >
-                  Start Surveys
-                  <ArrowRight size={16} />
+                  Backend API Missing
                 </button>
               ) : (
                 <Link className="btn-primary w-full rounded-xl" to={`/partners/${partner.id}/surveys`}>
@@ -109,24 +108,6 @@ export default function SurveyPartners() {
               </div>
             </section>
           ))}
-        </div>
-      )}
-      {showTheoremReach && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="relative h-[80vh] w-full max-w-2xl overflow-hidden rounded-xl bg-white shadow-2xl">
-            <button
-              className="absolute right-3 top-3 z-10 text-slate-500 hover:text-slate-900"
-              type="button"
-              onClick={() => setShowTheoremReach(false)}
-            >
-              ✕
-            </button>
-            <iframe
-              src={`https://theoremreach.com/respondent_entry/direct?api_key=6d98ed501f6be1cc271234146bdd&user_id=${user?.id}&transaction_id=${Date.now()}`}
-              className="h-full w-full border-0"
-              sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
-            />
-          </div>
         </div>
       )}
     </>

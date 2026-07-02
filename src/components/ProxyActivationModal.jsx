@@ -25,15 +25,20 @@ export default function ProxyActivationModal({ survey, onClose }) {
         .find(Boolean);
       const response = await startSurvey({
         surveyId: survey.id,
+        partnerId: survey.partnerId,
         proxyIp: firstProxy,
         fingerprintBrowser,
         operatingSystem,
         linkType,
       });
 
-      setLaunchResult(response.data.surveyLink);
+      if (!response.data.redirectUrl) {
+        throw new Error('Survey start API did not return redirectUrl.');
+      }
+
+      setLaunchResult(response.data.redirectUrl);
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Unable to start this survey session.');
+      setError(caughtError.response?.data?.message || caughtError.message || 'Unable to start this survey session.');
     } finally {
       setLoading(false);
     }
