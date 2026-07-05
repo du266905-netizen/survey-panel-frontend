@@ -1,184 +1,416 @@
 import { Link } from 'react-router-dom';
-import Logo from '../components/Logo';
 
 export default function Landing() {
   return (
-    <main className="landing-page">
+    <main className="bg-white text-slate-800 antialiased">
       <style>{`
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 0.7;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.08);
-          }
+        .public-container {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 40px;
         }
 
-        .landing-page {
-          position: relative;
-          width: 100vw;
-          height: 100vh;
-          overflow: hidden;
-          background: #00140a url('/hero.jpg') center / cover no-repeat;
+        .public-header {
+          background: #ffffff;
+          padding: 30px 0;
         }
 
-        .landing-overlay {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 20, 10, 0.65));
-        }
-
-        .landing-nav {
-          position: absolute;
-          top: 0;
-          right: 0;
-          left: 0;
-          z-index: 10;
+        .public-nav {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 24px 48px;
         }
 
-        .landing-brand {
-          display: inline-flex;
-          border-radius: 14px;
-          background: rgba(255, 255, 255, 0.82);
-          padding: 8px 10px;
-          backdrop-filter: blur(12px);
+        .public-logo {
+          color: #0f172a;
+          font-size: 22px;
+          font-weight: 800;
+          letter-spacing: -0.5px;
+          text-decoration: none;
         }
 
-        .landing-signin {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 10px 24px;
-          border: 1px solid rgba(255, 255, 255, 0.5);
-          border-radius: 8px;
-          background: transparent;
-          color: #ffffff;
-          font-size: 14px;
-          cursor: pointer;
-          transition: all 0.2s ease;
+        .public-links {
+          display: flex;
+          gap: 40px;
+          list-style: none;
         }
 
-        .landing-signin:hover {
-          background: rgba(255, 255, 255, 0.15);
+        .public-links a {
+          color: #475569;
+          font-size: 15px;
+          font-weight: 500;
+          text-decoration: none;
         }
 
-        .landing-content {
-          position: absolute;
-          bottom: 12%;
-          left: 6%;
-          z-index: 10;
-          max-width: 680px;
+        .public-links a:hover {
+          color: #000000;
         }
 
-        .landing-eyebrow {
-          display: inline-flex;
-          border-radius: 14px;
-          background: rgba(255, 255, 255, 0.82);
-          padding: 8px 10px;
-          backdrop-filter: blur(12px);
+        .public-hero {
+          padding: 120px 0 90px;
+          text-align: center;
         }
 
-        .landing-headline {
-          margin-top: 12px;
-          color: #ffffff;
-          font-size: 56px;
-          font-weight: 300;
+        .public-hero h1 {
+          max-width: 850px;
+          margin: 0 auto 28px;
+          color: #0f172a;
+          font-size: 54px;
+          font-weight: 800;
+          letter-spacing: -1.5px;
           line-height: 1.15;
         }
 
-        .landing-subtitle {
-          max-width: 560px;
-          margin-top: 12px;
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 16px;
-          font-weight: 300;
+        .public-hero p {
+          max-width: 680px;
+          margin: 0 auto 44px;
+          color: #64748b;
+          font-size: 20px;
+          line-height: 1.625;
         }
 
-        .landing-cta {
+        .public-cta {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          margin-top: 28px;
-          padding: 14px 36px;
-          border: none;
-          border-radius: 10px;
-          background: #22c55e;
+          border-radius: 999px;
+          background: #000000;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
           color: #ffffff;
+          font-size: 16px;
+          font-weight: 600;
+          padding: 16px 40px;
+          text-decoration: none;
+        }
+
+        .public-cta:hover {
+          background: #1e293b;
+          transform: translateY(-2px);
+        }
+
+        .public-banner-section {
+          margin: 40px auto 100px;
+        }
+
+        .public-banner-card {
+          position: relative;
+          display: flex;
+          min-height: 480px;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border-radius: 24px;
+          background:
+            linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+            url('/landing-celpax.jpg') center / cover no-repeat;
+          padding: 40px;
+        }
+
+        .public-banner-content {
+          max-width: 640px;
+          color: #ffffff;
+          text-align: center;
+        }
+
+        .public-banner-content h2 {
+          margin-bottom: 20px;
+          font-size: 42px;
+          font-weight: 800;
+          letter-spacing: -0.5px;
+        }
+
+        .public-banner-content p {
+          font-size: 18px;
+          line-height: 1.6;
+          opacity: 0.95;
+        }
+
+        .public-split {
+          padding: 90px 0;
+        }
+
+        .public-muted {
+          border-bottom: 1px solid #e2e8f0;
+          border-top: 1px solid #e2e8f0;
+          background: #f8fafc;
+        }
+
+        .public-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: center;
+        }
+
+        .public-tag {
+          display: block;
+          margin-bottom: 16px;
+          color: #2563eb;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+        }
+
+        .public-title {
+          margin-bottom: 24px;
+          color: #0f172a;
+          font-size: 38px;
+          font-weight: 800;
+          letter-spacing: -0.5px;
+          line-height: 1.2;
+        }
+
+        .public-copy {
+          margin-bottom: 20px;
+          color: #64748b;
+          font-size: 16px;
+          line-height: 1.625;
+        }
+
+        .public-image {
+          overflow: hidden;
+          border-radius: 20px;
+          box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+        }
+
+        .public-image img {
+          display: block;
+          width: 100%;
+          aspect-ratio: 4 / 3;
+          object-fit: cover;
+        }
+
+        .public-footer {
+          margin-top: 60px;
+          background: #0f172a;
+          color: #94a3b8;
+          padding: 80px 0 40px;
+        }
+
+        .public-footer-grid {
+          display: grid;
+          grid-template-columns: 1.5fr 1fr;
+          gap: 60px;
+          margin-bottom: 60px;
+        }
+
+        .public-footer h2 {
+          margin-bottom: 16px;
+          color: #ffffff;
+          font-size: 22px;
+          font-weight: 800;
+          letter-spacing: -0.5px;
+        }
+
+        .public-footer h3 {
+          margin-bottom: 18px;
+          color: #3b82f6;
           font-size: 15px;
-          font-weight: 500;
-          letter-spacing: 0.03em;
-          cursor: pointer;
-          transition: all 0.2s ease;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
         }
 
-        .landing-cta:hover {
-          background: #16a34a;
-          transform: scale(1.02);
+        .public-footer p {
+          max-width: 440px;
+          color: #94a3b8;
+          font-size: 15px;
+          line-height: 1.625;
         }
 
-        .landing-circle {
-          position: absolute;
-          right: -80px;
-          bottom: -80px;
-          z-index: 0;
-          width: 400px;
-          height: 400px;
-          border-radius: 9999px;
-          background: rgba(34, 197, 94, 0.08);
-          filter: blur(60px);
-          animation: pulse 5s infinite;
+        .public-mail {
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 600;
+          text-decoration: none;
         }
 
-        @media (max-width: 720px) {
-          .landing-nav {
-            padding: 20px 24px;
+        .public-mail:hover {
+          color: #3b82f6;
+          text-decoration: underline;
+        }
+
+        .public-footer-bottom {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-top: 1px solid #1e293b;
+          padding-top: 40px;
+          font-size: 14px;
+        }
+
+        .public-footer-links {
+          display: flex;
+          gap: 24px;
+        }
+
+        .public-footer-links a {
+          color: #94a3b8;
+          text-decoration: none;
+        }
+
+        .public-footer-links a:hover {
+          color: #ffffff;
+        }
+
+        @media (max-width: 968px) {
+          .public-container {
+            padding: 0 24px;
           }
 
-          .landing-content {
-            right: 24px;
-            bottom: 10%;
-            left: 24px;
+          .public-links {
+            display: none;
           }
 
-          .landing-headline {
-            font-size: 42px;
+          .public-hero {
+            padding: 82px 0 56px;
+          }
+
+          .public-hero h1 {
+            font-size: 36px;
+          }
+
+          .public-hero p {
+            font-size: 17px;
+          }
+
+          .public-banner-card {
+            min-height: 360px;
+          }
+
+          .public-banner-content h2 {
+            font-size: 30px;
+          }
+
+          .public-grid,
+          .public-footer-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+
+          .public-footer-bottom {
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
           }
         }
       `}</style>
 
-      <div className="landing-overlay" aria-hidden="true" />
-      <div className="landing-circle" aria-hidden="true" />
-
-      <nav className="landing-nav" aria-label="Public navigation">
-        <div className="landing-brand">
-          <Logo size="sm" />
+      <header className="public-header">
+        <div className="public-container public-nav">
+          <Link className="public-logo" to="/">
+            GUANYISEARCH
+          </Link>
+          <ul className="public-links">
+            <li>
+              <a href="#about">About Our Panel</a>
+            </li>
+            <li>
+              <a href="#rewards">Rewards & Benefits</a>
+            </li>
+            <li>
+              <a href="#network">Global Network</a>
+            </li>
+          </ul>
         </div>
-        <Link className="landing-signin" to="/login">
-          Sign In
-        </Link>
-      </nav>
+      </header>
 
-      <section className="landing-content">
-        <div className="landing-eyebrow">
-          <Logo size="md" />
+      <section className="public-hero">
+        <div className="public-container">
+          <h1>
+            Your Voice Matters.
+            <br />
+            Your Opinion Shapes the World.
+          </h1>
+          <p>
+            Guanyisearch connects real human perspectives with leading global media strategy. Every insight you provide fuels analytical research
+            that shapes tomorrow&apos;s marketplace.
+          </p>
+          <Link className="public-cta" to="/login">
+            Begin Survey Portal
+          </Link>
         </div>
-        <h1 className="landing-headline">
-          Your opinion
-          <br />
-          shapes the world
-        </h1>
-        <p className="landing-subtitle">Join our global research community. Earn rewards for every survey you complete.</p>
-        <Link className="landing-cta" to="/login">
-          Get Started
-        </Link>
       </section>
+
+      <section id="about" className="public-container public-banner-section">
+        <div className="public-banner-card">
+          <div className="public-banner-content">
+            <h2>How was your day?</h2>
+            <p>
+              We believe every meaningful insight starts with personal reflection. Share your daily observations and consumer trends to help refine
+              our international dataset, and get recognized for your time.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="rewards" className="public-split public-muted">
+        <div className="public-container public-grid">
+          <div>
+            <span className="public-tag">Value Your Time</span>
+            <h2 className="public-title">Turn Your Perspectives Into Premium Earnings</h2>
+            <p className="public-copy">
+              Your expertise is worth more than a generic thank-you. At Guanyisearch, we treat our panelists as critical data co-creators.
+              Participate in tailored, high-fidelity questionnaires designed around your industry lifestyle.
+            </p>
+            <p className="public-copy">
+              Every fully completed session directly adds to your tiered account balance. Enjoy transparent payouts, consistent survey options, and
+              a platform that rewards your accuracy with scalable bonuses.
+            </p>
+          </div>
+          <div className="public-image">
+            <img src="/landing-rewards.jpg" alt="Earn rewards with Guanyisearch" />
+          </div>
+        </div>
+      </section>
+
+      <section id="network" className="public-split">
+        <div className="public-container public-grid">
+          <div className="public-image">
+            <img src="/landing-network.jpg" alt="Join our global research network" />
+          </div>
+          <div>
+            <span className="public-tag">Empowerment</span>
+            <h2 className="public-title">Join a Global Collective of Thought Leaders</h2>
+            <p className="public-copy">
+              When you join our survey ecosystem, you&apos;re stepping into an elite global circle. Our contributors span multiple continents,
+              industries, and creative domains, forming a powerhouse repository of actionable public metrics.
+            </p>
+            <p className="public-copy">
+              See the direct ripple effect of your submitted data. Monitor macro trends, gain early access to curated analytical findings, and see
+              how your single voice shapes mainstream corporate directions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer className="public-footer">
+        <div className="public-container public-footer-grid">
+          <div>
+            <h2>GUANYISEARCH</h2>
+            <p>
+              A trusted baseline for international media assessment and public metric intelligence. We bridge consumer feedback and enterprise
+              positioning through rigorous validation.
+            </p>
+          </div>
+          <div>
+            <h3>Contact & Inquiries</h3>
+            <p className="mb-2 text-slate-300">Have questions regarding your panel eligibility? Reach us at:</p>
+            <a className="public-mail" href="mailto:heguanyi@guanyi-media.com">
+              heguanyi@guanyi-media.com
+            </a>
+          </div>
+        </div>
+        <div className="public-container public-footer-bottom">
+          <p>&copy; 2026 GUANYISEARCH. All Rights Reserved.</p>
+          <div className="public-footer-links">
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

@@ -26,11 +26,6 @@ function AdminRoute({ children }) {
   return isAdminRole(user?.role) ? children : <Navigate to="/dashboard" replace />;
 }
 
-function PublicHomeRoute() {
-  const { user } = useAuth();
-  return user ? <Navigate to="/dashboard" replace /> : <Landing />;
-}
-
 export default function App() {
   return (
     <Routes>
@@ -69,7 +64,7 @@ export default function App() {
           }
         />
       </Route>
-      <Route path="/" element={<PublicHomeRoute />} />
+      <Route path="/" element={<Landing />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );

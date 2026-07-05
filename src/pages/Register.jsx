@@ -1,20 +1,18 @@
 import { useCallback, useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { CheckCircle2, Eye, EyeOff } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { register } from '../api/realApi';
-import { useAuth } from '../components/AuthContext';
 import Logo from '../components/Logo';
 import TurnstileWidget from '../components/TurnstileWidget';
 
 export default function Register() {
-  const navigate = useNavigate();
-  const { setUser } = useAuth();
   const [form, setForm] = useState({ displayName: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const canSubmit = agreedToTerms && Boolean(turnstileToken) && !loading;
 
   const handleChange = (event) => {
@@ -37,13 +35,12 @@ export default function Register() {
     setError('');
 
     try {
-      const response = await register({
+      await register({
         ...form,
         turnstileToken,
         agreedToTermsAt: new Date().toISOString(),
       });
-      setUser(response.data.user);
-      navigate('/dashboard');
+      setSubmitted(true);
     } catch (caughtError) {
       const code = caughtError.response?.data?.error || caughtError.response?.data?.code;
       if (code === 'TURNSTILE_VERIFICATION_FAILED') {
@@ -63,10 +60,24 @@ export default function Register() {
           <p className="mt-3 text-sm italic text-slate-500">Your opinion shapes the world.</p>
         </div>
 
+        {submitted ? (
+          <div className="rounded-2xl border border-green-200 bg-white p-8 text-center shadow-sm">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-green-600">
+              <CheckCircle2 size={28} />
+            </div>
+            <h1 className="mt-6 text-2xl font-semibold text-slate-950">Registration submitted</h1>
+            <p className="mt-3 text-sm leading-6 text-slate-500">
+              Your account has been created and is now pending administrator approval. You can sign in after an administrator activates your account.
+            </p>
+            <Link className="btn-primary mt-6 w-full" to="/login">
+              Back to Login
+            </Link>
+          </div>
+        ) : (
         <form className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm" onSubmit={handleSubmit}>
           <div>
             <h1 className="text-2xl font-semibold text-slate-950">Create your account</h1>
-            <p className="mt-2 text-sm text-slate-500">Access is reviewed and protected against automated signups.</p>
+            <p className="mt-2 text-sm text-slate-500">Access requires administrator approval after registration.</p>
           </div>
 
           <label className="mt-6 block">
@@ -160,6 +171,7 @@ export default function Register() {
             </Link>
           </p>
         </form>
+        )}
       </section>
     </main>
   );

@@ -28,6 +28,7 @@ apiClient.interceptors.response.use(
 );
 
 export function persistSession({ token, user }) {
+  if (!token || !user) return;
   window.localStorage.setItem('surveyToken', token);
   window.localStorage.setItem('surveyUser', JSON.stringify(normalizeUser(user)));
 }
