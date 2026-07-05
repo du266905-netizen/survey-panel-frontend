@@ -10,7 +10,7 @@ export default function Logo({ size = 'md', variant = 'dark', className = '' }) 
   return (
     <img
       src={src}
-      alt="GUANYISEARCH"
+      alt=""
       width={s.width}
       height={s.height}
       className={`block h-auto select-none ${className}`}
