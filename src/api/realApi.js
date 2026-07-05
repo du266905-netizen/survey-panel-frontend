@@ -59,6 +59,7 @@ const mapSurvey = (survey, partnerContext) => ({
 const mapEmployee = (user) => ({
   ...user,
   name: user.displayName || user.name || '-',
+  tag: user.groupName || '',
   roleLabel: String(user.role || 'EMPLOYEE').toUpperCase() === 'ADMIN' ? 'ADMIN' : 'EMPLOYEE',
   isActive: user.isActive !== false,
 });
@@ -216,12 +217,13 @@ export const getEmployees = async () => {
   };
 };
 
-export const createEmployee = async ({ name, email, password, role }) => {
+export const createEmployee = async ({ name, email, password, role, tag, groupName }) => {
   const response = await apiClient.post('/api/admin/users', {
     name,
     email,
     password,
     role: role || 'EMPLOYEE',
+    groupName: tag || groupName || '',
   });
 
   return {

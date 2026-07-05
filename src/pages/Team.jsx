@@ -10,6 +10,7 @@ const emptyForm = {
   email: '',
   password: '',
   role: 'EMPLOYEE',
+  tag: '',
 };
 
 const formatDate = (value) => {
@@ -29,6 +30,7 @@ function EmployeeFormModal({ employee, onClose, onSubmit, saving, error }) {
           email: employee.email || '',
           password: '',
           role: employee.roleLabel || 'EMPLOYEE',
+          tag: employee.tag || employee.groupName || '',
         }
       : emptyForm
   );
@@ -45,8 +47,8 @@ function EmployeeFormModal({ employee, onClose, onSubmit, saving, error }) {
       <section className="card w-full max-w-lg p-6 shadow-2xl">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-slate-950">{isEditing ? 'Edit Employee' : 'Create Employee'}</h2>
-            <p className="mt-1 text-sm text-slate-500">Manage employee access for the survey panel.</p>
+            <h2 className="text-xl font-bold text-slate-950">{isEditing ? 'Edit Member' : 'Create Member'}</h2>
+            <p className="mt-1 text-sm text-slate-500">Manage member access and batch tags for the survey panel.</p>
           </div>
           <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={onClose}>
             <X size={18} />
@@ -61,6 +63,15 @@ function EmployeeFormModal({ employee, onClose, onSubmit, saving, error }) {
           <label className="block space-y-2">
             <span className="text-sm font-semibold text-slate-700">Email</span>
             <input className="field" type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} required />
+          </label>
+          <label className="block space-y-2">
+            <span className="text-sm font-semibold text-slate-700">Member Tag</span>
+            <input
+              className="field"
+              value={form.tag}
+              onChange={(event) => setForm({ ...form, tag: event.target.value })}
+              placeholder="Batch 2026-07, Campus A, VIP group..."
+            />
           </label>
           <label className="block space-y-2">
             <span className="text-sm font-semibold text-slate-700">Password</span>
@@ -88,7 +99,7 @@ function EmployeeFormModal({ employee, onClose, onSubmit, saving, error }) {
               Cancel
             </button>
             <button className="btn-primary" type="submit" disabled={saving}>
-              {saving ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Employee'}
+              {saving ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Member'}
             </button>
           </div>
         </form>
@@ -105,6 +116,7 @@ export default function Team() {
   const [saving, setSaving] = useState(false);
   const [modalMode, setModalMode] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [tagFilter, setTagFilter] = useState('All');
 
   const loadEmployees = async () => {
     setLoading(true);
@@ -150,6 +162,7 @@ export default function Team() {
           name: form.name,
           email: form.email,
           role: form.role,
+          groupName: form.tag.trim(),
         };
         if (form.password) payload.password = form.password;
         await updateEmployee(selectedEmployee.id, payload);
@@ -192,6 +205,18 @@ export default function Team() {
     () => [
       { key: 'name', header: 'Name' },
       { key: 'email', header: 'Email' },
+      {
+        key: 'tag',
+        header: 'Tag',
+        render: (row) =>
+          row.tag ? (
+            <span className="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-100">
+              {row.tag}
+            </span>
+          ) : (
+            <span className="text-sm text-slate-400">No tag</span>
+          ),
+      },
       {
         key: 'roleLabel',
         header: 'Role',
@@ -240,22 +265,46 @@ export default function Team() {
     [user?.id]
   );
 
+  const tagOptions = useMemo(() => {
+    const tags = employees.map((employee) => employee.tag).filter(Boolean);
+    return ['All', ...Array.from(new Set(tags)).sort((a, b) => a.localeCompare(b))];
+  }, [employees]);
+
+  const filteredEmployees = useMemo(
+    () => (tagFilter === 'All' ? employees : employees.filter((employee) => employee.tag === tagFilter)),
+    [employees, tagFilter]
+  );
+
   return (
     <>
       <PageHeader
         title="Team"
-        description="Create employees and manage account access."
+        description="Create members, assign batch tags, and manage account access."
         action={
           <button className="btn-primary" type="button" onClick={handleCreate}>
             <Plus size={16} />
-            Create Employee
+            Create Member
           </button>
         }
       />
 
       {error && !modalMode && <p className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
 
-      <DataTable columns={columns} rows={employees} loading={loading} emptyMessage="No employees found." />
+      <section className="card mb-5 flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-sm font-bold text-slate-950">Member Tags</h2>
+          <p className="mt-1 text-xs text-slate-500">Use tags to group members by campaign, batch, source, or operator.</p>
+        </div>
+        <select className="field w-full sm:w-64" value={tagFilter} onChange={(event) => setTagFilter(event.target.value)}>
+          {tagOptions.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag === 'All' ? 'All tags' : tag}
+            </option>
+          ))}
+        </select>
+      </section>
+
+      <DataTable columns={columns} rows={filteredEmployees} loading={loading} emptyMessage="No members found." />
 
       {modalMode && (
         <EmployeeFormModal
