@@ -17,6 +17,7 @@ export default function AppLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const isAdmin = isAdminRole(user?.role);
+  const roleLabel = isAdmin ? '管理员' : '成员';
 
   const handleLogout = () => {
     logout();
@@ -38,7 +39,7 @@ export default function AppLayout() {
             </div>
             <div className="text-right">
               <p className="text-sm font-semibold text-slate-900">{user?.username || 'Guest'}</p>
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{user?.role || 'employee'}</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{roleLabel}</p>
             </div>
             <button className="btn-secondary" type="button" onClick={handleLogout}>
               <LogOut size={16} />

@@ -87,7 +87,7 @@ export default function Login() {
               </label>
 
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">Admin-created accounts only</span>
+                <span aria-hidden="true" />
                 <a className="font-semibold text-green-600 hover:text-green-700" href="mailto:heguanyi@guanyi-media.com">
                   Need access?
                 </a>
