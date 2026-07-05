@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Logo from '../components/Logo';
 
 export default function Landing() {
   return (
@@ -23,10 +24,8 @@ export default function Landing() {
         }
 
         .public-logo {
-          color: #0f172a;
-          font-size: 22px;
-          font-weight: 800;
-          letter-spacing: -0.5px;
+          display: inline-flex;
+          align-items: center;
           text-decoration: none;
         }
 
@@ -198,10 +197,6 @@ export default function Landing() {
 
         .public-footer h2 {
           margin-bottom: 16px;
-          color: #ffffff;
-          font-size: 22px;
-          font-weight: 800;
-          letter-spacing: -0.5px;
         }
 
         .public-footer h3 {
@@ -301,7 +296,7 @@ export default function Landing() {
       <header className="public-header">
         <div className="public-container public-nav">
           <Link className="public-logo" to="/">
-            GUANYISEARCH
+            <Logo size="md" />
           </Link>
           <ul className="public-links">
             <li>
@@ -325,8 +320,8 @@ export default function Landing() {
             Your Opinion Shapes the World.
           </h1>
           <p>
-            Guanyisearch connects real human perspectives with leading global media strategy. Every insight you provide fuels analytical research
-            that shapes tomorrow&apos;s marketplace.
+            The panel connects real human perspectives with leading global media strategy. Every insight you provide fuels analytical research that
+            shapes tomorrow&apos;s marketplace.
           </p>
           <Link className="public-cta" to="/login">
             Begin Survey Portal
@@ -352,8 +347,8 @@ export default function Landing() {
             <span className="public-tag">Value Your Time</span>
             <h2 className="public-title">Turn Your Perspectives Into Premium Earnings</h2>
             <p className="public-copy">
-              Your expertise is worth more than a generic thank-you. At Guanyisearch, we treat our panelists as critical data co-creators.
-              Participate in tailored, high-fidelity questionnaires designed around your industry lifestyle.
+              Your expertise is worth more than a generic thank-you. We treat our panelists as critical data co-creators. Participate in tailored,
+              high-fidelity questionnaires designed around your industry lifestyle.
             </p>
             <p className="public-copy">
               Every fully completed session directly adds to your tiered account balance. Enjoy transparent payouts, consistent survey options, and
@@ -361,7 +356,7 @@ export default function Landing() {
             </p>
           </div>
           <div className="public-image">
-            <img src="/landing-rewards.jpg" alt="Earn rewards with Guanyisearch" />
+            <img src="/landing-rewards.jpg" alt="Earn rewards" />
           </div>
         </div>
       </section>
@@ -389,7 +384,9 @@ export default function Landing() {
       <footer className="public-footer">
         <div className="public-container public-footer-grid">
           <div>
-            <h2>GUANYISEARCH</h2>
+            <h2>
+              <Logo size="md" variant="light" />
+            </h2>
             <p>
               A trusted baseline for international media assessment and public metric intelligence. We bridge consumer feedback and enterprise
               positioning through rigorous validation.
@@ -404,7 +401,7 @@ export default function Landing() {
           </div>
         </div>
         <div className="public-container public-footer-bottom">
-          <p>&copy; 2026 GUANYISEARCH. All Rights Reserved.</p>
+          <p>&copy; 2026. All Rights Reserved.</p>
           <div className="public-footer-links">
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Service</Link>

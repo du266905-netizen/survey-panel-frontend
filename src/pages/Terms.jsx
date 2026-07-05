@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Logo from '../components/Logo';
 
 const terms = [
   {
@@ -15,7 +16,7 @@ const terms = [
   },
   {
     title: 'Platform Controls',
-    body: 'Guanyisearch may limit, suspend, or close accounts to protect research quality, prevent abuse, comply with partner requirements, or maintain platform integrity.',
+    body: 'The platform may limit, suspend, or close accounts to protect research quality, prevent abuse, comply with partner requirements, or maintain platform integrity.',
   },
   {
     title: 'Changes To Terms',
@@ -28,8 +29,8 @@ export default function Terms() {
     <main className="min-h-screen bg-slate-50">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
-          <Link className="text-xl font-extrabold tracking-tight text-slate-950" to="/">
-            GUANYISEARCH
+          <Link className="inline-flex items-center" to="/">
+            <Logo size="md" />
           </Link>
           <Link className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50" to="/login">
             Sign In
@@ -39,9 +40,9 @@ export default function Terms() {
 
       <section className="mx-auto max-w-5xl px-6 py-14">
         <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-600">Terms of Service</p>
-        <h1 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-950">Operating rules for the Guanyisearch panel</h1>
+        <h1 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-950">Operating rules for the survey panel</h1>
         <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">
-          These terms govern use of the Guanyisearch survey platform, including account access, survey participation, reward handling, and quality
+          These terms govern use of the survey platform, including account access, survey participation, reward handling, and quality
           controls.
         </p>
 

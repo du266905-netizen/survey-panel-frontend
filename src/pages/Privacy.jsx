@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
+import Logo from '../components/Logo';
 
 const sections = [
   {
     title: 'Information We Collect',
-    body: 'We collect account details, profile information, device and network signals, survey participation history, reward activity, and fraud-prevention data required to operate the Guanyisearch panel.',
+    body: 'We collect account details, profile information, device and network signals, survey participation history, reward activity, and fraud-prevention data required to operate the panel.',
   },
   {
     title: 'How We Use Information',
@@ -28,8 +29,8 @@ export default function Privacy() {
     <main className="min-h-screen bg-slate-50">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
-          <Link className="text-xl font-extrabold tracking-tight text-slate-950" to="/">
-            GUANYISEARCH
+          <Link className="inline-flex items-center" to="/">
+            <Logo size="md" />
           </Link>
           <Link className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50" to="/login">
             Sign In
@@ -39,9 +40,9 @@ export default function Privacy() {
 
       <section className="mx-auto max-w-5xl px-6 py-14">
         <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-600">Privacy Policy</p>
-        <h1 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-950">How Guanyisearch protects panel data</h1>
+        <h1 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-950">How panel data is protected</h1>
         <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">
-          This Privacy Policy explains how Guanyisearch collects, uses, shares, and protects information in connection with account access, survey
+          This Privacy Policy explains how the platform collects, uses, shares, and protects information in connection with account access, survey
           participation, fraud prevention, and reward operations.
         </p>
 
