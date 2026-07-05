@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Eye, EyeOff, LockKeyhole, Mail, ShieldCheck } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import Logo from '../components/Logo';
@@ -8,7 +8,7 @@ import Logo from '../components/Logo';
 export default function Login() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
-  const [form, setForm] = useState({ email: 'admin@surveypanel.com', password: 'admin123' });
+  const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,372 +23,113 @@ export default function Login() {
       setUser(response.data.user);
       navigate('/dashboard');
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Login failed. Please check your credentials.');
+      const message = caughtError.response?.data?.message || 'Login failed. Please check your email and password.';
+      setError(message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="login-page">
-      <style>{`
-        @keyframes slideInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
+    <main className="grid min-h-screen overflow-hidden bg-stone-50 lg:grid-cols-[0.92fr_1.08fr]">
+      <section className="relative flex min-h-screen items-center px-6 py-10 sm:px-10 lg:px-14">
+        <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-green-100/70 blur-3xl" />
+        <div className="relative mx-auto w-full max-w-md">
+          <Logo size="lg" />
 
-        .login-page {
-          display: flex;
-          flex-direction: row;
-          width: 100vw;
-          height: 100vh;
-          overflow: hidden;
-          background: #ffffff;
-        }
-
-        .login-left {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          width: 45%;
-          padding: 48px;
-          background: #fafaf9;
-          animation: slideInLeft 0.5s ease-out;
-        }
-
-        .login-left-inner {
-          width: 100%;
-          max-width: 420px;
-          margin: 0 auto;
-        }
-
-        .login-logo {
-          display: flex;
-        }
-
-        .login-copy {
-          margin-top: 8px;
-        }
-
-        .login-copy-primary {
-          color: #374151;
-          font-size: 13px;
-          font-style: italic;
-        }
-
-        .login-copy-secondary {
-          margin-top: 4px;
-          color: #22c55e;
-          font-size: 12px;
-          font-weight: 500;
-          letter-spacing: 0.04em;
-        }
-
-        .login-divider {
-          margin: 24px 0;
-          border: none;
-          border-top: 1px solid #f3f4f6;
-        }
-
-        .login-title {
-          color: #111827;
-          font-size: 24px;
-          font-weight: 600;
-        }
-
-        .login-subtitle {
-          margin-top: 6px;
-          color: #6b7280;
-          font-size: 13px;
-        }
-
-        .login-value-line {
-          margin: 8px 0 0;
-          color: #94a3b8;
-          font-size: 14px;
-        }
-
-        .login-form {
-          margin-top: 24px;
-        }
-
-        .login-field {
-          display: block;
-          margin-top: 18px;
-        }
-
-        .login-field:first-child {
-          margin-top: 0;
-        }
-
-        .login-label {
-          display: block;
-          margin-bottom: 6px;
-          color: #374151;
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-
-        .login-input-wrap {
-          position: relative;
-          display: block;
-        }
-
-        .login-input {
-          width: 100%;
-          padding: 12px 14px;
-          border: 1px solid #e5e7eb;
-          border-radius: 10px;
-          outline: none;
-          color: #111827;
-          font-size: 14px;
-          transition: all 0.2s ease;
-        }
-
-        .login-input:focus {
-          border-color: #22c55e;
-        }
-
-        .login-input-password {
-          padding-right: 44px;
-        }
-
-        .login-eye {
-          position: absolute;
-          top: 50%;
-          right: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 30px;
-          height: 30px;
-          border: none;
-          background: transparent;
-          color: #6b7280;
-          cursor: pointer;
-          transform: translateY(-50%);
-        }
-
-        .login-forgot-row {
-          display: flex;
-          justify-content: flex-end;
-          margin-top: 6px;
-        }
-
-        .login-forgot {
-          border: none;
-          background: transparent;
-          color: #22c55e;
-          font-size: 12px;
-          cursor: pointer;
-        }
-
-        .login-button {
-          width: 100%;
-          margin-top: 16px;
-          padding: 13px;
-          border: none;
-          border-radius: 10px;
-          background: #22c55e;
-          color: #ffffff;
-          font-size: 14px;
-          font-weight: 600;
-          letter-spacing: 0.03em;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .login-button:hover:not(:disabled) {
-          background: #16a34a;
-        }
-
-        .login-button:disabled {
-          cursor: not-allowed;
-          opacity: 0.65;
-        }
-
-        .login-error {
-          margin-top: 12px;
-          border: 1px solid #fecaca;
-          border-radius: 10px;
-          background: #fef2f2;
-          padding: 10px 12px;
-          color: #b91c1c;
-          font-size: 12px;
-          font-weight: 600;
-        }
-
-        .login-contact {
-          margin-top: 16px;
-          color: #9ca3af;
-          font-size: 11px;
-          text-align: center;
-        }
-
-        .login-contact a {
-          color: #22c55e;
-        }
-
-        .login-brand-note {
-          position: absolute;
-          bottom: 32px;
-          left: 32px;
-          color: #94a3b8;
-          font-size: 12px;
-          font-style: italic;
-        }
-
-        .login-right {
-          position: relative;
-          width: 55%;
-          padding: 0;
-          overflow: hidden;
-          background-image: url('/hero.jpg');
-          background-size: cover;
-          background-position: center;
-        }
-
-        .login-right::before {
-          position: absolute;
-          inset: 0;
-          content: "";
-          background: rgba(0, 0, 0, 0.15);
-        }
-
-        .login-hero-copy {
-          position: absolute;
-          bottom: 10%;
-          left: 8%;
-          z-index: 1;
-        }
-
-        .login-hero-title {
-          color: #ffffff;
-          font-size: 32px;
-          font-weight: 300;
-          letter-spacing: 0.06em;
-        }
-
-        .login-hero-subtitle {
-          margin-top: 8px;
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 14px;
-          font-style: italic;
-        }
-
-        @media (max-width: 820px) {
-          .login-page {
-            flex-direction: column;
-          }
-
-          .login-left,
-          .login-right {
-            width: 100%;
-          }
-
-          .login-left {
-            height: 62%;
-            padding: 32px 24px;
-          }
-
-          .login-right {
-            height: 38%;
-          }
-        }
-      `}</style>
-
-      <section className="login-left">
-        <div className="login-left-inner">
-          <div className="login-logo">
-            <Logo size="md" />
-          </div>
-          <div className="login-copy">
-            <p className="login-copy-primary">Your opinion shapes the world.</p>
-            <p className="login-copy-secondary">Earn rewards for the time you invest.</p>
-          </div>
-
-          <hr className="login-divider" />
-
-          <h1 className="login-title">Welcome back</h1>
-          <p className="login-subtitle">Sign in to your account</p>
-          <p className="login-value-line">Your opinion shapes the world.</p>
-
-          <form className="login-form" onSubmit={handleSubmit}>
-            <label className="login-field">
-              <span className="login-label">EMAIL ADDRESS</span>
-              <input
-                className="login-input focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                type="email"
-                placeholder="enter your email"
-                value={form.email}
-                onChange={(event) => setForm({ ...form, email: event.target.value })}
-                required
-              />
-            </label>
-
-            <label className="login-field">
-              <span className="login-label">PASSWORD</span>
-              <span className="login-input-wrap">
-                <input
-                  className="login-input login-input-password focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="enter your password"
-                  value={form.password}
-                  onChange={(event) => setForm({ ...form, password: event.target.value })}
-                  required
-                />
-                <button
-                  className="login-eye"
-                  type="button"
-                  onClick={() => setShowPassword((value) => !value)}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </span>
-            </label>
-
-            <div className="login-forgot-row">
-              <button className="login-forgot" type="button">
-                Forgot password
-              </button>
+          <div className="mt-10 rounded-[28px] border border-white bg-white/90 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur sm:p-9">
+            <div className="mb-7">
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-green-50 text-green-600 ring-1 ring-green-100">
+                <LockKeyhole size={22} />
+              </div>
+              <h1 className="text-3xl font-semibold tracking-tight text-slate-950">Welcome back</h1>
+              <p className="mt-2 text-sm leading-6 text-slate-500">Sign in to manage surveys, coins, records, and partner performance.</p>
             </div>
 
-            <button
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md active:scale-95"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? 'SIGNING IN...' : 'LOGIN'}
-            </button>
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              <label className="block">
+                <span className="mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Email address</span>
+                <span className="relative block">
+                  <Mail className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                  <input
+                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white pl-11 pr-4 text-sm font-medium text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-green-500 focus:ring-4 focus:ring-green-100"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={form.email}
+                    onChange={(event) => setForm({ ...form, email: event.target.value })}
+                    autoComplete="email"
+                    required
+                  />
+                </span>
+              </label>
 
-            {error && <p className="login-error">{error}</p>}
-          </form>
+              <label className="block">
+                <span className="mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Password</span>
+                <span className="relative block">
+                  <input
+                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 pr-12 text-sm font-medium text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-green-500 focus:ring-4 focus:ring-green-100"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter your password"
+                    value={form.password}
+                    onChange={(event) => setForm({ ...form, password: event.target.value })}
+                    autoComplete="current-password"
+                    required
+                  />
+                  <button
+                    className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                    type="button"
+                    onClick={() => setShowPassword((value) => !value)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </span>
+              </label>
 
-          <p className="login-contact">
-            Contact admin <a href="mailto:heguanyi@guanyi-media.com">heguanyi@guanyi-media.com</a>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400">Admin-created accounts only</span>
+                <a className="font-semibold text-green-600 hover:text-green-700" href="mailto:heguanyi@guanyi-media.com">
+                  Need access?
+                </a>
+              </div>
+
+              <button
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-green-600 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-xl hover:shadow-green-600/25 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Signing in...' : 'Login'}
+              </button>
+
+              {error && (
+                <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                  {error}
+                </div>
+              )}
+            </form>
+          </div>
+
+          <p className="mt-6 text-center text-xs text-slate-400">
+            Need a participant account? <Link className="font-semibold text-green-600 hover:text-green-700" to="/register">Register here</Link>
           </p>
         </div>
-        <p className="login-brand-note">
-          Earn rewards for the time you invest.
-        </p>
       </section>
 
-      <section className="login-right" aria-label="Research participant">
-        <div className="login-hero-copy">
-          <div className="inline-flex rounded-2xl bg-white/80 p-3 backdrop-blur-sm">
-            <Logo size="lg" />
+      <section className="relative hidden min-h-screen overflow-hidden lg:block">
+        <img className="absolute inset-0 h-full w-full object-cover" src="/hero.jpg" alt="Research participant giving feedback" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,20,10,0.08)_0%,rgba(0,32,16,0.72)_100%)]" />
+        <div className="absolute right-10 top-10 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80 backdrop-blur">
+          1000 Coins = $1 USD
+        </div>
+        <div className="absolute bottom-12 left-12 max-w-xl text-white">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">
+            <ShieldCheck size={16} />
+            Trusted survey operations
           </div>
-          <p className="login-hero-subtitle">Connecting people with research that matters.</p>
+          <h2 className="text-5xl font-light leading-tight tracking-tight">Your opinion shapes the world.</h2>
+          <p className="mt-4 max-w-md text-base leading-7 text-white/72">
+            Connect with research partners, complete verified surveys, and earn coins for the time you invest.
+          </p>
         </div>
       </section>
     </main>
