@@ -1,9 +1,9 @@
 import { apiClient, getStoredUser, normalizeUser, persistSession } from './client';
 import { isAdminRole } from '../utils/roles';
 
-const channelPalette = ['#10b981', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6', '#14b8a6', '#7c3aed'];
-const channelNames = ['Channel A', 'Channel B', 'Channel C', 'Channel D', 'Channel E', 'Channel F', 'Channel G'];
-const partnerSlugs = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs', 'theoremreach'];
+const channelPalette = ['#10b981', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6', '#14b8a6', '#7c3aed', '#0f766e'];
+const channelNames = ['Channel A', 'Channel B', 'Channel C', 'Channel D', 'Channel E', 'Channel F', 'Channel G', 'Channel H'];
+const partnerSlugs = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs', 'cpx-research', 'theoremreach'];
 
 const isAdmin = () => isAdminRole(getStoredUser()?.role);
 
