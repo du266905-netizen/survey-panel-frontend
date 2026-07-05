@@ -13,7 +13,6 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const canSubmit = agreedToTerms && Boolean(turnstileToken) && !loading;
 
   const handleChange = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -29,7 +28,7 @@ export default function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!canSubmit) return;
+    if (!agreedToTerms || loading) return;
 
     setLoading(true);
     setError('');
@@ -129,24 +128,23 @@ export default function Register() {
             </span>
           </label>
 
-          <label className="mt-5 flex items-start gap-3 text-sm text-slate-600">
+          <label className="mt-5 flex items-start gap-2 text-sm text-gray-600">
             <input
-              className="mt-1 h-4 w-4 rounded border-slate-300 accent-green-600"
               type="checkbox"
               checked={agreedToTerms}
               onChange={(event) => setAgreedToTerms(event.target.checked)}
+              className="mt-1"
               required
             />
             <span>
-              I have read and agree to the{' '}
-              <Link className="font-semibold text-green-600 hover:text-green-700" to="/terms" target="_blank">
+              I agree to the{' '}
+              <a href="/terms" target="_blank" rel="noreferrer" className="underline text-green-600">
                 Terms of Service
-              </Link>{' '}
-              and{' '}
-              <Link className="font-semibold text-green-600 hover:text-green-700" to="/privacy" target="_blank">
+              </a>
+              {' '}and{' '}
+              <a href="/privacy" target="_blank" rel="noreferrer" className="underline text-green-600">
                 Privacy Policy
-              </Link>
-              .
+              </a>
             </span>
           </label>
 
@@ -159,7 +157,7 @@ export default function Register() {
           <button
             className="mt-6 w-full rounded-xl bg-green-600 py-3 font-semibold text-white shadow-sm transition-all duration-200 hover:bg-green-700 hover:shadow-md active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
             type="submit"
-            disabled={!canSubmit}
+            disabled={!agreedToTerms || loading}
           >
             {loading ? 'Creating account...' : 'Create Account'}
           </button>
