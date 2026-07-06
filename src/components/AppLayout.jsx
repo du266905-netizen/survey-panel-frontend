@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, LogOut, Settings, ShieldCheck, User, UserPlus, Users } from 'lucide-react';
+import { BarChart3, ClipboardList, LogOut, MonitorPlay, Settings, ShieldCheck, User, UserPlus, Users } from 'lucide-react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import CoinAmount from './CoinAmount';
@@ -84,6 +84,17 @@ export default function AppLayout() {
                 >
                   <UserPlus size={18} />
                   Team
+                </NavLink>
+                <NavLink
+                  to="/traffic"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                      isActive ? 'bg-green-50 text-green-700 shadow-sm' : 'text-slate-600 hover:bg-green-50/70 hover:text-green-700'
+                    }`
+                  }
+                >
+                  <MonitorPlay size={18} />
+                  Traffic Console
                 </NavLink>
                 <NavLink
                   to="/admin"

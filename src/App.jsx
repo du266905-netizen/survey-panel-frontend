@@ -14,6 +14,8 @@ import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import TrafficConsole from './pages/TrafficConsole';
+import AgentPrecheck from './pages/AgentPrecheck';
 import { isAdminRole } from './utils/roles';
 
 function ProtectedRoute({ children }) {
@@ -52,6 +54,22 @@ export default function App() {
           element={
             <AdminRoute>
               <Team />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/traffic"
+          element={
+            <AdminRoute>
+              <TrafficConsole />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/agent-precheck"
+          element={
+            <AdminRoute>
+              <AgentPrecheck />
             </AdminRoute>
           }
         />

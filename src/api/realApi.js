@@ -240,3 +240,73 @@ export const updateEmployee = async (id, payload) => {
 };
 
 export const deleteEmployee = async (id) => apiClient.delete(`/api/admin/users/${id}`);
+
+export const getTrafficSummary = async () => {
+  const response = await apiClient.get('/api/traffic/summary');
+  return response.data;
+};
+
+export const getTrafficTasks = async (params = {}) => {
+  const response = await apiClient.get('/api/traffic/tasks', { params });
+  return response.data;
+};
+
+export const importTrafficTask = async (payload) => {
+  const response = await apiClient.post('/api/traffic/tasks/import', payload);
+  return response.data;
+};
+
+export const assignTrafficTask = async (taskId, payload) => {
+  const response = await apiClient.post(`/api/traffic/tasks/${taskId}/assign`, payload);
+  return response.data;
+};
+
+export const releaseTrafficTask = async (taskId, payload = {}) => {
+  const response = await apiClient.post(`/api/traffic/tasks/${taskId}/release`, payload);
+  return response.data;
+};
+
+export const markTrafficOutcome = async (taskId, payload) => {
+  const response = await apiClient.post(`/api/traffic/tasks/${taskId}/outcome`, payload);
+  return response.data;
+};
+
+export const runTrafficScheduler = async (payload = {}) => {
+  const response = await apiClient.post('/api/traffic/scheduler/tick', payload);
+  return response.data;
+};
+
+export const getTrafficProfiles = async (params = {}) => {
+  const response = await apiClient.get('/api/traffic/profiles', { params });
+  return response.data;
+};
+
+export const createTrafficProfile = async (payload) => {
+  const response = await apiClient.post('/api/traffic/profiles', payload);
+  return response.data;
+};
+
+export const bulkCreateTrafficProfiles = async (payload) => {
+  const response = await apiClient.post('/api/traffic/profiles/bulk', payload);
+  return response.data;
+};
+
+export const updateTrafficProfile = async (profileId, payload) => {
+  const response = await apiClient.put(`/api/traffic/profiles/${profileId}`, payload);
+  return response.data;
+};
+
+export const launchTrafficProfile = async (profileId) => {
+  const response = await apiClient.post(`/api/traffic/profiles/${profileId}/launch`);
+  return response.data;
+};
+
+export const closeTrafficProfile = async (profileId, payload = {}) => {
+  const response = await apiClient.post(`/api/traffic/profiles/${profileId}/close`, payload);
+  return response.data;
+};
+
+export const getTrafficLogs = async (params = {}) => {
+  const response = await apiClient.get('/api/traffic/logs', { params });
+  return response.data;
+};
