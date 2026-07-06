@@ -115,8 +115,11 @@ export default function Login() {
         </div>
       </section>
 
-      <section className="relative hidden min-h-screen overflow-hidden lg:block">
-        <img className="absolute inset-0 h-full w-full object-cover" src="/login-hero.jpg" alt="Research participant using a mobile device" />
+      <section
+        className="relative hidden min-h-screen overflow-hidden bg-slate-900 bg-cover bg-center lg:block"
+        style={{ backgroundImage: "url('/login-hero.jpg')" }}
+        aria-label="Research participant using a mobile device"
+      >
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,20,10,0.08)_0%,rgba(0,32,16,0.72)_100%)]" />
         <div className="absolute bottom-12 left-12 max-w-xl text-white">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">
