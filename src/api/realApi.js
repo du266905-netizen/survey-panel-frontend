@@ -246,6 +246,26 @@ export const getTrafficSummary = async () => {
   return response.data;
 };
 
+export const getTrafficWorkers = async () => {
+  const response = await apiClient.get('/api/traffic/workers');
+  return response.data;
+};
+
+export const getTrafficWorker = async (workerId) => {
+  const response = await apiClient.get(`/api/traffic/workers/${workerId}`);
+  return response.data;
+};
+
+export const importWorkerTrafficTask = async (workerId, payload) => {
+  const response = await apiClient.post(`/api/traffic/workers/${workerId}/tasks/import`, payload);
+  return response.data;
+};
+
+export const bindWorkerTrafficProfile = async (workerId, profileId, payload = {}) => {
+  const response = await apiClient.post(`/api/traffic/workers/${workerId}/profiles/${profileId}/bind`, payload);
+  return response.data;
+};
+
 export const getTrafficTasks = async (params = {}) => {
   const response = await apiClient.get('/api/traffic/tasks', { params });
   return response.data;

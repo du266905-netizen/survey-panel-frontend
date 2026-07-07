@@ -15,6 +15,8 @@ import Team from './pages/Team';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import TrafficConsole from './pages/TrafficConsole';
+import WorkerDetail from './pages/WorkerDetail';
+import WorkerMonitor from './pages/WorkerMonitor';
 import AgentPrecheck from './pages/AgentPrecheck';
 import { isAdminRole } from './utils/roles';
 
@@ -54,6 +56,22 @@ export default function App() {
           element={
             <AdminRoute>
               <Team />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/workers"
+          element={
+            <AdminRoute>
+              <WorkerMonitor />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/workers/:workerId"
+          element={
+            <AdminRoute>
+              <WorkerDetail />
             </AdminRoute>
           }
         />
