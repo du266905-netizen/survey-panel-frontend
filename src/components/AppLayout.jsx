@@ -7,7 +7,7 @@ import { isAdminRole } from '../utils/roles';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
-  { to: '/partners', label: 'Survey Partners', icon: Users },
+  { to: '/partners', label: '问卷墙', icon: Users },
   { to: '/records', label: 'My Records', icon: ClipboardList },
   { to: '/profile', label: 'Profile', icon: User },
   { to: '/settings', label: 'Settings', icon: Settings },
@@ -106,6 +106,17 @@ export default function AppLayout() {
                 >
                   <MonitorPlay size={18} />
                   流量控制台
+                </NavLink>
+                <NavLink
+                  to="/admin/partners"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                      isActive ? 'bg-green-50 text-green-700 shadow-sm' : 'text-slate-600 hover:bg-green-50/70 hover:text-green-700'
+                    }`
+                  }
+                >
+                  <Users size={18} />
+                  合作伙伴
                 </NavLink>
                 <NavLink
                   to="/admin"

@@ -10,6 +10,7 @@ import {
   importWorkerTrafficTask,
   markTrafficOutcome,
   releaseTrafficTask,
+  updateWorkerDevice,
 } from '../api/realApi';
 
 const initialTaskForm = {
@@ -64,6 +65,7 @@ export default function WorkerDetail() {
   const [worker, setWorker] = useState(null);
   const [profiles, setProfiles] = useState([]);
   const [availableProfiles, setAvailableProfiles] = useState([]);
+  const [devices, setDevices] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -83,6 +85,7 @@ export default function WorkerDetail() {
       setWorker(data.worker);
       setProfiles(data.profiles || []);
       setAvailableProfiles(data.availableProfiles || []);
+      setDevices(data.devices || []);
       setTasks(data.tasks || []);
       setLogs(data.logs || []);
       const firstIdle = (data.profiles || []).find((profile) => profile.status === 'idle');
@@ -113,6 +116,22 @@ export default function WorkerDetail() {
   };
 
   const idleProfiles = useMemo(() => profiles.filter((profile) => profile.status === 'idle'), [profiles]);
+  const settlementSummary = useMemo(() => {
+    const completedTasks = tasks.filter((task) => task.status === 'done');
+    const expectedUsd = completedTasks.reduce((sum, task) => sum + Number(task.payoutUsd || 0), 0);
+    const settlementIds = new Set(
+      profiles
+        .map((profile) => profile.metadata?.settlementUserId)
+        .concat(tasks.map((task) => task.metadata?.settlementUserId))
+        .filter(Boolean)
+    );
+    return {
+      completed: completedTasks.length,
+      expectedUsd,
+      settlementIds: [...settlementIds],
+      disabledDevices: devices.filter((device) => device.disabledAt).length,
+    };
+  }, [devices, profiles, tasks]);
 
   const handleImportTask = (event) => {
     event.preventDefault();
@@ -203,6 +222,36 @@ export default function WorkerDetail() {
     },
   ];
 
+  const deviceColumns = [
+    { key: 'deviceName', header: '设备', render: (row) => row.deviceName || row.deviceId || row.id },
+    { key: 'platform', header: '系统', render: (row) => row.platform || '-' },
+    { key: 'appVersion', header: '版本', render: (row) => row.appVersion || '-' },
+    { key: 'currentStatus', header: '状态', render: (row) => <StatusPill value={row.disabledAt ? 'disabled' : row.currentStatus} /> },
+    { key: 'moreLoginStatus', header: 'MoreLogin', render: (row) => row.moreLoginStatus || '-' },
+    { key: 'lastSeenAt', header: '最后心跳', render: (row) => (row.lastSeenAt ? new Date(row.lastSeenAt).toLocaleString() : '-') },
+    {
+      key: 'actions',
+      header: '操作',
+      render: (row) => (
+        <button
+          className="btn-secondary px-3 py-1.5"
+          type="button"
+          disabled={busy}
+          onClick={() =>
+            runAction(() =>
+              updateWorkerDevice(workerId, row.id, {
+                disabled: !row.disabledAt,
+                reason: row.disabledAt ? undefined : 'Disabled from member detail',
+              })
+            )
+          }
+        >
+          {row.disabledAt ? '恢复' : '禁用'}
+        </button>
+      ),
+    },
+  ];
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -237,6 +286,13 @@ export default function WorkerDetail() {
         <InfoCard label="待处理" value={worker?.pendingTaskCount || 0} />
       </div>
 
+      <div className="grid gap-4 lg:grid-cols-4">
+        <InfoCard label="当前 Coins" value={worker?.coinsBalance ?? 0} />
+        <InfoCard label="已完成任务" value={settlementSummary.completed} />
+        <InfoCard label="预计结算 USD" value={`$${settlementSummary.expectedUsd.toFixed(2)}`} />
+        <InfoCard label="结算账号" value={settlementSummary.settlementIds.length || '-'} />
+      </div>
+
       <section className="card flex flex-col gap-4 p-5 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Orbit Member 成员密码</p>
@@ -248,6 +304,11 @@ export default function WorkerDetail() {
           <Clipboard size={16} />
           复制成员密码
         </button>
+      </section>
+
+      <section>
+        <h2 className="mb-3 text-lg font-bold text-slate-950">成员设备</h2>
+        <DataTable columns={deviceColumns} rows={devices} loading={loading} emptyMessage="这个成员还没有绑定 Orbit Member 设备。" />
       </section>
 
       <div className="grid gap-4 xl:grid-cols-2">

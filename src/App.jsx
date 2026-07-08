@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminPartners from './pages/AdminPartners';
 import Dashboard from './pages/Dashboard';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
@@ -88,6 +89,14 @@ export default function App() {
           element={
             <AdminRoute>
               <AgentPrecheck />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/partners"
+          element={
+            <AdminRoute>
+              <AdminPartners />
             </AdminRoute>
           }
         />

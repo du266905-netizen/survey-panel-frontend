@@ -28,25 +28,36 @@ const displayPartnerName = (partner) => {
 
 const statusToUi = (status) => String(status || '').toLowerCase();
 
-const mapRecord = (record) => ({
-  ...record,
-  surveyNumber: record.survey?.externalId || record.surveyId,
-  surveyId: record.survey?.externalId || record.surveyId,
-  platform: displayPartnerName(record.partner) || record.partnerId,
-  employee: record.user?.displayName || record.user?.email || '-',
-  ip: record.ipAddress,
-  coins: record.coinsEarned,
-  coinsReward: record.coinsEarned,
-  status: statusToUi(record.status),
-  time: record.auditTime || record.createdAt,
-  startTime: record.startTime,
-  auditTime: record.auditTime || '-',
-});
+const maskSurveyId = (value, index) => {
+  if (isAdmin()) return value || '-';
+  return `Survey-${String(index + 1).padStart(3, '0')}`;
+};
 
-const mapSurvey = (survey, partnerContext) => ({
+const mapRecord = (record, index = 0) => {
+  const rawSurveyId = record.survey?.externalId || record.surveyId;
+  return {
+    ...record,
+    rawSurveyId,
+    surveyNumber: maskSurveyId(rawSurveyId, index),
+    surveyId: isAdmin() ? rawSurveyId : maskSurveyId(rawSurveyId, index),
+    pid: isAdmin() ? record.survey?.clientId || record.surveyId || '-' : undefined,
+    platform: isAdmin() ? displayPartnerName(record.partner) || record.partnerId : '渠道A',
+    employee: record.user?.displayName || record.user?.email || '-',
+    ip: record.ipAddress,
+    coins: record.coinsEarned,
+    coinsReward: record.coinsEarned,
+    status: statusToUi(record.status),
+    time: record.auditTime || record.createdAt,
+    startTime: record.startTime,
+    auditTime: record.auditTime || '-',
+  };
+};
+
+const mapSurvey = (survey, partnerContext, index = 0) => ({
   ...survey,
   pid: survey.clientId || survey.id,
   surveyId: survey.externalId,
+  displayName: isAdmin() ? survey.surveyName || survey.externalId : `调查 ${index + 1}`,
   partnerId: survey.partnerId || partnerContext?.id,
   partnerDisplayName: partnerContext?.displayName || partnerContext?.name || survey.partner?.name,
   partnerCodeName: partnerContext?.codeName,
@@ -54,6 +65,16 @@ const mapSurvey = (survey, partnerContext) => ({
   clicks: survey.clicks ?? Math.max(0, survey.sampleSize - survey.remaining),
   completes: survey.completes ?? 0,
   quota: survey.sampleSize,
+});
+
+const mapSurveyWallItem = (survey, index = 0) => ({
+  ...survey,
+  id: survey.id || survey.externalId,
+  surveyId: survey.externalId || survey.id,
+  displayName: `调查 ${index + 1}`,
+  loi: Number(survey.loi || 0),
+  reward: Number(survey.reward || 0),
+  status: survey.status || 'ACTIVE',
 });
 
 const mapEmployee = (user) => ({
@@ -130,7 +151,7 @@ export const getPartners = async () => {
         ...channelCode,
         displayName: partner.name,
         name: isAdmin() ? partner.name : channelCode.codeName,
-        activeSurveys: partner.activeSurveys ?? partner.surveyCount ?? 0,
+        activeSurveys: partner.activeSurveys ?? partner.surveyCount ?? partner._count?.surveys ?? 0,
         conversion: partner.conversion || (partner.isActive === false ? 'Inactive' : 'Live'),
       };
     }),
@@ -156,7 +177,17 @@ export const getSurveysByPartner = async (partnerId) => {
     : null;
 
   return {
-    data: (response.data.items || []).map((survey) => mapSurvey(survey, partnerContext)),
+    data: (response.data.items || []).map((survey, index) => mapSurvey(survey, partnerContext, index)),
+  };
+};
+
+export const getSurveyWall = async () => {
+  const response = await apiClient.get('/api/survey/list', {
+    params: { pageSize: 100 },
+  });
+
+  return {
+    data: (response.data.items || []).map(mapSurveyWallItem),
   };
 };
 
@@ -263,6 +294,11 @@ export const importWorkerTrafficTask = async (workerId, payload) => {
 
 export const bindWorkerTrafficProfile = async (workerId, profileId, payload = {}) => {
   const response = await apiClient.post(`/api/traffic/workers/${workerId}/profiles/${profileId}/bind`, payload);
+  return response.data;
+};
+
+export const updateWorkerDevice = async (workerId, agentId, payload = {}) => {
+  const response = await apiClient.patch(`/api/traffic/workers/${workerId}/devices/${agentId}`, payload);
   return response.data;
 };
 

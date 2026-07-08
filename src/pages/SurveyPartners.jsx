@@ -1,115 +1,104 @@
-import { ArrowRight } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getPartners } from '../api/realApi';
+import { AlertTriangle, Clock3, Coins, Play, RefreshCcw } from 'lucide-react';
+import { useState } from 'react';
+import { getSurveyWall, startSurvey } from '../api/realApi';
+import CoinAmount from '../components/CoinAmount';
 import PageHeader from '../components/PageHeader';
+import ProxyActivationModal from '../components/ProxyActivationModal';
 import { useAuth } from '../components/AuthContext';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { isAdminRole } from '../utils/roles';
 
-const descriptions = {
-  gwss: 'Global survey network.',
-  'za-survey': 'Asia Pacific research.',
-  wwi: 'B2B professional surveys.',
-  opx: 'Opinion exchange platform.',
-  mr: 'Market research hub.',
-  bitlabs: 'European survey specialists.',
-  'cpx-research': 'Performance survey network.',
-  theoremreach: 'Performance survey network.',
-};
-
-const headerStrips = ['#16a34a', '#059669', '#0d9488', '#0891b2', '#2563eb', '#14b8a6', '#22c55e'];
+function friendlyStartError(error) {
+  const code = error.response?.data?.code || error.response?.data?.error;
+  if (code === 'SURVEY_PARTNER_NOT_CPX' || code === 'CPX_SURVEY_NOT_FOUND' || code === 'CPX_API_NON_SUCCESS') {
+    return '暂无可用调查';
+  }
+  return error.response?.data?.message || error.message || '暂时无法开始调查';
+}
 
 export default function SurveyPartners() {
   const { user } = useAuth();
   const isAdmin = isAdminRole(user?.role);
-  const { data, loading } = useAsyncData(getPartners, []);
-  const [search, setSearch] = useState('');
-  const partners = data || [];
-  const filteredPartners = useMemo(() => {
-    const query = search.trim().toLowerCase();
-    if (!query) return partners;
+  const { data, loading, error } = useAsyncData(getSurveyWall, []);
+  const [activeSurvey, setActiveSurvey] = useState(null);
+  const [startingId, setStartingId] = useState('');
+  const [startError, setStartError] = useState('');
+  const surveys = data || [];
 
-    return partners.filter((partner) => {
-      const visibleName = partner.name || '';
-      const codeName = partner.codeName || '';
-      const adminName = isAdmin ? partner.displayName || '' : '';
-      return [visibleName, codeName, adminName].some((value) => value.toLowerCase().includes(query));
-    });
-  }, [partners, search, isAdmin]);
+  const handleStart = async (survey) => {
+    if (isAdmin) {
+      setActiveSurvey(survey);
+      return;
+    }
+
+    setStartingId(survey.id);
+    setStartError('');
+    try {
+      const response = await startSurvey({
+        surveyId: survey.surveyId || survey.id,
+        linkType: 'direct',
+      });
+      const redirectUrl = response.data.redirectUrl;
+      if (!redirectUrl) throw new Error('暂无可用调查');
+      window.location.assign(redirectUrl);
+    } catch (caughtError) {
+      setStartError(friendlyStartError(caughtError));
+    } finally {
+      setStartingId('');
+    }
+  };
 
   return (
     <>
-      <PageHeader title="Survey Partners" description={isAdmin ? 'Manage named partner channels and live supply.' : 'Choose an available survey channel.'} />
-      <section className="card mb-5 p-4">
-        <label className="block">
-          <span className="sr-only">Search partners</span>
-          <input
-            className="field focus:border-green-500 focus:ring-2 focus:ring-green-100"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search partner or channel code"
-          />
-        </label>
-      </section>
+      <PageHeader title="问卷墙" description="选择一个可用调查，完成后金币会在验证通过后发放。" />
+
+      {(error || startError) && (
+        <div className="mb-5 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+          <AlertTriangle size={16} />
+          {startError || '暂无可用调查'}
+        </div>
+      )}
+
       {loading ? (
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: 6 }).map((_, index) => (
-            <div key={index} className="h-56 animate-pulse rounded-xl bg-slate-100" />
+            <div key={index} className="h-44 animate-pulse rounded-lg bg-slate-100" />
           ))}
         </div>
-      ) : !filteredPartners.length ? (
-        <div className="card flex min-h-44 items-center justify-center p-8 text-sm text-slate-500">No survey partners found.</div>
+      ) : !surveys.length ? (
+        <div className="flex min-h-44 items-center justify-center rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-500">
+          暂无可用调查
+        </div>
       ) : (
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {filteredPartners.map((partner, index) => (
-            <section key={partner.id} className="card interactive-card cursor-pointer overflow-hidden p-0 hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
-              <div className="h-1.5" style={{ backgroundColor: headerStrips[index % headerStrips.length] }} />
-              <div className="p-6">
-              <div className="mb-5 flex items-center gap-4">
-                <div
-                  className="flex h-14 w-14 items-center justify-center rounded-xl text-lg font-bold text-white shadow-sm"
-                  style={{ backgroundColor: isAdmin ? headerStrips[index % headerStrips.length] : partner.channelColor }}
-                >
-                  {isAdmin ? partner.displayName.slice(0, 2) : partner.channelLetter}
-                </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {surveys.map((survey) => (
+            <section key={survey.id} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+              <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-950">
-                    {isAdmin ? partner.name : (partner.codeName || partner.channelLetter)}
-                  </h2>
-                  <p className="text-sm text-slate-500">
-                    {isAdmin ? descriptions[partner.slug] || 'Specialized survey supply.' : 'Independent research channel.'}
-                  </p>
+                  <h2 className="text-lg font-bold text-slate-950">{survey.displayName}</h2>
+                  <div className="mt-3 flex flex-wrap gap-2 text-sm text-slate-600">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-1 font-semibold">
+                      <Clock3 size={15} />
+                      {survey.loi || '-'} 分钟
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-amber-50 px-2.5 py-1 font-semibold text-amber-800">
+                      <Coins size={15} />
+                      <CoinAmount value={survey.reward} />
+                    </span>
+                  </div>
                 </div>
+                <span className="rounded-full bg-green-50 px-2.5 py-1 text-xs font-bold text-green-700">可开始</span>
               </div>
-              <p className="mb-5 text-sm font-medium text-slate-500">{partner.activeSurveys} active surveys</p>
-              <div className="mb-5 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
-                Channel status <span className="font-bold text-slate-950">{partner.conversion}</span>
-              </div>
-              {partner.isSynthetic ? (
-                <button className="btn-secondary w-full" type="button" disabled>
-                  No Surveys
-                </button>
-              ) : partner.slug === 'theoremreach' ? (
-                <button
-                  className="btn-secondary w-full rounded-xl"
-                  type="button"
-                  disabled
-                  title="Backend API missing for Theorem Reach launch."
-                >
-                  Backend API Missing
-                </button>
-              ) : (
-                <Link className="btn-primary w-full rounded-xl" to={`/partners/${partner.id}/surveys`}>
-                  View Surveys
-                  <ArrowRight size={16} />
-                </Link>
-              )}
-              </div>
+              <button className="btn-primary mt-5 w-full" type="button" disabled={startingId === survey.id} onClick={() => handleStart(survey)}>
+                {startingId === survey.id ? <RefreshCcw className="animate-spin" size={16} /> : <Play size={16} />}
+                开始
+              </button>
             </section>
           ))}
         </div>
       )}
+
+      {isAdmin && <ProxyActivationModal survey={activeSurvey} onClose={() => setActiveSurvey(null)} />}
     </>
   );
 }
