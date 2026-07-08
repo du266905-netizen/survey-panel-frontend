@@ -22,6 +22,19 @@ import { useAsyncData } from '../hooks/useAsyncData';
 
 const tabs = ['Overview', 'Codebit Service', 'API Performance Overview', 'API Partner Performance', 'Performance Report', 'Already Downloaded', 'Report'];
 
+const qualityCards = [
+  ['US PANELIST DAU', 'panel.dau'],
+  ['Panel Starts', 'panel.starts'],
+  ['Panel Completes', 'panel.postbacks'],
+  ['Panel Completion', 'panel.completionRate', '%'],
+  ['Internal Starts', 'internal.starts'],
+  ['Internal Completes', 'internal.postbacks'],
+  ['CPX Starts', 'partner.cpxStarts'],
+  ['CPX Completion', 'partner.cpxCompletionRate', '%'],
+];
+
+const valueAt = (source, path) => path.split('.').reduce((current, key) => current?.[key], source);
+
 export default function AdminDashboard() {
   const { user } = useAuth();
   const { data, loading } = useAsyncData(getAdminDashboard, []);
@@ -61,6 +74,43 @@ export default function AdminDashboard() {
         <StatCard label="High Risk" value={data?.stats.highRisk ?? '-'} />
         <StatCard label="Other" value={data?.stats.other ?? '-'} />
       </div>
+
+      <section className="mt-6">
+        <div className="mb-3 flex items-end justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-bold text-slate-950">Traffic Quality</h2>
+            <p className="mt-1 text-sm text-slate-500">US panelist activity is tracked separately from internal Orbit Member traffic.</p>
+          </div>
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 ring-1 ring-slate-200">
+            Last {data?.trafficQuality?.window?.days || 7} days
+          </span>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {qualityCards.map(([label, path, suffix]) => {
+            const value = valueAt(data?.trafficQuality, path);
+            return <StatCard key={path} label={label} value={value === undefined ? '-' : `${value}${suffix || ''}`} />;
+          })}
+        </div>
+      </section>
+
+      <section className="card mt-6 p-5">
+        <h2 className="mb-4 text-lg font-bold text-slate-950">US Panelist DAU</h2>
+        <div className="h-72">
+          {loading ? (
+            <div className="h-full animate-pulse rounded-lg bg-slate-100" />
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data?.trafficQuality?.daily || []}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <XAxis dataKey="day" stroke="#64748b" fontSize={12} />
+                <YAxis allowDecimals={false} stroke="#64748b" fontSize={12} />
+                <Tooltip />
+                <Line type="monotone" dataKey="panelistDau" stroke="#16a34a" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+      </section>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-2">
         <section className="card p-5">

@@ -1,4 +1,4 @@
-import { AlertTriangle, Clock3, Coins, Play, RefreshCcw } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Clock3, RefreshCcw, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { getSurveyWall, startSurvey } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
@@ -60,38 +60,54 @@ export default function SurveyPartners() {
       )}
 
       {loading ? (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="max-w-3xl space-y-3">
           {Array.from({ length: 6 }).map((_, index) => (
-            <div key={index} className="h-44 animate-pulse rounded-lg bg-slate-100" />
+            <div key={index} className="h-24 animate-pulse rounded-lg bg-slate-100" />
           ))}
         </div>
       ) : !surveys.length ? (
-        <div className="flex min-h-44 items-center justify-center rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-500">
+        <div className="flex min-h-44 max-w-3xl items-center justify-center rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-500">
           No surveys available right now.
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="max-w-3xl space-y-3">
           {surveys.map((survey) => (
-            <section key={survey.id} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h2 className="text-lg font-bold text-slate-950">{survey.displayName}</h2>
-                  <div className="mt-3 flex flex-wrap gap-2 text-sm text-slate-600">
-                    <span className="inline-flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-1 font-semibold">
-                      <Clock3 size={15} />
-                      {survey.loi || '-'} min
-                    </span>
-                    <span className="inline-flex items-center gap-1 rounded-lg bg-amber-50 px-2.5 py-1 font-semibold text-amber-800">
-                      <Coins size={15} />
-                      <CoinAmount value={survey.reward} />
-                    </span>
-                  </div>
-                </div>
-                <span className="rounded-full bg-green-50 px-2.5 py-1 text-xs font-bold text-green-700">Available</span>
+            <section
+              key={survey.id}
+              className="group grid grid-cols-[9.5rem_1fr_auto] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md max-sm:grid-cols-1"
+            >
+              <div className="flex flex-col justify-center bg-slate-50 px-5 py-4 max-sm:border-b max-sm:border-slate-100">
+                <span className="text-xs font-bold uppercase tracking-wide text-blue-600">Earn</span>
+                <span className="mt-1 text-2xl font-extrabold text-blue-600">
+                  <CoinAmount value={survey.reward} />
+                </span>
               </div>
-              <button className="btn-primary mt-5 w-full" type="button" disabled={startingId === survey.id} onClick={() => handleStart(survey)}>
-                {startingId === survey.id ? <RefreshCcw className="animate-spin" size={16} /> : <Play size={16} />}
-                Start
+
+              <div className="flex min-w-0 flex-col justify-center px-5 py-4">
+                <div className="flex flex-wrap items-center gap-3">
+                  <h2 className="text-base font-bold text-slate-950">{survey.displayName}</h2>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">
+                    <Clock3 size={14} />
+                    {survey.loi || '-'} min
+                  </span>
+                </div>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <span className="text-sm font-semibold text-slate-400">{survey.publicSurveyCode}</span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700">
+                    <Sparkles size={13} />
+                    Available
+                  </span>
+                </div>
+              </div>
+
+              <button
+                className="flex w-20 items-center justify-center border-l border-slate-100 text-slate-400 transition hover:bg-slate-950 hover:text-white disabled:cursor-not-allowed disabled:opacity-60 max-sm:h-12 max-sm:w-full max-sm:border-l-0 max-sm:border-t"
+                type="button"
+                disabled={startingId === survey.id}
+                onClick={() => handleStart(survey)}
+                aria-label={`Start ${survey.displayName}`}
+              >
+                {startingId === survey.id ? <RefreshCcw className="animate-spin" size={20} /> : <ArrowRight size={24} />}
               </button>
             </section>
           ))}

@@ -34,13 +34,23 @@ const maskSurveyId = (value, index) => {
   return `Survey-${String(index + 1).padStart(3, '0')}`;
 };
 
+const publicSurveyCode = (value, index = 0) => {
+  const source = String(value || index + 1);
+  let hash = 0;
+  for (let position = 0; position < source.length; position += 1) {
+    hash = (hash * 31 + source.charCodeAt(position)) % 90000000;
+  }
+  return `Survey #${String(hash + 10000000).slice(0, 8)}`;
+};
+
 const mapRecord = (record, index = 0) => {
   const rawSurveyId = record.survey?.externalId || record.surveyId;
+  const displaySurveyCode = publicSurveyCode(rawSurveyId, index);
   return {
     ...record,
     rawSurveyId,
-    surveyNumber: maskSurveyId(rawSurveyId, index),
-    surveyId: isAdmin() ? rawSurveyId : maskSurveyId(rawSurveyId, index),
+    surveyNumber: isAdmin() ? maskSurveyId(rawSurveyId, index) : displaySurveyCode,
+    surveyId: isAdmin() ? rawSurveyId : displaySurveyCode,
     pid: isAdmin() ? record.survey?.clientId || record.surveyId || '-' : undefined,
     platform: isAdmin() ? displayPartnerName(record.partner) || record.partnerId : 'Channel A',
     employee: record.user?.displayName || record.user?.email || '-',
@@ -73,6 +83,7 @@ const mapSurveyWallItem = (survey, index = 0) => ({
   id: survey.id || survey.externalId,
   surveyId: survey.externalId || survey.id,
   displayName: `Survey ${index + 1}`,
+  publicSurveyCode: survey.publicSurveyCode || publicSurveyCode(survey.externalId || survey.id, index),
   loi: Number(survey.loi || 0),
   reward: Number(survey.reward || 0),
   status: survey.status || 'ACTIVE',
@@ -82,7 +93,12 @@ const mapEmployee = (user) => ({
   ...user,
   name: user.displayName || user.name || '-',
   tag: user.groupName || '',
-  roleLabel: String(user.role || 'EMPLOYEE').toUpperCase() === 'ADMIN' ? 'ADMIN' : 'EMPLOYEE',
+  roleLabel:
+    String(user.role || 'EMPLOYEE').toUpperCase() === 'ADMIN'
+      ? 'ADMIN'
+      : ['PANELIST', 'USER'].includes(String(user.role || '').toUpperCase())
+        ? 'PANELIST'
+        : 'EMPLOYEE',
   isActive: user.isActive !== false,
 });
 
@@ -217,7 +233,11 @@ export const startSurvey = async ({ surveyId, partnerId, proxyIp, fingerprintBro
   });
 
 export const getAdminDashboard = async () => {
-  const [statsResponse, riskResponse] = await Promise.all([apiClient.get('/api/admin/stats'), apiClient.get('/api/admin/risk')]);
+  const [statsResponse, riskResponse, trafficQualityResponse] = await Promise.all([
+    apiClient.get('/api/admin/stats'),
+    apiClient.get('/api/admin/risk'),
+    apiClient.get('/api/admin/traffic-quality', { params: { days: 7, country: 'US' } }),
+  ]);
   const classificationColors = {
     'High Quality': '#22c55e',
     'Medium Risk': '#f59e0b',
@@ -238,6 +258,7 @@ export const getAdminDashboard = async () => {
         highRisk: 0,
       })),
       dailyRiskTrend: [],
+      trafficQuality: trafficQualityResponse.data,
     },
   };
 };

@@ -63,7 +63,7 @@ export default function AppLayout() {
                   to={item.to}
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                      isActive ? 'bg-green-50 text-green-700 shadow-sm' : 'text-slate-600 hover:bg-green-50/70 hover:text-green-700'
+                      isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
                     }`
                   }
                 >
@@ -78,7 +78,7 @@ export default function AppLayout() {
                   to="/team"
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                      isActive ? 'bg-green-50 text-green-700 shadow-sm' : 'text-slate-600 hover:bg-green-50/70 hover:text-green-700'
+                      isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
                     }`
                   }
                 >
@@ -89,7 +89,7 @@ export default function AppLayout() {
                   to="/workers"
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                      isActive ? 'bg-green-50 text-green-700 shadow-sm' : 'text-slate-600 hover:bg-green-50/70 hover:text-green-700'
+                      isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
                     }`
                   }
                 >
@@ -100,7 +100,7 @@ export default function AppLayout() {
                   to="/traffic"
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                      isActive ? 'bg-green-50 text-green-700 shadow-sm' : 'text-slate-600 hover:bg-green-50/70 hover:text-green-700'
+                      isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
                     }`
                   }
                 >
@@ -111,7 +111,7 @@ export default function AppLayout() {
                   to="/admin/partners"
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                      isActive ? 'bg-green-50 text-green-700 shadow-sm' : 'text-slate-600 hover:bg-green-50/70 hover:text-green-700'
+                      isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
                     }`
                   }
                 >
@@ -122,7 +122,7 @@ export default function AppLayout() {
                   to="/admin"
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                      isActive ? 'bg-green-50 text-green-700 shadow-sm' : 'text-slate-600 hover:bg-green-50/70 hover:text-green-700'
+                      isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
                     }`
                   }
                 >

@@ -50,7 +50,7 @@ export function getStoredUser() {
 export function normalizeUser(user) {
   if (!user) return null;
   const rawRole = String(user.role || '').toUpperCase();
-  const role = rawRole === 'ADMIN' ? 'admin' : 'employee';
+  const role = rawRole === 'ADMIN' ? 'admin' : rawRole === 'PANELIST' || rawRole === 'USER' ? 'panelist' : 'employee';
 
   return {
     ...user,

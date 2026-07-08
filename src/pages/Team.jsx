@@ -88,6 +88,7 @@ function EmployeeFormModal({ employee, onClose, onSubmit, saving, error }) {
             <span className="text-sm font-semibold text-slate-700">Role</span>
             <select className="field" value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}>
               <option value="EMPLOYEE">EMPLOYEE</option>
+              <option value="PANELIST">PANELIST</option>
               <option value="ADMIN">ADMIN</option>
             </select>
           </label>
