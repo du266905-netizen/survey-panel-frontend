@@ -170,10 +170,11 @@ export default function AdminDashboard() {
               <ShieldAlert size={18} className="text-amber-600" />
               <h2 className="text-lg font-bold text-slate-950">Risk & Regions</h2>
             </div>
-            <p className="mt-1 text-sm text-slate-500">Risk indicators come from IP log quality checks.</p>
+            <p className="mt-1 text-sm text-slate-500">Risk checks stay separate from real panelist region distribution.</p>
           </div>
-          <div className="grid gap-4 p-5 lg:grid-cols-2">
+          <div className="grid gap-4 p-5 lg:grid-cols-3">
             <div className="space-y-3">
+              <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Risk Classification</p>
               {(data?.riskClassification || []).map((item) => (
                 <div key={item.name} className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3">
                   <span className="flex items-center gap-2 text-sm font-semibold text-slate-600">
@@ -185,10 +186,26 @@ export default function AdminDashboard() {
               ))}
             </div>
             <div className="space-y-3">
-              {(data?.geographicRisk || []).slice(0, 5).map((item) => (
+              <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Panelist Regions</p>
+              {(data?.panelistRegions || []).slice(0, 5).map((item) => (
                 <div key={item.country} className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3">
                   <span className="flex items-center gap-2 text-sm font-semibold text-slate-600">
                     <MapPin size={14} className="text-cyan-600" />
+                    {item.country || 'Unknown'}
+                  </span>
+                  <span className="font-bold text-slate-950">{item.value}</span>
+                </div>
+              ))}
+              {!loading && !(data?.panelistRegions || []).length && (
+                <p className="rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-500">No panelist region data yet.</p>
+              )}
+            </div>
+            <div className="space-y-3">
+              <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Risk Regions</p>
+              {(data?.geographicRisk || []).slice(0, 5).map((item) => (
+                <div key={item.country} className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3">
+                  <span className="flex items-center gap-2 text-sm font-semibold text-slate-600">
+                    <ShieldAlert size={14} className="text-amber-600" />
                     {item.country || 'Unknown'}
                   </span>
                   <span className="font-bold text-slate-950">{item.value}</span>

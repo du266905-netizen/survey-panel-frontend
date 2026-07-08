@@ -259,6 +259,10 @@ export const getAdminDashboard = async () => {
         country: item.country,
         value: item.value,
       })),
+      panelistRegions: (trafficQualityResponse.data.regions || []).map((item) => ({
+        country: item.country,
+        value: item.value,
+      })),
       partnerPerformance: partners.map((partner, index) => {
         const isConnected = partner.slug === 'cpx-research';
         return {
