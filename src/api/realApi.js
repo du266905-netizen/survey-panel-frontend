@@ -4,6 +4,7 @@ import { isAdminRole } from '../utils/roles';
 const channelPalette = ['#10b981', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6', '#14b8a6', '#7c3aed', '#0f766e'];
 const channelNames = ['Channel A', 'Channel B', 'Channel C', 'Channel D', 'Channel E', 'Channel F', 'Channel G', 'Channel H'];
 const partnerSlugs = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs', 'cpx-research', 'theoremreach'];
+const realPartnerSlugs = new Set(['cpx-research', 'theoremreach', 'bitlabs']);
 
 const isAdmin = () => isAdminRole(getStoredUser()?.role);
 
@@ -41,7 +42,7 @@ const mapRecord = (record, index = 0) => {
     surveyNumber: maskSurveyId(rawSurveyId, index),
     surveyId: isAdmin() ? rawSurveyId : maskSurveyId(rawSurveyId, index),
     pid: isAdmin() ? record.survey?.clientId || record.surveyId || '-' : undefined,
-    platform: isAdmin() ? displayPartnerName(record.partner) || record.partnerId : '渠道A',
+    platform: isAdmin() ? displayPartnerName(record.partner) || record.partnerId : 'Channel A',
     employee: record.user?.displayName || record.user?.email || '-',
     ip: record.ipAddress,
     coins: record.coinsEarned,
@@ -57,7 +58,7 @@ const mapSurvey = (survey, partnerContext, index = 0) => ({
   ...survey,
   pid: survey.clientId || survey.id,
   surveyId: survey.externalId,
-  displayName: isAdmin() ? survey.surveyName || survey.externalId : `调查 ${index + 1}`,
+  displayName: isAdmin() ? survey.surveyName || survey.externalId : `Survey ${index + 1}`,
   partnerId: survey.partnerId || partnerContext?.id,
   partnerDisplayName: partnerContext?.displayName || partnerContext?.name || survey.partner?.name,
   partnerCodeName: partnerContext?.codeName,
@@ -71,7 +72,7 @@ const mapSurveyWallItem = (survey, index = 0) => ({
   ...survey,
   id: survey.id || survey.externalId,
   surveyId: survey.externalId || survey.id,
-  displayName: `调查 ${index + 1}`,
+  displayName: `Survey ${index + 1}`,
   loi: Number(survey.loi || 0),
   reward: Number(survey.reward || 0),
   status: survey.status || 'ACTIVE',
@@ -140,19 +141,22 @@ export const getDashboard = async () => {
 
 export const getPartners = async () => {
   const response = await apiClient.get('/api/partners');
-  const partners = response.data.partners || response.data.items || [];
+  const partners = (response.data.partners || response.data.items || []).filter((partner) => realPartnerSlugs.has(partner.slug));
 
   return {
     data: partners.map((partner, index) => {
       const channelCode = codeForPartner(partner, index);
+      const isConnected = partner.slug === 'cpx-research';
+      const partnerStatus = partner.slug === 'theoremreach' ? 'In discussion' : partner.slug === 'bitlabs' ? 'Promoting' : partner.conversion || 'Connected';
 
       return {
         ...partner,
         ...channelCode,
         displayName: partner.name,
         name: isAdmin() ? partner.name : channelCode.codeName,
-        activeSurveys: partner.activeSurveys ?? partner.surveyCount ?? partner._count?.surveys ?? 0,
-        conversion: partner.conversion || (partner.isActive === false ? 'Inactive' : 'Live'),
+        activeSurveys: isConnected ? partner.activeSurveys ?? partner.surveyCount ?? partner._count?.surveys ?? 0 : 0,
+        conversion: partnerStatus,
+        isConnected,
       };
     }),
   };

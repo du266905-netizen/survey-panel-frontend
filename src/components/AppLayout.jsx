@@ -7,7 +7,7 @@ import { isAdminRole } from '../utils/roles';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
-  { to: '/partners', label: '问卷墙', icon: Users },
+  { to: '/partners', label: 'Survey Wall', icon: Users },
   { to: '/records', label: 'My Records', icon: ClipboardList },
   { to: '/profile', label: 'Profile', icon: User },
   { to: '/settings', label: 'Settings', icon: Settings },
@@ -17,7 +17,7 @@ export default function AppLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const isAdmin = isAdminRole(user?.role);
-  const roleLabel = isAdmin ? '管理员' : '成员';
+  const roleLabel = isAdmin ? 'Admin' : 'Member';
 
   const handleLogout = () => {
     logout();
@@ -83,7 +83,7 @@ export default function AppLayout() {
                   }
                 >
                   <UserPlus size={18} />
-                  团队
+                  Team
                 </NavLink>
                 <NavLink
                   to="/workers"
@@ -94,7 +94,7 @@ export default function AppLayout() {
                   }
                 >
                   <UserCog size={18} />
-                  成员监控
+                  Member Monitor
                 </NavLink>
                 <NavLink
                   to="/traffic"
@@ -105,7 +105,7 @@ export default function AppLayout() {
                   }
                 >
                   <MonitorPlay size={18} />
-                  流量控制台
+                  Traffic Console
                 </NavLink>
                 <NavLink
                   to="/admin/partners"
@@ -116,7 +116,7 @@ export default function AppLayout() {
                   }
                 >
                   <Users size={18} />
-                  合作伙伴
+                  Partners
                 </NavLink>
                 <NavLink
                   to="/admin"

@@ -58,9 +58,9 @@ export default function MyRecords() {
 
   const columns = [
     ...(isAdmin ? [{ key: 'employee', header: 'Employee' }] : []),
-    { key: 'surveyNumber', header: '调查编号' },
+    { key: 'surveyNumber', header: 'Survey ID' },
     ...(isAdmin ? [{ key: 'pid', header: 'PID' }] : []),
-    { key: 'platform', header: '平台' },
+    { key: 'platform', header: 'Platform' },
     { key: 'ipAddress', header: 'IP Address' },
     { key: 'coinsReward', header: 'Coins Reward', render: (row) => <CoinAmount value={row.coinsReward} /> },
     { key: 'status', header: 'Status', render: (row) => <StatusBadge status={row.status} /> },

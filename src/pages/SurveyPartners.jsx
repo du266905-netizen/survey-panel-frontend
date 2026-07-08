@@ -11,9 +11,9 @@ import { isAdminRole } from '../utils/roles';
 function friendlyStartError(error) {
   const code = error.response?.data?.code || error.response?.data?.error;
   if (code === 'SURVEY_PARTNER_NOT_CPX' || code === 'CPX_SURVEY_NOT_FOUND' || code === 'CPX_API_NON_SUCCESS') {
-    return '暂无可用调查';
+    return 'No surveys available right now.';
   }
-  return error.response?.data?.message || error.message || '暂时无法开始调查';
+  return error.response?.data?.message || error.message || 'Unable to start this survey right now.';
 }
 
 export default function SurveyPartners() {
@@ -39,7 +39,7 @@ export default function SurveyPartners() {
         linkType: 'direct',
       });
       const redirectUrl = response.data.redirectUrl;
-      if (!redirectUrl) throw new Error('暂无可用调查');
+      if (!redirectUrl) throw new Error('No surveys available right now.');
       window.location.assign(redirectUrl);
     } catch (caughtError) {
       setStartError(friendlyStartError(caughtError));
@@ -50,12 +50,12 @@ export default function SurveyPartners() {
 
   return (
     <>
-      <PageHeader title="问卷墙" description="选择一个可用调查，完成后金币会在验证通过后发放。" />
+      <PageHeader title="Survey Wall" description="Choose an available survey. Coins are credited after partner validation." />
 
       {(error || startError) && (
         <div className="mb-5 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
           <AlertTriangle size={16} />
-          {startError || '暂无可用调查'}
+          {startError || 'No surveys available right now.'}
         </div>
       )}
 
@@ -67,7 +67,7 @@ export default function SurveyPartners() {
         </div>
       ) : !surveys.length ? (
         <div className="flex min-h-44 items-center justify-center rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-500">
-          暂无可用调查
+          No surveys available right now.
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -79,7 +79,7 @@ export default function SurveyPartners() {
                   <div className="mt-3 flex flex-wrap gap-2 text-sm text-slate-600">
                     <span className="inline-flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-1 font-semibold">
                       <Clock3 size={15} />
-                      {survey.loi || '-'} 分钟
+                      {survey.loi || '-'} min
                     </span>
                     <span className="inline-flex items-center gap-1 rounded-lg bg-amber-50 px-2.5 py-1 font-semibold text-amber-800">
                       <Coins size={15} />
@@ -87,11 +87,11 @@ export default function SurveyPartners() {
                     </span>
                   </div>
                 </div>
-                <span className="rounded-full bg-green-50 px-2.5 py-1 text-xs font-bold text-green-700">可开始</span>
+                <span className="rounded-full bg-green-50 px-2.5 py-1 text-xs font-bold text-green-700">Available</span>
               </div>
               <button className="btn-primary mt-5 w-full" type="button" disabled={startingId === survey.id} onClick={() => handleStart(survey)}>
                 {startingId === survey.id ? <RefreshCcw className="animate-spin" size={16} /> : <Play size={16} />}
-                开始
+                Start
               </button>
             </section>
           ))}

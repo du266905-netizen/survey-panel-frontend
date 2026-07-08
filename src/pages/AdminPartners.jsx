@@ -7,7 +7,7 @@ import PageHeader from '../components/PageHeader';
 function StatusPill({ active }) {
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ${active ? 'bg-green-50 text-green-700 ring-green-200' : 'bg-slate-100 text-slate-600 ring-slate-200'}`}>
-      {active ? 'Live' : 'Inactive'}
+      {active ? 'Active' : 'Inactive'}
     </span>
   );
 }
@@ -33,7 +33,7 @@ export default function AdminPartners() {
       const response = await getPartners();
       setPartners(response.data || []);
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || caughtError.message || '合作伙伴统计加载失败');
+      setError(caughtError.response?.data?.message || caughtError.message || 'Failed to load partner stats.');
     } finally {
       setLoading(false);
     }
@@ -53,23 +53,23 @@ export default function AdminPartners() {
   );
 
   const columns = [
-    { key: 'name', header: '合作伙伴', render: (row) => row.displayName || row.name || '-' },
+    { key: 'name', header: 'Partner', render: (row) => row.displayName || row.name || '-' },
     { key: 'slug', header: 'Slug', render: (row) => row.slug || '-' },
-    { key: 'activeSurveys', header: '问卷数量', render: (row) => row.activeSurveys || 0 },
-    { key: 'conversion', header: '渠道状态', render: (row) => row.conversion || (row.isActive === false ? 'Inactive' : 'Live') },
-    { key: 'isActive', header: '启用', render: (row) => <StatusPill active={row.isActive !== false} /> },
+    { key: 'activeSurveys', header: 'Surveys', render: (row) => row.activeSurveys || 0 },
+    { key: 'conversion', header: 'Business Status', render: (row) => row.conversion || (row.isActive === false ? 'Inactive' : 'Connected') },
+    { key: 'isActive', header: 'Enabled', render: (row) => <StatusPill active={row.isActive !== false} /> },
     { key: 'apiEndpoint', header: 'API Endpoint', render: (row) => row.apiEndpoint || '-' },
   ];
 
   return (
     <div className="space-y-6">
       <PageHeader
-        title="合作伙伴"
-        description="管理员查看真实合作伙伴名称、API 状态和当前问卷数量。用户端只展示统一问卷墙。"
+        title="Partners"
+        description="Admin-only partner view. The member experience stays as one anonymous survey wall."
         action={
           <button className="btn-secondary" type="button" onClick={loadPartners} disabled={loading}>
             <RefreshCcw size={16} />
-            刷新
+            Refresh
           </button>
         }
       />
@@ -82,12 +82,12 @@ export default function AdminPartners() {
       )}
 
       <div className="grid gap-4 md:grid-cols-3">
-        <StatCard label="合作伙伴" value={stats.totalPartners} />
-        <StatCard label="启用渠道" value={stats.activePartners} />
-        <StatCard label="问卷总量" value={stats.totalSurveys} />
+        <StatCard label="Partners" value={stats.totalPartners} />
+        <StatCard label="Enabled Channels" value={stats.activePartners} />
+        <StatCard label="Live Surveys" value={stats.totalSurveys} />
       </div>
 
-      <DataTable columns={columns} rows={partners} loading={loading} emptyMessage="还没有合作伙伴数据。" />
+      <DataTable columns={columns} rows={partners} loading={loading} emptyMessage="No partner data yet." />
     </div>
   );
 }
