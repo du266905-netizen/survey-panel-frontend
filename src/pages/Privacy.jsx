@@ -39,7 +39,7 @@ export default function Privacy() {
       </header>
 
       <section className="mx-auto max-w-5xl px-6 py-14">
-        <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-600">Privacy Policy</p>
+        <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-600">Privacy Policy</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-950">How panel data is protected</h1>
         <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">
           This Privacy Policy explains how the platform collects, uses, shares, and protects information in connection with account access, survey
@@ -59,7 +59,7 @@ export default function Privacy() {
           <h2 className="text-lg font-bold">Contact</h2>
           <p className="mt-2 text-sm leading-6 text-slate-300">
             For privacy requests, contact{' '}
-            <a className="font-semibold text-green-300 hover:text-green-200" href="mailto:heguanyi@guanyi-media.com">
+            <a className="font-semibold text-cyan-300 hover:text-cyan-200" href="mailto:heguanyi@guanyi-media.com">
               heguanyi@guanyi-media.com
             </a>
             .

@@ -48,8 +48,8 @@ export default function Dashboard() {
           value={data?.stats.completedOffers ?? '-'}
           icon={CheckCircle2}
           helper="Approved conversions"
-          className="border-l-4 border-l-green-500"
-          iconClassName="bg-green-100 text-green-600"
+          className="border-l-4 border-l-cyan-500"
+          iconClassName="bg-cyan-100 text-cyan-600"
         />
         <StatCard
           label="Coins Earned"
@@ -86,7 +86,7 @@ export default function Dashboard() {
           <label className="flex items-center gap-2 text-sm font-medium text-slate-500">
             Time range
             <select
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
+              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
               value={chartRange}
               onChange={(event) => setChartRange(event.target.value)}
             >
@@ -106,7 +106,7 @@ export default function Dashboard() {
                 <XAxis dataKey="day" stroke="#64748b" fontSize={12} />
                 <YAxis stroke="#64748b" fontSize={12} tickFormatter={(value) => `${formatCoinNumber(value)}`} />
                 <Tooltip />
-                <Line type="monotone" dataKey="coins" stroke="#22c55e" strokeWidth={3} dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="coins" stroke="#06b6d4" strokeWidth={3} dot={{ r: 4 }} />
               </LineChart>
             </ResponsiveContainer>
           )}

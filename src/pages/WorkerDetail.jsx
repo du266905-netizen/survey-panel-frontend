@@ -298,7 +298,7 @@ export default function WorkerDetail() {
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Orbit Member 成员密码</p>
           <p className="mt-2 font-mono text-2xl font-bold text-slate-950">{worker?.bindingCode || '暂无成员密码'}</p>
           <p className="mt-2 text-sm text-slate-500">成员只需要把这个密码填进 Orbit Member。绑定后执行端会用有限权限凭证工作，不再需要管理员登录信息。</p>
-          {copyMessage && <p className="mt-2 text-sm font-semibold text-green-600">{copyMessage}</p>}
+          {copyMessage && <p className="mt-2 text-sm font-semibold text-cyan-600">{copyMessage}</p>}
         </div>
         <button className="btn-primary" type="button" onClick={copyBindingCode} disabled={!worker?.bindingCode}>
           <Clipboard size={16} />
@@ -315,7 +315,7 @@ export default function WorkerDetail() {
         <form className="card space-y-4 p-5" onSubmit={handleBindProfile}>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-950">绑定执行环境</h2>
-            <LinkIcon size={18} className="text-green-600" />
+            <LinkIcon size={18} className="text-cyan-600" />
           </div>
           <p className="text-sm text-slate-500">绑定后，Orbit Member 只能领取这个成员名下的执行环境。ext_user_id 默认用环境 ID，结算账号默认用当前成员账号。</p>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -342,7 +342,7 @@ export default function WorkerDetail() {
         <form className="card space-y-4 p-5" onSubmit={handleImportTask}>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-950">导入成员任务</h2>
-            <Plus size={18} className="text-green-600" />
+            <Plus size={18} className="text-cyan-600" />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <input className="field" placeholder="Provider" value={taskForm.provider} onChange={(event) => setTaskForm({ ...taskForm, provider: event.target.value })} />

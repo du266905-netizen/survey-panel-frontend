@@ -39,7 +39,7 @@ export default function Terms() {
       </header>
 
       <section className="mx-auto max-w-5xl px-6 py-14">
-        <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-600">Terms of Service</p>
+        <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-600">Terms of Service</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-950">Operating rules for the survey panel</h1>
         <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">
           These terms govern use of the survey platform, including account access, survey participation, reward handling, and quality

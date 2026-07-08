@@ -301,7 +301,7 @@ export default function TrafficConsole() {
         <form className="card space-y-4 p-5" onSubmit={handleImportTask}>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-950">Import Task</h2>
-            <Plus size={18} className="text-green-600" />
+            <Plus size={18} className="text-cyan-600" />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <input className="field" placeholder="Provider, e.g. CPX" value={taskForm.provider} onChange={(e) => setTaskForm({ ...taskForm, provider: e.target.value })} />
@@ -320,7 +320,7 @@ export default function TrafficConsole() {
         <form className="card space-y-4 p-5" onSubmit={handleCreateProfile}>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-950">Register MoreLogin Profile</h2>
-            <RotateCcw size={18} className="text-green-600" />
+            <RotateCcw size={18} className="text-cyan-600" />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <input className="field" required placeholder="MoreLogin profile id" value={profileForm.profileId} onChange={(e) => setProfileForm({ ...profileForm, profileId: e.target.value })} />

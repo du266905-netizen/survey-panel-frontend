@@ -72,9 +72,9 @@ export default function MyRecords() {
     <>
       <PageHeader title="My Records" description="Personal participation history with audit status and rewards." />
       <div className="mb-5 grid gap-3 md:grid-cols-3">
-        <section className="rounded-xl border border-green-200 bg-green-50 p-4">
-          <p className="text-xs font-bold uppercase tracking-wide text-green-700">Total Completed</p>
-          <p className="mt-2 text-2xl font-bold text-green-900">{summary.completed}</p>
+        <section className="rounded-xl border border-cyan-200 bg-cyan-50 p-4">
+          <p className="text-xs font-bold uppercase tracking-wide text-cyan-700">Total Completed</p>
+          <p className="mt-2 text-2xl font-bold text-cyan-900">{summary.completed}</p>
         </section>
         <section className="rounded-xl border border-amber-200 bg-amber-50 p-4">
           <p className="text-xs font-bold uppercase tracking-wide text-amber-700">Total Coins Earned</p>
@@ -82,9 +82,9 @@ export default function MyRecords() {
             <CoinAmount value={summary.totalCoins} />
           </div>
         </section>
-        <section className="rounded-xl border border-blue-200 bg-blue-50 p-4">
-          <p className="text-xs font-bold uppercase tracking-wide text-blue-700">This Month Coins</p>
-          <div className="mt-2 text-lg font-bold text-blue-900">
+        <section className="rounded-xl border border-sky-200 bg-sky-50 p-4">
+          <p className="text-xs font-bold uppercase tracking-wide text-sky-700">This Month Coins</p>
+          <div className="mt-2 text-lg font-bold text-sky-900">
             <CoinAmount value={summary.monthCoins} />
           </div>
         </section>

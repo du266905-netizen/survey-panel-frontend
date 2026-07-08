@@ -60,8 +60,8 @@ export default function Register() {
         </div>
 
         {submitted ? (
-          <div className="rounded-2xl border border-green-200 bg-white p-8 text-center shadow-sm">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-green-600">
+          <div className="rounded-2xl border border-cyan-200 bg-white p-8 text-center shadow-sm">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600">
               <CheckCircle2 size={28} />
             </div>
             <h1 className="mt-6 text-2xl font-semibold text-slate-950">Account created</h1>
@@ -82,7 +82,7 @@ export default function Register() {
           <label className="mt-6 block">
             <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">Display Name</span>
             <input
-              className="field focus:border-green-500 focus:ring-2 focus:ring-green-100"
+              className="field"
               name="displayName"
               value={form.displayName}
               onChange={handleChange}
@@ -94,7 +94,7 @@ export default function Register() {
           <label className="mt-4 block">
             <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">Email Address</span>
             <input
-              className="field focus:border-green-500 focus:ring-2 focus:ring-green-100"
+              className="field"
               name="email"
               type="email"
               value={form.email}
@@ -108,7 +108,7 @@ export default function Register() {
             <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">Password</span>
             <span className="relative block">
               <input
-                className="field pr-12 focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                className="field pr-12"
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 value={form.password}
@@ -138,11 +138,11 @@ export default function Register() {
             />
             <span>
               I agree to the{' '}
-              <a href="/terms" target="_blank" rel="noreferrer" className="underline text-green-600">
+              <a href="/terms" target="_blank" rel="noreferrer" className="underline text-cyan-600">
                 Terms of Service
               </a>
               {' '}and{' '}
-              <a href="/privacy" target="_blank" rel="noreferrer" className="underline text-green-600">
+              <a href="/privacy" target="_blank" rel="noreferrer" className="underline text-cyan-600">
                 Privacy Policy
               </a>
             </span>
@@ -155,7 +155,7 @@ export default function Register() {
           {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
 
           <button
-            className="mt-6 w-full rounded-xl bg-green-600 py-3 font-semibold text-white shadow-sm transition-all duration-200 hover:bg-green-700 hover:shadow-md active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-6 w-full rounded-xl bg-cyan-600 py-3 font-semibold text-white shadow-sm transition-all duration-200 hover:bg-cyan-700 hover:shadow-md active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
             type="submit"
             disabled={!agreedToTerms || loading}
           >
@@ -164,7 +164,7 @@ export default function Register() {
 
           <p className="mt-5 text-center text-sm text-slate-500">
             Already have access?{' '}
-            <Link className="font-semibold text-green-600 hover:text-green-700" to="/login">
+            <Link className="font-semibold text-cyan-600 hover:text-cyan-700" to="/login">
               Sign in
             </Link>
           </p>

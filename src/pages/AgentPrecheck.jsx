@@ -102,7 +102,7 @@ export default function AgentPrecheck() {
         <aside className="space-y-4">
           <div className="card p-5">
             <div className="flex items-center gap-3">
-              <span className="rounded-xl bg-green-50 p-2 text-green-600">
+              <span className="rounded-xl bg-cyan-50 p-2 text-cyan-600">
                 <CheckCircle2 size={22} />
               </span>
               <div>

@@ -233,31 +233,14 @@ export const startSurvey = async ({ surveyId, partnerId, proxyIp, fingerprintBro
   });
 
 export const getAdminDashboard = async () => {
-  const [statsResponse, riskResponse, trafficQualityResponse] = await Promise.all([
+  const [statsResponse, trafficQualityResponse] = await Promise.all([
     apiClient.get('/api/admin/stats'),
-    apiClient.get('/api/admin/risk'),
     apiClient.get('/api/admin/traffic-quality', { params: { days: 7, country: 'US' } }),
   ]);
-  const classificationColors = {
-    'High Quality': '#22c55e',
-    'Medium Risk': '#f59e0b',
-    'High Risk': '#ef4444',
-  };
 
   return {
     data: {
       stats: statsResponse.data,
-      riskClassification: (riskResponse.data.classification || []).map((item) => ({
-        ...item,
-        fill: classificationColors[item.name] || '#64748b',
-      })),
-      geographicRisk: (riskResponse.data.geographic || []).map((item) => ({
-        country: item.country,
-        highQuality: item.value,
-        mediumRisk: 0,
-        highRisk: 0,
-      })),
-      dailyRiskTrend: [],
       trafficQuality: trafficQualityResponse.data,
     },
   };

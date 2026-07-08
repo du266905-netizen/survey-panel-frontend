@@ -33,13 +33,13 @@ export default function Login() {
   return (
     <main className="grid min-h-screen overflow-hidden bg-stone-50 lg:grid-cols-[0.92fr_1.08fr]">
       <section className="relative flex min-h-screen items-center px-6 py-10 sm:px-10 lg:px-14">
-        <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-green-100/70 blur-3xl" />
+        <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-cyan-100/70 blur-3xl" />
         <div className="relative mx-auto w-full max-w-md">
           <Logo size="lg" />
 
           <div className="mt-10 rounded-[28px] border border-white bg-white/90 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur sm:p-9">
             <div className="mb-7">
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-green-50 text-green-600 ring-1 ring-green-100">
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100">
                 <LockKeyhole size={22} />
               </div>
               <h1 className="text-3xl font-semibold tracking-tight text-slate-950">Welcome back</h1>
@@ -52,7 +52,7 @@ export default function Login() {
                 <span className="relative block">
                   <Mail className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                   <input
-                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white pl-11 pr-4 text-sm font-medium text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-green-500 focus:ring-4 focus:ring-green-100"
+                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white pl-11 pr-4 text-sm font-medium text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100"
                     type="email"
                     placeholder="Enter your email"
                     value={form.email}
@@ -67,7 +67,7 @@ export default function Login() {
                 <span className="mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Password</span>
                 <span className="relative block">
                   <input
-                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 pr-12 text-sm font-medium text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-green-500 focus:ring-4 focus:ring-green-100"
+                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 pr-12 text-sm font-medium text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
                     value={form.password}
@@ -88,13 +88,13 @@ export default function Login() {
 
               <div className="flex items-center justify-between text-xs">
                 <span aria-hidden="true" />
-                <a className="font-semibold text-green-600 hover:text-green-700" href="mailto:heguanyi@guanyi-media.com">
+                <a className="font-semibold text-cyan-600 hover:text-cyan-700" href="mailto:heguanyi@guanyi-media.com">
                   Need access?
                 </a>
               </div>
 
               <button
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-green-600 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-xl hover:shadow-green-600/25 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-cyan-600 text-sm font-bold text-white shadow-lg shadow-cyan-600/20 transition hover:-translate-y-0.5 hover:bg-cyan-700 hover:shadow-xl hover:shadow-cyan-600/25 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
                 type="submit"
                 disabled={loading}
               >
@@ -110,7 +110,7 @@ export default function Login() {
           </div>
 
           <p className="mt-6 text-center text-xs text-slate-400">
-            Need a participant account? <Link className="font-semibold text-green-600 hover:text-green-700" to="/register">Register here</Link>
+            Need a participant account? <Link className="font-semibold text-cyan-600 hover:text-cyan-700" to="/register">Register here</Link>
           </p>
         </div>
       </section>
@@ -120,7 +120,7 @@ export default function Login() {
         style={{ backgroundImage: "url('/login-hero.jpg')" }}
         aria-label="Research participant using a mobile device"
       >
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,20,10,0.08)_0%,rgba(0,32,16,0.72)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,47,73,0.08)_0%,rgba(8,47,73,0.74)_100%)]" />
         <div className="absolute bottom-12 left-12 max-w-xl text-white">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">
             <ShieldCheck size={16} />

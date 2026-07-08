@@ -17,7 +17,7 @@ export default function AppLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const isAdmin = isAdminRole(user?.role);
-  const roleLabel = isAdmin ? 'Admin' : 'Member';
+  const roleLabel = isAdmin ? 'Admin' : user?.role === 'panelist' ? 'Panelist' : 'Member';
 
   const handleLogout = () => {
     logout();
@@ -120,6 +120,7 @@ export default function AppLayout() {
                 </NavLink>
                 <NavLink
                   to="/admin"
+                  end
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
                       isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
