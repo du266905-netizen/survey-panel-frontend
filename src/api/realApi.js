@@ -246,6 +246,16 @@ export const getAdminDashboard = async () => {
   };
 };
 
+export const getDatabaseExplorer = async ({ table, limit = 20 } = {}) => {
+  const response = await apiClient.get('/api/admin/database', {
+    params: { table, limit },
+  });
+
+  return {
+    data: response.data,
+  };
+};
+
 export const getEmployees = async () => {
   const response = await apiClient.get('/api/admin/users', {
     params: { pageSize: 100 },

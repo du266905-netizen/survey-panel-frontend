@@ -4,6 +4,7 @@ import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminPartners from './pages/AdminPartners';
 import Dashboard from './pages/Dashboard';
+import DatabaseExplorer from './pages/DatabaseExplorer';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import MyRecords from './pages/MyRecords';
@@ -97,6 +98,14 @@ export default function App() {
           element={
             <AdminRoute>
               <AdminPartners />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/database"
+          element={
+            <AdminRoute>
+              <DatabaseExplorer />
             </AdminRoute>
           }
         />

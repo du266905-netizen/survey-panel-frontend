@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, LogOut, MonitorPlay, Settings, ShieldCheck, User, UserCog, UserPlus, Users } from 'lucide-react';
+import { BarChart3, ClipboardList, Database, LogOut, MonitorPlay, Settings, ShieldCheck, User, UserCog, UserPlus, Users } from 'lucide-react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import CoinAmount from './CoinAmount';
@@ -117,6 +117,17 @@ export default function AppLayout() {
                 >
                   <Users size={18} />
                   Partners
+                </NavLink>
+                <NavLink
+                  to="/admin/database"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                      isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
+                    }`
+                  }
+                >
+                  <Database size={18} />
+                  Database
                 </NavLink>
                 <NavLink
                   to="/admin"

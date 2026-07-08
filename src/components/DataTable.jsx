@@ -34,7 +34,7 @@ export default function DataTable({ columns, rows, loading, emptyMessage = 'No d
           </thead>
           <tbody className="divide-y divide-slate-100 bg-white">
             {rows.map((row, rowIndex) => (
-              <tr key={row.id || row.surveyId || row.surveyNumber || rowIndex} className="transition hover:bg-emerald-50/60">
+              <tr key={row.id || row.surveyId || row.surveyNumber || rowIndex} className="transition hover:bg-cyan-50/60">
                 {columns.map((column) => (
                   <td key={column.key} className="table-cell">
                     {column.render ? column.render(row) : row[column.key]}
