@@ -93,12 +93,13 @@ const mapEmployee = (user) => ({
   ...user,
   name: user.displayName || user.name || '-',
   tag: user.groupName || '',
+  roleValue: ['PANELIST', 'USER'].includes(String(user.role || '').toUpperCase()) ? 'PANELIST' : String(user.role || 'EMPLOYEE').toUpperCase() === 'ADMIN' ? 'ADMIN' : 'EMPLOYEE',
   roleLabel:
     String(user.role || 'EMPLOYEE').toUpperCase() === 'ADMIN'
-      ? 'ADMIN'
+      ? 'Admin'
       : ['PANELIST', 'USER'].includes(String(user.role || '').toUpperCase())
-        ? 'PANELIST'
-        : 'EMPLOYEE',
+        ? 'Panelist'
+        : 'Employee',
   isActive: user.isActive !== false,
 });
 
@@ -233,15 +234,41 @@ export const startSurvey = async ({ surveyId, partnerId, proxyIp, fingerprintBro
   });
 
 export const getAdminDashboard = async () => {
-  const [statsResponse, trafficQualityResponse] = await Promise.all([
+  const [statsResponse, trafficQualityResponse, riskResponse, partnersResponse] = await Promise.all([
     apiClient.get('/api/admin/stats'),
-    apiClient.get('/api/admin/traffic-quality', { params: { days: 7, country: 'US' } }),
+    apiClient.get('/api/admin/traffic-quality', { params: { days: 7 } }),
+    apiClient.get('/api/admin/risk'),
+    apiClient.get('/api/partners'),
   ]);
+  const classificationColors = {
+    'High Quality': '#06b6d4',
+    'Medium Risk': '#f59e0b',
+    'High Risk': '#ef4444',
+  };
+  const partners = (partnersResponse.data.partners || partnersResponse.data.items || []).filter((partner) => realPartnerSlugs.has(partner.slug));
 
   return {
     data: {
       stats: statsResponse.data,
       trafficQuality: trafficQualityResponse.data,
+      riskClassification: (riskResponse.data.classification || []).map((item) => ({
+        ...item,
+        fill: classificationColors[item.name] || '#64748b',
+      })),
+      geographicRisk: (riskResponse.data.geographic || []).map((item) => ({
+        country: item.country,
+        value: item.value,
+      })),
+      partnerPerformance: partners.map((partner, index) => {
+        const isConnected = partner.slug === 'cpx-research';
+        return {
+          ...partner,
+          displayName: partner.name,
+          activeSurveys: isConnected ? partner.activeSurveys ?? partner.surveyCount ?? partner._count?.surveys ?? 0 : 0,
+          businessStatus: partner.slug === 'theoremreach' ? 'In discussion' : partner.slug === 'bitlabs' ? 'Promoting' : 'Connected',
+          channel: `Channel ${String.fromCharCode(65 + index)}`,
+        };
+      }),
     },
   };
 };

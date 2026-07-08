@@ -29,7 +29,7 @@ function EmployeeFormModal({ employee, onClose, onSubmit, saving, error }) {
           name: employee.name || '',
           email: employee.email || '',
           password: '',
-          role: employee.roleLabel || 'EMPLOYEE',
+          role: employee.roleValue || 'EMPLOYEE',
           tag: employee.tag || employee.groupName || '',
         }
       : emptyForm
@@ -118,6 +118,7 @@ export default function Team() {
   const [modalMode, setModalMode] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [tagFilter, setTagFilter] = useState('All');
+  const [roleFilter, setRoleFilter] = useState('All');
 
   const loadEmployees = async () => {
     setLoading(true);
@@ -221,9 +222,18 @@ export default function Team() {
       {
         key: 'roleLabel',
         header: 'Role',
-        render: (row) => (
-          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700 ring-1 ring-slate-200">{row.roleLabel}</span>
-        ),
+        render: (row) => {
+          const tones = {
+            ADMIN: 'bg-slate-950 text-white ring-slate-950',
+            EMPLOYEE: 'bg-cyan-50 text-cyan-700 ring-cyan-200',
+            PANELIST: 'bg-amber-50 text-amber-700 ring-amber-200',
+          };
+          return (
+            <span className={`rounded-full px-2.5 py-1 text-xs font-bold ring-1 ${tones[row.roleValue] || tones.EMPLOYEE}`}>
+              {row.roleLabel}
+            </span>
+          );
+        },
       },
       { key: 'createdAt', header: 'Created Date', render: (row) => formatDate(row.createdAt) },
       {
@@ -271,9 +281,31 @@ export default function Team() {
     return ['All', ...Array.from(new Set(tags)).sort((a, b) => a.localeCompare(b))];
   }, [employees]);
 
+  const roleOptions = useMemo(() => {
+    const roles = employees.map((employee) => employee.roleValue).filter(Boolean);
+    return ['All', ...Array.from(new Set(roles)).sort((a, b) => a.localeCompare(b))];
+  }, [employees]);
+
+  const roleCounts = useMemo(
+    () =>
+      employees.reduce(
+        (accumulator, employee) => {
+          accumulator[employee.roleValue] = (accumulator[employee.roleValue] || 0) + 1;
+          return accumulator;
+        },
+        { ADMIN: 0, EMPLOYEE: 0, PANELIST: 0 }
+      ),
+    [employees]
+  );
+
   const filteredEmployees = useMemo(
-    () => (tagFilter === 'All' ? employees : employees.filter((employee) => employee.tag === tagFilter)),
-    [employees, tagFilter]
+    () =>
+      employees.filter((employee) => {
+        const matchesTag = tagFilter === 'All' || employee.tag === tagFilter;
+        const matchesRole = roleFilter === 'All' || employee.roleValue === roleFilter;
+        return matchesTag && matchesRole;
+      }),
+    [employees, tagFilter, roleFilter]
   );
 
   return (
@@ -291,18 +323,32 @@ export default function Team() {
 
       {error && !modalMode && <p className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
 
-      <section className="card mb-5 flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <section className="card mb-5 grid gap-4 p-4 lg:grid-cols-[1fr_auto] lg:items-center">
         <div>
-          <h2 className="text-sm font-bold text-slate-950">Member Tags</h2>
-          <p className="mt-1 text-xs text-slate-500">Use tags to group members by campaign, batch, source, or operator.</p>
+          <h2 className="text-sm font-bold text-slate-950">Member Filters</h2>
+          <p className="mt-1 text-xs text-slate-500">Filter members by role and batch/source tag.</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <span className="rounded-full bg-slate-950 px-2.5 py-1 text-xs font-bold text-white">Admin {roleCounts.ADMIN}</span>
+            <span className="rounded-full bg-cyan-50 px-2.5 py-1 text-xs font-bold text-cyan-700 ring-1 ring-cyan-100">Employee {roleCounts.EMPLOYEE}</span>
+            <span className="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700 ring-1 ring-amber-100">Panelist {roleCounts.PANELIST}</span>
+          </div>
         </div>
-        <select className="field w-full sm:w-64" value={tagFilter} onChange={(event) => setTagFilter(event.target.value)}>
-          {tagOptions.map((tag) => (
-            <option key={tag} value={tag}>
-              {tag === 'All' ? 'All tags' : tag}
-            </option>
-          ))}
-        </select>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <select className="field w-full sm:w-56" value={roleFilter} onChange={(event) => setRoleFilter(event.target.value)}>
+            {roleOptions.map((role) => (
+              <option key={role} value={role}>
+                {role === 'All' ? 'All roles' : role}
+              </option>
+            ))}
+          </select>
+          <select className="field w-full sm:w-56" value={tagFilter} onChange={(event) => setTagFilter(event.target.value)}>
+            {tagOptions.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag === 'All' ? 'All tags' : tag}
+              </option>
+            ))}
+          </select>
+        </div>
       </section>
 
       <DataTable columns={columns} rows={filteredEmployees} loading={loading} emptyMessage="No members found." />
