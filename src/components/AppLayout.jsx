@@ -83,7 +83,7 @@ export default function AppLayout() {
                   }
                 >
                   <UserPlus size={18} />
-                  Team
+                  团队
                 </NavLink>
                 <NavLink
                   to="/workers"
@@ -94,7 +94,7 @@ export default function AppLayout() {
                   }
                 >
                   <UserCog size={18} />
-                  Worker Monitor
+                  成员监控
                 </NavLink>
                 <NavLink
                   to="/traffic"
@@ -105,7 +105,7 @@ export default function AppLayout() {
                   }
                 >
                   <MonitorPlay size={18} />
-                  Traffic Console
+                  流量控制台
                 </NavLink>
                 <NavLink
                   to="/admin"
