@@ -24,6 +24,7 @@ export default function SurveyPartners() {
   const [startingId, setStartingId] = useState('');
   const [startError, setStartError] = useState('');
   const surveys = data || [];
+  const surveyGridClass = 'grid w-full gap-4 lg:grid-cols-2 2xl:grid-cols-3 [@media(min-width:2100px)]:grid-cols-4';
 
   const handleStart = async (survey) => {
     if (isAdmin) {
@@ -60,17 +61,17 @@ export default function SurveyPartners() {
       )}
 
       {loading ? (
-        <div className="grid max-w-6xl gap-4 xl:grid-cols-2">
+        <div className={surveyGridClass}>
           {Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className="h-44 animate-pulse rounded-lg bg-slate-100" />
           ))}
         </div>
       ) : !surveys.length ? (
-        <div className="flex min-h-44 max-w-6xl items-center justify-center rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-500">
+        <div className="flex min-h-44 w-full items-center justify-center rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-500">
           No surveys available right now.
         </div>
       ) : (
-        <div className="grid max-w-6xl gap-4 xl:grid-cols-2">
+        <div className={surveyGridClass}>
           {surveys.map((survey) => (
             <section
               key={survey.id}

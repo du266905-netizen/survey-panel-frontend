@@ -31,7 +31,7 @@ export default function Login() {
   };
 
   return (
-    <main className="grid min-h-screen overflow-hidden bg-slate-50 lg:grid-cols-[0.92fr_1.08fr]">
+    <main className="grid min-h-screen overflow-hidden bg-slate-50 md:grid-cols-[0.92fr_1.08fr]">
       <section className="relative flex min-h-screen items-center px-6 py-10 sm:px-10 lg:px-14">
         <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-slate-100/60 blur-3xl" />
         <div className="relative mx-auto w-full max-w-md">
@@ -116,10 +116,16 @@ export default function Login() {
       </section>
 
       <section
-        className="relative hidden min-h-screen overflow-hidden bg-slate-900 bg-cover bg-center lg:block"
-        style={{ backgroundImage: "url('/login-hero.jpg')" }}
+        className="relative hidden min-h-screen overflow-hidden bg-slate-900 md:block"
         aria-label="Research participant using a mobile device"
       >
+        <img
+          className="absolute inset-0 h-full w-full object-cover"
+          src="/login-hero.jpg?v=20260709"
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+        />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.04)_0%,rgba(15,23,42,0.62)_100%)]" />
         <div className="absolute bottom-12 left-12 max-w-xl text-white">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">

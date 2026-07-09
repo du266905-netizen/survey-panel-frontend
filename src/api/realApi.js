@@ -326,6 +326,11 @@ export const getTrafficSummary = async () => {
   return response.data;
 };
 
+export const getTrafficDiagnostics = async () => {
+  const response = await apiClient.get('/api/traffic/diagnostics');
+  return response.data;
+};
+
 export const getTrafficWorkers = async () => {
   const response = await apiClient.get('/api/traffic/workers');
   return response.data;
