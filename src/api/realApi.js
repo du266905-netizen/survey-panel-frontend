@@ -119,11 +119,12 @@ export const login = async ({ email, password }) => {
   };
 };
 
-export const register = async ({ email, password, displayName, turnstileToken, agreedToTermsAt }) => {
+export const register = async ({ email, password, displayName, verificationCode, turnstileToken, agreedToTermsAt }) => {
   const response = await apiClient.post('/api/auth/register', {
     email,
     password,
     displayName,
+    verificationCode,
     turnstileToken,
     agreedToTermsAt,
   });
@@ -135,6 +136,16 @@ export const register = async ({ email, password, displayName, turnstileToken, a
       user: normalizeUser(response.data.user),
     },
   };
+};
+
+export const sendEmailCode = async ({ email }) => {
+  const response = await apiClient.post('/api/auth/send-email-code', { email });
+  return { data: response.data };
+};
+
+export const verifyEmailCode = async ({ email, code }) => {
+  const response = await apiClient.post('/api/auth/verify-email-code', { email, code });
+  return { data: response.data };
 };
 
 export const getDashboard = async () => {

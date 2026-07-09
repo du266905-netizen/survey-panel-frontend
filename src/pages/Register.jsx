@@ -1,21 +1,44 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CheckCircle2, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { register } from '../api/realApi';
+import { register, sendEmailCode, verifyEmailCode } from '../api/realApi';
 import Logo from '../components/Logo';
 import TurnstileWidget from '../components/TurnstileWidget';
 
+const codeCooldownSeconds = 60;
+
 export default function Register() {
-  const [form, setForm] = useState({ displayName: '', email: '', password: '' });
+  const [form, setForm] = useState({ displayName: '', email: '', password: '', verificationCode: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
   const [loading, setLoading] = useState(false);
+  const [sendingCode, setSendingCode] = useState(false);
+  const [codeCooldown, setCodeCooldown] = useState(0);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [toast, setToast] = useState(null);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    if (!codeCooldown) return undefined;
+    const timer = window.setTimeout(() => setCodeCooldown((value) => Math.max(0, value - 1)), 1000);
+    return () => window.clearTimeout(timer);
+  }, [codeCooldown]);
+
+  useEffect(() => {
+    if (!toast) return undefined;
+    const timer = window.setTimeout(() => setToast(null), 3200);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
   const handleChange = (event) => {
-    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+    const { name, value } = event.target;
+    const nextValue = name === 'verificationCode' ? value.replace(/\D/g, '').slice(0, 6) : value;
+    setForm((current) => ({ ...current, [name]: nextValue }));
+    if (name === 'email' || name === 'verificationCode') {
+      setEmailVerified(false);
+    }
   };
 
   const handleVerify = useCallback((token) => {
@@ -26,14 +49,46 @@ export default function Register() {
     setTurnstileToken('');
   }, []);
 
+  const showToast = (message, type = 'info') => {
+    setToast({ message, type });
+  };
+
+  // Client-side cooldown mirrors the server limit and prevents accidental resends.
+  const handleSendCode = async () => {
+    if (!form.email || sendingCode || codeCooldown) return;
+
+    setSendingCode(true);
+    setError('');
+
+    try {
+      await sendEmailCode({ email: form.email });
+      setCodeCooldown(codeCooldownSeconds);
+      showToast('Verification code sent.', 'success');
+    } catch {
+      showToast('Unable to send verification code.', 'error');
+    } finally {
+      setSendingCode(false);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!agreedToTerms || loading) return;
+    if (!/^\d{6}$/.test(form.verificationCode)) {
+      setError('Invalid verification code.');
+      showToast('Invalid verification code.', 'error');
+      return;
+    }
 
     setLoading(true);
     setError('');
 
     try {
+      // The code is verified first, then submitted with registration as proof.
+      if (!emailVerified) {
+        await verifyEmailCode({ email: form.email, code: form.verificationCode });
+        setEmailVerified(true);
+      }
       await register({
         ...form,
         turnstileToken,
@@ -45,6 +100,9 @@ export default function Register() {
       if (code === 'TURNSTILE_VERIFICATION_FAILED') {
         resetTurnstile();
       }
+      if (code === 'EMAIL_CODE_INVALID') {
+        showToast('Invalid verification code.', 'error');
+      }
       setError(caughtError.response?.data?.message || code || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
@@ -53,6 +111,15 @@ export default function Register() {
 
   return (
     <main className="min-h-screen bg-stone-50 px-4 py-10">
+      {toast && (
+        <div
+          className={`fixed right-4 top-4 z-50 rounded-xl border px-4 py-3 text-sm font-semibold shadow-lg ${
+            toast.type === 'error' ? 'border-red-200 bg-red-50 text-red-700' : 'border-cyan-200 bg-white text-cyan-800'
+          }`}
+        >
+          {toast.message}
+        </div>
+      )}
       <section className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-md flex-col justify-center">
         <div className="mb-8">
           <Logo size="lg" />
@@ -64,9 +131,9 @@ export default function Register() {
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600">
               <CheckCircle2 size={28} />
             </div>
-            <h1 className="mt-6 text-2xl font-semibold text-slate-950">Account created</h1>
+            <h1 className="mt-6 text-2xl font-semibold text-slate-950">Email Verified</h1>
             <p className="mt-3 text-sm leading-6 text-slate-500">
-              Your panelist account is ready. Sign in to view available surveys.
+              Welcome to Guanyi Research. Your panelist account is ready.
             </p>
             <Link className="btn-primary mt-6 w-full" to="/login">
               Back to Login
@@ -93,15 +160,46 @@ export default function Register() {
 
           <label className="mt-4 block">
             <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">Email Address</span>
-            <input
-              className="field"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="enter your email"
-              required
-            />
+            <span className="grid gap-2 sm:grid-cols-[1fr_auto]">
+              <input
+                className="field"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="enter your email"
+                required
+              />
+              <button
+                className="btn-secondary min-h-11 min-w-[9rem] px-4 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+                type="button"
+                disabled={!form.email || sendingCode || codeCooldown > 0}
+                onClick={handleSendCode}
+              >
+                {sendingCode ? 'Sending...' : codeCooldown ? `${codeCooldown}s` : 'Send Code'}
+              </button>
+            </span>
+          </label>
+
+          <label className="mt-4 block">
+            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">Email Verification Code</span>
+            <span className="relative block">
+              <input
+                className="field pr-12 tracking-[0.18em]"
+                name="verificationCode"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                value={form.verificationCode}
+                onChange={handleChange}
+                placeholder="000000"
+                required
+              />
+              {emailVerified && (
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-600" aria-label="Email verified">
+                  <CheckCircle2 size={18} />
+                </span>
+              )}
+            </span>
           </label>
 
           <label className="mt-4 block">
