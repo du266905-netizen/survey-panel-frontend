@@ -6,6 +6,7 @@ import PageHeader from '../components/PageHeader';
 import {
   assignTrafficTask,
   bindWorkerTrafficProfile,
+  createTrafficProfile,
   getTrafficWorker,
   importWorkerTrafficTask,
   markTrafficOutcome,
@@ -27,6 +28,7 @@ const initialTaskForm = {
 
 const initialBindForm = {
   profileId: '',
+  newProfileId: '',
   displayName: '',
   extUserId: '',
   settlementUserId: '',
@@ -149,7 +151,28 @@ export default function WorkerDetail() {
   const handleBindProfile = (event) => {
     event.preventDefault();
     return runAction(async () => {
-      await bindWorkerTrafficProfile(workerId, bindForm.profileId, {
+      const profileId = bindForm.newProfileId.trim() || bindForm.profileId;
+      if (!profileId) throw new Error('请输入新的环境 ID，或选择一个已登记环境');
+
+      if (bindForm.newProfileId.trim()) {
+        if (!bindForm.proxyIp.trim()) throw new Error('新环境必须填写代理/IP，否则 CPX 无法按真实出口 IP 拉问卷');
+        if (!bindForm.countryTag.trim()) throw new Error('新环境必须填写国家标签，例如 US');
+
+        await createTrafficProfile({
+          id: profileId,
+          displayName: bindForm.displayName || profileId,
+          proxyIp: bindForm.proxyIp,
+          proxyCountry: bindForm.proxyCountry || bindForm.countryTag,
+          countryTag: bindForm.countryTag || bindForm.proxyCountry || 'US',
+          status: 'idle',
+          metadata: {
+            source: 'worker_detail_manual_bind',
+            manualCompletionOnly: true,
+          },
+        });
+      }
+
+      await bindWorkerTrafficProfile(workerId, profileId, {
         displayName: bindForm.displayName || undefined,
         extUserId: bindForm.extUserId || undefined,
         settlementUserId: bindForm.settlementUserId || undefined,
@@ -319,7 +342,7 @@ export default function WorkerDetail() {
           </div>
           <p className="text-sm text-slate-500">绑定后，Orbit Member 只能领取这个成员名下的执行环境。ext_user_id 默认用环境 ID，结算账号默认用当前成员账号。</p>
           <div className="grid gap-3 sm:grid-cols-2">
-            <select className="field sm:col-span-2" required value={bindForm.profileId} onChange={(event) => setBindForm({ ...bindForm, profileId: event.target.value })}>
+            <select className="field sm:col-span-2" value={bindForm.profileId} onChange={(event) => setBindForm({ ...bindForm, profileId: event.target.value, newProfileId: '' })}>
               <option value="">选择可绑定执行环境</option>
               {availableProfiles.map((profile) => (
                 <option key={profile.id} value={profile.id}>
@@ -327,6 +350,15 @@ export default function WorkerDetail() {
                 </option>
               ))}
             </select>
+            <div className="sm:col-span-2">
+              <input
+                className="field"
+                placeholder="新 MoreLogin 环境 ID，未在列表里就直接粘贴到这里"
+                value={bindForm.newProfileId}
+                onChange={(event) => setBindForm({ ...bindForm, newProfileId: event.target.value, profileId: '' })}
+              />
+              <p className="mt-2 text-xs font-semibold text-slate-500">全新环境先填这里。系统会先登记环境，再绑定给当前成员。</p>
+            </div>
             <input className="field" placeholder="显示名称" value={bindForm.displayName} onChange={(event) => setBindForm({ ...bindForm, displayName: event.target.value })} />
             <input className="field" placeholder="ext_user_id，留空默认环境 ID" value={bindForm.extUserId} onChange={(event) => setBindForm({ ...bindForm, extUserId: event.target.value })} />
             <input className="field sm:col-span-2" placeholder="结算账号 User ID，留空默认当前成员" value={bindForm.settlementUserId} onChange={(event) => setBindForm({ ...bindForm, settlementUserId: event.target.value })} />
@@ -334,7 +366,7 @@ export default function WorkerDetail() {
             <input className="field" placeholder="代理国家" value={bindForm.proxyCountry} onChange={(event) => setBindForm({ ...bindForm, proxyCountry: event.target.value })} />
             <input className="field" placeholder="国家标签" value={bindForm.countryTag} onChange={(event) => setBindForm({ ...bindForm, countryTag: event.target.value })} />
           </div>
-          <button className="btn-primary w-full" type="submit" disabled={busy || !bindForm.profileId}>
+          <button className="btn-primary w-full" type="submit" disabled={busy || (!bindForm.profileId && !bindForm.newProfileId.trim())}>
             保存绑定
           </button>
         </form>
