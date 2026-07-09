@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { register, sendEmailCode, verifyEmailCode } from '../api/realApi';
@@ -9,6 +9,7 @@ const codeCooldownSeconds = 60;
 
 export default function Register() {
   const [form, setForm] = useState({ displayName: '', email: '', password: '', verificationCode: '' });
+  const codeInputRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
@@ -16,6 +17,7 @@ export default function Register() {
   const [sendingCode, setSendingCode] = useState(false);
   const [codeCooldown, setCodeCooldown] = useState(0);
   const [emailVerified, setEmailVerified] = useState(false);
+  const [codeFocused, setCodeFocused] = useState(false);
   const [toast, setToast] = useState(null);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -109,6 +111,8 @@ export default function Register() {
     }
   };
 
+  const codeDigits = Array.from({ length: 6 }, (_, index) => form.verificationCode[index] || '');
+
   return (
     <main className="min-h-screen bg-stone-50 px-4 py-10">
       {toast && (
@@ -185,15 +189,40 @@ export default function Register() {
             <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">Email Verification Code</span>
             <span className="relative block">
               <input
-                className="field pr-12 tracking-[0.18em]"
+                ref={codeInputRef}
+                className="sr-only"
                 name="verificationCode"
                 inputMode="numeric"
                 autoComplete="one-time-code"
                 value={form.verificationCode}
                 onChange={handleChange}
-                placeholder="000000"
+                onFocus={() => setCodeFocused(true)}
+                onBlur={() => setCodeFocused(false)}
+                aria-label="Email verification code"
                 required
               />
+              <span
+                className="grid grid-cols-6 gap-2"
+                aria-hidden="true"
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                  codeInputRef.current?.focus();
+                }}
+              >
+                {codeDigits.map((digit, index) => {
+                  const isActive = codeFocused && index === Math.min(form.verificationCode.length, 5);
+                  return (
+                    <span
+                      className={`flex aspect-square min-h-12 items-center justify-center rounded-xl border bg-white text-lg font-semibold text-slate-950 shadow-sm transition-colors ${
+                        isActive ? 'border-cyan-500 ring-2 ring-cyan-100' : 'border-slate-200'
+                      }`}
+                      key={index}
+                    >
+                      {digit}
+                    </span>
+                  );
+                })}
+              </span>
               {emailVerified && (
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-600" aria-label="Email verified">
                   <CheckCircle2 size={18} />
