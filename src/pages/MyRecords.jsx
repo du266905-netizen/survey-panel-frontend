@@ -63,6 +63,8 @@ export default function MyRecords() {
     { key: 'platform', header: 'Platform' },
     { key: 'ipAddress', header: 'IP Address' },
     { key: 'coinsReward', header: 'Coins Reward', render: (row) => <CoinAmount value={row.coinsReward} /> },
+    { key: 'payoutUsd', header: 'Payout USD', render: (row) => (row.amountUsd === null || row.amountUsd === undefined ? '-' : `$${Number(row.amountUsd).toFixed(2)}`) },
+    ...(isAdmin ? [{ key: 'postbackStatus', header: 'Postback' }] : []),
     { key: 'status', header: 'Status', render: (row) => <StatusBadge status={row.status} /> },
     { key: 'startTime', header: 'Start Time' },
     { key: 'auditTime', header: 'Audit Time' },
