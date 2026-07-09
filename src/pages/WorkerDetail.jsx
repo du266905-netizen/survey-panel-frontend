@@ -35,6 +35,7 @@ const initialBindForm = {
   proxyIp: '',
   proxyCountry: '',
   countryTag: 'US',
+  dynamicIpMode: true,
 };
 
 function statusClass(status) {
@@ -60,6 +61,14 @@ function InfoCard({ label, value }) {
       <p className="mt-2 text-xl font-bold text-slate-950">{value}</p>
     </div>
   );
+}
+
+function profileIpLabel(profile) {
+  const metadata = profile.metadata || {};
+  if (metadata.dynamicIpMode) {
+    return metadata.currentIp ? `动态 ${metadata.currentIp}` : '动态，待检测';
+  }
+  return profile.proxyIp || '-';
 }
 
 export default function WorkerDetail() {
@@ -153,21 +162,22 @@ export default function WorkerDetail() {
     return runAction(async () => {
       const profileId = bindForm.newProfileId.trim() || bindForm.profileId;
       if (!profileId) throw new Error('请输入新的环境 ID，或选择一个已登记环境');
+      if (!bindForm.countryTag.trim()) throw new Error('请填写国家标签，例如 US');
+      if (!bindForm.dynamicIpMode && !bindForm.proxyIp.trim()) throw new Error('固定 IP 模式必须填写代理/IP');
 
       if (bindForm.newProfileId.trim()) {
-        if (!bindForm.proxyIp.trim()) throw new Error('新环境必须填写代理/IP，否则 CPX 无法按真实出口 IP 拉问卷');
-        if (!bindForm.countryTag.trim()) throw new Error('新环境必须填写国家标签，例如 US');
-
         await createTrafficProfile({
           id: profileId,
           displayName: bindForm.displayName || profileId,
-          proxyIp: bindForm.proxyIp,
+          proxyIp: bindForm.proxyIp || undefined,
           proxyCountry: bindForm.proxyCountry || bindForm.countryTag,
           countryTag: bindForm.countryTag || bindForm.proxyCountry || 'US',
           status: 'idle',
+          dynamicIpMode: bindForm.dynamicIpMode,
           metadata: {
             source: 'worker_detail_manual_bind',
             manualCompletionOnly: true,
+            dynamicIpMode: bindForm.dynamicIpMode,
           },
         });
       }
@@ -179,6 +189,10 @@ export default function WorkerDetail() {
         proxyIp: bindForm.proxyIp || undefined,
         proxyCountry: bindForm.proxyCountry || undefined,
         countryTag: bindForm.countryTag || undefined,
+        dynamicIpMode: bindForm.dynamicIpMode,
+        metadata: {
+          dynamicIpMode: bindForm.dynamicIpMode,
+        },
       });
       setBindForm(initialBindForm);
     });
@@ -197,7 +211,7 @@ export default function WorkerDetail() {
     { key: 'extUserId', header: 'ext_user_id', render: (row) => row.metadata?.extUserId || '-' },
     { key: 'settlementUserId', header: '结算账号', render: (row) => row.metadata?.settlementUserId || '-' },
     { key: 'countryTag', header: '国家' },
-    { key: 'proxyIp', header: '代理/IP' },
+    { key: 'proxyIp', header: '代理/IP', render: profileIpLabel },
     { key: 'healthScore', header: '健康' },
     { key: 'status', header: '状态', render: (row) => <StatusPill value={row.status} /> },
     {
@@ -362,7 +376,17 @@ export default function WorkerDetail() {
             <input className="field" placeholder="显示名称" value={bindForm.displayName} onChange={(event) => setBindForm({ ...bindForm, displayName: event.target.value })} />
             <input className="field" placeholder="ext_user_id，留空默认环境 ID" value={bindForm.extUserId} onChange={(event) => setBindForm({ ...bindForm, extUserId: event.target.value })} />
             <input className="field sm:col-span-2" placeholder="结算账号 User ID，留空默认当前成员" value={bindForm.settlementUserId} onChange={(event) => setBindForm({ ...bindForm, settlementUserId: event.target.value })} />
-            <input className="field" placeholder="代理/IP" value={bindForm.proxyIp} onChange={(event) => setBindForm({ ...bindForm, proxyIp: event.target.value })} />
+            <label className="sm:col-span-2 flex items-center gap-2 rounded-xl border border-cyan-100 bg-cyan-50 px-3 py-2 text-sm font-semibold text-cyan-800">
+              <input type="checkbox" checked={bindForm.dynamicIpMode} onChange={(event) => setBindForm({ ...bindForm, dynamicIpMode: event.target.checked })} />
+              动态 IP 模式（Orbit Member 接任务前自动读取当前出口 IP）
+            </label>
+            {bindForm.dynamicIpMode ? (
+              <p className="sm:col-span-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-500">
+                代理/IP 不需要手动填写。Orbit Member 会在接任务前打开检测页，自动写入当前出口 IP。
+              </p>
+            ) : (
+              <input className="field" placeholder="固定代理/IP" value={bindForm.proxyIp} onChange={(event) => setBindForm({ ...bindForm, proxyIp: event.target.value })} />
+            )}
             <input className="field" placeholder="代理国家" value={bindForm.proxyCountry} onChange={(event) => setBindForm({ ...bindForm, proxyCountry: event.target.value })} />
             <input className="field" placeholder="国家标签" value={bindForm.countryTag} onChange={(event) => setBindForm({ ...bindForm, countryTag: event.target.value })} />
           </div>
