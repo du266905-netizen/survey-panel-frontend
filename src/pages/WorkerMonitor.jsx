@@ -12,7 +12,7 @@ function statusClass(isOnline) {
 function StatusPill({ isOnline }) {
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ${statusClass(isOnline)}`}>
-      {isOnline ? '在线' : '离线'}
+      {isOnline ? 'Online' : 'Offline'}
     </span>
   );
 }
@@ -49,7 +49,7 @@ export default function WorkerMonitor() {
       setWorkers(workerData.items || []);
       setDiagnostics(diagnosticData);
     } catch (err) {
-      setError(err.response?.data?.message || err.message || '成员监控加载失败');
+      setError(err.response?.data?.message || err.message || 'Unable to load member monitor.');
     } finally {
       setLoading(false);
     }
@@ -74,7 +74,7 @@ export default function WorkerMonitor() {
   const columns = [
     {
       key: 'displayName',
-      header: '成员',
+      header: 'Member',
       render: (row) => (
         <div>
           <p className="font-bold text-slate-950">{row.displayName || row.operatorName || row.id}</p>
@@ -82,25 +82,25 @@ export default function WorkerMonitor() {
         </div>
       ),
     },
-    { key: 'status', header: '状态', render: (row) => <StatusPill isOnline={row.isOnline} /> },
-    { key: 'currentStatus', header: '当前状态', render: (row) => row.currentStatus || '-' },
-    { key: 'currentTaskId', header: '当前任务', render: (row) => row.currentTaskId || '-' },
-    { key: 'currentProfileId', header: '当前环境', render: (row) => row.currentProfileId || '-' },
-    { key: 'profileCount', header: '绑定环境' },
-    { key: 'idleProfileCount', header: '空闲环境' },
-    { key: 'completedTaskCount', header: '今日完成' },
-    { key: 'failedTaskCount', header: '今日失败' },
+    { key: 'status', header: 'Status', render: (row) => <StatusPill isOnline={row.isOnline} /> },
+    { key: 'currentStatus', header: 'Current Status', render: (row) => row.currentStatus || '-' },
+    { key: 'currentTaskId', header: 'Current Task', render: (row) => row.currentTaskId || '-' },
+    { key: 'currentProfileId', header: 'Current Profile', render: (row) => row.currentProfileId || '-' },
+    { key: 'profileCount', header: 'Bound Profiles' },
+    { key: 'idleProfileCount', header: 'Idle Profiles' },
+    { key: 'completedTaskCount', header: 'Completed Today' },
+    { key: 'failedTaskCount', header: 'Failed Today' },
     {
       key: 'lastSeenAt',
-      header: '最后心跳',
+      header: 'Last Heartbeat',
       render: (row) => (row.lastSeenAt ? new Date(row.lastSeenAt).toLocaleString() : '-'),
     },
     {
       key: 'actions',
-      header: '操作',
+      header: 'Action',
       render: (row) => (
         <Link className="btn-secondary px-3 py-1.5" to={`/workers/${row.id}`}>
-          打开
+          Open
         </Link>
       ),
     },
@@ -109,12 +109,12 @@ export default function WorkerMonitor() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="成员监控"
-        description="按成员聚合执行端心跳、绑定执行环境、当前任务、任务结果和异常原因。"
+        title="Member Monitor"
+        description="Monitor Orbit Member heartbeats, bound profiles, current tasks, outcomes, and dispatch blockers."
         action={
           <button className="btn-secondary" type="button" onClick={loadWorkers} disabled={loading}>
             <RefreshCcw size={16} />
-            刷新
+            Refresh
           </button>
         }
       />
@@ -127,22 +127,22 @@ export default function WorkerMonitor() {
       )}
 
       <div className="grid gap-4 lg:grid-cols-4">
-        <StatCard label="在线成员" value={totals.online} icon={MonitorCheck} tone="bg-green-50 text-green-600" />
-        <StatCard label="运行任务" value={totals.running} icon={Activity} tone="bg-blue-50 text-blue-600" />
-        <StatCard label="空闲环境" value={totals.idleProfiles} icon={CheckCircle2} tone="bg-amber-50 text-amber-600" />
-        <StatCard label="待处理任务" value={totals.pendingTasks} icon={UserRoundCog} tone="bg-indigo-50 text-indigo-600" />
+        <StatCard label="Online Members" value={totals.online} icon={MonitorCheck} tone="bg-green-50 text-green-600" />
+        <StatCard label="Running Tasks" value={totals.running} icon={Activity} tone="bg-blue-50 text-blue-600" />
+        <StatCard label="Idle Profiles" value={totals.idleProfiles} icon={CheckCircle2} tone="bg-amber-50 text-amber-600" />
+        <StatCard label="Pending Tasks" value={totals.pendingTasks} icon={UserRoundCog} tone="bg-indigo-50 text-indigo-600" />
       </div>
 
       <section className="card overflow-hidden">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-5 py-4">
           <div>
-            <h2 className="text-lg font-bold text-slate-950">派发诊断</h2>
-            <p className="mt-1 text-sm text-slate-500">只读检查成员、设备、Profile、任务和近期 CPX 同步日志，解释为什么暂时没派上任务。</p>
+            <h2 className="text-lg font-bold text-slate-950">Dispatch Diagnostics</h2>
+            <p className="mt-1 text-sm text-slate-500">Read-only checks for members, devices, profiles, tasks, and recent CPX sync logs.</p>
           </div>
           <div className="flex flex-wrap gap-2 text-xs font-bold">
-            <span className="rounded-full bg-cyan-50 px-3 py-1 text-cyan-700">可派发 {diagnostics?.summary?.ready || 0}</span>
-            <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-700">需关注 {diagnostics?.summary?.warning || 0}</span>
-            <span className="rounded-full bg-red-50 px-3 py-1 text-red-700">阻塞 {diagnostics?.summary?.blocked || 0}</span>
+            <span className="rounded-full bg-cyan-50 px-3 py-1 text-cyan-700">Ready {diagnostics?.summary?.ready || 0}</span>
+            <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-700">Needs Attention {diagnostics?.summary?.warning || 0}</span>
+            <span className="rounded-full bg-red-50 px-3 py-1 text-red-700">Blocked {diagnostics?.summary?.blocked || 0}</span>
           </div>
         </div>
         <div className="grid gap-4 p-5 xl:grid-cols-2">
@@ -160,19 +160,19 @@ export default function WorkerMonitor() {
               <div className="mt-4 grid grid-cols-4 gap-2 text-center text-xs">
                 <div className="rounded-lg bg-slate-50 p-2">
                   <p className="font-bold text-slate-950">{item.counts.onlineDevices}/{item.counts.devices}</p>
-                  <p className="mt-1 text-slate-500">设备</p>
+                  <p className="mt-1 text-slate-500">Devices</p>
                 </div>
                 <div className="rounded-lg bg-slate-50 p-2">
                   <p className="font-bold text-slate-950">{item.counts.idleProfiles}/{item.counts.profiles}</p>
-                  <p className="mt-1 text-slate-500">空闲</p>
+                  <p className="mt-1 text-slate-500">Idle</p>
                 </div>
                 <div className="rounded-lg bg-slate-50 p-2">
                   <p className="font-bold text-slate-950">{item.counts.pendingTasks}</p>
-                  <p className="mt-1 text-slate-500">待派</p>
+                  <p className="mt-1 text-slate-500">Pending</p>
                 </div>
                 <div className="rounded-lg bg-slate-50 p-2">
                   <p className="font-bold text-slate-950">{item.counts.missingProxyIp}</p>
-                  <p className="mt-1 text-slate-500">缺 IP</p>
+                  <p className="mt-1 text-slate-500">No IP</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -183,19 +183,19 @@ export default function WorkerMonitor() {
                 ))}
                 {!item.reasons?.length && (
                   <span className="rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700">
-                    当前没有阻塞原因
+                    No blockers detected
                   </span>
                 )}
               </div>
             </div>
           ))}
           {!loading && !diagnosticItems.length && (
-            <p className="rounded-lg bg-slate-50 p-5 text-sm text-slate-500">还没有可诊断的内部成员。</p>
+            <p className="rounded-lg bg-slate-50 p-5 text-sm text-slate-500">No internal members to diagnose yet.</p>
           )}
         </div>
       </section>
 
-      <DataTable columns={columns} rows={workers} loading={loading} emptyMessage="还没有成员或执行端心跳。" />
+      <DataTable columns={columns} rows={workers} loading={loading} emptyMessage="No members or agent heartbeats yet." />
     </div>
   );
 }
