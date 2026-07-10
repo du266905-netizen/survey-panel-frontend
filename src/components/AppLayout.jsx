@@ -3,7 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import CoinAmount from './CoinAmount';
 import Logo from './Logo';
-import { isAdminRole } from '../utils/roles';
+import { isAdminRole, isPanelistRole } from '../utils/roles';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -17,7 +17,9 @@ export default function AppLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const isAdmin = isAdminRole(user?.role);
+  const isPanelist = isPanelistRole(user?.role);
   const roleLabel = isAdmin ? 'Admin' : user?.role === 'panelist' ? 'Panelist' : 'Member';
+  const visibleNavItems = navItems.filter((item) => item.to !== '/settings' || !isPanelist);
 
   const handleLogout = () => {
     logout();
@@ -30,7 +32,7 @@ export default function AppLayout() {
         <div className="flex h-16 items-center justify-between px-6">
           <div className="flex items-center gap-4">
             <Logo size="md" />
-            <p className="hidden text-xs text-slate-500 sm:block">Survey operations console</p>
+            <p className="hidden text-xs text-slate-500 sm:block">{isPanelist ? 'Survey rewards' : 'Survey operations console'}</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-800">
@@ -51,11 +53,8 @@ export default function AppLayout() {
 
       <div className="flex">
         <aside className="min-h-[calc(100vh-4rem)] w-64 border-r border-slate-200/80 bg-white/90 px-4 py-6">
-          <div className="mb-6 border-b border-slate-100 pb-5">
-            <Logo size="sm" />
-          </div>
           <nav className="space-y-1">
-            {navItems.map((item) => {
+            {visibleNavItems.map((item) => {
               const Icon = item.icon;
               return (
                 <NavLink

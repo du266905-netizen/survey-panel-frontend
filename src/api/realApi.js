@@ -158,6 +158,26 @@ export const resetPassword = async ({ email, token, password }) => {
   return { data: response.data };
 };
 
+export const getCurrentUser = async () => {
+  const response = await apiClient.get('/api/auth/me');
+  return {
+    data: {
+      ...response.data,
+      user: normalizeUser(response.data.user),
+    },
+  };
+};
+
+export const updateProfile = async ({ displayName }) => {
+  const response = await apiClient.put('/api/auth/profile', { displayName });
+  return {
+    data: {
+      ...response.data,
+      user: normalizeUser(response.data.user),
+    },
+  };
+};
+
 export const getOnboardingProfile = async () => {
   const response = await apiClient.get('/api/auth/onboarding');
   return { data: response.data };

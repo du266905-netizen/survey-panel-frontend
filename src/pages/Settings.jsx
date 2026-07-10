@@ -1,14 +1,20 @@
+import { Navigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../components/AuthContext';
-import { isAdminRole } from '../utils/roles';
+import { isAdminRole, isPanelistRole } from '../utils/roles';
 
 export default function Settings() {
   const { user } = useAuth();
   const isAdmin = isAdminRole(user?.role);
+  const isPanelist = isPanelistRole(user?.role);
+
+  if (isPanelist) {
+    return <Navigate to="/profile" replace />;
+  }
 
   return (
     <>
-      <PageHeader title="Settings" description="Operational preferences for survey launching." />
+      <PageHeader title="Operational Settings" description="Internal preferences for survey launching." />
       <div className="grid max-w-5xl gap-6 xl:grid-cols-2">
         <section className="card p-5">
           <h2 className="mb-4 text-lg font-bold text-slate-950">Launch Controls</h2>
