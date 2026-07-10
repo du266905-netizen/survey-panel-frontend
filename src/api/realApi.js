@@ -453,6 +453,11 @@ export const updateWorkerDevice = async (workerId, agentId, payload = {}) => {
   return response.data;
 };
 
+export const updateWorkerMoreLoginCredential = async (workerId, payload = {}) => {
+  const response = await apiClient.put(`/api/traffic/workers/${workerId}/morelogin-credential`, payload);
+  return response.data;
+};
+
 export const getTrafficTasks = async (params = {}) => {
   const response = await apiClient.get('/api/traffic/tasks', { params });
   return response.data;

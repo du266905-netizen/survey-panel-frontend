@@ -12,6 +12,7 @@ import {
   markTrafficOutcome,
   releaseTrafficTask,
   updateWorkerDevice,
+  updateWorkerMoreLoginCredential,
 } from '../api/realApi';
 
 const initialTaskForm = {
@@ -36,6 +37,13 @@ const initialBindForm = {
   proxyCountry: '',
   countryTag: 'US',
   dynamicIpMode: true,
+};
+
+const initialMoreLoginForm = {
+  localBaseUrl: 'http://127.0.0.1:40000',
+  apiId: '',
+  apiKey: '',
+  encryptKey: '',
 };
 
 function statusClass(status) {
@@ -84,6 +92,8 @@ export default function WorkerDetail() {
   const [error, setError] = useState('');
   const [taskForm, setTaskForm] = useState(initialTaskForm);
   const [bindForm, setBindForm] = useState(initialBindForm);
+  const [moreLoginCredential, setMoreLoginCredential] = useState(null);
+  const [moreLoginForm, setMoreLoginForm] = useState(initialMoreLoginForm);
   const [selectedProfileId, setSelectedProfileId] = useState('');
   const [forceAssign, setForceAssign] = useState(false);
   const [copyMessage, setCopyMessage] = useState('');
@@ -99,6 +109,14 @@ export default function WorkerDetail() {
       setDevices(data.devices || []);
       setTasks(data.tasks || []);
       setLogs(data.logs || []);
+      setMoreLoginCredential(data.moreLoginCredential || null);
+      setMoreLoginForm((current) => ({
+        ...current,
+        localBaseUrl: data.moreLoginCredential?.localBaseUrl || current.localBaseUrl || initialMoreLoginForm.localBaseUrl,
+        apiId: '',
+        apiKey: '',
+        encryptKey: '',
+      }));
       const firstIdle = (data.profiles || []).find((profile) => profile.status === 'idle');
       setSelectedProfileId((current) => current || firstIdle?.id || '');
       setBindForm((current) => ({ ...current, profileId: current.profileId || (data.availableProfiles || [])[0]?.id || '' }));
@@ -195,6 +213,19 @@ export default function WorkerDetail() {
         },
       });
       setBindForm(initialBindForm);
+    });
+  };
+
+  const handleMoreLoginCredential = (event) => {
+    event.preventDefault();
+    return runAction(async () => {
+      await updateWorkerMoreLoginCredential(workerId, {
+        localBaseUrl: moreLoginForm.localBaseUrl || initialMoreLoginForm.localBaseUrl,
+        ...(moreLoginForm.apiId.trim() ? { apiId: moreLoginForm.apiId.trim() } : {}),
+        ...(moreLoginForm.apiKey.trim() ? { apiKey: moreLoginForm.apiKey.trim() } : {}),
+        ...(moreLoginForm.encryptKey.trim() ? { encryptKey: moreLoginForm.encryptKey.trim() } : {}),
+      });
+      setMoreLoginForm((current) => ({ ...current, apiId: '', apiKey: '', encryptKey: '' }));
     });
   };
 
@@ -342,6 +373,35 @@ export default function WorkerDetail() {
           复制成员密码
         </button>
       </section>
+
+      <form className="card space-y-4 p-5" onSubmit={handleMoreLoginCredential}>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-bold text-slate-950">MoreLogin API 配置</h2>
+            <p className="mt-1 text-sm text-slate-500">保存后，Orbit Member 检查环境和开始接任务前会自动同步这组配置。</p>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs font-bold">
+            <span className={`rounded-full px-2.5 py-1 ring-1 ${moreLoginCredential?.hasApiId ? 'bg-green-50 text-green-700 ring-green-200' : 'bg-slate-50 text-slate-500 ring-slate-200'}`}>
+              API ID {moreLoginCredential?.hasApiId ? '已配置' : '未配置'}
+            </span>
+            <span className={`rounded-full px-2.5 py-1 ring-1 ${moreLoginCredential?.hasApiKey ? 'bg-green-50 text-green-700 ring-green-200' : 'bg-slate-50 text-slate-500 ring-slate-200'}`}>
+              API Key {moreLoginCredential?.hasApiKey ? '已配置' : '未配置'}
+            </span>
+            <span className={`rounded-full px-2.5 py-1 ring-1 ${moreLoginCredential?.hasEncryptKey ? 'bg-green-50 text-green-700 ring-green-200' : 'bg-slate-50 text-slate-500 ring-slate-200'}`}>
+              Encrypt Key {moreLoginCredential?.hasEncryptKey ? '已配置' : '未配置'}
+            </span>
+          </div>
+        </div>
+        <div className="grid gap-3 lg:grid-cols-4">
+          <input className="field" placeholder="Local API URL" value={moreLoginForm.localBaseUrl} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, localBaseUrl: event.target.value })} />
+          <input className="field" placeholder="API ID（留空不修改）" value={moreLoginForm.apiId} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, apiId: event.target.value })} />
+          <input className="field" placeholder="API Key（留空不修改）" type="password" value={moreLoginForm.apiKey} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, apiKey: event.target.value })} />
+          <input className="field" placeholder="Encrypt Key（留空不修改）" type="password" value={moreLoginForm.encryptKey} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, encryptKey: event.target.value })} />
+        </div>
+        <button className="btn-primary" type="submit" disabled={busy}>
+          保存 MoreLogin 配置
+        </button>
+      </form>
 
       <section>
         <h2 className="mb-3 text-lg font-bold text-slate-950">成员设备</h2>
