@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Eye, EyeOff } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { register, sendEmailCode, verifyEmailCode } from '../api/realApi';
+import { useAuth } from '../components/AuthContext';
 import Logo from '../components/Logo';
 import TurnstileWidget from '../components/TurnstileWidget';
 
 const codeCooldownSeconds = 60;
 
 export default function Register() {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [form, setForm] = useState({ displayName: '', email: '', password: '', verificationCode: '' });
   const codeInputRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +23,6 @@ export default function Register() {
   const [codeFocused, setCodeFocused] = useState(false);
   const [toast, setToast] = useState(null);
   const [error, setError] = useState('');
-  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (!codeCooldown) return undefined;
@@ -54,6 +56,14 @@ export default function Register() {
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
   };
+
+  const passwordChecks = [
+    { label: '8+ characters', passed: form.password.length >= 8 },
+    { label: 'Upper and lower case', passed: /[a-z]/.test(form.password) && /[A-Z]/.test(form.password) },
+    { label: 'Number or symbol', passed: /[\d\W_]/.test(form.password) },
+  ];
+  const passwordScore = passwordChecks.filter((check) => check.passed).length;
+  const passwordStrength = passwordScore === 3 ? 'Strong' : passwordScore === 2 ? 'Good' : passwordScore === 1 ? 'Fair' : 'Weak';
 
   // Client-side cooldown mirrors the server limit and prevents accidental resends.
   const handleSendCode = async () => {
@@ -91,12 +101,13 @@ export default function Register() {
         await verifyEmailCode({ email: form.email, code: form.verificationCode });
         setEmailVerified(true);
       }
-      await register({
+      const response = await register({
         ...form,
         turnstileToken,
         agreedToTermsAt: new Date().toISOString(),
       });
-      setSubmitted(true);
+      setUser(response.data.user);
+      navigate('/onboarding', { replace: true });
     } catch (caughtError) {
       const code = caughtError.response?.data?.error || caughtError.response?.data?.code;
       if (code === 'TURNSTILE_VERIFICATION_FAILED') {
@@ -130,20 +141,6 @@ export default function Register() {
           <p className="mt-3 text-sm italic text-slate-500">Your opinion shapes the world.</p>
         </div>
 
-        {submitted ? (
-          <div className="rounded-2xl border border-cyan-200 bg-white p-8 text-center shadow-sm">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600">
-              <CheckCircle2 size={28} />
-            </div>
-            <h1 className="mt-6 text-2xl font-semibold text-slate-950">Email Verified</h1>
-            <p className="mt-3 text-sm leading-6 text-slate-500">
-              Welcome to Guanyi Research. Your panelist account is ready.
-            </p>
-            <Link className="btn-primary mt-6 w-full" to="/login">
-              Back to Login
-            </Link>
-          </div>
-        ) : (
         <form className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm" onSubmit={handleSubmit}>
           <div>
             <h1 className="text-2xl font-semibold text-slate-950">Create your account</h1>
@@ -255,6 +252,30 @@ export default function Register() {
             </span>
           </label>
 
+          <div className="mt-3 rounded-xl border border-slate-100 bg-slate-50 p-3">
+            <div className="mb-2 flex items-center justify-between text-xs font-semibold text-slate-600">
+              <span>Password strength</span>
+              <span>{passwordStrength}</span>
+            </div>
+            <div className="grid grid-cols-3 gap-1">
+              {passwordChecks.map((check) => (
+                <span
+                  key={check.label}
+                  className={`h-1.5 rounded-full ${check.passed ? 'bg-cyan-500' : 'bg-slate-200'}`}
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+            <div className="mt-3 grid gap-1 text-xs font-medium text-slate-500">
+              {passwordChecks.map((check) => (
+                <span className="flex items-center gap-2" key={check.label}>
+                  <CheckCircle2 size={14} className={check.passed ? 'text-cyan-600' : 'text-slate-300'} />
+                  {check.label}
+                </span>
+              ))}
+            </div>
+          </div>
+
           <label className="mt-5 flex items-start gap-2 text-sm text-gray-600">
             <input
               type="checkbox"
@@ -296,7 +317,6 @@ export default function Register() {
             </Link>
           </p>
         </form>
-        )}
       </section>
     </main>
   );

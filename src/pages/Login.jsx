@@ -88,9 +88,9 @@ export default function Login() {
 
               <div className="flex items-center justify-between text-xs">
                 <span aria-hidden="true" />
-                <a className="font-semibold text-cyan-600 hover:text-cyan-700" href="mailto:heguanyi@guanyi-media.com">
-                  Need access?
-                </a>
+                <Link className="font-semibold text-cyan-600 hover:text-cyan-700" to="/forgot-password">
+                  Forgot password?
+                </Link>
               </div>
 
               <button

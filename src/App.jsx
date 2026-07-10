@@ -5,11 +5,14 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminPartners from './pages/AdminPartners';
 import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
+import ForgotPassword from './pages/ForgotPassword';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import MyRecords from './pages/MyRecords';
+import Onboarding from './pages/Onboarding';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
+import ResetPassword from './pages/ResetPassword';
 import Settings from './pages/Settings';
 import SurveyList from './pages/SurveyList';
 import SurveyPartners from './pages/SurveyPartners';
@@ -37,6 +40,8 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/隐私" element={<Navigate to="/privacy" replace />} />
       <Route path="/terms" element={<Terms />} />
@@ -47,6 +52,7 @@ export default function App() {
           </ProtectedRoute>
         }
       >
+        <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/partners" element={<SurveyPartners />} />
         <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />

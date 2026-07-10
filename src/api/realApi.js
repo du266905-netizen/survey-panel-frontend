@@ -148,6 +148,31 @@ export const verifyEmailCode = async ({ email, code }) => {
   return { data: response.data };
 };
 
+export const requestPasswordReset = async ({ email }) => {
+  const response = await apiClient.post('/api/auth/forgot-password', { email });
+  return { data: response.data };
+};
+
+export const resetPassword = async ({ email, token, password }) => {
+  const response = await apiClient.post('/api/auth/reset-password', { email, token, password });
+  return { data: response.data };
+};
+
+export const getOnboardingProfile = async () => {
+  const response = await apiClient.get('/api/auth/onboarding');
+  return { data: response.data };
+};
+
+export const completeOnboardingProfile = async (payload) => {
+  const response = await apiClient.post('/api/auth/onboarding', payload);
+  return {
+    data: {
+      ...response.data,
+      user: normalizeUser(response.data.user),
+    },
+  };
+};
+
 export const getDashboard = async () => {
   const [statsResponse, chartResponse, recordsResponse] = await Promise.all([
     apiClient.get('/api/records/stats'),
