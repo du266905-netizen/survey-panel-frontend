@@ -3,6 +3,7 @@ import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminPartners from './pages/AdminPartners';
+import AdminRewards from './pages/AdminRewards';
 import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
@@ -20,6 +21,7 @@ import Team from './pages/Team';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import TrafficConsole from './pages/TrafficConsole';
+import Wallet from './pages/Wallet';
 import WorkerDetail from './pages/WorkerDetail';
 import WorkerMonitor from './pages/WorkerMonitor';
 import AgentPrecheck from './pages/AgentPrecheck';
@@ -56,6 +58,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/partners" element={<SurveyPartners />} />
         <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/records" element={<MyRecords />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
@@ -96,6 +99,14 @@ export default function App() {
           element={
             <AdminRoute>
               <AgentPrecheck />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/rewards"
+          element={
+            <AdminRoute>
+              <AdminRewards />
             </AdminRoute>
           }
         />

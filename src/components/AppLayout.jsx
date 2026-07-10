@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, Database, LogOut, MonitorPlay, Settings, ShieldCheck, User, UserCog, UserPlus, Users } from 'lucide-react';
+import { BarChart3, ClipboardList, Database, Gift, LogOut, MonitorPlay, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import CoinAmount from './CoinAmount';
@@ -8,6 +8,7 @@ import { isAdminRole, isPanelistRole } from '../utils/roles';
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
   { to: '/partners', label: 'Survey Wall', icon: Users },
+  { to: '/wallet', label: 'Wallet', icon: WalletCards },
   { to: '/records', label: 'My Records', icon: ClipboardList },
   { to: '/profile', label: 'Profile', icon: User },
   { to: '/settings', label: 'Settings', icon: Settings },
@@ -105,6 +106,17 @@ export default function AppLayout() {
                 >
                   <MonitorPlay size={18} />
                   Traffic Console
+                </NavLink>
+                <NavLink
+                  to="/admin/rewards"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                      isActive ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700'
+                    }`
+                  }
+                >
+                  <Gift size={18} />
+                  Reward Center
                 </NavLink>
                 <NavLink
                   to="/admin/partners"

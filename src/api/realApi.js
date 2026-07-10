@@ -193,6 +193,43 @@ export const completeOnboardingProfile = async (payload) => {
   };
 };
 
+export const getWallet = async () => {
+  const response = await apiClient.get('/api/wallet');
+  return { data: response.data };
+};
+
+export const redeemReward = async ({ provider = 'manual', rewardType = 'gift_card', amountCoins, note }) => {
+  const response = await apiClient.post('/api/wallet/redeem', {
+    provider,
+    rewardType,
+    amountCoins: Number(amountCoins),
+    note,
+  });
+  return { data: response.data };
+};
+
+export const getRewardOrders = async (params = {}) => {
+  const response = await apiClient.get('/api/admin/rewards/orders', {
+    params: { pageSize: 100, ...params },
+  });
+  return { data: response.data };
+};
+
+export const getRewardProviders = async () => {
+  const response = await apiClient.get('/api/admin/rewards/providers');
+  return { data: response.data.providers || [] };
+};
+
+export const updateRewardOrder = async (orderId, payload) => {
+  const response = await apiClient.patch(`/api/admin/rewards/orders/${orderId}`, payload);
+  return { data: response.data };
+};
+
+export const updateRewardProvider = async (name, payload) => {
+  const response = await apiClient.patch(`/api/admin/rewards/providers/${name}`, payload);
+  return { data: response.data };
+};
+
 export const getDashboard = async () => {
   const [statsResponse, chartResponse, recordsResponse] = await Promise.all([
     apiClient.get('/api/records/stats'),
