@@ -119,6 +119,18 @@ export const login = async ({ email, password }) => {
   };
 };
 
+export const googleLogin = async ({ credential, agreedToTermsAt }) => {
+  const response = await apiClient.post('/api/auth/google', { credential, agreedToTermsAt });
+  persistSession(response.data);
+
+  return {
+    data: {
+      ...response.data,
+      user: normalizeUser(response.data.user),
+    },
+  };
+};
+
 export const register = async ({ email, password, displayName, verificationCode, turnstileToken, agreedToTermsAt }) => {
   const response = await apiClient.post('/api/auth/register', {
     email,

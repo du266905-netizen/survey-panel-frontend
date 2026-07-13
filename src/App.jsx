@@ -8,11 +8,9 @@ import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
 import Landing from './pages/Landing';
-import Login from './pages/Login';
 import MyRecords from './pages/MyRecords';
 import Onboarding from './pages/Onboarding';
 import Profile from './pages/Profile';
-import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';
 import Settings from './pages/Settings';
 import SurveyList from './pages/SurveyList';
@@ -40,8 +38,8 @@ function AdminRoute({ children }) {
 export default function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Landing initialAuthMode="login" />} />
+      <Route path="/register" element={<Landing initialAuthMode="register" />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/privacy" element={<Privacy />} />
@@ -135,7 +133,7 @@ export default function App() {
           }
         />
       </Route>
-      <Route path="/" element={<Landing />} />
+      <Route path="/" element={<Landing initialAuthMode="register" />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );

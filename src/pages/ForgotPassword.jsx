@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Mail, Send } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Mail, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { requestPasswordReset } from '../api/realApi';
 import Logo from '../components/Logo';
@@ -28,53 +28,72 @@ export default function ForgotPassword() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10">
-      <section className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-md flex-col justify-center">
-        <div className="mb-8">
-          <Logo size="lg" />
-          <p className="mt-3 text-sm italic text-slate-500">Your opinion shapes the world.</p>
-        </div>
-
-        <form className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm" onSubmit={handleSubmit}>
-          <div className="mb-7 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100">
-            <Mail size={22} />
-          </div>
-          <h1 className="text-2xl font-semibold text-slate-950">Reset password</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-500">
-            Enter your account email and we will send a secure reset link.
-          </p>
-
-          <label className="mt-6 block">
-            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">Email Address</span>
-            <input
-              className="field"
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="enter your email"
-              autoComplete="email"
-              required
-            />
-          </label>
-
-          {submitted && (
-            <div className="mt-5 rounded-xl border border-cyan-200 bg-cyan-50 p-4 text-sm font-semibold text-cyan-800">
-              If the email is valid, password reset instructions have been sent.
-            </div>
-          )}
-
-          {error && <p className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
-
-          <button className="btn-primary mt-6 w-full" type="submit" disabled={loading}>
-            <Send size={16} />
-            {loading ? 'Sending...' : 'Send reset link'}
-          </button>
-
-          <Link className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-700 hover:text-cyan-800" to="/login">
-            <ArrowLeft size={16} />
-            Back to login
+    <main className="recovery-page">
+      <section className="recovery-shell">
+        <aside className="recovery-brand" aria-label="GuanyiSearch account recovery">
+          <Link className="recovery-logo" to="/">
+            <Logo size="lg" variant="light" />
           </Link>
-        </form>
+          <img className="recovery-brand-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" />
+
+          <div className="recovery-brand-copy">
+            <p className="recovery-kicker">Account recovery</p>
+            <h1>Return to your research journey.</h1>
+            <p>We will send a secure, time-limited link so you can choose a new password and return when you are ready.</p>
+          </div>
+
+          <div className="recovery-brand-note">
+            <ShieldCheck size={17} />
+            <span>Secure account recovery</span>
+          </div>
+        </aside>
+
+        <section className="recovery-panel" aria-labelledby="forgot-password-title">
+          <div className="recovery-panel-inner">
+            <Link className="recovery-return" to="/login">
+              <ArrowLeft size={16} />
+              Back to sign in
+            </Link>
+
+            <form className="recovery-card" onSubmit={handleSubmit}>
+              <div className="recovery-icon"><Mail size={22} /></div>
+              <p className="recovery-kicker">Password reset</p>
+              <h2 id="forgot-password-title">Find your way back.</h2>
+              <p className="recovery-intro">Enter the email address linked to your account. If it is recognised, we will send reset instructions right away.</p>
+
+              <label className="recovery-field-group">
+                <span>Email address</span>
+                <span className="recovery-input">
+                  <Mail size={17} aria-hidden="true" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="you@example.com"
+                    autoComplete="email"
+                    required
+                  />
+                </span>
+              </label>
+
+              {submitted && (
+                <div className="recovery-message is-success" role="status">
+                  <Mail size={17} />
+                  <span>If the email is valid, password reset instructions have been sent.</span>
+                </div>
+              )}
+
+              {error && <p className="recovery-message is-error" role="alert">{error}</p>}
+
+              <button className="recovery-submit" type="submit" disabled={loading}>
+                <span>{loading ? 'Sending secure link…' : 'Send reset link'}</span>
+                {loading ? <span className="recovery-spinner" aria-hidden="true" /> : <ArrowUpRight size={17} />}
+              </button>
+
+              <p className="recovery-help">Remembered your password? <Link to="/login">Sign in instead</Link></p>
+            </form>
+          </div>
+        </section>
       </section>
     </main>
   );

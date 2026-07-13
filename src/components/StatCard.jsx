@@ -1,6 +1,6 @@
 export default function StatCard({ label, value, helper, icon: Icon, className = '', iconClassName = 'bg-cyan-50 text-cyan-600' }) {
   return (
-    <section className={`card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${className}`}>
+    <section className={`app-stat-card card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${className}`}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-medium text-slate-500">{label}</p>

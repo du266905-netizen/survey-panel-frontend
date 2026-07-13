@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { CheckCircle2, Eye, EyeOff, KeyRound } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Eye, EyeOff, KeyRound, ShieldCheck } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../api/realApi';
 import Logo from '../components/Logo';
@@ -53,100 +53,114 @@ export default function ResetPassword() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10">
-      <section className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-md flex-col justify-center">
-        <div className="mb-8">
-          <Logo size="lg" />
-          <p className="mt-3 text-sm italic text-slate-500">Your opinion shapes the world.</p>
-        </div>
+    <main className="recovery-page">
+      <section className="recovery-shell">
+        <aside className="recovery-brand" aria-label="GuanyiSearch password reset">
+          <Link className="recovery-logo" to="/">
+            <Logo size="lg" variant="light" />
+          </Link>
+          <img className="recovery-brand-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" />
 
-        <form className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm" onSubmit={handleSubmit}>
-          <div className="mb-7 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100">
-            <KeyRound size={22} />
-          </div>
-          <h1 className="text-2xl font-semibold text-slate-950">Create new password</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-500">Choose a stronger password for your Guanyi Search account.</p>
-
-          <label className="mt-6 block">
-            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">New Password</span>
-            <span className="relative block">
-              <input
-                className="field pr-12"
-                type={showPassword ? 'text' : 'password'}
-                value={form.password}
-                onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
-                placeholder="enter a new password"
-                autoComplete="new-password"
-                minLength={8}
-                required
-              />
-              <button
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900"
-                type="button"
-                onClick={() => setShowPassword((value) => !value)}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-              >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </span>
-          </label>
-
-          <div className="mt-3 rounded-xl border border-slate-100 bg-slate-50 p-3">
-            <div className="mb-2 flex items-center justify-between text-xs font-semibold text-slate-600">
-              <span>Password strength</span>
-              <span>{passwordStrength}</span>
-            </div>
-            <div className="grid grid-cols-3 gap-1">
-              {passwordChecks.map((check) => (
-                <span
-                  key={check.label}
-                  className={`h-1.5 rounded-full ${check.passed ? 'bg-cyan-500' : 'bg-slate-200'}`}
-                  aria-hidden="true"
-                />
-              ))}
-            </div>
-            <div className="mt-3 grid gap-1 text-xs font-medium text-slate-500">
-              {passwordChecks.map((check) => (
-                <span className="flex items-center gap-2" key={check.label}>
-                  <CheckCircle2 size={14} className={check.passed ? 'text-cyan-600' : 'text-slate-300'} />
-                  {check.label}
-                </span>
-              ))}
-            </div>
+          <div className="recovery-brand-copy">
+            <p className="recovery-kicker">Secure reset</p>
+            <h1>Set a password that is yours alone.</h1>
+            <p>Your account, participation history, and reward record remain in one place. Choose a new password to continue.</p>
           </div>
 
-          <label className="mt-4 block">
-            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.08em] text-slate-700">Confirm Password</span>
-            <input
-              className="field"
-              type={showPassword ? 'text' : 'password'}
-              value={form.confirmPassword}
-              onChange={(event) => setForm((current) => ({ ...current, confirmPassword: event.target.value }))}
-              placeholder="confirm your password"
-              autoComplete="new-password"
-              minLength={8}
-              required
-            />
-          </label>
+          <div className="recovery-brand-note">
+            <ShieldCheck size={17} />
+            <span>Protected account access</span>
+          </div>
+        </aside>
 
-          {completed && (
-            <div className="mt-5 rounded-xl border border-cyan-200 bg-cyan-50 p-4 text-sm font-semibold text-cyan-800">
-              Password updated. You can sign in with your new password.
-            </div>
-          )}
-
-          {error && <p className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
-
-          {completed ? (
-            <Link className="btn-primary mt-6 w-full" to="/login">
-              Back to login
+        <section className="recovery-panel" aria-labelledby="reset-password-title">
+          <div className="recovery-panel-inner">
+            <Link className="recovery-return" to="/login">
+              <ArrowLeft size={16} />
+              Back to sign in
             </Link>
-          ) : (
-            <button className="btn-primary mt-6 w-full" type="submit" disabled={loading}>
-              {loading ? 'Updating...' : 'Update password'}
-            </button>
-          )}
-        </form>
+
+            <form className="recovery-card recovery-card-reset" onSubmit={handleSubmit}>
+              <div className="recovery-icon"><KeyRound size={22} /></div>
+              <p className="recovery-kicker">New password</p>
+              <h2 id="reset-password-title">Keep your account secure.</h2>
+              <p className="recovery-intro">Choose a strong password for your GuanyiSearch account. Your reset link is checked when you save it.</p>
+
+              <label className="recovery-field-group">
+                <span>New password</span>
+                <span className="recovery-input">
+                  <KeyRound size={17} aria-hidden="true" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={form.password}
+                    onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
+                    placeholder="At least 8 characters"
+                    autoComplete="new-password"
+                    minLength={8}
+                    required
+                  />
+                  <button
+                    className="recovery-password-toggle"
+                    type="button"
+                    onClick={() => setShowPassword((value) => !value)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                  </button>
+                </span>
+              </label>
+
+              <div className="recovery-strength" aria-live="polite">
+                <div className="recovery-strength-head"><span>Password strength</span><strong>{passwordStrength}</strong></div>
+                <div className="recovery-strength-meter" aria-hidden="true">
+                  {passwordChecks.map((check) => <span key={check.label} className={check.passed ? 'is-passed' : ''} />)}
+                </div>
+                <div className="recovery-strength-list">
+                  {passwordChecks.map((check) => (
+                    <span key={check.label} className={check.passed ? 'is-passed' : ''}>
+                      <CheckCircle2 size={14} />
+                      {check.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <label className="recovery-field-group">
+                <span>Confirm password</span>
+                <span className="recovery-input">
+                  <KeyRound size={17} aria-hidden="true" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={form.confirmPassword}
+                    onChange={(event) => setForm((current) => ({ ...current, confirmPassword: event.target.value }))}
+                    placeholder="Confirm your new password"
+                    autoComplete="new-password"
+                    minLength={8}
+                    required
+                  />
+                </span>
+              </label>
+
+              {completed && (
+                <div className="recovery-message is-success" role="status">
+                  <CheckCircle2 size={17} />
+                  <span>Password updated. You can sign in with your new password.</span>
+                </div>
+              )}
+
+              {error && <p className="recovery-message is-error" role="alert">{error}</p>}
+
+              {completed ? (
+                <Link className="recovery-submit" to="/login"><span>Back to sign in</span><ArrowUpRight size={17} /></Link>
+              ) : (
+                <button className="recovery-submit" type="submit" disabled={loading}>
+                  <span>{loading ? 'Saving password…' : 'Update password'}</span>
+                  {loading ? <span className="recovery-spinner" aria-hidden="true" /> : <ArrowUpRight size={17} />}
+                </button>
+              )}
+            </form>
+          </div>
+        </section>
       </section>
     </main>
   );

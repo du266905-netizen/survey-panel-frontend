@@ -43,6 +43,13 @@ const apiCards = [
   ['Pending Records', 'stats.pendingResponses', Database],
 ];
 
+const chartTooltipStyle = {
+  backgroundColor: '#081317',
+  border: '1px solid rgba(214, 236, 232, .14)',
+  borderRadius: 10,
+  color: '#eaf4f1',
+};
+
 export default function AdminDashboard() {
   const { user } = useAuth();
   const { data, loading } = useAsyncData(getAdminDashboard, []);
@@ -99,11 +106,11 @@ export default function AdminDashboard() {
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data?.trafficQuality?.daily || []}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                  <XAxis dataKey="day" stroke="#64748b" fontSize={12} />
-                  <YAxis allowDecimals={false} stroke="#64748b" fontSize={12} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="panelistDau" stroke="#06b6d4" strokeWidth={3} dot={{ r: 3 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(193, 221, 218, .12)" />
+                  <XAxis dataKey="day" stroke="rgba(193, 221, 218, .52)" fontSize={12} />
+                  <YAxis allowDecimals={false} stroke="rgba(193, 221, 218, .52)" fontSize={12} />
+                  <Tooltip contentStyle={chartTooltipStyle} labelStyle={{ color: '#eaf4f1' }} itemStyle={{ color: '#9fe4df' }} cursor={{ stroke: 'rgba(159, 228, 223, .22)' }} />
+                  <Line type="monotone" dataKey="panelistDau" stroke="#9fe4df" strokeWidth={3} dot={{ r: 3, fill: '#0b1d21', stroke: '#9fe4df', strokeWidth: 2 }} activeDot={{ r: 5, fill: '#9fe4df' }} />
                 </LineChart>
               </ResponsiveContainer>
             )}

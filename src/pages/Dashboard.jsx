@@ -11,6 +11,13 @@ import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber } from '../utils/formatters';
 import { useAuth } from '../components/AuthContext';
 
+const chartTooltipStyle = {
+  backgroundColor: '#081317',
+  border: '1px solid rgba(214, 236, 232, .14)',
+  borderRadius: 10,
+  color: '#eaf4f1',
+};
+
 const greetingForHour = (hour) => {
   if (hour < 12) return '早上好';
   if (hour < 18) return '下午好';
@@ -102,11 +109,11 @@ export default function Dashboard() {
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data.earningsTrend}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="day" stroke="#64748b" fontSize={12} />
-                <YAxis stroke="#64748b" fontSize={12} tickFormatter={(value) => `${formatCoinNumber(value)}`} />
-                <Tooltip />
-                <Line type="monotone" dataKey="coins" stroke="#06b6d4" strokeWidth={3} dot={{ r: 4 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(193, 221, 218, .12)" />
+                <XAxis dataKey="day" stroke="rgba(193, 221, 218, .52)" fontSize={12} />
+                <YAxis stroke="rgba(193, 221, 218, .52)" fontSize={12} tickFormatter={(value) => `${formatCoinNumber(value)}`} />
+                <Tooltip contentStyle={chartTooltipStyle} labelStyle={{ color: '#eaf4f1' }} itemStyle={{ color: '#9fe4df' }} cursor={{ stroke: 'rgba(159, 228, 223, .22)' }} />
+                <Line type="monotone" dataKey="coins" stroke="#9fe4df" strokeWidth={3} dot={{ r: 3, fill: '#0b1d21', stroke: '#9fe4df', strokeWidth: 2 }} activeDot={{ r: 5, fill: '#9fe4df' }} />
               </LineChart>
             </ResponsiveContainer>
           )}
