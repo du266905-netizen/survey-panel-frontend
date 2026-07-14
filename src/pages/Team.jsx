@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Edit3, Plus, Trash2, X } from 'lucide-react';
+import { Edit3, Eye, Plus, Trash2, X } from 'lucide-react';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';
-import { createEmployee, deleteEmployee, getEmployees, updateEmployee } from '../api/realApi';
+import { createEmployee, deleteEmployee, getAdminUserProfile, getEmployees, updateEmployee } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 
 const emptyForm = {
@@ -21,6 +21,71 @@ const formatDate = (value) => {
     day: '2-digit',
   }).format(new Date(value));
 };
+
+const formatDateTime = (value) => {
+  if (!value) return 'Not set';
+  return new Intl.DateTimeFormat('en', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(value));
+};
+
+const readableValue = (value) => (value ? String(value).replaceAll('_', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase()) : 'Not set');
+
+function PanelistProfileModal({ employee, detail, loading, error, onClose }) {
+  const profile = detail?.profile;
+  const user = detail?.user || employee;
+  const birthday = profile?.birthYear && profile?.birthMonth && profile?.birthDay ? `${profile.birthYear}-${String(profile.birthMonth).padStart(2, '0')}-${String(profile.birthDay).padStart(2, '0')}` : 'Not set';
+  const fields = profile
+    ? [
+        ['Public Panelist ID', profile.publicId || 'Not set'],
+        ['Country', profile.country || 'Not set'],
+        ['Language', readableValue(profile.language)],
+        ['Birth date', birthday],
+        ['Age range', profile.ageRange || 'Not set'],
+        ['Gender', readableValue(profile.gender)],
+        ['Occupation', readableValue(profile.occupation)],
+        ['Profile survey', profile.profileSurveyCompletedAt ? `Completed ${formatDateTime(profile.profileSurveyCompletedAt)}` : 'Not completed'],
+        ['Quality score', profile.qualityScore ?? 'Not set'],
+        ['Source', profile.source || 'Not set'],
+        ['Traffic type', profile.trafficType || 'Not set'],
+        ['Last active', formatDateTime(profile.lastActiveAt)],
+      ]
+    : [];
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4">
+      <section className="card w-full max-w-3xl p-6 shadow-2xl">
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-slate-950">Panelist Profile</h2>
+            <p className="mt-1 text-sm text-slate-500">{user?.displayName || user?.name || 'Panelist'} · {user?.email || 'No email'}</p>
+          </div>
+          <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={onClose}>
+            <X size={18} />
+          </button>
+        </div>
+
+        {loading && <p className="rounded-lg bg-slate-50 p-4 text-sm text-slate-500">Loading panelist profile…</p>}
+        {error && <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{error}</p>}
+        {!loading && !error && !profile && <p className="rounded-lg bg-slate-50 p-4 text-sm text-slate-500">This panelist has not created a profile yet.</p>}
+        {!loading && !error && profile && (
+          <div className="grid gap-4 md:grid-cols-2">
+            {fields.map(([label, value]) => (
+              <div key={label} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</p>
+                <p className="mt-2 break-words text-sm font-bold text-slate-950">{value}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
 
 function EmployeeFormModal({ employee, onClose, onSubmit, saving, error }) {
   const [form, setForm] = useState(() =>
@@ -117,6 +182,10 @@ export default function Team() {
   const [saving, setSaving] = useState(false);
   const [modalMode, setModalMode] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [profileEmployee, setProfileEmployee] = useState(null);
+  const [profileDetail, setProfileDetail] = useState(null);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileError, setProfileError] = useState('');
   const [tagFilter, setTagFilter] = useState('All');
   const [roleFilter, setRoleFilter] = useState('All');
 
@@ -152,6 +221,27 @@ export default function Team() {
   const handleEdit = (employee) => {
     setSelectedEmployee(employee);
     setModalMode('edit');
+  };
+
+  const handleViewProfile = async (employee) => {
+    setProfileEmployee(employee);
+    setProfileDetail(null);
+    setProfileError('');
+    setProfileLoading(true);
+    try {
+      const response = await getAdminUserProfile(employee.id);
+      setProfileDetail(response.data);
+    } catch (caughtError) {
+      setProfileError(caughtError.response?.data?.message || 'Unable to load panelist profile.');
+    } finally {
+      setProfileLoading(false);
+    }
+  };
+
+  const closeProfileDetail = () => {
+    setProfileEmployee(null);
+    setProfileDetail(null);
+    setProfileError('');
   };
 
   const handleSubmit = async (form) => {
@@ -258,6 +348,11 @@ export default function Team() {
         header: 'Actions',
         render: (row) => (
           <div className="flex items-center gap-2">
+            {row.roleValue === 'PANELIST' && (
+              <button className="rounded-lg border border-slate-200 p-2 text-slate-600 transition hover:bg-slate-50" type="button" onClick={() => handleViewProfile(row)} aria-label={`View profile for ${row.name}`}>
+                <Eye size={15} />
+              </button>
+            )}
             <button className="rounded-lg border border-slate-200 p-2 text-slate-600 transition hover:bg-slate-50" type="button" onClick={() => handleEdit(row)}>
               <Edit3 size={15} />
             </button>
@@ -362,6 +457,7 @@ export default function Team() {
           onSubmit={handleSubmit}
         />
       )}
+      {profileEmployee && <PanelistProfileModal employee={profileEmployee} detail={profileDetail} loading={profileLoading} error={profileError} onClose={closeProfileDetail} />}
     </>
   );
 }

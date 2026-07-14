@@ -419,6 +419,11 @@ export const getEmployees = async () => {
   };
 };
 
+export const getAdminUserProfile = async (id) => {
+  const response = await apiClient.get(`/api/admin/users/${id}/profile`);
+  return { data: response.data };
+};
+
 export const createEmployee = async ({ name, email, password, role, tag, groupName }) => {
   const response = await apiClient.post('/api/admin/users', {
     name,
