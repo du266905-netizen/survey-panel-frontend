@@ -66,6 +66,8 @@ const occupationOptions = [
 const initialForm = {
   country: 'US',
   birthYear: '',
+  birthMonth: '',
+  birthDay: '',
   gender: 'prefer_not_to_say',
   occupation: 'employed_full_time',
   language: 'en',
@@ -98,6 +100,8 @@ export default function Onboarding() {
         setForm({
           country: loadedProfile?.country || initialForm.country,
           birthYear: loadedProfile?.birthYear || '',
+          birthMonth: loadedProfile?.birthMonth || '',
+          birthDay: loadedProfile?.birthDay || '',
           gender: loadedProfile?.gender || initialForm.gender,
           occupation: loadedProfile?.occupation || initialForm.occupation,
           language: loadedProfile?.language?.slice(0, 2) || initialForm.language,
@@ -137,6 +141,8 @@ export default function Onboarding() {
       const response = await completeOnboardingProfile({
         ...form,
         birthYear: Number(form.birthYear),
+        birthMonth: Number(form.birthMonth),
+        birthDay: Number(form.birthDay),
       });
       setUser(response.data.user);
       setProfile(response.data.profile);
@@ -179,6 +185,44 @@ export default function Onboarding() {
                   </option>
                 ))}
               </select>
+            </label>
+
+            <label className="block">
+              <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700">
+                <CalendarDays size={16} />
+                Birth month
+              </span>
+              <input
+                className="field"
+                name="birthMonth"
+                type="number"
+                min="1"
+                max="12"
+                value={form.birthMonth}
+                onChange={handleChange}
+                placeholder="1-12"
+                disabled={loading}
+                required
+              />
+            </label>
+
+            <label className="block">
+              <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700">
+                <CalendarDays size={16} />
+                Birth day
+              </span>
+              <input
+                className="field"
+                name="birthDay"
+                type="number"
+                min="1"
+                max="31"
+                value={form.birthDay}
+                onChange={handleChange}
+                placeholder="1-31"
+                disabled={loading}
+                required
+              />
             </label>
 
             <label className="block">
