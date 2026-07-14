@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, BadgeCheck, CircleDollarSign, ShieldCheck, UserRoundCheck } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import GlobalGlobe from '../components/GlobalGlobe';
@@ -16,6 +16,35 @@ const panelistSteps = [
   ['02', 'Complete your profile', 'Tell us the basics so available research can be matched more thoughtfully.'],
   ['03', 'Track your rewards', 'Keep wallet activity, records, and redemption requests in one place.'],
 ];
+
+function LandingPhoto({ className = '', src, alt, eyebrow, title, priority = false }) {
+  const imageRef = useRef(null);
+  const [imageState, setImageState] = useState('loading');
+
+  useEffect(() => {
+    const image = imageRef.current;
+    if (!image?.complete) return;
+    setImageState(image.naturalWidth > 0 ? 'loaded' : 'error');
+  }, []);
+
+  return (
+    <article className={`landing-photo ${className} is-${imageState}`}>
+      <div className="landing-photo-loading" aria-hidden="true"><span /></div>
+      <img
+        ref={imageRef}
+        src={src}
+        alt={alt}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : 'auto'}
+        decoding="async"
+        onLoad={() => setImageState('loaded')}
+        onError={() => setImageState('error')}
+      />
+      <div className="landing-photo-fallback" aria-hidden="true"><span>Visual preview is temporarily unavailable.</span></div>
+      <div className="landing-photo-caption"><p>{eyebrow}</p><strong>{title}</strong></div>
+    </article>
+  );
+}
 
 export default function Landing({ initialAuthMode = 'register' }) {
   const navigate = useNavigate();
@@ -121,12 +150,24 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .landing-intro > p, .landing-quality-copy > p, .landing-panelist-heading > p { color: #5e6a72; font-size: 16px; line-height: 1.8; }
         .landing-intro > p { margin: 0; }
         .landing-photo-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; padding-bottom: 120px; }
-        .landing-photo { position: relative; min-height: 350px; overflow: hidden; border-radius: 22px; background: #dce7e8; content-visibility: auto; contain-intrinsic-size: 390px; }
-        .landing-photo img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; transform: scale(1.001); transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+        .landing-photo { position: relative; min-height: 350px; overflow: hidden; border-radius: 22px; background: #102126; content-visibility: auto; contain-intrinsic-size: 390px; }
+        .landing-photo-loading { position: absolute; z-index: 0; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 70% 20%, rgba(104, 187, 190, .2), transparent 34%), linear-gradient(135deg, #173539, #0a161a 72%); opacity: 1; transition: opacity .45s ease; }
+        .landing-photo.is-short .landing-photo-loading { background: radial-gradient(circle at 26% 72%, rgba(176, 157, 97, .24), transparent 33%), linear-gradient(135deg, #26343a, #141b20 76%); }
+        .landing-photo.is-wide .landing-photo-loading { background: radial-gradient(circle at 78% 26%, rgba(109, 151, 157, .2), transparent 31%), linear-gradient(135deg, #253336, #111819 76%); }
+        .landing-photo-loading:before, .landing-photo-loading:after, .landing-photo-loading span { width: 35%; height: 1px; background: rgba(223, 244, 241, .2); content: ''; transform: translateY(-11px); }
+        .landing-photo-loading:after { width: 21%; transform: translateY(11px); }
+        .landing-photo-loading span { width: 6px; height: 6px; border-radius: 50%; background: rgba(221, 246, 243, .56); box-shadow: 0 0 0 7px rgba(217, 244, 240, .08); transform: none; }
+        .landing-photo img { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; transform: scale(1.001); transition: opacity .45s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+        .landing-photo.is-loading img, .landing-photo.is-error img { opacity: 0; }
+        .landing-photo.is-loaded .landing-photo-loading { opacity: 0; }
+        .landing-photo-fallback { position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 54% 38%, rgba(99, 184, 187, .14), transparent 38%), linear-gradient(135deg, #132b30, #071013); color: rgba(222, 237, 234, .63); font-size: 11px; font-weight: 800; letter-spacing: .12em; opacity: 0; text-align: center; text-transform: uppercase; transition: opacity .25s ease; }
+        .landing-photo-fallback span { max-width: 190px; line-height: 1.6; }
+        .landing-photo.is-error .landing-photo-loading { opacity: 0; }
+        .landing-photo.is-error .landing-photo-fallback { opacity: 1; }
         .landing-photo:hover img { transform: scale(1.035); }
         .landing-photo.is-short { min-height: 350px; }
         .landing-photo.is-wide { grid-column: 1 / -1; min-height: 390px; }
-        .landing-photo-caption { position: absolute; right: 18px; bottom: 18px; left: 18px; border: 1px solid rgba(255,255,255,.2); border-radius: 15px; background: rgba(8,14,17,.76); color: white; padding: 16px; backdrop-filter: blur(10px); }
+        .landing-photo-caption { position: absolute; z-index: 2; right: 18px; bottom: 18px; left: 18px; border: 1px solid rgba(255,255,255,.2); border-radius: 15px; background: rgba(8,14,17,.76); color: white; padding: 16px; backdrop-filter: blur(10px); }
         .landing-photo-caption p { margin: 0; color: #84edf5; font-size: 10px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
         .landing-photo-caption strong { display: block; margin-top: 5px; font-size: 16px; line-height: 1.3; }
         .landing-quality { background: #090c0e; color: white; padding: 118px 0; }
@@ -249,9 +290,9 @@ export default function Landing({ initialAuthMode = 'register' }) {
         </section>
 
         <section className="landing-container landing-photo-grid" aria-label="GuanyiSearch platform experience" data-reveal>
-          <article className="landing-photo"><img src="/research-operations.jpg" alt="Research team collaborating around a planning board" loading="lazy" decoding="async" /><div className="landing-photo-caption"><p>Research operations</p><strong>Thoughtful systems start with clear human context.</strong></div></article>
-          <article className="landing-photo is-short"><img src="/panelist-mobile.jpg" alt="Person using a smartphone beside a tablet" loading="lazy" decoding="async" /><div className="landing-photo-caption"><p>Panelist reality</p><strong>Designed around people, not faceless traffic.</strong></div></article>
-          <article className="landing-photo is-wide"><img src="/global-audience.jpg" alt="People walking through a city intersection" loading="lazy" decoding="async" /><div className="landing-photo-caption"><p>Global perspective</p><strong>Research begins with different lives, places, and points of view.</strong></div></article>
+          <LandingPhoto priority src="/research-operations.jpg" alt="Research team collaborating around a planning board" eyebrow="Research operations" title="Thoughtful systems start with clear human context." />
+          <LandingPhoto priority className="is-short" src="/panelist-mobile.jpg" alt="Person using a smartphone beside a tablet" eyebrow="Panelist reality" title="Designed around people, not faceless traffic." />
+          <LandingPhoto className="is-wide" src="/global-audience.jpg" alt="People walking through a city intersection" eyebrow="Global perspective" title="Research begins with different lives, places, and points of view." />
         </section>
 
         <div className="landing-tone-transition is-light-to-dark" aria-hidden="true" />

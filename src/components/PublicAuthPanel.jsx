@@ -119,6 +119,10 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
     setError(value);
   }, []);
 
+  const clearTurnstileToken = useCallback(() => {
+    setTurnstileToken('');
+  }, []);
+
   const resetFormScroll = useCallback(() => {
     window.requestAnimationFrame(() => panelRef.current?.closest('.landing-access-inner')?.scrollTo({ top: 0, behavior: 'auto' }));
   }, []);
@@ -247,7 +251,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
             <button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : 'Send verification code'}</button>
             <label><span>Email code</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label>
             <label><span>Password</span><span className="public-auth-input"><LockKeyhole size={17} /><input type={showPassword ? 'text' : 'password'} autoComplete="new-password" minLength="8" placeholder="At least 8 characters" value={registerForm.password} onChange={(event) => setRegisterForm({ ...registerForm, password: event.target.value })} required /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></span></label>
-            <TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken('')} onError={() => setTurnstileToken('')} />
+            <TurnstileWidget theme="dark" onVerify={setTurnstileToken} onExpire={clearTurnstileToken} onError={clearTurnstileToken} />
             <button className="public-auth-submit" type="submit" disabled={loading || !turnstileToken}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : 'Create account'}{!loading && <Check size={17} />}</button>
           </form>
         )}
