@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Eye, EyeOff } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { register, sendEmailCode, verifyEmailCode } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import Logo from '../components/Logo';
@@ -10,6 +10,7 @@ const codeCooldownSeconds = 60;
 
 export default function Register() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { setUser } = useAuth();
   const [form, setForm] = useState({ displayName: '', email: '', password: '', verificationCode: '' });
   const codeInputRef = useRef(null);
@@ -105,6 +106,7 @@ export default function Register() {
         ...form,
         turnstileToken,
         agreedToTermsAt: new Date().toISOString(),
+        referredBy: searchParams.get('ref') || undefined,
       });
       setUser(response.data.user);
       navigate('/onboarding', { replace: true });

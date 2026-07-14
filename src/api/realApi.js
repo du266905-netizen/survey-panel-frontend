@@ -119,8 +119,17 @@ export const login = async ({ email, password }) => {
   };
 };
 
-export const googleLogin = async ({ credential, agreedToTermsAt }) => {
-  const response = await apiClient.post('/api/auth/google', { credential, agreedToTermsAt });
+const getReferralDeviceId = () => {
+  const storageKey = 'surveyReferralDeviceId';
+  const existing = window.localStorage.getItem(storageKey);
+  if (existing) return existing;
+  const value = window.crypto?.randomUUID?.().replace(/-/g, '') || `${Date.now()}${Math.random().toString(36).slice(2)}`;
+  window.localStorage.setItem(storageKey, value);
+  return value;
+};
+
+export const googleLogin = async ({ credential, agreedToTermsAt, referredBy }) => {
+  const response = await apiClient.post('/api/auth/google', { credential, agreedToTermsAt, referredBy, referralDeviceId: getReferralDeviceId() });
   persistSession(response.data);
 
   return {
@@ -131,7 +140,7 @@ export const googleLogin = async ({ credential, agreedToTermsAt }) => {
   };
 };
 
-export const register = async ({ email, password, displayName, verificationCode, turnstileToken, agreedToTermsAt }) => {
+export const register = async ({ email, password, displayName, verificationCode, turnstileToken, agreedToTermsAt, referredBy }) => {
   const response = await apiClient.post('/api/auth/register', {
     email,
     password,
@@ -139,6 +148,8 @@ export const register = async ({ email, password, displayName, verificationCode,
     verificationCode,
     turnstileToken,
     agreedToTermsAt,
+    referredBy,
+    referralDeviceId: getReferralDeviceId(),
   });
   persistSession(response.data);
 
@@ -243,12 +254,13 @@ export const updateRewardProvider = async (name, payload) => {
 };
 
 export const getDashboard = async () => {
-  const [statsResponse, chartResponse, recordsResponse] = await Promise.all([
+  const [statsResponse, chartResponse, recordsResponse, referralResponse] = await Promise.all([
     apiClient.get('/api/records/stats'),
     apiClient.get('/api/records/chart'),
     apiClient.get('/api/records', {
       params: { pageSize: 10, status: 'COMPLETED' },
     }),
+    apiClient.get('/api/referrals/me').catch(() => ({ data: { referral: null } })),
   ]);
 
   return {
@@ -261,6 +273,7 @@ export const getDashboard = async () => {
       },
       earningsTrend: chartResponse.data.chart || [],
       recentActivities: (recordsResponse.data.items || []).map(mapRecord),
+      referral: referralResponse.data.referral,
     },
   };
 };

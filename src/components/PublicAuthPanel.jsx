@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Check, ChevronLeft, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { googleLogin, login, register, sendEmailCode, verifyEmailCode } from '../api/realApi';
 import { useAuth } from './AuthContext';
 import TurnstileWidget from './TurnstileWidget';
@@ -88,6 +88,7 @@ function GoogleButton({ mode, agreedToTerms, onCredential, onError }) {
 
 export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const panelRef = useRef(null);
   const { setUser } = useAuth();
   const [registerExpanded, setRegisterExpanded] = useState(false);
@@ -101,6 +102,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
   const [codeCooldown, setCodeCooldown] = useState(0);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const referredBy = new URLSearchParams(location.search).get('ref') || undefined;
 
   useEffect(() => {
     if (!codeCooldown) return undefined;
@@ -140,7 +142,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
       setLoading(true);
       setError('');
       try {
-        const response = await googleLogin({ credential, agreedToTermsAt: mode === 'register' ? new Date().toISOString() : undefined });
+        const response = await googleLogin({ credential, agreedToTermsAt: mode === 'register' ? new Date().toISOString() : undefined, referredBy });
         finishAuth(response);
       } catch (caughtError) {
         showError(caughtError.response?.data?.message || 'Google sign-in failed. Please try email instead.');
@@ -148,7 +150,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
         setLoading(false);
       }
     },
-    [finishAuth, mode, showError]
+    [finishAuth, mode, referredBy, showError]
   );
 
   const handleLogin = async (event) => {
@@ -192,6 +194,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
           ...registerForm,
           turnstileToken,
           agreedToTermsAt: new Date().toISOString(),
+          referredBy,
         })
       );
     } catch (caughtError) {

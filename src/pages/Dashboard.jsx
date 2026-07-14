@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, Clock3, Coins, XCircle } from 'lucide-react';
+import { CheckCircle2, Clock3, Coins, Copy, Gift, XCircle } from 'lucide-react';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { getDashboard } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
@@ -28,8 +28,21 @@ export default function Dashboard() {
   const { data, loading } = useAsyncData(getDashboard, []);
   const { user } = useAuth();
   const [chartRange, setChartRange] = useState('7d');
+  const [copyStatus, setCopyStatus] = useState('');
   const greeting = greetingForHour(new Date().getHours());
   const displayName = user?.displayName || user?.username || 'there';
+  const referral = data?.referral;
+  const referralLink = referral?.referralCode ? `https://guanyi-media.com/register?ref=${referral.referralCode}` : '';
+
+  const copyReferralLink = async () => {
+    if (!referralLink) return;
+    try {
+      await navigator.clipboard.writeText(referralLink);
+      setCopyStatus('Copied');
+    } catch {
+      setCopyStatus('Copy failed');
+    }
+  };
 
   const columns = [
     { key: 'surveyId', header: 'Survey ID' },
@@ -83,6 +96,24 @@ export default function Dashboard() {
           iconClassName="bg-red-100 text-red-600"
         />
       </div>
+
+      <section className="card mt-6 overflow-hidden border border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-amber-50 p-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-cyan-700"><Gift size={19} /><span className="text-xs font-bold uppercase tracking-[0.12em]">Invite friends</span></div>
+            <h2 className="mt-2 text-xl font-bold text-slate-950">Share your link after they complete their first survey.</h2>
+            <p className="mt-1 text-sm text-slate-600">You earn {referral?.referrerRewardCoins ?? 500} Coins and your friend earns {referral?.referredRewardCoins ?? 300} Coins after their first completed survey.</p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 text-right">
+            <div><p className="text-2xl font-black text-slate-950">{referral?.successfulInvites ?? 0}</p><p className="text-xs font-semibold text-slate-500">Successful invites</p></div>
+            <div><p className="text-2xl font-black text-amber-600"><CoinAmount value={referral?.coinsEarned ?? 0} /></p><p className="text-xs font-semibold text-slate-500">Referral Coins</p></div>
+          </div>
+        </div>
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <input className="field flex-1 bg-white font-mono text-sm" value={referralLink} readOnly aria-label="Your referral link" />
+          <button className="btn-primary shrink-0" type="button" onClick={copyReferralLink} disabled={!referralLink}><Copy size={16} /> {copyStatus || 'Copy link'}</button>
+        </div>
+      </section>
 
       <section className="card mt-6 p-5">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">

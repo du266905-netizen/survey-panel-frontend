@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, BadgeCheck, CircleDollarSign, ShieldCheck, UserRoundCheck } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GlobalGlobe from '../components/GlobalGlobe';
 import Logo from '../components/Logo';
 import PublicAuthPanel from '../components/PublicAuthPanel';
@@ -48,6 +48,7 @@ function LandingPhoto({ className = '', src, alt, eyebrow, title, priority = fal
 
 export default function Landing({ initialAuthMode = 'register' }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [authMode, setAuthMode] = useState(initialAuthMode);
 
   useEffect(() => setAuthMode(initialAuthMode), [initialAuthMode]);
@@ -72,7 +73,7 @@ export default function Landing({ initialAuthMode = 'register' }) {
 
   const setMode = (nextMode) => {
     setAuthMode(nextMode);
-    navigate(nextMode === 'login' ? '/login' : '/register');
+    navigate({ pathname: nextMode === 'login' ? '/login' : '/register', search: location.search });
   };
 
   return (
@@ -274,7 +275,7 @@ export default function Landing({ initialAuthMode = 'register' }) {
           <nav className="landing-access-nav" aria-label="Public navigation">
             <a href="#platform">Platform</a>
             <a href="#quality">Quality</a>
-            {authMode === 'login' ? <Link className="landing-nav-pill" to="/register">Create account</Link> : <Link className="landing-nav-pill" to="/login">Sign in</Link>}
+            {authMode === 'login' ? <Link className="landing-nav-pill" to={{ pathname: '/register', search: location.search }}>Create account</Link> : <Link className="landing-nav-pill" to={{ pathname: '/login', search: location.search }}>Sign in</Link>}
           </nav>
           <div className="landing-access-inner"><PublicAuthPanel mode={authMode} onModeChange={setMode} /></div>
           <span className="landing-scroll-cue"><ArrowRight size={14} /> Explore the platform below</span>
