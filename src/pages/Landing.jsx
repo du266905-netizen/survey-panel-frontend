@@ -17,6 +17,47 @@ const panelistSteps = [
   ['03', 'Track your rewards', 'Keep wallet activity, records, and redemption requests in one place.'],
 ];
 
+const socialLinks = [
+  { id: 'x', label: 'X / Twitter', href: 'https://x.com/GUANYISEARCH' },
+  { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61591672089947' },
+  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/guanyisearch/' },
+  { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/guanyisearch/' },
+];
+
+function SocialGlyph({ id }) {
+  if (id === 'instagram') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" strokeWidth="2.2" />
+        <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" strokeWidth="2.2" />
+        <circle cx="17.25" cy="6.75" r="1.35" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  if (id === 'facebook') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M14.1 8.65h3.15V4h-3.72C9.4 4 7 6.46 7 10.1v2.4H4v4.38h3V23h4.85v-6.12h3.74l.7-4.38h-4.44v-1.95c0-1.26.62-1.9 2.25-1.9Z" />
+      </svg>
+    );
+  }
+
+  if (id === 'linkedin') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M5.15 7.25A2.6 2.6 0 1 1 5.18 2a2.6 2.6 0 0 1-.03 5.25ZM2.78 22V9.22h4.78V22H2.78Zm7.12 0V9.22h4.58v1.75h.06c.64-1.12 2.08-2.14 4.17-2.14 4.1 0 5.02 2.7 5.02 6.2V22h-4.78v-6.25c0-1.5-.03-3.43-2.1-3.43-2.1 0-2.18 1.67-2.18 3.34V22H9.9Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z" />
+    </svg>
+  );
+}
+
 function LandingPhoto({ className = '', src, alt, eyebrow, title, priority = false }) {
   const imageRef = useRef(null);
   const [imageState, setImageState] = useState('loading');
@@ -219,8 +260,12 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .landing-footer-contact { display: flex; flex-direction: column; justify-content: center; padding: 54px clamp(28px, 5vw, 72px); }
         .landing-footer-contact h2 { margin: 0; color: #40d5e4; font-size: 14px; font-weight: 800; letter-spacing: .08em; }
         .landing-footer-contact p { max-width: 490px; margin: 18px 0 0; color: #9aa9c0; font-size: 15px; line-height: 1.75; }
-        .landing-footer-contact a { display: inline-flex; width: max-content; margin-top: 15px; color: white; font-size: clamp(19px, 2vw, 25px); font-weight: 750; letter-spacing: -.02em; text-decoration: none; }
-        .landing-footer-contact a:hover { color: #78edf5; }
+        .landing-footer-email { display: inline-flex; width: max-content; margin-top: 15px; color: white; font-size: clamp(19px, 2vw, 25px); font-weight: 750; letter-spacing: -.02em; text-decoration: none; }
+        .landing-footer-email:hover { color: #78edf5; }
+        .landing-social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+        .landing-social-link { display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: rgba(255,255,255,.075); color: #f8fbfb; text-decoration: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 16px 34px rgba(0,0,0,.18); transition: transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease; }
+        .landing-social-link svg { width: 28px; height: 28px; display: block; }
+        .landing-social-link:hover { border-color: rgba(120,237,245,.38); background: rgba(120,237,245,.13); color: #86f3fa; transform: translateY(-2px); }
         .landing-footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(255,255,255,.1); padding: 28px 0; }
         .landing-footer-bottom p { margin: 0; color: #8493ab; font-size: 13px; }
         .landing-footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 24px; }
@@ -324,7 +369,26 @@ export default function Landing({ initialAuthMode = 'register' }) {
       <footer className="landing-footer">
         <div className="landing-footer-grid">
           <div className="landing-footer-brand"><div className="landing-footer-identity"><img className="landing-footer-logo-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" /></div><p>A trusted foundation for research participation, quality-aware operations, and transparent rewards.</p></div>
-          <div className="landing-footer-contact"><h2>CONTACT &amp; INQUIRIES</h2><p>Questions about panel eligibility, partnerships, or platform operations? Reach our team directly.</p><a href="mailto:heguanyi@guanyi-media.com">heguanyi@guanyi-media.com</a></div>
+          <div className="landing-footer-contact">
+            <h2>CONTACT &amp; INQUIRIES</h2>
+            <p>Questions about panel eligibility, partnerships, or platform operations? Reach our team directly.</p>
+            <a className="landing-footer-email" href="mailto:heguanyi@guanyi-media.com">heguanyi@guanyi-media.com</a>
+            <nav className="landing-social-links" aria-label="GuanyiSearch social links">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.id}
+                  className="landing-social-link"
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.label}
+                  title={social.label}
+                >
+                  <SocialGlyph id={social.id} />
+                </a>
+              ))}
+            </nav>
+          </div>
         </div>
         <div className="landing-container landing-footer-bottom"><p>© 2026 GuanyiSearch. All rights reserved.</p><div className="landing-footer-links"><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms of Service</Link></div></div>
       </footer>
