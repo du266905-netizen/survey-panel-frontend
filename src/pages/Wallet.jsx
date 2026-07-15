@@ -133,7 +133,7 @@ export default function Wallet() {
           </section>
 
           <section className="card p-5">
-            <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+            <div className="mb-5">
               <div>
                 <h2 className="flex items-center gap-2 text-lg font-bold text-slate-950">
                   <Gift size={18} className="text-amber-600" />
@@ -141,7 +141,6 @@ export default function Wallet() {
                 </h2>
                 <p className="mt-1 text-sm text-slate-500">Choose a future reward goal. Gift card delivery is not available yet.</p>
               </div>
-              <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 ring-1 ring-amber-200">Preview only</span>
             </div>
 
             <div className="mb-5 rounded-xl border border-cyan-100 bg-cyan-50/70 p-4">

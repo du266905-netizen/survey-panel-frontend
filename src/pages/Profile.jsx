@@ -133,6 +133,26 @@ export default function Profile() {
 
         <aside className="space-y-4">
           <section className="card p-5">
+            <h2 className="text-lg font-bold text-slate-950">Display Name</h2>
+            <p className="mt-1 text-sm text-slate-500">This is the name shown in your workspace.</p>
+            <label className="mt-4 block">
+              <span className="mb-2 block text-sm font-semibold text-slate-700">Name</span>
+              <input
+                className="field"
+                value={displayName}
+                onChange={(event) => setDisplayName(event.target.value)}
+                maxLength={80}
+                autoComplete="name"
+              />
+            </label>
+            <button className="btn-primary mt-4 w-full" type="button" onClick={handleSaveName} disabled={saving || !displayName.trim()}>
+              {saving ? 'Saving...' : 'Save name'}
+            </button>
+            {message && <p className="mt-3 rounded-lg border border-cyan-200 bg-cyan-50 p-3 text-sm font-semibold text-cyan-800">{message}</p>}
+            {error && <p className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
+          </section>
+
+          <section className="card p-5">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
                 <ShieldCheck size={21} />
@@ -145,7 +165,6 @@ export default function Profile() {
             <Link className="btn-secondary mt-5 w-full" to="/forgot-password">
               Reset password
             </Link>
-            {error && <p className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
           </section>
         </aside>
       </div>
