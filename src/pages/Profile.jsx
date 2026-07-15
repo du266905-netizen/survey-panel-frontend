@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { getCurrentUser, updateProfile } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../components/AuthContext';
-import CoinAmount from '../components/CoinAmount';
 import { isPanelistRole } from '../utils/roles';
 
 function displayValue(value, fallback = 'Not set') {
@@ -80,7 +79,6 @@ export default function Profile() {
       ['Login IP', user?.loginIp],
       ['Login Region', user?.loginRegion],
       ['Email', user?.email],
-      ['Coins Balance', <CoinAmount value={user?.coins} />],
     ];
 
     return (
@@ -113,12 +111,11 @@ export default function Profile() {
   const accountFields = [
     ['Public Panelist ID', displayValue(user?.publicPanelistId || user?.memberId)],
     ['Email', displayValue(user?.email)],
-    ['Coins Balance', <CoinAmount value={user?.coins} />],
   ];
 
   return (
     <>
-      <PageHeader title="Account" description="Your account identity, Coins balance, and security settings." />
+      <PageHeader title="Account" description="Your account identity and security settings." />
 
       <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
         <section className="card p-5">

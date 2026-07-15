@@ -32,30 +32,6 @@ export default function MyRecords() {
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
   const rows = filtered.slice((page - 1) * pageSize, page * pageSize);
-  const summary = useMemo(() => {
-    const now = new Date();
-    const monthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-
-    return records.reduce(
-      (accumulator, record) => {
-        const coins = Number(record.coinsReward || 0);
-        const isCompleted = record.status === 'completed';
-        const recordMonth = record.startTime?.slice(0, 7);
-
-        if (isCompleted) {
-          accumulator.completed += 1;
-          accumulator.totalCoins += coins;
-          if (recordMonth === monthKey) {
-            accumulator.monthCoins += coins;
-          }
-        }
-
-        return accumulator;
-      },
-      { completed: 0, totalCoins: 0, monthCoins: 0 }
-    );
-  }, [records]);
-
   const columns = [
     ...(isAdmin ? [{ key: 'employee', header: 'Employee' }] : []),
     { key: 'surveyNumber', header: 'Survey ID' },
@@ -73,24 +49,6 @@ export default function MyRecords() {
   return (
     <>
       <PageHeader title="My Records" description="Personal participation history with audit status and rewards." />
-      <div className="mb-5 grid gap-3 md:grid-cols-3">
-        <section className="rounded-xl border border-cyan-200 bg-cyan-50 p-4">
-          <p className="text-xs font-bold uppercase tracking-wide text-cyan-700">Total Completed</p>
-          <p className="mt-2 text-2xl font-bold text-cyan-900">{summary.completed}</p>
-        </section>
-        <section className="rounded-xl border border-amber-200 bg-amber-50 p-4">
-          <p className="text-xs font-bold uppercase tracking-wide text-amber-700">Total Coins Earned</p>
-          <div className="mt-2 text-lg font-bold text-amber-900">
-            <CoinAmount value={summary.totalCoins} />
-          </div>
-        </section>
-        <section className="rounded-xl border border-sky-200 bg-sky-50 p-4">
-          <p className="text-xs font-bold uppercase tracking-wide text-sky-700">This Month Coins</p>
-          <div className="mt-2 text-lg font-bold text-sky-900">
-            <CoinAmount value={summary.monthCoins} />
-          </div>
-        </section>
-      </div>
       <section className="card mb-5 grid gap-4 p-4 md:grid-cols-4">
         <label className="space-y-2">
           <span className="text-sm font-semibold text-slate-700">Start date</span>

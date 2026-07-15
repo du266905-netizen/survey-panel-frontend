@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Check, Clock3, CreditCard, Gift, RefreshCcw, WalletCards, X } from 'lucide-react';
-import { getWallet, redeemReward } from '../api/realApi';
+import { Check, Gift, RefreshCcw, X } from 'lucide-react';
+import { getWallet } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';
@@ -8,12 +8,6 @@ import StatusBadge from '../components/StatusBadge';
 import { useAuth } from '../components/AuthContext';
 import { giftCardImageSources, giftCardOptions } from '../config/giftCardOptions';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
-
-const rewardTypes = [
-  { id: 'gift_card', label: 'Gift Cards', status: 'Manual review', icon: Gift },
-  { id: 'paypal', label: 'PayPal', status: 'Coming Soon', icon: CreditCard },
-  { id: 'crypto', label: 'Crypto', status: 'Coming Soon', icon: WalletCards },
-];
 
 const giftCardDenominations = [10, 25, 50];
 const giftCardRedemptionMinimum = 10000;
@@ -30,9 +24,6 @@ export default function Wallet() {
   const { user, setUser } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({ amountCoins: 1000, note: '' });
-  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [giftCardPreview, setGiftCardPreview] = useState(null);
 
@@ -56,10 +47,8 @@ export default function Wallet() {
     loadWallet();
   }, []);
 
-  const manualProvider = useMemo(() => data?.providers?.find((provider) => provider.name === 'manual'), [data?.providers]);
   const wallet = data?.wallet;
   const exchangeRate = data?.exchangeRate || { coinsPerUsd: 1000, balanceUsd: 0, lockedUsd: 0 };
-  const canRedeem = manualProvider?.enabled && Number(form.amountCoins) > 0 && Number(form.amountCoins) <= Number(wallet?.balance || 0);
   const availableCoins = Number(wallet?.balance || 0);
   const coinsPerUsd = Number(exchangeRate.coinsPerUsd || 1000);
   const giftCardMinimumRemaining = Math.max(0, giftCardRedemptionMinimum - availableCoins);
@@ -76,33 +65,6 @@ export default function Wallet() {
       unlocked: remainingCoins === 0,
       progress: requiredCoins ? Math.min(100, Math.round((availableCoins / requiredCoins) * 100)) : 0,
     };
-  };
-
-  const handleRedeem = async (event) => {
-    event.preventDefault();
-    if (!canRedeem || submitting) return;
-
-    setSubmitting(true);
-    setMessage('');
-    setError('');
-
-    try {
-      const response = await redeemReward({
-        provider: 'manual',
-        rewardType: 'gift_card',
-        amountCoins: Number(form.amountCoins),
-        note: form.note,
-      });
-      setMessage('Redemption request submitted.');
-      if (response.data.wallet) {
-        setUser({ ...user, coinsBalance: response.data.wallet.balance, coins: response.data.wallet.balance });
-      }
-      await loadWallet();
-    } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Unable to submit redemption.');
-    } finally {
-      setSubmitting(false);
-    }
   };
 
   const transactionColumns = [
@@ -146,9 +108,7 @@ export default function Wallet() {
       />
 
       {error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</div>}
-      {message && <div className="mb-5 rounded-xl border border-cyan-200 bg-cyan-50 p-3 text-sm font-semibold text-cyan-800">{message}</div>}
-
-      <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
+      <div>
         <div className="space-y-6">
           <section className="grid gap-4 md:grid-cols-3">
             <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
@@ -201,8 +161,8 @@ export default function Wallet() {
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {giftCardOptions.map((option) => (
                 <article key={option.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.09)] transition-shadow hover:shadow-[0_14px_34px_rgba(15,23,42,0.13)]">
-                  <div className="m-3 aspect-[1.58] rounded-lg bg-slate-900 p-3 shadow-inner">
-                    <img className="h-full w-full rounded-md object-contain" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
+                  <div className="m-3 aspect-[1.58] overflow-hidden rounded-lg bg-slate-900 p-3 shadow-inner">
+                    <img className="h-full w-full rounded-md object-cover" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
                   </div>
                   <div className="border-t border-slate-100 p-4">
                     <div className="mb-3 flex items-center justify-between gap-2">
@@ -259,60 +219,6 @@ export default function Wallet() {
           </section>
         </div>
 
-        <aside className="space-y-4">
-          <section className="card p-5">
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-slate-950">
-              <Clock3 size={18} />
-              Redeem
-            </h2>
-            <form onSubmit={handleRedeem}>
-              <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-slate-700">Coins</span>
-                <input
-                  className="field"
-                  type="number"
-                  min={exchangeRate.coinsPerUsd}
-                  step={exchangeRate.coinsPerUsd}
-                  value={form.amountCoins}
-                  onChange={(event) => setForm((current) => ({ ...current, amountCoins: event.target.value }))}
-                />
-              </label>
-              <label className="mt-4 block">
-                <span className="mb-2 block text-sm font-semibold text-slate-700">Note</span>
-                <textarea
-                  className="field min-h-24 resize-none"
-                  value={form.note}
-                  onChange={(event) => setForm((current) => ({ ...current, note: event.target.value }))}
-                  placeholder="Preferred gift card region or payout note"
-                />
-              </label>
-              <button className="btn-primary mt-4 w-full" type="submit" disabled={!canRedeem || submitting}>
-                {submitting ? 'Submitting...' : 'Submit manual request'}
-              </button>
-              {!manualProvider?.enabled && <p className="mt-3 text-sm font-semibold text-slate-500">Manual redemption is currently unavailable.</p>}
-            </form>
-          </section>
-
-          <section className="card p-5">
-            <h2 className="mb-4 text-lg font-bold text-slate-950">Reward Methods</h2>
-            <div className="space-y-3">
-              {rewardTypes.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.id} className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 p-3">
-                    <span className="flex items-center gap-3">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-cyan-700">
-                        <Icon size={17} />
-                      </span>
-                      <span className="text-sm font-bold text-slate-950">{item.label}</span>
-                    </span>
-                    <span className="text-xs font-bold uppercase tracking-wide text-slate-500">{item.status}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        </aside>
       </div>
 
       {giftCardPreview && (
