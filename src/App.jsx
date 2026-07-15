@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
 import Landing from './pages/Landing';
+import NewsWall from './pages/NewsWall';
 import Onboarding from './pages/Onboarding';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
@@ -54,6 +55,7 @@ export default function App() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/partners" element={<SurveyPartners />} />
+        <Route path="/news" element={<NewsWall />} />
         <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/records" element={<Navigate to="/dashboard" replace />} />

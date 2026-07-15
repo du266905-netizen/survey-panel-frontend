@@ -342,6 +342,31 @@ export const getSurveyWall = async () => {
   };
 };
 
+export const getNewsWall = async (params = {}) => {
+  const response = await apiClient.get('/api/news', { params });
+  return { data: response.data.items || [] };
+};
+
+export const getNewsArticle = async (articleId) => {
+  const response = await apiClient.get(`/api/news/${articleId}`);
+  return { data: response.data.article };
+};
+
+export const voteNewsArticle = async (articleId, stance) => {
+  const response = await apiClient.post(`/api/news/${articleId}/vote`, { stance });
+  return { data: response.data.article };
+};
+
+export const getNewsPreferences = async () => {
+  const response = await apiClient.get('/api/news/preferences');
+  return { data: response.data.preferences };
+};
+
+export const updateNewsPreferences = async (categories) => {
+  const response = await apiClient.put('/api/news/preferences', { categories });
+  return { data: response.data.preferences };
+};
+
 export const getRecords = async () => {
   const endpoint = isAdmin() ? '/api/admin/records' : '/api/records';
   const response = await apiClient.get(endpoint, {
