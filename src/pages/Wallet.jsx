@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Clock3, CreditCard, Gift, RefreshCcw, WalletCards, X } from 'lucide-react';
+import { Check, Clock3, CreditCard, Gift, RefreshCcw, WalletCards, X } from 'lucide-react';
 import { getWallet, redeemReward } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
@@ -15,7 +15,8 @@ const rewardTypes = [
   { id: 'crypto', label: 'Crypto', status: 'Coming Soon', icon: WalletCards },
 ];
 
-const giftCardDenominations = [5, 10, 25];
+const giftCardDenominations = [10, 25, 50];
+const giftCardRedemptionMinimum = 10000;
 
 function usd(value) {
   return `$${Number(value || 0).toFixed(2)}`;
@@ -61,6 +62,9 @@ export default function Wallet() {
   const canRedeem = manualProvider?.enabled && Number(form.amountCoins) > 0 && Number(form.amountCoins) <= Number(wallet?.balance || 0);
   const availableCoins = Number(wallet?.balance || 0);
   const coinsPerUsd = Number(exchangeRate.coinsPerUsd || 1000);
+  const giftCardMinimumRemaining = Math.max(0, giftCardRedemptionMinimum - availableCoins);
+  const hasGiftCardRedemptionAccess = giftCardMinimumRemaining === 0;
+  const giftCardMinimumProgress = Math.min(100, Math.round((availableCoins / giftCardRedemptionMinimum) * 100));
 
   const giftCardTier = (amountUsd) => {
     const requiredCoins = Math.round(amountUsd * coinsPerUsd);
@@ -180,26 +184,41 @@ export default function Wallet() {
               <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 ring-1 ring-amber-200">Preview only</span>
             </div>
 
+            <div className="mb-5 rounded-xl border border-cyan-100 bg-cyan-50/70 p-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="text-sm font-bold text-cyan-950">
+                  {hasGiftCardRedemptionAccess
+                    ? 'Gift card redemption is unlocked.'
+                    : `Earn ${formatCoinNumber(giftCardMinimumRemaining)} more Coins to unlock redemption.`}
+                </p>
+                <span className="text-xs font-bold text-cyan-800">{formatCoinNumber(Math.min(availableCoins, giftCardRedemptionMinimum))} / {formatCoinNumber(giftCardRedemptionMinimum)}</span>
+              </div>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-cyan-100">
+                <div className="h-full rounded-full bg-cyan-600 transition-[width]" style={{ width: `${giftCardMinimumProgress}%` }} />
+              </div>
+            </div>
+
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {giftCardOptions.map((option) => (
-                <article key={option.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-                  <div className="aspect-[1.58] bg-slate-50 p-3">
-                    <img className="h-full w-full object-contain" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
+                <article key={option.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.09)] transition-shadow hover:shadow-[0_14px_34px_rgba(15,23,42,0.13)]">
+                  <div className="m-3 aspect-[1.58] rounded-lg bg-slate-900 p-3 shadow-inner">
+                    <img className="h-full w-full rounded-md object-contain" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
                   </div>
                   <div className="border-t border-slate-100 p-4">
                     <div className="mb-3 flex items-center justify-between gap-2">
                       <h3 className="font-bold text-slate-950">{option.name}</h3>
-                      <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">{option.region}</span>
+                      <span className="rounded-full bg-cyan-100/80 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-cyan-800 ring-1 ring-inset ring-cyan-200">{option.region}</span>
                     </div>
                     <div className="space-y-3">
                       {giftCardDenominations.map((amountUsd) => {
                         const tier = giftCardTier(amountUsd);
+                        const tierUnlocked = hasGiftCardRedemptionAccess && tier.unlocked;
                         return (
                           <button
                             key={amountUsd}
                             className="w-full rounded-lg border border-slate-200 bg-slate-50 p-3 text-left transition hover:border-cyan-300 hover:bg-cyan-50 disabled:cursor-not-allowed disabled:opacity-60"
                             type="button"
-                            disabled={!tier.unlocked}
+                            disabled={!tierUnlocked}
                             onClick={() => setGiftCardPreview({ ...tier, option })}
                             aria-label={`${option.name} ${usd(amountUsd)} gift card`}
                           >
@@ -210,8 +229,8 @@ export default function Wallet() {
                             <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-slate-200">
                               <span className="block h-full rounded-full bg-cyan-500" style={{ width: `${tier.progress}%` }} />
                             </span>
-                            <span className={`mt-2 block text-xs font-bold ${tier.unlocked ? 'text-cyan-700' : 'text-slate-500'}`}>
-                              {tier.unlocked ? 'Redeem now' : `${formatCoinNumber(tier.remainingCoins)} Coins to unlock`}
+                            <span className={`mt-2 flex items-center gap-1 text-xs font-bold ${tierUnlocked ? 'text-cyan-700' : 'text-slate-500'}`}>
+                              {tierUnlocked ? <><Check size={13} strokeWidth={3} /> Ready to redeem</> : `Need ${formatCoinNumber(tier.remainingCoins)} more`}
                             </span>
                           </button>
                         );
