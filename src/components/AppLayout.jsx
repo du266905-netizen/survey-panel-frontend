@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, Database, Gift, LogOut, MonitorPlay, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, Database, Gift, LogOut, MonitorPlay, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import CoinAmount from './CoinAmount';
@@ -9,7 +9,6 @@ const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
   { to: '/partners', label: 'Survey Wall', icon: Users },
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
-  { to: '/records', label: 'My Records', icon: ClipboardList },
   { to: '/profile', label: 'Profile', icon: User },
   { to: '/settings', label: 'Settings', icon: Settings },
 ];

@@ -253,14 +253,24 @@ export const updateRewardProvider = async (name, payload) => {
   return { data: response.data };
 };
 
+const getAllPanelistRecords = async () => {
+  const firstResponse = await apiClient.get('/api/records', { params: { pageSize: 100 } });
+  const firstItems = firstResponse.data.items || [];
+  const totalPages = Number(firstResponse.data.meta?.totalPages || 1);
+
+  if (totalPages <= 1) return firstItems;
+
+  const remainingResponses = await Promise.all(
+    Array.from({ length: totalPages - 1 }, (_, index) => apiClient.get('/api/records', { params: { page: index + 2, pageSize: 100 } }))
+  );
+
+  return firstItems.concat(...remainingResponses.map((response) => response.data.items || []));
+};
+
 export const getDashboard = async () => {
-  const [statsResponse, chartResponse, recordsResponse, referralResponse] = await Promise.all([
+  const [statsResponse, records] = await Promise.all([
     apiClient.get('/api/records/stats'),
-    apiClient.get('/api/records/chart'),
-    apiClient.get('/api/records', {
-      params: { pageSize: 10, status: 'COMPLETED' },
-    }),
-    apiClient.get('/api/referrals/me').catch(() => ({ data: { referral: null } })),
+    getAllPanelistRecords(),
   ]);
 
   return {
@@ -271,9 +281,7 @@ export const getDashboard = async () => {
         pendingEarnings: statsResponse.data.pendingEarnings,
         failedEarnings: statsResponse.data.failedEarnings,
       },
-      earningsTrend: chartResponse.data.chart || [],
-      recentActivities: (recordsResponse.data.items || []).map(mapRecord),
-      referral: referralResponse.data.referral,
+      records: records.map(mapRecord),
     },
   };
 };

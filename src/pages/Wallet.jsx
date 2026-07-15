@@ -161,8 +161,10 @@ export default function Wallet() {
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {giftCardOptions.map((option) => (
                 <article key={option.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.09)] transition-shadow hover:shadow-[0_14px_34px_rgba(15,23,42,0.13)]">
-                  <div className="m-3 aspect-[1.58] overflow-hidden rounded-lg bg-slate-900 p-3 shadow-inner">
-                    <img className="h-full w-full rounded-md object-cover" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
+                  <div className="m-3 aspect-[1.58] overflow-hidden rounded-xl bg-slate-900 p-2 shadow-inner">
+                    <div className="h-full w-full overflow-hidden rounded-lg [clip-path:inset(0_round_0.5rem)]">
+                      <img className="h-full w-full rounded-lg object-cover" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
+                    </div>
                   </div>
                   <div className="border-t border-slate-100 p-4">
                     <div className="mb-3 flex items-center justify-between gap-2">
