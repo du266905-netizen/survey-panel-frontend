@@ -101,8 +101,8 @@ export default function Wallet() {
         description="Coins, redemption requests, and reward history."
         action={
           <button className="btn-secondary" type="button" onClick={loadWallet} disabled={loading}>
-            <RefreshCcw size={16} />
-            Refresh
+            <RefreshCcw size={16} className={loading ? 'animate-spin' : ''} />
+            {loading ? 'Refreshing...' : 'Refresh'}
           </button>
         }
       />
@@ -163,7 +163,7 @@ export default function Wallet() {
                 <article key={option.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.09)] transition-shadow hover:shadow-[0_14px_34px_rgba(15,23,42,0.13)]">
                   <div className="m-3 aspect-[1.58] overflow-hidden rounded-xl bg-slate-900 p-2 shadow-inner">
                     <div className="h-full w-full overflow-hidden rounded-lg [clip-path:inset(0_round_0.5rem)]">
-                      <img className="h-full w-full rounded-lg object-cover" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
+                      <img className="h-full w-full scale-[1.045] rounded-lg object-cover" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
                     </div>
                   </div>
                   <div className="border-t border-slate-100 p-4">

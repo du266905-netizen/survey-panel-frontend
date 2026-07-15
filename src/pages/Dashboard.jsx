@@ -6,7 +6,6 @@ import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';
 import StatCard from '../components/StatCard';
-import StatusBadge from '../components/StatusBadge';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
 
@@ -80,10 +79,9 @@ export default function Dashboard() {
   }, [historyRange, historyStatus, records]);
 
   const recordColumns = [
-    { key: 'platform', header: 'Channel' },
+    { key: 'surveyNumber', header: 'Survey' },
     { key: 'coinsReward', header: 'Coins', render: (row) => <CoinAmount value={row.coinsReward} /> },
-    { key: 'status', header: 'Status', render: (row) => <StatusBadge status={row.status} /> },
-    { key: 'time', header: 'Time', render: (row) => formatRecordTime(row) },
+    { key: 'time', header: 'Date', render: (row) => formatRecordTime(row) },
     {
       key: 'details',
       header: '',
@@ -95,10 +93,7 @@ export default function Dashboard() {
     },
   ];
 
-  const fullRecordColumns = [
-    { key: 'surveyNumber', header: 'Survey' },
-    ...recordColumns,
-  ];
+  const fullRecordColumns = recordColumns;
 
   return (
     <>
