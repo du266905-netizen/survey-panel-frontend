@@ -347,6 +347,11 @@ export const getNewsWall = async (params = {}) => {
   return { data: response.data.items || [] };
 };
 
+export const getNewsBrief = async (params = {}) => {
+  const response = await apiClient.get('/api/news/brief', { params });
+  return { data: response.data.brief };
+};
+
 export const getNewsArticle = async (articleId) => {
   const response = await apiClient.get(`/api/news/${articleId}`);
   return { data: response.data.article };

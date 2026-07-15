@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Check, ExternalLink, Eye, LoaderCircle, Newspaper, ThumbsDown, ThumbsUp, UsersRound, X } from 'lucide-react';
-import { getNewsArticle, getNewsPreferences, getNewsWall, updateNewsPreferences, voteNewsArticle } from '../api/realApi';
+import { ArrowDown, Check, ExternalLink, Eye, LoaderCircle, Newspaper, Sparkles, ThumbsDown, ThumbsUp, UsersRound, X } from 'lucide-react';
+import { getNewsArticle, getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences, voteNewsArticle } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 
 const countries = [
@@ -22,8 +22,76 @@ function formatDate(value) {
   return Number.isNaN(date.getTime()) ? '-' : date.toLocaleString();
 }
 
+function formatBriefDate(value) {
+  if (!value) return 'Today';
+  const [year, month, day] = String(value).split('-').map(Number);
+  if (!year || !month || !day) return value;
+  return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+
 function formatCount(value) {
   return new Intl.NumberFormat('en-US').format(Number(value || 0));
+}
+
+function DailyBriefCard({ brief, loading, error }) {
+  return (
+    <section className="card mb-6 overflow-hidden">
+      <div className="border-b border-slate-100 bg-cyan-50/50 p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-100 text-cyan-700">
+              <Sparkles size={18} />
+            </span>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">{brief?.isAiGenerated ? 'AI Daily Brief' : 'Daily Brief'}</p>
+              <h2 className="text-xl font-black text-slate-950">{brief?.title || 'Today’s Brief'}</h2>
+            </div>
+          </div>
+          <span className="rounded-full border border-cyan-200 bg-white px-3 py-1 text-xs font-bold text-cyan-800">
+            {brief?.countryLabel || 'Region'} · {formatBriefDate(brief?.briefDate)}
+          </span>
+        </div>
+      </div>
+
+      <div className="p-5">
+        {loading ? (
+          <div className="space-y-3">
+            <div className="h-4 w-11/12 animate-pulse rounded-full bg-slate-100" />
+            <div className="h-4 w-9/12 animate-pulse rounded-full bg-slate-100" />
+            <div className="grid gap-3 pt-2 md:grid-cols-3">
+              {Array.from({ length: 3 }).map((_, index) => <div key={index} className="h-24 animate-pulse rounded-xl bg-slate-100" />)}
+            </div>
+          </div>
+        ) : error ? (
+          <p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</p>
+        ) : brief ? (
+          <>
+            <p className="max-w-5xl text-sm leading-7 text-slate-600">{brief.summary}</p>
+            <div className="mt-5 grid gap-3 lg:grid-cols-3">
+              {(brief.highlights || []).slice(0, 5).map((item, index) => (
+                <article key={`${item.headline}-${index}`} className="rounded-xl border border-slate-200 bg-white p-4">
+                  <p className="text-[10px] font-black uppercase tracking-[0.14em] text-cyan-700">{item.category || 'News'}</p>
+                  <h3 className="mt-2 text-sm font-black leading-snug text-slate-950">{item.headline}</h3>
+                  <p className="mt-2 text-xs leading-5 text-slate-500">{item.takeaway}</p>
+                </article>
+              ))}
+            </div>
+            <div className="mt-5 flex flex-wrap items-center gap-2 rounded-xl border border-cyan-100 bg-cyan-50/70 px-4 py-3 text-sm font-bold text-cyan-900">
+              <ArrowDown size={16} />
+              {brief.cta || 'After reading today’s brief, pick a story below and cast your vote.'}
+            </div>
+          </>
+        ) : (
+          <p className="text-sm font-semibold text-slate-500">Today’s brief is not available yet.</p>
+        )}
+      </div>
+    </section>
+  );
 }
 
 function summaryFor(article) {
@@ -62,12 +130,15 @@ export default function NewsWall() {
   const [country, setCountry] = useState('US');
   const [category, setCategory] = useState('tech');
   const [articles, setArticles] = useState([]);
+  const [brief, setBrief] = useState(null);
   const [preferences, setPreferences] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [briefLoading, setBriefLoading] = useState(true);
   const [detailLoading, setDetailLoading] = useState(false);
   const [voting, setVoting] = useState('');
   const [error, setError] = useState('');
+  const [briefError, setBriefError] = useState('');
 
   const subscribedCategories = useMemo(
     () => new Set((preferences?.categories || []).filter((item) => item.subscribed).map((item) => item.id)),
@@ -88,6 +159,20 @@ export default function NewsWall() {
     }
   };
 
+  const loadBrief = async () => {
+    setBriefLoading(true);
+    setBriefError('');
+    try {
+      const response = await getNewsBrief({ country });
+      setBrief(response.data);
+    } catch (caughtError) {
+      setBrief(null);
+      setBriefError(caughtError.response?.data?.message || 'Unable to load today’s brief.');
+    } finally {
+      setBriefLoading(false);
+    }
+  };
+
   const loadPreferences = async () => {
     try {
       const response = await getNewsPreferences();
@@ -104,6 +189,10 @@ export default function NewsWall() {
   useEffect(() => {
     loadNews();
   }, [country, category]);
+
+  useEffect(() => {
+    loadBrief();
+  }, [country]);
 
   const openArticle = async (article) => {
     setDetailLoading(true);
@@ -161,6 +250,8 @@ export default function NewsWall() {
       <PageHeader title="News Wall" description="Follow lightweight news signals and vote on stories worth tracking." />
 
       {error && <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
+
+      <DailyBriefCard brief={brief} loading={briefLoading} error={briefError} />
 
       <section className="card p-5">
         <div className="flex flex-wrap items-start justify-between gap-4">
