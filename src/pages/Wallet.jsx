@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Clock3, CreditCard, Gift, RefreshCcw, WalletCards } from 'lucide-react';
+import { Clock3, CreditCard, Gift, RefreshCcw, WalletCards, X } from 'lucide-react';
 import { getWallet, redeemReward } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';
 import StatusBadge from '../components/StatusBadge';
 import { useAuth } from '../components/AuthContext';
+import { giftCardImageSources, giftCardOptions } from '../config/giftCardOptions';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
 
 const rewardTypes = [
@@ -13,6 +14,8 @@ const rewardTypes = [
   { id: 'paypal', label: 'PayPal', status: 'Coming Soon', icon: CreditCard },
   { id: 'crypto', label: 'Crypto', status: 'Coming Soon', icon: WalletCards },
 ];
+
+const giftCardDenominations = [5, 10, 25];
 
 function usd(value) {
   return `$${Number(value || 0).toFixed(2)}`;
@@ -30,6 +33,7 @@ export default function Wallet() {
   const [form, setForm] = useState({ amountCoins: 1000, note: '' });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [giftCardPreview, setGiftCardPreview] = useState(null);
 
   const loadWallet = async () => {
     setLoading(true);
@@ -55,6 +59,20 @@ export default function Wallet() {
   const wallet = data?.wallet;
   const exchangeRate = data?.exchangeRate || { coinsPerUsd: 1000, balanceUsd: 0, lockedUsd: 0 };
   const canRedeem = manualProvider?.enabled && Number(form.amountCoins) > 0 && Number(form.amountCoins) <= Number(wallet?.balance || 0);
+  const availableCoins = Number(wallet?.balance || 0);
+  const coinsPerUsd = Number(exchangeRate.coinsPerUsd || 1000);
+
+  const giftCardTier = (amountUsd) => {
+    const requiredCoins = Math.round(amountUsd * coinsPerUsd);
+    const remainingCoins = Math.max(0, requiredCoins - availableCoins);
+    return {
+      amountUsd,
+      requiredCoins,
+      remainingCoins,
+      unlocked: remainingCoins === 0,
+      progress: requiredCoins ? Math.min(100, Math.round((availableCoins / requiredCoins) * 100)) : 0,
+    };
+  };
 
   const handleRedeem = async (event) => {
     event.preventDefault();
@@ -150,6 +168,61 @@ export default function Wallet() {
             </div>
           </section>
 
+          <section className="card p-5">
+            <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <h2 className="flex items-center gap-2 text-lg font-bold text-slate-950">
+                  <Gift size={18} className="text-amber-600" />
+                  Gift Card Options
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">Choose a future reward goal. Gift card delivery is not available yet.</p>
+              </div>
+              <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 ring-1 ring-amber-200">Preview only</span>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {giftCardOptions.map((option) => (
+                <article key={option.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                  <div className="aspect-[1.58] bg-slate-50 p-3">
+                    <img className="h-full w-full object-contain" src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
+                  </div>
+                  <div className="border-t border-slate-100 p-4">
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <h3 className="font-bold text-slate-950">{option.name}</h3>
+                      <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">{option.region}</span>
+                    </div>
+                    <div className="space-y-3">
+                      {giftCardDenominations.map((amountUsd) => {
+                        const tier = giftCardTier(amountUsd);
+                        return (
+                          <button
+                            key={amountUsd}
+                            className="w-full rounded-lg border border-slate-200 bg-slate-50 p-3 text-left transition hover:border-cyan-300 hover:bg-cyan-50 disabled:cursor-not-allowed disabled:opacity-60"
+                            type="button"
+                            disabled={!tier.unlocked}
+                            onClick={() => setGiftCardPreview({ ...tier, option })}
+                            aria-label={`${option.name} ${usd(amountUsd)} gift card`}
+                          >
+                            <span className="flex items-center justify-between gap-2">
+                              <span className="font-bold text-slate-950">{usd(amountUsd)}</span>
+                              <span className="text-xs font-semibold text-slate-600">{formatCoinNumber(tier.requiredCoins)} Coins</span>
+                            </span>
+                            <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-slate-200">
+                              <span className="block h-full rounded-full bg-cyan-500" style={{ width: `${tier.progress}%` }} />
+                            </span>
+                            <span className={`mt-2 block text-xs font-bold ${tier.unlocked ? 'text-cyan-700' : 'text-slate-500'}`}>
+                              {tier.unlocked ? 'Redeem now' : `${formatCoinNumber(tier.remainingCoins)} Coins to unlock`}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <section>
             <div className="mb-3 flex items-center justify-between">
               <h2 className="text-lg font-bold text-slate-950">Transactions</h2>
@@ -222,6 +295,29 @@ export default function Wallet() {
           </section>
         </aside>
       </div>
+
+      {giftCardPreview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4" role="dialog" aria-modal="true" aria-labelledby="gift-card-preview-title">
+          <section className="card w-full max-w-md p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wide text-amber-700">Gift card preview</p>
+                <h2 id="gift-card-preview-title" className="mt-1 text-xl font-bold text-slate-950">{giftCardPreview.option.name} {usd(giftCardPreview.amountUsd)}</h2>
+              </div>
+              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setGiftCardPreview(null)} aria-label="Close gift card preview">
+                <X size={18} />
+              </button>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-slate-600">Gift card redemption is coming soon. No redemption request was submitted and no Coins were deducted from your wallet.</p>
+            <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-900">
+              Future goal: {formatCoinNumber(giftCardPreview.requiredCoins)} Coins for {usd(giftCardPreview.amountUsd)}.
+            </div>
+            <button className="btn-primary mt-5 w-full" type="button" onClick={() => setGiftCardPreview(null)}>
+              Got it
+            </button>
+          </section>
+        </div>
+      )}
     </>
   );
 }
