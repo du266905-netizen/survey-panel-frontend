@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { AuthProvider } from './components/AuthContext';
+import ErrorBoundary from './components/ErrorBoundary';
+import { installDomMutationSafety } from './utils/domSafety';
 import './index.css';
+
+installDomMutationSafety();
 
 // Browsers may restore a previous SPA document from the back/forward cache after a deployment.
 // A persisted document bypasses the normal document request, so reload it once to pick up the
@@ -14,10 +18,12 @@ window.addEventListener('pageshow', (event) => {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </React.StrictMode>
 );

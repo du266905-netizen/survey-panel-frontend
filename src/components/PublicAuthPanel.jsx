@@ -5,7 +5,7 @@ import { googleLogin, login, register, sendEmailCode, verifyEmailCode } from '..
 import { useAuth } from './AuthContext';
 import TurnstileWidget from './TurnstileWidget';
 
-const GOOGLE_SCRIPT_SRC = 'https://accounts.google.com/gsi/client';
+const GOOGLE_SCRIPT_SRC = 'https://accounts.google.com/gsi/client?hl=en';
 const codeCooldownSeconds = 60;
 let googleScriptPromise;
 
@@ -66,6 +66,7 @@ function GoogleButton({ mode, agreedToTerms, onCredential, onError }) {
           shape: 'pill',
           width: Math.min(containerRef.current.clientWidth || 360, 380),
           logo_alignment: 'left',
+          locale: 'en',
         });
       })
       .catch(() => onError('Google sign-in could not be loaded. Please use email instead.'));
