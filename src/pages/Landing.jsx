@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, BadgeCheck, CircleDollarSign, Eye, Newspaper, ShieldCheck, UsersRound, UserRoundCheck } from 'lucide-react';
+import { ArrowRight, BadgeCheck, CircleDollarSign, Eye, Newspaper, ShieldCheck, UserRoundCheck } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getNewsWall } from '../api/realApi';
 import GlobalGlobe from '../components/GlobalGlobe';
@@ -63,6 +63,15 @@ function SocialGlyph({ id }) {
 
 function formatPreviewCount(value) {
   return new Intl.NumberFormat('en-US', { notation: Number(value || 0) >= 1000 ? 'compact' : 'standard' }).format(Number(value || 0));
+}
+
+function placeholderPreviewViews(article) {
+  const seed = String(article?.id || article?.title || article?.link || article?.sourceName || 'news');
+  let hash = 0;
+  for (let index = 0; index < seed.length; index += 1) {
+    hash = (hash * 31 + seed.charCodeAt(index)) % 1001;
+  }
+  return hash;
 }
 
 function LandingNewsImage({ article }) {
@@ -142,8 +151,7 @@ function LandingNewsPreview() {
                   <p>{article.sourceName || 'News source'}</p>
                   <h3>{article.title}</h3>
                   <div className="landing-news-card-meta">
-                    <span><UsersRound size={14} /> {formatPreviewCount(article.participantCount)} participants</span>
-                    <span><Eye size={14} /> {formatPreviewCount(article.viewCount)} views</span>
+                    <span><Eye size={14} /> {formatPreviewCount(placeholderPreviewViews(article))} views</span>
                   </div>
                 </div>
               </Link>

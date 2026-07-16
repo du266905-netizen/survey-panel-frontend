@@ -1,11 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { ArrowUpRight, CheckCircle2, Clock3, Eye, ListFilter, X, XCircle } from 'lucide-react';
+import { ArrowUpRight, Eye, ListFilter, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getDashboard } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
-import StatCard from '../components/StatCard';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
 
@@ -70,8 +69,6 @@ export default function Dashboard() {
   const hasTrendActivity = trend.some((point) => point.completed > 0 || point.coins > 0);
   const recentRecords = records.slice(0, 8);
   const completedOffers = data?.stats.completedOffers ?? 0;
-  const pendingEarnings = data?.stats.pendingEarnings ?? 0;
-  const failedEarnings = data?.stats.failedEarnings ?? 0;
   const nextAction = completedOffers > 0
     ? 'New matches move throughout the day. Check the wall while survey inventory is fresh.'
     : 'Start with one verified completion. Once it clears, your reward record begins to build.';
@@ -144,34 +141,7 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <div className="dashboard-stat-grid grid gap-4 md:grid-cols-3">
-        <StatCard
-          label="Completed Offers"
-          value={loading ? '-' : completedOffers}
-          icon={CheckCircle2}
-          helper="Approved conversions"
-          className="dashboard-stat-card"
-          iconClassName="dashboard-stat-icon is-success"
-        />
-        <StatCard
-          label="Pending Coins"
-          value={<CoinAmount value={pendingEarnings} />}
-          icon={Clock3}
-          helper="Awaiting audit"
-          className="dashboard-stat-card"
-          iconClassName="dashboard-stat-icon is-pending"
-        />
-        <StatCard
-          label="Failed Coins"
-          value={<CoinAmount value={failedEarnings} />}
-          icon={XCircle}
-          helper="Rejected or expired"
-          className="dashboard-stat-card"
-          iconClassName="dashboard-stat-icon is-failed"
-        />
-      </div>
-
-      <section className="dashboard-trend-card card mt-6 p-5">
+      <section className="dashboard-trend-card card p-5">
         <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-lg font-bold text-slate-950">Participation trend</h2>

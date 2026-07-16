@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowDown, Check, ExternalLink, Eye, LoaderCircle, Newspaper, Sparkles, ThumbsDown, ThumbsUp, UsersRound, X } from 'lucide-react';
+import { ArrowDown, Check, ExternalLink, Eye, Newspaper, Sparkles, X } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { getNewsArticle, getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences, voteNewsArticle } from '../api/realApi';
+import { getNewsArticle, getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import Logo from '../components/Logo';
 import PageHeader from '../components/PageHeader';
@@ -47,6 +47,15 @@ function formatBriefDate(value) {
 
 function formatCount(value) {
   return new Intl.NumberFormat('en-US').format(Number(value || 0));
+}
+
+function placeholderViewCount(article) {
+  const seed = String(article?.id || article?.title || article?.link || article?.sourceName || 'news');
+  let hash = 0;
+  for (let index = 0; index < seed.length; index += 1) {
+    hash = (hash * 31 + seed.charCodeAt(index)) % 1001;
+  }
+  return hash;
 }
 
 function categoryInfo(value) {
@@ -140,7 +149,7 @@ function DailyBriefCard({ brief, loading, error, country }) {
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-2 rounded-xl border border-cyan-100 bg-cyan-50/70 px-4 py-3 text-sm font-bold text-cyan-900">
               <ArrowDown size={16} />
-              {brief.cta || 'After reading today’s brief, pick a story below and cast your vote.'}
+              {brief.cta || 'After reading today’s brief, pick a story below to read more.'}
             </div>
           </>
         ) : (
@@ -152,7 +161,7 @@ function DailyBriefCard({ brief, loading, error, country }) {
 }
 
 function summaryFor(article) {
-  return article?.description || article?.content || 'Open the detail view to review this story and vote on the current signal.';
+  return article?.description || article?.content || 'Open the detail view to review this story.';
 }
 
 function articleImage(article) {
@@ -162,23 +171,6 @@ function articleImage(article) {
   return (
     <div className="flex h-full w-full items-center justify-center bg-cyan-50 text-cyan-700">
       <Newspaper size={34} strokeWidth={1.6} />
-    </div>
-  );
-}
-
-function VoteBar({ article }) {
-  const approve = Number(article?.approvePercent ?? 50);
-  const reject = Number(article?.rejectPercent ?? 50);
-  return (
-    <div>
-      <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-500">
-        <span>Approve {approve}%</span>
-        <span>Reject {reject}%</span>
-      </div>
-      <div className="flex h-3 overflow-hidden rounded-full bg-slate-100">
-        <div className="bg-cyan-500" style={{ width: `${approve}%` }} />
-        <div className="bg-red-400" style={{ width: `${reject}%` }} />
-      </div>
     </div>
   );
 }
@@ -197,7 +189,6 @@ export default function NewsWall() {
   const [loading, setLoading] = useState(true);
   const [briefLoading, setBriefLoading] = useState(true);
   const [detailLoading, setDetailLoading] = useState(false);
-  const [voting, setVoting] = useState('');
   const [error, setError] = useState('');
   const [briefError, setBriefError] = useState('');
   const [authPrompt, setAuthPrompt] = useState('');
@@ -295,26 +286,6 @@ export default function NewsWall() {
     openArticle({ id: articleId });
   }, [searchParams, selectedArticle?.id]);
 
-  const handleVote = async (stance) => {
-    if (!selectedArticle) return;
-    if (isPublicView) {
-      setAuthPrompt('Create a free account or sign in to vote on this story.');
-      return;
-    }
-    setVoting(stance);
-    setError('');
-    try {
-      const response = await voteNewsArticle(selectedArticle.id, stance);
-      setSelectedArticle(response.data);
-      setArticles((current) => current.map((item) => (item.id === selectedArticle.id ? response.data : item)));
-      await loadPreferences();
-    } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Unable to save your vote.');
-    } finally {
-      setVoting('');
-    }
-  };
-
   const toggleSubscription = async (categoryId) => {
     if (isPublicView) {
       setAuthPrompt('Create a free account or sign in to save topic subscriptions.');
@@ -342,7 +313,7 @@ export default function NewsWall() {
 
   const content = (
     <>
-      {!isPublicView && <PageHeader title="News Wall" description="Follow lightweight news signals and vote on stories worth tracking." />}
+      {!isPublicView && <PageHeader title="News Wall" description="Follow lightweight news signals and stories worth tracking." />}
 
       {error && <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
 
@@ -427,12 +398,8 @@ export default function NewsWall() {
                   </div>
                   <h2 className="line-clamp-2 text-lg font-black leading-snug text-slate-950">{article.title}</h2>
                   <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-500">{summaryFor(article)}</p>
-                  <div className="mt-4">
-                    <VoteBar article={article} />
-                  </div>
                   <div className="mt-4 flex items-center justify-between text-xs font-bold text-slate-500">
-                    <span className="inline-flex items-center gap-1"><UsersRound size={14} /> {formatCount(article.participantCount)} participants</span>
-                    <span className="inline-flex items-center gap-1"><Eye size={14} /> {formatCount(article.viewCount)} views</span>
+                    <span className="inline-flex items-center gap-1"><Eye size={14} /> {formatCount(placeholderViewCount(article))} views</span>
                   </div>
                 </div>
               </button>
@@ -464,29 +431,11 @@ export default function NewsWall() {
               <p className="text-sm leading-7 text-slate-600">{summaryFor(selectedArticle)}</p>
 
               <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm font-bold text-slate-700">Community signal</p>
-                  <span className="text-xs font-bold text-slate-500">{formatCount(selectedArticle.participantCount)} participants</span>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-sm font-bold text-slate-700">Reader activity</p>
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-slate-500"><Eye size={14} /> {formatCount(placeholderViewCount(selectedArticle))} views</span>
                 </div>
-                <VoteBar article={selectedArticle} />
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                  <button className="btn-primary" type="button" onClick={() => handleVote('approve')} disabled={Boolean(voting)}>
-                    {voting === 'approve' ? <LoaderCircle className="animate-spin" size={17} /> : <ThumbsUp size={17} />}
-                    {isPublicView ? 'Sign in to approve' : 'Approve'}
-                  </button>
-                  <button className="btn-secondary border-red-200 text-red-700" type="button" onClick={() => handleVote('reject')} disabled={Boolean(voting)}>
-                    {voting === 'reject' ? <LoaderCircle className="animate-spin" size={17} /> : <ThumbsDown size={17} />}
-                    {isPublicView ? 'Sign in to reject' : 'Reject'}
-                  </button>
-                </div>
-                {selectedArticle.userVote && (
-                  <p className="mt-3 text-xs font-bold text-slate-500">Your current vote: {selectedArticle.userVote === 'approve' ? 'Approve' : 'Reject'}</p>
-                )}
-                {isPublicView && (
-                  <button className="btn-secondary mt-3 w-full" type="button" onClick={() => setAuthPrompt('Create a free account or sign in to share your view when discussion features open.')}>
-                    Share your view
-                  </button>
-                )}
+                <p className="mt-2 text-xs font-semibold leading-5 text-slate-500">Discussion controls are intentionally quiet while the audience base grows.</p>
               </div>
 
               {selectedArticle.link && (
@@ -504,8 +453,8 @@ export default function NewsWall() {
           <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.14em] text-cyan-700">Join the signal</p>
-                <h2 id="news-auth-title" className="mt-2 text-2xl font-black text-slate-950">Sign in to participate</h2>
+                <p className="text-xs font-black uppercase tracking-[0.14em] text-cyan-700">Save your feed</p>
+                <h2 id="news-auth-title" className="mt-2 text-2xl font-black text-slate-950">Sign in to continue</h2>
               </div>
               <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setAuthPrompt('')} aria-label="Close sign-in prompt">
                 <X size={19} />
@@ -541,10 +490,10 @@ export default function NewsWall() {
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">News Wall</p>
           <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-[-0.04em] sm:text-5xl">
-            Read today’s stories, see the community signal, then add your vote.
+            Read today’s stories without the noise.
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
-            Browse public news trends for free. Create an account when you are ready to vote, save topic preferences, and earn coins through eligible surveys.
+            Browse public news trends for free. Create an account when you are ready to save topic preferences and earn coins through eligible surveys.
           </p>
         </div>
       </section>

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Check, Gift, RefreshCcw, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ChevronDown, Gift, X } from 'lucide-react';
 import { getWallet } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
@@ -25,6 +25,11 @@ export default function Wallet() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [giftCardPreview, setGiftCardPreview] = useState(null);
+  const [giftCardNotice, setGiftCardNotice] = useState(null);
+  const [expandedGiftCards, setExpandedGiftCards] = useState(() => new Set([giftCardOptions[0]?.id].filter(Boolean)));
+  const [selectedDenominations, setSelectedDenominations] = useState(() => (
+    giftCardOptions.reduce((current, option) => ({ ...current, [option.id]: giftCardDenominations[0] }), {})
+  ));
 
   const loadWallet = async () => {
     setLoading(true);
@@ -49,14 +54,9 @@ export default function Wallet() {
   const wallet = data?.wallet;
   const exchangeRate = data?.exchangeRate || { coinsPerUsd: 1000, balanceUsd: 0, lockedUsd: 0 };
   const availableCoins = Number(wallet?.balance || 0);
-  const lockedCoins = Number(wallet?.lockedBalance || 0);
   const coinsPerUsd = Number(exchangeRate.coinsPerUsd || 1000);
   const giftCardMinimumRemaining = Math.max(0, giftCardRedemptionMinimum - availableCoins);
   const hasGiftCardRedemptionAccess = giftCardMinimumRemaining === 0;
-  const giftCardMinimumProgress = Math.min(100, Math.round((availableCoins / giftCardRedemptionMinimum) * 100));
-  const redemptionMessage = hasGiftCardRedemptionAccess
-    ? 'You have enough Coins for the first redemption tier.'
-    : `${formatCoinNumber(giftCardMinimumRemaining)} Coins until gift cards unlock.`;
 
   const giftCardTier = (amountUsd) => {
     const requiredCoins = Math.round(amountUsd * coinsPerUsd);
@@ -66,8 +66,45 @@ export default function Wallet() {
       requiredCoins,
       remainingCoins,
       unlocked: remainingCoins === 0,
-      progress: requiredCoins ? Math.min(100, Math.round((availableCoins / requiredCoins) * 100)) : 0,
     };
+  };
+
+  const toggleGiftCard = (optionId) => {
+    setExpandedGiftCards((current) => {
+      const next = new Set(current);
+      if (next.has(optionId)) next.delete(optionId);
+      else next.add(optionId);
+      return next;
+    });
+  };
+
+  const selectGiftCardDenomination = (optionId, amountUsd) => {
+    setGiftCardNotice(null);
+    setSelectedDenominations((current) => ({ ...current, [optionId]: Number(amountUsd) }));
+  };
+
+  const handleGiftCardRedeem = (option) => {
+    const amountUsd = selectedDenominations[option.id] || giftCardDenominations[0];
+    const tier = giftCardTier(amountUsd);
+
+    if (!hasGiftCardRedemptionAccess) {
+      setGiftCardNotice({
+        optionId: option.id,
+        message: `Need ${formatCoinNumber(giftCardMinimumRemaining)} more Coins to unlock gift card redemption.`,
+      });
+      return;
+    }
+
+    if (!tier.unlocked) {
+      setGiftCardNotice({
+        optionId: option.id,
+        message: `Need ${formatCoinNumber(tier.remainingCoins)} more Coins to unlock the ${usd(tier.amountUsd)} ${option.name} gift card.`,
+      });
+      return;
+    }
+
+    setGiftCardNotice(null);
+    setGiftCardPreview({ ...tier, option });
   };
 
   const transactionColumns = [
@@ -102,63 +139,23 @@ export default function Wallet() {
       <section className="wallet-hero mb-6">
         <div className="wallet-hero-copy">
           <p className="wallet-hero-kicker">Reward wallet</p>
-          <h1>Build toward a real reward.</h1>
-          <p>{redemptionMessage} Gift card delivery is being prepared, so this page is your reward goal tracker for now.</p>
+          <h1>Choose the reward you want next.</h1>
+          <p>Gift card redemption starts from the $10 tier. Select a brand, choose a value, and we’ll tell you what is needed before redemption opens.</p>
           <div className="wallet-hero-actions">
             <span>1,000 Coins = $1 USD</span>
             <span>Minimum redemption: $10</span>
           </div>
         </div>
-        <div className="wallet-goal-card">
-          <div className="wallet-goal-card-head">
-            <span>Gift card threshold</span>
-            <strong>{formatCoinNumber(Math.min(availableCoins, giftCardRedemptionMinimum))} / {formatCoinNumber(giftCardRedemptionMinimum)}</strong>
-          </div>
-          <div className="wallet-goal-meter" aria-hidden="true">
-            <i style={{ width: `${giftCardMinimumProgress}%` }} />
-          </div>
-          <div className="wallet-goal-stats">
-            <div>
-              <span>Available</span>
-              <strong><CoinAmount value={availableCoins} /></strong>
-            </div>
-            <div>
-              <span>Locked</span>
-              <strong><CoinAmount value={lockedCoins} /></strong>
-            </div>
-          </div>
-          <button className="btn-secondary" type="button" onClick={loadWallet} disabled={loading}>
-            <RefreshCcw size={16} className={loading ? 'animate-spin' : ''} />
-            {loading ? 'Refreshing...' : 'Refresh'}
-          </button>
+        <div className="wallet-promo-panel">
+          <span>Coming soon</span>
+          <strong>Gift card redemption</strong>
+          <p>Real fulfillment will be connected before live redemption opens. No Coins are deducted in this catalog.</p>
         </div>
       </section>
 
       {error && <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</div>}
       <div>
         <div className="space-y-6">
-          <section className="wallet-metrics grid gap-4 md:grid-cols-3">
-            <div>
-              <p>Available Coins</p>
-              <div>
-                <CoinAmount value={wallet?.balance} />
-              </div>
-              <span>≈ {usd(exchangeRate.balanceUsd)}</span>
-            </div>
-            <div>
-              <p>Locked Coins</p>
-              <div>
-                <CoinAmount value={wallet?.lockedBalance} />
-              </div>
-              <span>Pending redemption: {usd(exchangeRate.lockedUsd)}</span>
-            </div>
-            <div>
-              <p>Exchange Rate</p>
-              <div>{formatCoinNumber(exchangeRate.coinsPerUsd)}</div>
-              <span>Coins = $1 USD</span>
-            </div>
-          </section>
-
           <section className="wallet-showcase card p-5">
             <div className="wallet-showcase-head">
               <div>
@@ -171,63 +168,56 @@ export default function Wallet() {
               <span className="wallet-showcase-note">Coming soon · no Coins deducted</span>
             </div>
 
-            <div className="wallet-unlock-strip">
-              <div>
-                <p>
-                  {hasGiftCardRedemptionAccess
-                    ? 'Gift card redemption is unlocked.'
-                    : `Earn ${formatCoinNumber(giftCardMinimumRemaining)} more Coins to unlock redemption.`}
-                </p>
-                <span>Current progress: {giftCardMinimumProgress}%</span>
-              </div>
-              <div className="wallet-unlock-meter" aria-hidden="true">
-                <i style={{ width: `${giftCardMinimumProgress}%` }} />
-              </div>
-            </div>
+            <div className="gift-card-dropdown-list">
+              {giftCardOptions.map((option) => {
+                const expanded = expandedGiftCards.has(option.id);
+                const amountUsd = selectedDenominations[option.id] || giftCardDenominations[0];
+                const tier = giftCardTier(amountUsd);
+                return (
+                  <article key={option.id} className={`gift-card-option ${expanded ? 'is-expanded' : ''}`}>
+                    <button className="gift-card-summary" type="button" onClick={() => toggleGiftCard(option.id)} aria-expanded={expanded}>
+                      <span className="gift-card-summary-image">
+                        <img src={giftCardImageSources[option.image]} alt="" />
+                      </span>
+                      <span className="gift-card-summary-copy">
+                        <strong>{option.name}</strong>
+                        <span>{option.region} · $10 / $25 / $50</span>
+                      </span>
+                      <ChevronDown className="gift-card-summary-chevron" size={18} aria-hidden="true" />
+                    </button>
 
-            <div className="gift-card-catalog grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {giftCardOptions.map((option) => (
-                <article key={option.id} className="gift-card-option">
-                  <div className="gift-card-image-shell">
-                    <div>
-                      <img src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
-                    </div>
-                  </div>
-                  <div className="gift-card-body">
-                    <div className="gift-card-title-row">
-                      <h3>{option.name}</h3>
-                      <span>{option.region}</span>
-                    </div>
-                    <div className="space-y-3">
-                      {giftCardDenominations.map((amountUsd) => {
-                        const tier = giftCardTier(amountUsd);
-                        const tierUnlocked = hasGiftCardRedemptionAccess && tier.unlocked;
-                        return (
-                          <button
-                            key={amountUsd}
-                            className={`gift-card-tier ${tierUnlocked ? 'is-ready' : ''}`}
-                            type="button"
-                            disabled={!tierUnlocked}
-                            onClick={() => setGiftCardPreview({ ...tier, option })}
-                            aria-label={`${option.name} ${usd(amountUsd)} gift card`}
-                          >
-                            <span className="gift-card-tier-head">
-                              <span>{usd(amountUsd)}</span>
-                              <span>{formatCoinNumber(tier.requiredCoins)} Coins</span>
-                            </span>
-                            <span className="gift-card-tier-meter">
-                              <i style={{ width: `${tier.progress}%` }} />
-                            </span>
-                            <span className="gift-card-tier-status">
-                              {tierUnlocked ? <><Check size={13} strokeWidth={3} /> Ready to redeem</> : `Need ${formatCoinNumber(tier.remainingCoins)} more`}
-                            </span>
+                    {expanded && (
+                      <div className="gift-card-dropdown">
+                        <div className="gift-card-image-shell">
+                          <div>
+                            <img src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
+                          </div>
+                        </div>
+                        <div className="gift-card-controls">
+                          <label>
+                            <span>Gift card value</span>
+                            <select className="field" value={amountUsd} onChange={(event) => selectGiftCardDenomination(option.id, event.target.value)}>
+                              {giftCardDenominations.map((denomination) => (
+                                <option key={denomination} value={denomination}>{usd(denomination)} · {formatCoinNumber(giftCardTier(denomination).requiredCoins)} Coins</option>
+                              ))}
+                            </select>
+                          </label>
+                          <div className="gift-card-selected-tier">
+                            <span>{usd(amountUsd)}</span>
+                            <strong>{formatCoinNumber(tier.requiredCoins)} Coins</strong>
+                          </div>
+                          <button className="btn-primary gift-card-redeem-button" type="button" onClick={() => handleGiftCardRedeem(option)}>
+                            Redeem
                           </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </article>
-              ))}
+                          {giftCardNotice?.optionId === option.id && (
+                            <p className="gift-card-redeem-caption">{giftCardNotice.message}</p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
             </div>
           </section>
 

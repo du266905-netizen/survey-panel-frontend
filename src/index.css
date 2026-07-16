@@ -568,36 +568,6 @@ textarea {
   font-weight: 650;
   line-height: 1.65;
 }
-.dashboard-stat-grid .app-stat-card {
-  border-radius: 22px;
-  padding: 24px;
-}
-.dashboard-stat-grid .app-stat-card::before {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 5px;
-  background: linear-gradient(180deg, rgba(181, 225, 219, .5), rgba(181, 225, 219, .03));
-  content: '';
-}
-.dashboard-stat-grid .app-stat-card::after {
-  right: 28px;
-  width: 96px;
-  background: linear-gradient(90deg, transparent, rgba(219, 238, 234, .22));
-}
-.dashboard-stat-icon {
-  display: flex;
-  width: 42px;
-  height: 42px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(225, 242, 238, .12);
-  border-radius: 16px;
-  background: rgba(226, 240, 237, .055);
-  color: rgba(223, 237, 233, .74);
-}
-.dashboard-stat-icon.is-success { color: #b7e3dc; }
-.dashboard-stat-icon.is-pending { color: #d8c27a; }
-.dashboard-stat-icon.is-failed { color: #d5aaa9; }
 .dashboard-trend-card { border-radius: 24px; }
 .dashboard-chart-wrap { position: relative; }
 .dashboard-chart-empty {
@@ -682,108 +652,61 @@ textarea {
   font-weight: 820;
   padding: 8px 11px;
 }
-.wallet-goal-card {
+.wallet-promo-panel {
   position: relative;
   z-index: 1;
-  display: grid;
-  gap: 16px;
-  border: 1px solid rgba(230, 211, 144, .16);
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .018));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-  padding: 20px;
-}
-.wallet-goal-card-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-.wallet-goal-card-head > span,
-.wallet-goal-stats > div > span {
-  color: rgba(224, 232, 228, .5);
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-.wallet-goal-card strong,
-.wallet-goal-stats strong {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #f5f9f5;
-  font-size: 16px;
-  font-weight: 900;
-  text-align: right;
-}
-.wallet-goal-meter,
-.wallet-unlock-meter,
-.gift-card-tier-meter {
+  min-height: 220px;
+  flex-direction: column;
+  justify-content: flex-end;
   overflow: hidden;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, .25);
-  box-shadow: inset 0 1px 5px rgba(0, 0, 0, .34);
-}
-.wallet-goal-meter { height: 12px; border: 1px solid rgba(236, 212, 134, .14); }
-.wallet-goal-meter i,
-.wallet-unlock-meter i,
-.gift-card-tier-meter i {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #8fcac2, #d7bf73);
-}
-.wallet-goal-stats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  overflow: hidden;
-  border: 1px solid rgba(220, 238, 234, .08);
-  border-radius: 16px;
-  background: rgba(220, 238, 234, .08);
-}
-.wallet-goal-stats > div {
-  min-width: 0;
-  background: rgba(1, 8, 10, .3);
-  padding: 14px;
-}
-.wallet-goal-stats strong { margin-top: 6px; justify-content: flex-start; text-align: left; }
-.wallet-metrics > div {
-  border: 1px solid rgba(213, 235, 232, .1);
-  border-radius: 20px;
-  background: linear-gradient(145deg, rgba(18, 33, 37, .68), rgba(7, 16, 19, .72));
-  box-shadow: inset 0 1px 0 rgba(238, 252, 249, .025);
-  padding: 21px;
-}
-.wallet-metrics > div:first-child {
-  border-color: rgba(230, 211, 144, .16);
+  border: 1px solid rgba(230, 211, 144, .15);
+  border-radius: 24px;
   background:
-    radial-gradient(circle at 100% 0%, rgba(230, 211, 144, .12), transparent 38%),
-    linear-gradient(145deg, rgba(29, 28, 19, .7), rgba(7, 16, 19, .76));
+    radial-gradient(circle at 20% 10%, rgba(231, 213, 142, .16), transparent 36%),
+    radial-gradient(circle at 88% 88%, rgba(154, 230, 223, .12), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .018));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+  padding: 22px;
 }
-.wallet-metrics > div > p {
-  color: rgba(210, 228, 224, .48);
+.wallet-promo-panel::before {
+  position: absolute;
+  top: -36%;
+  right: -20%;
+  width: 270px;
+  height: 270px;
+  border: 1px solid rgba(235, 225, 170, .1);
+  border-radius: 999px;
+  content: '';
+}
+.wallet-promo-panel span {
+  width: max-content;
+  border: 1px solid rgba(230, 211, 144, .18);
+  border-radius: 999px;
+  background: rgba(230, 211, 144, .06);
+  color: rgba(238, 225, 173, .74);
   font-size: 11px;
-  font-weight: 900;
-  letter-spacing: .14em;
+  font-weight: 880;
+  letter-spacing: .12em;
+  padding: 7px 10px;
   text-transform: uppercase;
 }
-.wallet-metrics > div > div {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 12px;
-  color: #f4faf6;
-  font-size: 24px;
-  font-weight: 900;
-}
-.wallet-metrics > div > span {
+.wallet-promo-panel strong {
   display: block;
-  margin-top: 8px;
-  color: rgba(210, 228, 224, .52);
+  margin-top: 16px;
+  color: #f5f9f5;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 920;
+  letter-spacing: -.04em;
+  line-height: 1.05;
+}
+.wallet-promo-panel p {
+  margin-top: 10px;
+  max-width: 310px;
+  color: rgba(210, 228, 224, .55);
   font-size: 13px;
   font-weight: 650;
+  line-height: 1.65;
 }
 .wallet-showcase {
   position: relative;
@@ -832,43 +755,87 @@ textarea {
   font-weight: 820;
   padding: 8px 11px;
 }
-.wallet-unlock-strip {
+.gift-card-dropdown-list {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(180px, 32%);
-  gap: 16px;
-  align-items: center;
-  margin-bottom: 20px;
-  border: 1px solid rgba(220, 238, 234, .10);
-  border-radius: 18px;
-  background: rgba(0, 0, 0, .16);
-  padding: 16px;
+  gap: 12px;
 }
-.wallet-unlock-strip p {
-  color: #f0f8f4;
-  font-size: 14px;
-  font-weight: 850;
-}
-.wallet-unlock-strip span {
-  display: block;
-  margin-top: 5px;
-  color: rgba(210, 228, 224, .52);
-  font-size: 12px;
-  font-weight: 650;
-}
-.wallet-unlock-meter { height: 10px; border: 1px solid rgba(236, 212, 134, .13); }
 .gift-card-option {
   overflow: hidden;
   border: 1px solid rgba(213, 235, 232, .10);
-  border-radius: 22px;
+  border-radius: 20px;
   background: linear-gradient(145deg, rgba(13, 25, 28, .88), rgba(6, 13, 15, .86));
   box-shadow: 0 18px 44px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(238, 252, 249, .025);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 .gift-card-option:hover {
-  border-color: rgba(230, 211, 144, .19);
-  transform: translateY(-2px);
+  border-color: rgba(230, 211, 144, .18);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .21), inset 0 1px 0 rgba(238, 252, 249, .035);
+}
+.gift-card-option.is-expanded {
+  border-color: rgba(230, 211, 144, .23);
+}
+.gift-card-summary {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 13px 15px;
+  text-align: left;
+}
+.gift-card-summary-image {
+  display: block;
+  aspect-ratio: 1.58;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .06);
+  border-radius: 14px;
+  background: #10181b;
+  padding: 5px;
+}
+.gift-card-summary-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  transform: scale(1.03);
+}
+.gift-card-summary-copy {
+  min-width: 0;
+}
+.gift-card-summary-copy strong {
+  display: block;
+  color: #f2f8f5;
+  font-size: 16px;
+  font-weight: 900;
+}
+.gift-card-summary-copy span {
+  display: block;
+  margin-top: 3px;
+  color: rgba(210, 228, 224, .46);
+  font-size: 12px;
+  font-weight: 760;
+  text-transform: capitalize;
+}
+.gift-card-summary-chevron {
+  color: rgba(210, 228, 224, .48);
+  transition: transform .2s ease, color .2s ease;
+}
+.gift-card-option.is-expanded .gift-card-summary-chevron {
+  color: rgba(230, 211, 144, .78);
+  transform: rotate(180deg);
+}
+.gift-card-dropdown {
+  display: grid;
+  grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
+  gap: 18px;
+  border-top: 1px solid rgba(213, 235, 232, .08);
+  padding: 16px;
 }
 .gift-card-image-shell {
-  margin: 14px;
   aspect-ratio: 1.58;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .045);
@@ -891,83 +858,53 @@ textarea {
   object-fit: cover;
   transform: scale(1.045);
 }
-.gift-card-body {
-  border-top: 1px solid rgba(213, 235, 232, .08);
-  padding: 16px;
+.gift-card-controls {
+  display: grid;
+  align-content: center;
+  gap: 13px;
 }
-.gift-card-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.gift-card-title-row h3 {
-  color: #f2f8f5;
-  font-size: 16px;
-  font-weight: 900;
-}
-.gift-card-title-row span {
-  color: rgba(210, 228, 224, .42);
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: .14em;
+.gift-card-controls label > span:first-child {
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(210, 228, 224, .52);
+  font-size: 11px;
+  font-weight: 860;
+  letter-spacing: .1em;
   text-transform: uppercase;
 }
-.gift-card-tier {
-  display: block;
-  width: 100%;
-  border: 1px solid rgba(213, 235, 232, .09);
-  border-radius: 14px;
-  background: rgba(3, 10, 12, .34);
-  color: inherit;
-  cursor: pointer;
-  padding: 13px;
-  text-align: left;
-}
-.gift-card-tier:hover:not(:disabled) {
-  border-color: rgba(230, 211, 144, .24);
-  background: rgba(230, 211, 144, .045);
-}
-.gift-card-tier:disabled {
-  cursor: not-allowed;
-  opacity: .58;
-}
-.gift-card-tier.is-ready {
-  border-color: rgba(230, 211, 144, .25);
-}
-.gift-card-tier-head {
+.gift-card-selected-tier {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  border: 1px solid rgba(213, 235, 232, .09);
+  border-radius: 14px;
+  background: rgba(3, 10, 12, .34);
+  padding: 13px;
 }
-.gift-card-tier-head span:first-child {
+.gift-card-selected-tier span {
   color: #f2f8f5;
   font-size: 16px;
   font-weight: 900;
 }
-.gift-card-tier-head span:last-child {
+.gift-card-selected-tier strong {
   color: rgba(210, 228, 224, .52);
   font-size: 12px;
   font-weight: 800;
 }
-.gift-card-tier-meter {
-  display: block;
-  height: 6px;
-  margin-top: 9px;
-  border: 1px solid rgba(220, 238, 234, .08);
+.gift-card-redeem-button {
+  width: 100%;
 }
-.gift-card-tier-status {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 8px;
-  color: rgba(210, 228, 224, .52);
+.gift-card-redeem-caption {
+  border: 1px solid rgba(230, 211, 144, .16);
+  border-radius: 13px;
+  background: rgba(230, 211, 144, .055);
+  color: rgba(238, 225, 173, .86);
   font-size: 12px;
-  font-weight: 780;
+  font-weight: 820;
+  line-height: 1.5;
+  padding: 10px 12px;
 }
-.gift-card-tier.is-ready .gift-card-tier-status { color: #d8c27a; }
 .app-data-table tbody tr { transition: background-color .18s ease; }
 .app-data-table tbody tr:hover { background: rgba(148, 217, 211, .055) !important; }
 
@@ -1086,7 +1023,7 @@ textarea {
   .dashboard-command { grid-template-columns: 1fr; }
   .dashboard-command::before { left: 64%; width: 560px; height: 560px; }
   .wallet-hero { grid-template-columns: 1fr; }
-  .wallet-unlock-strip { grid-template-columns: 1fr; }
+  .gift-card-dropdown { grid-template-columns: 1fr; }
   .app-sidebar { width: 84px; padding-right: 12px; padding-left: 12px; }
   .app-sidebar-label, .app-sidebar-foot, .app-nav-link span { display: none; }
   .app-nav-link { justify-content: center; padding: 0; }
@@ -1122,9 +1059,9 @@ textarea {
   .dashboard-path-steps article > span { grid-row: auto; }
   .wallet-hero { border-radius: 22px; padding: 22px; }
   .wallet-hero h1 { font-size: 37px; }
-  .wallet-goal-card-head { align-items: flex-start; flex-direction: column; gap: 7px; }
-  .wallet-goal-stats { grid-template-columns: 1fr; }
   .wallet-showcase-head { flex-direction: column; }
+  .gift-card-summary { grid-template-columns: 74px minmax(0, 1fr) auto; padding: 12px; }
+  .gift-card-dropdown { padding: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
