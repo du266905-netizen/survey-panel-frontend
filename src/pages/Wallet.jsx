@@ -173,7 +173,6 @@ export default function Wallet() {
             <div className="wallet-reward-card-face">
               <span>{activeRewardSlide.title}</span>
             </div>
-            <h2>{activeRewardSlide.title}</h2>
             <p>{activeRewardSlide.description}</p>
           </article>
           <button className="wallet-reward-nav is-right" type="button" onClick={() => shiftRewardSlide(1)} aria-label="Next reward option">

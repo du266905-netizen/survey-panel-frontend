@@ -14,6 +14,7 @@ import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
 import Settings from './pages/Settings';
 import SurveyList from './pages/SurveyList';
+import SurveyComplete from './pages/SurveyComplete';
 import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
 import Privacy from './pages/Privacy';
@@ -51,6 +52,17 @@ function NewsRoute() {
   );
 }
 
+function SurveyCompleteRoute() {
+  const { user } = useAuth();
+  return user ? (
+    <AppLayout>
+      <SurveyComplete />
+    </AppLayout>
+  ) : (
+    <SurveyComplete />
+  );
+}
+
 export default function App() {
   return (
     <Routes>
@@ -62,6 +74,7 @@ export default function App() {
       <Route path="/隐私" element={<Navigate to="/privacy" replace />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/news" element={<NewsRoute />} />
+      <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
       <Route
         element={
           <ProtectedRoute>

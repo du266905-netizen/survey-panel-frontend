@@ -729,25 +729,16 @@ textarea {
 .wallet-reward-card-face span {
   position: relative;
   color: #f6fbf8;
-  font-size: clamp(25px, 3vw, 36px);
+  font-size: clamp(24px, 2.55vw, 34px);
   font-weight: 950;
   letter-spacing: -.055em;
   line-height: 1.05;
   text-align: center;
 }
-.wallet-reward-slide h2 {
-  position: relative;
-  margin-top: 25px;
-  color: #f6fbf8;
-  font-size: clamp(27px, 3vw, 42px);
-  font-weight: 950;
-  letter-spacing: -.06em;
-  line-height: 1.04;
-}
 .wallet-reward-slide p {
   position: relative;
-  max-width: 350px;
-  margin-top: 11px;
+  max-width: 440px;
+  margin-top: 26px;
   color: rgba(219, 231, 227, .62);
   font-size: 13px;
   font-weight: 720;
@@ -798,6 +789,85 @@ textarea {
 .wallet-reward-dots button.is-active {
   width: 22px;
   background: rgba(154, 230, 223, .82);
+}
+.survey-complete-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background:
+    radial-gradient(circle at 24% 18%, rgba(154, 230, 223, .12), transparent 34%),
+    radial-gradient(circle at 82% 2%, rgba(230, 211, 144, .10), transparent 30%),
+    #020606;
+}
+.app-shell .survey-complete-page {
+  min-height: calc(100vh - 96px);
+  background: transparent;
+}
+.survey-complete-card {
+  width: min(680px, 100%);
+  overflow: hidden;
+  border: 1px solid rgba(231, 242, 238, .14);
+  border-radius: 30px;
+  background:
+    linear-gradient(145deg, rgba(15, 31, 31, .94), rgba(5, 10, 12, .92));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255, 255, 255, .06);
+  padding: clamp(28px, 6vw, 54px);
+}
+.survey-complete-icon {
+  display: inline-flex;
+  width: 62px;
+  height: 62px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(154, 230, 223, .22);
+  border-radius: 22px;
+  background: rgba(154, 230, 223, .10);
+  color: #9ae6df;
+}
+.survey-complete-card.is-success .survey-complete-icon {
+  border-color: rgba(154, 230, 178, .28);
+  background: rgba(154, 230, 178, .10);
+  color: #b2f0c8;
+}
+.survey-complete-card.is-warning .survey-complete-icon {
+  border-color: rgba(245, 179, 132, .30);
+  background: rgba(245, 179, 132, .10);
+  color: #f5b384;
+}
+.survey-complete-card.is-pending .survey-complete-icon {
+  border-color: rgba(230, 211, 144, .30);
+  background: rgba(230, 211, 144, .10);
+  color: #e6d390;
+}
+.survey-complete-eyebrow {
+  margin-top: 24px;
+  color: rgba(154, 230, 223, .86);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.survey-complete-card h1 {
+  margin-top: 12px;
+  max-width: 560px;
+  color: #f7fbf8;
+  font-size: clamp(36px, 7vw, 66px);
+  font-weight: 950;
+  letter-spacing: -.07em;
+  line-height: .95;
+}
+.survey-complete-card > p:not(.survey-complete-eyebrow) {
+  margin-top: 22px;
+  max-width: 540px;
+  color: rgba(219, 231, 227, .68);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+.survey-complete-action {
+  margin-top: 30px;
+  width: fit-content;
 }
 .wallet-showcase {
   position: relative;
