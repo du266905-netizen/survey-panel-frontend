@@ -484,7 +484,7 @@ textarea {
   gap: 10px;
   margin-top: 24px;
 }
-.dashboard-goal-panel {
+.dashboard-path-panel {
   position: relative;
   z-index: 1;
   display: grid;
@@ -497,66 +497,71 @@ textarea {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
   padding: 20px;
 }
-.dashboard-goal-head {
+.dashboard-path-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
 }
-.dashboard-goal-head > span,
-.dashboard-goal-grid > div > span {
+.dashboard-path-head > span {
   color: rgba(210, 228, 224, .48);
   font-size: 11px;
   font-weight: 850;
   letter-spacing: .12em;
   text-transform: uppercase;
 }
-.dashboard-goal-panel strong {
+.dashboard-path-panel strong {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   color: #f2f8f5;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 900;
   text-align: right;
 }
-.dashboard-goal-meter {
-  overflow: hidden;
-  height: 12px;
-  border: 1px solid rgba(236, 212, 134, .13);
-  border-radius: 999px;
-  background: rgba(0, 0, 0, .25);
-  box-shadow: inset 0 1px 5px rgba(0, 0, 0, .34);
-}
-.dashboard-goal-meter i {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #8fcac2, #d7bf73);
-  box-shadow: 0 0 22px rgba(211, 190, 112, .18);
-}
-.dashboard-goal-grid {
+.dashboard-path-steps {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
+  gap: 10px;
+}
+.dashboard-path-steps article {
+  position: relative;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 4px 12px;
   overflow: hidden;
   border: 1px solid rgba(220, 238, 234, .08);
   border-radius: 16px;
-  background: rgba(220, 238, 234, .08);
-}
-.dashboard-goal-grid > div {
-  min-width: 0;
-  background: rgba(1, 8, 10, .3);
+  background: rgba(1, 8, 10, .28);
   padding: 14px;
 }
-.dashboard-goal-grid strong {
-  display: flex;
-  margin-top: 6px;
+.dashboard-path-steps article::after {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, rgba(143, 202, 194, .6), rgba(215, 191, 115, .08));
+  content: '';
+}
+.dashboard-path-steps article > span {
+  grid-row: span 2;
+  color: rgba(216, 196, 126, .62);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+.dashboard-path-steps article strong {
   justify-content: flex-start;
+  color: #f3f9f6;
   font-size: 14px;
   text-align: left;
 }
-.dashboard-goal-panel > p {
+.dashboard-path-steps article p {
+  margin: 0;
+  color: rgba(210, 228, 224, .52);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+.dashboard-path-panel > p {
   margin: 0;
   color: rgba(210, 228, 224, .5);
   font-size: 12px;
@@ -1112,8 +1117,9 @@ textarea {
   .dashboard-command h1 { font-size: 38px; }
   .dashboard-command-actions { flex-direction: column; }
   .dashboard-command-actions .btn-primary, .dashboard-command-actions .btn-secondary { width: 100%; }
-  .dashboard-goal-head { align-items: flex-start; flex-direction: column; gap: 7px; }
-  .dashboard-goal-grid { grid-template-columns: 1fr; }
+  .dashboard-path-head { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .dashboard-path-steps article { grid-template-columns: 1fr; }
+  .dashboard-path-steps article > span { grid-row: auto; }
   .wallet-hero { border-radius: 22px; padding: 22px; }
   .wallet-hero h1 { font-size: 37px; }
   .wallet-goal-card-head { align-items: flex-start; flex-direction: column; gap: 7px; }

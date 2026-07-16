@@ -3,14 +3,11 @@ import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, T
 import { ArrowUpRight, CheckCircle2, Clock3, Eye, ListFilter, X, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getDashboard } from '../api/realApi';
-import { useAuth } from '../components/AuthContext';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import StatCard from '../components/StatCard';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
-
-const payoutTargetCoins = 10000;
 
 const chartTooltipStyle = {
   backgroundColor: '#081317',
@@ -61,17 +58,7 @@ function formatRecordTime(record) {
   return date ? date.toLocaleString() : '-';
 }
 
-function shortDateTime() {
-  return new Date().toLocaleString([], {
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-}
-
 export default function Dashboard() {
-  const { user } = useAuth();
   const { data, loading } = useAsyncData(getDashboard, []);
   const [trendRange, setTrendRange] = useState(7);
   const [showAllRecords, setShowAllRecords] = useState(false);
@@ -85,12 +72,9 @@ export default function Dashboard() {
   const completedOffers = data?.stats.completedOffers ?? 0;
   const pendingEarnings = data?.stats.pendingEarnings ?? 0;
   const failedEarnings = data?.stats.failedEarnings ?? 0;
-  const availableCoins = Number(user?.coins ?? user?.coinsBalance ?? 0);
-  const payoutRemaining = Math.max(0, payoutTargetCoins - availableCoins);
-  const payoutProgress = Math.min(100, Math.round((availableCoins / payoutTargetCoins) * 100));
   const nextAction = completedOffers > 0
-    ? 'Keep the signal warm — check for new surveys while availability is fresh.'
-    : 'Complete your first real survey to start building reward history.';
+    ? 'New matches move throughout the day. Check the wall while survey inventory is fresh.'
+    : 'Start with one verified completion. Once it clears, your reward record begins to build.';
   const historyRecords = useMemo(() => {
     const now = new Date();
     const cutoff = historyRange === 'all' ? null : new Date(now.getTime() - Number(historyRange) * 24 * 60 * 60 * 1000);
@@ -122,8 +106,8 @@ export default function Dashboard() {
     <>
       <section className="dashboard-command mb-6">
         <div className="dashboard-command-copy">
-          <p className="dashboard-command-kicker">Today’s next move</p>
-          <h1>Your next payout starts here.</h1>
+          <p className="dashboard-command-kicker">Start earning today</p>
+          <h1>One good survey can start the streak.</h1>
           <p>{nextAction}</p>
           <div className="dashboard-command-actions">
             <Link className="btn-primary" to="/partners">
@@ -134,29 +118,29 @@ export default function Dashboard() {
             </Link>
           </div>
         </div>
-        <div className="dashboard-goal-panel" aria-label="Redemption progress">
-          <div className="dashboard-goal-head">
-            <span>Next redemption</span>
-            <strong>{payoutRemaining > 0 ? `${formatCoinNumber(payoutRemaining)} Coins to go` : 'Ready to redeem'}</strong>
+        <div className="dashboard-path-panel" aria-label="Reward path">
+          <div className="dashboard-path-head">
+            <span>Reward path</span>
+            <strong>Surveys → Coins → Gift cards</strong>
           </div>
-          <div className="dashboard-goal-meter" aria-hidden="true">
-            <i style={{ width: `${payoutProgress}%` }} />
+          <div className="dashboard-path-steps">
+            <article>
+              <span>01</span>
+              <strong>Find a live match</strong>
+              <p>Survey availability changes during the day.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Finish with quality</strong>
+              <p>Partners validate completions before Coins clear.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Build toward rewards</strong>
+              <p>Gift card goals unlock from the $10 tier.</p>
+            </article>
           </div>
-          <div className="dashboard-goal-grid">
-            <div>
-              <span>Available</span>
-              <strong><CoinAmount value={availableCoins} /></strong>
-            </div>
-            <div>
-              <span>Target</span>
-              <strong>{formatCoinNumber(payoutTargetCoins)}</strong>
-            </div>
-            <div>
-              <span>Pending</span>
-              <strong><CoinAmount value={pendingEarnings} /></strong>
-            </div>
-          </div>
-          <p>Last checked {shortDateTime()}. Rewards clear after partner validation.</p>
+          <p>Tip: complete your profile and check back when the wall looks quiet — inventory rotates.</p>
         </div>
       </section>
 
