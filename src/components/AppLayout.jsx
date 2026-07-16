@@ -1,4 +1,5 @@
-import { BarChart3, Database, Gift, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { BarChart3, ChevronDown, Database, Gift, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import CoinAmount from './CoinAmount';
@@ -10,22 +11,46 @@ const navItems = [
   { to: '/partners', label: 'Survey Wall', icon: Users },
   { to: '/news', label: 'News Wall', icon: Newspaper },
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
-  { to: '/profile', label: 'Profile', icon: User },
-  { to: '/settings', label: 'Settings', icon: Settings },
 ];
 
 export default function AppLayout({ children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const userMenuRef = useRef(null);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const isAdmin = isAdminRole(user?.role);
   const isPanelist = isPanelistRole(user?.role);
   const roleLabel = isAdmin ? 'Admin' : user?.role === 'panelist' ? 'Panelist' : 'Member';
-  const visibleNavItems = navItems.filter((item) => item.to !== '/settings' || !isPanelist);
+
+  useEffect(() => {
+    setUserMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handlePointerDown = (event) => {
+      if (!userMenuRef.current?.contains(event.target)) setUserMenuOpen(false);
+    };
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setUserMenuOpen(false);
+    };
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const handleLogout = () => {
+    setUserMenuOpen(false);
     logout();
     navigate('/login');
+  };
+
+  const goToProfile = () => {
+    setUserMenuOpen(false);
+    navigate('/profile');
   };
 
   const navigationLink = (item) => {
@@ -67,14 +92,37 @@ export default function AppLayout({ children }) {
               <span className="mr-2 text-[10px] font-bold uppercase tracking-[0.14em]">Coins</span>
               <CoinAmount value={user?.coins} />
             </div>
-            <div className="app-user-summary text-right">
-              <p className="text-sm font-semibold">{user?.username || 'Guest'}</p>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em]">{roleLabel}</p>
+            <div ref={userMenuRef} className="app-user-menu">
+              <button
+                className={`app-user-trigger ${userMenuOpen ? 'is-open' : ''}`}
+                type="button"
+                onClick={() => setUserMenuOpen((value) => !value)}
+                aria-haspopup="menu"
+                aria-expanded={userMenuOpen}
+              >
+                <span className="app-user-summary text-right">
+                  <span className="text-sm font-semibold">{user?.username || 'Guest'}</span>
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.14em]">{roleLabel}</span>
+                </span>
+                <ChevronDown className="app-user-chevron" size={15} aria-hidden="true" />
+              </button>
+              {userMenuOpen && (
+                <div className="app-user-dropdown" role="menu" aria-label="User menu">
+                  <button className="app-user-menu-item" type="button" onClick={goToProfile} role="menuitem">
+                    <User size={15} />
+                    <span>View profile</span>
+                  </button>
+                  <button className="app-user-menu-item" type="button" onClick={goToProfile} role="menuitem">
+                    <Settings size={15} />
+                    <span>Account settings</span>
+                  </button>
+                  <button className="app-user-menu-item is-danger" type="button" onClick={handleLogout} role="menuitem">
+                    <LogOut size={15} />
+                    <span>Log out</span>
+                  </button>
+                </div>
+              )}
             </div>
-            <button className="app-logout" type="button" onClick={handleLogout} aria-label="Log out">
-              <LogOut size={16} />
-              <span className="hidden lg:inline">Log out</span>
-            </button>
           </div>
         </div>
       </header>
@@ -83,7 +131,7 @@ export default function AppLayout({ children }) {
         <aside className="app-sidebar w-[272px] shrink-0 px-4 py-6">
           <div className="app-sidebar-label">Workspace</div>
           <nav className="space-y-1">
-            {visibleNavItems.map(navigationLink)}
+            {navItems.map(navigationLink)}
             {isAdmin && (
               <>
                 <div className="app-sidebar-label app-sidebar-label-secondary">Operations</div>

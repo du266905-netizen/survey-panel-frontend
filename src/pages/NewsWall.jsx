@@ -19,6 +19,14 @@ const categories = [
   { id: 'entertainment', label: 'Entertainment' },
 ];
 
+const categoryTones = {
+  tech: { bg: 'rgba(91, 155, 213, .15)', border: 'rgba(91, 155, 213, .34)', text: '#8EC7F5' },
+  finance: { bg: 'rgba(212, 169, 74, .16)', border: 'rgba(212, 169, 74, .36)', text: '#E7C66F' },
+  society: { bg: 'rgba(128, 108, 214, .15)', border: 'rgba(128, 108, 214, .32)', text: '#B9A8F3' },
+  entertainment: { bg: 'rgba(218, 112, 166, .15)', border: 'rgba(218, 112, 166, .34)', text: '#F2A7C9' },
+  news: { bg: 'rgba(78, 205, 196, .13)', border: 'rgba(78, 205, 196, .3)', text: '#8EE7E1' },
+};
+
 function formatDate(value) {
   if (!value) return '-';
   const date = new Date(value);
@@ -41,7 +49,51 @@ function formatCount(value) {
   return new Intl.NumberFormat('en-US').format(Number(value || 0));
 }
 
-function DailyBriefCard({ brief, loading, error }) {
+function categoryInfo(value) {
+  const raw = String(value || '').toLowerCase();
+  const matched = categories.find((item) => item.id === raw || item.label.toLowerCase() === raw);
+  const id = matched?.id || 'news';
+  return {
+    id,
+    label: matched?.label || (value ? String(value) : 'News'),
+    tone: categoryTones[id] || categoryTones.news,
+  };
+}
+
+function categoryStyle(value) {
+  const { tone } = categoryInfo(value);
+  return {
+    '--news-category-bg': tone.bg,
+    '--news-category-border': tone.border,
+    '--news-category-text': tone.text,
+  };
+}
+
+function CategoryPill({ category, className = '' }) {
+  const info = categoryInfo(category);
+  return (
+    <span className={`news-category-pill ${className}`} style={categoryStyle(info.id)}>
+      <span className="news-category-dot" aria-hidden="true" />
+      {info.label}
+    </span>
+  );
+}
+
+function countryLabel(value) {
+  const key = String(value || 'US').toUpperCase();
+  return countries.find((item) => item.id === key)?.label || key;
+}
+
+function countryFlag(value) {
+  const key = String(value || 'US').toUpperCase();
+  if (key === 'US') return '🇺🇸';
+  if (key === 'UK') return '🇬🇧';
+  if (key === 'CA') return '🇨🇦';
+  return '🌐';
+}
+
+function DailyBriefCard({ brief, loading, error, country }) {
+  const briefCountry = brief?.country || country;
   return (
     <section className="card mb-6 overflow-hidden">
       <div className="border-b border-slate-100 bg-cyan-50/50 p-5">
@@ -56,7 +108,8 @@ function DailyBriefCard({ brief, loading, error }) {
             </div>
           </div>
           <span className="rounded-full border border-cyan-200 bg-white px-3 py-1 text-xs font-bold text-cyan-800">
-            {brief?.countryLabel || 'Region'} · {formatBriefDate(brief?.briefDate)}
+            <span className="mr-1.5" aria-hidden="true">{countryFlag(briefCountry)}</span>
+            {brief?.countryLabel || countryLabel(briefCountry)} · {formatBriefDate(brief?.briefDate)}
           </span>
         </div>
       </div>
@@ -78,7 +131,7 @@ function DailyBriefCard({ brief, loading, error }) {
             <div className="mt-5 grid gap-3 lg:grid-cols-3">
               {(brief.highlights || []).slice(0, 5).map((item, index) => (
                 <article key={`${item.headline}-${index}`} className="rounded-xl border border-slate-200 bg-white p-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.14em] text-cyan-700">{item.category || 'News'}</p>
+                  <CategoryPill category={item.category} />
                   <h3 className="mt-2 text-sm font-black leading-snug text-slate-950">{item.headline}</h3>
                   <p className="mt-2 text-xs leading-5 text-slate-500">{item.takeaway}</p>
                 </article>
@@ -292,7 +345,7 @@ export default function NewsWall() {
 
       {error && <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
 
-      <DailyBriefCard brief={brief} loading={briefLoading} error={briefError} />
+      <DailyBriefCard brief={brief} loading={briefLoading} error={briefError} country={country} />
 
       <section className="card p-5">
         <div className="flex flex-wrap items-start justify-between gap-4">
@@ -339,7 +392,9 @@ export default function NewsWall() {
               className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold ${category === item.id ? 'border-cyan-300 bg-cyan-50 text-cyan-800' : 'border-slate-200 bg-white text-slate-600'}`}
               type="button"
               onClick={() => setCategory(item.id)}
+              style={categoryStyle(item.id)}
             >
+              <span className="news-category-dot" aria-hidden="true" />
               {subscribedCategories.has(item.id) && <Check size={14} />}
               {item.label}
             </button>
@@ -363,7 +418,10 @@ export default function NewsWall() {
                 </div>
                 <div className="p-5">
                   <div className="mb-3 flex items-center justify-between gap-3 text-xs font-bold text-slate-500">
-                    <span>{article.sourceName || 'News source'}</span>
+                    <span className="flex min-w-0 flex-wrap items-center gap-2">
+                      <CategoryPill category={article.category} />
+                      <span className="truncate">{article.sourceName || 'News source'}</span>
+                    </span>
                     <span>{formatDate(article.publishedAt)}</span>
                   </div>
                   <h2 className="line-clamp-2 text-lg font-black leading-snug text-slate-950">{article.title}</h2>
@@ -387,7 +445,10 @@ export default function NewsWall() {
           <section className="card flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden shadow-2xl">
             <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-5">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">{selectedArticle.sourceName || 'News source'}</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CategoryPill category={selectedArticle.category} />
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">{selectedArticle.sourceName || 'News source'}</p>
+                </div>
                 <h2 id="news-detail-title" className="mt-2 text-2xl font-black leading-tight text-slate-950">{selectedArticle.title}</h2>
               </div>
               <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={closeArticle} aria-label="Close news detail">
