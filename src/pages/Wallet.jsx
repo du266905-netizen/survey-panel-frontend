@@ -140,16 +140,11 @@ export default function Wallet() {
         <div className="wallet-hero-copy">
           <p className="wallet-hero-kicker">Reward wallet</p>
           <h1>Choose the reward you want next.</h1>
-          <p>Gift card redemption starts from the $10 tier. Select a brand, choose a value, and we’ll tell you what is needed before redemption opens.</p>
+          <p>Select a gift card brand, choose a value, and we’ll show whether your current Coins balance meets the target.</p>
           <div className="wallet-hero-actions">
             <span>1,000 Coins = $1 USD</span>
             <span>Minimum redemption: $10</span>
           </div>
-        </div>
-        <div className="wallet-promo-panel">
-          <span>Coming soon</span>
-          <strong>Gift card redemption</strong>
-          <p>Real fulfillment will be connected before live redemption opens. No Coins are deducted in this catalog.</p>
         </div>
       </section>
 
@@ -163,9 +158,8 @@ export default function Wallet() {
                   <Gift size={18} className="text-amber-600" />
                   Gift card catalog
                 </h2>
-                <p>Pick a target. Real gift card fulfillment will be connected separately before live redemption opens.</p>
+                <p>Pick a target amount and keep building toward it. Coins are not deducted until a real redemption request is submitted.</p>
               </div>
-              <span className="wallet-showcase-note">Coming soon · no Coins deducted</span>
             </div>
 
             <div className="gift-card-dropdown-list">
@@ -252,7 +246,7 @@ export default function Wallet() {
                 <X size={18} />
               </button>
             </div>
-            <p className="mt-4 text-sm leading-6 text-slate-600">Gift card redemption is coming soon. No redemption request was submitted and no Coins were deducted from your wallet.</p>
+            <p className="mt-4 text-sm leading-6 text-slate-600">This is a reward target preview. No redemption request was submitted and no Coins were deducted from your wallet.</p>
             <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-900">
               Future goal: {formatCoinNumber(giftCardPreview.requiredCoins)} Coins for {usd(giftCardPreview.amountUsd)}.
             </div>

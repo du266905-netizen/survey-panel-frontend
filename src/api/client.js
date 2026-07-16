@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+const defaultApiBaseUrl = () => {
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return 'https://api.guanyi-media.com';
+  }
+  return 'http://127.0.0.1:3001';
+};
+
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:3001',
+  baseURL: import.meta.env.VITE_API_URL || defaultApiBaseUrl(),
   timeout: 10000,
 });
 
