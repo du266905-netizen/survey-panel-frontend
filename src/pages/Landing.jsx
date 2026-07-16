@@ -175,7 +175,7 @@ function LandingPhoto({ className = '', src, alt, eyebrow, title, priority = fal
         src={src}
         alt={alt}
         loading={priority ? 'eager' : 'lazy'}
-        fetchPriority={priority ? 'high' : 'auto'}
+        fetchpriority={priority ? 'high' : 'auto'}
         decoding="async"
         onLoad={() => setImageState('loaded')}
         onError={() => setImageState('error')}

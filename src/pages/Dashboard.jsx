@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { CheckCircle2, Clock3, Eye, ListFilter, X, XCircle } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, Clock3, Eye, ListFilter, X, XCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { getDashboard } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
-import PageHeader from '../components/PageHeader';
 import StatCard from '../components/StatCard';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
@@ -58,6 +58,15 @@ function formatRecordTime(record) {
   return date ? date.toLocaleString() : '-';
 }
 
+function shortDateTime() {
+  return new Date().toLocaleString([], {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
 export default function Dashboard() {
   const { data, loading } = useAsyncData(getDashboard, []);
   const [trendRange, setTrendRange] = useState(7);
@@ -67,7 +76,11 @@ export default function Dashboard() {
   const [historyRange, setHistoryRange] = useState('all');
   const records = data?.records || [];
   const trend = useMemo(() => buildTrend(records, trendRange), [records, trendRange]);
+  const hasTrendActivity = trend.some((point) => point.completed > 0 || point.coins > 0);
   const recentRecords = records.slice(0, 8);
+  const completedOffers = data?.stats.completedOffers ?? 0;
+  const pendingEarnings = data?.stats.pendingEarnings ?? 0;
+  const failedEarnings = data?.stats.failedEarnings ?? 0;
   const historyRecords = useMemo(() => {
     const now = new Date();
     const cutoff = historyRange === 'all' ? null : new Date(now.getTime() - Number(historyRange) * 24 * 60 * 60 * 1000);
@@ -97,35 +110,64 @@ export default function Dashboard() {
 
   return (
     <>
-      <PageHeader title="Dashboard" description="Your recent survey activity, reward trend, and participation history." />
-      <div className="grid gap-4 md:grid-cols-3">
+      <section className="dashboard-command mb-6">
+        <div className="dashboard-command-copy">
+          <p className="dashboard-command-kicker">Panelist control room</p>
+          <h1>Dashboard</h1>
+          <p>Track what cleared, what is still pending, and where your reward activity is moving.</p>
+          <div className="dashboard-command-actions">
+            <Link className="btn-primary" to="/partners">
+              Find surveys <ArrowUpRight size={16} />
+            </Link>
+            <Link className="btn-secondary" to="/wallet">
+              Open wallet
+            </Link>
+          </div>
+        </div>
+        <div className="dashboard-command-panel" aria-label="Account summary">
+          <div>
+            <span>Cleared offers</span>
+            <strong>{formatCoinNumber(completedOffers)}</strong>
+          </div>
+          <div>
+            <span>Pending review</span>
+            <strong><CoinAmount value={pendingEarnings} /></strong>
+          </div>
+          <div>
+            <span>Last checked</span>
+            <strong>{shortDateTime()}</strong>
+          </div>
+        </div>
+      </section>
+
+      <div className="dashboard-stat-grid grid gap-4 md:grid-cols-3">
         <StatCard
           label="Completed Offers"
-          value={data?.stats.completedOffers ?? '-'}
+          value={loading ? '-' : completedOffers}
           icon={CheckCircle2}
           helper="Approved conversions"
-          className="border-l-4 border-l-cyan-500"
-          iconClassName="bg-cyan-100 text-cyan-600"
+          className="dashboard-stat-card"
+          iconClassName="dashboard-stat-icon is-success"
         />
         <StatCard
           label="Pending Coins"
-          value={<CoinAmount value={data?.stats.pendingEarnings} />}
+          value={<CoinAmount value={pendingEarnings} />}
           icon={Clock3}
           helper="Awaiting audit"
-          className="border-l-4 border-l-blue-500"
-          iconClassName="bg-blue-100 text-blue-600"
+          className="dashboard-stat-card"
+          iconClassName="dashboard-stat-icon is-pending"
         />
         <StatCard
           label="Failed Coins"
-          value={<CoinAmount value={data?.stats.failedEarnings} />}
+          value={<CoinAmount value={failedEarnings} />}
           icon={XCircle}
           helper="Rejected or expired"
-          className="border-l-4 border-l-red-500"
-          iconClassName="bg-red-100 text-red-600"
+          className="dashboard-stat-card"
+          iconClassName="dashboard-stat-icon is-failed"
         />
       </div>
 
-      <section className="card mt-6 p-5">
+      <section className="dashboard-trend-card card mt-6 p-5">
         <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-lg font-bold text-slate-950">Participation trend</h2>
@@ -139,26 +181,36 @@ export default function Dashboard() {
             </select>
           </label>
         </div>
-        <div className="h-80">
+        <div className="dashboard-chart-wrap h-80">
           {loading ? (
             <div className="h-full animate-pulse rounded-lg bg-slate-100" />
           ) : (
-            <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, .24)" vertical={false} />
-                <XAxis dataKey="day" tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
-                <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
-                <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
-                <Tooltip
-                  contentStyle={chartTooltipStyle}
-                  labelStyle={{ color: '#eaf4f1' }}
-                  formatter={(value, name) => [name === 'Coins' ? `${formatCoinNumber(value)} Coins` : value, name]}
-                />
-                <Legend wrapperStyle={{ paddingTop: 14 }} />
-                <Bar yAxisId="completed" dataKey="completed" name="Completed offers" fill="#22c55e" radius={[4, 4, 0, 0]} maxBarSize={28} />
-                <Line yAxisId="coins" type="monotone" dataKey="coins" name="Coins" stroke="#0891b2" strokeWidth={3} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
-              </ComposedChart>
-            </ResponsiveContainer>
+            <>
+              {!hasTrendActivity && (
+                <div className="dashboard-chart-empty">
+                  <p>Trend will appear after your first approved survey.</p>
+                  <span>No cleared activity in the selected period yet.</span>
+                </div>
+              )}
+              <div className={hasTrendActivity ? 'h-full' : 'h-full opacity-35'}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, .20)" vertical={false} />
+                    <XAxis dataKey="day" tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
+                    <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
+                    <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
+                    <Tooltip
+                      contentStyle={chartTooltipStyle}
+                      labelStyle={{ color: '#eaf4f1' }}
+                      formatter={(value, name) => [name === 'Coins' ? `${formatCoinNumber(value)} Coins` : value, name]}
+                    />
+                    <Legend wrapperStyle={{ paddingTop: 14 }} />
+                    <Bar yAxisId="completed" dataKey="completed" name="Completed offers" fill="#a7ddd6" radius={[4, 4, 0, 0]} maxBarSize={28} />
+                    <Line yAxisId="coins" type="monotone" dataKey="coins" name="Coins" stroke="#d8c27a" strokeWidth={3} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </>
           )}
         </div>
       </section>

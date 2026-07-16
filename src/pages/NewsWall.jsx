@@ -20,11 +20,11 @@ const categories = [
 ];
 
 const categoryTones = {
-  tech: { bg: 'rgba(91, 155, 213, .15)', border: 'rgba(91, 155, 213, .34)', text: '#8EC7F5' },
-  finance: { bg: 'rgba(212, 169, 74, .16)', border: 'rgba(212, 169, 74, .36)', text: '#E7C66F' },
-  society: { bg: 'rgba(128, 108, 214, .15)', border: 'rgba(128, 108, 214, .32)', text: '#B9A8F3' },
-  entertainment: { bg: 'rgba(218, 112, 166, .15)', border: 'rgba(218, 112, 166, .34)', text: '#F2A7C9' },
-  news: { bg: 'rgba(78, 205, 196, .13)', border: 'rgba(78, 205, 196, .3)', text: '#8EE7E1' },
+  tech: { bg: 'rgba(180, 209, 213, .07)', border: 'rgba(180, 209, 213, .18)', text: '#b8cdd0', accent: '#8fb4b9' },
+  finance: { bg: 'rgba(218, 196, 134, .07)', border: 'rgba(218, 196, 134, .18)', text: '#d2c394', accent: '#bda963' },
+  society: { bg: 'rgba(194, 184, 211, .07)', border: 'rgba(194, 184, 211, .17)', text: '#c6bed1', accent: '#a999bb' },
+  entertainment: { bg: 'rgba(211, 184, 188, .07)', border: 'rgba(211, 184, 188, .17)', text: '#d0bdc0', accent: '#b8979d' },
+  news: { bg: 'rgba(194, 211, 207, .07)', border: 'rgba(194, 211, 207, .17)', text: '#c2d3cf', accent: '#95b9b2' },
 };
 
 function formatDate(value) {
@@ -66,6 +66,7 @@ function categoryStyle(value) {
     '--news-category-bg': tone.bg,
     '--news-category-border': tone.border,
     '--news-category-text': tone.text,
+    '--news-category-accent': tone.accent,
   };
 }
 
