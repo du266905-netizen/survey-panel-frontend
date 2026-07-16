@@ -3,11 +3,14 @@ import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, T
 import { ArrowUpRight, CheckCircle2, Clock3, Eye, ListFilter, X, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getDashboard } from '../api/realApi';
+import { useAuth } from '../components/AuthContext';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import StatCard from '../components/StatCard';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
+
+const payoutTargetCoins = 10000;
 
 const chartTooltipStyle = {
   backgroundColor: '#081317',
@@ -68,6 +71,7 @@ function shortDateTime() {
 }
 
 export default function Dashboard() {
+  const { user } = useAuth();
   const { data, loading } = useAsyncData(getDashboard, []);
   const [trendRange, setTrendRange] = useState(7);
   const [showAllRecords, setShowAllRecords] = useState(false);
@@ -81,6 +85,12 @@ export default function Dashboard() {
   const completedOffers = data?.stats.completedOffers ?? 0;
   const pendingEarnings = data?.stats.pendingEarnings ?? 0;
   const failedEarnings = data?.stats.failedEarnings ?? 0;
+  const availableCoins = Number(user?.coins ?? user?.coinsBalance ?? 0);
+  const payoutRemaining = Math.max(0, payoutTargetCoins - availableCoins);
+  const payoutProgress = Math.min(100, Math.round((availableCoins / payoutTargetCoins) * 100));
+  const nextAction = completedOffers > 0
+    ? 'Keep the signal warm — check for new surveys while availability is fresh.'
+    : 'Complete your first real survey to start building reward history.';
   const historyRecords = useMemo(() => {
     const now = new Date();
     const cutoff = historyRange === 'all' ? null : new Date(now.getTime() - Number(historyRange) * 24 * 60 * 60 * 1000);
@@ -112,9 +122,9 @@ export default function Dashboard() {
     <>
       <section className="dashboard-command mb-6">
         <div className="dashboard-command-copy">
-          <p className="dashboard-command-kicker">Panelist control room</p>
-          <h1>Dashboard</h1>
-          <p>Track what cleared, what is still pending, and where your reward activity is moving.</p>
+          <p className="dashboard-command-kicker">Today’s next move</p>
+          <h1>Your next payout starts here.</h1>
+          <p>{nextAction}</p>
           <div className="dashboard-command-actions">
             <Link className="btn-primary" to="/partners">
               Find surveys <ArrowUpRight size={16} />
@@ -124,19 +134,29 @@ export default function Dashboard() {
             </Link>
           </div>
         </div>
-        <div className="dashboard-command-panel" aria-label="Account summary">
-          <div>
-            <span>Cleared offers</span>
-            <strong>{formatCoinNumber(completedOffers)}</strong>
+        <div className="dashboard-goal-panel" aria-label="Redemption progress">
+          <div className="dashboard-goal-head">
+            <span>Next redemption</span>
+            <strong>{payoutRemaining > 0 ? `${formatCoinNumber(payoutRemaining)} Coins to go` : 'Ready to redeem'}</strong>
           </div>
-          <div>
-            <span>Pending review</span>
-            <strong><CoinAmount value={pendingEarnings} /></strong>
+          <div className="dashboard-goal-meter" aria-hidden="true">
+            <i style={{ width: `${payoutProgress}%` }} />
           </div>
-          <div>
-            <span>Last checked</span>
-            <strong>{shortDateTime()}</strong>
+          <div className="dashboard-goal-grid">
+            <div>
+              <span>Available</span>
+              <strong><CoinAmount value={availableCoins} /></strong>
+            </div>
+            <div>
+              <span>Target</span>
+              <strong>{formatCoinNumber(payoutTargetCoins)}</strong>
+            </div>
+            <div>
+              <span>Pending</span>
+              <strong><CoinAmount value={pendingEarnings} /></strong>
+            </div>
           </div>
+          <p>Last checked {shortDateTime()}. Rewards clear after partner validation.</p>
         </div>
       </section>
 
