@@ -225,10 +225,10 @@ export default function Wallet() {
 
           <section>
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-950">Redemption Orders</h2>
-              <p className="text-sm text-slate-500">Manual provider first</p>
+              <h2 className="text-lg font-bold text-slate-950">Reward requests</h2>
+              <p className="text-sm text-slate-500">{data?.orders?.length || 0} requests</p>
             </div>
-            <DataTable columns={orderColumns} rows={data?.orders || []} loading={loading} emptyMessage="No redemption orders yet." />
+            <DataTable columns={orderColumns} rows={data?.orders || []} loading={loading} emptyMessage="No reward requests yet." />
           </section>
         </div>
 
