@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, BadgeCheck, CircleDollarSign, ShieldCheck, UserRoundCheck } from 'lucide-react';
+import { ArrowRight, BadgeCheck, CircleDollarSign, Eye, Newspaper, ShieldCheck, UsersRound, UserRoundCheck } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { getNewsWall } from '../api/realApi';
 import GlobalGlobe from '../components/GlobalGlobe';
 import Logo from '../components/Logo';
 import PublicAuthPanel from '../components/PublicAuthPanel';
@@ -23,6 +24,8 @@ const socialLinks = [
   { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/guanyisearch/' },
   { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/guanyisearch/' },
 ];
+
+const previewNewsCategories = ['tech', 'finance', 'society', 'entertainment'];
 
 function SocialGlyph({ id }) {
   if (id === 'instagram') {
@@ -55,6 +58,121 @@ function SocialGlyph({ id }) {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z" />
     </svg>
+  );
+}
+
+function formatPreviewCount(value) {
+  return new Intl.NumberFormat('en-US', { notation: Number(value || 0) >= 1000 ? 'compact' : 'standard' }).format(Number(value || 0));
+}
+
+function LandingPreviewVoteBar({ article }) {
+  const approve = Number(article?.approvePercent ?? 50);
+  const reject = Number(article?.rejectPercent ?? 50);
+  return (
+    <div className="landing-news-signal">
+      <div className="landing-news-signal-labels">
+        <span>Approve {approve}%</span>
+        <span>Reject {reject}%</span>
+      </div>
+      <div className="landing-news-signal-track">
+        <span className="is-approve" style={{ width: `${approve}%` }} />
+        <span className="is-reject" style={{ width: `${reject}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function LandingNewsImage({ article }) {
+  if (article?.imageUrl) {
+    return <img src={article.imageUrl} alt="" loading="lazy" decoding="async" />;
+  }
+  return (
+    <div className="landing-news-image-fallback" aria-hidden="true">
+      <Newspaper size={34} strokeWidth={1.6} />
+    </div>
+  );
+}
+
+function LandingNewsPreview() {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadPreviewNews() {
+      setLoading(true);
+      setError('');
+      try {
+        const responses = await Promise.allSettled(
+          previewNewsCategories.map((category) => getNewsWall({ country: 'US', category, limit: 6 }))
+        );
+        const byId = new Map();
+        responses.forEach((result) => {
+          if (result.status !== 'fulfilled') return;
+          (result.value.data || []).forEach((article) => {
+            if (article?.id && !byId.has(article.id)) byId.set(article.id, article);
+          });
+        });
+        const nextArticles = [...byId.values()]
+          .sort((left, right) => Number(right.score || 0) - Number(left.score || 0) || new Date(right.publishedAt || 0) - new Date(left.publishedAt || 0))
+          .slice(0, 3);
+        if (!cancelled) setArticles(nextArticles);
+      } catch {
+        if (!cancelled) setError('News preview is temporarily unavailable.');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    loadPreviewNews();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <section className="landing-news-preview" aria-labelledby="landing-news-preview-title">
+      <div className="landing-container landing-news-preview-panel">
+        <div className="landing-news-preview-head">
+          <div>
+            <p className="landing-label">News Wall preview</p>
+            <h2 id="landing-news-preview-title">Today’s topics are already moving.</h2>
+          </div>
+          <Link to="/news">Explore News Wall <ArrowRight size={17} /></Link>
+        </div>
+
+        {loading ? (
+          <div className="landing-news-grid" aria-label="Loading news preview">
+            {Array.from({ length: 3 }).map((_, index) => <div key={index} className="landing-news-card is-loading" />)}
+          </div>
+        ) : error ? (
+          <p className="landing-news-preview-error">{error}</p>
+        ) : articles.length ? (
+          <div className="landing-news-grid">
+            {articles.map((article) => (
+              <Link key={article.id} className="landing-news-card" to={`/news?article=${encodeURIComponent(article.id)}`}>
+                <div className="landing-news-card-image">
+                  <LandingNewsImage article={article} />
+                </div>
+                <div className="landing-news-card-body">
+                  <p>{article.sourceName || 'News source'}</p>
+                  <h3>{article.title}</h3>
+                  <LandingPreviewVoteBar article={article} />
+                  <div className="landing-news-card-meta">
+                    <span><UsersRound size={14} /> {formatPreviewCount(article.participantCount)} participants</span>
+                    <span><Eye size={14} /> {formatPreviewCount(article.viewCount)} views</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="landing-news-preview-error">Latest News Wall stories will appear here as soon as the feed refreshes.</p>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -179,6 +297,33 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .public-auth-message { margin: 15px 0 0; border: 1px solid #f7caca; border-radius: 11px; background: #fff5f5; color: #bb3434; font-size: 12px; font-weight: 700; line-height: 1.45; padding: 10px 12px; }
         .public-auth-message.is-success { border-color: #a7e3d5; background: #edfffa; color: #08755f; }
         .landing-scroll-cue { display: flex; align-items: center; gap: 8px; color: rgba(218,230,229,.46); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+        .landing-news-preview { background: #020303; color: white; padding: 0 0 72px; }
+        .landing-news-preview-panel { border: 1px solid rgba(255,255,255,.12); border-radius: 26px; background: linear-gradient(135deg, rgba(13,32,39,.92), rgba(6,11,14,.96)); box-shadow: 0 28px 70px rgba(0,0,0,.24); padding: clamp(22px, 4vw, 42px); }
+        .landing-news-preview-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+        .landing-news-preview-head .landing-label { color: #8ef3f8; }
+        .landing-news-preview-head h2 { max-width: 560px; margin: 10px 0 0; font-size: clamp(27px, 3vw, 42px); font-weight: 850; letter-spacing: -.045em; line-height: 1.08; }
+        .landing-news-preview-head a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(141,245,250,.24); border-radius: 999px; background: rgba(141,245,250,.1); color: #9cf5f9; font-size: 13px; font-weight: 850; text-decoration: none; padding: 12px 16px; white-space: nowrap; }
+        .landing-news-preview-head a:hover { background: rgba(141,245,250,.16); color: white; }
+        .landing-news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+        .landing-news-card { overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 20px; background: rgba(255,255,255,.055); color: white; text-decoration: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+        .landing-news-card:hover { border-color: rgba(137,240,247,.34); background: rgba(255,255,255,.08); transform: translateY(-3px); }
+        .landing-news-card.is-loading { min-height: 330px; background: linear-gradient(100deg, rgba(255,255,255,.06), rgba(255,255,255,.12), rgba(255,255,255,.06)); background-size: 220% 100%; animation: landing-news-shimmer 1.4s ease-in-out infinite; }
+        .landing-news-card-image { aspect-ratio: 1.9; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.09); background: #0c1b20; }
+        .landing-news-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+        .landing-news-card:hover .landing-news-card-image img { transform: scale(1.04); }
+        .landing-news-image-fallback { display: grid; width: 100%; height: 100%; place-items: center; background: radial-gradient(circle at 60% 35%, rgba(83,221,230,.2), transparent 42%), #0b1b20; color: #86eef6; }
+        .landing-news-card-body { padding: 18px; }
+        .landing-news-card-body > p { margin: 0 0 9px; color: #8eeef5; font-size: 10px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+        .landing-news-card-body h3 { min-height: 3.1em; margin: 0; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 16px; font-weight: 850; letter-spacing: -.02em; line-height: 1.35; }
+        .landing-news-signal { margin-top: 16px; }
+        .landing-news-signal-labels { display: flex; justify-content: space-between; gap: 12px; color: rgba(228,239,239,.63); font-size: 11px; font-weight: 850; }
+        .landing-news-signal-track { display: flex; height: 9px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.09); margin-top: 8px; }
+        .landing-news-signal-track span { display: block; }
+        .landing-news-signal-track .is-approve { background: #29cddd; }
+        .landing-news-signal-track .is-reject { background: #fb7185; }
+        .landing-news-card-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 15px; color: rgba(220,232,232,.62); font-size: 11px; font-weight: 800; }
+        .landing-news-card-meta span { display: inline-flex; align-items: center; gap: 5px; }
+        .landing-news-preview-error { border: 1px solid rgba(251,191,36,.28); border-radius: 16px; background: rgba(251,191,36,.09); color: #fde68a; font-size: 13px; font-weight: 800; padding: 14px 16px; }
         .landing-tone-transition { position: relative; height: clamp(76px, 7vw, 126px); overflow: hidden; }
         .landing-tone-transition:after { position: absolute; inset: -20% -10%; background: radial-gradient(ellipse 48% 110% at 50% 50%, rgba(112,184,187,.12), transparent 70%); animation: landing-transition-breathe 12s ease-in-out infinite alternate; content: ''; pointer-events: none; }
         .landing-tone-transition.is-dark-to-light { background: linear-gradient(180deg, #020303 0%, #0c1a1e 24%, #3d5355 57%, #c7d1d0 84%, #f7f8f8 100%); }
@@ -293,9 +438,10 @@ export default function Landing({ initialAuthMode = 'register' }) {
         @keyframes landing-transition-breathe { from { transform: translate3d(-3%, -1%, 0) scale(1); opacity: .42; } to { transform: translate3d(3%, 1%, 0) scale(1.06); opacity: .9; } }
         @keyframes landing-aurora { from { transform: translate3d(-1.5%, -1%, 0) scale(1); } to { transform: translate3d(1.5%, 1%, 0) scale(1.06); } }
         @keyframes landing-mark-drift { 0%, 100% { transform: translate(-50%, -50%) translate3d(0, 0, 0) rotate(-4deg); filter: drop-shadow(0 0 0 rgba(79,231,242,0)); } 50% { transform: translate(-50%, -50%) translate3d(-10px, -18px, 0) rotate(3deg); filter: drop-shadow(0 18px 26px rgba(79,231,242,.13)); } }
+        @keyframes landing-news-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
         @media (prefers-reduced-motion: reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
-        @media (max-width: 1180px) { .landing-shell { display: grid; height: auto; min-height: 0; overflow: visible; grid-template-columns: 1fr; } .landing-brand, .landing-access { min-height: auto; height: auto; } .landing-brand { width: auto; min-height: 680px; } .landing-access { position: static; width: auto; min-width: 0; overflow: visible; border: 0; border-radius: 0; box-shadow: none; padding-bottom: 68px; } .landing-access-nav { justify-content: space-between; } .landing-access-inner { overflow: visible; padding: 54px 0 12px; } .landing-brand-mark { top: 33%; left: 52%; width: min(80vw, 540px); } .landing-footer-grid { grid-template-columns: 1fr; } .landing-footer-brand { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); } }
-        @media (max-width: 700px) { .landing-brand { min-height: 625px; padding: 25px 24px 31px; } .landing-brand-kicker { display: none; } .landing-brand-content h1 { font-size: 39px; } .landing-brand-content > p { font-size: 14px; line-height: 1.65; } .landing-brand-proof { grid-template-columns: 1fr; gap: 2px; margin-top: 24px; } .landing-brand-proof span { min-height: 0; padding-top: 8px; } .landing-brand-mark { top: 35%; left: 54%; width: 100vw; } .landing-access { padding: 20px 24px 36px; } .landing-access-nav { font-size: 12px; } .landing-access-inner { padding-top: 40px; } .public-auth-content h2 { font-size: 30px; } .landing-container { width: min(100% - 40px, 1200px); } .landing-intro, .landing-quality-grid, .landing-global { grid-template-columns: 1fr; gap: 28px; padding: 78px 0; } .landing-intro > p { font-size: 15px; } .landing-photo-grid { grid-template-columns: 1fr; padding-bottom: 78px; } .landing-photo, .landing-photo.is-short, .landing-photo.is-wide { grid-column: auto; min-height: 315px; } .landing-quality, .landing-panelists { padding: 78px 0; } .landing-global { min-height: 0; } .landing-global-visual { order: 2; min-height: 385px; } .landing-global-copy { order: 1; padding: 0; } .landing-map-frame { min-height: 0; } .landing-global-globe { width: min(88%, 350px); transform: translate(0, 1%); } .landing-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .landing-step { min-height: 0; } .landing-step h3 { margin-top: 25px; } .landing-reward-banner { min-height: 470px; margin-top: 45px; } .landing-reward-copy { padding: 44px 28px; } .landing-footer-brand, .landing-footer-contact { padding: 44px 28px; } .landing-footer-bottom { align-items: flex-start; flex-direction: column; padding: 24px 0; } .landing-footer-links { justify-content: flex-start; } }
+        @media (max-width: 1180px) { .landing-shell { display: grid; height: auto; min-height: 0; overflow: visible; grid-template-columns: 1fr; } .landing-brand, .landing-access { min-height: auto; height: auto; } .landing-brand { width: auto; min-height: 680px; } .landing-access { position: static; width: auto; min-width: 0; overflow: visible; border: 0; border-radius: 0; box-shadow: none; padding-bottom: 68px; } .landing-access-nav { justify-content: space-between; } .landing-access-inner { overflow: visible; padding: 54px 0 12px; } .landing-brand-mark { top: 33%; left: 52%; width: min(80vw, 540px); } .landing-news-grid { grid-template-columns: 1fr; } .landing-news-card-body h3 { min-height: 0; } .landing-footer-grid { grid-template-columns: 1fr; } .landing-footer-brand { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); } }
+        @media (max-width: 700px) { .landing-brand { min-height: 625px; padding: 25px 24px 31px; } .landing-brand-kicker { display: none; } .landing-brand-content h1 { font-size: 39px; } .landing-brand-content > p { font-size: 14px; line-height: 1.65; } .landing-brand-proof { grid-template-columns: 1fr; gap: 2px; margin-top: 24px; } .landing-brand-proof span { min-height: 0; padding-top: 8px; } .landing-brand-mark { top: 35%; left: 54%; width: 100vw; } .landing-access { padding: 20px 24px 36px; } .landing-access-nav { font-size: 12px; gap: 12px; } .landing-access-inner { padding-top: 40px; } .public-auth-content h2 { font-size: 30px; } .landing-container { width: min(100% - 40px, 1200px); } .landing-news-preview { padding-bottom: 54px; } .landing-news-preview-head { align-items: flex-start; flex-direction: column; } .landing-intro, .landing-quality-grid, .landing-global { grid-template-columns: 1fr; gap: 28px; padding: 78px 0; } .landing-intro > p { font-size: 15px; } .landing-photo-grid { grid-template-columns: 1fr; padding-bottom: 78px; } .landing-photo, .landing-photo.is-short, .landing-photo.is-wide { grid-column: auto; min-height: 315px; } .landing-quality, .landing-panelists { padding: 78px 0; } .landing-global { min-height: 0; } .landing-global-visual { order: 2; min-height: 385px; } .landing-global-copy { order: 1; padding: 0; } .landing-map-frame { min-height: 0; } .landing-global-globe { width: min(88%, 350px); transform: translate(0, 1%); } .landing-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .landing-step { min-height: 0; } .landing-step h3 { margin-top: 25px; } .landing-reward-banner { min-height: 470px; margin-top: 45px; } .landing-reward-copy { padding: 44px 28px; } .landing-footer-brand, .landing-footer-contact { padding: 44px 28px; } .landing-footer-bottom { align-items: flex-start; flex-direction: column; padding: 24px 0; } .landing-footer-links { justify-content: flex-start; } }
       `}</style>
 
       <section className="landing-shell">
@@ -307,7 +453,7 @@ export default function Landing({ initialAuthMode = 'register' }) {
           <img className="landing-brand-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" />
           <div className="landing-brand-content">
             <h1 id="landing-title">Research participation, made more accountable.</h1>
-            <p>GuanyiSearch connects verified panelists, transparent rewards, and quality-aware operations in one carefully designed platform.</p>
+            <p>GuanyiSearch connects paid research surveys, daily news signals, transparent rewards, and quality-aware operations in one carefully designed platform.</p>
             <div className="landing-brand-proof">
               <span><BadgeCheck size={16} /> Verified entry</span>
               <span><CircleDollarSign size={16} /> Reward visibility</span>
@@ -319,6 +465,7 @@ export default function Landing({ initialAuthMode = 'register' }) {
         <section className="landing-access" aria-label="Account access">
           <nav className="landing-access-nav" aria-label="Public navigation">
             <a href="#platform">Platform</a>
+            <Link to="/news">News Wall</Link>
             <a href="#quality">Quality</a>
             {authMode === 'login' ? <Link className="landing-nav-pill" to={{ pathname: '/register', search: location.search }}>Create account</Link> : <Link className="landing-nav-pill" to={{ pathname: '/login', search: location.search }}>Sign in</Link>}
           </nav>
@@ -326,6 +473,8 @@ export default function Landing({ initialAuthMode = 'register' }) {
           <span className="landing-scroll-cue"><ArrowRight size={14} /> Explore the platform below</span>
         </section>
       </section>
+
+      <LandingNewsPreview />
 
       <div className="landing-tone-transition is-dark-to-light" aria-hidden="true" />
 

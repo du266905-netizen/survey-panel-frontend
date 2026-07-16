@@ -30,21 +30,38 @@ function ProtectedRoute({ children }) {
   return user ? children : <Navigate to="/login" replace />;
 }
 
+function PublicEntry({ children }) {
+  const { user } = useAuth();
+  return user ? <Navigate to="/dashboard" replace /> : children;
+}
+
 function AdminRoute({ children }) {
   const { user } = useAuth();
   return isAdminRole(user?.role) ? children : <Navigate to="/dashboard" replace />;
 }
 
+function NewsRoute() {
+  const { user } = useAuth();
+  return user ? (
+    <AppLayout>
+      <NewsWall />
+    </AppLayout>
+  ) : (
+    <NewsWall />
+  );
+}
+
 export default function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Landing initialAuthMode="login" />} />
-      <Route path="/register" element={<Landing initialAuthMode="register" />} />
+      <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" /></PublicEntry>} />
+      <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" /></PublicEntry>} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/隐私" element={<Navigate to="/privacy" replace />} />
       <Route path="/terms" element={<Terms />} />
+      <Route path="/news" element={<NewsRoute />} />
       <Route
         element={
           <ProtectedRoute>
@@ -55,7 +72,6 @@ export default function App() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/partners" element={<SurveyPartners />} />
-        <Route path="/news" element={<NewsWall />} />
         <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/records" element={<Navigate to="/dashboard" replace />} />
@@ -134,7 +150,7 @@ export default function App() {
           }
         />
       </Route>
-      <Route path="/" element={<Landing initialAuthMode="register" />} />
+      <Route path="/" element={<PublicEntry><Landing initialAuthMode="register" /></PublicEntry>} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );

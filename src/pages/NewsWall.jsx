@@ -1,6 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowDown, Check, ExternalLink, Eye, LoaderCircle, Newspaper, Sparkles, ThumbsDown, ThumbsUp, UsersRound, X } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getNewsArticle, getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences, voteNewsArticle } from '../api/realApi';
+import { useAuth } from '../components/AuthContext';
+import Logo from '../components/Logo';
 import PageHeader from '../components/PageHeader';
 
 const countries = [
@@ -127,6 +130,10 @@ function VoteBar({ article }) {
 }
 
 export default function NewsWall() {
+  const { user } = useAuth();
+  const isPublicView = !user;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedArticleRef = useRef('');
   const [country, setCountry] = useState('US');
   const [category, setCategory] = useState('tech');
   const [articles, setArticles] = useState([]);
@@ -139,6 +146,7 @@ export default function NewsWall() {
   const [voting, setVoting] = useState('');
   const [error, setError] = useState('');
   const [briefError, setBriefError] = useState('');
+  const [authPrompt, setAuthPrompt] = useState('');
 
   const subscribedCategories = useMemo(
     () => new Set((preferences?.categories || []).filter((item) => item.subscribed).map((item) => item.id)),
@@ -183,8 +191,12 @@ export default function NewsWall() {
   };
 
   useEffect(() => {
+    if (isPublicView) {
+      setPreferences({ categories: [] });
+      return;
+    }
     loadPreferences();
-  }, []);
+  }, [isPublicView]);
 
   useEffect(() => {
     loadNews();
@@ -208,8 +220,33 @@ export default function NewsWall() {
     }
   };
 
+  const closeArticle = () => {
+    setSelectedArticle(null);
+    requestedArticleRef.current = '';
+    if (searchParams.get('article')) {
+      const next = new URLSearchParams(searchParams);
+      next.delete('article');
+      setSearchParams(next, { replace: true });
+    }
+  };
+
+  useEffect(() => {
+    const articleId = searchParams.get('article');
+    if (!articleId) {
+      requestedArticleRef.current = '';
+      return;
+    }
+    if (selectedArticle?.id === articleId || requestedArticleRef.current === articleId) return;
+    requestedArticleRef.current = articleId;
+    openArticle({ id: articleId });
+  }, [searchParams, selectedArticle?.id]);
+
   const handleVote = async (stance) => {
     if (!selectedArticle) return;
+    if (isPublicView) {
+      setAuthPrompt('Create a free account or sign in to vote on this story.');
+      return;
+    }
     setVoting(stance);
     setError('');
     try {
@@ -225,6 +262,10 @@ export default function NewsWall() {
   };
 
   const toggleSubscription = async (categoryId) => {
+    if (isPublicView) {
+      setAuthPrompt('Create a free account or sign in to save topic subscriptions.');
+      return;
+    }
     const next = new Set(subscribedCategories);
     if (next.has(categoryId)) next.delete(categoryId);
     else next.add(categoryId);
@@ -245,9 +286,9 @@ export default function NewsWall() {
     }
   };
 
-  return (
+  const content = (
     <>
-      <PageHeader title="News Wall" description="Follow lightweight news signals and vote on stories worth tracking." />
+      {!isPublicView && <PageHeader title="News Wall" description="Follow lightweight news signals and vote on stories worth tracking." />}
 
       {error && <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
 
@@ -271,22 +312,24 @@ export default function NewsWall() {
             </div>
           </div>
 
-          <div className="min-w-[260px]">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">Subscribed topics</p>
-            <div className="mt-3 grid gap-2 sm:grid-cols-2">
-              {categories.map((item) => (
-                <label key={item.id} className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700">
-                  <input
-                    className="h-4 w-4 accent-cyan-500"
-                    type="checkbox"
-                    checked={subscribedCategories.has(item.id)}
-                    onChange={() => toggleSubscription(item.id)}
-                  />
-                  {item.label}
-                </label>
-              ))}
+          {!isPublicView && (
+            <div className="min-w-[260px]">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">Subscribed topics</p>
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                {categories.map((item) => (
+                  <label key={item.id} className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700">
+                    <input
+                      className="h-4 w-4 accent-cyan-500"
+                      type="checkbox"
+                      checked={subscribedCategories.has(item.id)}
+                      onChange={() => toggleSubscription(item.id)}
+                    />
+                    {item.label}
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="mt-5 flex flex-wrap gap-2 border-t border-slate-100 pt-5">
@@ -347,7 +390,7 @@ export default function NewsWall() {
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">{selectedArticle.sourceName || 'News source'}</p>
                 <h2 id="news-detail-title" className="mt-2 text-2xl font-black leading-tight text-slate-950">{selectedArticle.title}</h2>
               </div>
-              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setSelectedArticle(null)} aria-label="Close news detail">
+              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={closeArticle} aria-label="Close news detail">
                 <X size={19} />
               </button>
             </div>
@@ -367,15 +410,20 @@ export default function NewsWall() {
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   <button className="btn-primary" type="button" onClick={() => handleVote('approve')} disabled={Boolean(voting)}>
                     {voting === 'approve' ? <LoaderCircle className="animate-spin" size={17} /> : <ThumbsUp size={17} />}
-                    Approve
+                    {isPublicView ? 'Sign in to approve' : 'Approve'}
                   </button>
                   <button className="btn-secondary border-red-200 text-red-700" type="button" onClick={() => handleVote('reject')} disabled={Boolean(voting)}>
                     {voting === 'reject' ? <LoaderCircle className="animate-spin" size={17} /> : <ThumbsDown size={17} />}
-                    Reject
+                    {isPublicView ? 'Sign in to reject' : 'Reject'}
                   </button>
                 </div>
                 {selectedArticle.userVote && (
                   <p className="mt-3 text-xs font-bold text-slate-500">Your current vote: {selectedArticle.userVote === 'approve' ? 'Approve' : 'Reject'}</p>
+                )}
+                {isPublicView && (
+                  <button className="btn-secondary mt-3 w-full" type="button" onClick={() => setAuthPrompt('Create a free account or sign in to share your view when discussion features open.')}>
+                    Share your view
+                  </button>
                 )}
               </div>
 
@@ -388,6 +436,60 @@ export default function NewsWall() {
           </section>
         </div>
       )}
+
+      {authPrompt && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/65 p-4" role="dialog" aria-modal="true" aria-labelledby="news-auth-title">
+          <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.14em] text-cyan-700">Join the signal</p>
+                <h2 id="news-auth-title" className="mt-2 text-2xl font-black text-slate-950">Sign in to participate</h2>
+              </div>
+              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setAuthPrompt('')} aria-label="Close sign-in prompt">
+                <X size={19} />
+              </button>
+            </div>
+            <p className="mt-3 text-sm leading-6 text-slate-600">{authPrompt}</p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <Link className="btn-primary" to="/register">Create account</Link>
+              <Link className="btn-secondary" to="/login">Sign in</Link>
+            </div>
+          </section>
+        </div>
+      )}
     </>
+  );
+
+  if (!isPublicView) return content;
+
+  return (
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/92 backdrop-blur">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
+          <Link to="/" aria-label="GuanyiSearch home"><Logo size="md" variant="light" /></Link>
+          <nav className="flex items-center gap-4 text-sm font-bold">
+            <Link className="text-cyan-100" to="/news">News Wall</Link>
+            <Link className="hidden text-slate-300 transition hover:text-white sm:inline" to="/login">Sign in</Link>
+            <Link className="rounded-full bg-white px-4 py-2 text-slate-950 transition hover:bg-cyan-100" to="/register">Create account</Link>
+          </nav>
+        </div>
+      </header>
+
+      <section className="bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">News Wall</p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-[-0.04em] sm:text-5xl">
+            Read today’s stories, see the community signal, then add your vote.
+          </h1>
+          <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
+            Browse public news trends for free. Create an account when you are ready to vote, save topic preferences, and earn coins through eligible surveys.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:py-10">
+        {content}
+      </section>
+    </main>
   );
 }

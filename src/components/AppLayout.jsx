@@ -14,7 +14,7 @@ const navItems = [
   { to: '/settings', label: 'Settings', icon: Settings },
 ];
 
-export default function AppLayout() {
+export default function AppLayout({ children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -104,7 +104,7 @@ export default function AppLayout() {
         </aside>
         <main className="app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10">
           <div key={location.pathname} className="app-route-enter">
-            <Outlet />
+            {children || <Outlet />}
           </div>
         </main>
       </div>
