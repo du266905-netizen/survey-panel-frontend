@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChevronDown, Gift, X } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, Gift, X } from 'lucide-react';
 import { getWallet } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
@@ -10,6 +10,19 @@ import { formatCoinNumber, titleCase } from '../utils/formatters';
 
 const giftCardDenominations = [10, 25, 50];
 const giftCardRedemptionMinimum = 10000;
+const rewardSlides = [
+  {
+    id: 'gift-cards',
+    title: 'Gift card redemption',
+    description: 'Select a gift card brand, choose a value, and we’ll show whether your current Coins balance meets the target.',
+  },
+  {
+    id: 'crypto',
+    title: 'Cryptocurrency',
+    description: 'Coming soon. Stay tuned for future payout options.',
+    variant: 'crypto',
+  },
+];
 
 function usd(value) {
   return `$${Number(value || 0).toFixed(2)}`;
@@ -26,6 +39,7 @@ export default function Wallet() {
   const [error, setError] = useState('');
   const [giftCardPreview, setGiftCardPreview] = useState(null);
   const [giftCardNotice, setGiftCardNotice] = useState(null);
+  const [rewardSlideIndex, setRewardSlideIndex] = useState(0);
   const [expandedGiftCards, setExpandedGiftCards] = useState(() => new Set());
   const [selectedDenominations, setSelectedDenominations] = useState(() => (
     giftCardOptions.reduce((current, option) => ({ ...current, [option.id]: giftCardDenominations[0] }), {})
@@ -57,6 +71,11 @@ export default function Wallet() {
   const coinsPerUsd = Number(exchangeRate.coinsPerUsd || 1000);
   const giftCardMinimumRemaining = Math.max(0, giftCardRedemptionMinimum - availableCoins);
   const hasGiftCardRedemptionAccess = giftCardMinimumRemaining === 0;
+  const activeRewardSlide = rewardSlides[rewardSlideIndex] || rewardSlides[0];
+
+  const shiftRewardSlide = (direction) => {
+    setRewardSlideIndex((current) => (current + direction + rewardSlides.length) % rewardSlides.length);
+  };
 
   const giftCardTier = (amountUsd) => {
     const requiredCoins = Math.round(amountUsd * coinsPerUsd);
@@ -140,10 +159,36 @@ export default function Wallet() {
         <div className="wallet-hero-copy">
           <p className="wallet-hero-kicker">Reward wallet</p>
           <h1>Choose the reward you want next.</h1>
-          <p>Select a gift card brand, choose a value, and we’ll show whether your current Coins balance meets the target.</p>
           <div className="wallet-hero-actions">
             <span>1,000 Coins = $1 USD</span>
             <span>Minimum redemption: $10</span>
+          </div>
+        </div>
+        <div className="wallet-reward-stage" aria-label="Reward options preview">
+          <button className="wallet-reward-nav is-left" type="button" onClick={() => shiftRewardSlide(-1)} aria-label="Previous reward option">
+            <ChevronLeft size={18} />
+          </button>
+          <article className={`wallet-reward-slide ${activeRewardSlide.variant === 'crypto' ? 'is-crypto' : ''}`}>
+            <div className="wallet-reward-orbit" aria-hidden="true" />
+            <div className="wallet-reward-card-face">
+              <span>{activeRewardSlide.title}</span>
+            </div>
+            <h2>{activeRewardSlide.title}</h2>
+            <p>{activeRewardSlide.description}</p>
+          </article>
+          <button className="wallet-reward-nav is-right" type="button" onClick={() => shiftRewardSlide(1)} aria-label="Next reward option">
+            <ChevronRight size={18} />
+          </button>
+          <div className="wallet-reward-dots" aria-label="Reward option slides">
+            {rewardSlides.map((slide, index) => (
+              <button
+                key={slide.id}
+                className={index === rewardSlideIndex ? 'is-active' : ''}
+                type="button"
+                onClick={() => setRewardSlideIndex(index)}
+                aria-label={`Show ${slide.title}`}
+              />
+            ))}
           </div>
         </div>
       </section>
