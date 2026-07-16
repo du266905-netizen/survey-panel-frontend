@@ -26,7 +26,7 @@ export default function Wallet() {
   const [error, setError] = useState('');
   const [giftCardPreview, setGiftCardPreview] = useState(null);
   const [giftCardNotice, setGiftCardNotice] = useState(null);
-  const [expandedGiftCards, setExpandedGiftCards] = useState(() => new Set([giftCardOptions[0]?.id].filter(Boolean)));
+  const [expandedGiftCards, setExpandedGiftCards] = useState(() => new Set());
   const [selectedDenominations, setSelectedDenominations] = useState(() => (
     giftCardOptions.reduce((current, option) => ({ ...current, [option.id]: giftCardDenominations[0] }), {})
   ));
