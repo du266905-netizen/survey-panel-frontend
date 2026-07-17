@@ -1,6 +1,6 @@
 // LEGACY MOCK SYSTEM - DO NOT USE IN PRODUCTION
-// 已废弃，仅用于UI开发模拟数据
-// 所有业务数据迁移至 /api/realApi.js
+// Deprecated. Kept only for UI development mock data.
+// All business data has moved to /api/realApi.js.
 
 const throwDeprecatedMockApi = () => {
   throw new Error('mockApi is deprecated. Use src/api/realApi.js for all business data.');

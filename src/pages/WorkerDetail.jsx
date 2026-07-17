@@ -74,7 +74,7 @@ function InfoCard({ label, value }) {
 function profileIpLabel(profile) {
   const metadata = profile.metadata || {};
   if (metadata.dynamicIpMode) {
-    return metadata.currentIp ? `动态 ${metadata.currentIp}` : '动态，待检测';
+    return metadata.currentIp ? `Dynamic ${metadata.currentIp}` : 'Dynamic, pending check';
   }
   return profile.proxyIp || '-';
 }
@@ -179,9 +179,9 @@ export default function WorkerDetail() {
     event.preventDefault();
     return runAction(async () => {
       const profileId = bindForm.newProfileId.trim() || bindForm.profileId;
-      if (!profileId) throw new Error('请输入新的环境 ID，或选择一个已登记环境');
-      if (!bindForm.countryTag.trim()) throw new Error('请填写国家标签，例如 US');
-      if (!bindForm.dynamicIpMode && !bindForm.proxyIp.trim()) throw new Error('固定 IP 模式必须填写代理/IP');
+      if (!profileId) throw new Error('Enter a new profile ID or select a registered profile.');
+      if (!bindForm.countryTag.trim()) throw new Error('Enter a country tag, for example US.');
+      if (!bindForm.dynamicIpMode && !bindForm.proxyIp.trim()) throw new Error('Static IP mode requires a proxy/IP value.');
 
       if (bindForm.newProfileId.trim()) {
         await createTrafficProfile({
@@ -232,40 +232,40 @@ export default function WorkerDetail() {
   const copyBindingCode = async () => {
     if (!worker?.bindingCode) return;
     await navigator.clipboard.writeText(worker.bindingCode);
-    setCopyMessage('成员密码已复制');
+    setCopyMessage('Member password copied');
     window.setTimeout(() => setCopyMessage(''), 1800);
   };
 
   const profileColumns = [
-    { key: 'id', header: '环境 ID' },
-    { key: 'displayName', header: '名称', render: (row) => row.displayName || '-' },
+    { key: 'id', header: 'Profile ID' },
+    { key: 'displayName', header: 'Name', render: (row) => row.displayName || '-' },
     { key: 'extUserId', header: 'ext_user_id', render: (row) => row.metadata?.extUserId || '-' },
-    { key: 'settlementUserId', header: '结算账号', render: (row) => row.metadata?.settlementUserId || '-' },
-    { key: 'countryTag', header: '国家' },
-    { key: 'proxyIp', header: '代理/IP', render: profileIpLabel },
-    { key: 'healthScore', header: '健康' },
-    { key: 'status', header: '状态', render: (row) => <StatusPill value={row.status} /> },
+    { key: 'settlementUserId', header: 'Settlement user', render: (row) => row.metadata?.settlementUserId || '-' },
+    { key: 'countryTag', header: 'Country' },
+    { key: 'proxyIp', header: 'Proxy/IP', render: profileIpLabel },
+    { key: 'healthScore', header: 'Health' },
+    { key: 'status', header: 'Status', render: (row) => <StatusPill value={row.status} /> },
     {
       key: 'actions',
-      header: '操作',
+      header: 'Actions',
       render: (row) => (
         <button className="btn-secondary px-3 py-1.5" type="button" disabled={busy || row.status !== 'idle'} onClick={() => setSelectedProfileId(row.id)}>
-          选择
+          Select
         </button>
       ),
     },
   ];
 
   const taskColumns = [
-    { key: 'provider', header: '来源' },
-    { key: 'externalSurveyId', header: '任务编号', render: (row) => row.externalSurveyId || row.id.slice(-8) },
-    { key: 'targetCountries', header: '国家', render: (row) => (row.targetCountries || []).join(', ') },
-    { key: 'payoutUsd', header: '支付', render: (row) => `$${Number(row.payoutUsd || 0).toFixed(2)}` },
-    { key: 'status', header: '状态', render: (row) => <StatusPill value={row.status} /> },
-    { key: 'profile', header: '环境', render: (row) => row.assignedProfileId || '-' },
+    { key: 'provider', header: 'Source' },
+    { key: 'externalSurveyId', header: 'Task ID', render: (row) => row.externalSurveyId || row.id.slice(-8) },
+    { key: 'targetCountries', header: 'Countries', render: (row) => (row.targetCountries || []).join(', ') },
+    { key: 'payoutUsd', header: 'Payout', render: (row) => `$${Number(row.payoutUsd || 0).toFixed(2)}` },
+    { key: 'status', header: 'Status', render: (row) => <StatusPill value={row.status} /> },
+    { key: 'profile', header: 'Profile', render: (row) => row.assignedProfileId || '-' },
     {
       key: 'actions',
-      header: '操作',
+      header: 'Actions',
       render: (row) => (
         <div className="flex flex-wrap gap-2">
           <button
@@ -274,7 +274,7 @@ export default function WorkerDetail() {
             disabled={busy || !selectedProfileId || !['pending', 'pending_wait', 'failed'].includes(row.status)}
             onClick={() => runAction(() => assignTrafficTask(row.id, { profileId: selectedProfileId, force: forceAssign, reason: forceAssign ? 'Admin worker detail assignment' : undefined }))}
           >
-            分配
+            Assign
           </button>
           <button className="btn-secondary px-3 py-1.5" type="button" disabled={busy || row.status !== 'running'} onClick={() => runAction(() => releaseTrafficTask(row.id))}>
             Release
@@ -291,15 +291,15 @@ export default function WorkerDetail() {
   ];
 
   const deviceColumns = [
-    { key: 'deviceName', header: '设备', render: (row) => row.deviceName || row.deviceId || row.id },
-    { key: 'platform', header: '系统', render: (row) => row.platform || '-' },
-    { key: 'appVersion', header: '版本', render: (row) => row.appVersion || '-' },
-    { key: 'currentStatus', header: '状态', render: (row) => <StatusPill value={row.disabledAt ? 'disabled' : row.currentStatus} /> },
+    { key: 'deviceName', header: 'Device', render: (row) => row.deviceName || row.deviceId || row.id },
+    { key: 'platform', header: 'System', render: (row) => row.platform || '-' },
+    { key: 'appVersion', header: 'Version', render: (row) => row.appVersion || '-' },
+    { key: 'currentStatus', header: 'Status', render: (row) => <StatusPill value={row.disabledAt ? 'disabled' : row.currentStatus} /> },
     { key: 'moreLoginStatus', header: 'MoreLogin', render: (row) => row.moreLoginStatus || '-' },
-    { key: 'lastSeenAt', header: '最后心跳', render: (row) => (row.lastSeenAt ? new Date(row.lastSeenAt).toLocaleString() : '-') },
+    { key: 'lastSeenAt', header: 'Last heartbeat', render: (row) => (row.lastSeenAt ? new Date(row.lastSeenAt).toLocaleString() : '-') },
     {
       key: 'actions',
-      header: '操作',
+      header: 'Actions',
       render: (row) => (
         <button
           className="btn-secondary px-3 py-1.5"
@@ -314,7 +314,7 @@ export default function WorkerDetail() {
             )
           }
         >
-          {row.disabledAt ? '恢复' : '禁用'}
+          {row.disabledAt ? 'Restore' : 'Disable'}
         </button>
       ),
     },
@@ -323,17 +323,17 @@ export default function WorkerDetail() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title={worker?.displayName || '成员详情'}
-        description={worker?.email || worker?.operatorName || '管理成员密码、执行环境、任务分配和执行日志。'}
+        title={worker?.displayName || 'Member detail'}
+        description={worker?.email || worker?.operatorName || 'Manage member password, execution profiles, task assignment, and execution logs.'}
         action={
           <div className="flex gap-2">
             <Link className="btn-secondary" to="/workers">
               <ArrowLeft size={16} />
-              返回
+              Back
             </Link>
             <button className="btn-secondary" type="button" onClick={loadWorker} disabled={loading || busy}>
               <RefreshCcw size={16} />
-              刷新
+              Refresh
             </button>
           </div>
         }
@@ -347,77 +347,77 @@ export default function WorkerDetail() {
       )}
 
       <div className="grid gap-4 lg:grid-cols-5">
-        <InfoCard label="状态" value={worker?.isOnline ? '在线' : '离线'} />
-        <InfoCard label="运行任务" value={worker?.runningCount || 0} />
-        <InfoCard label="并发上限" value={worker?.concurrency || 0} />
-        <InfoCard label="绑定资料" value={worker?.profileCount || 0} />
-        <InfoCard label="待处理" value={worker?.pendingTaskCount || 0} />
+        <InfoCard label="Status" value={worker?.isOnline ? 'Online' : 'Offline'} />
+        <InfoCard label="Running tasks" value={worker?.runningCount || 0} />
+        <InfoCard label="Concurrency" value={worker?.concurrency || 0} />
+        <InfoCard label="Bound profiles" value={worker?.profileCount || 0} />
+        <InfoCard label="Pending" value={worker?.pendingTaskCount || 0} />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-4">
-        <InfoCard label="当前 Coins" value={worker?.coinsBalance ?? 0} />
-        <InfoCard label="已完成任务" value={settlementSummary.completed} />
-        <InfoCard label="预计结算 USD" value={`$${settlementSummary.expectedUsd.toFixed(2)}`} />
-        <InfoCard label="结算账号" value={settlementSummary.settlementIds.length || '-'} />
+        <InfoCard label="Current Coins" value={worker?.coinsBalance ?? 0} />
+        <InfoCard label="Completed tasks" value={settlementSummary.completed} />
+        <InfoCard label="Expected USD" value={`$${settlementSummary.expectedUsd.toFixed(2)}`} />
+        <InfoCard label="Settlement users" value={settlementSummary.settlementIds.length || '-'} />
       </div>
 
       <section className="card flex flex-col gap-4 p-5 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Orbit Member 成员密码</p>
-          <p className="mt-2 font-mono text-2xl font-bold text-slate-950">{worker?.bindingCode || '暂无成员密码'}</p>
-          <p className="mt-2 text-sm text-slate-500">成员只需要把这个密码填进 Orbit Member。绑定后执行端会用有限权限凭证工作，不再需要管理员登录信息。</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Orbit Member password</p>
+          <p className="mt-2 font-mono text-2xl font-bold text-slate-950">{worker?.bindingCode || 'No member password yet'}</p>
+          <p className="mt-2 text-sm text-slate-500">Members only need to enter this password in Orbit Member. After binding, the client uses limited-scope credentials and no longer needs administrator login details.</p>
           {copyMessage && <p className="mt-2 text-sm font-semibold text-cyan-600">{copyMessage}</p>}
         </div>
         <button className="btn-primary" type="button" onClick={copyBindingCode} disabled={!worker?.bindingCode}>
           <Clipboard size={16} />
-          复制成员密码
+          Copy member password
         </button>
       </section>
 
       <form className="card space-y-4 p-5" onSubmit={handleMoreLoginCredential}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-lg font-bold text-slate-950">MoreLogin API 配置</h2>
-            <p className="mt-1 text-sm text-slate-500">保存后，Orbit Member 检查环境和开始接任务前会自动同步这组配置。</p>
+            <h2 className="text-lg font-bold text-slate-950">MoreLogin API configuration</h2>
+            <p className="mt-1 text-sm text-slate-500">After saving, Orbit Member automatically syncs these credentials before checking profiles or starting tasks.</p>
           </div>
           <div className="flex flex-wrap gap-2 text-xs font-bold">
             <span className={`rounded-full px-2.5 py-1 ring-1 ${moreLoginCredential?.hasApiId ? 'bg-green-50 text-green-700 ring-green-200' : 'bg-slate-50 text-slate-500 ring-slate-200'}`}>
-              API ID {moreLoginCredential?.hasApiId ? '已配置' : '未配置'}
+              API ID {moreLoginCredential?.hasApiId ? 'Configured' : 'Not configured'}
             </span>
             <span className={`rounded-full px-2.5 py-1 ring-1 ${moreLoginCredential?.hasApiKey ? 'bg-green-50 text-green-700 ring-green-200' : 'bg-slate-50 text-slate-500 ring-slate-200'}`}>
-              API Key {moreLoginCredential?.hasApiKey ? '已配置' : '未配置'}
+              API Key {moreLoginCredential?.hasApiKey ? 'Configured' : 'Not configured'}
             </span>
             <span className={`rounded-full px-2.5 py-1 ring-1 ${moreLoginCredential?.hasEncryptKey ? 'bg-green-50 text-green-700 ring-green-200' : 'bg-slate-50 text-slate-500 ring-slate-200'}`}>
-              Encrypt Key {moreLoginCredential?.hasEncryptKey ? '已配置' : '未配置'}
+              Encrypt Key {moreLoginCredential?.hasEncryptKey ? 'Configured' : 'Not configured'}
             </span>
           </div>
         </div>
         <div className="grid gap-3 lg:grid-cols-4">
           <input className="field" placeholder="Local API URL" value={moreLoginForm.localBaseUrl} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, localBaseUrl: event.target.value })} />
-          <input className="field" placeholder="API ID（留空不修改）" value={moreLoginForm.apiId} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, apiId: event.target.value })} />
-          <input className="field" placeholder="API Key（留空不修改）" type="password" value={moreLoginForm.apiKey} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, apiKey: event.target.value })} />
-          <input className="field" placeholder="Encrypt Key（留空不修改）" type="password" value={moreLoginForm.encryptKey} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, encryptKey: event.target.value })} />
+          <input className="field" placeholder="API ID (leave blank to keep current)" value={moreLoginForm.apiId} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, apiId: event.target.value })} />
+          <input className="field" placeholder="API Key (leave blank to keep current)" type="password" value={moreLoginForm.apiKey} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, apiKey: event.target.value })} />
+          <input className="field" placeholder="Encrypt Key (leave blank to keep current)" type="password" value={moreLoginForm.encryptKey} onChange={(event) => setMoreLoginForm({ ...moreLoginForm, encryptKey: event.target.value })} />
         </div>
         <button className="btn-primary" type="submit" disabled={busy}>
-          保存 MoreLogin 配置
+          Save MoreLogin configuration
         </button>
       </form>
 
       <section>
-        <h2 className="mb-3 text-lg font-bold text-slate-950">成员设备</h2>
-        <DataTable columns={deviceColumns} rows={devices} loading={loading} emptyMessage="这个成员还没有绑定 Orbit Member 设备。" />
+        <h2 className="mb-3 text-lg font-bold text-slate-950">Member devices</h2>
+        <DataTable columns={deviceColumns} rows={devices} loading={loading} emptyMessage="This member has not bound any Orbit Member devices yet." />
       </section>
 
       <div className="grid gap-4 xl:grid-cols-2">
         <form className="card space-y-4 p-5" onSubmit={handleBindProfile}>
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-950">绑定执行环境</h2>
+            <h2 className="text-lg font-bold text-slate-950">Bind execution profile</h2>
             <LinkIcon size={18} className="text-cyan-600" />
           </div>
-          <p className="text-sm text-slate-500">绑定后，Orbit Member 只能领取这个成员名下的执行环境。ext_user_id 默认用环境 ID，结算账号默认用当前成员账号。</p>
+          <p className="text-sm text-slate-500">After binding, Orbit Member can only claim execution profiles assigned to this member. ext_user_id defaults to the profile ID, and settlement defaults to the current member account.</p>
           <div className="grid gap-3 sm:grid-cols-2">
             <select className="field sm:col-span-2" value={bindForm.profileId} onChange={(event) => setBindForm({ ...bindForm, profileId: event.target.value, newProfileId: '' })}>
-              <option value="">选择可绑定执行环境</option>
+              <option value="">Select an available execution profile</option>
               {availableProfiles.map((profile) => (
                 <option key={profile.id} value={profile.id}>
                   {profile.displayName || profile.id} - {profile.countryTag}
@@ -427,37 +427,37 @@ export default function WorkerDetail() {
             <div className="sm:col-span-2">
               <input
                 className="field"
-                placeholder="新 MoreLogin 环境 ID，未在列表里就直接粘贴到这里"
+                placeholder="New MoreLogin profile ID, paste here if it is not listed"
                 value={bindForm.newProfileId}
                 onChange={(event) => setBindForm({ ...bindForm, newProfileId: event.target.value, profileId: '' })}
               />
-              <p className="mt-2 text-xs font-semibold text-slate-500">全新环境先填这里。系统会先登记环境，再绑定给当前成员。</p>
+              <p className="mt-2 text-xs font-semibold text-slate-500">For a new profile, enter it here first. The system will register the profile and then bind it to this member.</p>
             </div>
-            <input className="field" placeholder="显示名称" value={bindForm.displayName} onChange={(event) => setBindForm({ ...bindForm, displayName: event.target.value })} />
-            <input className="field" placeholder="ext_user_id，留空默认环境 ID" value={bindForm.extUserId} onChange={(event) => setBindForm({ ...bindForm, extUserId: event.target.value })} />
-            <input className="field sm:col-span-2" placeholder="结算账号 User ID，留空默认当前成员" value={bindForm.settlementUserId} onChange={(event) => setBindForm({ ...bindForm, settlementUserId: event.target.value })} />
+            <input className="field" placeholder="Display name" value={bindForm.displayName} onChange={(event) => setBindForm({ ...bindForm, displayName: event.target.value })} />
+            <input className="field" placeholder="ext_user_id, defaults to profile ID" value={bindForm.extUserId} onChange={(event) => setBindForm({ ...bindForm, extUserId: event.target.value })} />
+            <input className="field sm:col-span-2" placeholder="Settlement user ID, defaults to current member" value={bindForm.settlementUserId} onChange={(event) => setBindForm({ ...bindForm, settlementUserId: event.target.value })} />
             <label className="sm:col-span-2 flex items-center gap-2 rounded-xl border border-cyan-100 bg-cyan-50 px-3 py-2 text-sm font-semibold text-cyan-800">
               <input type="checkbox" checked={bindForm.dynamicIpMode} onChange={(event) => setBindForm({ ...bindForm, dynamicIpMode: event.target.checked })} />
-              动态 IP 模式（Orbit Member 接任务前自动读取当前出口 IP）
+              Dynamic IP mode (Orbit Member reads the current exit IP before claiming tasks)
             </label>
             {bindForm.dynamicIpMode ? (
               <p className="sm:col-span-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-500">
-                代理/IP 不需要手动填写。Orbit Member 会在接任务前打开检测页，自动写入当前出口 IP。
+                Proxy/IP does not need to be entered manually. Orbit Member opens the check page before claiming tasks and writes the current exit IP automatically.
               </p>
             ) : (
-              <input className="field" placeholder="固定代理/IP" value={bindForm.proxyIp} onChange={(event) => setBindForm({ ...bindForm, proxyIp: event.target.value })} />
+              <input className="field" placeholder="Static proxy/IP" value={bindForm.proxyIp} onChange={(event) => setBindForm({ ...bindForm, proxyIp: event.target.value })} />
             )}
-            <input className="field" placeholder="代理国家" value={bindForm.proxyCountry} onChange={(event) => setBindForm({ ...bindForm, proxyCountry: event.target.value })} />
-            <input className="field" placeholder="国家标签" value={bindForm.countryTag} onChange={(event) => setBindForm({ ...bindForm, countryTag: event.target.value })} />
+            <input className="field" placeholder="Proxy country" value={bindForm.proxyCountry} onChange={(event) => setBindForm({ ...bindForm, proxyCountry: event.target.value })} />
+            <input className="field" placeholder="Country tag" value={bindForm.countryTag} onChange={(event) => setBindForm({ ...bindForm, countryTag: event.target.value })} />
           </div>
           <button className="btn-primary w-full" type="submit" disabled={busy || (!bindForm.profileId && !bindForm.newProfileId.trim())}>
-            保存绑定
+            Save binding
           </button>
         </form>
 
         <form className="card space-y-4 p-5" onSubmit={handleImportTask}>
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-950">导入成员任务</h2>
+            <h2 className="text-lg font-bold text-slate-950">Import member task</h2>
             <Plus size={18} className="text-cyan-600" />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -472,17 +472,17 @@ export default function WorkerDetail() {
             <input className="field" placeholder="IP user / proxy IP" value={taskForm.ipUser} onChange={(event) => setTaskForm({ ...taskForm, ipUser: event.target.value })} />
           </div>
           <button className="btn-primary w-full" type="submit" disabled={busy}>
-            导入任务
+            Import task
           </button>
         </form>
       </div>
 
       <section>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-bold text-slate-950">已绑定执行环境</h2>
+          <h2 className="text-lg font-bold text-slate-950">Bound execution profiles</h2>
           <div className="flex flex-wrap items-center gap-3">
             <select className="field max-w-80" value={selectedProfileId} onChange={(event) => setSelectedProfileId(event.target.value)}>
-              <option value="">选择空闲执行环境用于分配</option>
+              <option value="">Select an idle execution profile for assignment</option>
               {idleProfiles.map((profile) => (
                 <option key={profile.id} value={profile.id}>
                   {profile.displayName || profile.id} - {profile.countryTag}
@@ -491,21 +491,21 @@ export default function WorkerDetail() {
             </select>
             <label className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600">
               <input type="checkbox" checked={forceAssign} onChange={(event) => setForceAssign(event.target.checked)} />
-              强制
+              Force
             </label>
           </div>
         </div>
-        <DataTable columns={profileColumns} rows={profiles} loading={loading} emptyMessage="这个成员还没有绑定执行环境。" />
+        <DataTable columns={profileColumns} rows={profiles} loading={loading} emptyMessage="This member has not bound any execution profiles yet." />
       </section>
 
       <section>
-        <h2 className="mb-3 text-lg font-bold text-slate-950">成员任务</h2>
-        <DataTable columns={taskColumns} rows={tasks} loading={loading} emptyMessage="这个成员还没有导入或分配任务。" />
+        <h2 className="mb-3 text-lg font-bold text-slate-950">Member tasks</h2>
+        <DataTable columns={taskColumns} rows={tasks} loading={loading} emptyMessage="This member has no imported or assigned tasks yet." />
       </section>
 
       <section className="card overflow-hidden">
         <div className="border-b border-slate-100 px-4 py-3">
-          <h2 className="text-lg font-bold text-slate-950">执行日志</h2>
+          <h2 className="text-lg font-bold text-slate-950">Execution logs</h2>
         </div>
         <div className="max-h-80 divide-y divide-slate-100 overflow-y-auto">
           {logs.length ? (
@@ -520,7 +520,7 @@ export default function WorkerDetail() {
               </div>
             ))
           ) : (
-            <p className="p-6 text-sm text-slate-500">还没有这个成员的执行日志。</p>
+            <p className="p-6 text-sm text-slate-500">This member has no execution logs yet.</p>
           )}
         </div>
       </section>

@@ -71,7 +71,6 @@ export default function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/privacy" element={<Privacy />} />
-      <Route path="/隐私" element={<Navigate to="/privacy" replace />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/news" element={<NewsRoute />} />
       <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
