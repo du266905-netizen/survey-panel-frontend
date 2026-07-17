@@ -3,8 +3,8 @@ import { isAdminRole } from '../utils/roles';
 
 const channelPalette = ['#10b981', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6', '#14b8a6', '#7c3aed', '#0f766e'];
 const channelNames = ['Channel A', 'Channel B', 'Channel C', 'Channel D', 'Channel E', 'Channel F', 'Channel G', 'Channel H'];
-const partnerSlugs = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs', 'cpx-research', 'theoremreach'];
-const realPartnerSlugs = new Set(['cpx-research', 'theoremreach', 'bitlabs']);
+const partnerSlugs = ['gwss', 'za-survey', 'wwi', 'opx', 'mr', 'bitlabs', 'cpx-research', 'theoremreach', 'cpalead'];
+const realPartnerSlugs = new Set(['cpx-research', 'theoremreach', 'bitlabs', 'cpalead']);
 
 const isAdmin = () => isAdminRole(getStoredUser()?.role);
 
@@ -293,7 +293,7 @@ export const getPartners = async () => {
   return {
     data: partners.map((partner, index) => {
       const channelCode = codeForPartner(partner, index);
-      const isConnected = partner.slug === 'cpx-research';
+      const isConnected = ['cpx-research', 'cpalead'].includes(partner.slug);
       const partnerStatus = partner.slug === 'theoremreach' ? 'In discussion' : partner.slug === 'bitlabs' ? 'Promoting' : partner.conversion || 'Connected';
 
       return {
@@ -424,7 +424,7 @@ export const getAdminDashboard = async () => {
         value: item.value,
       })),
       partnerPerformance: partners.map((partner, index) => {
-        const isConnected = partner.slug === 'cpx-research';
+        const isConnected = ['cpx-research', 'cpalead'].includes(partner.slug);
         return {
           ...partner,
           displayName: partner.name,

@@ -37,6 +37,7 @@ export default function SurveyPartners() {
     try {
       const response = await startSurvey({
         surveyId: survey.surveyId || survey.id,
+        partnerId: survey.partnerSlug || survey.partnerId,
         linkType: 'direct',
       });
       const redirectUrl = response.data.redirectUrl;
