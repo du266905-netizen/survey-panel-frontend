@@ -18,6 +18,7 @@ import SurveyComplete from './pages/SurveyComplete';
 import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
 import Privacy from './pages/Privacy';
+import Referrals from './pages/Referrals';
 import Terms from './pages/Terms';
 import TrafficConsole from './pages/TrafficConsole';
 import Wallet from './pages/Wallet';
@@ -86,6 +87,7 @@ export default function App() {
         <Route path="/partners" element={<SurveyPartners />} />
         <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
         <Route path="/wallet" element={<Wallet />} />
+        <Route path="/referrals" element={<Referrals />} />
         <Route path="/records" element={<Navigate to="/dashboard" replace />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />

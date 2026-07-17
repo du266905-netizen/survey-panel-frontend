@@ -221,6 +221,11 @@ export const getWallet = async () => {
   return { data: response.data };
 };
 
+export const getReferralSummary = async () => {
+  const response = await apiClient.get('/api/referrals/me');
+  return { data: response.data.referral };
+};
+
 export const redeemReward = async ({ provider = 'manual', rewardType = 'gift_card', amountCoins, note }) => {
   const response = await apiClient.post('/api/wallet/redeem', {
     provider,

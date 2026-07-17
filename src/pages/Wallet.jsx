@@ -8,7 +8,7 @@ import { useAuth } from '../components/AuthContext';
 import { giftCardImageSources, giftCardOptions } from '../config/giftCardOptions';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
 
-const giftCardDenominations = [10, 25, 50];
+const defaultGiftCardDenominations = [10, 25, 50];
 const giftCardRedemptionMinimum = 10000;
 const rewardSlides = [
   {
@@ -32,6 +32,14 @@ function transactionStatus(status) {
   return String(status || '').toLowerCase();
 }
 
+function giftCardAmounts(option) {
+  return Array.isArray(option?.amounts) && option.amounts.length ? option.amounts : defaultGiftCardDenominations;
+}
+
+function giftCardAmountLabel(option) {
+  return giftCardAmounts(option).map((amount) => `$${amount}`).join(' / ');
+}
+
 export default function Wallet() {
   const { user, setUser } = useAuth();
   const [data, setData] = useState(null);
@@ -42,7 +50,7 @@ export default function Wallet() {
   const [rewardSlideIndex, setRewardSlideIndex] = useState(0);
   const [expandedGiftCards, setExpandedGiftCards] = useState(() => new Set());
   const [selectedDenominations, setSelectedDenominations] = useState(() => (
-    giftCardOptions.reduce((current, option) => ({ ...current, [option.id]: giftCardDenominations[0] }), {})
+    giftCardOptions.reduce((current, option) => ({ ...current, [option.id]: giftCardAmounts(option)[0] }), {})
   ));
 
   const loadWallet = async () => {
@@ -103,7 +111,7 @@ export default function Wallet() {
   };
 
   const handleGiftCardRedeem = (option) => {
-    const amountUsd = selectedDenominations[option.id] || giftCardDenominations[0];
+    const amountUsd = selectedDenominations[option.id] || giftCardAmounts(option)[0];
     const tier = giftCardTier(amountUsd);
 
     if (!hasGiftCardRedemptionAccess) {
@@ -209,7 +217,8 @@ export default function Wallet() {
             <div className="gift-card-dropdown-list">
               {giftCardOptions.map((option) => {
                 const expanded = expandedGiftCards.has(option.id);
-                const amountUsd = selectedDenominations[option.id] || giftCardDenominations[0];
+                const amounts = giftCardAmounts(option);
+                const amountUsd = selectedDenominations[option.id] || amounts[0];
                 const tier = giftCardTier(amountUsd);
                 return (
                   <article key={option.id} className={`gift-card-option ${expanded ? 'is-expanded' : ''}`}>
@@ -219,7 +228,7 @@ export default function Wallet() {
                       </span>
                       <span className="gift-card-summary-copy">
                         <strong>{option.name}</strong>
-                        <span>{option.region} · $10 / $25 / $50</span>
+                        <span>{option.region} · {giftCardAmountLabel(option)}</span>
                       </span>
                       <ChevronDown className="gift-card-summary-chevron" size={18} aria-hidden="true" />
                     </button>
@@ -235,7 +244,7 @@ export default function Wallet() {
                           <label>
                             <span>Gift card value</span>
                             <select className="field" value={amountUsd} onChange={(event) => selectGiftCardDenomination(option.id, event.target.value)}>
-                              {giftCardDenominations.map((denomination) => (
+                              {amounts.map((denomination) => (
                                 <option key={denomination} value={denomination}>{usd(denomination)} · {formatCoinNumber(giftCardTier(denomination).requiredCoins)} Coins</option>
                               ))}
                             </select>

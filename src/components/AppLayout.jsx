@@ -11,6 +11,7 @@ const navItems = [
   { to: '/partners', label: 'Survey Wall', icon: Users },
   { to: '/news', label: 'News Wall', icon: Newspaper },
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
+  { to: '/referrals', label: 'Referrals', icon: UserPlus },
 ];
 
 export default function AppLayout({ children }) {

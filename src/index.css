@@ -908,6 +908,8 @@ textarea {
 }
 .gift-card-dropdown-list {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: 12px;
 }
 .gift-card-option {
@@ -1056,6 +1058,205 @@ textarea {
   line-height: 1.5;
   padding: 10px 12px;
 }
+.referral-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  gap: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(213, 235, 232, .12);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 11% 7%, rgba(156, 231, 223, .16), transparent 31%),
+    radial-gradient(circle at 96% 0%, rgba(230, 211, 144, .14), transparent 35%),
+    linear-gradient(145deg, rgba(18, 34, 37, .92), rgba(5, 13, 15, .9));
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(238, 252, 249, .035);
+  padding: clamp(26px, 4vw, 48px);
+}
+.referral-hero::before {
+  position: absolute;
+  right: -150px;
+  top: -210px;
+  width: 520px;
+  height: 520px;
+  border: 1px solid rgba(230, 211, 144, .12);
+  border-radius: 999px;
+  content: '';
+  pointer-events: none;
+}
+.referral-hero > * { position: relative; z-index: 1; }
+.referral-kicker {
+  margin: 0 0 12px;
+  color: #d9c781;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.referral-hero h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #f8fffd;
+  font-size: clamp(42px, 7vw, 86px);
+  font-weight: 950;
+  letter-spacing: -.07em;
+  line-height: .95;
+}
+.referral-hero p {
+  max-width: 690px;
+  margin: 24px 0 0;
+  color: rgba(219, 235, 232, .68);
+  font-size: 16px;
+  font-weight: 720;
+  line-height: 1.75;
+}
+.referral-hero-card {
+  align-self: center;
+  border: 1px solid rgba(230, 211, 144, .18);
+  border-radius: 26px;
+  background:
+    linear-gradient(145deg, rgba(230, 211, 144, .12), rgba(156, 231, 223, .06)),
+    rgba(7, 16, 18, .68);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04), 0 20px 54px rgba(0, 0, 0, .18);
+  color: rgba(219, 235, 232, .62);
+  padding: 26px;
+}
+.referral-hero-card svg { color: #d9c781; }
+.referral-hero-card strong {
+  display: block;
+  margin-top: 34px;
+  color: #f8fffd;
+  font-size: 38px;
+  font-weight: 950;
+  letter-spacing: -.04em;
+}
+.referral-hero-card span {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 780;
+  line-height: 1.55;
+}
+.referral-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(210px, .55fr) minmax(210px, .55fr);
+  gap: 16px;
+}
+.referral-link-card,
+.referral-stat-card,
+.referral-rules {
+  border: 1px solid rgba(213, 235, 232, .11);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(18, 33, 37, .84), rgba(7, 16, 19, .8));
+  box-shadow: 0 22px 48px rgba(0, 0, 0, .16), inset 0 1px 0 rgba(238, 252, 249, .025);
+}
+.referral-link-card { padding: 22px; }
+.referral-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+.referral-card-head > span {
+  display: inline-grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(156, 231, 223, .16);
+  border-radius: 14px;
+  background: rgba(156, 231, 223, .07);
+  color: #9ce7df;
+}
+.referral-card-head h2 {
+  margin: 0;
+  color: #f2f8f5;
+  font-size: 19px;
+  font-weight: 900;
+}
+.referral-card-head p {
+  margin: 5px 0 0;
+  color: rgba(210, 228, 224, .52);
+  font-size: 13px;
+  font-weight: 680;
+  line-height: 1.55;
+}
+.referral-link-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  margin-top: 22px;
+}
+.referral-link-box code {
+  overflow: hidden;
+  border: 1px solid rgba(213, 235, 232, .10);
+  border-radius: 16px;
+  background: rgba(3, 10, 12, .34);
+  color: rgba(242, 248, 245, .82);
+  font-size: 13px;
+  font-weight: 760;
+  line-height: 46px;
+  padding: 0 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.referral-link-box .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 46px;
+}
+.referral-note {
+  margin: 14px 0 0;
+  color: rgba(230, 211, 144, .78);
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.55;
+}
+.referral-stat-card {
+  display: flex;
+  min-height: 184px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px;
+}
+.referral-stat-card svg { color: #d9c781; }
+.referral-stat-card span {
+  color: rgba(210, 228, 224, .48);
+  font-size: 12px;
+  font-weight: 860;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.referral-stat-card strong {
+  color: #f8fffd;
+  font-size: 34px;
+  font-weight: 950;
+  letter-spacing: -.045em;
+}
+.referral-rule-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.referral-rule-list article {
+  border: 1px solid rgba(213, 235, 232, .09);
+  border-radius: 18px;
+  background: rgba(3, 10, 12, .24);
+  padding: 16px;
+}
+.referral-rule-list strong {
+  color: #f2f8f5;
+  font-size: 14px;
+  font-weight: 900;
+}
+.referral-rule-list p {
+  margin: 8px 0 0;
+  color: rgba(210, 228, 224, .52);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+}
 .app-data-table tbody tr { transition: background-color .18s ease; }
 .app-data-table tbody tr:hover { background: rgba(148, 217, 211, .055) !important; }
 
@@ -1174,7 +1375,11 @@ textarea {
   .dashboard-command { grid-template-columns: 1fr; }
   .dashboard-command::before { left: 64%; width: 560px; height: 560px; }
   .wallet-hero { grid-template-columns: 1fr; }
+  .gift-card-dropdown-list { grid-template-columns: 1fr; }
   .gift-card-dropdown { grid-template-columns: 1fr; }
+  .referral-hero,
+  .referral-grid,
+  .referral-rule-list { grid-template-columns: 1fr; }
   .app-sidebar { width: 84px; padding-right: 12px; padding-left: 12px; }
   .app-sidebar-label, .app-sidebar-foot, .app-nav-link span { display: none; }
   .app-nav-link { justify-content: center; padding: 0; }
@@ -1213,6 +1418,8 @@ textarea {
   .wallet-showcase-head { flex-direction: column; }
   .gift-card-summary { grid-template-columns: 74px minmax(0, 1fr) auto; padding: 12px; }
   .gift-card-dropdown { padding: 12px; }
+  .referral-hero h1 { font-size: 40px; }
+  .referral-link-box { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
