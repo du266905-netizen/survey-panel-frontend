@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Check, Copy, Gift, Link as LinkIcon, ShieldCheck, Sparkles, Users } from 'lucide-react';
+import { Check, Copy, Gift, Link as LinkIcon, ShieldCheck, Sparkles, Star, Users } from 'lucide-react';
 import CoinAmount from '../components/CoinAmount';
 import { getReferralSummary } from '../api/realApi';
 
@@ -44,13 +44,13 @@ export default function Referrals() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="referral-page space-y-6">
       <section className="referral-hero">
         <div>
-          <p className="referral-kicker">Referral plan</p>
-          <h1>Invite real panelists. Earn when they complete.</h1>
+          <p className="referral-kicker"><Star size={14} /> Referral plan</p>
+          <h1>Invite friends. Reward real participation.</h1>
           <p>
-            Share your personal invite link. Rewards are only released after your invited user completes their first real survey, keeping the program clean and sustainable.
+            Share your personal invite link. Rewards unlock only after the invited panelist completes a validated first survey, keeping the program clean and sustainable.
           </p>
         </div>
         <div className="referral-hero-card">

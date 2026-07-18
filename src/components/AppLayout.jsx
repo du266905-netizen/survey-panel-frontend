@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, ChevronDown, Database, Gift, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, ChevronDown, Database, Gift, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import CoinAmount from './CoinAmount';
@@ -11,7 +11,7 @@ const navItems = [
   { to: '/partners', label: 'Survey Wall', icon: Users },
   { to: '/news', label: 'News Wall', icon: Newspaper },
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
-  { to: '/referrals', label: 'Referrals', icon: UserPlus },
+  { to: '/referrals', label: 'Referral Plan', icon: Star },
 ];
 
 export default function AppLayout({ children }) {
