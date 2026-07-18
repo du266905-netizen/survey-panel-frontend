@@ -704,6 +704,20 @@ textarea {
   min-height: 295px;
   display: flex;
   align-items: stretch;
+  isolation: isolate;
+}
+.wallet-reward-stage::before {
+  position: absolute;
+  z-index: -1;
+  inset: 12% 8% 4%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 52% 42%, rgba(157, 213, 207, .16), transparent 54%),
+    radial-gradient(circle at 70% 58%, rgba(244, 241, 232, .075), transparent 58%);
+  filter: blur(34px);
+  opacity: .78;
+  content: '';
+  pointer-events: none;
 }
 .wallet-reward-slide {
   position: relative;
@@ -718,7 +732,7 @@ textarea {
   background:
     radial-gradient(circle at 78% 8%, rgba(244, 241, 232, .055), transparent 30%),
     linear-gradient(145deg, rgba(20, 22, 20, .94), rgba(4, 7, 7, .88));
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .26), inset 0 1px 0 rgba(255, 255, 255, .065);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .26), 0 0 54px rgba(139, 207, 202, .075), inset 0 1px 0 rgba(255, 255, 255, .065);
   padding: 28px;
 }
 .wallet-reward-slide::before {
@@ -1038,24 +1052,25 @@ textarea {
   position: fixed;
   z-index: 70;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   overflow-y: auto;
+  overscroll-behavior: contain;
   background: rgba(0, 0, 0, .72);
   padding: 24px;
   backdrop-filter: blur(14px);
+  -webkit-overflow-scrolling: touch;
 }
 .gift-card-modal {
   width: min(100%, 760px);
-  max-height: min(860px, calc(100svh - 48px));
-  overflow-y: auto;
+  max-height: none;
+  overflow: visible;
   border: 1px solid rgba(244, 241, 232, .16);
   border-radius: 28px;
   background:
     radial-gradient(circle at 10% 0%, rgba(244, 241, 232, .04), transparent 34%),
     linear-gradient(145deg, rgba(9, 12, 11, .98), rgba(0, 0, 0, .96));
   box-shadow: 0 40px 100px rgba(0, 0, 0, .58), inset 0 1px 0 rgba(255, 255, 255, .045);
+  margin: min(5vh, 48px) auto;
   padding: clamp(18px, 3vw, 28px);
 }
 .gift-card-modal-head {
@@ -1568,8 +1583,8 @@ textarea {
   .wallet-showcase-head { flex-direction: column; }
   .gift-card-summary { grid-template-columns: 74px minmax(0, 1fr); padding: 12px; }
   .gift-card-summary-action { grid-column: 1 / -1; justify-content: center; }
-  .gift-card-modal-backdrop { align-items: flex-start; padding: 14px; }
-  .gift-card-modal { max-height: calc(100svh - 28px); border-radius: 22px; }
+  .gift-card-modal-backdrop { padding: 14px; }
+  .gift-card-modal { max-height: none; border-radius: 22px; margin: 0 auto; }
   .referral-hero h1 { font-size: 40px; }
   .referral-link-box { grid-template-columns: 1fr; }
 }
