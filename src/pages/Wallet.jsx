@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, Gift, X } from 'lucide-react';
 import { getWallet } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
@@ -277,7 +278,7 @@ export default function Wallet() {
         const amounts = giftCardAmounts(activeGiftCard);
         const amountUsd = selectedDenominations[activeGiftCard.id] || amounts[0];
         const tier = giftCardTier(amountUsd);
-        return (
+        return createPortal(
           <div className="gift-card-modal-backdrop" role="presentation" onMouseDown={(event) => {
             if (event.target === event.currentTarget) closeGiftCardModal();
           }}>
@@ -323,7 +324,8 @@ export default function Wallet() {
                 </div>
               </div>
             </section>
-          </div>
+          </div>,
+          document.body
         );
       })()}
     </>

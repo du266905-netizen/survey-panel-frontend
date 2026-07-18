@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { getSurveyWall, startSurvey } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import PageHeader from '../components/PageHeader';
-import ProxyActivationModal from '../components/ProxyActivationModal';
 import { useAuth } from '../components/AuthContext';
 import { useAsyncData } from '../hooks/useAsyncData';
-import { isAdminRole } from '../utils/roles';
+import { isPanelistRole } from '../utils/roles';
 
 function friendlyStartError(error) {
   const code = error.response?.data?.code || error.response?.data?.error;
@@ -18,20 +17,14 @@ function friendlyStartError(error) {
 
 export default function SurveyPartners() {
   const { user } = useAuth();
-  const isAdmin = isAdminRole(user?.role);
+  const isPanelist = isPanelistRole(user?.role);
   const { data, loading, error } = useAsyncData(getSurveyWall, []);
-  const [activeSurvey, setActiveSurvey] = useState(null);
   const [startingId, setStartingId] = useState('');
   const [startError, setStartError] = useState('');
   const surveys = data || [];
   const surveyGridClass = 'grid w-full gap-4 lg:grid-cols-2 2xl:grid-cols-3 [@media(min-width:2100px)]:grid-cols-4';
 
   const handleStart = async (survey) => {
-    if (isAdmin) {
-      setActiveSurvey(survey);
-      return;
-    }
-
     setStartingId(survey.id);
     setStartError('');
     try {
@@ -106,20 +99,18 @@ export default function SurveyPartners() {
                 <button
                   className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 text-sm font-bold text-white transition hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-60"
                   type="button"
-                  disabled={startingId === survey.id}
+                  disabled={!isPanelist || startingId === survey.id}
                   onClick={() => handleStart(survey)}
-                  aria-label={`Start ${survey.displayName}`}
+                  aria-label={isPanelist ? `Start ${survey.displayName}` : `Preview ${survey.displayName}`}
                 >
-                  {startingId === survey.id ? <RefreshCcw className="animate-spin" size={18} /> : <ArrowRight size={18} />}
-                  Start
+                  {isPanelist && (startingId === survey.id ? <RefreshCcw className="animate-spin" size={18} /> : <ArrowRight size={18} />)}
+                  {isPanelist ? 'Start' : 'Preview only'}
                 </button>
               </div>
             </section>
           ))}
         </div>
       )}
-
-      {isAdmin && <ProxyActivationModal survey={activeSurvey} onClose={() => setActiveSurvey(null)} />}
     </>
   );
 }
