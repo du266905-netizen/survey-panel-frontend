@@ -82,8 +82,7 @@ export default function AppLayout({ children }) {
         <div className="flex h-[76px] items-center justify-between px-5 sm:px-7">
           <div className="flex items-center gap-4">
             <div className="app-brand-lockup" aria-label="GuanyiSearch">
-              <img className="app-brand-mark" src="/guanyisearch-favicon.png" alt="" aria-hidden="true" />
-              <Logo size="md" variant="light" className="app-logo" />
+              <Logo size="md" className="app-logo" />
             </div>
             <span className="app-topbar-divider hidden sm:block" aria-hidden="true" />
             <p className="app-topbar-context hidden text-xs sm:block">{isPanelist ? 'Panelist workspace' : 'Operations workspace'}</p>
