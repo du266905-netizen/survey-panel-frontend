@@ -1052,8 +1052,10 @@ textarea {
   position: fixed;
   z-index: 70;
   inset: 0;
-  display: block;
-  overflow-y: auto;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  overflow: hidden;
   overscroll-behavior: contain;
   background: rgba(0, 0, 0, .72);
   padding: 24px;
@@ -1062,16 +1064,19 @@ textarea {
 }
 .gift-card-modal {
   width: min(100%, 760px);
-  max-height: none;
-  overflow: visible;
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border: 1px solid rgba(244, 241, 232, .16);
   border-radius: 28px;
   background:
     radial-gradient(circle at 10% 0%, rgba(244, 241, 232, .04), transparent 34%),
     linear-gradient(145deg, rgba(9, 12, 11, .98), rgba(0, 0, 0, .96));
   box-shadow: 0 40px 100px rgba(0, 0, 0, .58), inset 0 1px 0 rgba(255, 255, 255, .045);
-  margin: min(5vh, 48px) auto;
+  margin: 0 auto;
   padding: clamp(18px, 3vw, 28px);
+  scrollbar-color: rgba(244, 241, 232, .28) transparent;
+  scrollbar-width: thin;
 }
 .gift-card-modal-head {
   display: flex;
@@ -1584,7 +1589,7 @@ textarea {
   .gift-card-summary { grid-template-columns: 74px minmax(0, 1fr); padding: 12px; }
   .gift-card-summary-action { grid-column: 1 / -1; justify-content: center; }
   .gift-card-modal-backdrop { padding: 14px; }
-  .gift-card-modal { max-height: none; border-radius: 22px; margin: 0 auto; }
+  .gift-card-modal { max-height: calc(100dvh - 28px); border-radius: 22px; margin: 0 auto; }
   .referral-hero h1 { font-size: 40px; }
   .referral-link-box { grid-template-columns: 1fr; }
 }
