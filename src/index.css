@@ -1052,9 +1052,9 @@ textarea {
   position: fixed;
   z-index: 70;
   inset: 0;
-  display: grid;
+  display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
   overflow: hidden;
   overscroll-behavior: contain;
   background: rgba(0, 0, 0, .72);

@@ -47,6 +47,7 @@ export default function Wallet() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeGiftCard, setActiveGiftCard] = useState(null);
+  const [giftCardModalOffset, setGiftCardModalOffset] = useState({ x: 0, y: 0 });
   const [giftCardNotice, setGiftCardNotice] = useState(null);
   const [rewardSlideIndex, setRewardSlideIndex] = useState(0);
   const [selectedDenominations, setSelectedDenominations] = useState(() => (
@@ -76,14 +77,38 @@ export default function Wallet() {
   useEffect(() => {
     if (!activeGiftCard) return undefined;
     const previousOverflow = document.body.style.overflow;
+    const updateModalPosition = () => {
+      const appMain = document.querySelector('.app-main');
+      if (!appMain) {
+        setGiftCardModalOffset({ x: 0, y: 0 });
+        return;
+      }
+
+      const bounds = appMain.getBoundingClientRect();
+      const visibleLeft = Math.max(0, bounds.left);
+      const visibleTop = Math.max(0, bounds.top);
+      const visibleRight = Math.min(window.innerWidth, bounds.right);
+      const visibleBottom = Math.min(window.innerHeight, bounds.bottom);
+      const visibleWidth = Math.max(0, visibleRight - visibleLeft);
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+      setGiftCardModalOffset({
+        x: visibleWidth ? visibleLeft + visibleWidth / 2 - window.innerWidth / 2 : 0,
+        y: visibleHeight ? visibleTop + visibleHeight / 2 - window.innerHeight / 2 : 0,
+      });
+    };
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') closeGiftCardModal();
     };
+
     document.body.style.overflow = 'hidden';
+    updateModalPosition();
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', updateModalPosition);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', updateModalPosition);
     };
   }, [activeGiftCard]);
 
@@ -282,7 +307,13 @@ export default function Wallet() {
           <div className="gift-card-modal-backdrop" role="presentation" onMouseDown={(event) => {
             if (event.target === event.currentTarget) closeGiftCardModal();
           }}>
-            <section className="gift-card-modal" role="dialog" aria-modal="true" aria-labelledby="gift-card-modal-title">
+            <section
+              className="gift-card-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="gift-card-modal-title"
+              style={{ transform: `translate(${giftCardModalOffset.x}px, ${giftCardModalOffset.y}px)` }}
+            >
               <div className="gift-card-modal-head">
                 <div>
                   <p>Gift card target</p>
