@@ -180,7 +180,7 @@ export default function Dashboard() {
                     />
                     <Legend wrapperStyle={{ paddingTop: 14 }} />
                     <Bar yAxisId="completed" dataKey="completed" name="Completed offers" fill="#a7ddd6" radius={[4, 4, 0, 0]} maxBarSize={28} />
-                    <Line yAxisId="coins" type="monotone" dataKey="coins" name="Coins" stroke="#d8c27a" strokeWidth={3} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
+                    <Line yAxisId="coins" type="monotone" dataKey="coins" name="Coins" stroke="#cfc6aa" strokeWidth={3} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
                   </ComposedChart>
                 </ResponsiveContainer>
               </div>
