@@ -6,6 +6,7 @@ import { AuthProvider } from './components/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import { installDomMutationSafety } from './utils/domSafety';
 import './index.css';
+import './styles/paper-contrast-fixes.css';
 
 installDomMutationSafety();
 

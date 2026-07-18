@@ -166,7 +166,7 @@ export default function Dashboard() {
                   <span>No cleared activity in the selected period yet.</span>
                 </div>
               )}
-              <div className={hasTrendActivity ? 'h-full' : 'h-full opacity-35'}>
+              <div className={hasTrendActivity ? 'h-full' : 'h-full dashboard-chart-muted'}>
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, .20)" vertical={false} />
