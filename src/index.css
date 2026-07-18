@@ -964,9 +964,6 @@ textarea {
   border-color: rgba(230, 211, 144, .18);
   box-shadow: 0 20px 50px rgba(0, 0, 0, .21), inset 0 1px 0 rgba(238, 252, 249, .035);
 }
-.gift-card-option.is-expanded {
-  border-color: rgba(230, 211, 144, .23);
-}
 .gift-card-summary {
   display: grid;
   width: 100%;
@@ -980,21 +977,25 @@ textarea {
   padding: 13px 15px;
   text-align: left;
 }
+.gift-card-summary:hover .gift-card-summary-action {
+  border-color: rgba(230, 211, 144, .32);
+  background: rgba(230, 211, 144, .12);
+  color: rgba(246, 237, 199, .96);
+}
 .gift-card-summary-image {
   display: block;
   aspect-ratio: 1.58;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .06);
   border-radius: 14px;
-  background: #10181b;
+  background: linear-gradient(145deg, rgba(244, 241, 232, .08), rgba(0, 0, 0, .30));
   padding: 5px;
 }
 .gift-card-summary-image img {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  object-fit: cover;
-  transform: scale(1.03);
+  object-fit: contain;
 }
 .gift-card-summary-copy {
   min-width: 0;
@@ -1013,29 +1014,113 @@ textarea {
   font-weight: 760;
   text-transform: capitalize;
 }
-.gift-card-summary-chevron {
-  color: rgba(210, 228, 224, .48);
-  transition: transform .2s ease, color .2s ease;
+.gift-card-summary-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(213, 235, 232, .12);
+  border-radius: 999px;
+  color: rgba(210, 228, 224, .58);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .04em;
+  padding: 7px 9px;
+  text-transform: uppercase;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
 }
-.gift-card-option.is-expanded .gift-card-summary-chevron {
-  color: rgba(230, 211, 144, .78);
-  transform: rotate(180deg);
+.gift-card-modal-backdrop {
+  position: fixed;
+  z-index: 70;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, .72);
+  padding: 24px;
+  backdrop-filter: blur(14px);
 }
-.gift-card-dropdown {
-  display: grid;
-  grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
+.gift-card-modal {
+  width: min(100%, 760px);
+  max-height: min(860px, calc(100svh - 48px));
+  overflow-y: auto;
+  border: 1px solid rgba(244, 241, 232, .16);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(216, 194, 122, .10), transparent 34%),
+    linear-gradient(145deg, rgba(9, 12, 11, .98), rgba(0, 0, 0, .96));
+  box-shadow: 0 40px 100px rgba(0, 0, 0, .58), inset 0 1px 0 rgba(255, 255, 255, .045);
+  padding: clamp(18px, 3vw, 28px);
+}
+.gift-card-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 18px;
-  border-top: 1px solid rgba(213, 235, 232, .08);
-  padding: 16px;
+  margin-bottom: 20px;
+}
+.gift-card-modal-head p {
+  margin: 0 0 7px;
+  color: #d8c27a;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.gift-card-modal-head h2 {
+  margin: 0;
+  color: var(--color-paper);
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 820;
+  letter-spacing: -.045em;
+  line-height: .98;
+}
+.gift-card-modal-head span {
+  display: block;
+  margin-top: 8px;
+  color: rgba(210, 228, 224, .50);
+  font-size: 13px;
+  font-weight: 750;
+  text-transform: capitalize;
+}
+.gift-card-modal-head button {
+  display: grid;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(244, 241, 232, .12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .035);
+  color: rgba(232, 238, 235, .72);
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+.gift-card-modal-head button:hover {
+  border-color: rgba(244, 241, 232, .24);
+  background: rgba(255, 255, 255, .07);
+  color: #fff;
+}
+.gift-card-modal-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(260px, .92fr);
+  gap: 20px;
+  align-items: stretch;
 }
 .gift-card-image-shell {
   aspect-ratio: 1.58;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .045);
   border-radius: 18px;
-  background: #10181b;
+  background: linear-gradient(145deg, rgba(244, 241, 232, .07), rgba(0, 0, 0, .28));
   padding: 8px;
   box-shadow: inset 0 1px 12px rgba(0, 0, 0, .45);
+}
+.gift-card-image-shell.is-modal {
+  align-self: center;
+  width: 100%;
+  max-height: 360px;
 }
 .gift-card-image-shell > div {
   width: 100%;
@@ -1048,8 +1133,7 @@ textarea {
   width: 100%;
   height: 100%;
   border-radius: 13px;
-  object-fit: cover;
-  transform: scale(1.045);
+  object-fit: contain;
 }
 .gift-card-controls {
   display: grid;
@@ -1097,6 +1181,18 @@ textarea {
   font-weight: 820;
   line-height: 1.5;
   padding: 10px 12px;
+}
+.gift-card-redeem-caption.is-ready {
+  border-color: rgba(146, 214, 187, .22);
+  background: rgba(89, 149, 125, .10);
+  color: rgba(203, 238, 222, .90);
+}
+.gift-card-modal-note {
+  margin: 0;
+  color: rgba(210, 228, 224, .45);
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.55;
 }
 .referral-hero {
   position: relative;
@@ -1416,7 +1512,7 @@ textarea {
   .dashboard-command::before { left: 64%; width: 560px; height: 560px; }
   .wallet-hero { grid-template-columns: 1fr; }
   .gift-card-dropdown-list { grid-template-columns: 1fr; }
-  .gift-card-dropdown { grid-template-columns: 1fr; }
+  .gift-card-modal-body { grid-template-columns: 1fr; }
   .referral-hero,
   .referral-grid,
   .referral-rule-list { grid-template-columns: 1fr; }
@@ -1456,8 +1552,10 @@ textarea {
   .wallet-hero { border-radius: 22px; padding: 22px; }
   .wallet-hero h1 { font-size: 37px; }
   .wallet-showcase-head { flex-direction: column; }
-  .gift-card-summary { grid-template-columns: 74px minmax(0, 1fr) auto; padding: 12px; }
-  .gift-card-dropdown { padding: 12px; }
+  .gift-card-summary { grid-template-columns: 74px minmax(0, 1fr); padding: 12px; }
+  .gift-card-summary-action { grid-column: 1 / -1; justify-content: center; }
+  .gift-card-modal-backdrop { align-items: flex-start; padding: 14px; }
+  .gift-card-modal { max-height: calc(100svh - 28px); border-radius: 22px; }
   .referral-hero h1 { font-size: 40px; }
   .referral-link-box { grid-template-columns: 1fr; }
 }

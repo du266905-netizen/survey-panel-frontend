@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChevronDown, ChevronLeft, ChevronRight, Gift, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Gift, X } from 'lucide-react';
 import { getWallet } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
@@ -45,10 +45,9 @@ export default function Wallet() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [giftCardPreview, setGiftCardPreview] = useState(null);
+  const [activeGiftCard, setActiveGiftCard] = useState(null);
   const [giftCardNotice, setGiftCardNotice] = useState(null);
   const [rewardSlideIndex, setRewardSlideIndex] = useState(0);
-  const [expandedGiftCards, setExpandedGiftCards] = useState(() => new Set());
   const [selectedDenominations, setSelectedDenominations] = useState(() => (
     giftCardOptions.reduce((current, option) => ({ ...current, [option.id]: giftCardAmounts(option)[0] }), {})
   ));
@@ -73,6 +72,20 @@ export default function Wallet() {
     loadWallet();
   }, []);
 
+  useEffect(() => {
+    if (!activeGiftCard) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') closeGiftCardModal();
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeGiftCard]);
+
   const wallet = data?.wallet;
   const exchangeRate = data?.exchangeRate || { coinsPerUsd: 1000, balanceUsd: 0, lockedUsd: 0 };
   const availableCoins = Number(wallet?.balance || 0);
@@ -96,13 +109,14 @@ export default function Wallet() {
     };
   };
 
-  const toggleGiftCard = (optionId) => {
-    setExpandedGiftCards((current) => {
-      const next = new Set(current);
-      if (next.has(optionId)) next.delete(optionId);
-      else next.add(optionId);
-      return next;
-    });
+  const openGiftCardModal = (option) => {
+    setGiftCardNotice(null);
+    setActiveGiftCard(option);
+  };
+
+  const closeGiftCardModal = () => {
+    setGiftCardNotice(null);
+    setActiveGiftCard(null);
   };
 
   const selectGiftCardDenomination = (optionId, amountUsd) => {
@@ -130,8 +144,11 @@ export default function Wallet() {
       return;
     }
 
-    setGiftCardNotice(null);
-    setGiftCardPreview({ ...tier, option });
+    setGiftCardNotice({
+      optionId: option.id,
+      kind: 'ready',
+      message: `${option.name} ${usd(tier.amountUsd)} is within your current Coins balance. Real fulfillment is not submitted here yet, so no Coins were deducted.`,
+    });
   };
 
   const transactionColumns = [
@@ -216,13 +233,9 @@ export default function Wallet() {
 
             <div className="gift-card-dropdown-list">
               {giftCardOptions.map((option) => {
-                const expanded = expandedGiftCards.has(option.id);
-                const amounts = giftCardAmounts(option);
-                const amountUsd = selectedDenominations[option.id] || amounts[0];
-                const tier = giftCardTier(amountUsd);
                 return (
-                  <article key={option.id} className={`gift-card-option ${expanded ? 'is-expanded' : ''}`}>
-                    <button className="gift-card-summary" type="button" onClick={() => toggleGiftCard(option.id)} aria-expanded={expanded}>
+                  <article key={option.id} className="gift-card-option">
+                    <button className="gift-card-summary" type="button" onClick={() => openGiftCardModal(option)} aria-label={`Open ${option.name} redemption options`}>
                       <span className="gift-card-summary-image">
                         <img src={giftCardImageSources[option.image]} alt="" />
                       </span>
@@ -230,38 +243,11 @@ export default function Wallet() {
                         <strong>{option.name}</strong>
                         <span>{option.region} · {giftCardAmountLabel(option)}</span>
                       </span>
-                      <ChevronDown className="gift-card-summary-chevron" size={18} aria-hidden="true" />
+                      <span className="gift-card-summary-action">
+                        Open
+                        <ChevronRight size={16} aria-hidden="true" />
+                      </span>
                     </button>
-
-                    {expanded && (
-                      <div className="gift-card-dropdown">
-                        <div className="gift-card-image-shell">
-                          <div>
-                            <img src={giftCardImageSources[option.image]} alt={`${option.name} gift card`} />
-                          </div>
-                        </div>
-                        <div className="gift-card-controls">
-                          <label>
-                            <span>Gift card value</span>
-                            <select className="field" value={amountUsd} onChange={(event) => selectGiftCardDenomination(option.id, event.target.value)}>
-                              {amounts.map((denomination) => (
-                                <option key={denomination} value={denomination}>{usd(denomination)} · {formatCoinNumber(giftCardTier(denomination).requiredCoins)} Coins</option>
-                              ))}
-                            </select>
-                          </label>
-                          <div className="gift-card-selected-tier">
-                            <span>{usd(amountUsd)}</span>
-                            <strong>{formatCoinNumber(tier.requiredCoins)} Coins</strong>
-                          </div>
-                          <button className="btn-primary gift-card-redeem-button" type="button" onClick={() => handleGiftCardRedeem(option)}>
-                            Redeem
-                          </button>
-                          {giftCardNotice?.optionId === option.id && (
-                            <p className="gift-card-redeem-caption">{giftCardNotice.message}</p>
-                          )}
-                        </div>
-                      </div>
-                    )}
                   </article>
                 );
               })}
@@ -287,28 +273,59 @@ export default function Wallet() {
 
       </div>
 
-      {giftCardPreview && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4" role="dialog" aria-modal="true" aria-labelledby="gift-card-goal-title">
-          <section className="card w-full max-w-md p-6 shadow-2xl">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wide text-amber-700">Gift card goal</p>
-                <h2 id="gift-card-goal-title" className="mt-1 text-xl font-bold text-slate-950">{giftCardPreview.option.name} {usd(giftCardPreview.amountUsd)}</h2>
+      {activeGiftCard && (() => {
+        const amounts = giftCardAmounts(activeGiftCard);
+        const amountUsd = selectedDenominations[activeGiftCard.id] || amounts[0];
+        const tier = giftCardTier(amountUsd);
+        return (
+          <div className="gift-card-modal-backdrop" role="presentation" onMouseDown={(event) => {
+            if (event.target === event.currentTarget) closeGiftCardModal();
+          }}>
+            <section className="gift-card-modal" role="dialog" aria-modal="true" aria-labelledby="gift-card-modal-title">
+              <div className="gift-card-modal-head">
+                <div>
+                  <p>Gift card target</p>
+                  <h2 id="gift-card-modal-title">{activeGiftCard.name}</h2>
+                  <span>{activeGiftCard.region} · {giftCardAmountLabel(activeGiftCard)}</span>
+                </div>
+                <button type="button" onClick={closeGiftCardModal} aria-label="Close gift card dialog">
+                  <X size={18} />
+                </button>
               </div>
-              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setGiftCardPreview(null)} aria-label="Close gift card goal">
-                <X size={18} />
-              </button>
-            </div>
-            <p className="mt-4 text-sm leading-6 text-slate-600">This is a reward target preview. No redemption request was submitted and no Coins were deducted from your wallet.</p>
-            <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-900">
-              Future goal: {formatCoinNumber(giftCardPreview.requiredCoins)} Coins for {usd(giftCardPreview.amountUsd)}.
-            </div>
-            <button className="btn-primary mt-5 w-full" type="button" onClick={() => setGiftCardPreview(null)}>
-              Got it
-            </button>
-          </section>
-        </div>
-      )}
+
+              <div className="gift-card-modal-body">
+                <div className="gift-card-image-shell is-modal">
+                  <div>
+                    <img src={giftCardImageSources[activeGiftCard.image]} alt={`${activeGiftCard.name} gift card`} />
+                  </div>
+                </div>
+
+                <div className="gift-card-controls">
+                  <label>
+                    <span>Gift card value</span>
+                    <select className="field" value={amountUsd} onChange={(event) => selectGiftCardDenomination(activeGiftCard.id, event.target.value)}>
+                      {amounts.map((denomination) => (
+                        <option key={denomination} value={denomination}>{usd(denomination)} · {formatCoinNumber(giftCardTier(denomination).requiredCoins)} Coins</option>
+                      ))}
+                    </select>
+                  </label>
+                  <div className="gift-card-selected-tier">
+                    <span>{usd(amountUsd)}</span>
+                    <strong>{formatCoinNumber(tier.requiredCoins)} Coins</strong>
+                  </div>
+                  <button className="btn-primary gift-card-redeem-button" type="button" onClick={() => handleGiftCardRedeem(activeGiftCard)}>
+                    Redeem
+                  </button>
+                  {giftCardNotice?.optionId === activeGiftCard.id && (
+                    <p className={`gift-card-redeem-caption ${giftCardNotice.kind === 'ready' ? 'is-ready' : ''}`}>{giftCardNotice.message}</p>
+                  )}
+                  <p className="gift-card-modal-note">Gift card delivery details will be requested only when live redemption is enabled. This screen does not deduct Coins.</p>
+                </div>
+              </div>
+            </section>
+          </div>
+        );
+      })()}
     </>
   );
 }
