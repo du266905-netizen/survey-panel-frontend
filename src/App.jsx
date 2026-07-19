@@ -3,13 +3,14 @@ import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminPartners from './pages/AdminPartners';
+import AdminPanelists from './pages/AdminPanelists';
 import AdminRewards from './pages/AdminRewards';
 import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
 import Landing from './pages/Landing';
 import NewsWall from './pages/NewsWall';
-import Onboarding from './pages/Onboarding';
+import PanelProfilePage from './pages/PanelProfilePage';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
 import Settings from './pages/Settings';
@@ -75,6 +76,7 @@ export default function App() {
       <Route path="/terms" element={<Terms />} />
       <Route path="/news" element={<NewsRoute />} />
       <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
+      <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />
       <Route
         element={
           <ProtectedRoute>
@@ -82,7 +84,7 @@ export default function App() {
           </ProtectedRoute>
         }
       >
-        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/onboarding" element={<Navigate to="/panel-profile" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/partners" element={<SurveyPartners />} />
         <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
@@ -128,6 +130,14 @@ export default function App() {
           element={
             <AdminRoute>
               <AgentPrecheck />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/panelists"
+          element={
+            <AdminRoute>
+              <AdminPanelists />
             </AdminRoute>
           }
         />

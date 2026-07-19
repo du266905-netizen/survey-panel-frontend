@@ -109,7 +109,7 @@ export default function Register() {
         referredBy: searchParams.get('ref') || undefined,
       });
       setUser(response.data.user);
-      navigate('/onboarding', { replace: true });
+      navigate('/panel-profile', { replace: true });
     } catch (caughtError) {
       const code = caughtError.response?.data?.error || caughtError.response?.data?.code;
       if (code === 'TURNSTILE_VERIFICATION_FAILED') {

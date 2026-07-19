@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, ChevronDown, Database, Gift, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, ChevronDown, Database, Gift, ListFilter, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import CoinAmount from './CoinAmount';
 import Logo from './Logo';
 import { isAdminRole, isPanelistRole } from '../utils/roles';
+import { ProfileSurveyProvider } from './ProfileSurveyContext';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -139,6 +140,7 @@ export default function AppLayout({ children }) {
                 {adminLink('/workers', 'Member Monitor', UserCog)}
                 {adminLink('/traffic', 'Traffic Console', MonitorPlay)}
                 {adminLink('/admin/rewards', 'Reward Center', Gift)}
+                {adminLink('/admin/panelists', 'Panel Profiles', ListFilter)}
                 {adminLink('/admin/partners', 'Partners', Users)}
                 {adminLink('/admin/database', 'Database', Database)}
                 {adminLink('/admin', 'Admin Dashboard', ShieldCheck, true)}
@@ -150,11 +152,13 @@ export default function AppLayout({ children }) {
             Secure workspace
           </div>
         </aside>
-        <main className="app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10">
-          <div key={location.pathname} className="app-route-enter">
-            {children || <Outlet />}
-          </div>
-        </main>
+        <ProfileSurveyProvider enabled={isPanelist}>
+          <main className="app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10">
+            <div key={location.pathname} className="app-route-enter">
+              {children || <Outlet />}
+            </div>
+          </main>
+        </ProfileSurveyProvider>
       </div>
     </div>
   );

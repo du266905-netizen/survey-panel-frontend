@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { ShieldCheck } from 'lucide-react';
+import { Coins, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getCurrentUser, updateProfile } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../components/AuthContext';
 import { isPanelistRole } from '../utils/roles';
+import { useProfileSurvey } from '../components/ProfileSurveyContext';
 
 function displayValue(value, fallback = 'Not set') {
   return value || fallback;
@@ -22,6 +23,7 @@ function InfoPanel({ label, value }) {
 export default function Profile() {
   const { user, setUser } = useAuth();
   const isPanelist = isPanelistRole(user?.role);
+  const { panelProfile, rewardCoins, loading: panelProfileLoading, openProfileSurvey } = useProfileSurvey();
   const [displayName, setDisplayName] = useState(user?.displayName || user?.username || '');
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
@@ -128,6 +130,14 @@ export default function Profile() {
             {accountFields.map(([label, value]) => (
               <InfoPanel key={label} label={label} value={value} />
             ))}
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200/70 bg-amber-50/60 p-4">
+            <div className="flex items-start gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-amber-700 shadow-sm"><Coins size={20} /></span>
+              <div><p className="font-bold text-slate-950">Panel profile</p><p className="mt-1 text-sm text-slate-600">{panelProfileLoading ? 'Checking your profile…' : panelProfile?.isComplete ? 'Your profile is complete. You can update it anytime.' : `Complete your profile to receive ${rewardCoins} Coins once.`}</p></div>
+            </div>
+            <button className="btn-secondary" type="button" onClick={openProfileSurvey}>{panelProfile?.isComplete ? 'Update profile' : 'Complete profile'}</button>
           </div>
         </section>
 

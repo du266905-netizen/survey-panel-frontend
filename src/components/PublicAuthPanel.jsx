@@ -133,7 +133,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
   const finishAuth = useCallback(
     (response) => {
       setUser(response.data.user);
-      navigate(response.data.isNewUser ? '/onboarding' : '/dashboard', { replace: true });
+      navigate(response.data.isNewUser ? '/panel-profile' : '/dashboard', { replace: true });
     },
     [navigate, setUser]
   );

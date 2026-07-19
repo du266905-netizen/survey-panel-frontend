@@ -201,19 +201,14 @@ export const updateProfile = async ({ displayName }) => {
   };
 };
 
-export const getOnboardingProfile = async () => {
-  const response = await apiClient.get('/api/auth/onboarding');
+export const getPanelProfile = async () => {
+  const response = await apiClient.get('/api/panel-profile');
   return { data: response.data };
 };
 
-export const completeOnboardingProfile = async (payload) => {
-  const response = await apiClient.post('/api/auth/onboarding', payload);
-  return {
-    data: {
-      ...response.data,
-      user: normalizeUser(response.data.user),
-    },
-  };
+export const savePanelProfileProgress = async ({ answers, currentStep }) => {
+  const response = await apiClient.patch('/api/panel-profile', { answers, currentStep });
+  return { data: response.data };
 };
 
 export const getWallet = async () => {
@@ -464,6 +459,11 @@ export const getEmployees = async () => {
 
 export const getAdminUserProfile = async (id) => {
   const response = await apiClient.get(`/api/admin/users/${id}/profile`);
+  return { data: response.data };
+};
+
+export const getAdminPanelists = async (params = {}) => {
+  const response = await apiClient.get('/api/admin/panelists', { params: { pageSize: 25, ...params } });
   return { data: response.data };
 };
 
