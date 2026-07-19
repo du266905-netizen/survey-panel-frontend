@@ -1,22 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, BadgeCheck, CircleDollarSign, Eye, Newspaper, ShieldCheck, UserRoundCheck } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowRight, BadgeCheck, CircleDollarSign, Eye, Newspaper, ShieldCheck } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getNewsWall } from '../api/realApi';
 import GlobalGlobe from '../components/GlobalGlobe';
 import Logo from '../components/Logo';
 import PublicAuthPanel from '../components/PublicAuthPanel';
-
-const qualityControls = [
-  ['Clear eligibility', 'A transparent start helps people understand how participation begins and what comes next.', BadgeCheck],
-  ['Respectful privacy', 'Information is collected only when it has a clear purpose in the research experience.', ShieldCheck],
-  ['Visible records', 'Participation, rewards, and account progress stay easy to understand at every step.', UserRoundCheck],
-];
-
-const panelistSteps = [
-  ['01', 'Create your account', 'Use Google or your email, then verify the account and accept the platform terms.'],
-  ['02', 'Complete your profile', 'Tell us the basics so available research can be matched more thoughtfully.'],
-  ['03', 'Track your rewards', 'Keep wallet activity, records, and redemption requests in one place.'],
-];
 
 const socialLinks = [
   { id: 'x', label: 'X / Twitter', href: 'https://x.com/GUANYISEARCH' },
@@ -165,32 +153,20 @@ function LandingNewsPreview() {
   );
 }
 
-function LandingPhoto({ className = '', src, alt, eyebrow, title, priority = false }) {
-  const imageRef = useRef(null);
-  const [imageState, setImageState] = useState('loading');
-
-  useEffect(() => {
-    const image = imageRef.current;
-    if (!image?.complete) return;
-    setImageState(image.naturalWidth > 0 ? 'loaded' : 'error');
-  }, []);
-
+function ManifestoSprout() {
   return (
-    <article className={`landing-photo ${className} is-${imageState}`}>
-      <div className="landing-photo-loading" aria-hidden="true"><span /></div>
-      <img
-        ref={imageRef}
-        src={src}
-        alt={alt}
-        loading={priority ? 'eager' : 'lazy'}
-        fetchpriority={priority ? 'high' : 'auto'}
-        decoding="async"
-        onLoad={() => setImageState('loaded')}
-        onError={() => setImageState('error')}
-      />
-      <div className="landing-photo-fallback" aria-hidden="true"><span>Visual preview is temporarily unavailable.</span></div>
-      <div className="landing-photo-caption"><p>{eyebrow}</p><strong>{title}</strong></div>
-    </article>
+    <div className="landing-manifesto-sprout" aria-hidden="true">
+      <svg viewBox="0 0 220 220" fill="none">
+        <circle className="landing-sprout-sun" cx="155" cy="67" r="41" />
+        <path className="landing-sprout-ground" d="M34 173c27-10 111-10 148 0" />
+        <path className="landing-sprout-stem" d="M104 170c2-28 3-56-2-86" />
+        <path className="landing-sprout-leaf landing-sprout-leaf-left" d="M101 116C71 108 57 84 64 58c28 4 44 25 38 58Z" />
+        <path className="landing-sprout-leaf landing-sprout-leaf-right" d="M105 92c12-29 36-42 65-31-5 30-29 45-65 31Z" />
+        <path className="landing-sprout-vein landing-sprout-vein-left" d="M99 112 69 66" />
+        <path className="landing-sprout-vein landing-sprout-vein-right" d="m109 89 53-23" />
+        <path className="landing-sprout-root" d="M104 169c-14-1-25 3-34 10M105 169c12 0 24 4 35 10" />
+      </svg>
+    </div>
   );
 }
 
@@ -311,6 +287,47 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .landing-tone-transition.is-dark-to-light { background: linear-gradient(180deg, #020303 0%, #050706 42%, #090805 72%, #000 100%); }
         .landing-tone-transition.is-light-to-dark { background: linear-gradient(180deg, #000 0%, #080806 34%, #0b1010 70%, #090c0e 100%); }
         .landing-tone-transition.is-global-to-light { height: clamp(72px, 6vw, 108px); background: linear-gradient(180deg, #020303 0%, #0b1110 45%, #090806 100%); }
+        .landing-tone-transition.is-dark-to-paper { height: clamp(82px, 8vw, 132px); background: linear-gradient(180deg, #020303 0%, #0b0b08 30%, #f3ede0 100%); }
+        .landing-tone-transition.is-dark-to-paper:after { background: radial-gradient(ellipse 48% 115% at 50% 85%, rgba(195,173,124,.19), transparent 70%); }
+        .landing-tone-transition.is-paper-to-dark { height: clamp(82px, 8vw, 132px); background: linear-gradient(180deg, #f3ede0 0%, #cfc3aa 22%, #151510 67%, #020303 100%); }
+        .landing-tone-transition.is-paper-to-dark:after { background: radial-gradient(ellipse 48% 115% at 50% 18%, rgba(195,173,124,.16), transparent 70%); }
+        .landing-human-manifesto { position: relative; overflow: hidden; background: radial-gradient(circle at 87% 10%, rgba(184,164,117,.16), transparent 27%), radial-gradient(circle at 11% 80%, rgba(107,130,112,.09), transparent 25%), #f3ede0; color: #171714; padding: clamp(54px, 6vw, 94px) 0 clamp(74px, 7vw, 112px); }
+        .landing-human-manifesto:before { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 6px, rgba(67,55,33,.017) 7px 8px); content: ''; opacity: .7; pointer-events: none; }
+        .landing-human-manifesto .landing-container { width: min(100% - 72px, 1360px); }
+        .landing-manifesto-inner { position: relative; z-index: 1; }
+        .landing-manifesto-masthead { display: grid; grid-template-columns: minmax(0,1fr) minmax(280px, .33fr); gap: clamp(32px, 6vw, 96px); align-items: end; border-top: 1px solid rgba(34,31,23,.24); padding-top: clamp(24px, 3.2vw, 43px); }
+        .landing-manifesto-label { margin: 0; color: #5e594e; font-size: 11px; font-weight: 900; letter-spacing: .19em; text-transform: uppercase; }
+        .landing-manifesto-masthead h2 { max-width: 1060px; margin: 13px 0 0; color: #000; font-family: var(--font-serif); font-size: clamp(60px, 7.4vw, 112px); font-weight: 760; letter-spacing: -.065em; line-height: .88; }
+        .landing-manifesto-deck { max-width: 570px; margin: 25px 0 0; color: #38362f; font-family: var(--font-serif); font-size: clamp(21px, 2vw, 29px); font-weight: 570; letter-spacing: -.024em; line-height: 1.25; }
+        .landing-manifesto-mark { display: grid; grid-template-columns: 126px minmax(0,1fr); align-items: end; gap: 18px; border-left: 1px solid rgba(34,31,23,.24); padding: 3px 0 3px 24px; }
+        .landing-manifesto-mark > div { padding-bottom: 8px; }
+        .landing-manifesto-mark span { display: block; color: #141512; font-size: 12px; font-weight: 900; letter-spacing: .13em; line-height: 1.38; }
+        .landing-manifesto-mark p { max-width: 190px; margin: 16px 0 0; color: #625e55; font-size: 11px; font-weight: 750; letter-spacing: .02em; line-height: 1.55; }
+        .landing-manifesto-sprout { width: 126px; color: #172018; }
+        .landing-manifesto-sprout svg { display: block; width: 100%; height: auto; overflow: visible; }
+        .landing-sprout-sun { fill: rgba(168,179,145,.36); transform-origin: 155px 67px; animation: landing-sprout-breathe 5.6s ease-in-out infinite; }
+        .landing-sprout-ground, .landing-sprout-stem, .landing-sprout-root, .landing-sprout-vein { stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3.2; }
+        .landing-sprout-ground { opacity: .88; }
+        .landing-sprout-root { opacity: .68; }
+        .landing-sprout-stem { stroke-dasharray: 95; stroke-dashoffset: 95; animation: landing-sprout-draw .95s cubic-bezier(.2,.8,.2,1) .15s forwards; }
+        .landing-sprout-leaf { fill: #8f9e7b; stroke: currentColor; stroke-linejoin: round; stroke-width: 3.2; transform-box: fill-box; }
+        .landing-sprout-leaf-left { transform-origin: 100% 100%; animation: landing-sprout-sway 5.2s ease-in-out 1.05s infinite; }
+        .landing-sprout-leaf-right { fill: #aab494; transform-origin: 0 100%; animation: landing-sprout-sway-reverse 5.9s ease-in-out 1.2s infinite; }
+        .landing-sprout-vein { stroke-width: 2.2; opacity: .72; }
+        .landing-sprout-vein-left { animation: landing-sprout-vein-left 5.2s ease-in-out 1.05s infinite; }
+        .landing-sprout-vein-right { animation: landing-sprout-vein-right 5.9s ease-in-out 1.2s infinite; }
+        .landing-manifesto-spread { display: grid; grid-template-columns: minmax(320px,.84fr) minmax(0,1.16fr); gap: clamp(36px, 6vw, 86px); align-items: start; border-top: 1px solid rgba(35,31,22,.24); margin-top: clamp(36px, 4vw, 58px); padding-top: clamp(26px, 3vw, 42px); }
+        .landing-manifesto-art { position: relative; height: clamp(410px, 36vw, 540px); margin: 0; overflow: hidden; border: 1px solid rgba(35,31,22,.24); background: #b8c5c0; box-shadow: 16px 17px 0 rgba(84,72,45,.06); }
+        .landing-manifesto-art:after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(245,239,223,.02) 30%, rgba(12,22,19,.74) 100%); content: ''; pointer-events: none; }
+        .landing-manifesto-art img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; filter: saturate(.8) contrast(.95) sepia(.08); transform: scale(1.45) translateY(-14%); transform-origin: 50% 80%; }
+        .landing-manifesto-art figcaption { position: absolute; z-index: 1; right: clamp(28px, 4vw, 58px); bottom: clamp(27px, 4vw, 50px); left: clamp(28px, 4vw, 58px); display: flex; align-items: end; gap: 20px; color: #f8f2e5; }
+        .landing-manifesto-art figcaption span { border-right: 1px solid rgba(249,243,229,.55); color: #e3d2ab; font-size: 11px; font-weight: 900; letter-spacing: .16em; padding: 5px 18px 5px 0; }
+        .landing-manifesto-art figcaption strong { max-width: 390px; font-family: var(--font-serif); font-size: clamp(24px, 2.5vw, 37px); font-weight: 700; letter-spacing: -.035em; line-height: 1.08; }
+        .landing-manifesto-copy { display: flex; max-width: 660px; min-width: 0; flex-direction: column; justify-content: flex-start; color: #514f49; font-size: clamp(15px, 1.3vw, 17px); line-height: 1.88; padding: 0; }
+        .landing-manifesto-copy p { margin: 0; }
+        .landing-manifesto-copy p + p { margin-top: 21px; }
+        .landing-manifesto-lede { color: #272620; font-size: clamp(16px, 1.35vw, 19px); font-weight: 680; letter-spacing: -.012em; line-height: 1.65; }
+        .landing-manifesto-principle { border-top: 1px solid rgba(130,103,49,.46); color: #172c23; font-family: var(--font-serif); font-size: clamp(24px, 2.35vw, 34px); font-weight: 700; letter-spacing: -.035em; line-height: 1.14; margin-top: 38px !important; padding-top: 23px; }
         .landing-sections { background: radial-gradient(circle at 18% 8%, rgba(244,241,232,.035), transparent 32%), linear-gradient(180deg, #000 0%, #050505 54%, #000 100%); color: #edf4f2; }
         .landing-container { width: min(100% - 48px, 1200px); margin: 0 auto; }
         .landing-intro { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); gap: clamp(42px, 8vw, 112px); align-items: center; padding: 120px 0; }
@@ -420,7 +437,34 @@ export default function Landing({ initialAuthMode = 'register' }) {
         @keyframes landing-transition-breathe { from { transform: translate3d(-3%, -1%, 0) scale(1); opacity: .42; } to { transform: translate3d(3%, 1%, 0) scale(1.06); opacity: .9; } }
         @keyframes landing-aurora { from { transform: translate3d(-1.5%, -1%, 0) scale(1); } to { transform: translate3d(1.5%, 1%, 0) scale(1.06); } }
         @keyframes landing-mark-drift { 0%, 100% { transform: translate(-50%, -50%) translate3d(0, 0, 0) rotate(-4deg); filter: drop-shadow(0 14px 32px rgba(139,207,202,.13)) drop-shadow(0 0 58px rgba(244,241,232,.055)); } 50% { transform: translate(-50%, -50%) translate3d(-10px, -18px, 0) rotate(3deg); filter: drop-shadow(0 22px 38px rgba(139,207,202,.20)) drop-shadow(0 0 68px rgba(244,241,232,.075)); } }
+        @keyframes landing-sprout-draw { to { stroke-dashoffset: 0; } }
+        @keyframes landing-sprout-breathe { 0%, 100% { opacity: .7; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.05); } }
+        @keyframes landing-sprout-sway { 0%, 100% { transform: rotate(-2deg) scale(1); } 50% { transform: rotate(3deg) scale(1.03); } }
+        @keyframes landing-sprout-sway-reverse { 0%, 100% { transform: rotate(2deg) scale(1); } 50% { transform: rotate(-3deg) scale(1.03); } }
+        @keyframes landing-sprout-vein-left { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(3deg); } }
+        @keyframes landing-sprout-vein-right { 0%, 100% { transform: rotate(2deg); } 50% { transform: rotate(-3deg); } }
         @keyframes landing-news-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+        @media (max-width: 780px) {
+          .landing-human-manifesto { padding: 52px 0 65px; }
+          .landing-human-manifesto .landing-container { width: min(100% - 40px, 1360px); }
+          .landing-manifesto-masthead { grid-template-columns: 1fr; gap: 20px; padding-top: 22px; }
+          .landing-manifesto-masthead h2 { margin-top: 13px; font-size: clamp(50px, 15vw, 72px); line-height: .92; }
+          .landing-manifesto-deck { margin-top: 20px; font-size: 22px; line-height: 1.28; }
+          .landing-manifesto-mark { display: grid; grid-template-columns: 86px minmax(0,1fr); align-items: center; gap: 17px; border-top: 1px solid rgba(34,31,23,.24); border-left: 0; padding: 18px 0 0; }
+          .landing-manifesto-mark > div { padding: 0; }
+          .landing-manifesto-mark p { margin-top: 9px; }
+          .landing-manifesto-sprout { width: 86px; }
+          .landing-manifesto-spread { grid-template-columns: 1fr; gap: 30px; margin-top: 36px; }
+          .landing-manifesto-art { height: 340px; }
+          .landing-manifesto-art img { transform: scale(1.35) translateY(-10%); }
+          .landing-manifesto-art figcaption { right: 25px; bottom: 25px; left: 25px; gap: 13px; }
+          .landing-manifesto-art figcaption span { padding-right: 12px; }
+          .landing-manifesto-art figcaption strong { font-size: 25px; }
+          .landing-manifesto-copy { font-size: 15px; line-height: 1.84; padding: 0; }
+          .landing-manifesto-copy p + p { margin-top: 21px; }
+          .landing-manifesto-lede { font-size: 17px; }
+          .landing-manifesto-principle { font-size: 27px; margin-top: 35px !important; padding-top: 18px; }
+        }
         @media (prefers-reduced-motion: reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
         @media (max-width: 1180px) { .landing-shell { display: grid; height: auto; min-height: 0; overflow: visible; grid-template-columns: 1fr; } .landing-brand, .landing-access { min-height: auto; height: auto; } .landing-brand { width: auto; min-height: 680px; } .landing-access { position: static; width: auto; min-width: 0; overflow: visible; border: 0; border-radius: 0; box-shadow: none; padding-bottom: 68px; } .landing-access-nav { justify-content: space-between; } .landing-access-inner { overflow: visible; padding: 54px 0 12px; } .landing-brand-mark { top: 33%; left: 52%; width: min(80vw, 540px); } .landing-news-grid { grid-template-columns: 1fr; } .landing-news-card-body h3 { min-height: 0; } .landing-footer-grid { grid-template-columns: 1fr; } .landing-footer-brand { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); } }
         @media (max-width: 700px) { .landing-brand { min-height: 625px; padding: 25px 24px 31px; } .landing-brand-kicker { display: none; } .landing-brand-content h1 { font-size: 39px; } .landing-brand-content > p { font-size: 14px; line-height: 1.65; } .landing-brand-proof { grid-template-columns: 1fr; gap: 2px; margin-top: 24px; } .landing-brand-proof span { min-height: 0; padding-top: 8px; } .landing-brand-mark { top: 35%; left: 54%; width: 100vw; } .landing-access { padding: 20px 24px 36px; } .landing-access-nav { font-size: 12px; gap: 12px; } .landing-access-inner { padding-top: 40px; } .public-auth-content h2 { font-size: 30px; } .landing-container { width: min(100% - 40px, 1200px); } .landing-news-preview { padding-bottom: 54px; } .landing-news-preview-head { align-items: flex-start; flex-direction: column; } .landing-intro, .landing-quality-grid, .landing-global { grid-template-columns: 1fr; gap: 28px; padding: 78px 0; } .landing-intro > p { font-size: 15px; } .landing-photo-grid { grid-template-columns: 1fr; padding-bottom: 78px; } .landing-photo, .landing-photo.is-short, .landing-photo.is-wide { grid-column: auto; min-height: 315px; } .landing-quality, .landing-panelists { padding: 78px 0; } .landing-global { min-height: 0; } .landing-global-visual { order: 2; min-height: 385px; } .landing-global-copy { order: 1; padding: 0; } .landing-map-frame { min-height: 0; } .landing-global-globe { width: min(88%, 350px); transform: translate(0, 1%); } .landing-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .landing-step { min-height: 0; } .landing-step h3 { margin-top: 25px; } .landing-reward-banner { min-height: 470px; margin-top: 45px; } .landing-reward-copy { padding: 44px 28px; } .landing-footer-brand, .landing-footer-contact { padding: 44px 28px; } .landing-footer-bottom { align-items: flex-start; flex-direction: column; padding: 24px 0; } .landing-footer-links { justify-content: flex-start; } }
@@ -446,9 +490,9 @@ export default function Landing({ initialAuthMode = 'register' }) {
 
         <section className="landing-access" aria-label="Account access">
           <nav className="landing-access-nav" aria-label="Public navigation">
-            <a href="#platform">Platform</a>
+            <a href="#human-manifesto">Human Manifesto</a>
             <Link to="/news">News Wall</Link>
-            <a href="#quality">Quality</a>
+            <Link to="/how-it-works">How it works</Link>
             {authMode === 'login' ? <Link className="landing-nav-pill" to={{ pathname: '/register', search: location.search }}>Create account</Link> : <Link className="landing-nav-pill" to={{ pathname: '/login', search: location.search }}>Sign in</Link>}
           </nav>
           <div className="landing-access-inner"><PublicAuthPanel mode={authMode} onModeChange={setMode} /></div>
@@ -458,42 +502,48 @@ export default function Landing({ initialAuthMode = 'register' }) {
 
       <LandingNewsPreview />
 
-      <div className="landing-tone-transition is-dark-to-light" aria-hidden="true" />
+      <div className="landing-tone-transition is-dark-to-paper" aria-hidden="true" />
+
+      <section id="human-manifesto" className="landing-human-manifesto" aria-labelledby="human-manifesto-title">
+        <div className="landing-container landing-manifesto-inner">
+          <div className="landing-manifesto-masthead">
+            <div className="landing-manifesto-heading">
+              <p className="landing-manifesto-label">GuanyiSearch / 01</p>
+              <h2 id="human-manifesto-title">Human Manifesto</h2>
+              <p className="landing-manifesto-deck">We believe that real people will always be the starting point for research.</p>
+            </div>
+            <div className="landing-manifesto-mark">
+              <ManifestoSprout />
+              <div>
+                <span>REAL PEOPLE<br />REAL INSIGHT</span>
+                <p>One real response at a time, a more trustworthy picture can grow.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="landing-manifesto-spread">
+            <figure className="landing-manifesto-art">
+              <img src="/human-manifesto/shoreline-painting.jpg" alt="Impressionist shoreline landscape" loading="lazy" decoding="async" />
+              <figcaption><span>01</span><strong>Real voices deserve to be heard with care.</strong></figcaption>
+            </figure>
+            <div className="landing-manifesto-copy">
+              <p className="landing-manifesto-lede">This is an era in which AI can generate an endless volume of content that appears real. Opinions are easy to produce; voices are easy to replicate. Yet one thing can never be generated: a particular person, in a particular moment, expressing what they truly think.</p>
+              <p>GuanyiSearch refuses to substitute synthetic voices for real ones. Behind every survey result and every submitted opinion is a real person who chose to spend a few minutes sharing a perspective. These voices may be small, but they are irreplaceable. It is the accumulation of such specific, individual voices that forms insight worth trusting.</p>
+              <p>We also believe technology is not the opposite of people; it is an extension of people. We use automated matching so your time is spent where it truly matters, transparent real-time data so you can see the impact of your voice, and clear, fair rules so every minute you contribute can lead to a reward that is visible and attainable.</p>
+              <p className="landing-manifesto-principle">Human-centered does not mean rejecting technology. It means making technology serve people.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="landing-tone-transition is-paper-to-dark" aria-hidden="true" />
 
       <div className="landing-sections">
-        <section id="platform" className="landing-container landing-intro" data-reveal>
-          <div><p className="landing-label">One operating foundation</p><h2>From a verified account to a clear reward record.</h2></div>
-          <p>Panelists get a focused journey for registration, profile completion, surveys, records, and wallet activity. Operations teams get the context they need to diagnose delivery without exposing internal provider details to members.</p>
-        </section>
-
-        <section className="landing-container landing-photo-grid" aria-label="GuanyiSearch platform experience" data-reveal>
-          <LandingPhoto priority src="/research-operations.jpg" alt="Research team collaborating around a planning board" eyebrow="Research operations" title="Thoughtful systems start with clear human context." />
-          <LandingPhoto priority className="is-short" src="/panelist-mobile.jpg" alt="Person using a smartphone beside a tablet" eyebrow="Panelist reality" title="Designed around people, not faceless traffic." />
-          <LandingPhoto className="is-wide" src="/global-audience.jpg" alt="People walking through a city intersection" eyebrow="Global perspective" title="Research begins with different lives, places, and points of view." />
-        </section>
-
-        <div className="landing-tone-transition is-light-to-dark" aria-hidden="true" />
-
-        <section id="quality" className="landing-quality">
-          <div className="landing-container landing-quality-grid" data-reveal>
-            <div className="landing-quality-copy"><p className="landing-label">Research standards</p><h2>Research works better when people know where they stand.</h2><p>The experience is built around clear eligibility, respectful privacy, and visible records—so every person can take part with confidence.</p></div>
-            <div className="landing-quality-list">{qualityControls.map(([title, description, Icon]) => <article key={title} className="landing-quality-item"><span className="landing-quality-icon"><Icon size={19} /></span><div><h3>{title}</h3><p>{description}</p></div></article>)}</div>
-          </div>
-        </section>
-
         <section className="landing-global-section">
           <div className="landing-container landing-global" data-reveal>
             <div className="landing-global-visual" aria-hidden="true"><div className="landing-map-frame"><GlobalGlobe /></div></div>
             <div className="landing-global-copy"><p className="landing-label">Global perspective</p><h2>Research begins with people, in every context.</h2><p>A global view reminds us that every response comes from a different life, place, and point of view. The platform keeps each participation journey clear and considered from the first step to reward.</p></div>
           </div>
-        </section>
-
-        <div className="landing-tone-transition is-global-to-light" aria-hidden="true" />
-
-        <section className="landing-container landing-panelists" data-reveal>
-          <div className="landing-panelist-heading"><p className="landing-label">For panelists</p><h2>A simple journey with a visible record of value.</h2><p>There is no need to navigate a maze of disconnected tools. Your account, verification, profile, participation history, and rewards all begin in one place.</p></div>
-          <div className="landing-steps">{panelistSteps.map(([number, title, description]) => <article key={number} className="landing-step"><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
-          <article className="landing-reward-banner"><img src="/rewards-wallet.jpg" alt="Rewards and digital participation" loading="lazy" decoding="async" /><div className="landing-reward-copy"><p className="landing-label">Reward infrastructure</p><h2>Your wallet should be understandable at a glance.</h2><p>Follow coins, transactions, and redemption requests in a single place as the reward system expands.</p><Link to="/register">Create your account <ArrowRight size={17} /></Link></div></article>
         </section>
       </div>
 

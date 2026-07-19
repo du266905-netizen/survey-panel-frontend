@@ -8,6 +8,7 @@ import AdminRewards from './pages/AdminRewards';
 import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
+import HowItWorks from './pages/HowItWorks';
 import Landing from './pages/Landing';
 import NewsWall from './pages/NewsWall';
 import PanelProfilePage from './pages/PanelProfilePage';
@@ -74,6 +75,7 @@ export default function App() {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
+      <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/news" element={<NewsRoute />} />
       <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
       <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />
