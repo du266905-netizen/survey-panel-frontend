@@ -1,13 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { geoGraticule10, geoOrthographic, geoPath } from 'd3-geo';
-import { feature, mesh } from 'topojson-client';
+import { geoGraticule, geoOrthographic, geoPath } from 'd3-geo';
+import { feature } from 'topojson-client';
 import landTopology from 'world-atlas/land-110m.json';
-import countriesTopology from 'world-atlas/countries-110m.json';
 
 const sphere = { type: 'Sphere' };
 const land = feature(landTopology, landTopology.objects.land);
-const countryBorders = mesh(countriesTopology, countriesTopology.objects.countries, (left, right) => left !== right);
-const graticule = geoGraticule10();
+const graticule = geoGraticule().step([20, 20]);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
 
 export default function GlobalGlobe() {
@@ -32,7 +30,7 @@ export default function GlobalGlobe() {
     const draw = () => {
       if (!size) return;
       const center = size / 2;
-      const radius = size * 0.462;
+      const radius = size * 0.436;
       const projection = geoOrthographic()
         .translate([center, center])
         .scale(radius)
@@ -44,80 +42,68 @@ export default function GlobalGlobe() {
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       context.clearRect(0, 0, size, size);
 
-      const atmosphere = context.createRadialGradient(center, center, radius * 0.74, center, center, radius * 1.095);
-      atmosphere.addColorStop(0, 'rgba(18, 135, 147, 0)');
-      atmosphere.addColorStop(0.78, 'rgba(25, 166, 177, 0.015)');
-      atmosphere.addColorStop(1, 'rgba(115, 236, 239, 0.13)');
-      context.save();
-      context.beginPath();
-      context.arc(center, center, radius * 1.075, 0, Math.PI * 2);
-      context.clip();
-      context.fillStyle = atmosphere;
-      context.fillRect(0, 0, size, size);
-      context.restore();
-
       context.save();
       context.beginPath();
       path(sphere);
       context.clip();
 
-      const ocean = context.createRadialGradient(
-        center - radius * 0.34,
-        center - radius * 0.42,
-        radius * 0.08,
-        center,
-        center,
-        radius * 1.2,
-      );
-      ocean.addColorStop(0, '#23505a');
-      ocean.addColorStop(0.34, '#123940');
-      ocean.addColorStop(0.73, '#08232a');
-      ocean.addColorStop(1, '#041015');
-      context.fillStyle = ocean;
+      context.fillStyle = '#e6e3da';
       context.fillRect(0, 0, size, size);
 
       context.beginPath();
       path(graticule);
-      context.strokeStyle = 'rgba(181, 234, 235, 0.16)';
-      context.lineWidth = 0.62;
+      context.setLineDash([1, 5.2]);
+      context.strokeStyle = 'rgba(45, 45, 40, 0.28)';
+      context.lineWidth = 0.48;
       context.stroke();
+      context.setLineDash([]);
 
       context.beginPath();
       path(land);
-      context.fillStyle = 'rgba(44, 132, 141, 0.9)';
+      context.fillStyle = 'rgba(47, 49, 44, 0.1)';
       context.fill();
-      context.strokeStyle = 'rgba(193, 242, 243, 0.48)';
-      context.lineWidth = 0.72;
+      context.strokeStyle = 'rgba(39, 40, 36, 0.54)';
+      context.lineWidth = 0.42;
       context.stroke();
 
+      context.save();
       context.beginPath();
-      path(countryBorders);
-      context.strokeStyle = 'rgba(214, 246, 246, 0.16)';
-      context.lineWidth = 0.38;
-      context.stroke();
+      path(land);
+      context.clip();
+      const dotStep = clamp(radius * 0.045, 6.6, 8.4);
+      const dotRadius = Math.max(1.05, dotStep * 0.18);
+      const left = center - radius;
+      const right = center + radius;
+      const top = center - radius;
+      const bottom = center + radius;
+      context.fillStyle = '#2c2d29';
+      for (let row = 0, y = top; y <= bottom; row += 1, y += dotStep) {
+        const offset = row % 2 ? dotStep * 0.5 : 0;
+        for (let x = left + offset; x <= right; x += dotStep) {
+          const distance = Math.hypot(x - center, y - center) / radius;
+          if (distance > 1) continue;
+          const grain = Math.sin(x * 0.075 + y * 0.047) * 0.08;
+          context.globalAlpha = Math.max(0.38, 0.68 - distance * 0.18 + grain);
+          context.beginPath();
+          context.arc(x, y, dotRadius, 0, Math.PI * 2);
+          context.fill();
+        }
+      }
+      context.restore();
 
-      const nightSide = context.createLinearGradient(center - radius, center - radius * 0.1, center + radius, center + radius * 0.18);
-      nightSide.addColorStop(0, 'rgba(5, 18, 22, 0)');
-      nightSide.addColorStop(0.54, 'rgba(4, 15, 19, 0.015)');
-      nightSide.addColorStop(1, 'rgba(2, 9, 12, 0.48)');
-      context.fillStyle = nightSide;
+      const paperFalloff = context.createRadialGradient(center - radius * 0.26, center - radius * 0.28, radius * 0.08, center, center, radius * 1.04);
+      paperFalloff.addColorStop(0, 'rgba(255, 255, 252, 0)');
+      paperFalloff.addColorStop(0.72, 'rgba(249, 247, 241, 0)');
+      paperFalloff.addColorStop(1, 'rgba(45, 45, 40, 0.12)');
+      context.fillStyle = paperFalloff;
       context.fillRect(0, 0, size, size);
       context.restore();
 
       context.beginPath();
       path(sphere);
-      context.strokeStyle = 'rgba(204, 246, 247, 0.36)';
-      context.lineWidth = 1.2;
+      context.strokeStyle = 'rgba(41, 42, 38, 0.66)';
+      context.lineWidth = 0.8;
       context.stroke();
-
-      const rim = context.createRadialGradient(center, center, radius * 0.68, center, center, radius * 1.04);
-      rim.addColorStop(0, 'rgba(31, 222, 232, 0)');
-      rim.addColorStop(0.9, 'rgba(34, 206, 218, 0)');
-      rim.addColorStop(1, 'rgba(167, 243, 245, 0.21)');
-      context.beginPath();
-      path(sphere);
-      context.fillStyle = rim;
-      context.fill();
     };
 
     const render = (timestamp) => {
@@ -128,7 +114,7 @@ export default function GlobalGlobe() {
       const elapsed = Math.min(timestamp - lastFrame || 16, 40);
       lastFrame = timestamp;
       if (!prefersReducedMotion && !isDragging && timestamp - lastDraw >= 33) {
-        rotation[0] += elapsed * 0.0018;
+        rotation[0] += elapsed * 0.001;
         draw();
         lastDraw = timestamp;
       }
@@ -205,7 +191,7 @@ export default function GlobalGlobe() {
 
   return (
     <div className="landing-global-globe">
-      <canvas ref={canvasRef} className="landing-global-globe-canvas" aria-label="Interactive globe with continents" />
+      <canvas ref={canvasRef} className="landing-global-globe-canvas" aria-label="Interactive rotating printed globe" />
     </div>
   );
 }
