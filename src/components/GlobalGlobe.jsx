@@ -7,6 +7,7 @@ const sphere = { type: 'Sphere' };
 const land = feature(landTopology, landTopology.objects.land);
 const graticule = geoGraticule().step([20, 20]);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
+const autoRotationDegreesPerSecond = 5.5;
 
 export default function GlobalGlobe() {
   const canvasRef = useRef(null);
@@ -113,8 +114,8 @@ export default function GlobalGlobe() {
       }
       const elapsed = Math.min(timestamp - lastFrame || 16, 40);
       lastFrame = timestamp;
-      if (!prefersReducedMotion && !isDragging && timestamp - lastDraw >= 33) {
-        rotation[0] += elapsed * 0.001;
+      if (!prefersReducedMotion && !isDragging && timestamp - lastDraw >= 16) {
+        rotation[0] += elapsed * (autoRotationDegreesPerSecond / 1000);
         draw();
         lastDraw = timestamp;
       }
