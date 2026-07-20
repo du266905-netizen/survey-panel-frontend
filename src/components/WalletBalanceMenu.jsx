@@ -3,7 +3,6 @@ import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getWallet } from '../api/realApi';
 import { useAuth } from './AuthContext';
-import CoinAmount from './CoinAmount';
 import { useProfileSurvey } from './ProfileSurveyContext';
 import { formatCoinNumber } from '../utils/formatters';
 import { formatUsdEstimate, walletTransactionLabel } from '../utils/wallet';
@@ -83,12 +82,17 @@ export default function WalletBalanceMenu() {
         aria-haspopup="menu"
         aria-expanded={open}
       >
-        <span className="app-balance-copy">
-          <span className="app-balance-label">Coins</span>
-          <CoinAmount value={balance} />
+        <span className="app-balance-token" aria-hidden="true">
+          <span className="coin-icon">◎</span>
         </span>
-        <span className="app-balance-estimate">({formatUsdEstimate(balanceUsd, panelProfile?.country)})</span>
-        <ChevronDown className="app-balance-chevron" size={15} aria-hidden="true" />
+        <span className="app-balance-copy">
+          <span className="app-balance-label">Coins balance</span>
+          <span className="app-balance-amount"><strong>{formatCoinNumber(balance)}</strong><em>Coins</em></span>
+        </span>
+        <span className="app-balance-side">
+          <span className="app-balance-estimate">≈ {formatUsdEstimate(balanceUsd, panelProfile?.country)}</span>
+          <ChevronDown className="app-balance-chevron" size={15} aria-hidden="true" />
+        </span>
       </button>
 
       {open && (

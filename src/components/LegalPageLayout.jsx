@@ -39,7 +39,7 @@ export default function LegalPageLayout({ eyebrow, title, intro, sections, child
           <h1>{title}</h1>
           <p className="legal-hero-copy">{intro}</p>
           <div className="legal-meta">
-            <span>Effective July 20, 2026</span>
+            <span>Effective June 6, 2026</span>
             <span>For registered Guanyi Media panelists</span>
           </div>
         </div>
