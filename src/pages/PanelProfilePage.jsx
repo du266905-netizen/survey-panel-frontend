@@ -23,6 +23,10 @@ export default function PanelProfilePage() {
     getPanelProfile()
       .then((response) => {
         if (!mounted) return;
+        if (response.data.profile?.isComplete) {
+          navigate('/dashboard', { replace: true });
+          return;
+        }
         setProfile(response.data.profile);
         setRewardCoins(response.data.rewardCoins || 150);
       })
@@ -42,6 +46,13 @@ export default function PanelProfilePage() {
     }
   };
 
+  const handleCompleted = ({ awardedCoins }) => {
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem('first-survey-completion', JSON.stringify({ awardedCoins }));
+    }
+    navigate('/dashboard', { replace: true });
+  };
+
   if (error) {
     return <main className="profile-survey-page-status"><p>{error}</p><button type="button" onClick={() => navigate('/dashboard')}>Return to workspace</button></main>;
   }
@@ -50,5 +61,5 @@ export default function PanelProfilePage() {
     return <main className="profile-survey-page-status"><LoaderCircle className="animate-spin" size={24} /><p>Loading your panel profile…</p></main>;
   }
 
-  return <PanelProfileModal open profile={profile} rewardCoins={rewardCoins} onClose={() => navigate('/dashboard')} onProfileSaved={handleProfileSaved} asPage />;
+  return <PanelProfileModal open profile={profile} rewardCoins={rewardCoins} onClose={() => navigate('/dashboard')} onProfileSaved={handleProfileSaved} onCompleted={handleCompleted} asPage />;
 }

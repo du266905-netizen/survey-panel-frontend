@@ -223,7 +223,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
       <div className="public-auth-content">
         <p className="public-auth-eyebrow">{isLogin ? 'Welcome back' : 'Join the verified panel'}</p>
         <h2 id="public-auth-title">{isLogin ? 'Continue where you left off.' : 'Your perspective belongs here.'}</h2>
-        <p className="public-auth-intro">{isLogin ? 'Access your survey wall, wallet, and activity records.' : 'Create a panelist account, verify your email, and start building your profile.'}</p>
+        <p className="public-auth-intro">{isLogin ? 'Access your survey wall, wallet, and activity records.' : 'Create a panelist account, verify your email, and begin your first survey.'}</p>
 
         {!isLogin && (
           <label className="public-auth-consent">

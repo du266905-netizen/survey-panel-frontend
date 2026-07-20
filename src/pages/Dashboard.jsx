@@ -137,7 +137,7 @@ export default function Dashboard() {
               <p>Gift card goals unlock from the $10 tier.</p>
             </article>
           </div>
-          <p>Tip: complete your profile and check back when the wall looks quiet — inventory rotates.</p>
+          <p>Tip: finish your first survey and check back when the wall looks quiet — inventory rotates.</p>
         </div>
       </section>
 

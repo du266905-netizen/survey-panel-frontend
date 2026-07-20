@@ -140,7 +140,7 @@ function CountryOptions({ value, onSelect, disabled }) {
   );
 }
 
-export default function PanelProfileModal({ open, profile, rewardCoins, onClose, onProfileSaved, asPage = false }) {
+export default function PanelProfileModal({ open, profile, rewardCoins, onClose, onProfileSaved, onCompleted, asPage = false }) {
   const [draft, setDraft] = useState(() => initialDraft(profile));
   const [stepIndex, setStepIndex] = useState(0);
   const [saving, setSaving] = useState(false);
@@ -162,7 +162,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     setError('');
     setOptionsOpen(false);
     setStepIndex(profile?.isComplete ? 0 : Math.min(profile?.profileCurrentStep || 0, questionSteps(nextDraft).length - 1));
-  }, [open, profile]);
+  }, [open]);
 
   useEffect(() => {
     if (!open || asPage) return undefined;
@@ -184,12 +184,14 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
       const nextDraft = initialDraft(response.data.profile);
       const nextSteps = questionSteps(nextDraft);
       setDraft(nextDraft);
-      onProfileSaved(response.data);
       if (response.data.profile.isComplete) {
         setCompleted(true);
         setAwardedCoins(response.data.awardedCoins || 0);
+        onProfileSaved?.(response.data);
+        onCompleted?.({ profile: response.data.profile, awardedCoins: response.data.awardedCoins || 0 });
       } else {
         setStepIndex(Math.min(nextStepIndex, nextSteps.length - 1));
+        onProfileSaved?.(response.data);
       }
     } catch (caughtError) {
       setError(caughtError.response?.data?.message || 'Your answer could not be saved. Please try again.');
@@ -251,9 +253,9 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
       return (
         <div className="profile-survey-success">
           <span className="profile-survey-success-icon"><ShieldCheck size={34} /></span>
-          <p className="profile-survey-eyebrow">Profile complete</p>
-          <h2>{awardedCoins ? `${awardedCoins} Coins added` : 'Your profile is saved'}</h2>
-          <p>{awardedCoins ? 'Thank you. Your profile reward has been added to your wallet.' : 'Thank you for keeping your panel profile up to date.'}</p>
+          <p className="profile-survey-eyebrow">First survey complete</p>
+          <h2>{awardedCoins ? `${awardedCoins} Coins added` : 'Your answers are saved'}</h2>
+          <p>{awardedCoins ? 'Thank you. Your first-survey reward has been added to your wallet.' : 'Thank you for sharing your perspective.'}</p>
           <button className="profile-survey-primary-action" type="button" onClick={onClose}>Return to your workspace <ChevronRight size={18} /></button>
         </div>
       );
@@ -263,12 +265,12 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
       return (
         <div className="profile-survey-intro">
           <span className="profile-survey-intro-coin"><Coins size={23} /></span>
-          <p className="profile-survey-eyebrow">Member profile</p>
+          <p className="profile-survey-eyebrow">Your first survey</p>
           <h2>Help us match you with more relevant research.</h2>
-          <p>Answer a short set of profile questions at your own pace. You can close this at any time and continue later.</p>
-          <div className="profile-survey-reward-note"><Coins size={16} /> Complete the profile to receive <strong>{rewardCoins} Coins</strong> once.</div>
-          <button className="profile-survey-primary-action" type="button" onClick={() => setStepIndex(1)}>Start profile <ChevronRight size={18} /></button>
-          <a href="/privacy" className="profile-survey-privacy-link"><CircleHelp size={15} /> How we use profile information</a>
+          <p>Answer a short set of introduction questions at your own pace. You can close this at any time and continue later.</p>
+          <div className="profile-survey-reward-note"><Coins size={16} /> Complete this survey to receive <strong>{rewardCoins} Coins</strong> once.</div>
+          <button className="profile-survey-primary-action" type="button" onClick={() => setStepIndex(1)}>Start survey <ChevronRight size={18} /></button>
+          <a href="/privacy" className="profile-survey-privacy-link"><CircleHelp size={15} /> How we use survey information</a>
         </div>
       );
     }
@@ -348,7 +350,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
         <header className="profile-survey-topbar">
           <div className="profile-survey-brand"><Logo size="sm" variant="light" /></div>
           <div className="profile-survey-actions">
-            <div className="profile-survey-header-progress" role="progressbar" aria-label="Profile completion progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progressValue)}>
+            <div className="profile-survey-header-progress" role="progressbar" aria-label="First survey progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progressValue)}>
               <span style={{ width: `${progressValue}%` }} />
             </div>
             <button className="profile-survey-options-trigger" type="button" onClick={() => setOptionsOpen((open) => !open)} aria-expanded={optionsOpen} aria-haspopup="menu" aria-label="Options">

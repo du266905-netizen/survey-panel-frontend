@@ -1909,6 +1909,18 @@ textarea {
 .profile-survey-saving { display: flex; align-items: center; gap: 7px; margin: 14px 0 0; color: #5f625a; font-size: 12px; font-weight: 800; }
 .profile-survey-page-status { display: flex; min-height: 100svh; align-items: center; justify-content: center; gap: 10px; background: #f2ebdd; color: #1e2f26; font-size: 14px; font-weight: 750; }
 .profile-survey-page-status button { border: 1px solid #1e2f26; border-radius: 9px; background: transparent; color: inherit; cursor: pointer; font: inherit; padding: 8px 10px; }
+.first-survey-completion-backdrop { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; background: rgba(17, 25, 22, .52); padding: 22px; }
+.first-survey-completion-card { position: relative; width: min(100%, 510px); border: 1px solid rgba(47, 72, 57, .22); border-radius: 24px; background: #f8f3e9; box-shadow: 0 30px 80px rgba(13, 25, 19, .28); color: #1d2928; padding: 42px; }
+.first-survey-completion-close { position: absolute; top: 15px; right: 15px; display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid rgba(39, 53, 44, .14); border-radius: 50%; background: transparent; color: #62675f; cursor: pointer; }
+.first-survey-completion-close:hover { background: #eee5d5; color: #1d2928; }
+.first-survey-completion-mark { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 50%; background: #173b32; color: #fbf6eb; }
+.first-survey-completion-kicker { margin: 24px 0 0; color: #93742f; font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+.first-survey-completion-card h2 { margin: 10px 0 0; font-family: var(--font-serif); font-size: clamp(31px, 4vw, 43px); line-height: 1.05; letter-spacing: -.04em; }
+.first-survey-completion-card > p:not(.first-survey-completion-kicker) { margin: 17px 0 0; color: #5a625b; font-size: 15px; line-height: 1.65; }
+.first-survey-completion-reward { display: flex; align-items: center; gap: 9px; margin-top: 25px; border: 1px solid #d9c69d; border-radius: 13px; background: #f1e6cc; color: #56471f; font-size: 14px; padding: 14px 15px; }
+.first-survey-completion-reward strong { color: #1c342c; font-size: 17px; }
+.first-survey-completion-action { width: 100%; min-height: 49px; margin-top: 24px; border: 1px solid #173b32; border-radius: 12px; background: #173b32; color: #fffaf0; cursor: pointer; font: inherit; font-size: 14px; font-weight: 850; }
+.first-survey-completion-action:hover { background: #245144; }
 @keyframes profile-question-in { from { opacity: 0; transform: translate3d(0, 10px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 @media (max-width: 640px) {
   .profile-invite-card { border-radius: 20px; }
@@ -1928,4 +1940,5 @@ textarea {
   .profile-survey-date-fields { grid-template-columns: 1fr; }
   .profile-survey-primary-action { width: 100%; justify-self: stretch; }
   .profile-survey-back { bottom: 17px; left: 13px; }
+  .first-survey-completion-card { border-radius: 20px; padding: 34px 26px 26px; }
 }

@@ -802,7 +802,8 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .public-auth-submit:disabled, .public-auth-code:disabled { cursor: not-allowed; opacity: .55; transform: none; }
         .public-auth-email-cta { background: transparent; color: #1b1b19; }
         .public-auth-back { display: inline-flex; width: max-content; align-items: center; gap: 4px; border: 0; background: transparent; color: #2d2d29; cursor: pointer; font-size: 12px; font-weight: 800; margin-bottom: 2px; padding: 0; }
-        .public-auth-code { justify-self: start; border: 0; background: transparent; color: #2d2d29; cursor: pointer; font-size: 12px; font-weight: 800; margin-top: -7px; padding: 0; }
+        .public-auth-code { display: inline-flex; min-height: 34px; align-items: center; justify-self: start; border: 1px solid #1b1b19; border-radius: 999px; background: #1b1b19; color: #f7f4ed; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: .01em; margin-top: -3px; padding: 0 13px; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+        .public-auth-code:hover:not(:disabled) { border-color: #393936; background: #393936; transform: translateY(-1px); }
         .public-auth-register-form { gap: 13px; }
         .public-auth-register-form .cf-turnstile { max-width: 100%; }
         .public-auth-message { margin: 15px 0 0; border: 1px solid #f7caca; border-radius: 11px; background: #fff5f5; color: #bb3434; font-size: 12px; font-weight: 700; line-height: 1.45; padding: 10px 12px; }
