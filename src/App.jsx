@@ -66,6 +66,17 @@ function SurveyCompleteRoute() {
   );
 }
 
+function SurveyWallRoute() {
+  const { user } = useAuth();
+  return user ? (
+    <AppLayout>
+      <SurveyPartners />
+    </AppLayout>
+  ) : (
+    <SurveyPartners />
+  );
+}
+
 export default function App() {
   return (
     <Routes>
@@ -77,6 +88,7 @@ export default function App() {
       <Route path="/terms" element={<Terms />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/news" element={<NewsRoute />} />
+      <Route path="/partners" element={<SurveyWallRoute />} />
       <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
       <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />
       <Route
@@ -88,7 +100,6 @@ export default function App() {
       >
         <Route path="/onboarding" element={<Navigate to="/panel-profile" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/partners" element={<SurveyPartners />} />
         <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/referrals" element={<Referrals />} />

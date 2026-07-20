@@ -93,6 +93,21 @@ const mapSurveyWallItem = (survey, index = 0) => ({
   status: survey.status || 'ACTIVE',
 });
 
+const mapSurveyWallSection = (section, index = 0) => ({
+  ...section,
+  id: section.id || `survey-section-${index + 1}`,
+  items: (section.items || []).map((item, itemIndex) =>
+    item.kind === 'entry'
+      ? {
+          ...item,
+          kind: 'entry',
+          id: item.id || `survey-opportunity-${itemIndex + 1}`,
+          opportunityId: item.opportunityId || item.id,
+        }
+      : mapSurveyWallItem(item, itemIndex)
+  ),
+});
+
 const mapEmployee = (user) => ({
   ...user,
   name: user.displayName || user.name || '-',
@@ -338,7 +353,9 @@ export const getSurveyWall = async () => {
   });
 
   return {
-    data: (response.data.items || []).map(mapSurveyWallItem),
+    data: {
+      sections: (response.data.sections || []).map(mapSurveyWallSection),
+    },
   };
 };
 
