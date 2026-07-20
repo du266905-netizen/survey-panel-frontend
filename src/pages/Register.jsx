@@ -76,7 +76,7 @@ export default function Register() {
     try {
       await sendEmailCode({ email: form.email });
       setCodeCooldown(codeCooldownSeconds);
-      showToast('Verification code sent.', 'success');
+      showToast('Verification code sent. Check your inbox and spam folder.', 'success');
     } catch {
       showToast('Unable to send verification code.', 'error');
     } finally {

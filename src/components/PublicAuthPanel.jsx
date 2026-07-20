@@ -133,7 +133,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
   const finishAuth = useCallback(
     (response) => {
       setUser(response.data.user);
-      navigate(response.data.isNewUser ? '/panel-profile' : '/dashboard', { replace: true });
+      navigate('/dashboard', { replace: true });
     },
     [navigate, setUser]
   );
@@ -174,7 +174,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
     try {
       await sendEmailCode({ email: registerForm.email });
       setCodeCooldown(codeCooldownSeconds);
-      setMessage('Verification code sent. Check your inbox.');
+      setMessage('Verification code sent. Check your inbox and spam folder.');
     } catch (caughtError) {
       showError(caughtError.response?.data?.message || 'Unable to send a verification code.');
     } finally {

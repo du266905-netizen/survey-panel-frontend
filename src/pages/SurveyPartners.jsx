@@ -1,6 +1,6 @@
 import { AlertTriangle, ArrowRight, Clock3, RefreshCcw, Sparkles } from 'lucide-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { getSurveyWall, startSurvey } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import PageHeader from '../components/PageHeader';
@@ -45,13 +45,25 @@ const publicSurveySections = [
 
 export default function SurveyPartners() {
   const { user } = useAuth();
+  const location = useLocation();
   const isPanelist = isPanelistRole(user?.role);
   const loadSurveyWall = user ? getSurveyWall : () => Promise.resolve({ data: { sections: publicSurveySections } });
   const { data, loading, error } = useAsyncData(loadSurveyWall, [user?.id || 'guest']);
   const [startingId, setStartingId] = useState('');
   const [startError, setStartError] = useState('');
+  const [showAllSurveys, setShowAllSurveys] = useState(false);
   const sections = data?.sections || publicSurveySections;
   const surveyGridClass = 'grid w-full gap-4 lg:grid-cols-2 2xl:grid-cols-3 [@media(min-width:2100px)]:grid-cols-4';
+
+  useEffect(() => {
+    const targetId = location.hash.slice(1);
+    if (!targetId) return undefined;
+
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.hash]);
 
   const handleStart = async (item) => {
     setStartingId(item.id);
@@ -84,8 +96,14 @@ export default function SurveyPartners() {
       )}
 
       <div className="space-y-12">
-        {sections.map((section, sectionIndex) => (
-          <section key={section.id} className={sectionIndex ? 'border-t border-slate-200 pt-10' : ''}>
+        {sections.map((section, sectionIndex) => {
+          const isSurveySection = section.id === 'surveys';
+          const allItems = section.items || [];
+          const displayedItems = isSurveySection && !showAllSurveys ? allItems.slice(0, 6) : allItems;
+          const hiddenSurveyCount = isSurveySection ? Math.max(0, allItems.length - displayedItems.length) : 0;
+
+          return (
+          <section id={section.id} key={section.id} className={`scroll-mt-28 ${sectionIndex ? 'border-t border-slate-200 pt-10' : ''}`}>
             <div className="mb-5 max-w-2xl">
               <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">{section.title}</h2>
               {section.subtitle && <p className="mt-2 text-sm leading-6 text-slate-500">{section.subtitle}</p>}
@@ -97,13 +115,14 @@ export default function SurveyPartners() {
                   <div key={index} className="h-44 animate-pulse rounded-lg bg-slate-100" />
                 ))}
               </div>
-            ) : !section.items?.length ? (
-              <div className="flex min-h-40 w-full items-center justify-center rounded-lg border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
+            ) : !allItems.length ? (
+              <div className="flex min-h-28 w-full items-center justify-center rounded-lg border border-slate-200 bg-white p-6 text-center text-sm text-slate-500">
                 {user ? 'No surveys are available right now. Check back soon.' : <Link className="font-bold text-cyan-700 hover:text-cyan-600" to="/login">Sign in to view surveys matched for you.</Link>}
               </div>
             ) : (
-              <div className={surveyGridClass}>
-                {section.items.map((item) =>
+              <>
+                <div className={surveyGridClass}>
+                {displayedItems.map((item) =>
                   item.kind === 'entry' ? (
                     <section key={item.id} className="group flex min-h-44 flex-col justify-between rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md">
                       <div>
@@ -172,10 +191,21 @@ export default function SurveyPartners() {
                     </section>
                   )
                 )}
-              </div>
+                </div>
+                {hiddenSurveyCount > 0 && (
+                  <button
+                    className="mt-5 inline-flex h-11 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+                    type="button"
+                    onClick={() => setShowAllSurveys(true)}
+                  >
+                    View {hiddenSurveyCount} more surveys
+                  </button>
+                )}
+              </>
             )}
           </section>
-        ))}
+          );
+        })}
       </div>
     </>
   );

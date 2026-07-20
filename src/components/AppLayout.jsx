@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, ChevronDown, Database, Gift, ListFilter, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, ChevronDown, Compass, Database, Gift, ListFilter, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
@@ -9,7 +9,8 @@ import WalletBalanceMenu from './WalletBalanceMenu';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
-  { to: '/partners', label: 'Survey Wall', icon: Users },
+  { to: '/partners#surveys', label: 'Surveys', icon: Users, hash: '#surveys' },
+  { to: '/partners#more-opportunities', label: 'More survey opportunities', icon: Compass, hash: '#more-opportunities' },
   { to: '/news', label: 'News Wall', icon: Newspaper },
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
   { to: '/referrals', label: 'Invite Program', icon: Star },
@@ -61,7 +62,12 @@ export default function AppLayout({ children }) {
       <NavLink
         key={item.to}
         to={item.to}
-        className={({ isActive }) => `app-nav-link ${isActive ? 'is-active' : ''}`}
+        className={({ isActive }) => {
+          const isSectionActive = item.hash
+            ? location.pathname === '/partners' && (location.hash === item.hash || (!location.hash && item.hash === '#surveys'))
+            : isActive;
+          return `app-nav-link ${isSectionActive ? 'is-active' : ''}`;
+        }}
       >
         <Icon size={17} strokeWidth={1.8} />
         <span>{item.label}</span>
