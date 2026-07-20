@@ -205,7 +205,7 @@ export default function Wallet() {
   ];
 
   return (
-    <>
+    <section className="wallet-page">
       <section className="wallet-hero mb-6">
         <div className="wallet-hero-copy">
           <p className="wallet-hero-kicker">Reward wallet</p>
@@ -359,6 +359,6 @@ export default function Wallet() {
           document.body
         );
       })()}
-    </>
+    </section>
   );
 }

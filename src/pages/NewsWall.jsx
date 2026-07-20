@@ -474,8 +474,41 @@ export default function NewsWall() {
   if (!isPublicView) return content;
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-950">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/92 backdrop-blur">
+    <main className="news-wall-public min-h-screen bg-slate-50 text-slate-950">
+      <style>{`
+        .news-wall-public { background: #171716; color: #efede7; }
+        .news-wall-public-header { border-color: rgba(244,241,232,.14) !important; background: rgba(23,23,22,.94) !important; }
+        .news-wall-public-header nav a:first-child { color: #f4f1e9; }
+        .news-wall-public-header nav a:nth-child(2) { color: rgba(239,237,231,.62); }
+        .news-wall-public-header nav a:nth-child(2):hover { color: #fff; }
+        .news-wall-public-header nav a:last-child { background: #f1eee6; color: #171716; }
+        .news-wall-public-header nav a:last-child:hover { background: #fffdf7; }
+        .news-wall-public-hero { border-bottom: 1px solid rgba(244,241,232,.14); background: radial-gradient(circle at 76% 18%, rgba(255,255,255,.05), transparent 30%), #1d1d1c !important; color: #f4f1e9; }
+        .news-wall-public-hero > div > p { color: #c3b9a8; }
+        .news-wall-public-hero > div > h1 { font-family: var(--font-serif); font-weight: 760; }
+        .news-wall-public-hero > div > p:last-child { color: rgba(239,237,231,.66); }
+        .news-wall-public-body { max-width: 1280px; }
+        .news-wall-public .card { border-color: rgba(244,241,232,.14); background: #20201e; box-shadow: none; }
+        .news-wall-public .card.mb-6 > .border-b { border-color: rgba(244,241,232,.12); background: #252523; }
+        .news-wall-public .text-slate-950, .news-wall-public .text-slate-700 { color: #f4f1e9; }
+        .news-wall-public .text-slate-600, .news-wall-public .text-slate-500, .news-wall-public .text-slate-400 { color: rgba(239,237,231,.64); }
+        .news-wall-public .text-cyan-700 { color: #c9bfac; }
+        .news-wall-public .text-cyan-800, .news-wall-public .text-cyan-900 { color: #24231f; }
+        .news-wall-public .bg-white { background-color: #1a1a19; }
+        .news-wall-public .bg-slate-50, .news-wall-public .bg-slate-100 { background-color: #292927; }
+        .news-wall-public .border-slate-100, .news-wall-public .border-slate-200 { border-color: rgba(244,241,232,.13); }
+        .news-wall-public .border-cyan-100, .news-wall-public .border-cyan-200 { border-color: rgba(244,241,232,.16); }
+        .news-wall-public .bg-cyan-100 { background-color: #e7e1d4; color: #24231f; }
+        .news-wall-public .bg-cyan-50 { background-color: #e7e1d4; }
+        .news-wall-public .border-cyan-300 { border-color: #e7e1d4; }
+        .news-wall-public .bg-amber-50 { background-color: rgba(123,94,44,.18); }
+        .news-wall-public .border-amber-200 { border-color: rgba(214,185,119,.3); }
+        .news-wall-public .text-amber-800 { color: #ead39b; }
+        .news-wall-public .news-category-pill { box-shadow: none; }
+        .news-wall-public .btn-primary { border-color: #ece7dc; background: #ece7dc; color: #1b1b19; }
+        .news-wall-public .btn-secondary { border-color: rgba(244,241,232,.22); background: transparent; color: #f4f1e9; }
+      `}</style>
+      <header className="news-wall-public-header sticky top-0 z-40 border-b border-white/10 bg-slate-950/92 backdrop-blur">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
           <Link to="/" aria-label="GuanyiSearch home"><Logo size="md" variant="light" /></Link>
           <nav className="flex items-center gap-4 text-sm font-bold">
@@ -486,7 +519,7 @@ export default function NewsWall() {
         </div>
       </header>
 
-      <section className="bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">
+      <section className="news-wall-public-hero bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">News Wall</p>
           <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-[-0.04em] sm:text-5xl">
@@ -498,7 +531,7 @@ export default function NewsWall() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:py-10">
+      <section className="news-wall-public-body mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:py-10">
         {content}
       </section>
     </main>

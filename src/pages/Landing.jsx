@@ -808,20 +808,20 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .public-auth-message { margin: 15px 0 0; border: 1px solid #f7caca; border-radius: 11px; background: #fff5f5; color: #bb3434; font-size: 12px; font-weight: 700; line-height: 1.45; padding: 10px 12px; }
         .public-auth-message.is-success { border-color: #a7e3d5; background: #edfffa; color: #08755f; }
         .landing-scroll-cue { display: flex; align-items: center; gap: 8px; color: #77746c; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-        .landing-news-preview { background: linear-gradient(180deg, #1b1b19, #20201e); color: white; padding: 0 0 72px; }
-        .landing-news-preview-panel { border: 1px solid rgba(239,237,230,.16); border-radius: 26px; background: linear-gradient(135deg, #292825, #20201e); box-shadow: 0 28px 70px rgba(0,0,0,.22); padding: clamp(22px, 4vw, 42px); }
+        .landing-news-preview { background: linear-gradient(180deg, #151514, #1a1a19); color: white; padding: 0 0 72px; }
+        .landing-news-preview-panel { border: 1px solid rgba(239,237,230,.14); border-radius: 26px; background: linear-gradient(135deg, #232322, #1c1c1b); box-shadow: 0 28px 70px rgba(0,0,0,.28); padding: clamp(22px, 4vw, 42px); }
         .landing-news-preview-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
         .landing-news-preview-head h2 { max-width: 560px; margin: 0; color: var(--color-paper); font-family: var(--font-serif); font-size: clamp(31px, 3.4vw, 48px); font-weight: 820; letter-spacing: -.04em; line-height: 1.02; }
         .landing-news-preview-head a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(244,241,232,.20); border-radius: 999px; background: rgba(244,241,232,.055); color: #e4e1d9; font-size: 13px; font-weight: 850; text-decoration: none; padding: 12px 16px; white-space: nowrap; }
         .landing-news-preview-head a:hover { background: rgba(244,241,232,.10); color: white; }
         .landing-news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-        .landing-news-card { overflow: hidden; border: 1px solid rgba(235,233,226,.14); border-radius: 20px; background: rgba(247,245,239,.055); color: white; text-decoration: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.045); transition: transform .2s ease, border-color .2s ease, background .2s ease; }
-        .landing-news-card:hover { border-color: rgba(244,241,232,.35); background: rgba(247,245,239,.085); transform: translateY(-3px); }
+        .landing-news-card { overflow: hidden; border: 1px solid rgba(235,233,226,.13); border-radius: 20px; background: #262625; color: white; text-decoration: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.035); transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+        .landing-news-card:hover { border-color: rgba(244,241,232,.32); background: #2c2c2a; transform: translateY(-3px); }
         .landing-news-card.is-loading { min-height: 330px; background: linear-gradient(100deg, rgba(255,255,255,.06), rgba(255,255,255,.12), rgba(255,255,255,.06)); background-size: 220% 100%; animation: landing-news-shimmer 1.4s ease-in-out infinite; }
-        .landing-news-card-image { aspect-ratio: 1.9; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.09); background: #242421; }
+        .landing-news-card-image { aspect-ratio: 1.9; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.09); background: #30302e; }
         .landing-news-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
         .landing-news-card:hover .landing-news-card-image img { transform: scale(1.04); }
-        .landing-news-image-fallback { display: grid; width: 100%; height: 100%; place-items: center; background: radial-gradient(circle at 60% 35%, rgba(244,241,232,.08), transparent 42%), #171715; color: #d7d4cc; }
+        .landing-news-image-fallback { display: grid; width: 100%; height: 100%; place-items: center; background: radial-gradient(circle at 60% 35%, rgba(244,241,232,.08), transparent 42%), #1c1c1b; color: #d7d4cc; }
         .landing-news-card-body { padding: 18px; }
         .landing-news-card-body > p { margin: 0 0 9px; color: #c5c2ba; font-size: 10px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
         .landing-news-card-body h3 { min-height: 3.1em; margin: 0; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 16px; font-weight: 850; letter-spacing: -.02em; line-height: 1.35; }
@@ -837,19 +837,18 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .landing-tone-transition.is-dark-to-paper:after { display: none; }
         .landing-tone-transition.is-paper-to-ink { height: 1px; background: rgba(34,31,23,.28); }
         .landing-tone-transition.is-paper-to-ink:after { display: none; }
-        .landing-human-manifesto { position: relative; overflow: hidden; background: radial-gradient(circle at 87% 10%, rgba(184,164,117,.16), transparent 27%), radial-gradient(circle at 11% 80%, rgba(107,130,112,.09), transparent 25%), #f3ede0; color: #171714; padding: clamp(54px, 6vw, 94px) 0 clamp(74px, 7vw, 112px); }
+        .landing-human-manifesto { position: relative; overflow: hidden; background: radial-gradient(circle at 87% 10%, rgba(184,164,117,.16), transparent 27%), radial-gradient(circle at 11% 80%, rgba(107,130,112,.09), transparent 25%), #f3ede0; color: #171714; padding: clamp(46px, 5vw, 76px) 0 clamp(52px, 5.8vw, 82px); }
         .landing-human-manifesto:before { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 6px, rgba(67,55,33,.017) 7px 8px); content: ''; opacity: .7; pointer-events: none; }
-        .landing-human-manifesto .landing-container { width: min(100% - 72px, 1360px); }
+        .landing-human-manifesto .landing-container { width: min(100% - 72px, 1280px); }
         .landing-manifesto-inner { position: relative; z-index: 1; }
-        .landing-manifesto-masthead { display: grid; grid-template-columns: minmax(0,1fr) minmax(280px, .33fr); gap: clamp(32px, 6vw, 96px); align-items: end; border-top: 1px solid rgba(34,31,23,.24); padding-top: clamp(24px, 3.2vw, 43px); }
-        .landing-manifesto-label { margin: 0; color: #5e594e; font-size: 11px; font-weight: 900; letter-spacing: .19em; text-transform: uppercase; }
-        .landing-manifesto-masthead h2 { max-width: 1060px; margin: 13px 0 0; color: #000; font-family: var(--font-serif); font-size: clamp(60px, 7.4vw, 112px); font-weight: 760; letter-spacing: -.065em; line-height: .88; }
-        .landing-manifesto-deck { max-width: 570px; margin: 25px 0 0; color: #38362f; font-family: var(--font-serif); font-size: clamp(21px, 2vw, 29px); font-weight: 570; letter-spacing: -.024em; line-height: 1.25; }
-        .landing-manifesto-mark { display: grid; grid-template-columns: 126px minmax(0,1fr); align-items: end; gap: 18px; border-left: 1px solid rgba(34,31,23,.24); padding: 3px 0 3px 24px; }
-        .landing-manifesto-mark > div { padding-bottom: 8px; }
+        .landing-manifesto-masthead { display: grid; grid-template-columns: minmax(0,1fr) minmax(250px, .31fr); gap: clamp(24px, 4vw, 68px); align-items: end; border-top: 1px solid rgba(34,31,23,.24); padding-top: clamp(22px, 2.7vw, 36px); }
+        .landing-manifesto-masthead h2 { max-width: 900px; margin: 0; color: #000; font-family: var(--font-serif); font-size: clamp(56px, 6vw, 92px); font-weight: 760; letter-spacing: -.065em; line-height: .9; }
+        .landing-manifesto-deck { max-width: 620px; margin: 19px 0 0; color: #38362f; font-family: var(--font-serif); font-size: clamp(20px, 1.7vw, 26px); font-weight: 570; letter-spacing: -.024em; line-height: 1.27; }
+        .landing-manifesto-mark { display: grid; grid-template-columns: 96px minmax(0,1fr); align-items: end; gap: 17px; border-left: 1px solid rgba(34,31,23,.24); padding: 3px 0 3px 22px; }
+        .landing-manifesto-mark > div { padding-bottom: 5px; }
         .landing-manifesto-mark span { display: block; color: #141512; font-size: 12px; font-weight: 900; letter-spacing: .13em; line-height: 1.38; }
         .landing-manifesto-mark p { max-width: 190px; margin: 16px 0 0; color: #625e55; font-size: 11px; font-weight: 750; letter-spacing: .02em; line-height: 1.55; }
-        .landing-manifesto-sprout { width: 126px; color: #172018; }
+        .landing-manifesto-sprout { width: 96px; color: #172018; }
         .landing-manifesto-sprout svg { display: block; width: 100%; height: auto; overflow: visible; }
         .landing-sprout-sun { fill: rgba(168,179,145,.36); transform-origin: 155px 67px; animation: landing-sprout-breathe 5.6s ease-in-out infinite; }
         .landing-sprout-ground, .landing-sprout-stem, .landing-sprout-root, .landing-sprout-vein { stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3.2; }
@@ -862,18 +861,24 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .landing-sprout-vein { stroke-width: 2.2; opacity: .72; }
         .landing-sprout-vein-left { animation: landing-sprout-vein-left 5.2s ease-in-out 1.05s infinite; }
         .landing-sprout-vein-right { animation: landing-sprout-vein-right 5.9s ease-in-out 1.2s infinite; }
-        .landing-manifesto-spread { display: grid; grid-template-columns: minmax(320px,.84fr) minmax(0,1.16fr); gap: clamp(36px, 6vw, 86px); align-items: start; border-top: 1px solid rgba(35,31,22,.24); margin-top: clamp(36px, 4vw, 58px); padding-top: clamp(26px, 3vw, 42px); }
-        .landing-manifesto-art { position: relative; height: clamp(410px, 36vw, 540px); margin: 0; overflow: hidden; border: 1px solid rgba(35,31,22,.24); background: #b8c5c0; box-shadow: 16px 17px 0 rgba(84,72,45,.06); }
+        .landing-manifesto-spread { display: grid; grid-template-columns: minmax(320px,.78fr) minmax(0,1.22fr); gap: clamp(32px, 4vw, 58px); align-items: start; border-top: 1px solid rgba(35,31,22,.24); margin-top: clamp(30px, 3vw, 42px); padding-top: clamp(24px, 2.5vw, 34px); }
+        .landing-manifesto-art { position: relative; height: clamp(350px, 29vw, 440px); margin: 0; overflow: hidden; border: 1px solid rgba(35,31,22,.24); background: #b8c5c0; box-shadow: 13px 14px 0 rgba(84,72,45,.06); }
         .landing-manifesto-art:after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(245,239,223,.02) 30%, rgba(12,22,19,.74) 100%); content: ''; pointer-events: none; }
         .landing-manifesto-art img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; filter: saturate(.8) contrast(.95) sepia(.08); transform: scale(1.45) translateY(-14%); transform-origin: 50% 80%; }
-        .landing-manifesto-art figcaption { position: absolute; z-index: 1; right: clamp(28px, 4vw, 58px); bottom: clamp(27px, 4vw, 50px); left: clamp(28px, 4vw, 58px); display: flex; align-items: end; gap: 20px; color: #f8f2e5; }
-        .landing-manifesto-art figcaption span { border-right: 1px solid rgba(249,243,229,.55); color: #e3d2ab; font-size: 11px; font-weight: 900; letter-spacing: .16em; padding: 5px 18px 5px 0; }
-        .landing-manifesto-art figcaption strong { max-width: 390px; font-family: var(--font-serif); font-size: clamp(24px, 2.5vw, 37px); font-weight: 700; letter-spacing: -.035em; line-height: 1.08; }
-        .landing-manifesto-copy { display: flex; max-width: 660px; min-width: 0; flex-direction: column; justify-content: flex-start; color: #514f49; font-size: clamp(15px, 1.3vw, 17px); line-height: 1.88; padding: 0; }
+        .landing-manifesto-art figcaption { position: absolute; z-index: 1; right: clamp(25px, 3vw, 42px); bottom: clamp(25px, 3vw, 38px); left: clamp(25px, 3vw, 42px); color: #f8f2e5; }
+        .landing-manifesto-art figcaption strong { display: block; max-width: 330px; font-family: var(--font-serif); font-size: clamp(24px, 2.2vw, 33px); font-weight: 700; letter-spacing: -.035em; line-height: 1.08; }
+        .landing-manifesto-copy { display: flex; max-width: 700px; min-width: 0; flex-direction: column; justify-content: flex-start; color: #514f49; font-size: clamp(15px, 1.1vw, 16px); line-height: 1.68; padding: 0; }
         .landing-manifesto-copy p { margin: 0; }
-        .landing-manifesto-copy p + p { margin-top: 21px; }
-        .landing-manifesto-lede { color: #272620; font-size: clamp(16px, 1.35vw, 19px); font-weight: 680; letter-spacing: -.012em; line-height: 1.65; }
-        .landing-manifesto-principle { border-top: 1px solid rgba(130,103,49,.46); color: #172c23; font-family: var(--font-serif); font-size: clamp(24px, 2.35vw, 34px); font-weight: 700; letter-spacing: -.035em; line-height: 1.14; margin-top: 38px !important; padding-top: 23px; }
+        .landing-manifesto-lede { max-width: 670px; color: #272620; font-size: clamp(17px, 1.3vw, 19px); font-weight: 680; letter-spacing: -.012em; line-height: 1.56; }
+        .landing-manifesto-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+        .landing-manifesto-card { display: flex; min-height: clamp(180px, 14vw, 205px); flex-direction: column; justify-content: flex-start; gap: 17px; border: 1px solid rgba(34,31,23,.16); padding: clamp(20px, 2vw, 28px); }
+        .landing-manifesto-card.is-voices { background: #e4dccd; }
+        .landing-manifesto-card.is-technology { background: #d7ded1; }
+        .landing-manifesto-card span, .landing-manifesto-principle span { display: block; font-size: 10px; font-weight: 900; letter-spacing: .14em; line-height: 1.2; text-transform: uppercase; }
+        .landing-manifesto-card span { color: #534d40; font-family: var(--font-accent); font-size: clamp(17px, 1.35vw, 21px); font-weight: 500; letter-spacing: .01em; line-height: 1.06; }
+        .landing-manifesto-card p { color: #34342e; font-size: clamp(16px, 1.2vw, 18px); letter-spacing: -.018em; line-height: 1.52; }
+        .landing-manifesto-principle { margin-top: 12px !important; background: #172c23; color: #f4efe2; font-family: var(--font-serif); font-size: clamp(23px, 2vw, 31px); font-weight: 700; letter-spacing: -.035em; line-height: 1.12; padding: clamp(24px, 3vw, 36px); }
+        .landing-manifesto-principle span { color: #c7d0b1; font-family: var(--font-sans); margin-bottom: 14px; }
         .landing-sections { background: #f3ede0; color: #171714; }
         .landing-container { width: min(100% - 48px, 1200px); margin: 0 auto; }
         .landing-intro { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); gap: clamp(42px, 8vw, 112px); align-items: center; padding: 120px 0; }
@@ -994,25 +999,25 @@ export default function Landing({ initialAuthMode = 'register' }) {
         @keyframes landing-brand-mark-breathe { 0%, 100% { opacity: .42; transform: translate(-50%, -50%) translate3d(0, 0, 0) rotate(-3deg) scale(1); } 48% { opacity: .57; transform: translate(-50%, -50%) translate3d(-7px, -10px, 0) rotate(-1deg) scale(1.012); } }
         @keyframes landing-news-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
         @media (max-width: 780px) {
-          .landing-human-manifesto { padding: 52px 0 65px; }
+          .landing-human-manifesto { padding: 46px 0 56px; }
           .landing-human-manifesto .landing-container { width: min(100% - 40px, 1360px); }
           .landing-manifesto-masthead { grid-template-columns: 1fr; gap: 20px; padding-top: 22px; }
-          .landing-manifesto-masthead h2 { margin-top: 13px; font-size: clamp(50px, 15vw, 72px); line-height: .92; }
-          .landing-manifesto-deck { margin-top: 20px; font-size: 22px; line-height: 1.28; }
+          .landing-manifesto-masthead h2 { font-size: clamp(50px, 15vw, 72px); line-height: .92; }
+          .landing-manifesto-deck { margin-top: 18px; font-size: 21px; line-height: 1.28; }
           .landing-manifesto-mark { display: grid; grid-template-columns: 86px minmax(0,1fr); align-items: center; gap: 17px; border-top: 1px solid rgba(34,31,23,.24); border-left: 0; padding: 18px 0 0; }
           .landing-manifesto-mark > div { padding: 0; }
           .landing-manifesto-mark p { margin-top: 9px; }
           .landing-manifesto-sprout { width: 86px; }
-          .landing-manifesto-spread { grid-template-columns: 1fr; gap: 30px; margin-top: 36px; }
-          .landing-manifesto-art { height: 340px; }
+          .landing-manifesto-spread { grid-template-columns: 1fr; gap: 26px; margin-top: 30px; padding-top: 24px; }
+          .landing-manifesto-art { height: 310px; }
           .landing-manifesto-art img { transform: scale(1.35) translateY(-10%); }
-          .landing-manifesto-art figcaption { right: 25px; bottom: 25px; left: 25px; gap: 13px; }
-          .landing-manifesto-art figcaption span { padding-right: 12px; }
+          .landing-manifesto-art figcaption { right: 25px; bottom: 25px; left: 25px; }
           .landing-manifesto-art figcaption strong { font-size: 25px; }
-          .landing-manifesto-copy { font-size: 15px; line-height: 1.84; padding: 0; }
-          .landing-manifesto-copy p + p { margin-top: 21px; }
+          .landing-manifesto-copy { font-size: 15px; line-height: 1.68; padding: 0; }
           .landing-manifesto-lede { font-size: 17px; }
-          .landing-manifesto-principle { font-size: 27px; margin-top: 35px !important; padding-top: 18px; }
+          .landing-manifesto-card-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+          .landing-manifesto-card { min-height: 0; gap: 14px; padding: 22px; }
+          .landing-manifesto-principle { font-size: 27px; margin-top: 10px !important; padding: 27px 24px; }
         }
         @media (prefers-reduced-motion: reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
         @media (max-width: 1180px) { .landing-shell { display: grid; height: auto; min-height: 0; overflow: visible; grid-template-columns: 1fr; } .landing-brand, .landing-access { min-height: auto; height: auto; } .landing-brand { width: auto; min-height: 680px; } .landing-access { position: static; width: auto; min-width: 0; overflow: visible; border: 0; border-radius: 0; box-shadow: none; padding-bottom: 68px; } .landing-access-nav { justify-content: space-between; } .landing-access-inner { overflow: visible; padding: 54px 0 12px; } .landing-plum-cycle { top: 13%; right: 7%; width: min(52%, 500px); } .landing-hero-sprout { top: 11%; right: 6%; width: min(49%, 470px); } .landing-news-grid { grid-template-columns: 1fr; } .landing-news-card-body h3 { min-height: 0; } .landing-footer-grid { grid-template-columns: 1fr; } .landing-footer-brand { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); } }
@@ -1064,8 +1069,7 @@ export default function Landing({ initialAuthMode = 'register' }) {
         <div className="landing-container landing-manifesto-inner">
           <div className="landing-manifesto-masthead">
             <div className="landing-manifesto-heading">
-              <p className="landing-manifesto-label">GuanyiSearch / 01</p>
-              <h2 id="human-manifesto-title">Human Manifesto</h2>
+              <h2 id="human-manifesto-title">Human First</h2>
               <p className="landing-manifesto-deck">We believe that real people will always be the starting point for research.</p>
             </div>
             <div className="landing-manifesto-mark">
@@ -1080,13 +1084,21 @@ export default function Landing({ initialAuthMode = 'register' }) {
           <div className="landing-manifesto-spread">
             <figure className="landing-manifesto-art">
               <img src="/human-manifesto/shoreline-painting.jpg" alt="Impressionist shoreline landscape" loading="lazy" decoding="async" />
-              <figcaption><span>01</span><strong>Real voices deserve to be heard with care.</strong></figcaption>
+              <figcaption><strong>Real voices deserve to be heard with care.</strong></figcaption>
             </figure>
             <div className="landing-manifesto-copy">
-              <p className="landing-manifesto-lede">This is an era in which AI can generate an endless volume of content that appears real. Opinions are easy to produce; voices are easy to replicate. Yet one thing can never be generated: a particular person, in a particular moment, expressing what they truly think.</p>
-              <p>GuanyiSearch refuses to substitute synthetic voices for real ones. Behind every survey result and every submitted opinion is a real person who chose to spend a few minutes sharing a perspective. These voices may be small, but they are irreplaceable. It is the accumulation of such specific, individual voices that forms insight worth trusting.</p>
-              <p>We also believe technology is not the opposite of people; it is an extension of people. We use automated matching so your time is spent where it truly matters, transparent real-time data so you can see the impact of your voice, and clear, fair rules so every minute you contribute can lead to a reward that is visible and attainable.</p>
-              <p className="landing-manifesto-principle">Human-centered does not mean rejecting technology. It means making technology serve people.</p>
+              <p className="landing-manifesto-lede">AI can generate endless content that appears real. But it can never recreate a particular person, in a particular moment, expressing what they truly think.</p>
+              <div className="landing-manifesto-card-grid">
+                <article className="landing-manifesto-card is-voices">
+                  <span>Real voices</span>
+                  <p>Behind every survey result is a person who chose to share a perspective. Those individual voices make insight worth trusting.</p>
+                </article>
+                <article className="landing-manifesto-card is-technology">
+                  <span>Technology, in service</span>
+                  <p>We use matching and real-time data to respect your time, show your impact, and keep every reward rule clear and fair.</p>
+                </article>
+              </div>
+              <p className="landing-manifesto-principle"><span>Our principle</span>Human-centered does not mean rejecting technology. It means making technology serve people.</p>
             </div>
           </div>
         </div>

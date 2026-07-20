@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:opsz,wght@8..60,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..700&family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:opsz,wght@8..60,400..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,6 +7,7 @@
 :root {
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-accent: "Bodoni Moda", "Source Serif 4", Georgia, "Times New Roman", serif;
   --color-paper: #f4f1e8;
   --color-ivory: #f7f3e8;
   --color-muted-ivory: #b8b4a9;
@@ -88,7 +89,7 @@ textarea {
   min-width: 320px;
   min-height: 100svh;
   overflow: hidden;
-  background: #191917;
+  background: #141413;
   color: #f0ede6;
 }
 .recovery-page::before {
@@ -116,7 +117,7 @@ textarea {
   flex-direction: column;
   overflow: hidden;
   border-right: 1px solid rgba(240, 237, 230, .14);
-  background: #1d1d1b;
+  background: #191918;
   padding: 36px clamp(34px, 7vw, 112px) 42px;
 }
 .recovery-brand::before {
@@ -156,7 +157,7 @@ textarea {
   display: flex;
   min-height: 100%;
   overflow-y: auto;
-  background: #22221f;
+  background: #1f1f1e;
   scrollbar-width: thin;
   scrollbar-color: rgba(240, 237, 230, .25) transparent;
 }
@@ -168,7 +169,7 @@ textarea {
   margin: 62px 0 24px;
   border: 1px solid rgba(240, 237, 230, .14);
   border-radius: 20px;
-  background: #292925;
+  background: #252523;
   box-shadow: 0 28px 60px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .035);
   padding: clamp(26px, 3vw, 38px);
   backdrop-filter: blur(18px);
@@ -181,8 +182,8 @@ textarea {
 .recovery-intro { margin: 13px 0 0; color: rgba(232, 229, 221, .62); font-size: 14px; line-height: 1.7; }
 .recovery-field-group { display: grid; gap: 8px; margin-top: 25px; }
 .recovery-field-group > span:first-child { color: rgba(232, 229, 221, .67); font-size: 10px; font-weight: 900; letter-spacing: .11em; text-transform: uppercase; }
-.recovery-input { display: flex; height: 49px; align-items: center; gap: 10px; border: 1px solid rgba(240, 237, 230, .16); border-radius: 13px; background: #191917; color: rgba(232, 229, 221, .46); padding: 0 13px; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
-.recovery-input:focus-within { border-color: rgba(244, 241, 233, .5); background: #161615; box-shadow: 0 0 0 4px rgba(240, 237, 230, .06); }
+.recovery-input { display: flex; height: 49px; align-items: center; gap: 10px; border: 1px solid rgba(240, 237, 230, .16); border-radius: 13px; background: #171716; color: rgba(232, 229, 221, .46); padding: 0 13px; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
+.recovery-input:focus-within { border-color: rgba(244, 241, 233, .5); background: #151514; box-shadow: 0 0 0 4px rgba(240, 237, 230, .06); }
 .recovery-input input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: #f4f1e9; font-size: 14px; font-weight: 600; }
 .recovery-input input::placeholder { color: rgba(232, 229, 221, .38); font-weight: 500; }
 .recovery-password-toggle { display: grid; flex: 0 0 auto; place-items: center; border: 0; background: transparent; color: rgba(232, 229, 221, .57); cursor: pointer; padding: 4px; }
@@ -627,6 +628,23 @@ textarea {
   font-size: 12px;
   font-weight: 650;
 }
+.wallet-page {
+  position: relative;
+  isolation: isolate;
+}
+.wallet-page::before {
+  position: absolute;
+  z-index: -1;
+  inset: -20px;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 253, 247, .78), transparent 27%),
+    radial-gradient(circle at 92% 10%, rgba(177, 145, 85, .075), transparent 31%),
+    repeating-linear-gradient(0deg, transparent 0 6px, rgba(86, 70, 41, .018) 7px 8px),
+    #f3ede0;
+  content: '';
+  pointer-events: none;
+}
 .wallet-hero {
   position: relative;
   display: grid;
@@ -916,14 +934,17 @@ textarea {
 .wallet-showcase {
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(77, 65, 43, .17) !important;
   border-radius: 26px;
+  background: rgba(250, 246, 237, .82) !important;
+  box-shadow: 0 18px 40px rgba(76, 59, 32, .08), inset 0 1px 0 rgba(255, 255, 255, .72);
 }
 .wallet-showcase::before {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 14% 0%, rgba(244, 241, 232, .035), transparent 30%),
-    radial-gradient(circle at 94% 4%, rgba(188, 145, 66, .07), transparent 32%);
+    radial-gradient(circle at 14% 0%, rgba(255, 253, 247, .72), transparent 30%),
+    radial-gradient(circle at 94% 4%, rgba(188, 145, 66, .10), transparent 32%);
   content: '';
   pointer-events: none;
 }
@@ -939,13 +960,13 @@ textarea {
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #f2f8f5;
+  color: #25221c;
   font-size: 19px;
   font-weight: 900;
 }
 .wallet-showcase-head p {
   margin-top: 6px;
-  color: rgba(210, 228, 224, .55);
+  color: #716859;
   font-size: 13px;
   font-weight: 650;
   line-height: 1.65;
@@ -958,15 +979,15 @@ textarea {
 }
 .gift-card-option {
   overflow: hidden;
-  border: 1px solid rgba(213, 235, 232, .10);
+  border: 1px solid rgba(83, 70, 46, .15);
   border-radius: 20px;
-  background: linear-gradient(145deg, rgba(13, 25, 28, .88), rgba(6, 13, 15, .86));
-  box-shadow: 0 18px 44px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(238, 252, 249, .025);
+  background: linear-gradient(145deg, #f3eadb, #e8decc);
+  box-shadow: 0 14px 28px rgba(76, 59, 32, .08), inset 0 1px 0 rgba(255, 255, 255, .68);
   transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 .gift-card-option:hover {
-  border-color: rgba(244, 241, 232, .16);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, .21), inset 0 1px 0 rgba(238, 252, 249, .035);
+  border-color: rgba(76, 63, 41, .28);
+  box-shadow: 0 18px 34px rgba(76, 59, 32, .12), inset 0 1px 0 rgba(255, 255, 255, .78);
 }
 .gift-card-summary {
   display: grid;
@@ -982,17 +1003,17 @@ textarea {
   text-align: left;
 }
 .gift-card-summary:hover .gift-card-summary-action {
-  border-color: rgba(244, 241, 232, .26);
-  background: rgba(244, 241, 232, .075);
-  color: rgba(246, 241, 226, .96);
+  border-color: rgba(54, 79, 60, .30);
+  background: rgba(54, 79, 60, .08);
+  color: #263d2e;
 }
 .gift-card-summary-image {
   display: block;
   aspect-ratio: 1.58;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .06);
+  border: 1px solid rgba(82, 69, 45, .13);
   border-radius: 14px;
-  background: linear-gradient(145deg, rgba(244, 241, 232, .08), rgba(0, 0, 0, .30));
+  background: linear-gradient(145deg, rgba(255, 253, 247, .74), rgba(199, 181, 147, .24));
   padding: 5px;
 }
 .gift-card-summary-image img {
@@ -1006,14 +1027,14 @@ textarea {
 }
 .gift-card-summary-copy strong {
   display: block;
-  color: #f2f8f5;
+  color: #29251e;
   font-size: 16px;
   font-weight: 900;
 }
 .gift-card-summary-copy span {
   display: block;
   margin-top: 3px;
-  color: rgba(210, 228, 224, .46);
+  color: #716859;
   font-size: 12px;
   font-weight: 760;
   text-transform: capitalize;
@@ -1022,9 +1043,9 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  border: 1px solid rgba(213, 235, 232, .12);
+  border: 1px solid rgba(82, 69, 45, .17);
   border-radius: 999px;
-  color: rgba(210, 228, 224, .58);
+  color: #625a4d;
   font-size: 11px;
   font-weight: 850;
   letter-spacing: .04em;
