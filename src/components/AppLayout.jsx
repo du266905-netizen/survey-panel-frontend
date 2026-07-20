@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { BarChart3, ChevronDown, Database, Gift, ListFilter, LogOut, MonitorPlay, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import CoinAmount from './CoinAmount';
 import Logo from './Logo';
 import { isAdminRole, isPanelistRole } from '../utils/roles';
 import { ProfileSurveyProvider } from './ProfileSurveyContext';
+import WalletBalanceMenu from './WalletBalanceMenu';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -77,23 +77,21 @@ export default function AppLayout({ children }) {
   );
 
   return (
-    <div className="app-shell min-h-screen">
-      <div className="app-shell-grain" aria-hidden="true" />
-      <header className="app-topbar sticky top-0 z-30">
-        <div className="flex h-[76px] items-center justify-between px-5 sm:px-7">
-          <div className="flex items-center gap-4">
-            <div className="app-brand-lockup" aria-label="GuanyiSearch">
-              <Logo size="md" className="app-logo" />
+    <ProfileSurveyProvider enabled={isPanelist}>
+      <div className="app-shell min-h-screen">
+        <div className="app-shell-grain" aria-hidden="true" />
+        <header className="app-topbar sticky top-0 z-30">
+          <div className="flex h-[76px] items-center justify-between px-5 sm:px-7">
+            <div className="flex items-center gap-4">
+              <div className="app-brand-lockup" aria-label="GuanyiSearch">
+                <Logo size="md" className="app-logo" />
+              </div>
+              <span className="app-topbar-divider hidden sm:block" aria-hidden="true" />
+              <p className="app-topbar-context hidden text-xs sm:block">{isPanelist ? 'Panelist workspace' : 'Operations workspace'}</p>
             </div>
-            <span className="app-topbar-divider hidden sm:block" aria-hidden="true" />
-            <p className="app-topbar-context hidden text-xs sm:block">{isPanelist ? 'Panelist workspace' : 'Operations workspace'}</p>
-          </div>
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="app-balance hidden px-3 py-2 text-sm font-semibold sm:block">
-              <span className="mr-2 text-[10px] font-bold uppercase tracking-[0.14em]">Coins</span>
-              <CoinAmount value={user?.coins} />
-            </div>
-            <div ref={userMenuRef} className="app-user-menu">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <WalletBalanceMenu />
+              <div ref={userMenuRef} className="app-user-menu">
               <button
                 className={`app-user-trigger ${userMenuOpen ? 'is-open' : ''}`}
                 type="button"
@@ -123,10 +121,10 @@ export default function AppLayout({ children }) {
                   </button>
                 </div>
               )}
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
       <div className="app-frame flex">
         <aside className="app-sidebar w-[272px] shrink-0 px-4 py-6">
@@ -152,14 +150,13 @@ export default function AppLayout({ children }) {
             Secure workspace
           </div>
         </aside>
-        <ProfileSurveyProvider enabled={isPanelist}>
-          <main className="app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10">
-            <div key={location.pathname} className="app-route-enter">
-              {children || <Outlet />}
-            </div>
-          </main>
-        </ProfileSurveyProvider>
+        <main className="app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10">
+          <div key={location.pathname} className="app-route-enter">
+            {children || <Outlet />}
+          </div>
+        </main>
+        </div>
       </div>
-    </div>
+    </ProfileSurveyProvider>
   );
 }

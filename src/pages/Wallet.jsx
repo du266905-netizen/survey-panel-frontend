@@ -177,24 +177,6 @@ export default function Wallet() {
     });
   };
 
-  const transactionColumns = [
-    { key: 'type', header: 'Type', render: (row) => titleCase(row.type) },
-    { key: 'description', header: 'Description', render: (row) => row.description || '-' },
-    {
-      key: 'coins',
-      header: 'Coins',
-      render: (row) => (
-        <span className={Number(row.coins) >= 0 ? 'font-bold text-cyan-700' : 'font-bold text-red-700'}>
-          {Number(row.coins) >= 0 ? '+' : ''}
-          {formatCoinNumber(row.coins)}
-        </span>
-      ),
-    },
-    { key: 'balanceAfter', header: 'Balance After', render: (row) => <CoinAmount value={row.balanceAfter} /> },
-    { key: 'status', header: 'Status', render: (row) => <StatusBadge status={transactionStatus(row.status)} /> },
-    { key: 'createdAt', header: 'Created', render: (row) => new Date(row.createdAt).toLocaleString() },
-  ];
-
   const orderColumns = [
     { key: 'rewardType', header: 'Reward', render: (row) => titleCase(row.rewardType) },
     { key: 'provider', header: 'Provider', render: (row) => titleCase(row.provider) },
@@ -278,14 +260,6 @@ export default function Wallet() {
                 );
               })}
             </div>
-          </section>
-
-          <section>
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-950">Transactions</h2>
-              <p className="text-sm text-slate-500">{data?.transactions?.length || 0} latest entries</p>
-            </div>
-            <DataTable columns={transactionColumns} rows={data?.transactions || []} loading={loading} emptyMessage="No wallet transactions yet." />
           </section>
 
           <section>
