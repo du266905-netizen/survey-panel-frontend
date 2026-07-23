@@ -21,6 +21,7 @@ import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
 import Privacy from './pages/Privacy';
 import Referrals from './pages/Referrals';
+import RouteScrollManager from './components/RouteScrollManager';
 import Terms from './pages/Terms';
 import TrafficConsole from './pages/TrafficConsole';
 import Wallet from './pages/Wallet';
@@ -79,116 +80,119 @@ function SurveyWallRoute() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" /></PublicEntry>} />
-      <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" /></PublicEntry>} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/privacy" element={<Privacy />} />
-      <Route path="/terms" element={<Terms />} />
-      <Route path="/how-it-works" element={<HowItWorks />} />
-      <Route path="/news" element={<NewsRoute />} />
-      <Route path="/partners" element={<SurveyWallRoute />} />
-      <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
-      <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />
-      <Route
-        element={
-          <ProtectedRoute>
-            <AppLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route path="/onboarding" element={<Navigate to="/panel-profile" replace />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/referrals" element={<Referrals />} />
-        <Route path="/records" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/settings" element={<Settings />} />
+    <>
+      <RouteScrollManager />
+      <Routes>
+        <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" /></PublicEntry>} />
+        <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" /></PublicEntry>} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/news" element={<NewsRoute />} />
+        <Route path="/partners" element={<SurveyWallRoute />} />
+        <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
+        <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />
         <Route
-          path="/team"
           element={
-            <AdminRoute>
-              <Team />
-            </AdminRoute>
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
           }
-        />
-        <Route
-          path="/workers"
-          element={
-            <AdminRoute>
-              <WorkerMonitor />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/workers/:workerId"
-          element={
-            <AdminRoute>
-              <WorkerDetail />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/traffic"
-          element={
-            <AdminRoute>
-              <TrafficConsole />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/agent-precheck"
-          element={
-            <AdminRoute>
-              <AgentPrecheck />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/panelists"
-          element={
-            <AdminRoute>
-              <AdminPanelists />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/rewards"
-          element={
-            <AdminRoute>
-              <AdminRewards />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/partners"
-          element={
-            <AdminRoute>
-              <AdminPartners />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/database"
-          element={
-            <AdminRoute>
-              <DatabaseExplorer />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          }
-        />
-      </Route>
-      <Route path="/" element={<PublicEntry><Landing initialAuthMode="register" /></PublicEntry>} />
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
-    </Routes>
+        >
+          <Route path="/onboarding" element={<Navigate to="/panel-profile" replace />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
+          <Route path="/wallet" element={<Wallet />} />
+          <Route path="/referrals" element={<Referrals />} />
+          <Route path="/records" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route
+            path="/team"
+            element={
+              <AdminRoute>
+                <Team />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/workers"
+            element={
+              <AdminRoute>
+                <WorkerMonitor />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/workers/:workerId"
+            element={
+              <AdminRoute>
+                <WorkerDetail />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/traffic"
+            element={
+              <AdminRoute>
+                <TrafficConsole />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/agent-precheck"
+            element={
+              <AdminRoute>
+                <AgentPrecheck />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/panelists"
+            element={
+              <AdminRoute>
+                <AdminPanelists />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/rewards"
+            element={
+              <AdminRoute>
+                <AdminRewards />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/partners"
+            element={
+              <AdminRoute>
+                <AdminPartners />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/database"
+            element={
+              <AdminRoute>
+                <DatabaseExplorer />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+        </Route>
+        <Route path="/" element={<PublicEntry><Landing initialAuthMode="register" /></PublicEntry>} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </>
   );
 }

@@ -10,12 +10,7 @@ import './styles/paper-contrast-fixes.css';
 
 installDomMutationSafety();
 
-// Browsers may restore a previous SPA document from the back/forward cache after a deployment.
-// A persisted document bypasses the normal document request, so reload it once to pick up the
-// current hashed asset manifest instead of reviving an older visual system.
-window.addEventListener('pageshow', (event) => {
-  if (event.persisted) window.location.reload();
-});
+window.history.scrollRestoration = 'manual';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
