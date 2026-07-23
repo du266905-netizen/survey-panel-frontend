@@ -400,9 +400,10 @@ export const getRecords = async () => {
   };
 };
 
-export const startSurvey = async ({ surveyId, partnerId, proxyIp, fingerprintBrowser, operatingSystem, linkType }) =>
+export const startSurvey = async ({ surveyId, opportunityId, partnerId, proxyIp, fingerprintBrowser, operatingSystem, linkType }) =>
   apiClient.post('/api/survey/start', {
     surveyId,
+    opportunityId,
     partnerId,
     proxyIp,
     fingerprintBrowser,
