@@ -1,5 +1,9 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+}
 
 export default function RouteScrollManager() {
   const location = useLocation();
@@ -8,8 +12,9 @@ export default function RouteScrollManager() {
     window.history.scrollRestoration = 'manual';
 
     if (!location.hash) {
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-      return undefined;
+      scrollToTop();
+      const frame = window.requestAnimationFrame(scrollToTop);
+      return () => window.cancelAnimationFrame(frame);
     }
 
     const frame = window.requestAnimationFrame(() => {
@@ -18,6 +23,15 @@ export default function RouteScrollManager() {
 
     return () => window.cancelAnimationFrame(frame);
   }, [location.hash, location.key, location.pathname]);
+
+  useEffect(() => {
+    const handlePageShow = (event) => {
+      if (event.persisted && !window.location.hash) scrollToTop();
+    };
+
+    window.addEventListener('pageshow', handlePageShow);
+    return () => window.removeEventListener('pageshow', handlePageShow);
+  }, []);
 
   return null;
 }
