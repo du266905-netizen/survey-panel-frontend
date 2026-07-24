@@ -5,7 +5,7 @@ const MOSS = '#7A8979';
 const FADE = '#CFC7B8';
 const SERIF = '"Source Han Serif SC", "Noto Serif CJK SC", "Source Serif 4", Georgia, serif';
 const SANS = 'Inter, "Noto Sans SC", Arial, sans-serif';
-let brandMarkPromise;
+const imagePromises = new Map();
 
 export const MARKETING_ASSET_SIZES = {
   square: { width: 1080, height: 1080, label: 'Square · 1080 × 1080' },
@@ -13,6 +13,9 @@ export const MARKETING_ASSET_SIZES = {
 };
 
 export const DEFAULT_MANIFESTO = 'Research begins with people,\nin every context.';
+export const DEFAULT_MANIFESTO_ARTWORK = '/human-manifesto/shoreline-painting.jpg';
+export const DEFAULT_PARTICIPATION_HEADLINE = 'Your voice has a visible path.';
+export const DEFAULT_PARTICIPATION_COPY = 'Take part in research surveys. See every reward clearly. Keep your perspective in motion.';
 
 function setFont(ctx, size, { weight = 400, family = SERIF, style = 'normal' } = {}) {
   ctx.font = `${style} ${weight} ${size}px ${family}`;
@@ -127,31 +130,42 @@ function drawBrand(ctx, x, y, { compact = false, inverted = false } = {}) {
   ctx.fillText('GUANYISEARCH', x, y);
 }
 
-function loadBrandMark() {
-  if (!brandMarkPromise) {
-    brandMarkPromise = new Promise((resolve, reject) => {
+function loadImage(source) {
+  if (!source) return Promise.resolve(null);
+  if (!imagePromises.has(source)) {
+    imagePromises.set(source, new Promise((resolve, reject) => {
       const image = new Image();
       image.onload = () => resolve(image);
       image.onerror = reject;
-      image.src = '/guanyisearch-brand-mark.png';
-    });
+      image.src = source;
+    }));
   }
-  return brandMarkPromise;
+  return imagePromises.get(source);
 }
 
-function drawBrandMark(ctx, image, x, y, size) {
-  if (image) {
-    ctx.save();
-    ctx.globalAlpha = 0.72;
-    ctx.drawImage(image, x, y, size, size);
-    ctx.restore();
-    return;
+function drawImageCover(ctx, image, x, y, width, height, { radius = 0, position = 0.5 } = {}) {
+  if (!image) return false;
+  const imageRatio = image.width / image.height;
+  const boxRatio = width / height;
+  let sourceWidth = image.width;
+  let sourceHeight = image.height;
+  let sourceX = 0;
+  let sourceY = 0;
+  if (imageRatio > boxRatio) {
+    sourceWidth = image.height * boxRatio;
+    sourceX = (image.width - sourceWidth) * position;
+  } else {
+    sourceHeight = image.width / boxRatio;
+    sourceY = (image.height - sourceHeight) * position;
   }
-  setFont(ctx, Math.round(size * 0.62), { weight: 800, family: SANS, style: 'italic' });
-  ctx.fillStyle = withAlpha(PAPER, 0.55);
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('G', x + size / 2, y + size / 2);
+  ctx.save();
+  if (radius) {
+    roundedRect(ctx, x, y, width, height, radius);
+    ctx.clip();
+  }
+  ctx.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, x, y, width, height);
+  ctx.restore();
+  return true;
 }
 
 function drawFooter(ctx, width, height, { text = 'GUANYISEARCH · HUMAN-CENTERED INSIGHT', compact = false } = {}) {
@@ -425,92 +439,326 @@ function drawLeaderboard(ctx, data, width, height) {
   drawFooter(ctx, width, height, { text: 'WEEKLY COMMUNITY RECOGNITION · PRIVACY-SAFE MEMBER LABELS', compact });
 }
 
-function drawManifesto(ctx, data, width, height, manifesto, brandMark) {
+function drawManifesto(ctx, data, width, height, manifesto, artwork) {
   const compact = height < 800;
   const pad = compact ? 58 : 78;
-  const panelWidth = compact ? Math.min(350, width * 0.31) : 330;
-  const panelX = width - pad - panelWidth;
-  const panelY = compact ? 38 : 52;
-  const panelHeight = height - panelY - (compact ? 72 : 92);
-  const copyWidth = panelX - pad - (compact ? 42 : 54);
+  const artworkWidth = compact ? Math.min(392, width * 0.35) : 356;
+  const artworkX = width - pad - artworkWidth;
+  const artworkY = compact ? 102 : 138;
+  const artworkHeight = height - artworkY - (compact ? 70 : 92);
+  const copyWidth = artworkX - pad - (compact ? 48 : 66);
+  const quote = manifesto || DEFAULT_MANIFESTO;
   drawBrand(ctx, pad, compact ? 42 : 55, { compact });
   setFont(ctx, compact ? 11 : 13, { weight: 800, family: SANS });
   ctx.fillStyle = withAlpha(INK, 0.56);
   ctx.textAlign = 'right';
   ctx.textBaseline = 'top';
   ctx.letterSpacing = '0.14em';
-  ctx.fillText('MANIFESTO SERIES  /  01', panelX - (compact ? 12 : 18), compact ? 47 : 64);
+  ctx.fillText('HUMAN MANIFESTO  /  01', width - pad, compact ? 47 : 64);
   ctx.letterSpacing = '0px';
-  ctx.strokeStyle = withAlpha(INK, 0.24);
+  ctx.strokeStyle = withAlpha(INK, 0.23);
   ctx.beginPath();
   ctx.moveTo(pad, compact ? 83 : 104);
-  ctx.lineTo(panelX - (compact ? 12 : 18), compact ? 83 : 104);
+  ctx.lineTo(width - pad, compact ? 83 : 104);
   ctx.stroke();
 
-  fillRoundedRect(ctx, panelX, panelY, panelWidth, panelHeight, compact ? 14 : 18, FOREST);
-  strokeRoundedRect(ctx, panelX, panelY, panelWidth, panelHeight, compact ? 14 : 18, withAlpha(PAPER, 0.42));
-  const markSize = compact ? Math.min(154, panelWidth - 76) : Math.min(214, panelWidth - 86);
-  drawBrandMark(ctx, brandMark, panelX + (panelWidth - markSize) / 2, panelY + (compact ? 38 : 52), markSize);
-  setFont(ctx, compact ? 10 : 12, { weight: 800, family: SANS });
-  ctx.fillStyle = withAlpha(PAPER, 0.66);
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  ctx.letterSpacing = '0.16em';
-  ctx.fillText('RESEARCH PARTICIPATION PLATFORM', panelX + panelWidth / 2, panelY + markSize + (compact ? 61 : 75));
-  ctx.letterSpacing = '0px';
-  drawParticipationRail(ctx, panelX + (compact ? 25 : 30), panelY + (compact ? 246 : 326), panelWidth - (compact ? 50 : 60), { compact });
-  drawParticipationPath(ctx, panelX + (compact ? 27 : 31), panelY + panelHeight - (compact ? 194 : 232), panelWidth - (compact ? 54 : 62), {
-    color: withAlpha(PAPER, 0.72),
-    compact,
+  fillRoundedRect(ctx, artworkX, artworkY, artworkWidth, artworkHeight, compact ? 12 : 16, '#D8D0C0');
+  const artworkDrawn = drawImageCover(ctx, artwork, artworkX, artworkY, artworkWidth, artworkHeight, {
+    radius: compact ? 12 : 16,
+    position: 0.5,
   });
+  if (!artworkDrawn) {
+    const artworkGradient = ctx.createLinearGradient(artworkX, artworkY, artworkX + artworkWidth, artworkY + artworkHeight);
+    artworkGradient.addColorStop(0, '#A8AC9B');
+    artworkGradient.addColorStop(0.48, '#D6C7AA');
+    artworkGradient.addColorStop(1, '#789292');
+    fillRoundedRect(ctx, artworkX, artworkY, artworkWidth, artworkHeight, compact ? 12 : 16, artworkGradient);
+  }
+  const artworkOverlay = ctx.createLinearGradient(artworkX, artworkY, artworkX, artworkY + artworkHeight);
+  artworkOverlay.addColorStop(0, 'rgba(20,28,25,0)');
+  artworkOverlay.addColorStop(0.68, 'rgba(20,28,25,.03)');
+  artworkOverlay.addColorStop(1, 'rgba(20,28,25,.72)');
+  ctx.save();
+  roundedRect(ctx, artworkX, artworkY, artworkWidth, artworkHeight, compact ? 12 : 16);
+  ctx.clip();
+  ctx.fillStyle = artworkOverlay;
+  ctx.fillRect(artworkX, artworkY, artworkWidth, artworkHeight);
+  ctx.restore();
+  strokeRoundedRect(ctx, artworkX, artworkY, artworkWidth, artworkHeight, compact ? 12 : 16, withAlpha(INK, 0.26));
   setFont(ctx, compact ? 10 : 12, { weight: 800, family: SANS });
-  ctx.fillStyle = withAlpha(PAPER, 0.7);
+  ctx.fillStyle = PAPER;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
-  ctx.fillText('PARTICIPATION → RECORD → REWARD', panelX + (compact ? 24 : 30), panelY + panelHeight - (compact ? 45 : 54));
+  ctx.letterSpacing = '0.15em';
+  ctx.fillText('SITE ARTWORK', artworkX + (compact ? 19 : 24), artworkY + artworkHeight - (compact ? 48 : 60));
+  ctx.letterSpacing = '0px';
+  setFont(ctx, compact ? 14 : 18, { weight: 600, family: SANS });
+  ctx.fillText('Real voices, held with care.', artworkX + (compact ? 19 : 24), artworkY + artworkHeight - (compact ? 30 : 35));
 
-  const quote = manifesto || DEFAULT_MANIFESTO;
   const quoteX = pad;
-  const quoteY = compact ? 150 : 214;
-  setFont(ctx, compact ? 78 : 100, { weight: 650 });
-  ctx.fillStyle = withAlpha(MOSS, 0.56);
+  const quoteY = compact ? 141 : 200;
+  setFont(ctx, compact ? 72 : 98, { weight: 650 });
+  ctx.fillStyle = withAlpha(MOSS, 0.58);
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
-  ctx.fillText('“', quoteX, quoteY - (compact ? 44 : 57));
-  const quoteHeight = drawWrapped(ctx, quote, quoteX + (compact ? 34 : 42), quoteY, copyWidth - (compact ? 34 : 42), {
-    size: compact ? 44 : 64,
-    lineHeight: compact ? 51 : 71,
+  ctx.fillText('“', quoteX, quoteY - (compact ? 40 : 54));
+  const quoteHeight = drawWrapped(ctx, quote, quoteX + (compact ? 32 : 40), quoteY, copyWidth - (compact ? 32 : 40), {
+    size: compact ? 43 : 63,
+    lineHeight: compact ? 50 : 70,
     maxLines: compact ? 4 : 5,
     weight: 650,
   });
-  setFont(ctx, compact ? 52 : 70, { weight: 650 });
-  ctx.fillStyle = withAlpha(MOSS, 0.56);
-  ctx.fillText('”', quoteX + 34, quoteY + quoteHeight - (compact ? 9 : 12));
+  setFont(ctx, compact ? 50 : 68, { weight: 650 });
+  ctx.fillStyle = withAlpha(MOSS, 0.58);
+  ctx.fillText('”', quoteX + (compact ? 32 : 40), quoteY + quoteHeight - (compact ? 8 : 11));
+  const copyRuleY = quoteY + quoteHeight + (compact ? 25 : 36);
   ctx.strokeStyle = MOSS;
   ctx.lineWidth = 2;
   ctx.beginPath();
-  const copyRuleY = quoteY + quoteHeight + (compact ? 26 : 36);
-  ctx.moveTo(quoteX + 42, copyRuleY);
-  ctx.lineTo(quoteX + (compact ? 101 : 120), copyRuleY);
+  ctx.moveTo(quoteX + (compact ? 38 : 42), copyRuleY);
+  ctx.lineTo(quoteX + (compact ? 100 : 124), copyRuleY);
   ctx.stroke();
-  drawWrapped(ctx, 'Behind every data point is a real person who chose to share a perspective.', quoteX + 42, copyRuleY + (compact ? 23 : 28), copyWidth - 42, {
+  drawWrapped(ctx, 'Real people are the starting point for research. Technology should make their participation clearer, not smaller.', quoteX + (compact ? 38 : 42), copyRuleY + (compact ? 22 : 28), copyWidth - (compact ? 38 : 42), {
     size: compact ? 15 : 19,
-    lineHeight: compact ? 22 : 27,
-    maxLines: 3,
+    lineHeight: compact ? 22 : 28,
+    maxLines: compact ? 3 : 4,
     family: SANS,
     weight: 500,
   });
   setFont(ctx, compact ? 11 : 13, { weight: 800, family: SANS });
-  ctx.fillStyle = withAlpha(INK, 0.55);
+  ctx.fillStyle = withAlpha(INK, 0.56);
   ctx.textAlign = 'left';
-  ctx.fillText('A PRINCIPLE FOR BETTER RESEARCH', quoteX + 42, compact ? height - 105 : height - 132);
-  ctx.strokeStyle = withAlpha(FOREST, 0.48);
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(quoteX + 42, compact ? height - 83 : height - 104);
-  ctx.lineTo(quoteX + (compact ? 145 : 185), compact ? height - 83 : height - 104);
-  ctx.stroke();
+  ctx.textBaseline = 'top';
+  ctx.letterSpacing = '0.1em';
+  ctx.fillText('A PRINCIPLE FOR BETTER RESEARCH', quoteX + (compact ? 38 : 42), compact ? height - 104 : height - 130);
+  ctx.letterSpacing = '0px';
   drawFooter(ctx, width, height, { text: 'HUMAN-CENTERED   ·   INSIGHT-DRIVEN   ·   IMPACT-FOCUSED', compact });
+}
+
+function withSketchCanvas(ctx, x, y, width, height, draw) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(width / 220, height / 190);
+  ctx.strokeStyle = FOREST;
+  ctx.fillStyle = withAlpha('#8F9E7B', 0.18);
+  ctx.lineWidth = 3.1;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  draw();
+  ctx.restore();
+}
+
+function drawGiftSketch(ctx, x, y, width, height) {
+  withSketchCanvas(ctx, x, y, width, height, () => {
+    ctx.beginPath();
+    ctx.rect(65, 94, 94, 58);
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.rect(57, 79, 110, 19);
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(111, 79);
+    ctx.lineTo(111, 152);
+    ctx.moveTo(65, 98);
+    ctx.lineTo(159, 98);
+    ctx.moveTo(109, 79);
+    ctx.bezierCurveTo(90, 77, 78, 66, 81, 54);
+    ctx.bezierCurveTo(97, 52, 108, 61, 109, 79);
+    ctx.moveTo(113, 79);
+    ctx.bezierCurveTo(132, 77, 144, 66, 141, 54);
+    ctx.bezierCurveTo(125, 52, 114, 61, 113, 79);
+    ctx.moveTo(48, 72);
+    ctx.lineTo(48, 90);
+    ctx.moveTo(39, 81);
+    ctx.lineTo(57, 81);
+    ctx.moveTo(172, 77);
+    ctx.lineTo(172, 91);
+    ctx.moveTo(165, 84);
+    ctx.lineTo(179, 84);
+    ctx.moveTo(64, 51);
+    ctx.lineTo(69, 60);
+    ctx.lineTo(78, 65);
+    ctx.lineTo(69, 70);
+    ctx.lineTo(64, 79);
+    ctx.lineTo(59, 70);
+    ctx.lineTo(50, 65);
+    ctx.lineTo(59, 60);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(50, 160);
+    ctx.bezierCurveTo(81, 168, 138, 168, 170, 160);
+    ctx.stroke();
+  });
+}
+
+function drawTokenSketch(ctx, x, y, width, height) {
+  withSketchCanvas(ctx, x, y, width, height, () => {
+    ctx.beginPath();
+    ctx.moveTo(48, 118);
+    ctx.bezierCurveTo(60, 75, 141, 46, 181, 84);
+    ctx.bezierCurveTo(209, 110, 179, 145, 138, 154);
+    ctx.stroke();
+    ctx.fillStyle = '#C26F43';
+    ctx.beginPath();
+    ctx.arc(166, 69, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = withAlpha('#8F9E7B', 0.18);
+    ctx.beginPath();
+    ctx.ellipse(111, 110, 43, 25, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(68, 110);
+    ctx.lineTo(68, 128);
+    ctx.bezierCurveTo(68, 142, 154, 142, 154, 128);
+    ctx.lineTo(154, 110);
+    ctx.moveTo(68, 110);
+    ctx.bezierCurveTo(68, 124, 154, 124, 154, 110);
+    ctx.moveTo(95, 108);
+    ctx.lineTo(127, 108);
+    ctx.moveTo(111, 95);
+    ctx.lineTo(111, 121);
+    ctx.moveTo(108, 158);
+    ctx.lineTo(108, 171);
+    ctx.moveTo(93, 162);
+    ctx.lineTo(85, 171);
+    ctx.moveTo(129, 162);
+    ctx.lineTo(137, 171);
+    ctx.stroke();
+  });
+}
+
+function drawCartSketch(ctx, x, y, width, height) {
+  withSketchCanvas(ctx, x, y, width, height, () => {
+    ctx.strokeStyle = withAlpha(FOREST, 0.56);
+    ctx.beginPath();
+    ctx.moveTo(14, 76);
+    ctx.lineTo(45, 76);
+    ctx.bezierCurveTo(54, 76, 60, 80, 64, 87);
+    ctx.moveTo(8, 97);
+    ctx.lineTo(47, 97);
+    ctx.bezierCurveTo(56, 97, 62, 101, 66, 108);
+    ctx.moveTo(19, 118);
+    ctx.lineTo(47, 118);
+    ctx.bezierCurveTo(56, 118, 62, 122, 66, 129);
+    ctx.stroke();
+    ctx.strokeStyle = FOREST;
+    ctx.fillStyle = withAlpha('#8F9E7B', 0.18);
+    ctx.beginPath();
+    ctx.arc(165, 61, 25, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(63, 56);
+    ctx.lineTo(90, 56);
+    ctx.bezierCurveTo(98, 56, 103, 61, 105, 71);
+    ctx.lineTo(120, 139);
+    ctx.bezierCurveTo(123, 152, 130, 159, 144, 159);
+    ctx.lineTo(183, 159);
+    ctx.bezierCurveTo(197, 159, 203, 153, 206, 139);
+    ctx.lineTo(219, 82);
+    ctx.lineTo(105, 82);
+    ctx.moveTo(108, 139);
+    ctx.lineTo(184, 139);
+    ctx.moveTo(42, 56);
+    ctx.lineTo(63, 56);
+    ctx.arc(127, 177, 13, 0, Math.PI * 2);
+    ctx.moveTo(114, 177);
+    ctx.lineTo(140, 177);
+    ctx.moveTo(127, 164);
+    ctx.lineTo(127, 190);
+    ctx.arc(181, 177, 13, 0, Math.PI * 2);
+    ctx.moveTo(168, 177);
+    ctx.lineTo(194, 177);
+    ctx.moveTo(181, 164);
+    ctx.lineTo(181, 190);
+    ctx.moveTo(83, 187);
+    ctx.bezierCurveTo(119, 192, 173, 192, 209, 187);
+    ctx.stroke();
+  });
+}
+
+function drawParticipationStep(ctx, { number, title, detail, drawSketch }, x, y, width, height, { compact = false } = {}) {
+  fillRoundedRect(ctx, x, y, width, height, compact ? 12 : 16, withAlpha('#FFFFFF', 0.26));
+  strokeRoundedRect(ctx, x, y, width, height, compact ? 12 : 16, withAlpha(INK, 0.22));
+  setFont(ctx, compact ? 11 : 13, { weight: 800, family: SANS });
+  ctx.fillStyle = FOREST;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText(number, x + (compact ? 18 : 23), y + (compact ? 18 : 23));
+  ctx.letterSpacing = '0px';
+  drawSketch(ctx, x + width * 0.14, y + (compact ? 34 : 43), width * 0.72, height * (compact ? 0.43 : 0.45));
+  setFont(ctx, compact ? 19 : 25, { weight: 650 });
+  ctx.fillStyle = INK;
+  ctx.textAlign = 'center';
+  ctx.fillText(title, x + width / 2, y + height * (compact ? 0.64 : 0.66));
+  drawWrapped(ctx, detail, x + width / 2, y + height * (compact ? 0.77 : 0.79), width - (compact ? 36 : 46), {
+    size: compact ? 11 : 13,
+    lineHeight: compact ? 15 : 18,
+    maxLines: 2,
+    align: 'center',
+    family: SANS,
+    weight: 600,
+    color: withAlpha(INK, 0.68),
+  });
+}
+
+function drawParticipationIllustration(ctx, data, width, height, participation) {
+  const compact = height < 800;
+  const pad = compact ? 58 : 76;
+  const cardGap = compact ? 14 : 18;
+  const cardY = compact ? 286 : 483;
+  const cardHeight = compact ? 252 : 356;
+  const cardWidth = (width - pad * 2 - cardGap * 2) / 3;
+  const headline = participation?.headline || DEFAULT_PARTICIPATION_HEADLINE;
+  const copy = participation?.copy || DEFAULT_PARTICIPATION_COPY;
+  drawBrand(ctx, pad, compact ? 42 : 55, { compact });
+  setFont(ctx, compact ? 11 : 13, { weight: 800, family: SANS });
+  ctx.fillStyle = withAlpha(INK, 0.56);
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'top';
+  ctx.letterSpacing = '0.14em';
+  ctx.fillText('PARTICIPATION PATH  /  01', width - pad, compact ? 47 : 64);
+  ctx.letterSpacing = '0px';
+  ctx.strokeStyle = withAlpha(INK, 0.23);
+  ctx.beginPath();
+  ctx.moveTo(pad, compact ? 83 : 104);
+  ctx.lineTo(width - pad, compact ? 83 : 104);
+  ctx.stroke();
+  setFont(ctx, compact ? 15 : 18, { weight: 800, family: SANS });
+  ctx.fillStyle = FOREST;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  ctx.letterSpacing = '0.16em';
+  ctx.fillText('RESEARCH PARTICIPATION, MADE CLEAR', pad, compact ? 111 : 146);
+  ctx.letterSpacing = '0px';
+  const headlineHeight = drawWrapped(ctx, headline, pad, compact ? 140 : 183, compact ? width - pad * 2 : width * 0.72, {
+    size: compact ? 45 : 66,
+    lineHeight: compact ? 51 : 72,
+    maxLines: compact ? 2 : 2,
+    weight: 650,
+  });
+  drawWrapped(ctx, copy, pad, (compact ? 140 : 183) + headlineHeight + (compact ? 12 : 17), compact ? width - pad * 2 : width * 0.65, {
+    size: compact ? 14 : 18,
+    lineHeight: compact ? 19 : 25,
+    maxLines: compact ? 2 : 3,
+    family: SANS,
+    weight: 500,
+    color: withAlpha(INK, 0.72),
+  });
+  const steps = [
+    { number: '01', title: 'Share', detail: 'Bring your perspective to research.', drawSketch: drawGiftSketch },
+    { number: '02', title: 'See clearly', detail: 'Keep every reward visible.', drawSketch: drawTokenSketch },
+    { number: '03', title: 'Keep moving', detail: 'Let participation lead somewhere.', drawSketch: drawCartSketch },
+  ];
+  steps.forEach((step, index) => {
+    drawParticipationStep(ctx, step, pad + index * (cardWidth + cardGap), cardY, cardWidth, cardHeight, { compact });
+  });
+  drawFooter(ctx, width, height, { text: 'RESEARCH SURVEYS   ·   TRANSPARENT REWARDS   ·   YOUR PERSPECTIVE', compact });
 }
 
 function drawOpportunity(ctx, data, width, height) {
@@ -701,9 +949,16 @@ function drawWeeklyDigest(ctx, data, width, height) {
   drawFooter(ctx, width, height, { text: 'WEEKLY NEWS WALL DIGEST · REAL COMMUNITY POLL DATA', compact });
 }
 
-export async function renderMarketingAsset(canvas, { templateKey, data = {}, manifesto = DEFAULT_MANIFESTO, format = 'square' }) {
+export async function renderMarketingAsset(canvas, {
+  templateKey,
+  data = {},
+  manifesto = DEFAULT_MANIFESTO,
+  artworkSrc = DEFAULT_MANIFESTO_ARTWORK,
+  participation,
+  format = 'square',
+}) {
   const size = MARKETING_ASSET_SIZES[format] || MARKETING_ASSET_SIZES.square;
-  const brandMark = await loadBrandMark().catch(() => null);
+  const artwork = templateKey === 'C' ? await loadImage(artworkSrc).catch(() => null) : null;
   const ctx = canvas.getContext('2d');
   canvas.width = size.width;
   canvas.height = size.height;
@@ -711,15 +966,16 @@ export async function renderMarketingAsset(canvas, { templateKey, data = {}, man
   const draw = {
     A: drawDailyBrief,
     B: drawLeaderboard,
-    C: (context, assetData, width, height) => drawManifesto(context, assetData, width, height, manifesto, brandMark),
+    C: (context, assetData, width, height) => drawManifesto(context, assetData, width, height, manifesto, artwork),
     D: drawOpportunity,
     E: drawMilestone,
     F: drawRedemption,
     G: drawFeaturedTopic,
     H: drawWeeklyDigest,
+    I: (context, assetData, width, height) => drawParticipationIllustration(context, assetData, width, height, participation),
   }[templateKey];
   if (!draw) throw new Error(`Unknown marketing template: ${templateKey}`);
-  draw(ctx, data, size.width, size.height, brandMark);
+  draw(ctx, data, size.width, size.height);
   return canvas;
 }
 

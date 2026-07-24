@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AlertCircle, ArrowDownToLine, CheckCircle2, FileImage, LockKeyhole, Palette, RefreshCcw, Sparkles } from 'lucide-react';
+import { AlertCircle, ArrowDownToLine, CheckCircle2, FileImage, LockKeyhole, Palette, RefreshCcw, RotateCcw, Sparkles, Upload } from 'lucide-react';
 import { getMarketingAssets } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 import {
   DEFAULT_MANIFESTO,
+  DEFAULT_MANIFESTO_ARTWORK,
+  DEFAULT_PARTICIPATION_COPY,
+  DEFAULT_PARTICIPATION_HEADLINE,
   downloadMarketingAsset,
   MARKETING_ASSET_SIZES,
   renderMarketingAsset,
@@ -18,6 +21,7 @@ const TEMPLATE_CATALOG = [
   { key: 'F', title: '兑换成功见证', subtitle: 'Reward Moment', source: 'Consent-backed reward redemption', mode: 'gated' },
   { key: 'G', title: '单条话题深度展示', subtitle: 'Featured Conversation', source: 'Top Daily Brief poll topic', mode: 'automatic' },
   { key: 'H', title: '每周话题精选', subtitle: 'Weekly Digest', source: 'Weekly Daily Briefs + poll data', mode: 'automatic' },
+  { key: 'I', title: '参与旅程线绘', subtitle: 'Participation Path Illustration', source: 'Platform editorial + site line drawings', mode: 'editorial' },
 ];
 
 const COUNTRY_OPTIONS = [
@@ -47,7 +51,7 @@ function availabilityDetails(details) {
   return values.length ? values.join(' · ') : null;
 }
 
-function AssetCanvas({ templateKey, asset, manifesto, format }) {
+function AssetCanvas({ templateKey, asset, manifesto, artworkSrc, participation, format }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -59,6 +63,8 @@ function AssetCanvas({ templateKey, asset, manifesto, format }) {
           templateKey,
           data: asset.data,
           manifesto,
+          artworkSrc,
+          participation,
           format,
         });
       }
@@ -69,7 +75,7 @@ function AssetCanvas({ templateKey, asset, manifesto, format }) {
     return () => {
       cancelled = true;
     };
-  }, [asset, format, manifesto, templateKey]);
+  }, [artworkSrc, asset, format, manifesto, participation, templateKey]);
 
   if (!asset?.available) {
     return (
@@ -89,6 +95,9 @@ export default function MarketingAssets() {
   const [selectedKey, setSelectedKey] = useState('A');
   const [format, setFormat] = useState('square');
   const [manifesto, setManifesto] = useState(DEFAULT_MANIFESTO);
+  const [artworkSrc, setArtworkSrc] = useState(DEFAULT_MANIFESTO_ARTWORK);
+  const [participationHeadline, setParticipationHeadline] = useState(DEFAULT_PARTICIPATION_HEADLINE);
+  const [participationCopy, setParticipationCopy] = useState(DEFAULT_PARTICIPATION_COPY);
   const [assetPayload, setAssetPayload] = useState(null);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
@@ -128,6 +137,8 @@ export default function MarketingAssets() {
         templateKey: selectedKey,
         data: selectedAsset.data,
         manifesto,
+        artworkSrc,
+        participation: { headline: participationHeadline, copy: participationCopy },
         format,
       });
       setNotice('PNG 已下载。发布前请确认内容仍与实时数据一致。');
@@ -136,6 +147,28 @@ export default function MarketingAssets() {
     } finally {
       setExporting(false);
     }
+  };
+
+  const handleArtworkChange = (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      setError('主视觉仅支持 JPG、PNG 或 WebP 图片。');
+      return;
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      setError('主视觉图片需小于 8 MB。');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setArtworkSrc(String(reader.result || DEFAULT_MANIFESTO_ARTWORK));
+      setError('');
+      setNotice('主视觉已替换；导出的 PNG 会使用这张图片。');
+    };
+    reader.onerror = () => setError('无法读取这张图片，请重新选择。');
+    reader.readAsDataURL(file);
   };
 
   const details = availabilityDetails(selectedAsset?.details);
@@ -166,7 +199,7 @@ export default function MarketingAssets() {
         <aside className="marketing-template-list">
           <div className="marketing-list-head">
             <div>
-              <p>8 TEMPLATE SYSTEM</p>
+              <p>9 TEMPLATE SYSTEM</p>
               <h2>选择营销素材</h2>
             </div>
             <Palette size={20} />
@@ -226,10 +259,39 @@ export default function MarketingAssets() {
               </select>
             </label>
             {selectedKey === 'C' && (
-              <label className="marketing-copy-field">
-                <span>Manifesto copy</span>
-                <textarea value={manifesto} maxLength={170} onChange={(event) => setManifesto(event.target.value)} />
-              </label>
+              <>
+                <label className="marketing-copy-field">
+                  <span>Manifesto copy</span>
+                  <textarea value={manifesto} maxLength={170} onChange={(event) => setManifesto(event.target.value)} />
+                </label>
+                <div className="marketing-artwork-field marketing-copy-field">
+                  <span>Primary artwork</span>
+                  <div className="marketing-artwork-actions">
+                    <label className="marketing-upload-button">
+                      <Upload size={15} />
+                      Replace artwork
+                      <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleArtworkChange} />
+                    </label>
+                    <button type="button" className="marketing-artwork-reset" onClick={() => setArtworkSrc(DEFAULT_MANIFESTO_ARTWORK)} disabled={artworkSrc === DEFAULT_MANIFESTO_ARTWORK}>
+                      <RotateCcw size={14} />
+                      Use site artwork
+                    </button>
+                  </div>
+                  <small>默认使用网站 Human Manifesto 油画；上传仅用于当前生成会话，支持 JPG / PNG / WebP，最大 8 MB。</small>
+                </div>
+              </>
+            )}
+            {selectedKey === 'I' && (
+              <>
+                <label className="marketing-copy-field">
+                  <span>Headline</span>
+                  <textarea value={participationHeadline} maxLength={90} onChange={(event) => setParticipationHeadline(event.target.value)} />
+                </label>
+                <label className="marketing-copy-field">
+                  <span>Supporting copy</span>
+                  <textarea value={participationCopy} maxLength={170} onChange={(event) => setParticipationCopy(event.target.value)} />
+                </label>
+              </>
             )}
           </div>
 
@@ -237,7 +299,14 @@ export default function MarketingAssets() {
             <div className="marketing-loading">Reading verified source data…</div>
           ) : (
             <div className="marketing-preview-wrap">
-              <AssetCanvas templateKey={selectedKey} asset={selectedAsset} manifesto={manifesto} format={format} />
+              <AssetCanvas
+                templateKey={selectedKey}
+                asset={selectedAsset}
+                manifesto={manifesto}
+                artworkSrc={artworkSrc}
+                participation={{ headline: participationHeadline, copy: participationCopy }}
+                format={format}
+              />
             </div>
           )}
 
@@ -267,7 +336,7 @@ export default function MarketingAssets() {
 
       <section className="marketing-disclosure">
         <Sparkles size={18} />
-        <p><strong>Brand system:</strong> #F3EDE0 paper, #1F1F1B ink, Source Han Serif-style type, and a fixed GuanyiSearch wordmark area across all eight templates.</p>
+        <p><strong>Brand system:</strong> #F3EDE0 paper, #1F1F1B ink, Source Han Serif-style type, and a fixed GuanyiSearch wordmark area across all nine templates.</p>
       </section>
     </div>
   );
