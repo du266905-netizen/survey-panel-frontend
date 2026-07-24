@@ -5,6 +5,7 @@ const MOSS = '#7A8979';
 const FADE = '#CFC7B8';
 const SERIF = '"Source Han Serif SC", "Noto Serif CJK SC", "Source Serif 4", Georgia, serif';
 const SANS = 'Inter, "Noto Sans SC", Arial, sans-serif';
+let brandMarkPromise;
 
 export const MARKETING_ASSET_SIZES = {
   square: { width: 1080, height: 1080, label: 'Square · 1080 × 1080' },
@@ -126,6 +127,33 @@ function drawBrand(ctx, x, y, { compact = false, inverted = false } = {}) {
   ctx.fillText('GUANYISEARCH', x, y);
 }
 
+function loadBrandMark() {
+  if (!brandMarkPromise) {
+    brandMarkPromise = new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = '/guanyisearch-brand-mark.png';
+    });
+  }
+  return brandMarkPromise;
+}
+
+function drawBrandMark(ctx, image, x, y, size) {
+  if (image) {
+    ctx.save();
+    ctx.globalAlpha = 0.72;
+    ctx.drawImage(image, x, y, size, size);
+    ctx.restore();
+    return;
+  }
+  setFont(ctx, Math.round(size * 0.62), { weight: 800, family: SANS, style: 'italic' });
+  ctx.fillStyle = withAlpha(PAPER, 0.55);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('G', x + size / 2, y + size / 2);
+}
+
 function drawFooter(ctx, width, height, { text = 'GUANYISEARCH · HUMAN-CENTERED INSIGHT', compact = false } = {}) {
   const footerHeight = compact ? 50 : 66;
   const y = height - footerHeight;
@@ -235,33 +263,59 @@ function drawGlobe(ctx, centerX, centerY, radius, { stroke = withAlpha(INK, 0.28
   ctx.restore();
 }
 
-function drawPlum(ctx, x, y, scale = 1) {
+function drawParticipationPath(ctx, x, y, width, { color = FOREST, compact = false } = {}) {
   ctx.save();
-  ctx.strokeStyle = withAlpha(INK, 0.68);
-  ctx.lineWidth = 5 * scale;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = compact ? 1.6 : 2;
   ctx.lineCap = 'round';
+  const rows = compact ? 3 : 4;
+  const rowGap = compact ? 28 : 36;
+  const nodeSize = compact ? 8 : 10;
+  const firstX = x + nodeSize;
+  const middleX = x + width * 0.47;
+  const lastX = x + width - nodeSize;
   ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.bezierCurveTo(x - 40 * scale, y - 85 * scale, x + 42 * scale, y - 142 * scale, x + 80 * scale, y - 214 * scale);
+  ctx.moveTo(firstX, y);
+  for (let index = 0; index < rows; index += 1) {
+    const nodeY = y + index * rowGap;
+    ctx.lineTo(middleX, nodeY + (index % 2 ? -9 : 9));
+    ctx.lineTo(lastX, nodeY);
+  }
   ctx.stroke();
-  ctx.lineWidth = 2.8 * scale;
-  [[-14, -62, -72, -104], [27, -103, 94, -142], [49, -148, 14, -194], [69, -177, 139, -212]].forEach(([startX, startY, endX, endY]) => {
-    ctx.beginPath();
-    ctx.moveTo(x + startX * scale, y + startY * scale);
-    ctx.quadraticCurveTo(x + (startX + endX) / 2 * scale, y + (startY + endY + 18) / 2 * scale, x + endX * scale, y + endY * scale);
-    ctx.stroke();
-  });
-  const blossoms = [[-62, -105], [95, -142], [12, -193], [140, -213], [46, -149], [71, -177], [-6, -64]];
-  blossoms.forEach(([offsetX, offsetY], index) => {
-    ctx.fillStyle = index % 2 ? withAlpha(MOSS, 0.62) : withAlpha(FOREST, 0.68);
-    for (let petal = 0; petal < 5; petal += 1) {
-      const angle = (Math.PI * 2 * petal) / 5;
-      ctx.beginPath();
-      ctx.ellipse(x + offsetX * scale + Math.cos(angle) * 5 * scale, y + offsetY * scale + Math.sin(angle) * 5 * scale, 5 * scale, 3.2 * scale, angle, 0, Math.PI * 2);
-      ctx.fill();
+  [firstX, middleX, lastX].forEach((nodeX, columnIndex) => {
+    for (let index = 0; index < rows; index += 1) {
+      const nodeY = y + index * rowGap + (columnIndex === 1 ? (index % 2 ? -9 : 9) : 0);
+      fillRoundedRect(ctx, nodeX - nodeSize / 2, nodeY - nodeSize / 2, nodeSize, nodeSize, 2, color);
     }
   });
   ctx.restore();
+}
+
+function drawParticipationRail(ctx, x, y, width, { compact = false } = {}) {
+  const stages = [
+    ['01', 'VERIFIED PANEL'],
+    ['02', 'DAILY SIGNALS'],
+    ['03', 'RESEARCH SURVEYS'],
+    ['04', 'TRANSPARENT REWARDS'],
+  ];
+  const rowHeight = compact ? 52 : 66;
+  const labelSize = compact ? 10 : 12;
+  stages.forEach(([number, label], index) => {
+    const rowY = y + index * rowHeight;
+    ctx.strokeStyle = withAlpha(PAPER, 0.2);
+    ctx.beginPath();
+    ctx.moveTo(x, rowY + rowHeight - 8);
+    ctx.lineTo(x + width, rowY + rowHeight - 8);
+    ctx.stroke();
+    setFont(ctx, compact ? 11 : 13, { weight: 800, family: SANS });
+    ctx.fillStyle = withAlpha(PAPER, 0.52);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(number, x, rowY + 7);
+    setFont(ctx, labelSize, { weight: 800, family: SANS });
+    ctx.fillStyle = withAlpha(PAPER, 0.88);
+    ctx.fillText(label, x + (compact ? 35 : 42), rowY + 7);
+  });
 }
 
 function drawDailyBrief(ctx, data, width, height) {
@@ -371,7 +425,7 @@ function drawLeaderboard(ctx, data, width, height) {
   drawFooter(ctx, width, height, { text: 'WEEKLY COMMUNITY RECOGNITION · PRIVACY-SAFE MEMBER LABELS', compact });
 }
 
-function drawManifesto(ctx, data, width, height, manifesto) {
+function drawManifesto(ctx, data, width, height, manifesto, brandMark) {
   const compact = height < 800;
   const pad = compact ? 58 : 78;
   const panelWidth = compact ? Math.min(350, width * 0.31) : 330;
@@ -395,26 +449,25 @@ function drawManifesto(ctx, data, width, height, manifesto) {
 
   fillRoundedRect(ctx, panelX, panelY, panelWidth, panelHeight, compact ? 14 : 18, FOREST);
   strokeRoundedRect(ctx, panelX, panelY, panelWidth, panelHeight, compact ? 14 : 18, withAlpha(PAPER, 0.42));
-  setFont(ctx, compact ? 116 : 156, { weight: 650 });
-  ctx.fillStyle = withAlpha(PAPER, 0.1);
+  const markSize = compact ? Math.min(154, panelWidth - 76) : Math.min(214, panelWidth - 86);
+  drawBrandMark(ctx, brandMark, panelX + (panelWidth - markSize) / 2, panelY + (compact ? 38 : 52), markSize);
+  setFont(ctx, compact ? 10 : 12, { weight: 800, family: SANS });
+  ctx.fillStyle = withAlpha(PAPER, 0.66);
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  ctx.fillText('01', panelX + panelWidth / 2, panelY + (compact ? 36 : 42));
-  setFont(ctx, compact ? 12 : 14, { weight: 800, family: SANS });
-  ctx.fillStyle = withAlpha(PAPER, 0.84);
-  ctx.letterSpacing = '0.15em';
-  ctx.fillText('PEOPLE FIRST', panelX + panelWidth / 2, panelY + (compact ? 153 : 197));
+  ctx.letterSpacing = '0.16em';
+  ctx.fillText('RESEARCH PARTICIPATION PLATFORM', panelX + panelWidth / 2, panelY + markSize + (compact ? 61 : 75));
   ctx.letterSpacing = '0px';
-  drawGlobe(ctx, panelX + panelWidth * 0.66, panelY + panelHeight * (compact ? 0.7 : 0.68), panelWidth * (compact ? 0.42 : 0.55), {
-    stroke: withAlpha(PAPER, 0.48),
-    dot: withAlpha(PAPER, 0.38),
+  drawParticipationRail(ctx, panelX + (compact ? 25 : 30), panelY + (compact ? 246 : 326), panelWidth - (compact ? 50 : 60), { compact });
+  drawParticipationPath(ctx, panelX + (compact ? 27 : 31), panelY + panelHeight - (compact ? 194 : 232), panelWidth - (compact ? 54 : 62), {
+    color: withAlpha(PAPER, 0.72),
+    compact,
   });
-  setFont(ctx, compact ? 12 : 14, { weight: 600, family: SANS });
-  ctx.fillStyle = withAlpha(PAPER, 0.76);
+  setFont(ctx, compact ? 10 : 12, { weight: 800, family: SANS });
+  ctx.fillStyle = withAlpha(PAPER, 0.7);
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
-  ctx.fillText('THE HUMAN', panelX + (compact ? 24 : 30), panelY + panelHeight - (compact ? 78 : 98));
-  ctx.fillText('SIGNAL', panelX + (compact ? 24 : 30), panelY + panelHeight - (compact ? 59 : 78));
+  ctx.fillText('PARTICIPATION → RECORD → REWARD', panelX + (compact ? 24 : 30), panelY + panelHeight - (compact ? 45 : 54));
 
   const quote = manifesto || DEFAULT_MANIFESTO;
   const quoteX = pad;
@@ -451,7 +504,12 @@ function drawManifesto(ctx, data, width, height, manifesto) {
   ctx.fillStyle = withAlpha(INK, 0.55);
   ctx.textAlign = 'left';
   ctx.fillText('A PRINCIPLE FOR BETTER RESEARCH', quoteX + 42, compact ? height - 105 : height - 132);
-  drawPlum(ctx, compact ? panelX - 58 : panelX - 70, compact ? height - 106 : height - 130, compact ? 0.52 : 0.68);
+  ctx.strokeStyle = withAlpha(FOREST, 0.48);
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(quoteX + 42, compact ? height - 83 : height - 104);
+  ctx.lineTo(quoteX + (compact ? 145 : 185), compact ? height - 83 : height - 104);
+  ctx.stroke();
   drawFooter(ctx, width, height, { text: 'HUMAN-CENTERED   ·   INSIGHT-DRIVEN   ·   IMPACT-FOCUSED', compact });
 }
 
@@ -492,7 +550,7 @@ function drawOpportunity(ctx, data, width, height) {
   setFont(ctx, compact ? 15 : 18, { weight: 500 });
   ctx.fillStyle = withAlpha(INK, 0.75);
   ctx.fillText('New survey opportunities are now open.', cardX + cardWidth / 2, cardY + (compact ? 165 : 185));
-  drawPlum(ctx, compact ? width * 0.49 : width - 125, compact ? 420 : 500, compact ? 0.8 : 1.1);
+  drawParticipationPath(ctx, compact ? width * 0.43 : width - 350, compact ? 423 : 492, compact ? 170 : 250, { compact });
   drawFooter(ctx, width, height, { text: 'MORE SURVEY OPPORTUNITIES · MORE PERSPECTIVES', compact });
 }
 
@@ -643,8 +701,9 @@ function drawWeeklyDigest(ctx, data, width, height) {
   drawFooter(ctx, width, height, { text: 'WEEKLY NEWS WALL DIGEST · REAL COMMUNITY POLL DATA', compact });
 }
 
-export function renderMarketingAsset(canvas, { templateKey, data = {}, manifesto = DEFAULT_MANIFESTO, format = 'square' }) {
+export async function renderMarketingAsset(canvas, { templateKey, data = {}, manifesto = DEFAULT_MANIFESTO, format = 'square' }) {
   const size = MARKETING_ASSET_SIZES[format] || MARKETING_ASSET_SIZES.square;
+  const brandMark = await loadBrandMark().catch(() => null);
   const ctx = canvas.getContext('2d');
   canvas.width = size.width;
   canvas.height = size.height;
@@ -652,7 +711,7 @@ export function renderMarketingAsset(canvas, { templateKey, data = {}, manifesto
   const draw = {
     A: drawDailyBrief,
     B: drawLeaderboard,
-    C: (context, assetData, width, height) => drawManifesto(context, assetData, width, height, manifesto),
+    C: (context, assetData, width, height) => drawManifesto(context, assetData, width, height, manifesto, brandMark),
     D: drawOpportunity,
     E: drawMilestone,
     F: drawRedemption,
@@ -660,13 +719,13 @@ export function renderMarketingAsset(canvas, { templateKey, data = {}, manifesto
     H: drawWeeklyDigest,
   }[templateKey];
   if (!draw) throw new Error(`Unknown marketing template: ${templateKey}`);
-  draw(ctx, data, size.width, size.height);
+  draw(ctx, data, size.width, size.height, brandMark);
   return canvas;
 }
 
 export async function downloadMarketingAsset(options) {
   const canvas = document.createElement('canvas');
-  renderMarketingAsset(canvas, options);
+  await renderMarketingAsset(canvas, options);
   const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('Unable to create the PNG export.');
   const url = URL.createObjectURL(blob);

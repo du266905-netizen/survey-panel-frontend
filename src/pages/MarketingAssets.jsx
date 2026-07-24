@@ -53,9 +53,9 @@ function AssetCanvas({ templateKey, asset, manifesto, format }) {
   useEffect(() => {
     if (!asset?.available || !canvasRef.current) return undefined;
     let cancelled = false;
-    const drawPreview = () => {
+    const drawPreview = async () => {
       if (!cancelled && canvasRef.current) {
-        renderMarketingAsset(canvasRef.current, {
+        await renderMarketingAsset(canvasRef.current, {
           templateKey,
           data: asset.data,
           manifesto,
