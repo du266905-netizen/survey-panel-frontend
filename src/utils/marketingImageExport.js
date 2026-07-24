@@ -119,21 +119,11 @@ function paperTexture(ctx, width, height) {
 }
 
 function drawBrand(ctx, x, y, { compact = false, inverted = false } = {}) {
-  const color = inverted ? PAPER : INK;
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.arc(x + 9, y + 9, 8, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = inverted ? FOREST : PAPER;
-  ctx.beginPath();
-  ctx.arc(x + 7, y + 8, 2.3, 0, Math.PI * 2);
-  ctx.arc(x + 11, y + 8, 2.3, 0, Math.PI * 2);
-  ctx.fill();
-  setFont(ctx, compact ? 17 : 20, { weight: 800, family: SANS });
-  ctx.fillStyle = color;
+  setFont(ctx, compact ? 17 : 25, { weight: 800, family: SANS });
+  ctx.fillStyle = inverted ? PAPER : '#0F172A';
   ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('GUANYISEARCH', x + 27, y + 10);
+  ctx.textBaseline = 'top';
+  ctx.fillText('GUANYISEARCH', x, y);
 }
 
 function drawFooter(ctx, width, height, { text = 'GUANYISEARCH · HUMAN-CENTERED INSIGHT', compact = false } = {}) {
@@ -216,9 +206,9 @@ function drawTopicRow(ctx, topic, index, x, y, width, { compact = false } = {}) 
   return rowHeight;
 }
 
-function drawGlobe(ctx, centerX, centerY, radius) {
+function drawGlobe(ctx, centerX, centerY, radius, { stroke = withAlpha(INK, 0.28), dot = withAlpha(FOREST, 0.28) } = {}) {
   ctx.save();
-  ctx.strokeStyle = withAlpha(INK, 0.28);
+  ctx.strokeStyle = stroke;
   ctx.lineWidth = 1.2;
   ctx.beginPath();
   ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
@@ -232,7 +222,7 @@ function drawGlobe(ctx, centerX, centerY, radius) {
     ctx.stroke();
   }
   const random = seededRandom(Math.round(centerX + centerY + radius));
-  ctx.fillStyle = withAlpha(FOREST, 0.28);
+  ctx.fillStyle = dot;
   for (let index = 0; index < Math.round(radius * 3.2); index += 1) {
     const angle = random() * Math.PI * 2;
     const distance = Math.sqrt(random()) * radius * 0.88;
@@ -383,40 +373,85 @@ function drawLeaderboard(ctx, data, width, height) {
 
 function drawManifesto(ctx, data, width, height, manifesto) {
   const compact = height < 800;
-  const pad = compact ? 62 : 82;
-  drawBrand(ctx, pad, compact ? 47 : 61, { compact });
+  const pad = compact ? 58 : 78;
+  const panelWidth = compact ? Math.min(350, width * 0.31) : 330;
+  const panelX = width - pad - panelWidth;
+  const panelY = compact ? 38 : 52;
+  const panelHeight = height - panelY - (compact ? 72 : 92);
+  const copyWidth = panelX - pad - (compact ? 42 : 54);
+  drawBrand(ctx, pad, compact ? 42 : 55, { compact });
+  setFont(ctx, compact ? 11 : 13, { weight: 800, family: SANS });
+  ctx.fillStyle = withAlpha(INK, 0.56);
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'top';
+  ctx.letterSpacing = '0.14em';
+  ctx.fillText('MANIFESTO SERIES  /  01', panelX - (compact ? 12 : 18), compact ? 47 : 64);
+  ctx.letterSpacing = '0px';
+  ctx.strokeStyle = withAlpha(INK, 0.24);
+  ctx.beginPath();
+  ctx.moveTo(pad, compact ? 83 : 104);
+  ctx.lineTo(panelX - (compact ? 12 : 18), compact ? 83 : 104);
+  ctx.stroke();
+
+  fillRoundedRect(ctx, panelX, panelY, panelWidth, panelHeight, compact ? 14 : 18, FOREST);
+  strokeRoundedRect(ctx, panelX, panelY, panelWidth, panelHeight, compact ? 14 : 18, withAlpha(PAPER, 0.42));
+  setFont(ctx, compact ? 116 : 156, { weight: 650 });
+  ctx.fillStyle = withAlpha(PAPER, 0.1);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText('01', panelX + panelWidth / 2, panelY + (compact ? 36 : 42));
+  setFont(ctx, compact ? 12 : 14, { weight: 800, family: SANS });
+  ctx.fillStyle = withAlpha(PAPER, 0.84);
+  ctx.letterSpacing = '0.15em';
+  ctx.fillText('PEOPLE FIRST', panelX + panelWidth / 2, panelY + (compact ? 153 : 197));
+  ctx.letterSpacing = '0px';
+  drawGlobe(ctx, panelX + panelWidth * 0.66, panelY + panelHeight * (compact ? 0.7 : 0.68), panelWidth * (compact ? 0.42 : 0.55), {
+    stroke: withAlpha(PAPER, 0.48),
+    dot: withAlpha(PAPER, 0.38),
+  });
+  setFont(ctx, compact ? 12 : 14, { weight: 600, family: SANS });
+  ctx.fillStyle = withAlpha(PAPER, 0.76);
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  ctx.fillText('THE HUMAN', panelX + (compact ? 24 : 30), panelY + panelHeight - (compact ? 78 : 98));
+  ctx.fillText('SIGNAL', panelX + (compact ? 24 : 30), panelY + panelHeight - (compact ? 59 : 78));
+
   const quote = manifesto || DEFAULT_MANIFESTO;
-  const quoteX = pad + (compact ? 45 : 55);
-  const quoteY = compact ? 146 : 250;
-  setFont(ctx, compact ? 72 : 84, { weight: 650 });
+  const quoteX = pad;
+  const quoteY = compact ? 150 : 214;
+  setFont(ctx, compact ? 78 : 100, { weight: 650 });
   ctx.fillStyle = withAlpha(MOSS, 0.56);
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
-  ctx.fillText('“', pad, quoteY - 12);
-  drawWrapped(ctx, quote, quoteX, quoteY, compact ? width * 0.53 : width * 0.52, {
-    size: compact ? 48 : 62,
-    lineHeight: compact ? 54 : 69,
-    maxLines: compact ? 3 : 4,
+  ctx.fillText('“', quoteX, quoteY - (compact ? 44 : 57));
+  const quoteHeight = drawWrapped(ctx, quote, quoteX + (compact ? 34 : 42), quoteY, copyWidth - (compact ? 34 : 42), {
+    size: compact ? 44 : 64,
+    lineHeight: compact ? 51 : 71,
+    maxLines: compact ? 4 : 5,
     weight: 650,
   });
-  setFont(ctx, compact ? 72 : 84, { weight: 650 });
+  setFont(ctx, compact ? 52 : 70, { weight: 650 });
   ctx.fillStyle = withAlpha(MOSS, 0.56);
-  ctx.fillText('”', quoteX + (compact ? width * 0.47 : width * 0.49), quoteY + (compact ? 102 : 140));
+  ctx.fillText('”', quoteX + 34, quoteY + quoteHeight - (compact ? 9 : 12));
   ctx.strokeStyle = MOSS;
   ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.moveTo(quoteX, compact ? 350 : 599);
-  ctx.lineTo(quoteX + 70, compact ? 350 : 599);
+  const copyRuleY = quoteY + quoteHeight + (compact ? 26 : 36);
+  ctx.moveTo(quoteX + 42, copyRuleY);
+  ctx.lineTo(quoteX + (compact ? 101 : 120), copyRuleY);
   ctx.stroke();
-  drawWrapped(ctx, 'Behind every data point is a real person who chose to share a perspective.', quoteX, compact ? 370 : 630, compact ? width * 0.43 : width * 0.39, {
-    size: compact ? 16 : 20,
-    lineHeight: compact ? 23 : 28,
+  drawWrapped(ctx, 'Behind every data point is a real person who chose to share a perspective.', quoteX + 42, copyRuleY + (compact ? 23 : 28), copyWidth - 42, {
+    size: compact ? 15 : 19,
+    lineHeight: compact ? 22 : 27,
     maxLines: 3,
     family: SANS,
     weight: 500,
   });
-  if (compact) drawPlum(ctx, width - 160, 410, 1.05);
-  else drawGlobe(ctx, width - 65, height - 156, 330);
+  setFont(ctx, compact ? 11 : 13, { weight: 800, family: SANS });
+  ctx.fillStyle = withAlpha(INK, 0.55);
+  ctx.textAlign = 'left';
+  ctx.fillText('A PRINCIPLE FOR BETTER RESEARCH', quoteX + 42, compact ? height - 105 : height - 132);
+  drawPlum(ctx, compact ? panelX - 58 : panelX - 70, compact ? height - 106 : height - 130, compact ? 0.52 : 0.68);
   drawFooter(ctx, width, height, { text: 'HUMAN-CENTERED   ·   INSIGHT-DRIVEN   ·   IMPACT-FOCUSED', compact });
 }
 
