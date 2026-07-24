@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
+import MarketingAssets from './pages/MarketingAssets';
 import AdminPartners from './pages/AdminPartners';
 import AdminPanelists from './pages/AdminPanelists';
 import AdminRewards from './pages/AdminRewards';
@@ -187,6 +188,14 @@ export default function App() {
             element={
               <AdminRoute>
                 <DatabaseExplorer />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/marketing-assets"
+            element={
+              <AdminRoute>
+                <MarketingAssets />
               </AdminRoute>
             }
           />

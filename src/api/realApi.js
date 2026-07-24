@@ -369,6 +369,11 @@ export const getNewsBrief = async (params = {}) => {
   return { data: response.data.brief };
 };
 
+export const getMarketingAssets = async (params = {}) => {
+  const response = await apiClient.get('/api/admin/marketing-assets', { params });
+  return { data: response.data };
+};
+
 export const getNewsArticle = async (articleId) => {
   const response = await apiClient.get(`/api/news/${articleId}`);
   return { data: response.data.article };
