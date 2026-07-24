@@ -554,6 +554,11 @@ export const getTrafficTasks = async (params = {}) => {
   return response.data;
 };
 
+export const getTrafficSettlementReview = async () => {
+  const response = await apiClient.get('/api/traffic/settlement-review');
+  return response.data;
+};
+
 export const importTrafficTask = async (payload) => {
   const response = await apiClient.post('/api/traffic/tasks/import', payload);
   return response.data;

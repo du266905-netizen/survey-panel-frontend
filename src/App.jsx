@@ -14,6 +14,7 @@ import NewsWall from './pages/NewsWall';
 import PanelProfilePage from './pages/PanelProfilePage';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
+import SettlementReview from './pages/SettlementReview';
 import Settings from './pages/Settings';
 import SurveyList from './pages/SurveyList';
 import SurveyComplete from './pages/SurveyComplete';
@@ -138,6 +139,14 @@ export default function App() {
             element={
               <AdminRoute>
                 <TrafficConsole />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/orbit/settlement"
+            element={
+              <AdminRoute>
+                <SettlementReview />
               </AdminRoute>
             }
           />
