@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminSupportTickets from './pages/AdminSupportTickets';
 import MarketingAssets from './pages/MarketingAssets';
 import AdminPartners from './pages/AdminPartners';
 import AdminPanelists from './pages/AdminPanelists';
@@ -30,6 +31,7 @@ import Wallet from './pages/Wallet';
 import WorkerDetail from './pages/WorkerDetail';
 import WorkerMonitor from './pages/WorkerMonitor';
 import AgentPrecheck from './pages/AgentPrecheck';
+import SupportChatWidget from './components/SupportChatWidget';
 import { isAdminRole } from './utils/roles';
 
 function ProtectedRoute({ children }) {
@@ -200,6 +202,14 @@ export default function App() {
             }
           />
           <Route
+            path="/admin/support"
+            element={
+              <AdminRoute>
+                <AdminSupportTickets />
+              </AdminRoute>
+            }
+          />
+          <Route
             path="/admin"
             element={
               <AdminRoute>
@@ -211,6 +221,7 @@ export default function App() {
         <Route path="/" element={<PublicEntry><Landing initialAuthMode="register" /></PublicEntry>} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
+      <SupportChatWidget />
     </>
   );
 }

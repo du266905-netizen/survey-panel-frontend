@@ -5,6 +5,7 @@ const sections = [
   { id: 'information-collected', title: 'Information we collect' },
   { id: 'how-we-use', title: 'How we use information' },
   { id: 'sharing', title: 'Sharing by category' },
+  { id: 'ai-support', title: 'AI-assisted support' },
   { id: 'retention', title: 'Retention' },
   { id: 'rights', title: 'Your privacy rights' },
   { id: 'california', title: 'California notice' },
@@ -80,17 +81,22 @@ export default function Privacy() {
         <p>We generally retain your personal information for the life of your account or until you ask us to delete it. We may retain limited information for longer where necessary for legal obligations, resolving disputes, protecting the panel, or maintaining reward records.</p>
       </LegalSection>
 
-      <LegalSection number={6} id="rights" title="Your privacy rights">
+      <LegalSection number={6} id="ai-support" title="AI-assisted support">
+        <p>When you choose to use the website support assistant, the questions and messages you send are processed by an AI service provider solely to generate a support response. The assistant is designed to use published platform information and cannot review an individual account, wallet, survey, redemption, access decision, or appeal.</p>
+        <p>Please do not include passwords, verification or one-time codes, payment-card details, government identifiers, or full financial details in chat. If you ask to talk to a person, the conversation and contact details you provide are stored as a private support request for our team to review.</p>
+      </LegalSection>
+
+      <LegalSection number={7} id="rights" title="Your privacy rights">
         <p>Depending on where you live, you may have the right to request access to your information, correction of inaccurate information, deletion, withdrawal of consent, and a portable copy of information you provided to us.</p>
         <p>To exercise a right, email <a href="mailto:heguanyi@guanyi-media.com?subject=Privacy%20Request">heguanyi@guanyi-media.com</a> with the subject line “Privacy Request.” We may ask for information necessary to verify the request and will respond as required by applicable law.</p>
       </LegalSection>
 
-      <LegalSection number={7} id="california" title="California privacy notice">
+      <LegalSection number={8} id="california" title="California privacy notice">
         <p>For California residents, certain uses of IP addresses, device identifiers, and related technical information may be considered “sharing” under California privacy law. You may ask us to opt you out of applicable sharing by emailing <a href="mailto:heguanyi@guanyi-media.com?subject=California%20Privacy%20Request">heguanyi@guanyi-media.com</a> with the subject line “California Privacy Request.”</p>
         <p>Guanyi Media does not knowingly sell or share the personal information of California residents under 16 years of age.</p>
       </LegalSection>
 
-      <LegalSection number={8} id="cookies" title="Cookies and similar technology">
+      <LegalSection number={9} id="cookies" title="Cookies and similar technology">
         <div className="legal-cookie-grid">
           <article>
             <span>Necessary</span>
@@ -105,7 +111,7 @@ export default function Privacy() {
         </div>
       </LegalSection>
 
-      <LegalSection number={9} id="security" title="Security and contact">
+      <LegalSection number={10} id="security" title="Security and contact">
         <p>We use encryption in transit, access controls, and other technical and organizational measures designed to protect personal information. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.</p>
         <p>For questions about this policy, contact <a href="mailto:heguanyi@guanyi-media.com">heguanyi@guanyi-media.com</a>.</p>
       </LegalSection>

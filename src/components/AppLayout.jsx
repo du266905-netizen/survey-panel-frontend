@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, ChevronDown, ClipboardCheck, Compass, Database, Gift, Image, ListFilter, LogOut, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, ChevronDown, ClipboardCheck, Compass, Database, Gift, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
@@ -148,6 +148,7 @@ export default function AppLayout({ children }) {
                 {adminLink('/admin/partners', 'Partners', Users)}
                 {adminLink('/admin/database', 'Database', Database)}
                 {adminLink('/admin/marketing-assets', 'Marketing Assets', Image)}
+                {adminLink('/admin/support', 'Support Requests', MessageCircleMore)}
                 {adminLink('/admin', 'Admin Dashboard', ShieldCheck, true)}
               </>
             )}
