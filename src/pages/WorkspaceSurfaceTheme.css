@@ -1,48 +1,183 @@
-.dashboard-command {
-  border-color: rgba(71, 70, 64, .84);
+.app-main-dashboard {
+  min-height: calc(100vh - 76px);
   background:
-    radial-gradient(circle at 88% 7%, rgba(243, 237, 224, .14), transparent 34%),
-    radial-gradient(circle at 9% 0%, rgba(189, 157, 95, .16), transparent 42%),
-    linear-gradient(135deg, #5a5952 0%, #494944 52%, #3b3b37 100%);
-  box-shadow: 0 22px 46px rgba(66, 58, 43, .15), inset 0 1px 0 rgba(255, 255, 255, .14);
+    radial-gradient(ellipse 54% 48% at 94% 0%, rgba(129, 116, 83, .2), transparent 70%),
+    radial-gradient(ellipse 46% 52% at 8% 100%, rgba(77, 102, 83, .18), transparent 72%),
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(243, 237, 224, .016) 9px 10px),
+    linear-gradient(135deg, #43433f 0%, #363734 49%, #2e302e 100%);
+  box-shadow: inset 1px 0 rgba(243, 237, 224, .06);
+}
+
+.app-main-dashboard::before { display: none; }
+
+.dashboard-page {
+  position: relative;
+  min-height: calc(100vh - 132px);
+  padding: 8px 0 34px;
+}
+
+.dashboard-command {
+  grid-template-columns: minmax(0, 1.12fr) minmax(340px, .88fr);
+  gap: clamp(34px, 5vw, 76px);
+  overflow: visible;
+  border: 0;
+  border-bottom: 1px solid rgba(243, 237, 224, .2);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: clamp(20px, 3vw, 40px) 0 clamp(34px, 4vw, 54px);
 }
 
 .dashboard-command::before {
-  border-color: rgba(243, 237, 224, .24);
-  box-shadow: 0 0 0 74px rgba(243, 237, 224, .035), 0 0 0 150px rgba(195, 166, 106, .045);
+  inset: -54px 6% auto auto;
+  width: min(42vw, 510px);
+  height: min(42vw, 510px);
+  border: 0;
+  background: radial-gradient(circle, rgba(243, 237, 224, .1), rgba(243, 237, 224, 0) 67%);
+  box-shadow: none;
 }
 
-.dashboard-command-kicker { color: rgba(248, 242, 231, .72); }
-.dashboard-command h1 { color: #fbf6eb; }
-.dashboard-command p:not(.dashboard-command-kicker) { color: rgba(248, 242, 231, .82); }
+.dashboard-command-kicker { color: rgba(247, 240, 227, .64); }
+.dashboard-command h1 { max-width: 690px; color: #fbf6eb; }
+.dashboard-command p:not(.dashboard-command-kicker) { color: rgba(247, 240, 227, .76); }
+
+.app-main-dashboard .dashboard-command .btn-primary {
+  border-color: #d9bd7a;
+  background: #d9bd7a;
+  box-shadow: none;
+  color: #302e28;
+}
+
+.app-main-dashboard .dashboard-command .btn-primary:hover {
+  border-color: #eee0bc;
+  background: #eee0bc;
+  color: #25241f;
+}
+
+.app-main-dashboard .dashboard-command .btn-secondary,
+.app-main-dashboard .dashboard-records-section .btn-secondary {
+  border-color: rgba(243, 237, 224, .28);
+  background: transparent;
+  color: #f4eee2;
+}
+
+.app-main-dashboard .dashboard-command .btn-secondary:hover,
+.app-main-dashboard .dashboard-records-section .btn-secondary:hover {
+  border-color: rgba(243, 237, 224, .56);
+  background: rgba(243, 237, 224, .08);
+  color: #fffaf0;
+}
 
 .dashboard-path-panel {
-  border-color: rgba(246, 240, 229, .3);
-  background: linear-gradient(160deg, rgba(95, 94, 87, .94), rgba(63, 63, 59, .92));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16);
+  align-self: stretch;
+  gap: 14px;
+  border: 0;
+  border-left: 1px solid rgba(243, 237, 224, .25);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 4px 0 4px clamp(24px, 3vw, 40px);
 }
 
 .dashboard-path-head > span,
-.dashboard-path-panel > p { color: rgba(246, 240, 229, .72); }
+.dashboard-path-panel > p { color: rgba(247, 240, 227, .64); }
 .dashboard-path-panel strong,
 .dashboard-path-steps article strong { color: #fbf6eb; }
 
+.dashboard-path-steps { gap: 0; }
+
 .dashboard-path-steps article {
-  border-color: rgba(246, 240, 229, .24);
-  background: rgba(76, 76, 70, .76);
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 4px 10px;
+  border: 0;
+  border-top: 1px solid rgba(243, 237, 224, .16);
+  border-radius: 0;
+  background: transparent;
+  padding: 15px 0;
+}
+
+.dashboard-path-steps article::after {
+  width: 2px;
+  background: linear-gradient(180deg, #d4b36f, rgba(133, 167, 131, .52));
 }
 
 .dashboard-path-steps article > span { color: #e0bd75; }
-.dashboard-path-steps article p { color: rgba(248, 242, 231, .76); }
+.dashboard-path-steps article p { color: rgba(247, 240, 227, .7); }
 
-.dashboard-chart-empty {
-  border-color: rgba(108, 101, 86, .24);
-  background: rgba(238, 232, 219, .9);
-  box-shadow: 0 18px 40px rgba(77, 64, 42, .11), inset 0 1px 0 rgba(255, 255, 255, .72);
+.dashboard-trend-card.card {
+  border: 0;
+  border-bottom: 1px solid rgba(243, 237, 224, .2);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0 0 40px;
 }
 
-.dashboard-chart-empty p { color: #292720; }
-.dashboard-chart-empty span { color: #716a5c; }
+.dashboard-records-section { padding-bottom: 18px; }
+
+.app-main-dashboard .text-slate-950,
+.app-main-dashboard .text-slate-900,
+.app-main-dashboard .text-slate-800 { color: #fbf6eb !important; }
+
+.app-main-dashboard .text-slate-700,
+.app-main-dashboard .text-slate-600 { color: #ded7ca !important; }
+
+.app-main-dashboard .text-slate-500,
+.app-main-dashboard .text-slate-400 { color: #b8b0a3 !important; }
+
+.app-shell .app-main-dashboard .field {
+  border-color: rgba(243, 237, 224, .26);
+  background: rgba(34, 36, 34, .38);
+  color: #fbf6eb;
+}
+
+.app-shell .app-main-dashboard .field:focus {
+  border-color: rgba(222, 192, 125, .75);
+  box-shadow: 0 0 0 4px rgba(222, 192, 125, .12);
+}
+
+.dashboard-chart-empty {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.dashboard-chart-empty p { color: #f4eee2; }
+.dashboard-chart-empty span { color: #beb6a8; }
+
+.app-shell .app-main-dashboard .dashboard-records-section .app-data-table.card {
+  border: 0;
+  border-top: 1px solid rgba(243, 237, 224, .2);
+  border-bottom: 1px solid rgba(243, 237, 224, .2);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-shell .app-main-dashboard .dashboard-records-section .app-data-table .table-head {
+  background: rgba(243, 237, 224, .06);
+  color: #d4ccbc;
+}
+
+.app-shell .app-main-dashboard .dashboard-records-section .app-data-table tbody.bg-white { background: transparent !important; }
+
+.app-shell .app-main-dashboard .dashboard-records-section .app-data-table .table-cell,
+.app-shell .app-main-dashboard .dashboard-records-section .app-data-table .text-slate-500 { color: #e5ded0 !important; }
+
+.app-shell .app-main-dashboard .dashboard-records-section .app-data-table .divide-slate-100 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(243, 237, 224, .13) !important; }
+
+.app-shell .app-main-dashboard .dashboard-records-section .app-data-table tbody tr:hover { background: rgba(243, 237, 224, .065) !important; }
+
+.app-shell .app-main-dashboard .recharts-default-tooltip {
+  border-color: rgba(243, 237, 224, .24) !important;
+  background: #30312e !important;
+  box-shadow: 0 16px 34px rgba(15, 16, 14, .28) !important;
+}
+
+.app-shell .app-main-dashboard .recharts-tooltip-label,
+.app-shell .app-main-dashboard .recharts-tooltip-item,
+.app-main-dashboard .recharts-legend-item-text { color: #f3ede0 !important; }
 
 .wallet-hero {
   border-color: rgba(98, 83, 55, .25);

@@ -158,7 +158,7 @@ export default function AppLayout({ children }) {
             Secure workspace
           </div>
         </aside>
-        <main className="app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10">
+        <main className={`app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10 ${location.pathname === '/dashboard' ? 'app-main-dashboard' : ''}`}>
           <div key={location.pathname} className="app-route-enter">
             {children || <Outlet />}
           </div>

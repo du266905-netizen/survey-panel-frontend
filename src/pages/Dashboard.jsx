@@ -9,7 +9,7 @@ import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
 
 const chartTooltipStyle = {
-  backgroundColor: '#3f3f3a',
+  backgroundColor: '#30312e',
   border: '1px solid rgba(243, 237, 224, .36)',
   borderRadius: 10,
   color: '#f3ede0',
@@ -100,7 +100,7 @@ export default function Dashboard() {
   const fullRecordColumns = recordColumns;
 
   return (
-    <>
+    <div className="dashboard-page space-y-10">
       <section className="dashboard-command mb-6">
         <div className="dashboard-command-copy">
           <p className="dashboard-command-kicker">Start earning today</p>
@@ -169,10 +169,10 @@ export default function Dashboard() {
               <div className={hasTrendActivity ? 'h-full' : 'h-full dashboard-chart-muted'}>
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(117, 109, 94, .22)" vertical={false} />
-                    <XAxis dataKey="day" tick={{ fill: '#736d61', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
-                    <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#736d61', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
-                    <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#736d61', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(243, 237, 224, .14)" vertical={false} />
+                    <XAxis dataKey="day" tick={{ fill: '#c2bbae', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
+                    <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#c2bbae', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
+                    <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#c2bbae', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
                     <Tooltip
                       contentStyle={chartTooltipStyle}
                       labelStyle={{ color: '#f3ede0' }}
@@ -189,7 +189,7 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <section className="mt-6">
+      <section className="dashboard-records-section">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-bold text-slate-950">Recent records</h2>
@@ -272,6 +272,6 @@ export default function Dashboard() {
           </section>
         </div>
       )}
-    </>
+    </div>
   );
 }
