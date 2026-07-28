@@ -44,8 +44,8 @@
 .dashboard-checklist-illustration {
   width: min(100%, 400px);
   margin-top: clamp(28px, 4vw, 58px);
-  color: #f5eee1;
-  opacity: .92;
+  color: rgba(244, 237, 224, .76);
+  opacity: .88;
 }
 
 .dashboard-checklist-illustration svg {
@@ -64,14 +64,21 @@
   stroke-linejoin: round;
 }
 
-.dashboard-checklist-outline { stroke-width: 2.9; }
-.dashboard-checklist-detail { stroke-width: 2.45; }
-.dashboard-checklist-orbit { stroke-width: 2.15; opacity: .72; }
+.dashboard-checklist-outline { stroke-width: 2.45; }
+.dashboard-checklist-detail { stroke-width: 2.05; }
+.dashboard-checklist-orbit { stroke-width: 1.8; opacity: .42; }
 .dashboard-checklist-ground { stroke: rgba(245, 238, 225, .28); stroke-width: 1.55; }
-.dashboard-checklist-box { fill: rgba(245, 238, 225, .035); }
-.dashboard-checklist-orb { fill: rgba(174, 190, 136, .62); }
+.dashboard-checklist-paper { fill: rgba(244, 237, 224, .045); }
+.dashboard-checklist-box { fill: rgba(244, 237, 224, .025); }
+.dashboard-checklist-box.is-complete { fill: rgba(211, 170, 90, .86); stroke: rgba(241, 218, 163, .92); }
+.dashboard-checklist-complete-mark { stroke: #373832; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.3; }
+.dashboard-checklist-orb { fill: rgba(174, 190, 136, .52); }
 .dashboard-checklist-dot { fill: #c98250; }
-.dashboard-checklist-seal { stroke: currentColor; stroke-width: 2.8; }
+.dashboard-checklist-stamp { fill: rgba(207, 167, 91, .46); stroke: rgba(244, 237, 224, .64); stroke-width: 2.15; }
+.dashboard-checklist-accent,
+.dashboard-checklist-stamp-mark { transform-box: fill-box; transform-origin: center; }
+.dashboard-checklist-accent { animation: dashboard-checklist-accent-drift 7.2s ease-in-out infinite; }
+.dashboard-checklist-stamp-mark { animation: dashboard-checklist-stamp-breathe 6.4s ease-in-out infinite; }
 
 .app-main-dashboard .dashboard-command .btn-primary {
   border-color: #d9bd7a;
@@ -377,4 +384,19 @@
   .dashboard-path-head { align-items: flex-start; flex-direction: column; gap: 6px; }
   .dashboard-path-head strong { white-space: normal; text-align: left; }
   .dashboard-path-steps article { grid-template-columns: 42px minmax(0, 1fr); gap: 4px 10px; padding-left: 18px; }
+}
+
+@keyframes dashboard-checklist-accent-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3px, -4px, 0) scale(1.05); }
+}
+
+@keyframes dashboard-checklist-stamp-breathe {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: .86; }
+  50% { transform: translate3d(-2px, -3px, 0) scale(1.035); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-checklist-accent,
+  .dashboard-checklist-stamp-mark { animation: none; }
 }
