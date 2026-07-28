@@ -33,10 +33,9 @@
 .dashboard-command p:not(.dashboard-command-kicker) { color: rgba(247, 240, 227, .76); }
 
 .dashboard-checklist-illustration {
-  width: min(100%, 220px);
-  margin: clamp(44px, 5vw, 72px) 0 0 clamp(8px, 4vw, 54px);
-  color: rgba(243, 237, 224, .84);
-  opacity: .9;
+  width: min(100%, 320px);
+  margin: clamp(42px, 5vw, 70px) 0 0 clamp(8px, 3vw, 36px);
+  color: #f7f0e3;
 }
 
 .dashboard-checklist-illustration svg {
@@ -46,23 +45,45 @@
   overflow: visible;
 }
 
-.dashboard-checklist-outline,
-.dashboard-checklist-detail,
-.dashboard-checklist-ground {
+.dashboard-notebook-outline,
+.dashboard-notebook-spine,
+.dashboard-notebook-ring,
+.dashboard-notebook-line,
+.dashboard-notebook-check,
+.dashboard-notebook-box,
+.dashboard-notebook-pen-cap,
+.dashboard-notebook-pen-body,
+.dashboard-notebook-pen-detail,
+.dashboard-notebook-pen-tip,
+.dashboard-notebook-ground {
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.dashboard-checklist-outline { stroke-width: 2.35; }
-.dashboard-checklist-detail { stroke-width: 2; }
-.dashboard-checklist-detail.is-faint { opacity: .54; }
-.dashboard-checklist-ground { stroke: rgba(243, 237, 224, .28); stroke-width: 1.35; }
-.dashboard-checklist-box { fill: transparent; }
-.dashboard-checklist-sheet,
-.dashboard-checklist-spark { transform-box: fill-box; transform-origin: center; }
-.dashboard-checklist-sheet { animation: dashboard-checklist-sheet-drift 8s ease-in-out infinite; }
-.dashboard-checklist-spark { animation: dashboard-checklist-spark-breathe 6s ease-in-out infinite; }
+.dashboard-notebook-outline { fill: rgba(247, 240, 227, .025); stroke-width: 3.5; }
+.dashboard-notebook-spine { stroke-width: 3; }
+.dashboard-notebook-ring { stroke-width: 3.15; }
+.dashboard-notebook-line { stroke-width: 3.15; opacity: .92; }
+.dashboard-notebook-box { fill: transparent; stroke-width: 3.15; }
+.dashboard-notebook-check-fill { fill: #d5ae62; }
+.dashboard-notebook-check-fill.is-sage { fill: #80936d; }
+.dashboard-notebook-check { stroke: #171716; stroke-width: 3.25; }
+.dashboard-notebook-pen-cap { fill: #d5ae62; stroke-width: 3.3; }
+.dashboard-notebook-pen-body { fill: #bd7250; stroke-width: 3.3; }
+.dashboard-notebook-pen-detail { stroke-width: 2.6; }
+.dashboard-notebook-pen-tip { fill: #f7f0e3; stroke-width: 3; }
+.dashboard-notebook-ground { stroke: rgba(247, 240, 227, .36); stroke-width: 1.7; }
+
+.dashboard-notebook,
+.dashboard-notebook-pen,
+.dashboard-notebook-check-delayed {
+  transform-box: fill-box;
+}
+
+.dashboard-notebook { transform-origin: center; animation: dashboard-notebook-drift 9s ease-in-out infinite; }
+.dashboard-notebook-pen { transform-origin: 70% 88%; animation: dashboard-notebook-pen-write 7.5s ease-in-out infinite; }
+.dashboard-notebook-check-delayed { transform-origin: center; animation: dashboard-notebook-check-in 7.5s ease-in-out infinite; }
 
 .app-main-dashboard .dashboard-command .btn-primary {
   border-color: #f3ede0;
@@ -357,30 +378,38 @@
 @media (max-width: 960px) {
   .dashboard-command { grid-template-columns: 1fr; }
   .dashboard-path-panel { border-top: 1px solid rgba(243, 237, 224, .22); border-left: 0; padding: 24px 0 0; }
-  .dashboard-checklist-illustration { width: min(46vw, 220px); }
+  .dashboard-checklist-illustration { width: min(52vw, 290px); }
 }
 
 @media (max-width: 640px) {
   .app-main-dashboard { padding-top: 18px; }
   .dashboard-page { padding-top: 0; }
   .dashboard-command { gap: 32px; padding-top: 16px; }
-  .dashboard-checklist-illustration { width: min(100%, 190px); margin: 32px 0 0 10px; }
+  .dashboard-checklist-illustration { width: min(100%, 238px); margin: 32px 0 0 4px; }
   .dashboard-path-head { align-items: flex-start; flex-direction: column; gap: 6px; }
   .dashboard-path-head strong { white-space: normal; text-align: left; }
   .dashboard-path-steps article { grid-template-columns: 42px minmax(0, 1fr); gap: 4px 10px; padding-left: 18px; }
 }
 
-@keyframes dashboard-checklist-sheet-drift {
+@keyframes dashboard-notebook-drift {
   0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -2px, 0); }
+  50% { transform: translate3d(0, -3px, 0); }
 }
 
-@keyframes dashboard-checklist-spark-breathe {
-  0%, 100% { transform: scale(1); opacity: .52; }
-  50% { transform: scale(1.08); opacity: 1; }
+@keyframes dashboard-notebook-pen-write {
+  0%, 24%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  40% { transform: translate3d(-2px, 2px, 0) rotate(-1.4deg); }
+  54% { transform: translate3d(2px, -2px, 0) rotate(1deg); }
+}
+
+@keyframes dashboard-notebook-check-in {
+  0%, 31%, 100% { opacity: 1; transform: scale(1); }
+  38% { opacity: .3; transform: scale(.92); }
+  47% { opacity: 1; transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dashboard-checklist-sheet,
-  .dashboard-checklist-spark { animation: none; }
+  .dashboard-notebook,
+  .dashboard-notebook-pen,
+  .dashboard-notebook-check-delayed { animation: none; }
 }
