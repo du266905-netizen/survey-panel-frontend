@@ -31,13 +31,13 @@ export function SupportChatGlyph({ size = 28, decorative = false }) {
   return (
     <svg className="support-chat-glyph" viewBox="0 0 120 110" width={size} height={size} aria-hidden={decorative ? 'true' : undefined} role={decorative ? undefined : 'img'}>
       {!decorative && <title>Support</title>}
-      <circle className="support-chat-glyph-coin" cx="92" cy="23" r="17" />
-      <path className="support-chat-glyph-coin-mark" d="M84 23h16M92 15v16" />
-      <path className="support-chat-glyph-bubble" d="M20 38c0-15 11-25 27-25h28c15 0 25 10 25 24v15c0 14-10 23-25 23H51L29 92l4-21c-8-6-13-17-13-33Z" />
-      <path className="support-chat-glyph-copy" d="M39 39h34M39 51h25M39 63h13" />
-      <path className="support-chat-glyph-signal" d="M75 82c8 0 14 3 18 9M83 91c5 0 8 2 11 5" />
-      <path className="support-chat-glyph-ground" d="M23 100c19 4 43 4 60 0" />
-      <circle className="support-chat-glyph-accent" cx="105" cy="48" r="3.5" />
+      <circle className="support-chat-glyph-orb" cx="87" cy="27" r="19" />
+      <path className="support-chat-glyph-bubble" d="M22 31c4-13 18-20 40-20h19c17 0 28 8 30 22 2 13-3 29-14 37-7 5-16 7-28 7H48L27 94l4-22c-9-8-12-25-9-41Z" />
+      <g className="support-chat-glyph-dots">
+        <circle cx="47" cy="57" r="4.2" />
+        <circle cx="61" cy="57" r="4.2" />
+        <circle cx="75" cy="57" r="4.2" />
+      </g>
     </svg>
   );
 }
