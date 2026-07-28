@@ -41,6 +41,38 @@
 .dashboard-command h1 { max-width: 690px; color: #fbf6eb; }
 .dashboard-command p:not(.dashboard-command-kicker) { color: rgba(247, 240, 227, .76); }
 
+.dashboard-checklist-illustration {
+  width: min(100%, 400px);
+  margin-top: clamp(28px, 4vw, 58px);
+  color: #f5eee1;
+  opacity: .92;
+}
+
+.dashboard-checklist-illustration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.dashboard-checklist-outline,
+.dashboard-checklist-detail,
+.dashboard-checklist-orbit,
+.dashboard-checklist-ground {
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard-checklist-outline { stroke-width: 2.9; }
+.dashboard-checklist-detail { stroke-width: 2.45; }
+.dashboard-checklist-orbit { stroke-width: 2.15; opacity: .72; }
+.dashboard-checklist-ground { stroke: rgba(245, 238, 225, .28); stroke-width: 1.55; }
+.dashboard-checklist-box { fill: rgba(245, 238, 225, .035); }
+.dashboard-checklist-orb { fill: rgba(174, 190, 136, .62); }
+.dashboard-checklist-dot { fill: #c98250; }
+.dashboard-checklist-seal { stroke: currentColor; stroke-width: 2.8; }
+
 .app-main-dashboard .dashboard-command .btn-primary {
   border-color: #d9bd7a;
   background: #d9bd7a;
@@ -84,16 +116,24 @@
 .dashboard-path-panel strong,
 .dashboard-path-steps article strong { color: #fbf6eb; }
 
+.dashboard-path-head { align-items: flex-start; }
+
+.dashboard-path-head strong {
+  max-width: none;
+  font-size: clamp(14px, 1.1vw, 16px);
+  white-space: nowrap;
+}
+
 .dashboard-path-steps { gap: 0; }
 
 .dashboard-path-steps article {
-  grid-template-columns: 34px minmax(0, 1fr);
-  gap: 4px 10px;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 4px 14px;
   border: 0;
   border-top: 1px solid rgba(243, 237, 224, .16);
   border-radius: 0;
   background: transparent;
-  padding: 15px 0;
+  padding: 15px 0 15px 22px;
 }
 
 .dashboard-path-steps article::after {
@@ -101,7 +141,7 @@
   background: linear-gradient(180deg, #d4b36f, rgba(133, 167, 131, .52));
 }
 
-.dashboard-path-steps article > span { color: #e0bd75; }
+.dashboard-path-steps article > span { color: #e0bd75; padding-top: 2px; }
 .dashboard-path-steps article p { color: rgba(247, 240, 227, .7); }
 
 .dashboard-trend-card.card {
@@ -321,4 +361,20 @@
   .wallet-hero { border-radius: 23px; }
 
   .wallet-reward-slide { padding: 22px; }
+}
+
+@media (max-width: 960px) {
+  .dashboard-command { grid-template-columns: 1fr; }
+  .dashboard-path-panel { border-top: 1px solid rgba(243, 237, 224, .22); border-left: 0; padding: 24px 0 0; }
+  .dashboard-checklist-illustration { width: min(74vw, 390px); }
+}
+
+@media (max-width: 640px) {
+  .app-main-dashboard { padding-top: 18px; }
+  .dashboard-page { padding-top: 0; }
+  .dashboard-command { gap: 32px; padding-top: 16px; }
+  .dashboard-checklist-illustration { width: min(100%, 330px); margin-top: 26px; }
+  .dashboard-path-head { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .dashboard-path-head strong { white-space: normal; text-align: left; }
+  .dashboard-path-steps article { grid-template-columns: 42px minmax(0, 1fr); gap: 4px 10px; padding-left: 18px; }
 }

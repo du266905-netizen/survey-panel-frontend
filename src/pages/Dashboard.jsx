@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getDashboard } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
+import DashboardChecklistIllustration from '../components/DashboardChecklistIllustration';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
 
@@ -114,6 +115,7 @@ export default function Dashboard() {
               Open wallet
             </Link>
           </div>
+          <DashboardChecklistIllustration />
         </div>
         <div className="dashboard-path-panel" aria-label="Reward path">
           <div className="dashboard-path-head">
