@@ -7,7 +7,6 @@ import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
-import './WorkspaceSurfaceTheme.css';
 
 const chartTooltipStyle = {
   backgroundColor: '#3f3f3a',

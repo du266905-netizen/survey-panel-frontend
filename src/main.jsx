@@ -7,6 +7,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { installDomMutationSafety } from './utils/domSafety';
 import './index.css';
 import './styles/paper-contrast-fixes.css';
+import './pages/WorkspaceSurfaceTheme.css';
 
 installDomMutationSafety();
 
