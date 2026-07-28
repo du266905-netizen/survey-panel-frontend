@@ -8,6 +8,7 @@ import StatusBadge from '../components/StatusBadge';
 import { useAuth } from '../components/AuthContext';
 import { giftCardImageSources, giftCardOptions } from '../config/giftCardOptions';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
+import './WorkspaceSurfaceTheme.css';
 
 const defaultGiftCardDenominations = [10, 25, 50];
 const giftCardRedemptionMinimum = 10000;

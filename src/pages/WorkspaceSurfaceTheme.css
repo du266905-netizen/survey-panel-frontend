@@ -1,0 +1,189 @@
+.dashboard-command {
+  border-color: rgba(71, 70, 64, .84);
+  background:
+    radial-gradient(circle at 88% 7%, rgba(243, 237, 224, .14), transparent 34%),
+    radial-gradient(circle at 9% 0%, rgba(189, 157, 95, .16), transparent 42%),
+    linear-gradient(135deg, #5a5952 0%, #494944 52%, #3b3b37 100%);
+  box-shadow: 0 22px 46px rgba(66, 58, 43, .15), inset 0 1px 0 rgba(255, 255, 255, .14);
+}
+
+.dashboard-command::before {
+  border-color: rgba(243, 237, 224, .24);
+  box-shadow: 0 0 0 74px rgba(243, 237, 224, .035), 0 0 0 150px rgba(195, 166, 106, .045);
+}
+
+.dashboard-command-kicker { color: rgba(248, 242, 231, .72); }
+.dashboard-command h1 { color: #fbf6eb; }
+.dashboard-command p:not(.dashboard-command-kicker) { color: rgba(248, 242, 231, .82); }
+
+.dashboard-path-panel {
+  border-color: rgba(246, 240, 229, .3);
+  background: linear-gradient(160deg, rgba(95, 94, 87, .94), rgba(63, 63, 59, .92));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16);
+}
+
+.dashboard-path-head > span,
+.dashboard-path-panel > p { color: rgba(246, 240, 229, .72); }
+.dashboard-path-panel strong,
+.dashboard-path-steps article strong { color: #fbf6eb; }
+
+.dashboard-path-steps article {
+  border-color: rgba(246, 240, 229, .24);
+  background: rgba(76, 76, 70, .76);
+}
+
+.dashboard-path-steps article > span { color: #e0bd75; }
+.dashboard-path-steps article p { color: rgba(248, 242, 231, .76); }
+
+.dashboard-chart-empty {
+  border-color: rgba(108, 101, 86, .24);
+  background: rgba(238, 232, 219, .9);
+  box-shadow: 0 18px 40px rgba(77, 64, 42, .11), inset 0 1px 0 rgba(255, 255, 255, .72);
+}
+
+.dashboard-chart-empty p { color: #292720; }
+.dashboard-chart-empty span { color: #716a5c; }
+
+.wallet-hero {
+  border-color: rgba(98, 83, 55, .25);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(195, 156, 87, .17), transparent 33%),
+    radial-gradient(circle at 89% 17%, rgba(112, 137, 108, .14), transparent 34%),
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(86, 70, 41, .026) 9px 10px),
+    #f3ede0;
+  box-shadow: 0 22px 46px rgba(76, 59, 32, .13), inset 0 1px 0 rgba(255, 255, 255, .72);
+}
+
+.wallet-hero-kicker { color: #766d5c; }
+.wallet-hero h1 { color: #1f1f1b; }
+.wallet-hero-copy > p:not(.wallet-hero-kicker) { color: #5f5a50; }
+
+.wallet-hero-actions span {
+  border-color: rgba(91, 77, 52, .23);
+  background: rgba(255, 252, 245, .66);
+  color: #5c5549;
+}
+
+.wallet-reward-stage::before {
+  background:
+    radial-gradient(circle at 48% 44%, rgba(186, 148, 76, .18), transparent 54%),
+    radial-gradient(circle at 74% 58%, rgba(115, 145, 107, .12), transparent 58%);
+}
+
+.wallet-reward-slide {
+  border-color: rgba(94, 78, 50, .22);
+  background:
+    radial-gradient(circle at 80% 8%, rgba(255, 253, 246, .76), transparent 30%),
+    linear-gradient(145deg, #eee7d9, #d9d0c0);
+  box-shadow: 0 22px 46px rgba(76, 59, 32, .15), inset 0 1px 0 rgba(255, 255, 255, .76);
+}
+
+.wallet-reward-slide::before {
+  border-color: rgba(75, 70, 60, .2);
+  background: rgba(255, 253, 247, .26);
+}
+
+.wallet-reward-slide.is-crypto {
+  background:
+    radial-gradient(circle at 82% 8%, rgba(255, 252, 245, .58), transparent 30%),
+    radial-gradient(circle at 15% 100%, rgba(187, 164, 113, .18), transparent 36%),
+    linear-gradient(145deg, #e3e9dc, #cbd6c3);
+}
+
+.wallet-reward-orbit {
+  border-color: rgba(67, 82, 66, .23);
+  background: linear-gradient(135deg, rgba(255, 254, 249, .48), rgba(255, 253, 247, .16));
+}
+
+.wallet-reward-card-face {
+  border-color: rgba(93, 79, 53, .22);
+  background: rgba(255, 252, 246, .68);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .86), 0 16px 32px rgba(84, 67, 39, .11);
+}
+
+.wallet-reward-card-face::before { background: rgba(185, 147, 76, .14); }
+.wallet-reward-card-face span { color: #26231d; }
+.wallet-reward-slide p { color: #5e594e; }
+
+.wallet-reward-nav {
+  border-color: rgba(89, 75, 51, .26);
+  background: rgba(250, 246, 238, .88);
+  color: #365440;
+  box-shadow: 0 10px 22px rgba(84, 66, 37, .12);
+}
+
+.wallet-reward-nav:hover {
+  background: #fffaf0;
+  color: #21412e;
+}
+
+.wallet-reward-dots button { background: rgba(111, 100, 79, .38); }
+.wallet-reward-dots button.is-active { background: #967236; }
+
+.gift-card-modal-backdrop {
+  background: rgba(45, 43, 36, .34);
+  backdrop-filter: blur(10px);
+}
+
+.gift-card-modal {
+  border-color: rgba(98, 83, 55, .26);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(193, 157, 92, .15), transparent 34%),
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(86, 70, 41, .022) 9px 10px),
+    #f3ede0;
+  box-shadow: 0 34px 82px rgba(61, 51, 34, .28), inset 0 1px 0 rgba(255, 255, 255, .76);
+  scrollbar-color: rgba(93, 80, 57, .45) transparent;
+}
+
+.gift-card-modal-head p { color: #7d6842; }
+.gift-card-modal-head h2 { color: #1f1f1b; }
+.gift-card-modal-head span { color: #6e675a; }
+
+.gift-card-modal-head button {
+  border-color: rgba(91, 77, 52, .24);
+  background: rgba(255, 252, 245, .72);
+  color: #4f4a40;
+}
+
+.gift-card-modal-head button:hover {
+  border-color: rgba(70, 61, 45, .42);
+  background: #fffaf0;
+  color: #1f1f1b;
+}
+
+.gift-card-image-shell {
+  border-color: rgba(94, 78, 50, .18);
+  background: linear-gradient(145deg, #f8f2e8, #ddd2c0);
+  box-shadow: inset 0 1px 12px rgba(92, 72, 39, .1);
+}
+
+.gift-card-controls label > span:first-child { color: #716757; }
+
+.gift-card-selected-tier {
+  border-color: rgba(94, 78, 50, .2);
+  background: rgba(225, 216, 199, .72);
+}
+
+.gift-card-selected-tier span { color: #26231d; }
+.gift-card-selected-tier strong { color: #6f685a; }
+
+.gift-card-redeem-caption {
+  border-color: rgba(94, 78, 50, .2);
+  background: rgba(255, 252, 245, .64);
+  color: #5f584d;
+}
+
+.gift-card-redeem-caption.is-ready {
+  border-color: rgba(57, 89, 64, .28);
+  background: rgba(70, 115, 79, .12);
+  color: #2d5836;
+}
+
+.gift-card-modal-note { color: #746d60; }
+
+@media (max-width: 720px) {
+  .dashboard-command,
+  .wallet-hero { border-radius: 23px; }
+
+  .wallet-reward-slide { padding: 22px; }
+}

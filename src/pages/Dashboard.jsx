@@ -7,12 +7,13 @@ import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
+import './WorkspaceSurfaceTheme.css';
 
 const chartTooltipStyle = {
-  backgroundColor: '#081317',
-  border: '1px solid rgba(214, 236, 232, .14)',
+  backgroundColor: '#3f3f3a',
+  border: '1px solid rgba(243, 237, 224, .36)',
   borderRadius: 10,
-  color: '#eaf4f1',
+  color: '#f3ede0',
 };
 
 function dateKey(date) {
@@ -169,13 +170,13 @@ export default function Dashboard() {
               <div className={hasTrendActivity ? 'h-full' : 'h-full dashboard-chart-muted'}>
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, .20)" vertical={false} />
-                    <XAxis dataKey="day" tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
-                    <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
-                    <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(117, 109, 94, .22)" vertical={false} />
+                    <XAxis dataKey="day" tick={{ fill: '#736d61', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
+                    <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#736d61', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
+                    <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#736d61', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
                     <Tooltip
                       contentStyle={chartTooltipStyle}
-                      labelStyle={{ color: '#eaf4f1' }}
+                      labelStyle={{ color: '#f3ede0' }}
                       formatter={(value, name) => [name === 'Coins' ? `${formatCoinNumber(value)} Coins` : value, name]}
                     />
                     <Legend wrapperStyle={{ paddingTop: 14 }} />
