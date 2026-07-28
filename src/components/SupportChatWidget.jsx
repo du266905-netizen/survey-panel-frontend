@@ -1,18 +1,26 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowUp, ChevronDown, LoaderCircle, MessageCircleMore, Send, UserRound } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, ChevronDown, FilePenLine, LoaderCircle, Send, UserRound } from 'lucide-react';
 import { createSupportTicket, sendSupportMessage } from '../api/supportApi';
 import { useAuth } from './AuthContext';
 import './SupportChatWidget.css';
 
 const INITIAL_MESSAGE = {
   role: 'assistant',
-  content: 'Hi — I can explain published information about participation, Coins, rewards, privacy, and account safety. For account-specific questions, I’ll connect you with a person.',
+  content: 'Welcome to GuanyiSearch Support. Ask a general question, or submit a request when you need help with your account.',
 };
 
 const QUICK_QUESTIONS = [
   'How do Coins and rewards work?',
-  'What is the published minimum redemption?',
+  'How does participation work?',
   'How is my privacy handled?',
+];
+
+const TICKET_CATEGORIES = [
+  { value: 'ACCOUNT', label: 'Account & access' },
+  { value: 'PARTICIPATION', label: 'Participation' },
+  { value: 'REWARDS', label: 'Coins & rewards' },
+  { value: 'PRIVACY', label: 'Privacy request' },
+  { value: 'OTHER', label: 'Something else' },
 ];
 
 function trimMessages(messages) {
@@ -21,16 +29,14 @@ function trimMessages(messages) {
 
 export function SupportChatGlyph({ size = 28, decorative = false }) {
   return (
-    <svg className="support-chat-glyph" viewBox="0 0 132 116" width={size} height={size} aria-hidden={decorative ? 'true' : undefined} role={decorative ? undefined : 'img'}>
-      {!decorative && <title>Support chat</title>}
-      <circle className="support-chat-glyph-sun" cx="98" cy="27" r="20" />
-      <path className="support-chat-glyph-breeze" d="M88 65c13 0 21 4 25 12M91 76c8 0 14 3 18 8" />
-      <path className="support-chat-glyph-bubble" d="M25 28c8-12 25-16 46-16 24 0 40 4 46 18 4 9 4 31-1 42-5 12-17 18-33 19H55L29 106l5-23c-11-6-16-16-16-29 0-11 2-20 7-26Z" />
-      <circle className="support-chat-glyph-dot" cx="50" cy="51" r="3.5" />
-      <circle className="support-chat-glyph-dot" cx="69" cy="51" r="3.5" />
-      <circle className="support-chat-glyph-dot" cx="88" cy="51" r="3.5" />
-      <path className="support-chat-glyph-ground" d="M25 111c20 4 48 4 68 0" />
-      <circle className="support-chat-glyph-accent" cx="111" cy="61" r="4.5" />
+    <svg className="support-chat-glyph" viewBox="0 0 120 110" width={size} height={size} aria-hidden={decorative ? 'true' : undefined} role={decorative ? undefined : 'img'}>
+      {!decorative && <title>Support</title>}
+      <circle className="support-chat-glyph-sun" cx="87" cy="27" r="19" />
+      <path className="support-chat-glyph-bubble" d="M22 31c4-13 18-20 40-20h19c17 0 28 8 30 22 2 13-3 29-14 37-7 5-16 7-28 7H48L27 94l4-22c-9-8-12-25-9-41Z" />
+      <path className="support-chat-glyph-line" d="M43 46h31M43 58h22" />
+      <path className="support-chat-glyph-breeze" d="M77 68c8 0 14 3 18 9M82 77c5 0 9 2 12 6" />
+      <path className="support-chat-glyph-ground" d="M25 101c19 4 42 4 58 0" />
+      <circle className="support-chat-glyph-accent" cx="98" cy="62" r="4" />
     </svg>
   );
 }
@@ -38,7 +44,7 @@ export function SupportChatGlyph({ size = 28, decorative = false }) {
 function Message({ message }) {
   return (
     <article className={`support-chat-message is-${message.role}`}>
-      <span className="support-chat-message-label">{message.role === 'assistant' ? 'GUANYISEARCH SUPPORT' : 'YOU'}</span>
+      <span className="support-chat-message-label">{message.role === 'assistant' ? 'SUPPORT' : 'YOU'}</span>
       <p>{message.content}</p>
     </article>
   );
@@ -51,7 +57,10 @@ export default function SupportChatWidget() {
   const [input, setInput] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState('');
-  const [handoffOpen, setHandoffOpen] = useState(false);
+  const [requestOpen, setRequestOpen] = useState(false);
+  const [ticketCategory, setTicketCategory] = useState('ACCOUNT');
+  const [ticketSubject, setTicketSubject] = useState('');
+  const [ticketDescription, setTicketDescription] = useState('');
   const [contactEmail, setContactEmail] = useState('');
   const [contactName, setContactName] = useState('');
   const [ticketStatus, setTicketStatus] = useState('');
@@ -59,22 +68,29 @@ export default function SupportChatWidget() {
   const bodyRef = useRef(null);
 
   const isSignedIn = Boolean(user?.email);
-  const messagesForTicket = useMemo(() => trimMessages(messages), [messages]);
 
   useEffect(() => {
-    if (isOpen && bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
-  }, [isOpen, messages, isSending]);
+    if (isOpen && bodyRef.current) {
+      bodyRef.current.scrollTop = requestOpen ? 0 : bodyRef.current.scrollHeight;
+    }
+  }, [isOpen, messages, isSending, requestOpen, ticketStatus]);
 
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
         setIsOpen(false);
-        setHandoffOpen(false);
+        setRequestOpen(false);
       }
     };
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
+
+  const openRequestForm = () => {
+    setError('');
+    setTicketStatus('');
+    setRequestOpen(true);
+  };
 
   const submitMessage = async (value) => {
     const content = String(value || '').trim();
@@ -89,30 +105,36 @@ export default function SupportChatWidget() {
     try {
       const response = await sendSupportMessage(nextMessages);
       setMessages((current) => trimMessages([...current, { role: 'assistant', content: response.data.reply }]));
-      if (response.data.needsHuman) setHandoffOpen(true);
+      if (response.data.needsHuman) openRequestForm();
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'The support assistant could not respond. Please try again or talk to a person.');
+      setError(caughtError.response?.data?.message || 'We could not send that message. Please try again or submit a request.');
     } finally {
       setIsSending(false);
     }
   };
 
-  const submitHandoff = async (event) => {
+  const submitSupportRequest = async (event) => {
     event.preventDefault();
-    if (isCreatingTicket) return;
+    const subject = ticketSubject.trim();
+    const description = ticketDescription.trim();
+    if (!subject || !description || isCreatingTicket) return;
+
     setError('');
     setTicketStatus('');
     setIsCreatingTicket(true);
     try {
       await createSupportTicket({
-        messages: messagesForTicket,
+        category: ticketCategory,
+        subject,
+        messages: [{ role: 'user', content: description }],
         ...(isSignedIn ? {} : { contactEmail: contactEmail.trim(), contactName: contactName.trim() || undefined }),
-        subject: 'Website support request',
       });
-      setTicketStatus('Your request is in the support queue. A person will review the conversation and reply using the contact details on file.');
-      setHandoffOpen(false);
+      setTicketStatus('Request received. Our team will follow up using your contact details.');
+      setTicketSubject('');
+      setTicketDescription('');
+      setRequestOpen(false);
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'We could not create the support request. Please try again.');
+      setError(caughtError.response?.data?.message || 'We could not submit your request. Please try again.');
     } finally {
       setIsCreatingTicket(false);
     }
@@ -124,59 +146,75 @@ export default function SupportChatWidget() {
         <section className="support-chat-panel" role="dialog" aria-modal="false" aria-label="GuanyiSearch support">
           <header className="support-chat-header">
             <div className="support-chat-title">
-              <span className="support-chat-title-mark"><SupportChatGlyph size={31} decorative /></span>
+              <span className="support-chat-title-mark"><SupportChatGlyph size={37} decorative /></span>
               <div>
                 <span>GUANYISEARCH</span>
-                <strong>A considered conversation.</strong>
+                <strong>How can we help?</strong>
               </div>
             </div>
-            <button type="button" className="support-chat-close" onClick={() => setIsOpen(false)} aria-label="Close support chat"><ChevronDown size={20} /></button>
+            <button type="button" className="support-chat-close" onClick={() => setIsOpen(false)} aria-label="Close support"><ChevronDown size={20} /></button>
           </header>
 
-          <div className="support-chat-disclosure">Please do not send passwords, verification codes, payment details, government IDs, or full financial information.</div>
+          <div className="support-chat-disclosure">Please don’t share passwords, verification codes, or payment details.</div>
 
           <div className="support-chat-body" ref={bodyRef}>
-            {messages.map((message, index) => <Message key={`${message.role}-${index}-${message.content.slice(0, 16)}`} message={message} />)}
-            {isSending && <div className="support-chat-typing"><LoaderCircle size={15} className="animate-spin" /> Checking published information…</div>}
+            {!requestOpen && messages.map((message, index) => <Message key={`${message.role}-${index}-${message.content.slice(0, 16)}`} message={message} />)}
+            {isSending && <div className="support-chat-typing"><LoaderCircle size={15} className="animate-spin" /> One moment…</div>}
             {error && <div className="support-chat-error">{error}</div>}
             {ticketStatus && <div className="support-chat-success">{ticketStatus}</div>}
 
-            {!messages.some((message) => message.role === 'user') && (
+            {!messages.some((message) => message.role === 'user') && !requestOpen && (
               <div className="support-chat-suggestions">
-                {QUICK_QUESTIONS.map((question) => <button key={question} type="button" onClick={() => submitMessage(question)}>{question}</button>)}
+                <span>Common questions</span>
+                {QUICK_QUESTIONS.map((question) => <button key={question} type="button" onClick={() => submitMessage(question)}>{question}<ArrowUpRight size={15} /></button>)}
               </div>
             )}
 
-            {handoffOpen && !ticketStatus && (
-              <form className="support-handoff-form" onSubmit={submitHandoff}>
-                <div className="support-handoff-heading"><UserRound size={17} /><strong>Talk to a person</strong></div>
-                <p>Your conversation will be saved as a private support request for the team to review.</p>
+            {requestOpen && !ticketStatus && (
+              <form className="support-request-form" onSubmit={submitSupportRequest}>
+                <div className="support-request-heading"><FilePenLine size={17} /><div><span>SUPPORT REQUEST</span><strong>Tell us what you need.</strong></div></div>
+                <p>Choose a topic and give the team a short description so your request reaches the right person.</p>
+                <label>TOPIC
+                  <select value={ticketCategory} onChange={(event) => setTicketCategory(event.target.value)}>
+                    {TICKET_CATEGORIES.map((category) => <option key={category.value} value={category.value}>{category.label}</option>)}
+                  </select>
+                </label>
+                <label>SUBJECT
+                  <input value={ticketSubject} required maxLength={140} onChange={(event) => setTicketSubject(event.target.value)} placeholder="A short summary" />
+                </label>
+                <label>DETAILS
+                  <textarea value={ticketDescription} required maxLength={1800} onChange={(event) => setTicketDescription(event.target.value)} placeholder="What happened, and what would you like help with?" />
+                </label>
                 {!isSignedIn && (
-                  <>
+                  <div className="support-request-contact">
                     <label>NAME<input value={contactName} maxLength={80} onChange={(event) => setContactName(event.target.value)} autoComplete="name" /></label>
                     <label>EMAIL<input value={contactEmail} type="email" required maxLength={254} onChange={(event) => setContactEmail(event.target.value)} autoComplete="email" /></label>
-                  </>
+                  </div>
                 )}
-                {isSignedIn && <p className="support-handoff-signed-in">We’ll use the email address associated with your signed-in account.</p>}
-                <button type="submit" disabled={isCreatingTicket}>{isCreatingTicket ? 'Creating request…' : 'Create support request'} <ArrowUp size={15} /></button>
+                {isSignedIn && <p className="support-request-signed-in">We’ll reply using the email address on your account.</p>}
+                <div className="support-request-actions">
+                  <button type="button" onClick={() => setRequestOpen(false)}>Back to chat</button>
+                  <button type="submit" disabled={isCreatingTicket}>{isCreatingTicket ? 'Submitting…' : 'Submit request'} <ArrowUpRight size={15} /></button>
+                </div>
               </form>
             )}
           </div>
 
-          <div className="support-chat-human-row">
-            <button type="button" onClick={() => { setHandoffOpen((open) => !open); setTicketStatus(''); }}><UserRound size={15} /> Talk to a person</button>
-            <a href="/privacy">Privacy</a>
-          </div>
+          {!requestOpen && (
+            <div className="support-chat-human-row">
+              <button type="button" onClick={openRequestForm}><UserRound size={15} /> Submit a request</button>
+              <a href="/privacy">Privacy</a>
+            </div>
+          )}
 
           <form className="support-chat-composer" onSubmit={(event) => { event.preventDefault(); submitMessage(input); }}>
-            <textarea value={input} maxLength={1800} onChange={(event) => setInput(event.target.value)} placeholder="Ask about published platform information…" aria-label="Support question" />
-            <button type="submit" disabled={!input.trim() || isSending} aria-label="Send support question"><Send size={17} /></button>
+            <textarea value={input} maxLength={1800} onChange={(event) => setInput(event.target.value)} placeholder="Type your question…" aria-label="Support question" />
+            <button type="submit" disabled={!input.trim() || isSending} aria-label="Send question"><Send size={17} /></button>
           </form>
         </section>
       )}
-      <button className={`support-chat-launcher ${isOpen ? 'is-open' : ''}`} type="button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? 'Close support chat' : 'Open support chat'} aria-expanded={isOpen}>
-        {isOpen ? <ChevronDown size={24} /> : <SupportChatGlyph size={57} decorative />}
-        <span className="support-chat-launcher-caption">Support</span>
+      <button className={`support-chat-launcher ${isOpen ? 'is-open' : ''}`} type="button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? 'Close support' : 'Open support'} aria-expanded={isOpen}>
+        {isOpen ? <ChevronDown size={23} /> : <SupportChatGlyph size={48} decorative />}
       </button>
     </div>
   );
