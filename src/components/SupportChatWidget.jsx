@@ -31,12 +31,12 @@ export function SupportChatGlyph({ size = 28, decorative = false }) {
   return (
     <svg className="support-chat-glyph" viewBox="0 0 120 110" width={size} height={size} aria-hidden={decorative ? 'true' : undefined} role={decorative ? undefined : 'img'}>
       {!decorative && <title>Support</title>}
-      <circle className="support-chat-glyph-orb" cx="87" cy="27" r="19" />
-      <path className="support-chat-glyph-bubble" d="M22 31c4-13 18-20 40-20h19c17 0 28 8 30 22 2 13-3 29-14 37-7 5-16 7-28 7H48L27 94l4-22c-9-8-12-25-9-41Z" />
+      <circle className="support-chat-glyph-orb" cx="89" cy="24" r="16" />
+      <path className="support-chat-glyph-bubble" d="M21 34c0-14 12-23 29-23h24c16 0 27 9 27 23v14c0 14-11 23-28 23H51L30 88l4-20c-8-7-13-18-13-34Z" />
       <g className="support-chat-glyph-dots">
-        <circle cx="47" cy="57" r="4.2" />
-        <circle cx="61" cy="57" r="4.2" />
-        <circle cx="75" cy="57" r="4.2" />
+        <circle cx="47" cy="49" r="3.7" />
+        <circle cx="61" cy="49" r="3.7" />
+        <circle cx="75" cy="49" r="3.7" />
       </g>
     </svg>
   );

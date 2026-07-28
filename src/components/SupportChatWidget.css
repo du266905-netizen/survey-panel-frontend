@@ -4,9 +4,9 @@
 .support-chat-launcher:focus-visible { outline: 3px solid rgba(194,111,67,.68); outline-offset: 4px; }
 .support-chat-launcher.is-open { width: 50px; height: 50px; border-radius: 50%; background: #173b32; box-shadow: 0 13px 28px rgba(23,45,38,.28); color: #fffaf0; }
 .support-chat-glyph { display: block; overflow: visible; }
-.support-chat-glyph-orb { fill: rgba(159,171,129,.52); }
+.support-chat-glyph-orb { fill: rgba(159,171,129,.44); }
 .support-chat-glyph-bubble { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
-.support-chat-glyph-bubble { stroke-width: 3.4; }
+.support-chat-glyph-bubble { stroke-width: 3.1; }
 .support-chat-glyph-dots { fill: currentColor; }
 .support-chat-panel { position: absolute; right: 0; bottom: 82px; display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto auto; width: min(402px, calc(100vw - 28px)); height: min(650px, calc(100vh - 112px)); overflow: hidden; border: 1px solid rgba(31,31,27,.24); border-radius: 24px; background: repeating-linear-gradient(0deg, transparent 0 8px, rgba(67,55,33,.026) 9px 10px), #f3ede0; box-shadow: 0 30px 74px rgba(13,26,21,.27); color: #1f1f1b; }
 .support-chat-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; border-bottom: 1px solid rgba(31,31,27,.14); padding: 14px 17px 13px; }
