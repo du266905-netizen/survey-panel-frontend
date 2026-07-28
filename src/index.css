@@ -270,7 +270,7 @@ textarea {
 .marketing-template-item { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 10px; width: 100%; border: 1px solid transparent; border-radius: 12px; background: transparent; color: #eee9dc; cursor: pointer; text-align: left; padding: 12px 10px; transition: background .18s ease, border-color .18s ease, transform .18s ease; }
 .marketing-template-item:hover { border-color: rgba(244,241,232,.15); background: rgba(244,241,232,.045); }
 .marketing-template-item.is-selected { border-color: rgba(243,237,224,.36); background: #30302d; box-shadow: inset 3px 0 0 #d9d2c5; }
-.marketing-template-letter { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(244,241,232,.23); border-radius: 50%; color: #ebe4d7; font-family: var(--font-marketing-serif); font-size: 15px; font-weight: 700; }
+.marketing-template-letter { display: grid; width: 30px; height: 30px; place-items: center; overflow: hidden; border: 1px solid rgba(244,241,232,.23); border-radius: 50%; color: #ebe4d7; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-weight: 700; line-height: 1; text-align: center; text-orientation: mixed; white-space: nowrap; writing-mode: horizontal-tb; }
 .marketing-template-copy { display: grid; min-width: 0; gap: 3px; }
 .marketing-template-copy strong { overflow: hidden; color: #f3ede0; font-family: var(--font-marketing-serif); font-size: 15px; font-weight: 650; letter-spacing: -.015em; text-overflow: ellipsis; white-space: nowrap; }
 .marketing-template-copy small { overflow: hidden; color: rgba(230,224,213,.5); font-family: var(--font-sans); font-size: 10px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }

@@ -5,8 +5,6 @@ import PageHeader from '../components/PageHeader';
 import {
   DEFAULT_MANIFESTO,
   DEFAULT_MANIFESTO_ARTWORK,
-  DEFAULT_PARTICIPATION_COPY,
-  DEFAULT_PARTICIPATION_HEADLINE,
   downloadMarketingAsset,
   MARKETING_ASSET_SIZES,
   renderMarketingAsset,
@@ -17,11 +15,8 @@ const TEMPLATE_CATALOG = [
   { key: 'B', title: '周榜／成就播报', subtitle: 'Weekly Highlights', source: 'Weekly rewards + completions', mode: 'gated' },
   { key: 'C', title: '宣言金句卡', subtitle: 'Manifesto Quote Card', source: 'Custom editorial copy', mode: 'editorial' },
   { key: 'D', title: '新机会上线', subtitle: 'New Opportunities', source: 'New active survey channels', mode: 'gated' },
-  { key: 'E', title: '平台里程碑', subtitle: 'Community Milestone', source: 'Verified platform totals', mode: 'gated' },
-  { key: 'F', title: '兑换成功见证', subtitle: 'Reward Moment', source: 'Consent-backed reward redemption', mode: 'gated' },
   { key: 'G', title: '单条话题深度展示', subtitle: 'Featured Conversation', source: 'Top Daily Brief poll topic', mode: 'automatic' },
   { key: 'H', title: '每周话题精选', subtitle: 'Weekly Digest', source: 'Weekly Daily Briefs + poll data', mode: 'automatic' },
-  { key: 'I', title: '参与旅程线绘', subtitle: 'Participation Path Illustration', source: 'Platform editorial + site line drawings', mode: 'editorial' },
 ];
 
 const COUNTRY_OPTIONS = [
@@ -51,7 +46,7 @@ function availabilityDetails(details) {
   return values.length ? values.join(' · ') : null;
 }
 
-function AssetCanvas({ templateKey, asset, manifesto, artworkSrc, participation, format }) {
+function AssetCanvas({ templateKey, asset, manifesto, artworkSrc, format }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -64,7 +59,6 @@ function AssetCanvas({ templateKey, asset, manifesto, artworkSrc, participation,
           data: asset.data,
           manifesto,
           artworkSrc,
-          participation,
           format,
         });
       }
@@ -75,7 +69,7 @@ function AssetCanvas({ templateKey, asset, manifesto, artworkSrc, participation,
     return () => {
       cancelled = true;
     };
-  }, [artworkSrc, asset, format, manifesto, participation, templateKey]);
+  }, [artworkSrc, asset, format, manifesto, templateKey]);
 
   if (!asset?.available) {
     return (
@@ -96,8 +90,6 @@ export default function MarketingAssets() {
   const [format, setFormat] = useState('square');
   const [manifesto, setManifesto] = useState(DEFAULT_MANIFESTO);
   const [artworkSrc, setArtworkSrc] = useState(DEFAULT_MANIFESTO_ARTWORK);
-  const [participationHeadline, setParticipationHeadline] = useState(DEFAULT_PARTICIPATION_HEADLINE);
-  const [participationCopy, setParticipationCopy] = useState(DEFAULT_PARTICIPATION_COPY);
   const [assetPayload, setAssetPayload] = useState(null);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
@@ -138,7 +130,6 @@ export default function MarketingAssets() {
         data: selectedAsset.data,
         manifesto,
         artworkSrc,
-        participation: { headline: participationHeadline, copy: participationCopy },
         format,
       });
       setNotice('PNG 已下载。发布前请确认内容仍与实时数据一致。');
@@ -199,7 +190,7 @@ export default function MarketingAssets() {
         <aside className="marketing-template-list">
           <div className="marketing-list-head">
             <div>
-              <p>9 TEMPLATE SYSTEM</p>
+              <p>6 TEMPLATE SYSTEM</p>
               <h2>选择营销素材</h2>
             </div>
             <Palette size={20} />
@@ -281,18 +272,6 @@ export default function MarketingAssets() {
                 </div>
               </>
             )}
-            {selectedKey === 'I' && (
-              <>
-                <label className="marketing-copy-field">
-                  <span>Headline</span>
-                  <textarea value={participationHeadline} maxLength={90} onChange={(event) => setParticipationHeadline(event.target.value)} />
-                </label>
-                <label className="marketing-copy-field">
-                  <span>Supporting copy</span>
-                  <textarea value={participationCopy} maxLength={170} onChange={(event) => setParticipationCopy(event.target.value)} />
-                </label>
-              </>
-            )}
           </div>
 
           {loading ? (
@@ -304,7 +283,6 @@ export default function MarketingAssets() {
                 asset={selectedAsset}
                 manifesto={manifesto}
                 artworkSrc={artworkSrc}
-                participation={{ headline: participationHeadline, copy: participationCopy }}
                 format={format}
               />
             </div>
@@ -336,7 +314,7 @@ export default function MarketingAssets() {
 
       <section className="marketing-disclosure">
         <Sparkles size={18} />
-        <p><strong>Brand system:</strong> #F3EDE0 paper, #1F1F1B ink, Source Han Serif-style type, and a fixed GuanyiSearch wordmark area across all nine templates.</p>
+        <p><strong>Brand system:</strong> #F3EDE0 paper, #1F1F1B ink, Source Han Serif-style type, and a fixed GuanyiSearch wordmark area across all active templates.</p>
       </section>
     </div>
   );
