@@ -1,11 +1,7 @@
 .app-main-dashboard {
   min-height: calc(100vh - 76px);
-  background:
-    radial-gradient(ellipse 54% 48% at 94% 0%, rgba(129, 116, 83, .2), transparent 70%),
-    radial-gradient(ellipse 46% 52% at 8% 100%, rgba(77, 102, 83, .18), transparent 72%),
-    repeating-linear-gradient(0deg, transparent 0 8px, rgba(243, 237, 224, .016) 9px 10px),
-    linear-gradient(135deg, #43433f 0%, #363734 49%, #2e302e 100%);
-  box-shadow: inset 1px 0 rgba(243, 237, 224, .06);
+  background: #151514;
+  box-shadow: inset 1px 0 rgba(243, 237, 224, .08);
 }
 
 .app-main-dashboard::before { display: none; }
@@ -29,12 +25,7 @@
 }
 
 .dashboard-command::before {
-  inset: -54px 6% auto auto;
-  width: min(42vw, 510px);
-  height: min(42vw, 510px);
-  border: 0;
-  background: radial-gradient(circle, rgba(243, 237, 224, .1), rgba(243, 237, 224, 0) 67%);
-  box-shadow: none;
+  display: none;
 }
 
 .dashboard-command-kicker { color: rgba(247, 240, 227, .64); }
@@ -42,10 +33,10 @@
 .dashboard-command p:not(.dashboard-command-kicker) { color: rgba(247, 240, 227, .76); }
 
 .dashboard-checklist-illustration {
-  width: min(100%, 400px);
-  margin-top: clamp(28px, 4vw, 58px);
-  color: rgba(244, 237, 224, .76);
-  opacity: .88;
+  width: min(100%, 220px);
+  margin: clamp(44px, 5vw, 72px) 0 0 clamp(8px, 4vw, 54px);
+  color: rgba(243, 237, 224, .84);
+  opacity: .9;
 }
 
 .dashboard-checklist-illustration svg {
@@ -57,40 +48,33 @@
 
 .dashboard-checklist-outline,
 .dashboard-checklist-detail,
-.dashboard-checklist-orbit,
 .dashboard-checklist-ground {
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.dashboard-checklist-outline { stroke-width: 2.45; }
-.dashboard-checklist-detail { stroke-width: 2.05; }
-.dashboard-checklist-orbit { stroke-width: 1.8; opacity: .42; }
-.dashboard-checklist-ground { stroke: rgba(245, 238, 225, .28); stroke-width: 1.55; }
-.dashboard-checklist-paper { fill: rgba(244, 237, 224, .045); }
-.dashboard-checklist-box { fill: rgba(244, 237, 224, .025); }
-.dashboard-checklist-box.is-complete { fill: rgba(211, 170, 90, .86); stroke: rgba(241, 218, 163, .92); }
-.dashboard-checklist-complete-mark { stroke: #373832; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.3; }
-.dashboard-checklist-orb { fill: rgba(174, 190, 136, .52); }
-.dashboard-checklist-dot { fill: #c98250; }
-.dashboard-checklist-stamp { fill: rgba(207, 167, 91, .46); stroke: rgba(244, 237, 224, .64); stroke-width: 2.15; }
-.dashboard-checklist-accent,
-.dashboard-checklist-stamp-mark { transform-box: fill-box; transform-origin: center; }
-.dashboard-checklist-accent { animation: dashboard-checklist-accent-drift 7.2s ease-in-out infinite; }
-.dashboard-checklist-stamp-mark { animation: dashboard-checklist-stamp-breathe 6.4s ease-in-out infinite; }
+.dashboard-checklist-outline { stroke-width: 2.35; }
+.dashboard-checklist-detail { stroke-width: 2; }
+.dashboard-checklist-detail.is-faint { opacity: .54; }
+.dashboard-checklist-ground { stroke: rgba(243, 237, 224, .28); stroke-width: 1.35; }
+.dashboard-checklist-box { fill: transparent; }
+.dashboard-checklist-sheet,
+.dashboard-checklist-spark { transform-box: fill-box; transform-origin: center; }
+.dashboard-checklist-sheet { animation: dashboard-checklist-sheet-drift 8s ease-in-out infinite; }
+.dashboard-checklist-spark { animation: dashboard-checklist-spark-breathe 6s ease-in-out infinite; }
 
 .app-main-dashboard .dashboard-command .btn-primary {
-  border-color: #d9bd7a;
-  background: #d9bd7a;
+  border-color: #f3ede0;
+  background: #f3ede0;
   box-shadow: none;
-  color: #302e28;
+  color: #171716;
 }
 
 .app-main-dashboard .dashboard-command .btn-primary:hover {
-  border-color: #eee0bc;
-  background: #eee0bc;
-  color: #25241f;
+  border-color: #fffaf0;
+  background: #fffaf0;
+  color: #171716;
 }
 
 .app-main-dashboard .dashboard-command .btn-secondary,
@@ -145,10 +129,10 @@
 
 .dashboard-path-steps article::after {
   width: 2px;
-  background: linear-gradient(180deg, #d4b36f, rgba(133, 167, 131, .52));
+  background: rgba(243, 237, 224, .32);
 }
 
-.dashboard-path-steps article > span { color: #e0bd75; padding-top: 2px; }
+.dashboard-path-steps article > span { color: rgba(243, 237, 224, .66); padding-top: 2px; }
 .dashboard-path-steps article p { color: rgba(247, 240, 227, .7); }
 
 .dashboard-trend-card.card {
@@ -373,30 +357,30 @@
 @media (max-width: 960px) {
   .dashboard-command { grid-template-columns: 1fr; }
   .dashboard-path-panel { border-top: 1px solid rgba(243, 237, 224, .22); border-left: 0; padding: 24px 0 0; }
-  .dashboard-checklist-illustration { width: min(74vw, 390px); }
+  .dashboard-checklist-illustration { width: min(46vw, 220px); }
 }
 
 @media (max-width: 640px) {
   .app-main-dashboard { padding-top: 18px; }
   .dashboard-page { padding-top: 0; }
   .dashboard-command { gap: 32px; padding-top: 16px; }
-  .dashboard-checklist-illustration { width: min(100%, 330px); margin-top: 26px; }
+  .dashboard-checklist-illustration { width: min(100%, 190px); margin: 32px 0 0 10px; }
   .dashboard-path-head { align-items: flex-start; flex-direction: column; gap: 6px; }
   .dashboard-path-head strong { white-space: normal; text-align: left; }
   .dashboard-path-steps article { grid-template-columns: 42px minmax(0, 1fr); gap: 4px 10px; padding-left: 18px; }
 }
 
-@keyframes dashboard-checklist-accent-drift {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(3px, -4px, 0) scale(1.05); }
+@keyframes dashboard-checklist-sheet-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -2px, 0); }
 }
 
-@keyframes dashboard-checklist-stamp-breathe {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: .86; }
-  50% { transform: translate3d(-2px, -3px, 0) scale(1.035); opacity: 1; }
+@keyframes dashboard-checklist-spark-breathe {
+  0%, 100% { transform: scale(1); opacity: .52; }
+  50% { transform: scale(1.08); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dashboard-checklist-accent,
-  .dashboard-checklist-stamp-mark { animation: none; }
+  .dashboard-checklist-sheet,
+  .dashboard-checklist-spark { animation: none; }
 }
