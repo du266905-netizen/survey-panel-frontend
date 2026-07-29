@@ -33,9 +33,8 @@
 .dashboard-command p:not(.dashboard-command-kicker) { color: rgba(247, 240, 227, .76); }
 
 .dashboard-checklist-illustration {
-  width: min(100%, 320px);
-  margin: clamp(42px, 5vw, 70px) 0 0 clamp(8px, 3vw, 36px);
-  color: #f7f0e3;
+  width: min(100%, 372px);
+  margin: clamp(46px, 5vw, 76px) 0 0 clamp(2px, 2vw, 22px);
 }
 
 .dashboard-checklist-illustration svg {
@@ -45,45 +44,23 @@
   overflow: visible;
 }
 
-.dashboard-notebook-outline,
-.dashboard-notebook-spine,
-.dashboard-notebook-ring,
-.dashboard-notebook-line,
-.dashboard-notebook-check,
-.dashboard-notebook-box,
-.dashboard-notebook-pen-cap,
-.dashboard-notebook-pen-body,
-.dashboard-notebook-pen-detail,
-.dashboard-notebook-pen-tip,
-.dashboard-notebook-ground {
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+.dashboard-signature-signal { fill: #c76f43; }
 
-.dashboard-notebook-outline { fill: rgba(247, 240, 227, .025); stroke-width: 3.5; }
-.dashboard-notebook-spine { stroke-width: 3; }
-.dashboard-notebook-ring { stroke-width: 3.15; }
-.dashboard-notebook-line { stroke-width: 3.15; opacity: .92; }
-.dashboard-notebook-box { fill: transparent; stroke-width: 3.15; }
-.dashboard-notebook-check-fill { fill: #d5ae62; }
-.dashboard-notebook-check-fill.is-sage { fill: #80936d; }
-.dashboard-notebook-check { stroke: #171716; stroke-width: 3.25; }
-.dashboard-notebook-pen-cap { fill: #d5ae62; stroke-width: 3.3; }
-.dashboard-notebook-pen-body { fill: #bd7250; stroke-width: 3.3; }
-.dashboard-notebook-pen-detail { stroke-width: 2.6; }
-.dashboard-notebook-pen-tip { fill: #f7f0e3; stroke-width: 3; }
-.dashboard-notebook-ground { stroke: rgba(247, 240, 227, .36); stroke-width: 1.7; }
-
-.dashboard-notebook,
-.dashboard-notebook-pen,
-.dashboard-notebook-check-delayed {
+.dashboard-signature-gesture {
+  fill: #f7f0e3;
   transform-box: fill-box;
+  transform-origin: 48% 62%;
+  animation: dashboard-signature-gesture-settle 12s cubic-bezier(.37, 0, .2, 1) infinite;
 }
 
-.dashboard-notebook { transform-origin: center; animation: dashboard-notebook-drift 9s ease-in-out infinite; }
-.dashboard-notebook-pen { transform-origin: 70% 88%; animation: dashboard-notebook-pen-write 7.5s ease-in-out infinite; }
-.dashboard-notebook-check-delayed { transform-origin: center; animation: dashboard-notebook-check-in 7.5s ease-in-out infinite; }
+.dashboard-signature-contour {
+  stroke: rgba(247, 240, 227, .72);
+  stroke-linecap: round;
+  stroke-width: 6;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dashboard-signature-contour-settle 12s ease-in-out infinite;
+}
 
 .app-main-dashboard .dashboard-command .btn-primary {
   border-color: #f3ede0;
@@ -378,38 +355,31 @@
 @media (max-width: 960px) {
   .dashboard-command { grid-template-columns: 1fr; }
   .dashboard-path-panel { border-top: 1px solid rgba(243, 237, 224, .22); border-left: 0; padding: 24px 0 0; }
-  .dashboard-checklist-illustration { width: min(52vw, 290px); }
+  .dashboard-checklist-illustration { width: min(58vw, 340px); }
 }
 
 @media (max-width: 640px) {
   .app-main-dashboard { padding-top: 18px; }
   .dashboard-page { padding-top: 0; }
   .dashboard-command { gap: 32px; padding-top: 16px; }
-  .dashboard-checklist-illustration { width: min(100%, 238px); margin: 32px 0 0 4px; }
+  .dashboard-checklist-illustration { width: min(100%, 290px); margin: 36px 0 0; }
   .dashboard-path-head { align-items: flex-start; flex-direction: column; gap: 6px; }
   .dashboard-path-head strong { white-space: normal; text-align: left; }
   .dashboard-path-steps article { grid-template-columns: 42px minmax(0, 1fr); gap: 4px 10px; padding-left: 18px; }
 }
 
-@keyframes dashboard-notebook-drift {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -3px, 0); }
+@keyframes dashboard-signature-gesture-settle {
+  0%, 76%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  84% { transform: translate3d(1px, -2px, 0) rotate(-.35deg); }
+  91% { transform: translate3d(-1px, 1px, 0) rotate(.2deg); }
 }
 
-@keyframes dashboard-notebook-pen-write {
-  0%, 24%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  40% { transform: translate3d(-2px, 2px, 0) rotate(-1.4deg); }
-  54% { transform: translate3d(2px, -2px, 0) rotate(1deg); }
-}
-
-@keyframes dashboard-notebook-check-in {
-  0%, 31%, 100% { opacity: 1; transform: scale(1); }
-  38% { opacity: .3; transform: scale(.92); }
-  47% { opacity: 1; transform: scale(1); }
+@keyframes dashboard-signature-contour-settle {
+  0%, 76%, 100% { opacity: .68; transform: translate3d(0, 0, 0); }
+  85% { opacity: .94; transform: translate3d(3px, -2px, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dashboard-notebook,
-  .dashboard-notebook-pen,
-  .dashboard-notebook-check-delayed { animation: none; }
+  .dashboard-signature-gesture,
+  .dashboard-signature-contour { animation: none; }
 }
