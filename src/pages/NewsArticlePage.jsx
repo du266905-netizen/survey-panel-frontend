@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowUpRight, CalendarDays, ExternalLink, Globe2, LoaderCircle, X } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CalendarDays, ExternalLink, Globe2, LoaderCircle, Search, X } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import { getNewsArticle } from '../api/realApi';
+import { getNewsArticle, getNewsWall } from '../api/realApi';
 import Logo from '../components/Logo';
 import './NewsArticlePage.css';
 
@@ -11,6 +11,9 @@ const categoryLabels = {
   society: 'Society',
   entertainment: 'Culture',
 };
+
+const searchableCategories = Object.keys(categoryLabels);
+const MAX_READING_SUMMARY_WORDS = 140;
 
 function formatPublishedAt(value) {
   if (!value) return 'Date unavailable';
@@ -33,8 +36,29 @@ function formatPublishedTime(value) {
   });
 }
 
+function cleanArticleText(value) {
+  return String(value || '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&(nbsp|#160);/gi, ' ')
+    .replace(/&(amp|#38);/gi, '&')
+    .replace(/&(quot|#34);/gi, '"')
+    .replace(/&(apos|#39);/gi, "'")
+    .replace(/&(lt|#60);/gi, '<')
+    .replace(/&(gt|#62);/gi, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function wordCount(value) {
+  return cleanArticleText(value).split(' ').filter(Boolean).length;
+}
+
 function articleSummary(article) {
-  return article?.summary || article?.description || article?.content || 'A short reading note for this story is not available yet.';
+  const candidates = [article?.summary, article?.description, article?.content]
+    .map(cleanArticleText)
+    .filter((value) => value && !/only available (?:in|on) paid plans/i.test(value));
+  const preparedSummary = candidates.find((value) => wordCount(value) <= MAX_READING_SUMMARY_WORDS);
+  return preparedSummary || 'A fuller factual brief is being prepared from the available reporting.';
 }
 
 function articleCategory(article) {
@@ -45,9 +69,18 @@ function articleCategory(article) {
 function splitSummary(value) {
   const sentences = String(value || '')
     .trim()
-    .split(/(?<=[.!?])\s+(?=[A-Z])/)
+    .split(/(?:\r?\n){2,}|(?<=[.!?。！？])\s+(?=[A-Z\u4E00-\u9FFF])|(?<=[。！？])(?=[\u4E00-\u9FFF])/)
     .filter(Boolean);
   return sentences.length > 1 ? sentences : [String(value || '').trim()];
+}
+
+function matchesSearch(article, query) {
+  const haystack = [article?.title, article?.summary, article?.description, article?.sourceName]
+    .map(cleanArticleText)
+    .filter(Boolean)
+    .join(' ')
+    .toLocaleLowerCase();
+  return haystack.includes(query.toLocaleLowerCase());
 }
 
 function ArticleImage({ article }) {
@@ -101,6 +134,10 @@ export default function NewsArticlePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [sourceHandoffOpen, setSourceHandoffOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -132,6 +169,43 @@ export default function NewsArticlePage() {
     return () => window.removeEventListener('keydown', handleEscape);
   }, []);
 
+  useEffect(() => {
+    const query = searchQuery.trim();
+    if (query.length < 2) {
+      setSearchResults([]);
+      setSearching(false);
+      return undefined;
+    }
+
+    let active = true;
+    const timeout = window.setTimeout(async () => {
+      setSearching(true);
+      try {
+        const responses = await Promise.all(
+          searchableCategories.map((category) => getNewsWall({
+            country: article?.country || 'US',
+            category,
+            limit: 20,
+          }))
+        );
+        const uniqueResults = new Map();
+        responses.flatMap((response) => response.data).forEach((item) => {
+          if (item?.id && matchesSearch(item, query) && !uniqueResults.has(item.id)) uniqueResults.set(item.id, item);
+        });
+        if (active) setSearchResults([...uniqueResults.values()].slice(0, 6));
+      } catch {
+        if (active) setSearchResults([]);
+      } finally {
+        if (active) setSearching(false);
+      }
+    }, 220);
+
+    return () => {
+      active = false;
+      window.clearTimeout(timeout);
+    };
+  }, [article?.country, searchQuery]);
+
   const summaryParagraphs = useMemo(() => splitSummary(articleSummary(article)), [article]);
   const publishedDate = formatPublishedAt(article?.publishedAt);
   const publishedTime = formatPublishedTime(article?.publishedAt);
@@ -142,6 +216,40 @@ export default function NewsArticlePage() {
         <Link className="news-reading-brand" to="/" aria-label="GuanyiSearch home">
           <Logo size="md" />
         </Link>
+        <div
+          className="news-reading-search-wrap"
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setSearchOpen(false);
+          }}
+        >
+          <label className="news-reading-search">
+            <Search size={16} aria-hidden="true" />
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              onFocus={() => setSearchOpen(true)}
+              placeholder="Search the News Wall"
+              aria-label="Search the News Wall"
+            />
+            {searching && <LoaderCircle className="news-reading-search-loader" size={15} aria-label="Searching news" />}
+          </label>
+          {searchOpen && searchQuery.trim().length >= 2 && (
+            <div className="news-reading-search-results" role="listbox" aria-label="News search results">
+              {searchResults.length ? searchResults.map((result) => (
+                <Link
+                  key={result.id}
+                  className="news-reading-search-result"
+                  to={`/news/${encodeURIComponent(result.id)}`}
+                  onClick={() => setSearchOpen(false)}
+                >
+                  <span>{articleCategory(result)} · {formatPublishedAt(result.publishedAt)}</span>
+                  <strong>{result.title}</strong>
+                </Link>
+              )) : !searching && <p className="news-reading-search-empty">No matching stories in this edition yet.</p>}
+            </div>
+          )}
+        </div>
         <Link className="news-reading-return" to="/news">
           <ArrowLeft size={16} />
           <span>News Wall</span>
