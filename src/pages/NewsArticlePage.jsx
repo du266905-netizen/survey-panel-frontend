@@ -13,7 +13,7 @@ const categoryLabels = {
 };
 
 const searchableCategories = Object.keys(categoryLabels);
-const MAX_READING_SUMMARY_WORDS = 140;
+const MAX_READING_SUMMARY_WORDS = 760;
 
 function formatPublishedAt(value) {
   if (!value) return 'Date unavailable';
@@ -54,11 +54,11 @@ function wordCount(value) {
 }
 
 function articleSummary(article) {
-  const candidates = [article?.summary, article?.description, article?.content]
+  const candidates = [article?.readingBrief, article?.summary]
     .map(cleanArticleText)
     .filter((value) => value && !/only available (?:in|on) paid plans/i.test(value));
   const preparedSummary = candidates.find((value) => wordCount(value) <= MAX_READING_SUMMARY_WORDS);
-  return preparedSummary || 'A fuller factual brief is being prepared from the available reporting.';
+  return preparedSummary || 'A fuller reading report is being prepared from the available reporting.';
 }
 
 function articleCategory(article) {
@@ -71,7 +71,13 @@ function splitSummary(value) {
     .trim()
     .split(/(?:\r?\n){2,}|(?<=[.!?。！？])\s+(?=[A-Z\u4E00-\u9FFF])|(?<=[。！？])(?=[\u4E00-\u9FFF])/)
     .filter(Boolean);
-  return sentences.length > 1 ? sentences : [String(value || '').trim()];
+  if (sentences.length < 4) return sentences.length > 1 ? sentences : [String(value || '').trim()];
+
+  const paragraphs = [];
+  for (let index = 0; index < sentences.length; index += 2) {
+    paragraphs.push(sentences.slice(index, index + 2).join(' '));
+  }
+  return paragraphs;
 }
 
 function matchesSearch(article, query) {
