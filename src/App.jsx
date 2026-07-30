@@ -13,6 +13,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import HowItWorks from './pages/HowItWorks';
 import Landing from './pages/Landing';
 import NewsWall from './pages/NewsWall';
+import NewsArticlePage from './pages/NewsArticlePage';
 import PanelProfilePage from './pages/PanelProfilePage';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
@@ -95,6 +96,7 @@ export default function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/news" element={<NewsRoute />} />
+        <Route path="/news/:articleId" element={<NewsArticlePage />} />
         <Route path="/partners" element={<SurveyWallRoute />} />
         <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
         <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />

@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowDown, Check, ExternalLink, Eye, Newspaper, Sparkles, X } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { getNewsArticle, getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
+import { useEffect, useMemo, useState } from 'react';
+import { ArrowDown, ArrowUpRight, Check, Newspaper, Sparkles, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import Logo from '../components/Logo';
 import PageHeader from '../components/PageHeader';
@@ -43,19 +43,6 @@ function formatBriefDate(value) {
     year: 'numeric',
     timeZone: 'UTC',
   });
-}
-
-function formatCount(value) {
-  return new Intl.NumberFormat('en-US').format(Number(value || 0));
-}
-
-function placeholderViewCount(article) {
-  const seed = String(article?.id || article?.title || article?.link || article?.sourceName || 'news');
-  let hash = 0;
-  for (let index = 0; index < seed.length; index += 1) {
-    hash = (hash * 31 + seed.charCodeAt(index)) % 1001;
-  }
-  return hash;
 }
 
 function categoryInfo(value) {
@@ -161,7 +148,7 @@ function DailyBriefCard({ brief, loading, error, country }) {
 }
 
 function summaryFor(article) {
-  return article?.description || article?.content || 'Open the detail view to review this story.';
+  return article?.summary || article?.description || article?.content || 'Open the detail view to review this story.';
 }
 
 function articleImage(article) {
@@ -178,17 +165,13 @@ function articleImage(article) {
 export default function NewsWall() {
   const { user } = useAuth();
   const isPublicView = !user;
-  const [searchParams, setSearchParams] = useSearchParams();
-  const requestedArticleRef = useRef('');
   const [country, setCountry] = useState('US');
   const [category, setCategory] = useState('tech');
   const [articles, setArticles] = useState([]);
   const [brief, setBrief] = useState(null);
   const [preferences, setPreferences] = useState([]);
-  const [selectedArticle, setSelectedArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [briefLoading, setBriefLoading] = useState(true);
-  const [detailLoading, setDetailLoading] = useState(false);
   const [error, setError] = useState('');
   const [briefError, setBriefError] = useState('');
   const [authPrompt, setAuthPrompt] = useState('');
@@ -250,41 +233,6 @@ export default function NewsWall() {
   useEffect(() => {
     loadBrief();
   }, [country]);
-
-  const openArticle = async (article) => {
-    setDetailLoading(true);
-    setError('');
-    try {
-      const response = await getNewsArticle(article.id);
-      setSelectedArticle(response.data);
-      setArticles((current) => current.map((item) => (item.id === article.id ? response.data : item)));
-    } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Unable to open this story.');
-    } finally {
-      setDetailLoading(false);
-    }
-  };
-
-  const closeArticle = () => {
-    setSelectedArticle(null);
-    requestedArticleRef.current = '';
-    if (searchParams.get('article')) {
-      const next = new URLSearchParams(searchParams);
-      next.delete('article');
-      setSearchParams(next, { replace: true });
-    }
-  };
-
-  useEffect(() => {
-    const articleId = searchParams.get('article');
-    if (!articleId) {
-      requestedArticleRef.current = '';
-      return;
-    }
-    if (selectedArticle?.id === articleId || requestedArticleRef.current === articleId) return;
-    requestedArticleRef.current = articleId;
-    openArticle({ id: articleId });
-  }, [searchParams, selectedArticle?.id]);
 
   const toggleSubscription = async (categoryId) => {
     if (isPublicView) {
@@ -383,12 +331,12 @@ export default function NewsWall() {
           </div>
         ) : (
           articles.map((article) => (
-            <article key={article.id} className="card overflow-hidden">
-              <button className="block w-full text-left" type="button" onClick={() => openArticle(article)} disabled={detailLoading}>
-                <div className="aspect-[1.9] overflow-hidden border-b border-slate-100">
+            <article key={article.id} className="card flex h-full overflow-hidden">
+              <Link className="flex h-full w-full flex-col text-left" to={`/news/${encodeURIComponent(article.id)}`}>
+                <div className="aspect-[1.9] shrink-0 overflow-hidden border-b border-slate-100">
                   {articleImage(article)}
                 </div>
-                <div className="p-5">
+                <div className="flex flex-1 flex-col p-5">
                   <div className="mb-3 flex items-center justify-between gap-3 text-xs font-bold text-slate-500">
                     <span className="flex min-w-0 flex-wrap items-center gap-2">
                       <CategoryPill category={article.category} />
@@ -396,57 +344,17 @@ export default function NewsWall() {
                     </span>
                     <span>{formatDate(article.publishedAt)}</span>
                   </div>
-                  <h2 className="line-clamp-2 text-lg font-black leading-snug text-slate-950">{article.title}</h2>
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-500">{summaryFor(article)}</p>
-                  <div className="mt-4 flex items-center justify-between text-xs font-bold text-slate-500">
-                    <span className="inline-flex items-center gap-1"><Eye size={14} /> {formatCount(placeholderViewCount(article))} views</span>
+                  <h2 className="min-h-[3.5rem] line-clamp-2 text-lg font-black leading-snug text-slate-950">{article.title}</h2>
+                  <p className="mt-3 min-h-[4.5rem] line-clamp-3 text-sm leading-6 text-slate-500">{summaryFor(article)}</p>
+                  <div className="mt-auto flex items-center justify-between pt-4 text-xs font-bold text-slate-500">
+                    <span className="inline-flex items-center gap-1 text-cyan-700">Read story <ArrowUpRight size={14} /></span>
                   </div>
                 </div>
-              </button>
+              </Link>
             </article>
           ))
         )}
       </section>
-
-      {selectedArticle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/65 p-4" role="dialog" aria-modal="true" aria-labelledby="news-detail-title">
-          <section className="card flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden shadow-2xl">
-            <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-5">
-              <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <CategoryPill category={selectedArticle.category} />
-                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">{selectedArticle.sourceName || 'News source'}</p>
-                </div>
-                <h2 id="news-detail-title" className="mt-2 text-2xl font-black leading-tight text-slate-950">{selectedArticle.title}</h2>
-              </div>
-              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={closeArticle} aria-label="Close news detail">
-                <X size={19} />
-              </button>
-            </div>
-
-            <div className="min-h-0 overflow-y-auto p-5">
-              <div className="mb-5 aspect-[2.15] overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-                {articleImage(selectedArticle)}
-              </div>
-              <p className="text-sm leading-7 text-slate-600">{summaryFor(selectedArticle)}</p>
-
-              <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm font-bold text-slate-700">Reader activity</p>
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-slate-500"><Eye size={14} /> {formatCount(placeholderViewCount(selectedArticle))} views</span>
-                </div>
-                <p className="mt-2 text-xs font-semibold leading-5 text-slate-500">Discussion controls are intentionally quiet while the audience base grows.</p>
-              </div>
-
-              {selectedArticle.link && (
-                <a className="btn-secondary mt-5 w-full" href={selectedArticle.link} target="_blank" rel="noreferrer">
-                  Open original story <ExternalLink size={16} />
-                </a>
-              )}
-            </div>
-          </section>
-        </div>
-      )}
 
       {authPrompt && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/65 p-4" role="dialog" aria-modal="true" aria-labelledby="news-auth-title">

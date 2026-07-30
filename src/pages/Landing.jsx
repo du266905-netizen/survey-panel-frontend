@@ -184,7 +184,7 @@ function LandingNewsPreview() {
         ) : articles.length ? (
           <div className="landing-news-grid">
             {articles.map((article) => (
-              <Link key={article.id} className="landing-news-card" to={`/news?article=${encodeURIComponent(article.id)}`}>
+              <Link key={article.id} className="landing-news-card" to={`/news/${encodeURIComponent(article.id)}`}>
                 <div className="landing-news-card-image">
                   <LandingNewsImage article={article} />
                 </div>
