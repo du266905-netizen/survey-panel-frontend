@@ -398,8 +398,8 @@
 /* Dashboard: one restrained editorial surface, distinct from the paper sidebar. */
 .app-main-dashboard {
   min-height: calc(100vh - 76px);
-  background: #fbfaf7;
-  box-shadow: inset 1px 0 rgba(72, 80, 70, .11);
+  background: #e5e8e0;
+  box-shadow: inset 1px 0 rgba(72, 80, 70, .14);
 }
 
 .dashboard-page {
@@ -409,12 +409,9 @@
 
 .dashboard-board {
   overflow: hidden;
-  border-top: 1px solid rgba(56, 66, 57, .14);
-  border-bottom: 1px solid rgba(56, 66, 57, .14);
-  background:
-    linear-gradient(rgba(74, 82, 72, .028) 1px, transparent 1px),
-    #fbfaf7;
-  background-size: 100% 10px;
+  border-top: 1px solid rgba(56, 66, 57, .16);
+  border-bottom: 1px solid rgba(56, 66, 57, .16);
+  background: #eff0e9;
 }
 
 .dashboard-board-intro {
@@ -460,7 +457,7 @@
 .app-main-dashboard .dashboard-command .btn-primary:hover { border-color: #315746; background: #315746; color: #fffdf9; }
 .app-main-dashboard .dashboard-command .btn-secondary {
   border-color: rgba(38, 57, 46, .24);
-  background: rgba(255, 253, 249, .62);
+  background: #f5f4ed;
   color: #34483a;
 }
 .app-main-dashboard .dashboard-command .btn-secondary:hover { border-color: rgba(38, 57, 46, .46); background: rgba(38, 57, 46, .055); color: #213e31; }
@@ -506,14 +503,14 @@
 .dashboard-trend-heading h2 { margin-top: 8px; color: #1d2921; font-size: clamp(26px, 2.5vw, 36px); font-weight: 760; letter-spacing: -.035em; }
 .dashboard-trend-heading p:not(.dashboard-command-kicker) { margin-top: 6px; color: #778178; font-size: 14px; font-weight: 650; }
 .dashboard-trend-heading label { display: grid; min-width: 150px; gap: 7px; color: #6f796f; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
-.app-shell .app-main-dashboard .field { border-color: rgba(44, 62, 49, .18); border-radius: 4px; background: rgba(255, 254, 250, .84); color: #2b3a30; }
+.app-shell .app-main-dashboard .field { border-color: rgba(44, 62, 49, .18); border-radius: 4px; background: #f5f4ed; color: #2b3a30; }
 .app-shell .app-main-dashboard .field:focus { border-color: rgba(42, 80, 61, .55); box-shadow: 0 0 0 4px rgba(47, 93, 70, .10); }
 .dashboard-chart-wrap { position: relative; height: 320px; margin-top: 26px; }
-.dashboard-chart-empty { border: 1px solid rgba(56, 66, 57, .14); border-radius: 4px; background: rgba(255, 253, 248, .9); box-shadow: 0 14px 32px rgba(50, 57, 49, .08); backdrop-filter: none; }
+.dashboard-chart-empty { border: 1px solid rgba(56, 66, 57, .14); border-radius: 4px; background: #e8eae3; box-shadow: 0 14px 32px rgba(50, 57, 49, .08); backdrop-filter: none; }
 .dashboard-chart-empty p { color: #304035; }
 .dashboard-chart-empty span { color: #758076; }
 .app-main-dashboard .recharts-legend-item-text { color: #687268 !important; }
-.app-shell .app-main-dashboard .recharts-default-tooltip { border-color: rgba(56, 66, 57, .16) !important; background: #fffdfa !important; box-shadow: 0 12px 28px rgba(47, 54, 45, .09) !important; }
+.app-shell .app-main-dashboard .recharts-default-tooltip { border-color: rgba(56, 66, 57, .16) !important; background: #f5f4ed !important; box-shadow: 0 12px 28px rgba(47, 54, 45, .09) !important; }
 .app-shell .app-main-dashboard .recharts-tooltip-label,
 .app-shell .app-main-dashboard .recharts-tooltip-item { color: #1f2a23 !important; }
 
