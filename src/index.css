@@ -1626,8 +1626,8 @@ textarea {
 .referral-launcher-art {
   position: absolute;
   top: 13px;
-  right: 12px;
-  width: 112px;
+  right: 0;
+  width: 138px;
   height: 138px;
 }
 .referral-photo-art {
@@ -1735,19 +1735,34 @@ textarea {
 .referral-modal-reward {
   position: relative;
   display: flex;
-  min-height: 0;
+  min-height: 246px;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 0 0 28px;
+  justify-content: flex-end;
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 0;
+  isolation: isolate;
+}
+.referral-modal-reward::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 28, 23, .04) 18%, rgba(20, 28, 23, .82) 100%);
+  content: '';
 }
 .referral-modal-art {
-  align-self: flex-end;
-  width: min(100%, 252px);
-  height: 194px;
-  margin: 0 0 18px;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
 }
-.referral-modal-reward span { color: #6b756d; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-.referral-modal-reward strong { margin-top: 7px; color: #1e2a22; font-size: clamp(32px, 3.5vw, 45px); font-weight: 850; letter-spacing: -.06em; }
+.referral-modal-art img { object-position: 57% center; filter: saturate(.72) contrast(.98) sepia(.1) brightness(.86); }
+.referral-modal-reward-copy { position: relative; z-index: 2; display: flex; flex-direction: column; padding: 24px 25px; }
+.referral-modal-reward span { color: rgba(255, 252, 243, .8); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.referral-modal-reward strong { margin-top: 7px; color: #fffaf0; font-size: clamp(32px, 3.5vw, 45px); font-weight: 850; letter-spacing: -.06em; text-shadow: 0 1px 18px rgba(9, 15, 11, .36); }
 .referral-modal-error { margin: 16px 0 0; border: 1px solid rgba(137, 71, 67, .26); border-radius: 14px; background: rgba(137, 71, 67, .08); color: #8b403b; font-size: 13px; font-weight: 700; padding: 12px 14px; }
 .referral-modal-summary {
   display: grid;
@@ -1793,8 +1808,7 @@ textarea {
 @media (max-width: 960px) {
   .referral-launcher { left: 20px; width: min(300px, calc(100vw - 40px)); }
   .referral-modal-hero { grid-template-columns: 1fr; }
-  .referral-modal-reward { border-top: 1px solid rgba(68, 77, 69, .2); padding: 22px 0 26px; }
-  .referral-modal-art { width: 224px; height: 172px; }
+  .referral-modal-reward { min-height: 252px; margin-bottom: 26px; }
 }
 @media (max-width: 700px) {
   .referral-modal-backdrop { padding: 12px; }
@@ -1811,12 +1825,12 @@ textarea {
   .referral-launcher { left: 14px; bottom: 14px; width: min(282px, calc(100vw - 28px)); min-height: 160px; }
   .referral-launcher-copy { width: 149px; padding: 17px; }
   .referral-launcher-copy strong { font-size: 24px; }
-  .referral-launcher-art { top: 13px; right: 11px; width: 104px; height: 126px; }
+  .referral-launcher-art { top: 13px; right: 0; width: 128px; height: 126px; }
   .referral-launcher-orbit { top: auto; right: 48px; bottom: 3px; width: 28px; height: 28px; }
   .referral-modal-hero-copy { padding: 3px 0 24px; }
   .referral-modal-hero h2 { font-size: 39px; }
-  .referral-modal-reward { min-height: 0; padding: 20px 0 24px; }
-  .referral-modal-art { width: 178px; height: 136px; }
+  .referral-modal-reward { min-height: 214px; margin-bottom: 24px; }
+  .referral-modal-reward-copy { padding: 20px; }
   .referral-modal-link-card, .referral-modal-rules { padding: 0; }
   .referral-modal-link-box { grid-template-columns: 1fr; }
   .referral-modal-stats article { min-height: 125px; padding: 0 14px; }

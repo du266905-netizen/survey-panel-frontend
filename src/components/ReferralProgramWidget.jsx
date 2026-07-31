@@ -2,6 +2,7 @@ import { ArrowUpRight, Check, Copy, Gift, Link as LinkIcon, ShieldCheck, Sparkle
 import { createPortal } from 'react-dom';
 import { useEffect, useMemo, useState } from 'react';
 import referralPeopleImage from '../assets/referral-people.jpg';
+import referralCommunityImage from '../assets/referral-community.jpg';
 import { useNavigate } from 'react-router-dom';
 import { getReferralSummary } from '../api/realApi';
 import CoinAmount from './CoinAmount';
@@ -11,10 +12,10 @@ function inviteUrl(referralCode) {
   return referralCode ? `${origin}/register?ref=${encodeURIComponent(referralCode)}` : '';
 }
 
-function ReferralPeopleArtwork({ className = '' }) {
+function ReferralPeopleArtwork({ className = '', imageSrc = referralPeopleImage }) {
   return (
     <div className={`referral-photo-art ${className}`} aria-hidden="true">
-      <img src={referralPeopleImage} alt="" />
+      <img src={imageSrc} alt="" />
     </div>
   );
 }
@@ -122,9 +123,11 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
                   <p>Share a personal link with someone who would value taking part. Rewards unlock after their first validated survey is complete.</p>
                 </div>
                 <div className="referral-modal-reward">
-                  <ReferralPeopleArtwork className="referral-modal-art" />
-                  <span>For a qualified first completion</span>
-                  <strong>{referrerReward.toLocaleString('en-US')} Coins</strong>
+                  <ReferralPeopleArtwork className="referral-modal-art" imageSrc={referralCommunityImage} />
+                  <div className="referral-modal-reward-copy">
+                    <span>For a qualified first completion</span>
+                    <strong>{referrerReward.toLocaleString('en-US')} Coins</strong>
+                  </div>
                 </div>
               </section>
 

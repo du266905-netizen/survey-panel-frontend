@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react';
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { ArrowUpRight, Eye, ListFilter, X } from 'lucide-react';
+import { ArrowUpRight, ListFilter, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getDashboard } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import DashboardChecklistIllustration from '../components/DashboardChecklistIllustration';
 import { useAsyncData } from '../hooks/useAsyncData';
-import { formatCoinNumber, titleCase } from '../utils/formatters';
+import { formatCoinNumber } from '../utils/formatters';
 
 const chartTooltipStyle = {
   backgroundColor: '#30312e',
@@ -62,7 +62,6 @@ export default function Dashboard() {
   const { data, loading } = useAsyncData(getDashboard, []);
   const [trendRange, setTrendRange] = useState(7);
   const [showAllRecords, setShowAllRecords] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
   const [historyStatus, setHistoryStatus] = useState('all');
   const [historyRange, setHistoryRange] = useState('all');
   const records = data?.records || [];
@@ -87,15 +86,6 @@ export default function Dashboard() {
     { key: 'surveyNumber', header: 'Survey' },
     { key: 'coinsReward', header: 'Coins', render: (row) => <CoinAmount value={row.coinsReward} /> },
     { key: 'time', header: 'Date', render: (row) => formatRecordTime(row) },
-    {
-      key: 'details',
-      header: '',
-      render: (row) => (
-        <button className="btn-secondary px-3 py-1.5 text-xs" type="button" onClick={() => setSelectedRecord(row)}>
-          <Eye size={14} /> Details
-        </button>
-      ),
-    },
   ];
 
   const fullRecordColumns = recordColumns;
@@ -244,36 +234,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {selectedRecord && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/55 p-4" role="dialog" aria-modal="true" aria-labelledby="record-details-title">
-          <section className="card w-full max-w-md p-6 shadow-2xl">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wide text-cyan-700">Participation record</p>
-                <h2 id="record-details-title" className="mt-1 text-xl font-bold text-slate-950">{selectedRecord.surveyNumber}</h2>
-              </div>
-              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setSelectedRecord(null)} aria-label="Close record details">
-                <X size={18} />
-              </button>
-            </div>
-            <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
-              {[
-                ['Channel', selectedRecord.platform],
-                ['Status', titleCase(selectedRecord.status)],
-                ['Approved Coins', `${formatCoinNumber(selectedRecord.coinsReward)} Coins`],
-                ['Payout', selectedRecord.amountUsd === null || selectedRecord.amountUsd === undefined ? '-' : `$${Number(selectedRecord.amountUsd).toFixed(2)}`],
-                ['Started', selectedRecord.startTime ? new Date(selectedRecord.startTime).toLocaleString() : '-'],
-                ['Updated', formatRecordTime(selectedRecord)],
-              ].map(([label, value]) => (
-                <div key={label} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
-                  <dt className="text-xs font-bold uppercase tracking-wide text-slate-500">{label}</dt>
-                  <dd className="mt-1 font-semibold text-slate-900">{value}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-        </div>
-      )}
     </div>
   );
 }
