@@ -74,7 +74,12 @@ export default function WalletBalanceMenu() {
   const transactions = walletData?.transactions || [];
 
   return (
-    <div ref={menuRef} className="app-wallet-menu hidden sm:block">
+    <div
+      ref={menuRef}
+      className="app-wallet-menu hidden sm:block"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
       <button
         className={`app-balance app-balance-trigger ${open ? 'is-open' : ''}`}
         type="button"

@@ -353,15 +353,21 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
             <div className="profile-survey-header-progress" role="progressbar" aria-label="First survey progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progressValue)}>
               <span style={{ width: `${progressValue}%` }} />
             </div>
-            <button className="profile-survey-options-trigger" type="button" onClick={() => setOptionsOpen((open) => !open)} aria-expanded={optionsOpen} aria-haspopup="menu" aria-label="Options">
-              <Settings2 size={17} />
-            </button>
-            {optionsOpen && (
-              <div className="profile-survey-options-menu" role="menu">
-                <a href="/privacy" role="menuitem"><CircleHelp size={15} /> Privacy</a>
-                <button type="button" role="menuitem" onClick={onClose}><X size={15} /> Save and exit</button>
-              </div>
-            )}
+            <div
+              className="profile-survey-options-control"
+              onMouseEnter={() => setOptionsOpen(true)}
+              onMouseLeave={() => setOptionsOpen(false)}
+            >
+              <button className="profile-survey-options-trigger" type="button" onClick={() => setOptionsOpen((open) => !open)} aria-expanded={optionsOpen} aria-haspopup="menu" aria-label="Options">
+                <Settings2 size={17} />
+              </button>
+              {optionsOpen && (
+                <div className="profile-survey-options-menu" role="menu">
+                  <a href="/privacy" role="menuitem"><CircleHelp size={15} /> Privacy</a>
+                  <button type="button" role="menuitem" onClick={onClose}><X size={15} /> Save and exit</button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
         <div className="profile-survey-progress-track"><span style={{ width: `${progressValue}%` }} /></div>

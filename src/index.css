@@ -2015,6 +2015,7 @@ textarea {
 .profile-survey-actions { position: relative; display: flex; align-items: center; gap: 12px; }
 .profile-survey-header-progress { width: clamp(104px, 12vw, 168px); height: 5px; overflow: hidden; border-radius: 999px; background: rgba(242, 235, 221, .22); }
 .profile-survey-header-progress span { display: block; height: 100%; border-radius: inherit; background: #bd9b4a; box-shadow: 0 0 12px rgba(189, 155, 74, .42); transition: width .35s cubic-bezier(.2,.8,.2,1); }
+.profile-survey-options-control { position: relative; }
 .profile-survey-options-trigger { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 0; border-radius: 9px; background: transparent; color: rgba(242, 235, 221, .82); cursor: pointer; padding: 0; }
 .profile-survey-options-trigger:hover, .profile-survey-options-trigger[aria-expanded="true"] { background: rgba(255,255,255,.09); color: #fff; }
 .profile-survey-options-menu { position: absolute; z-index: 6; top: calc(100% + 8px); right: 0; display: grid; min-width: 158px; border: 1px solid rgba(155, 205, 199, .16); border-radius: 11px; background: #143236; box-shadow: 0 16px 34px rgba(5, 18, 20, .28); overflow: hidden; padding: 5px; }

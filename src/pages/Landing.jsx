@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, BadgeCheck, ChevronDown, CircleDollarSign, Eye, Menu, Newspaper, ShieldCheck, X } from 'lucide-react';
+import { ArrowRight, BadgeCheck, ChevronDown, CircleDollarSign, Eye, Newspaper, ShieldCheck } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getNewsWall } from '../api/realApi';
 import GlobalGlobe from '../components/GlobalGlobe';
@@ -159,12 +159,14 @@ function LandingNavigation({ search }) {
 
         <button
           type="button"
-          className="landing-site-nav-toggle"
+          className={`landing-site-nav-toggle${mobileOpen ? ' is-open' : ''}`}
           aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((current) => !current)}
         >
-          {mobileOpen ? <X size={24} strokeWidth={2} /> : <Menu size={25} strokeWidth={2} />}
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
         </button>
       </div>
 
@@ -982,6 +984,14 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .landing-site-nav-actions .landing-site-nav-join { display: inline-flex; align-items: center; gap: 7px; background: #183b2c; color: #f8f5ed; padding: 12px 15px; transition: background .18s ease, transform .18s ease; }
         .landing-site-nav-actions .landing-site-nav-join:hover { background: #275742; color: #fffdf7; transform: translateY(-1px); }
         .landing-site-nav-toggle, .landing-site-nav-mobile { display: none; }
+        .landing-site-nav-toggle { position: relative; overflow: hidden; }
+        .landing-site-nav-toggle span { position: absolute; left: 10px; right: 10px; height: 2px; border-radius: 999px; background: currentColor; transform-origin: center; transition: transform .28s cubic-bezier(.2,.85,.3,1), opacity .18s ease; }
+        .landing-site-nav-toggle span:nth-child(1) { transform: translateY(-7px); }
+        .landing-site-nav-toggle span:nth-child(2) { transform: scaleX(1); }
+        .landing-site-nav-toggle span:nth-child(3) { transform: translateY(7px); }
+        .landing-site-nav-toggle.is-open span:nth-child(1) { transform: rotate(45deg); }
+        .landing-site-nav-toggle.is-open span:nth-child(2) { opacity: 0; transform: scaleX(.4); }
+        .landing-site-nav-toggle.is-open span:nth-child(3) { transform: rotate(-45deg); }
         .landing-site-nav-mobile { border-top: 1px solid rgba(31,31,27,.12); background: #f8f6ef; }
         .landing-site-nav-mobile > nav { width: min(100% - 40px, 680px); margin: 0 auto; padding: 13px 0 20px; }
         .landing-site-nav-mobile-group { border-bottom: 1px solid rgba(31,31,27,.12); }

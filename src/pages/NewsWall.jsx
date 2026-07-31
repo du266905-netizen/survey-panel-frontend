@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronDown, Newspaper, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Newspaper, Sparkles, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
+import { getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import Logo from '../components/Logo';
 import PageHeader from '../components/PageHeader';
@@ -77,19 +77,52 @@ function summaryFor(article) {
   return article?.summary || article?.description || article?.content || 'Open the detail view to review this story.';
 }
 
-function DailyBriefIntro({ country, category }) {
-  const selectedCountry = countryLabel(country);
-  const selectedCategory = categoryInfo(category).label.toLowerCase();
+function formatBriefDate(value) {
+  if (!value) return 'Today';
+  const [year, month, day] = String(value).split('-').map(Number);
+  if (!year || !month || !day) return value;
+  return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+
+function DailyBriefDescription({ brief, loading, error, country }) {
+  const briefCountry = brief?.country || country;
 
   return (
-    <section className="mb-5 border-b border-slate-200 pb-5">
-      <div className="flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-cyan-800">
-        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-cyan-50 text-base" aria-hidden="true">{countryFlag(country)}</span>
-        Daily reading note
+    <section className="card mb-5 overflow-hidden">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-cyan-50/45 px-5 py-4">
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cyan-100 text-cyan-800" aria-hidden="true">
+            <Sparkles size={18} strokeWidth={1.9} />
+          </span>
+          <div className="min-w-0">
+            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">{brief?.isAiGenerated ? 'AI daily brief' : 'Daily brief'}</p>
+            <h2 className="truncate text-xl font-black text-slate-950">{brief?.title || 'Today’s briefing'}</h2>
+          </div>
+        </div>
+        <span className="rounded-full border border-cyan-200 bg-white px-3 py-1 text-xs font-bold text-cyan-800">
+          <span className="mr-1.5" aria-hidden="true">{countryFlag(briefCountry)}</span>
+          {brief?.countryLabel || countryLabel(briefCountry)} · {formatBriefDate(brief?.briefDate)}
+        </span>
       </div>
-      <p className="mt-3 max-w-4xl text-sm leading-7 text-slate-600">
-        A focused selection of {selectedCategory} reporting from {selectedCountry}. Read the context below, then open the stories that are most useful to you.
-      </p>
+      <div className="px-5 py-4">
+        {loading ? (
+          <div className="space-y-3">
+            <div className="h-4 w-11/12 animate-pulse rounded-full bg-slate-100" />
+            <div className="h-4 w-8/12 animate-pulse rounded-full bg-slate-100" />
+          </div>
+        ) : error ? (
+          <p className="text-sm font-semibold leading-7 text-slate-500">Today’s editorial summary is temporarily unavailable. The latest stories are still available below.</p>
+        ) : (
+          <p className="max-w-5xl text-sm leading-7 text-slate-600">
+            {brief?.summary || 'A focused selection of reporting and context from the stories currently available below.'}
+          </p>
+        )}
+      </div>
     </section>
   );
 }
@@ -132,23 +165,60 @@ function NewsStoryCard({ article }) {
 }
 
 function CompactSelect({ label, value, onChange, options, ariaLabel, optionLabel }) {
+  const [open, setOpen] = useState(false);
+  const selectedOption = options.find((item) => item.id === value) || options[0];
+
   return (
-    <label className="inline-flex h-10 min-w-[148px] items-center gap-2 rounded-full border border-slate-200 bg-white px-3 shadow-sm transition focus-within:border-cyan-600 focus-within:ring-2 focus-within:ring-cyan-100">
-      <span className="text-[10px] font-black uppercase tracking-[0.12em] text-slate-500">{label}</span>
-      <select
-        className="min-w-0 flex-1 appearance-none bg-transparent pr-1 text-sm font-bold text-slate-800 outline-none"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
+    <div
+      className="group relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        type="button"
+        className="inline-flex h-10 min-w-[148px] items-center gap-2 rounded-full border border-slate-200 bg-white px-3 text-left shadow-sm transition hover:border-slate-300 focus-visible:border-cyan-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-100"
         aria-label={ariaLabel}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        onClick={() => setOpen((current) => !current)}
+        onFocus={() => setOpen(true)}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') setOpen(false);
+        }}
       >
-        {options.map((item) => <option key={item.id} value={item.id}>{optionLabel(item)}</option>)}
-      </select>
-      <ChevronDown className="shrink-0 text-slate-400" size={15} aria-hidden="true" />
-    </label>
+        <span className="text-[10px] font-black uppercase tracking-[0.12em] text-slate-500">{label}</span>
+        <span className="min-w-0 flex-1 truncate text-sm font-bold text-slate-800">{optionLabel(selectedOption)}</span>
+        <ChevronDown className={`shrink-0 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`} size={15} aria-hidden="true" />
+      </button>
+      {open && (
+        <div className="absolute left-0 z-30 mt-2 min-w-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl" role="listbox" aria-label={ariaLabel}>
+          {options.map((item) => {
+            const selected = item.id === value;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="option"
+                aria-selected={selected}
+                className={`flex w-full items-center rounded-xl px-3 py-2 text-left text-sm font-bold transition ${selected ? 'bg-cyan-50 text-cyan-900' : 'text-slate-700 hover:bg-slate-50'}`}
+                onClick={() => {
+                  onChange(item.id);
+                  setOpen(false);
+                }}
+              >
+                {optionLabel(item)}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
 
 function NewsFilters({ country, category, isPublicView, subscribedCategories, loading, onCountryChange, onCategoryChange, onToggleSubscription }) {
+  const [topicsOpen, setTopicsOpen] = useState(false);
+
   return (
     <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
       <CompactSelect
@@ -169,29 +239,45 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
       />
       {loading && <span className="text-xs font-bold text-slate-400" role="status">Updating…</span>}
       {!isPublicView && (
-        <details className="group relative">
-          <summary className="flex h-10 cursor-pointer list-none items-center gap-2 rounded-full border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:border-slate-300 [&::-webkit-details-marker]:hidden">
+        <div
+          className="group relative"
+          onMouseEnter={() => setTopicsOpen(true)}
+          onMouseLeave={() => setTopicsOpen(false)}
+        >
+          <button
+            type="button"
+            className="flex h-10 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:border-slate-300 focus-visible:border-cyan-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-100"
+            aria-expanded={topicsOpen}
+            aria-haspopup="menu"
+            onClick={() => setTopicsOpen((current) => !current)}
+            onFocus={() => setTopicsOpen(true)}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') setTopicsOpen(false);
+            }}
+          >
             <span className="text-[10px] font-black uppercase tracking-[0.12em] text-slate-500">Topics</span>
             <span>{subscribedCategories.size ? `${subscribedCategories.size} saved` : 'All topics'}</span>
-            <ChevronDown className="transition-transform group-open:rotate-180" size={15} />
-          </summary>
-          <div className="absolute right-0 z-30 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
-            <p className="px-1 pb-2 text-xs font-bold leading-5 text-slate-500">Save the topics you want to follow.</p>
-            <div className="grid gap-1">
-              {categories.map((item) => (
-                <label key={item.id} className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
-                  <input
-                    className="h-4 w-4 accent-cyan-600"
-                    type="checkbox"
-                    checked={subscribedCategories.has(item.id)}
-                    onChange={() => onToggleSubscription(item.id)}
-                  />
-                  {item.label}
-                </label>
-              ))}
+            <ChevronDown className={`transition-transform ${topicsOpen ? 'rotate-180' : ''}`} size={15} />
+          </button>
+          {topicsOpen && (
+            <div className="absolute right-0 z-30 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl" role="menu" aria-label="News topics">
+              <p className="px-1 pb-2 text-xs font-bold leading-5 text-slate-500">Save the topics you want to follow.</p>
+              <div className="grid gap-1">
+                {categories.map((item) => (
+                  <label key={item.id} className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                    <input
+                      className="h-4 w-4 accent-cyan-600"
+                      type="checkbox"
+                      checked={subscribedCategories.has(item.id)}
+                      onChange={() => onToggleSubscription(item.id)}
+                    />
+                    {item.label}
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
-        </details>
+          )}
+        </div>
       )}
     </div>
   );
@@ -204,10 +290,14 @@ export default function NewsWall() {
   const [category, setCategory] = useState('tech');
   const [articles, setArticles] = useState([]);
   const [preferences, setPreferences] = useState([]);
+  const [brief, setBrief] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [briefLoading, setBriefLoading] = useState(true);
   const [error, setError] = useState('');
+  const [briefError, setBriefError] = useState('');
   const [authPrompt, setAuthPrompt] = useState('');
   const requestIdRef = useRef(0);
+  const briefRequestIdRef = useRef(0);
 
   const subscribedCategories = useMemo(
     () => new Set((preferences?.categories || []).filter((item) => item.subscribed).map((item) => item.id)),
@@ -221,7 +311,7 @@ export default function NewsWall() {
     setError('');
 
     try {
-      const response = await getNewsWall({ country, category });
+      const response = await getNewsWall({ category, ...(country === 'GLOBAL' ? {} : { country }) });
       if (requestId !== requestIdRef.current) return;
       setArticles(response.data || []);
     } catch (caughtError) {
@@ -229,6 +319,25 @@ export default function NewsWall() {
       setError(caughtError.response?.data?.message || 'Unable to update this feed right now. Please try another region or try again shortly.');
     } finally {
       if (requestId === requestIdRef.current) setLoading(false);
+    }
+  };
+
+  const loadBrief = async () => {
+    const requestId = briefRequestIdRef.current + 1;
+    briefRequestIdRef.current = requestId;
+    setBriefLoading(true);
+    setBriefError('');
+
+    try {
+      const response = await getNewsBrief(country === 'GLOBAL' ? {} : { country });
+      if (requestId !== briefRequestIdRef.current) return;
+      setBrief(response.data || null);
+    } catch {
+      if (requestId !== briefRequestIdRef.current) return;
+      setBrief(null);
+      setBriefError('Unable to load the daily brief.');
+    } finally {
+      if (requestId === briefRequestIdRef.current) setBriefLoading(false);
     }
   };
 
@@ -251,8 +360,10 @@ export default function NewsWall() {
 
   useEffect(() => {
     loadNews();
+    loadBrief();
     return () => {
       requestIdRef.current += 1;
+      briefRequestIdRef.current += 1;
     };
   }, [country, category]);
 
@@ -306,7 +417,7 @@ export default function NewsWall() {
 
       {error && <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
 
-      <DailyBriefIntro country={country} category={category} />
+      <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} />
 
       <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {loading && !articles.length ? (

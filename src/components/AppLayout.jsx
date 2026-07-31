@@ -98,7 +98,12 @@ export default function AppLayout({ children }) {
             </div>
             <div className="flex items-center gap-3 sm:gap-4">
               <WalletBalanceMenu />
-              <div ref={userMenuRef} className="app-user-menu">
+              <div
+                ref={userMenuRef}
+                className="app-user-menu"
+                onMouseEnter={() => setUserMenuOpen(true)}
+                onMouseLeave={() => setUserMenuOpen(false)}
+              >
               <button
                 className={`app-user-trigger ${userMenuOpen ? 'is-open' : ''}`}
                 type="button"
