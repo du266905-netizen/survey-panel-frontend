@@ -1,19 +1,17 @@
 import { useMemo, useState } from 'react';
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { ArrowUpRight, ListFilter, X } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getDashboard } from '../api/realApi';
-import CoinAmount from '../components/CoinAmount';
-import DataTable from '../components/DataTable';
-import DashboardChecklistIllustration from '../components/DashboardChecklistIllustration';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber } from '../utils/formatters';
 
 const chartTooltipStyle = {
-  backgroundColor: '#30312e',
-  border: '1px solid rgba(243, 237, 224, .36)',
-  borderRadius: 10,
-  color: '#f3ede0',
+  backgroundColor: '#fffdfa',
+  border: '1px solid rgba(53, 62, 53, .16)',
+  borderRadius: 4,
+  color: '#1f2a23',
+  boxShadow: '0 12px 28px rgba(47, 54, 45, .09)',
 };
 
 function dateKey(date) {
@@ -53,187 +51,111 @@ function buildTrend(records, dayCount) {
   return points;
 }
 
-function formatRecordTime(record) {
-  const date = recordDate(record);
-  return date ? date.toLocaleString() : '-';
-}
-
 export default function Dashboard() {
   const { data, loading } = useAsyncData(getDashboard, []);
   const [trendRange, setTrendRange] = useState(7);
-  const [showAllRecords, setShowAllRecords] = useState(false);
-  const [historyStatus, setHistoryStatus] = useState('all');
-  const [historyRange, setHistoryRange] = useState('all');
   const records = data?.records || [];
   const trend = useMemo(() => buildTrend(records, trendRange), [records, trendRange]);
   const hasTrendActivity = trend.some((point) => point.completed > 0 || point.coins > 0);
-  const recentRecords = records.slice(0, 8);
   const completedOffers = data?.stats.completedOffers ?? 0;
   const nextAction = completedOffers > 0
     ? 'New matches move throughout the day. Check the wall while survey inventory is fresh.'
     : 'Start with one verified completion. Once it clears, your reward record begins to build.';
-  const historyRecords = useMemo(() => {
-    const now = new Date();
-    const cutoff = historyRange === 'all' ? null : new Date(now.getTime() - Number(historyRange) * 24 * 60 * 60 * 1000);
-    return records.filter((record) => {
-      const matchesStatus = historyStatus === 'all' || record.status === historyStatus;
-      const date = recordDate(record);
-      return matchesStatus && (!cutoff || (date && date >= cutoff));
-    });
-  }, [historyRange, historyStatus, records]);
-
-  const recordColumns = [
-    { key: 'surveyNumber', header: 'Survey' },
-    { key: 'coinsReward', header: 'Coins', render: (row) => <CoinAmount value={row.coinsReward} /> },
-    { key: 'time', header: 'Date', render: (row) => formatRecordTime(row) },
-  ];
-
-  const fullRecordColumns = recordColumns;
-
   return (
-    <div className="dashboard-page space-y-10">
-      <section className="dashboard-command mb-6">
-        <div className="dashboard-command-copy">
-          <p className="dashboard-command-kicker">Start earning today</p>
-          <h1>One good survey can start the streak.</h1>
-          <p>{nextAction}</p>
-          <div className="dashboard-command-actions">
-            <Link className="btn-primary" to="/partners">
-              Find surveys <ArrowUpRight size={16} />
-            </Link>
-            <Link className="btn-secondary" to="/wallet">
-              Open wallet
-            </Link>
-          </div>
-          <DashboardChecklistIllustration />
-        </div>
-        <div className="dashboard-path-panel" aria-label="Reward path">
-          <div className="dashboard-path-head">
-            <span>Reward path</span>
-            <strong>Surveys → Coins → Gift cards</strong>
-          </div>
-          <div className="dashboard-path-steps">
-            <article>
-              <span>01</span>
-              <strong>Find a live match</strong>
-              <p>Survey availability changes during the day.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <strong>Finish with quality</strong>
-              <p>Partners validate completions before Coins clear.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <strong>Build toward rewards</strong>
-              <p>Gift card goals unlock from the $10 tier.</p>
-            </article>
-          </div>
-          <p>Tip: finish your first survey and check back when the wall looks quiet — inventory rotates.</p>
-        </div>
-      </section>
+    <div className="dashboard-page">
+      <section className="dashboard-board">
+        <div className="dashboard-board-intro">
+          <header className="dashboard-command">
+            <div className="dashboard-command-copy">
+              <p className="dashboard-command-kicker">Start earning today</p>
+              <h1>One good survey can start the streak.</h1>
+              <p>{nextAction}</p>
+              <div className="dashboard-command-actions">
+                <Link className="btn-primary" to="/partners">
+                  Find surveys <ArrowUpRight size={16} />
+                </Link>
+                <Link className="btn-secondary" to="/wallet">
+                  Open wallet
+                </Link>
+              </div>
+            </div>
+          </header>
 
-      <section className="dashboard-trend-card card p-5">
-        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-bold text-slate-950">Participation trend</h2>
-            <p className="mt-1 text-sm text-slate-500">Daily completed offers and approved Coins.</p>
-          </div>
-          <label className="flex items-center gap-2 text-sm font-semibold text-slate-600">
-            Period
-            <select className="field w-auto py-2" value={trendRange} onChange={(event) => setTrendRange(Number(event.target.value))}>
-              <option value={7}>Last 7 days</option>
-              <option value={30}>Last 30 days</option>
-            </select>
-          </label>
+          <aside className="dashboard-path-panel" aria-label="Reward path">
+            <div className="dashboard-path-head">
+              <span>Reward path</span>
+              <strong>Surveys → Coins → Gift cards</strong>
+            </div>
+            <div className="dashboard-path-steps">
+              <article>
+                <span>01</span>
+                <strong>Find a live match</strong>
+                <p>Survey availability changes during the day.</p>
+              </article>
+              <article>
+                <span>02</span>
+                <strong>Finish with quality</strong>
+                <p>Partners validate completions before Coins clear.</p>
+              </article>
+              <article>
+                <span>03</span>
+                <strong>Build toward rewards</strong>
+                <p>Gift card goals unlock from the $10 tier.</p>
+              </article>
+            </div>
+            <p>Tip: finish your first survey and check back when the wall looks quiet — inventory rotates.</p>
+          </aside>
         </div>
-        <div className="dashboard-chart-wrap h-80">
-          {loading ? (
-            <div className="h-full animate-pulse rounded-lg bg-slate-100" />
-          ) : (
-            <>
-              {!hasTrendActivity && (
-                <div className="dashboard-chart-empty">
-                  <p>Trend will appear after your first approved survey.</p>
-                  <span>No cleared activity in the selected period yet.</span>
+
+        <section className="dashboard-trend-card">
+          <div className="dashboard-trend-heading">
+            <div>
+              <p className="dashboard-command-kicker">Your activity</p>
+              <h2>Participation trend</h2>
+              <p>Daily completed offers and approved Coins.</p>
+            </div>
+            <label>
+              <span>Period</span>
+              <select className="field" value={trendRange} onChange={(event) => setTrendRange(Number(event.target.value))}>
+                <option value={7}>Last 7 days</option>
+                <option value={30}>Last 30 days</option>
+              </select>
+            </label>
+          </div>
+          <div className="dashboard-chart-wrap">
+            {loading ? (
+              <div className="h-full animate-pulse rounded-lg bg-slate-100" />
+            ) : (
+              <>
+                {!hasTrendActivity && (
+                  <div className="dashboard-chart-empty">
+                    <p>Trend will appear after your first approved survey.</p>
+                    <span>No cleared activity in the selected period yet.</span>
+                  </div>
+                )}
+                <div className={hasTrendActivity ? 'h-full' : 'h-full dashboard-chart-muted'}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(58, 69, 59, .12)" vertical={false} />
+                      <XAxis dataKey="day" tick={{ fill: '#888b82', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
+                      <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#888b82', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
+                      <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#888b82', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
+                      <Tooltip
+                        contentStyle={chartTooltipStyle}
+                        labelStyle={{ color: '#1f2a23' }}
+                        formatter={(value, name) => [name === 'Coins' ? `${formatCoinNumber(value)} Coins` : value, name]}
+                      />
+                      <Legend wrapperStyle={{ paddingTop: 14 }} />
+                      <Bar yAxisId="completed" dataKey="completed" name="Completed offers" fill="#9ec8bd" radius={[3, 3, 0, 0]} maxBarSize={28} />
+                      <Line yAxisId="coins" type="monotone" dataKey="coins" name="Coins" stroke="#ba9655" strokeWidth={2.5} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
+                    </ComposedChart>
+                  </ResponsiveContainer>
                 </div>
-              )}
-              <div className={hasTrendActivity ? 'h-full' : 'h-full dashboard-chart-muted'}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(243, 237, 224, .14)" vertical={false} />
-                    <XAxis dataKey="day" tick={{ fill: '#c2bbae', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
-                    <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#c2bbae', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
-                    <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#c2bbae', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
-                    <Tooltip
-                      contentStyle={chartTooltipStyle}
-                      labelStyle={{ color: '#f3ede0' }}
-                      formatter={(value, name) => [name === 'Coins' ? `${formatCoinNumber(value)} Coins` : value, name]}
-                    />
-                    <Legend wrapperStyle={{ paddingTop: 14 }} />
-                    <Bar yAxisId="completed" dataKey="completed" name="Completed offers" fill="#a7ddd6" radius={[4, 4, 0, 0]} maxBarSize={28} />
-                    <Line yAxisId="coins" type="monotone" dataKey="coins" name="Coins" stroke="#cfc6aa" strokeWidth={3} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
-                  </ComposedChart>
-                </ResponsiveContainer>
-              </div>
-            </>
-          )}
-        </div>
-      </section>
-
-      <section className="dashboard-records-section">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-bold text-slate-950">Recent records</h2>
-            <p className="mt-1 text-sm text-slate-500">Your latest participation updates.</p>
+              </>
+            )}
           </div>
-          <button className="btn-secondary" type="button" onClick={() => setShowAllRecords(true)}>
-            <ListFilter size={16} /> View all
-          </button>
-        </div>
-        <DataTable columns={recordColumns} rows={recentRecords} loading={loading} emptyMessage="No participation records yet." />
+        </section>
       </section>
-
-      {showAllRecords && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 p-4" role="dialog" aria-modal="true" aria-labelledby="all-records-title">
-          <section className="card flex max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden shadow-2xl">
-            <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 p-5">
-              <div>
-                <h2 id="all-records-title" className="text-xl font-bold text-slate-950">Participation history</h2>
-                <p className="mt-1 text-sm text-slate-500">Filter and review your full record history without leaving Dashboard.</p>
-              </div>
-              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setShowAllRecords(false)} aria-label="Close participation history">
-                <X size={19} />
-              </button>
-            </div>
-            <div className="grid gap-3 border-b border-slate-100 bg-slate-50 p-4 sm:grid-cols-2">
-              <label className="text-sm font-semibold text-slate-700">
-                Status
-                <select className="field mt-1" value={historyStatus} onChange={(event) => setHistoryStatus(event.target.value)}>
-                  <option value="all">All statuses</option>
-                  <option value="completed">Completed</option>
-                  <option value="pending">Pending</option>
-                  <option value="failed">Failed</option>
-                  <option value="screen_out">Screen out</option>
-                  <option value="quota_full">Quota full</option>
-                </select>
-              </label>
-              <label className="text-sm font-semibold text-slate-700">
-                Period
-                <select className="field mt-1" value={historyRange} onChange={(event) => setHistoryRange(event.target.value)}>
-                  <option value="all">All time</option>
-                  <option value="7">Last 7 days</option>
-                  <option value="30">Last 30 days</option>
-                </select>
-              </label>
-            </div>
-            <div className="min-h-0 overflow-y-auto p-5">
-              <DataTable columns={fullRecordColumns} rows={historyRecords} loading={loading} emptyMessage="No records match these filters." />
-            </div>
-          </section>
-        </div>
-      )}
-
     </div>
   );
 }
