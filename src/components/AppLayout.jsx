@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, ChevronDown, ClipboardCheck, Compass, Database, Gift, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, Star, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, ChevronDown, ClipboardCheck, Compass, Database, Gift, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
 import { isAdminRole, isPanelistRole } from '../utils/roles';
 import { ProfileSurveyProvider } from './ProfileSurveyContext';
+import ReferralProgramWidget from './ReferralProgramWidget';
 import WalletBalanceMenu from './WalletBalanceMenu';
 
 const navItems = [
@@ -13,7 +14,6 @@ const navItems = [
   { to: '/partners#more-opportunities', label: 'More survey opportunities', icon: Compass, hash: '#more-opportunities' },
   { to: '/news', label: 'News Wall', icon: Newspaper },
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
-  { to: '/referrals', label: 'Invite Program', icon: Star },
 ];
 
 export default function AppLayout({ children }) {
@@ -25,6 +25,7 @@ export default function AppLayout({ children }) {
   const isAdmin = isAdminRole(user?.role);
   const isPanelist = isPanelistRole(user?.role);
   const roleLabel = isAdmin ? 'Admin' : user?.role === 'panelist' ? 'Panelist' : 'Member';
+  const referralOpenRequested = new URLSearchParams(location.search).get('referral') === 'true';
 
   useEffect(() => {
     setUserMenuOpen(false);
@@ -164,6 +165,7 @@ export default function AppLayout({ children }) {
           </div>
         </main>
         </div>
+        <ReferralProgramWidget openFromRoute={referralOpenRequested} />
       </div>
     </ProfileSurveyProvider>
   );

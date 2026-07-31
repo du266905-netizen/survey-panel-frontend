@@ -1409,213 +1409,6 @@ textarea {
   font-weight: 720;
   line-height: 1.55;
 }
-.referral-page {
-  width: min(100%, 1180px);
-  margin: 0 auto;
-}
-.referral-hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 330px);
-  align-items: center;
-  gap: clamp(20px, 3vw, 34px);
-  overflow: hidden;
-  border: 1px solid rgba(244, 241, 232, .13);
-  border-radius: 26px;
-  background:
-    radial-gradient(circle at 8% 0%, rgba(244, 241, 232, .06), transparent 34%),
-    linear-gradient(145deg, rgba(10, 10, 9, .96), rgba(0, 0, 0, .91));
-  box-shadow: 0 24px 68px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(244, 241, 232, .035);
-  padding: clamp(24px, 3.2vw, 40px);
-}
-.referral-hero::before {
-  position: absolute;
-  right: -120px;
-  top: -190px;
-  width: 450px;
-  height: 450px;
-  border: 1px solid rgba(244, 241, 232, .08);
-  border-radius: 999px;
-  content: '';
-  pointer-events: none;
-}
-.referral-hero > * { position: relative; z-index: 1; }
-.referral-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 0 12px;
-  color: rgba(231, 224, 204, .72);
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: .20em;
-  text-transform: uppercase;
-}
-.referral-kicker svg { color: rgba(244, 241, 232, .78); }
-.referral-hero h1 {
-  max-width: 680px;
-  margin: 0;
-  color: var(--color-ivory);
-  font-size: clamp(38px, 4.7vw, 64px);
-  font-weight: 760;
-  letter-spacing: -.038em;
-  line-height: 1;
-}
-.referral-hero p {
-  max-width: 610px;
-  margin: 18px 0 0;
-  color: rgba(211, 207, 195, .68);
-  font-size: 15px;
-  font-weight: 650;
-  line-height: 1.68;
-}
-.referral-hero-card {
-  align-self: center;
-  border: 1px solid rgba(244, 241, 232, .13);
-  border-radius: 22px;
-  background:
-    linear-gradient(145deg, rgba(244, 241, 232, .075), rgba(244, 241, 232, .025)),
-    rgba(8, 9, 9, .70);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04), 0 20px 54px rgba(0, 0, 0, .18);
-  color: rgba(211, 207, 195, .62);
-  padding: 24px;
-}
-.referral-hero-card svg { color: rgba(225, 219, 202, .72); }
-.referral-hero-card strong {
-  display: block;
-  margin-top: 26px;
-  color: var(--color-ivory);
-  font-size: clamp(30px, 3vw, 38px);
-  font-weight: 880;
-  letter-spacing: -.04em;
-}
-.referral-hero-card span {
-  display: block;
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 690;
-  line-height: 1.55;
-}
-.referral-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(210px, .55fr) minmax(210px, .55fr);
-  gap: 16px;
-}
-.referral-link-card,
-.referral-stat-card,
-.referral-rules {
-  border: 1px solid rgba(244, 241, 232, .095);
-  border-radius: 22px;
-  background: linear-gradient(145deg, rgba(11, 11, 10, .92), rgba(2, 2, 2, .88));
-  box-shadow: 0 22px 48px rgba(0, 0, 0, .16), inset 0 1px 0 rgba(238, 252, 249, .025);
-}
-.referral-link-card { padding: 22px; }
-.referral-card-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
-}
-.referral-card-head > span {
-  display: inline-grid;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 auto;
-  place-items: center;
-  border: 1px solid rgba(244, 241, 232, .13);
-  border-radius: 14px;
-  background: rgba(244, 241, 232, .045);
-  color: rgba(242, 235, 216, .84);
-}
-.referral-card-head h2 {
-  margin: 0;
-  color: var(--color-ivory);
-  font-size: 20px;
-  font-weight: 760;
-}
-.referral-card-head p {
-  margin: 5px 0 0;
-  color: rgba(211, 207, 195, .54);
-  font-size: 13px;
-  font-weight: 620;
-  line-height: 1.55;
-}
-.referral-link-box {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  margin-top: 22px;
-}
-.referral-link-box code {
-  overflow: hidden;
-  border: 1px solid rgba(244, 241, 232, .10);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, .025);
-  color: rgba(244, 241, 232, .82);
-  font-size: 13px;
-  font-weight: 760;
-  line-height: 46px;
-  padding: 0 14px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.referral-link-box .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 46px;
-}
-.referral-note {
-  margin: 14px 0 0;
-  color: rgba(218, 211, 190, .68);
-  font-size: 12px;
-  font-weight: 690;
-  line-height: 1.55;
-}
-.referral-stat-card {
-  display: flex;
-  min-height: 154px;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 22px;
-}
-.referral-stat-card svg { color: rgba(225, 219, 202, .62); }
-.referral-stat-card span {
-  color: rgba(211, 207, 195, .50);
-  font-size: 12px;
-  font-weight: 760;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-.referral-stat-card strong {
-  color: var(--color-ivory);
-  font-size: 34px;
-  font-weight: 850;
-  letter-spacing: -.045em;
-}
-.referral-rule-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 20px;
-}
-.referral-rule-list article {
-  border: 1px solid rgba(244, 241, 232, .09);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, .022);
-  padding: 16px;
-}
-.referral-rule-list strong {
-  color: var(--color-ivory);
-  font-size: 14px;
-  font-weight: 780;
-}
-.referral-rule-list p {
-  margin: 8px 0 0;
-  color: rgba(211, 207, 195, .54);
-  font-size: 12px;
-  font-weight: 620;
-  line-height: 1.6;
-}
 .app-data-table tbody tr { transition: background-color .18s ease; }
 .app-data-table tbody tr:hover { background: rgba(244, 241, 232, .045) !important; }
 
@@ -1786,6 +1579,258 @@ textarea {
 @media (prefers-reduced-motion: reduce) {
   .recovery-card, .recovery-spinner { animation: none; }
   .app-route-enter { animation: none; }
+}
+
+/* Referral program: a compact recommendation prompt with a focused detail view. */
+.referral-launcher {
+  position: fixed;
+  z-index: 58;
+  left: 300px;
+  bottom: 24px;
+  width: min(292px, calc(100vw - 336px));
+  min-height: 144px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 22px;
+  background:
+    linear-gradient(125deg, rgba(255, 255, 255, .08), transparent 45%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .026) 0 1px, transparent 1px 8px),
+    #5b605c;
+  box-shadow: 0 18px 38px rgba(24, 27, 25, .23), inset 0 1px 0 rgba(255, 255, 255, .18);
+  color: #f8f5ed;
+  isolation: isolate;
+}
+.referral-launcher::after {
+  position: absolute;
+  z-index: -1;
+  right: -42px;
+  bottom: -62px;
+  width: 180px;
+  height: 180px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 50%;
+  content: '';
+}
+.referral-launcher-copy { position: relative; z-index: 2; width: 166px; padding: 20px 18px; }
+.referral-launcher-copy > span,
+.referral-modal-label,
+.referral-modal-brand,
+.referral-modal-kicker,
+.referral-modal-stats span,
+.referral-modal-rules li > span {
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.referral-launcher-copy > span { color: rgba(249, 246, 237, .68); }
+.referral-launcher-copy strong {
+  display: block;
+  margin-top: 7px;
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 760;
+  letter-spacing: -.035em;
+  line-height: 1;
+}
+.referral-launcher-copy p {
+  margin: 9px 0 0;
+  color: rgba(249, 246, 237, .73);
+  font-size: 11px;
+  font-weight: 620;
+  line-height: 1.45;
+}
+.referral-launcher-art {
+  position: absolute;
+  right: -6px;
+  bottom: 11px;
+  width: 175px;
+  height: auto;
+  shape-rendering: crispEdges;
+  transform: rotate(-2deg);
+}
+.referral-pixel-art-shadow rect { fill: rgba(32, 34, 32, .3); }
+.referral-pixel-person rect { fill: #f8f5ed; }
+.referral-pixel-gift rect { fill: #dfbd68; }
+.referral-pixel-arrow rect { fill: #d58257; }
+.referral-pixel-spark rect { fill: #b8c49a; }
+.referral-launcher-orbit {
+  position: absolute;
+  z-index: 3;
+  right: 13px;
+  top: 13px;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(34, 37, 34, .14);
+  border-radius: 50%;
+  background: #faf7ef;
+  box-shadow: 0 7px 16px rgba(20, 23, 21, .18);
+  color: #2d3530;
+}
+.referral-launcher-orbit:hover { transform: rotate(13deg) scale(1.04); }
+.referral-launcher-orbit:focus-visible,
+.referral-modal-close:focus-visible,
+.referral-modal-link-box button:focus-visible { outline: 3px solid rgba(223, 189, 104, .72); outline-offset: 3px; }
+.referral-launcher-orbit svg { width: 30px; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.7; }
+
+.referral-modal-backdrop {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(24, 27, 25, .6);
+  padding: 26px;
+  backdrop-filter: blur(10px);
+}
+.referral-modal {
+  width: min(100%, 1060px);
+  max-height: min(860px, calc(100dvh - 52px));
+  overflow: hidden;
+  border: 1px solid rgba(42, 48, 44, .24);
+  border-radius: 28px;
+  background:
+    repeating-linear-gradient(0deg, rgba(92, 91, 81, .04) 0 1px, transparent 1px 8px),
+    #f6f2e9;
+  box-shadow: 0 34px 100px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .8);
+}
+.referral-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 76px;
+  border-bottom: 1px solid rgba(77, 81, 75, .16);
+  padding: 0 28px;
+}
+.referral-modal-brand { color: #17221d; }
+.referral-modal-label { margin-left: 13px; color: #778078; }
+.referral-modal-close {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(51, 57, 52, .18);
+  border-radius: 50%;
+  background: rgba(255, 253, 247, .66);
+  color: #304037;
+}
+.referral-modal-close:hover { border-color: rgba(32, 54, 43, .42); background: #fffdf7; transform: rotate(4deg); }
+.referral-modal-scroll { max-height: calc(min(860px, 100dvh - 52px) - 76px); overflow: auto; padding: 26px; }
+.referral-modal-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .75fr);
+  min-height: 300px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .17);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 75% 20%, rgba(223, 189, 104, .16), transparent 25%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .024) 0 1px, transparent 1px 9px),
+    #4d5450;
+  color: #f9f6ed;
+}
+.referral-modal-hero::after {
+  position: absolute;
+  right: -112px;
+  bottom: -150px;
+  width: 410px;
+  height: 410px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 50%;
+  content: '';
+}
+.referral-modal-hero-copy { position: relative; z-index: 1; padding: clamp(28px, 4vw, 46px); }
+.referral-modal-kicker { display: flex; align-items: center; gap: 8px; margin: 0; color: rgba(249, 246, 237, .72); }
+.referral-modal-kicker svg { color: #dfbd68; }
+.referral-modal-hero h2 {
+  margin: 15px 0 0;
+  color: #fffdf6;
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 4.5vw, 61px);
+  font-weight: 760;
+  letter-spacing: -.05em;
+  line-height: .93;
+}
+.referral-modal-hero-copy > p:last-child { max-width: 470px; margin: 19px 0 0; color: rgba(249, 246, 237, .74); font-size: 14px; font-weight: 600; line-height: 1.62; }
+.referral-modal-reward {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 300px;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-left: 1px solid rgba(255, 255, 255, .14);
+  padding: 31px 34px;
+}
+.referral-modal-art { position: absolute; top: 24px; right: 18px; width: min(100%, 280px); shape-rendering: crispEdges; transform: rotate(-2deg); }
+.referral-modal-reward span { position: relative; color: rgba(249, 246, 237, .62); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.referral-modal-reward strong { position: relative; margin-top: 7px; color: #fffdf6; font-size: clamp(32px, 3.5vw, 45px); font-weight: 850; letter-spacing: -.06em; }
+.referral-modal-error { margin: 16px 0 0; border: 1px solid rgba(137, 71, 67, .26); border-radius: 14px; background: rgba(137, 71, 67, .08); color: #8b403b; font-size: 13px; font-weight: 700; padding: 12px 14px; }
+.referral-modal-summary { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr); gap: 14px; margin-top: 15px; }
+.referral-modal-link-card,
+.referral-modal-stats article,
+.referral-modal-rules {
+  border: 1px solid rgba(69, 73, 66, .17);
+  border-radius: 19px;
+  background: rgba(255, 253, 247, .64);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 12px 25px rgba(65, 58, 45, .06);
+}
+.referral-modal-link-card { padding: 22px; }
+.referral-modal-card-head { display: flex; align-items: flex-start; gap: 12px; }
+.referral-modal-card-head > span { display: grid; width: 38px; height: 38px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(41, 57, 47, .16); border-radius: 12px; background: rgba(184, 196, 154, .2); color: #355143; }
+.referral-modal-card-head h3 { margin: 0; color: #292d29; font-family: var(--font-serif); font-size: 24px; font-weight: 740; letter-spacing: -.035em; line-height: 1; }
+.referral-modal-card-head p { margin: 7px 0 0; color: #70766d; font-size: 13px; font-weight: 600; line-height: 1.5; }
+.referral-modal-link-box { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; margin-top: 20px; }
+.referral-modal-link-box code { overflow: hidden; border: 1px solid rgba(52, 62, 55, .16); border-radius: 13px; background: rgba(246, 242, 233, .78); color: #485149; font-size: 12px; font-weight: 700; line-height: 44px; padding: 0 13px; text-overflow: ellipsis; white-space: nowrap; }
+.referral-modal-link-box button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; border: 1px solid #303b34; border-radius: 13px; background: #303b34; color: #faf7ef; font-size: 13px; font-weight: 800; padding: 0 15px; }
+.referral-modal-link-box button:hover:not(:disabled) { background: #3d4a42; transform: translateY(-1px); }
+.referral-modal-link-box button:disabled { cursor: not-allowed; opacity: .5; }
+.referral-modal-note { margin: 13px 0 0; color: #7c786d; font-size: 12px; font-weight: 600; line-height: 1.5; }
+.referral-modal-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.referral-modal-stats article { display: flex; min-height: 175px; flex-direction: column; justify-content: space-between; padding: 20px; }
+.referral-modal-stats article > svg { color: #c0933e; }
+.referral-modal-stats span { color: #7d837a; line-height: 1.35; }
+.referral-modal-stats strong { color: #262b27; font-size: 31px; font-weight: 840; letter-spacing: -.055em; }
+.referral-modal-stats strong .coin-amount { font-size: inherit; }
+.referral-modal-rules { margin-top: 15px; padding: 22px; }
+.referral-modal-rules ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 21px 0 0; padding: 0; list-style: none; }
+.referral-modal-rules li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; min-height: 116px; border-left: 1px solid rgba(61, 76, 65, .18); padding: 4px 13px; }
+.referral-modal-rules li > span { color: #b18436; }
+.referral-modal-rules strong { display: block; color: #343936; font-size: 14px; font-weight: 780; }
+.referral-modal-rules li p { margin: 7px 0 0; color: #777b72; font-size: 12px; font-weight: 580; line-height: 1.55; }
+
+@media (max-width: 960px) {
+  .referral-launcher { left: 100px; width: min(292px, calc(100vw - 130px)); }
+  .referral-modal-hero { grid-template-columns: 1fr; }
+  .referral-modal-reward { min-height: 190px; border-top: 1px solid rgba(255, 255, 255, .14); border-left: 0; }
+  .referral-modal-art { top: -20px; right: 24px; width: 245px; }
+}
+@media (max-width: 700px) {
+  .referral-modal-backdrop { padding: 12px; }
+  .referral-modal { max-height: calc(100dvh - 24px); border-radius: 22px; }
+  .referral-modal-header { min-height: 65px; padding: 0 18px; }
+  .referral-modal-scroll { max-height: calc(100dvh - 89px); padding: 14px; }
+  .referral-modal-summary { grid-template-columns: 1fr; }
+  .referral-modal-rules ol { grid-template-columns: 1fr; }
+  .referral-modal-rules li { min-height: 0; padding: 6px 11px; }
+}
+@media (max-width: 640px) {
+  .referral-launcher { left: 14px; bottom: 14px; width: min(300px, calc(100vw - 86px)); min-height: 132px; }
+  .referral-launcher-copy { width: 158px; padding: 17px 15px; }
+  .referral-launcher-copy strong { font-size: 21px; }
+  .referral-launcher-art { width: 160px; right: -14px; bottom: 6px; }
+  .referral-launcher-orbit { right: 11px; top: 11px; width: 42px; height: 42px; }
+  .referral-modal-hero-copy { padding: 26px 22px; }
+  .referral-modal-hero h2 { font-size: 39px; }
+  .referral-modal-reward { min-height: 165px; padding: 22px; }
+  .referral-modal-art { width: 190px; top: -11px; right: 11px; }
+  .referral-modal-link-card, .referral-modal-rules { padding: 18px; }
+  .referral-modal-link-box { grid-template-columns: 1fr; }
+  .referral-modal-stats article { min-height: 145px; padding: 17px; }
+  .referral-modal-stats strong { font-size: 27px; }
 }
 
 /* Native panel profile: invitation modal + dedicated CPX-inspired single-question page. */
