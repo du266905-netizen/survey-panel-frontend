@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowUpRight, CalendarDays, ExternalLink, Globe2, LoaderCircle, Search, X } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CalendarDays, ExternalLink, Globe2, LoaderCircle, MessageCircle, Search, X } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { getNewsArticle, getNewsWall } from '../api/realApi';
 import Logo from '../components/Logo';
@@ -322,6 +322,21 @@ export default function NewsArticlePage() {
                   View original reporting <ArrowUpRight size={17} />
                 </button>
               )}
+              <section className="news-reading-whatsapp" aria-labelledby="news-reading-whatsapp-title">
+                <div className="news-reading-whatsapp-icon" aria-hidden="true"><MessageCircle size={19} /></div>
+                <p>WhatsApp channel</p>
+                <h2 id="news-reading-whatsapp-title">Stay close to what matters.</h2>
+                <span>
+                  Join for new signals and occasional special survey invitations. Eligible activities can offer up to 500,000 Coins.
+                </span>
+                <a
+                  href="https://whatsapp.com/channel/0029Vb8T5zhJf05W6ZZmi83F"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Join the channel <ArrowUpRight size={16} />
+                </a>
+              </section>
             </aside>
           </section>
         </>
