@@ -405,6 +405,11 @@ export const getRecords = async () => {
   };
 };
 
+export const getSurveyOutcome = async (recordId) => {
+  const response = await apiClient.get(`/api/records/${encodeURIComponent(recordId)}/outcome`);
+  return { data: response.data.result };
+};
+
 export const startSurvey = async ({ surveyId, opportunityId, partnerId, proxyIp, fingerprintBrowser, operatingSystem, linkType }) =>
   apiClient.post('/api/survey/start', {
     surveyId,

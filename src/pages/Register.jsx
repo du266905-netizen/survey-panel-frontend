@@ -8,6 +8,22 @@ import TurnstileWidget from '../components/TurnstileWidget';
 
 const codeCooldownSeconds = 60;
 
+function codeCooldownStorageKey(email) {
+  return `guanyi-email-code-cooldown:${String(email || '').trim().toLowerCase()}`;
+}
+
+function readCodeCooldown(email) {
+  const storedUntil = Number(window.localStorage.getItem(codeCooldownStorageKey(email)));
+  return Number.isFinite(storedUntil) ? Math.max(0, Math.ceil((storedUntil - Date.now()) / 1000)) : 0;
+}
+
+function formatWaitTime(seconds) {
+  const roundedSeconds = Math.max(1, Math.ceil(Number(seconds) || codeCooldownSeconds));
+  if (roundedSeconds < 60) return `${roundedSeconds} seconds`;
+  const minutes = Math.ceil(roundedSeconds / 60);
+  return `${minutes} minute${minutes === 1 ? '' : 's'}`;
+}
+
 export default function Register() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -30,6 +46,10 @@ export default function Register() {
     const timer = window.setTimeout(() => setCodeCooldown((value) => Math.max(0, value - 1)), 1000);
     return () => window.clearTimeout(timer);
   }, [codeCooldown]);
+
+  useEffect(() => {
+    setCodeCooldown(readCodeCooldown(form.email));
+  }, [form.email]);
 
   useEffect(() => {
     if (!toast) return undefined;
@@ -58,6 +78,12 @@ export default function Register() {
     setToast({ message, type });
   };
 
+  const startCodeCooldown = (email, seconds = codeCooldownSeconds) => {
+    const normalizedSeconds = Math.max(1, Math.ceil(Number(seconds) || codeCooldownSeconds));
+    window.localStorage.setItem(codeCooldownStorageKey(email), String(Date.now() + normalizedSeconds * 1000));
+    setCodeCooldown(normalizedSeconds);
+  };
+
   const passwordChecks = [
     { label: '8+ characters', passed: form.password.length >= 8 },
     { label: 'Upper and lower case', passed: /[a-z]/.test(form.password) && /[A-Z]/.test(form.password) },
@@ -75,10 +101,20 @@ export default function Register() {
 
     try {
       await sendEmailCode({ email: form.email });
-      setCodeCooldown(codeCooldownSeconds);
+      startCodeCooldown(form.email);
       showToast('Verification code sent. Check your inbox and spam folder.', 'success');
-    } catch {
-      showToast('Unable to send verification code.', 'error');
+    } catch (caughtError) {
+      const code = caughtError.response?.data?.error || caughtError.response?.data?.code;
+      const retryAfterSeconds = Number(caughtError.response?.data?.retryAfterSeconds || caughtError.response?.headers?.['retry-after']);
+      if (code === 'EMAIL_CODE_RATE_LIMITED' || caughtError.response?.status === 429) {
+        const waitSeconds = Math.max(1, Math.ceil(retryAfterSeconds || codeCooldownSeconds));
+        startCodeCooldown(form.email, waitSeconds);
+        showToast(`Please wait ${formatWaitTime(waitSeconds)} before requesting another code.`, 'info');
+      } else if (code === 'EMAIL_CODE_SEND_FAILED') {
+        showToast('Email delivery is temporarily unavailable. Please try again shortly.', 'error');
+      } else {
+        showToast('Unable to send verification code. Please check the address and try again.', 'error');
+      }
     } finally {
       setSendingCode(false);
     }

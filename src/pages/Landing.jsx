@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, BadgeCheck, CircleDollarSign, Eye, Newspaper, ShieldCheck } from 'lucide-react';
+import { ArrowRight, BadgeCheck, ChevronDown, CircleDollarSign, Eye, Menu, Newspaper, ShieldCheck, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getNewsWall } from '../api/realApi';
 import GlobalGlobe from '../components/GlobalGlobe';
@@ -11,6 +11,35 @@ const socialLinks = [
   { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61591672089947' },
   { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/guanyisearch_/' },
   { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/guanyisearch/' },
+];
+
+const landingNavigationGroups = [
+  {
+    id: 'discover',
+    label: 'Discover',
+    items: [
+      { label: 'How it works', description: 'A clear path from participation to reward.', to: '/how-it-works' },
+      { label: 'News Wall', description: 'Stories, signals, and community perspectives.', to: '/news' },
+      { label: 'Our approach', description: 'The human-first principle behind the panel.', href: '#human-manifesto' },
+    ],
+  },
+  {
+    id: 'participate',
+    label: 'Participate',
+    items: [
+      { label: 'Find surveys', description: 'Browse currently available opportunities.', to: '/partners' },
+      { label: 'Rewards & wallet', description: 'Keep track of eligible rewards and Coins.', to: '/wallet' },
+      { label: 'Invite program', description: 'Share a thoughtful introduction to the panel.', to: '/referrals' },
+    ],
+  },
+  {
+    id: 'standards',
+    label: 'Standards',
+    items: [
+      { label: 'Privacy', description: 'How personal information is handled.', to: '/privacy' },
+      { label: 'Terms', description: 'The rules that keep participation clear.', to: '/terms' },
+    ],
+  },
 ];
 
 const previewNewsCategories = ['tech', 'finance', 'society', 'entertainment'];
@@ -49,6 +78,119 @@ function SocialGlyph({ id }) {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z" />
     </svg>
+  );
+}
+
+function LandingNavigation({ search }) {
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [pinnedMenu, setPinnedMenu] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileGroup, setMobileGroup] = useState(landingNavigationGroups[0].id);
+
+  useEffect(() => {
+    const closeOnEscape = (event) => {
+      if (event.key !== 'Escape') return;
+      setActiveMenu(null);
+      setPinnedMenu(null);
+      setMobileOpen(false);
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, []);
+
+  const closeNavigation = () => {
+    setActiveMenu(null);
+    setPinnedMenu(null);
+    setMobileOpen(false);
+  };
+
+  const renderDestination = (item, className, onClick) => {
+    const content = <><span>{item.label}</span>{item.description ? <small>{item.description}</small> : null}</>;
+    if (item.href) return <a className={className} href={item.href} onClick={onClick}>{content}</a>;
+    return <Link className={className} to={item.to} onClick={onClick}>{content}</Link>;
+  };
+
+  return (
+    <header className="landing-site-nav">
+      <div className="landing-site-nav-inner">
+        <Link className="landing-site-nav-brand" to="/" aria-label="GuanyiSearch home" onClick={closeNavigation}>
+          <Logo size="md" />
+        </Link>
+
+        <nav className="landing-site-nav-links" aria-label="Primary navigation">
+          {landingNavigationGroups.map((group) => (
+            <div
+              key={group.id}
+              className="landing-site-nav-menu"
+              onMouseEnter={() => {
+                setPinnedMenu(null);
+                setActiveMenu(group.id);
+              }}
+              onMouseLeave={() => setActiveMenu(null)}
+            >
+              <button
+                type="button"
+                className="landing-site-nav-trigger"
+                aria-expanded={(pinnedMenu || activeMenu) === group.id}
+                aria-controls={`landing-nav-${group.id}`}
+                onClick={() => {
+                  setActiveMenu(group.id);
+                  setPinnedMenu((current) => (current === group.id ? null : group.id));
+                }}
+                onFocus={() => setActiveMenu(group.id)}
+              >
+                {group.label}<ChevronDown size={15} strokeWidth={2.15} />
+              </button>
+              {(pinnedMenu || activeMenu) === group.id ? (
+                <div id={`landing-nav-${group.id}`} className="landing-site-nav-dropdown">
+                  <p>{group.label}</p>
+                  {group.items.map((item) => renderDestination(item, 'landing-site-nav-dropdown-link', closeNavigation))}
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </nav>
+
+        <div className="landing-site-nav-actions">
+          <Link to={{ pathname: '/login', search }} onClick={closeNavigation}>Sign in</Link>
+          <Link className="landing-site-nav-join" to={{ pathname: '/register', search }} onClick={closeNavigation}>Join the panel <ArrowRight size={16} /></Link>
+        </div>
+
+        <button
+          type="button"
+          className="landing-site-nav-toggle"
+          aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((current) => !current)}
+        >
+          {mobileOpen ? <X size={24} strokeWidth={2} /> : <Menu size={25} strokeWidth={2} />}
+        </button>
+      </div>
+
+      <div className={`landing-site-nav-mobile${mobileOpen ? ' is-open' : ''}`} aria-hidden={!mobileOpen}>
+        <nav aria-label="Mobile navigation">
+          {landingNavigationGroups.map((group) => (
+            <section key={group.id} className={`landing-site-nav-mobile-group${mobileGroup === group.id ? ' is-open' : ''}`}>
+              <button
+                type="button"
+                aria-expanded={mobileGroup === group.id}
+                onClick={() => setMobileGroup((current) => (current === group.id ? null : group.id))}
+              >
+                {group.label}<ChevronDown size={17} strokeWidth={2.2} />
+              </button>
+              <div>
+                {group.items.map((item) => renderDestination(item, 'landing-site-nav-mobile-link', closeNavigation))}
+              </div>
+            </section>
+          ))}
+          <div className="landing-site-nav-mobile-actions">
+            <Link to={{ pathname: '/login', search }} onClick={closeNavigation}>Sign in</Link>
+            <Link to={{ pathname: '/register', search }} onClick={closeNavigation}>Join the panel <ArrowRight size={16} /></Link>
+          </div>
+        </nav>
+      </div>
+    </header>
   );
 }
 
@@ -817,6 +959,43 @@ export default function Landing({ initialAuthMode = 'register' }) {
     <main className="landing-page">
       <style>{`
         .landing-page { background: #191917; color: #eeeae2; min-width: 320px; font-family: var(--font-sans); }
+        .landing-site-nav { position: sticky; z-index: 50; top: 0; border-bottom: 1px solid rgba(31,31,27,.15); background: rgba(249,247,241,.94); color: #1f2822; backdrop-filter: blur(18px); }
+        .landing-site-nav-inner { display: flex; width: min(100% - 64px, 1380px); min-height: 78px; align-items: center; gap: clamp(24px, 4vw, 64px); margin: 0 auto; }
+        .landing-site-nav-brand { display: inline-flex; flex: 0 0 auto; align-items: center; text-decoration: none; }
+        .landing-site-nav-brand img { display: block; width: 171px; height: auto; }
+        .landing-site-nav-links { display: flex; min-height: 78px; align-items: stretch; gap: clamp(3px, 1.4vw, 20px); margin: 0 auto; }
+        .landing-site-nav-menu { position: relative; display: flex; align-items: stretch; }
+        .landing-site-nav-trigger { display: inline-flex; align-items: center; gap: 7px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: #404740; cursor: pointer; font: inherit; font-size: 14px; font-weight: 780; letter-spacing: -.01em; padding: 0 8px; transition: border-color .18s ease, color .18s ease; }
+        .landing-site-nav-menu:hover .landing-site-nav-trigger, .landing-site-nav-trigger:focus-visible { border-color: #1f4b3a; color: #163b2d; outline: 0; }
+        .landing-site-nav-trigger svg { transition: transform .18s ease; }
+        .landing-site-nav-menu:hover .landing-site-nav-trigger svg, .landing-site-nav-trigger[aria-expanded='true'] svg { transform: rotate(180deg); }
+        .landing-site-nav-dropdown { position: absolute; top: calc(100% - 7px); left: 50%; display: grid; width: min(372px, calc(100vw - 40px)); gap: 4px; border: 1px solid rgba(31,31,27,.14); background: #fbfaf6; box-shadow: 0 20px 46px rgba(25,30,26,.14); padding: 14px; transform: translateX(-50%); }
+        .landing-site-nav-dropdown:before { position: absolute; top: -8px; left: 50%; width: 14px; height: 14px; border-top: 1px solid rgba(31,31,27,.14); border-left: 1px solid rgba(31,31,27,.14); background: #fbfaf6; content: ''; transform: translateX(-50%) rotate(45deg); }
+        .landing-site-nav-dropdown > p { position: relative; margin: 2px 9px 8px; color: #758078; font-size: 10px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+        .landing-site-nav-dropdown-link { position: relative; display: grid; gap: 4px; color: #1f2822; text-decoration: none; padding: 11px 10px; transition: background .18s ease, color .18s ease; }
+        .landing-site-nav-dropdown-link:hover, .landing-site-nav-dropdown-link:focus-visible { background: #edf0e9; color: #173d2e; outline: 0; }
+        .landing-site-nav-dropdown-link span { font-size: 14px; font-weight: 820; letter-spacing: -.01em; }
+        .landing-site-nav-dropdown-link small { color: #737970; font-size: 12px; font-weight: 570; line-height: 1.45; }
+        .landing-site-nav-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 19px; }
+        .landing-site-nav-actions > a { color: #3f4740; font-size: 13px; font-weight: 800; text-decoration: none; white-space: nowrap; }
+        .landing-site-nav-actions > a:hover { color: #153b2c; }
+        .landing-site-nav-actions .landing-site-nav-join { display: inline-flex; align-items: center; gap: 7px; background: #183b2c; color: #f8f5ed; padding: 12px 15px; transition: background .18s ease, transform .18s ease; }
+        .landing-site-nav-actions .landing-site-nav-join:hover { background: #275742; color: #fffdf7; transform: translateY(-1px); }
+        .landing-site-nav-toggle, .landing-site-nav-mobile { display: none; }
+        .landing-site-nav-mobile { border-top: 1px solid rgba(31,31,27,.12); background: #f8f6ef; }
+        .landing-site-nav-mobile > nav { width: min(100% - 40px, 680px); margin: 0 auto; padding: 13px 0 20px; }
+        .landing-site-nav-mobile-group { border-bottom: 1px solid rgba(31,31,27,.12); }
+        .landing-site-nav-mobile-group > button { display: flex; width: 100%; align-items: center; justify-content: space-between; border: 0; background: transparent; color: #1d2922; cursor: pointer; font: inherit; font-size: 15px; font-weight: 820; padding: 17px 0; text-align: left; }
+        .landing-site-nav-mobile-group > button svg { transition: transform .18s ease; }
+        .landing-site-nav-mobile-group.is-open > button svg { transform: rotate(180deg); }
+        .landing-site-nav-mobile-group > div { display: none; gap: 5px; padding: 0 0 15px; }
+        .landing-site-nav-mobile-group.is-open > div { display: grid; }
+        .landing-site-nav-mobile-link { display: grid; gap: 3px; color: #263029; text-decoration: none; padding: 8px 0; }
+        .landing-site-nav-mobile-link span { font-size: 14px; font-weight: 760; }
+        .landing-site-nav-mobile-link small { color: #737970; font-size: 12px; line-height: 1.45; }
+        .landing-site-nav-mobile-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; padding-top: 21px; }
+        .landing-site-nav-mobile-actions a { display: flex; min-height: 47px; align-items: center; justify-content: center; gap: 7px; border: 1px solid rgba(31,31,27,.2); color: #1c3025; font-size: 13px; font-weight: 850; text-decoration: none; }
+        .landing-site-nav-mobile-actions a:last-child { border-color: #183b2c; background: #183b2c; color: #f8f5ed; }
         .landing-shell { position: relative; isolation: isolate; height: min(900px, 100svh); min-height: 720px; overflow: hidden; background: #191917; }
         .landing-shell:before { position: absolute; z-index: -1; inset: 0; background: repeating-linear-gradient(116deg, rgba(255,255,255,.012) 0 1px, transparent 1px 11px), linear-gradient(120deg, rgba(255,255,255,.012), transparent 42%); content: ''; opacity: .46; pointer-events: none; }
         .landing-brand { position: relative; display: flex; width: 58%; height: 100%; min-height: 0; flex-direction: column; overflow: hidden; background: radial-gradient(ellipse 72% 76% at 74% 26%, rgba(92,99,79,.1), transparent 64%), linear-gradient(137deg, #1d1d1b 0%, #191917 72%, #171715 100%); color: white; padding: 34px clamp(28px, 6vw, 88px) 48px; }
@@ -1060,27 +1239,27 @@ export default function Landing({ initialAuthMode = 'register' }) {
         .landing-reward-copy h2 { margin: 14px 0 0; font-family: var(--font-serif); font-size: clamp(34px, 4.4vw, 56px); font-weight: 820; letter-spacing: -.04em; line-height: 1.02; }
         .landing-reward-copy p { color: rgba(255,255,255,.7); font-size: 15px; line-height: 1.8; }
         .landing-reward-copy a { display: inline-flex; align-items: center; gap: 7px; color: #d7d0bb; font-size: 14px; font-weight: 800; text-decoration: none; }
-        .landing-footer { overflow: hidden; background: #191917; color: #f0ede6; }
-        .landing-footer-grid { display: grid; grid-template-columns: minmax(280px, .9fr) minmax(0, 1.1fr); min-height: 268px; }
-        .landing-footer-brand { position: relative; display: flex; flex-direction: column; justify-content: center; overflow: hidden; border-right: 1px solid rgba(240,237,230,.14); padding: 42px clamp(28px, 5vw, 60px); }
-        .landing-footer-brand:before { display: none; }
-        .landing-footer-brand img, .landing-footer-brand p { position: relative; z-index: 1; }
-        .landing-footer-identity { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; }
-        .landing-footer-logo-mark { width: 47px; height: 47px; object-fit: contain; mix-blend-mode: screen; }
-        .landing-footer-brand p { max-width: 420px; margin: 20px 0 0; color: rgba(232,229,221,.62); font-size: 15px; line-height: 1.75; }
-        .landing-footer-contact { display: flex; flex-direction: column; justify-content: center; padding: 42px clamp(28px, 5vw, 60px); }
-        .landing-footer-contact h2 { margin: 0; color: rgba(232,229,221,.72); font-size: 14px; font-weight: 800; letter-spacing: .08em; }
-        .landing-footer-contact p { max-width: 490px; margin: 18px 0 0; color: rgba(232,229,221,.62); font-size: 15px; line-height: 1.75; }
-        .landing-footer-email { display: inline-flex; width: max-content; margin-top: 15px; color: #f4f1e9; font-size: clamp(19px, 2vw, 25px); font-weight: 750; letter-spacing: -.02em; text-decoration: none; }
-        .landing-footer-email:hover { color: #d8d4ca; }
-        .landing-social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-        .landing-social-link { display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid rgba(240,237,230,.14); border-radius: 14px; background: transparent; color: #f0ede6; text-decoration: none; box-shadow: none; transition: transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease; }
-        .landing-social-link svg { width: 28px; height: 28px; display: block; }
-        .landing-social-link:hover { border-color: rgba(244,241,232,.32); background: rgba(244,241,232,.06); color: #f4f1e8; transform: translateY(-2px); }
-        .landing-footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(240,237,230,.14); padding: 28px 0; }
-        .landing-footer-bottom p { margin: 0; color: rgba(232,229,221,.54); font-size: 13px; }
-        .landing-footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 24px; }
-        .landing-footer-links a { color: rgba(232,229,221,.62); font-size: 13px; font-weight: 700; text-decoration: none; }
+        .landing-footer { overflow: hidden; background: #17231d; color: #f3efe5; }
+        .landing-footer-main { display: grid; grid-template-columns: minmax(260px, .86fr) minmax(0, 1.14fr); gap: clamp(46px, 7vw, 110px); padding-top: clamp(62px, 7vw, 96px); padding-bottom: clamp(54px, 6vw, 78px); }
+        .landing-footer-brand { display: flex; flex-direction: column; align-items: flex-start; }
+        .landing-footer-identity { display: flex; align-items: center; gap: 13px; }
+        .landing-footer-logo-mark { width: 43px; height: 43px; object-fit: contain; mix-blend-mode: screen; }
+        .landing-footer-brand p { max-width: 370px; margin: 20px 0 0; color: rgba(239,235,224,.68); font-size: 14px; line-height: 1.7; }
+        .landing-footer-email { display: inline-flex; align-items: center; gap: 8px; margin-top: 21px; border-bottom: 1px solid rgba(243,239,229,.35); color: #f6f1e7; font-size: 14px; font-weight: 800; padding-bottom: 6px; text-decoration: none; transition: color .18s ease, border-color .18s ease; }
+        .landing-footer-email:hover { border-color: #d5c888; color: #d5c888; }
+        .landing-social-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+        .landing-social-link { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid rgba(240,237,230,.2); color: rgba(244,241,232,.86); text-decoration: none; transition: transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease; }
+        .landing-social-link svg { display: block; width: 18px; height: 18px; }
+        .landing-social-link:hover { border-color: #d5c888; background: #d5c888; color: #1a2b21; transform: translateY(-2px); }
+        .landing-footer-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(28px, 4vw, 66px); align-content: start; }
+        .landing-footer-nav section { display: grid; align-content: start; gap: 13px; }
+        .landing-footer-nav p { margin: 0 0 8px; color: #bcc7af; font-size: 10px; font-weight: 900; letter-spacing: .17em; text-transform: uppercase; }
+        .landing-footer-nav a { color: rgba(243,239,229,.72); font-size: 14px; font-weight: 700; line-height: 1.4; text-decoration: none; transition: color .18s ease; }
+        .landing-footer-nav a:hover { color: #f8f4e9; }
+        .landing-footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(240,237,230,.16); padding: 23px 0 27px; }
+        .landing-footer-bottom p { margin: 0; color: rgba(232,229,221,.58); font-size: 12px; }
+        .landing-footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 21px; }
+        .landing-footer-links a { color: rgba(232,229,221,.65); font-size: 12px; font-weight: 750; text-decoration: none; }
         .landing-footer-links a:hover { color: #f4f1e9; }
         [data-reveal] { opacity: 0; filter: blur(5px); transform: translate3d(0, 34px, 0); transition: opacity .78s cubic-bezier(.2,.8,.2,1), filter .78s cubic-bezier(.2,.8,.2,1), transform .78s cubic-bezier(.2,.8,.2,1); }
         [data-reveal] > * { opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .72s cubic-bezier(.2,.8,.2,1), transform .72s cubic-bezier(.2,.8,.2,1); }
@@ -1120,6 +1299,19 @@ export default function Landing({ initialAuthMode = 'register' }) {
         @keyframes landing-cart-wheel { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes landing-brand-mark-breathe { 0%, 100% { opacity: .42; transform: translate(-50%, -50%) translate3d(0, 0, 0) rotate(-3deg) scale(1); } 48% { opacity: .57; transform: translate(-50%, -50%) translate3d(-7px, -10px, 0) rotate(-1deg) scale(1.012); } }
         @keyframes landing-news-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+        @media (max-width: 1080px) {
+          .landing-site-nav-inner { width: min(100% - 48px, 940px); min-height: 72px; justify-content: space-between; }
+          .landing-site-nav-brand img { width: 160px; }
+          .landing-site-nav-links, .landing-site-nav-actions { display: none; }
+          .landing-site-nav-toggle { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(31,31,27,.2); background: transparent; color: #1c3025; cursor: pointer; }
+          .landing-site-nav-mobile.is-open { display: block; }
+        }
+        @media (max-width: 560px) {
+          .landing-site-nav-inner { width: min(100% - 32px, 680px); min-height: 66px; }
+          .landing-site-nav-brand img { width: 145px; }
+          .landing-site-nav-toggle { width: 39px; height: 39px; }
+          .landing-site-nav-mobile > nav { width: min(100% - 32px, 680px); }
+        }
         @media (max-width: 780px) {
           .landing-human-manifesto { padding: 38px 0 44px; }
           .landing-human-manifesto .landing-container { width: min(100% - 40px, 1360px); }
@@ -1142,19 +1334,21 @@ export default function Landing({ initialAuthMode = 'register' }) {
           .landing-manifesto-principle { font-size: 27px; margin-top: 10px !important; padding: 27px 24px; }
         }
         @media (prefers-reduced-motion: reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
-        @media (max-width: 1180px) { .landing-shell { display: grid; height: auto; min-height: 0; overflow: visible; grid-template-columns: 1fr; } .landing-brand, .landing-access { min-height: auto; height: auto; } .landing-brand { width: auto; min-height: 680px; } .landing-access { position: static; width: auto; min-width: 0; overflow: visible; border: 0; border-radius: 0; box-shadow: none; padding-bottom: 68px; } .landing-access-nav { justify-content: space-between; } .landing-access-inner { overflow: visible; padding: 54px 0 12px; } .landing-plum-cycle { top: 13%; right: 7%; width: min(52%, 500px); } .landing-hero-sprout { top: 11%; right: 6%; width: min(49%, 470px); } .landing-news-grid { grid-template-columns: 1fr; } .landing-news-card-body h3 { min-height: 0; } .landing-footer-grid { grid-template-columns: 1fr; } .landing-footer-brand { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); } }
+        @media (max-width: 1180px) { .landing-shell { display: grid; height: auto; min-height: 0; overflow: visible; grid-template-columns: 1fr; } .landing-brand, .landing-access { min-height: auto; height: auto; } .landing-brand { width: auto; min-height: 680px; } .landing-access { position: static; width: auto; min-width: 0; overflow: visible; border: 0; border-radius: 0; box-shadow: none; padding-bottom: 68px; } .landing-access-inner { overflow: visible; padding: 54px 0 12px; } .landing-plum-cycle { top: 13%; right: 7%; width: min(52%, 500px); } .landing-hero-sprout { top: 11%; right: 6%; width: min(49%, 470px); } .landing-news-grid { grid-template-columns: 1fr; } .landing-news-card-body h3 { min-height: 0; } .landing-footer-main { grid-template-columns: 1fr; gap: 38px; } }
         @media (max-width: 940px) { .landing-reward-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .landing-reward-card.is-panel { grid-column: 1 / -1; min-height: 400px; } }
-        @media (max-width: 700px) { .landing-brand { min-height: 625px; padding: 25px 24px 31px; } .landing-brand-kicker { display: none; } .landing-plum-cycle { top: 14%; right: -32px; width: min(84%, 340px); opacity: .52; } .landing-hero-sprout { top: 12%; right: -28px; width: min(82%, 370px); opacity: .57; } .landing-brand-content h1 { font-size: 39px; } .landing-brand-content > p { font-size: 14px; line-height: 1.65; } .landing-brand-proof { grid-template-columns: 1fr; gap: 2px; margin-top: 24px; } .landing-brand-proof span { min-height: 0; padding-top: 8px; } .landing-access { padding: 20px 24px 36px; } .landing-access-nav { font-size: 12px; gap: 12px; } .landing-access-inner { padding-top: 40px; } .public-auth-content h2 { font-size: 30px; } .landing-container { width: min(100% - 40px, 1200px); } .landing-news-preview { padding-bottom: 44px; } .landing-news-preview-head { align-items: flex-start; flex-direction: column; } .landing-intro, .landing-quality-grid, .landing-global { grid-template-columns: 1fr; gap: 28px; padding: 64px 0; } .landing-intro > p { font-size: 15px; } .landing-photo-grid { grid-template-columns: 1fr; padding-bottom: 64px; } .landing-photo, .landing-photo.is-short, .landing-photo.is-wide { grid-column: auto; min-height: 315px; } .landing-quality, .landing-panelists { padding: 64px 0; } .landing-global { min-height: 0; } .landing-global-visual { order: 2; min-height: 282px; } .landing-global-copy { order: 1; border-left: 0; border-bottom: 1px solid rgba(34,31,23,.24); padding: 0 0 22px; } .landing-map-frame { min-height: 0; } .landing-map-frame:after { transform: translateY(116px); } .landing-global-globe { width: min(76%, 228px); transform: translate(0, -1%); } .landing-rewards-layout { padding: 54px 0; } .landing-reward-card-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 20px; } .landing-reward-card, .landing-reward-card.is-panel { min-height: 352px; grid-column: auto; padding: 24px; } .landing-reward-card p { max-width: none; font-size: 14px; } .landing-reward-sketch { width: 150px; height: 142px; } .landing-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .landing-step { min-height: 0; } .landing-step h3 { margin-top: 25px; } .landing-reward-banner { min-height: 470px; margin-top: 45px; } .landing-reward-copy { padding: 44px 28px; } .landing-footer-brand, .landing-footer-contact { padding: 36px 28px; } .landing-footer-bottom { align-items: flex-start; flex-direction: column; padding: 24px 0; } .landing-footer-links { justify-content: flex-start; } }
+        @media (max-width: 700px) { .landing-brand { min-height: 625px; padding: 25px 24px 31px; } .landing-brand-kicker { display: none; } .landing-plum-cycle { top: 14%; right: -32px; width: min(84%, 340px); opacity: .52; } .landing-hero-sprout { top: 12%; right: -28px; width: min(82%, 370px); opacity: .57; } .landing-brand-content h1 { font-size: 39px; } .landing-brand-content > p { font-size: 14px; line-height: 1.65; } .landing-brand-proof { grid-template-columns: 1fr; gap: 2px; margin-top: 24px; } .landing-brand-proof span { min-height: 0; padding-top: 8px; } .landing-access { padding: 20px 24px 36px; } .landing-access-inner { padding-top: 40px; } .public-auth-content h2 { font-size: 30px; } .landing-container { width: min(100% - 40px, 1200px); } .landing-news-preview { padding-bottom: 44px; } .landing-news-preview-head { align-items: flex-start; flex-direction: column; } .landing-intro, .landing-quality-grid, .landing-global { grid-template-columns: 1fr; gap: 28px; padding: 64px 0; } .landing-intro > p { font-size: 15px; } .landing-photo-grid { grid-template-columns: 1fr; padding-bottom: 64px; } .landing-photo, .landing-photo.is-short, .landing-photo.is-wide { grid-column: auto; min-height: 315px; } .landing-quality, .landing-panelists { padding: 64px 0; } .landing-global { min-height: 0; } .landing-global-visual { order: 2; min-height: 282px; } .landing-global-copy { order: 1; border-left: 0; border-bottom: 1px solid rgba(34,31,23,.24); padding: 0 0 22px; } .landing-map-frame { min-height: 0; } .landing-map-frame:after { transform: translateY(116px); } .landing-global-globe { width: min(76%, 228px); transform: translate(0, -1%); } .landing-rewards-layout { padding: 54px 0; } .landing-reward-card-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 20px; } .landing-reward-card, .landing-reward-card.is-panel { min-height: 352px; grid-column: auto; padding: 24px; } .landing-reward-card p { max-width: none; font-size: 14px; } .landing-reward-sketch { width: 150px; height: 142px; } .landing-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .landing-step { min-height: 0; } .landing-step h3 { margin-top: 25px; } .landing-reward-banner { min-height: 470px; margin-top: 45px; } .landing-reward-copy { padding: 44px 28px; } .landing-footer-main { padding-top: 48px; padding-bottom: 44px; } .landing-footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 30px; } .landing-footer-bottom { align-items: flex-start; flex-direction: column; padding: 24px 0; } .landing-footer-links { justify-content: flex-start; } }
         @media (max-width: 1180px) { .landing-brand-mark { top: 28%; left: 55%; width: min(66vw, 460px); opacity: .42; } }
         @media (max-width: 700px) { .landing-brand-mark { top: 30%; left: 55%; width: min(100vw, 460px); opacity: .3; } }
       `}</style>
 
+      <LandingNavigation search={location.search} />
+
       <section className="landing-shell">
         <section className="landing-brand" aria-labelledby="landing-title">
-        <div className="landing-brand-header">
-          <Link to="/" aria-label="GuanyiSearch home"><Logo size="md" variant="light" /></Link>
-          <span className="landing-brand-kicker">Research participation platform</span>
-        </div>
+          <div className="landing-brand-header">
+            <span className="landing-brand-kicker">Research participation platform</span>
+            <span className="landing-brand-kicker">For considered participation</span>
+          </div>
           <img
             className="landing-brand-mark"
             src="/guanyisearch-brand-mark.png"
@@ -1173,12 +1367,6 @@ export default function Landing({ initialAuthMode = 'register' }) {
         </section>
 
         <section className="landing-access" aria-label="Account access">
-          <nav className="landing-access-nav" aria-label="Public navigation">
-            <a href="#human-manifesto">Human Manifesto</a>
-            <Link to="/news">News Wall</Link>
-            <Link to="/how-it-works">How it works</Link>
-            {authMode === 'login' ? <Link className="landing-nav-pill" to={{ pathname: '/register', search: location.search }}>Create account</Link> : <Link className="landing-nav-pill" to={{ pathname: '/login', search: location.search }}>Sign in</Link>}
-          </nav>
           <div className="landing-access-inner"><PublicAuthPanel mode={authMode} onModeChange={setMode} /></div>
           <span className="landing-scroll-cue"><ArrowRight size={14} /> Explore the platform below</span>
         </section>
@@ -1277,28 +1465,31 @@ export default function Landing({ initialAuthMode = 'register' }) {
       <div className="landing-tone-transition is-paper-to-ink" aria-hidden="true" />
 
       <footer className="landing-footer">
-        <div className="landing-footer-grid">
-          <div className="landing-footer-brand"><div className="landing-footer-identity"><img className="landing-footer-logo-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" /></div><p>A trusted foundation for research participation, quality-aware operations, and transparent rewards.</p></div>
-          <div className="landing-footer-contact">
-            <h2>CONTACT &amp; INQUIRIES</h2>
-            <p>Questions about panel eligibility, partnerships, or platform operations? Reach our team directly.</p>
-            <a className="landing-footer-email" href="mailto:heguanyi@guanyi-media.com">heguanyi@guanyi-media.com</a>
+        <div className="landing-container landing-footer-main">
+          <div className="landing-footer-brand">
+            <div className="landing-footer-identity"><img className="landing-footer-logo-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" /></div>
+            <p>Clear participation, considered rewards, and a place for real perspectives.</p>
+            <a className="landing-footer-email" href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a>
             <nav className="landing-social-links" aria-label="GuanyiSearch social links">
               {socialLinks.map((social) => (
-                <a
-                  key={social.id}
-                  className="landing-social-link"
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={social.label}
-                  title={social.label}
-                >
+                <a key={social.id} className="landing-social-link" href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}>
                   <SocialGlyph id={social.id} />
                 </a>
               ))}
             </nav>
           </div>
+          <nav className="landing-footer-nav" aria-label="Footer navigation">
+            {landingNavigationGroups.map((group) => (
+              <section key={group.id}>
+                <p>{group.label}</p>
+                {group.items.map((item) => (
+                  item.href
+                    ? <a key={item.label} href={item.href}>{item.label}</a>
+                    : <Link key={item.label} to={item.to}>{item.label}</Link>
+                ))}
+              </section>
+            ))}
+          </nav>
         </div>
         <div className="landing-container landing-footer-bottom"><p>© 2026 GuanyiSearch. All rights reserved.</p><div className="landing-footer-links"><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms of Service</Link></div></div>
       </footer>

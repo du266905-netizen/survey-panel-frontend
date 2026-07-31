@@ -9,6 +9,22 @@ const GOOGLE_SCRIPT_SRC = 'https://accounts.google.com/gsi/client?hl=en';
 const codeCooldownSeconds = 60;
 let googleScriptPromise;
 
+function codeCooldownStorageKey(email) {
+  return `guanyi-email-code-cooldown:${String(email || '').trim().toLowerCase()}`;
+}
+
+function readCodeCooldown(email) {
+  const storedUntil = Number(window.localStorage.getItem(codeCooldownStorageKey(email)));
+  return Number.isFinite(storedUntil) ? Math.max(0, Math.ceil((storedUntil - Date.now()) / 1000)) : 0;
+}
+
+function formatWaitTime(seconds) {
+  const roundedSeconds = Math.max(1, Math.ceil(Number(seconds) || codeCooldownSeconds));
+  if (roundedSeconds < 60) return `${roundedSeconds} seconds`;
+  const minutes = Math.ceil(roundedSeconds / 60);
+  return `${minutes} minute${minutes === 1 ? '' : 's'}`;
+}
+
 function loadGoogleScript() {
   if (window.google?.accounts?.id) return Promise.resolve();
   if (googleScriptPromise) return googleScriptPromise;
@@ -112,6 +128,10 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
   }, [codeCooldown]);
 
   useEffect(() => {
+    setCodeCooldown(readCodeCooldown(registerForm.email));
+  }, [registerForm.email]);
+
+  useEffect(() => {
     setError('');
     setMessage('');
     setShowPassword(false);
@@ -121,6 +141,12 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
     setMessage('');
     setError(value);
   }, []);
+
+  const startCodeCooldown = (email, seconds = codeCooldownSeconds) => {
+    const normalizedSeconds = Math.max(1, Math.ceil(Number(seconds) || codeCooldownSeconds));
+    window.localStorage.setItem(codeCooldownStorageKey(email), String(Date.now() + normalizedSeconds * 1000));
+    setCodeCooldown(normalizedSeconds);
+  };
 
   const clearTurnstileToken = useCallback(() => {
     setTurnstileToken('');
@@ -173,10 +199,20 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
     setError('');
     try {
       await sendEmailCode({ email: registerForm.email });
-      setCodeCooldown(codeCooldownSeconds);
+      startCodeCooldown(registerForm.email);
       setMessage('Verification code sent. Check your inbox and spam folder.');
     } catch (caughtError) {
-      showError(caughtError.response?.data?.message || 'Unable to send a verification code.');
+      const code = caughtError.response?.data?.error || caughtError.response?.data?.code;
+      const retryAfterSeconds = Number(caughtError.response?.data?.retryAfterSeconds || caughtError.response?.headers?.['retry-after']);
+      if (code === 'EMAIL_CODE_RATE_LIMITED' || caughtError.response?.status === 429) {
+        const waitSeconds = Math.max(1, Math.ceil(retryAfterSeconds || codeCooldownSeconds));
+        startCodeCooldown(registerForm.email, waitSeconds);
+        setMessage(`Please wait ${formatWaitTime(waitSeconds)} before requesting another code.`);
+      } else if (code === 'EMAIL_CODE_SEND_FAILED') {
+        showError('Email delivery is temporarily unavailable. Please try again shortly.');
+      } else {
+        showError('Unable to send a verification code. Please check the address and try again.');
+      }
     } finally {
       setSendingCode(false);
     }
