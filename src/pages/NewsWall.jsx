@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowDown, ArrowUpRight, Check, Newspaper, Sparkles, X } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, ChevronDown, Sparkles, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -26,12 +26,6 @@ const categoryTones = {
   entertainment: { bg: 'rgba(211, 184, 188, .07)', border: 'rgba(211, 184, 188, .17)', text: '#d0bdc0', accent: '#b8979d' },
   news: { bg: 'rgba(194, 211, 207, .07)', border: 'rgba(194, 211, 207, .17)', text: '#c2d3cf', accent: '#95b9b2' },
 };
-
-function formatDate(value) {
-  if (!value) return '-';
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? '-' : date.toLocaleString();
-}
 
 function formatBriefDate(value) {
   if (!value) return 'Today';
@@ -89,8 +83,38 @@ function countryFlag(value) {
   return '🌐';
 }
 
+function BriefHighlightCard({ item, index }) {
+  const [expanded, setExpanded] = useState(false);
+  const summaryId = `brief-highlight-${index}`;
+
+  return (
+    <article className="rounded-xl border border-slate-200 bg-white p-3.5">
+      <CategoryPill category={item.category} />
+      <h3 className="mt-2 text-sm font-black leading-snug text-slate-950">{item.headline}</h3>
+      {item.takeaway && (
+        <>
+          <button
+            className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-cyan-700 transition hover:text-cyan-900"
+            type="button"
+            aria-expanded={expanded}
+            aria-controls={summaryId}
+            onClick={() => setExpanded((value) => !value)}
+          >
+            {expanded ? 'Hide description' : 'Read description'}
+            <ChevronDown className={expanded ? 'rotate-180 transition-transform' : 'transition-transform'} size={14} />
+          </button>
+          <p id={summaryId} className={`overflow-hidden text-xs leading-5 text-slate-500 ${expanded ? 'mt-2' : 'hidden'}`}>
+            {item.takeaway}
+          </p>
+        </>
+      )}
+    </article>
+  );
+}
+
 function DailyBriefCard({ brief, loading, error, country }) {
   const briefCountry = brief?.country || country;
+  const [summaryExpanded, setSummaryExpanded] = useState(false);
   return (
     <section className="card mb-6 overflow-hidden">
       <div className="border-b border-slate-100 bg-cyan-50/50 p-5">
@@ -124,14 +148,21 @@ function DailyBriefCard({ brief, loading, error, country }) {
           <p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</p>
         ) : brief ? (
           <>
-            <p className="max-w-5xl text-sm leading-7 text-slate-600">{brief.summary}</p>
-            <div className="mt-5 grid gap-3 lg:grid-cols-3">
+            <p className={`max-w-5xl text-sm leading-7 text-slate-600 ${summaryExpanded ? '' : 'line-clamp-2'}`}>{brief.summary}</p>
+            {brief.summary && (
+              <button
+                className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-cyan-700 transition hover:text-cyan-900"
+                type="button"
+                aria-expanded={summaryExpanded}
+                onClick={() => setSummaryExpanded((value) => !value)}
+              >
+                {summaryExpanded ? 'Collapse daily brief' : 'Read daily brief'}
+                <ChevronDown className={summaryExpanded ? 'rotate-180 transition-transform' : 'transition-transform'} size={14} />
+              </button>
+            )}
+            <div className="mt-4 grid gap-3 lg:grid-cols-3">
               {(brief.highlights || []).slice(0, 5).map((item, index) => (
-                <article key={`${item.headline}-${index}`} className="rounded-xl border border-slate-200 bg-white p-4">
-                  <CategoryPill category={item.category} />
-                  <h3 className="mt-2 text-sm font-black leading-snug text-slate-950">{item.headline}</h3>
-                  <p className="mt-2 text-xs leading-5 text-slate-500">{item.takeaway}</p>
-                </article>
+                <BriefHighlightCard key={`${item.headline}-${index}`} item={item} index={index} />
               ))}
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-2 rounded-xl border border-cyan-100 bg-cyan-50/70 px-4 py-3 text-sm font-bold text-cyan-900">
@@ -151,13 +182,95 @@ function summaryFor(article) {
   return article?.summary || article?.description || article?.content || 'Open the detail view to review this story.';
 }
 
-function articleImage(article) {
-  if (article?.imageUrl) {
-    return <img className="h-full w-full object-cover" src={article.imageUrl} alt="" loading="lazy" />;
-  }
+function NewsStoryCard({ article }) {
+  const [expanded, setExpanded] = useState(false);
+  const summaryId = `news-summary-${article.id}`;
+
   return (
-    <div className="flex h-full w-full items-center justify-center bg-cyan-50 text-cyan-700">
-      <Newspaper size={34} strokeWidth={1.6} />
+    <article className="card news-story-card flex h-full flex-col p-4">
+      <Link className="group block text-left no-underline" to={`/news/${encodeURIComponent(article.id)}`}>
+        <div className="flex min-w-0 items-center gap-2 text-xs font-bold text-slate-500">
+          <CategoryPill category={article.category} />
+          <span className="truncate">{article.sourceName || 'News source'}</span>
+        </div>
+        <h2 className="mt-3 line-clamp-3 text-base font-black leading-snug text-slate-950 transition group-hover:text-cyan-800">
+          {article.title}
+        </h2>
+      </Link>
+      <button
+        className="mt-4 inline-flex w-fit items-center gap-1.5 text-left text-xs font-bold text-cyan-700 transition hover:text-cyan-900"
+        type="button"
+        aria-expanded={expanded}
+        aria-controls={summaryId}
+        onClick={() => setExpanded((value) => !value)}
+      >
+        {expanded ? 'Hide description' : 'Read description'}
+        <ChevronDown className={expanded ? 'rotate-180 transition-transform' : 'transition-transform'} size={14} />
+      </button>
+      <div id={summaryId} className={expanded ? 'mt-3' : 'hidden'}>
+        <p className="text-sm leading-6 text-slate-500">{summaryFor(article)}</p>
+        <Link className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-cyan-700" to={`/news/${encodeURIComponent(article.id)}`}>
+          Read story <ArrowUpRight size={14} />
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+function NewsFilters({ country, category, isPublicView, subscribedCategories, onCountryChange, onCategoryChange, onToggleSubscription }) {
+  return (
+    <div className="flex w-full flex-wrap items-end gap-2 sm:w-auto sm:flex-nowrap sm:justify-end">
+      <label className="flex min-w-[132px] flex-1 flex-col gap-1.5 sm:flex-none">
+        <span className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-500">Region</span>
+        <select
+          className="h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
+          value={country}
+          onChange={(event) => onCountryChange(event.target.value)}
+          aria-label="Filter news by region"
+        >
+          {countries.map((item) => <option key={item.id} value={item.id}>{countryFlag(item.id)} {item.label}</option>)}
+        </select>
+      </label>
+
+      <label className="flex min-w-[142px] flex-1 flex-col gap-1.5 sm:flex-none">
+        <span className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-500">Content</span>
+        <select
+          className="h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
+          value={category}
+          onChange={(event) => onCategoryChange(event.target.value)}
+          aria-label="Filter news by content"
+        >
+          {categories.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
+        </select>
+      </label>
+
+      {!isPublicView && (
+        <details className="group relative min-w-[142px] flex-1 sm:flex-none">
+          <summary className="flex h-[58px] cursor-pointer list-none flex-col justify-end rounded-lg border border-slate-200 bg-white px-3 pb-2.5 outline-none transition hover:border-slate-300 focus-visible:border-cyan-500 focus-visible:ring-2 focus-visible:ring-cyan-100 [&::-webkit-details-marker]:hidden">
+            <span className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-500">Topics</span>
+            <span className="mt-1 flex items-center justify-between gap-3 text-sm font-bold text-slate-800">
+              {subscribedCategories.size ? `${subscribedCategories.size} saved` : 'Choose topics'}
+              <ChevronDown className="transition-transform group-open:rotate-180" size={15} />
+            </span>
+          </summary>
+          <div className="absolute right-0 z-30 mt-2 w-64 rounded-xl border border-slate-200 bg-white p-3 shadow-xl">
+            <p className="px-1 pb-2 text-xs font-bold leading-5 text-slate-500">Save the topics you want to follow.</p>
+            <div className="grid gap-1">
+              {categories.map((item) => (
+                <label key={item.id} className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                  <input
+                    className="h-4 w-4 accent-cyan-600"
+                    type="checkbox"
+                    checked={subscribedCategories.has(item.id)}
+                    onChange={() => onToggleSubscription(item.id)}
+                  />
+                  {item.label}
+                </label>
+              ))}
+            </div>
+          </div>
+        </details>
+      )}
     </div>
   );
 }
@@ -259,100 +372,41 @@ export default function NewsWall() {
     }
   };
 
+  const newsFilters = (
+    <NewsFilters
+      country={country}
+      category={category}
+      isPublicView={isPublicView}
+      subscribedCategories={subscribedCategories}
+      onCountryChange={setCountry}
+      onCategoryChange={setCategory}
+      onToggleSubscription={toggleSubscription}
+    />
+  );
+
   const content = (
     <>
-      {!isPublicView && <PageHeader title="News Wall" description="Follow lightweight news signals and stories worth tracking." />}
+      {!isPublicView && (
+        <PageHeader
+          title="News Wall"
+          description="Follow lightweight news signals and stories worth tracking."
+          action={newsFilters}
+        />
+      )}
 
       {error && <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
 
       <DailyBriefCard brief={brief} loading={briefLoading} error={briefError} country={country} />
 
-      <section className="card p-5">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">Region</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {countries.map((item) => (
-                <button
-                  key={item.id}
-                  className={`rounded-full border px-4 py-2 text-sm font-bold ${country === item.id ? 'border-cyan-300 bg-cyan-50 text-cyan-800' : 'border-slate-200 bg-white text-slate-600'}`}
-                  type="button"
-                  onClick={() => setCountry(item.id)}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {!isPublicView && (
-            <div className="min-w-[260px]">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700">Subscribed topics</p>
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {categories.map((item) => (
-                  <label key={item.id} className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700">
-                    <input
-                      className="h-4 w-4 accent-cyan-500"
-                      type="checkbox"
-                      checked={subscribedCategories.has(item.id)}
-                      onChange={() => toggleSubscription(item.id)}
-                    />
-                    {item.label}
-                  </label>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-5 flex flex-wrap gap-2 border-t border-slate-100 pt-5">
-          {categories.map((item) => (
-            <button
-              key={item.id}
-              className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-bold ${category === item.id ? 'border-cyan-300 bg-cyan-50 text-cyan-800' : 'border-slate-200 bg-white text-slate-600'}`}
-              type="button"
-              onClick={() => setCategory(item.id)}
-              style={categoryStyle(item.id)}
-            >
-              <span className="news-category-dot" aria-hidden="true" />
-              {subscribedCategories.has(item.id) && <Check size={14} />}
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-6 grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
+      <section className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {loading ? (
-          Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-72 animate-pulse rounded-xl bg-slate-100" />)
+          Array.from({ length: 8 }).map((_, index) => <div key={index} className="h-44 animate-pulse rounded-xl bg-slate-100" />)
         ) : !articles.length ? (
           <div className="card col-span-full flex min-h-48 items-center justify-center p-8 text-sm font-semibold text-slate-500">
             No news available for this region and topic yet.
           </div>
         ) : (
-          articles.map((article) => (
-            <article key={article.id} className="card flex h-full overflow-hidden">
-              <Link className="flex h-full w-full flex-col text-left" to={`/news/${encodeURIComponent(article.id)}`}>
-                <div className="aspect-[1.9] shrink-0 overflow-hidden border-b border-slate-100">
-                  {articleImage(article)}
-                </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="mb-3 flex items-center justify-between gap-3 text-xs font-bold text-slate-500">
-                    <span className="flex min-w-0 flex-wrap items-center gap-2">
-                      <CategoryPill category={article.category} />
-                      <span className="truncate">{article.sourceName || 'News source'}</span>
-                    </span>
-                    <span>{formatDate(article.publishedAt)}</span>
-                  </div>
-                  <h2 className="min-h-[3.5rem] line-clamp-2 text-lg font-black leading-snug text-slate-950">{article.title}</h2>
-                  <p className="mt-3 min-h-[4.5rem] line-clamp-3 text-sm leading-6 text-slate-500">{summaryFor(article)}</p>
-                  <div className="mt-auto flex items-center justify-between pt-4 text-xs font-bold text-slate-500">
-                    <span className="inline-flex items-center gap-1 text-cyan-700">Read story <ArrowUpRight size={14} /></span>
-                  </div>
-                </div>
-              </Link>
-            </article>
-          ))
+          articles.map((article) => <NewsStoryCard key={article.id} article={article} />)
         )}
       </section>
 
@@ -428,14 +482,17 @@ export default function NewsWall() {
       </header>
 
       <section className="news-wall-public-hero bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">News Wall</p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-[-0.04em] sm:text-5xl">
-            Read today’s stories without the noise.
-          </h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
-            Browse public news trends for free. Create an account when you are ready to save topic preferences and earn coins through eligible surveys.
-          </p>
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:py-20">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">News Wall</p>
+            <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-[-0.04em] sm:text-5xl">
+              Read today’s stories without the noise.
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
+              Browse public news trends for free. Create an account when you are ready to save topic preferences and earn coins through eligible surveys.
+            </p>
+          </div>
+          {newsFilters}
         </div>
       </section>
 
