@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
 import HowItWorks from './pages/HowItWorks';
+import HomeAtlas from './pages/HomeAtlas';
 import Landing from './pages/Landing';
 import NewsWall from './pages/NewsWall';
 import NewsArticlePage from './pages/NewsArticlePage';
@@ -219,7 +220,7 @@ export default function App() {
             }
           />
         </Route>
-        <Route path="/" element={<PublicEntry><Landing initialAuthMode="register" /></PublicEntry>} />
+        <Route path="/" element={<HomeAtlas />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
       <SupportChatWidget />
