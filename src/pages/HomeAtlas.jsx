@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ArrowUpRight, ChevronDown, Menu, Search, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
-import PublicAuthPanel from '../components/PublicAuthPanel';
 import { useAuth } from '../components/AuthContext';
 import listeningRoom from '../assets/home/listening-room.jpg';
 import seaStudy from '../assets/home/sea-study.jpg';
@@ -167,23 +166,8 @@ function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onIna
   );
 }
 
-function AuthOverlay({ mode, onClose }) {
-  const navigate = useNavigate();
-
-  return (
-    <div className="atlas-auth-overlay" role="dialog" aria-modal="true" aria-label={mode === 'login' ? 'Sign in' : 'Create account'}>
-      <button className="atlas-auth-backdrop" type="button" aria-label="Close account access" onClick={onClose} />
-      <div className="atlas-auth-shell landing-access-inner">
-        <button className="atlas-auth-close" type="button" aria-label="Close account access" onClick={onClose}><X size={21} /></button>
-        <PublicAuthPanel mode={mode} onModeChange={(nextMode) => navigate(nextMode === 'login' ? '/login' : '/register')} />
-      </div>
-    </div>
-  );
-}
-
-export default function HomeAtlas({ authMode = null }) {
+export default function HomeAtlas() {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [activeNode, setActiveNode] = useState('');
 
   return (
@@ -246,8 +230,6 @@ export default function HomeAtlas({ authMode = null }) {
           />
         </div>
       </section>
-
-      {authMode && !user && <AuthOverlay mode={authMode} onClose={() => navigate('/')} />}
     </main>
   );
 }

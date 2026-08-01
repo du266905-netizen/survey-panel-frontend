@@ -281,28 +281,6 @@
 .atlas-node--community { bottom: 2%; left: 19%; animation: atlas-float-three 6.8s ease-in-out infinite; }
 .atlas-node--community .atlas-node-image { background: #d7e0da; }
 
-.atlas-auth-overlay {
-  position: fixed;
-  z-index: 80;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 28px;
-}
-.atlas-auth-backdrop { position: absolute; inset: 0; border: 0; background: rgba(17, 31, 25, 0.54); backdrop-filter: blur(10px); cursor: default; }
-.atlas-auth-shell {
-  position: relative;
-  z-index: 1;
-  width: min(100%, 470px);
-  max-height: min(820px, calc(100vh - 56px));
-  overflow: auto;
-  border: 1px solid rgba(218, 224, 216, 0.16);
-  border-radius: 24px;
-  background: #19231f;
-  box-shadow: 0 28px 90px rgba(8, 18, 13, 0.35);
-}
-.atlas-auth-close { position: absolute; z-index: 2; top: 15px; right: 15px; display: grid; width: 37px; height: 37px; place-items: center; border: 1px solid rgba(255, 255, 255, 0.23); border-radius: 50%; color: #f7f5ef; background: rgba(255, 255, 255, 0.06); cursor: pointer; }
-
 @keyframes atlas-spin { to { transform: rotate(360deg); } }
 @keyframes atlas-spin-reverse { to { transform: rotate(-360deg); } }
 @keyframes atlas-grid { 50% { background-position: 28px 23px; } }
@@ -365,7 +343,6 @@
   .atlas-node { grid-template-columns: 54px minmax(0, 1fr); gap: 10px; }
   .atlas-node-image { width: 54px; height: 54px; }
   .atlas-node-copy strong { font-size: 1.02rem; }
-  .atlas-auth-overlay { padding: 16px; }
 }
 
 @media (max-width: 520px) {

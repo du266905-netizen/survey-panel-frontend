@@ -12,6 +12,7 @@ import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
 import HowItWorks from './pages/HowItWorks';
 import HomeAtlas from './pages/HomeAtlas';
+import Landing from './pages/Landing';
 import NewsWall from './pages/NewsWall';
 import NewsArticlePage from './pages/NewsArticlePage';
 import PanelProfilePage from './pages/PanelProfilePage';
@@ -87,8 +88,8 @@ export default function App() {
     <>
       <RouteScrollManager />
       <Routes>
-        <Route path="/login" element={<PublicEntry><HomeAtlas authMode="login" /></PublicEntry>} />
-        <Route path="/register" element={<PublicEntry><HomeAtlas authMode="register" /></PublicEntry>} />
+        <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" authOnly /></PublicEntry>} />
+        <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<Privacy />} />

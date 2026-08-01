@@ -927,7 +927,7 @@ function ResearchLedgerIllustration() {
   return <div className="landing-research-ledger" aria-hidden="true"><canvas ref={canvasRef} className="landing-research-ledger-canvas" /></div>;
 }
 
-export default function Landing({ initialAuthMode = 'register' }) {
+export default function Landing({ initialAuthMode = 'register', authOnly = false }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [authMode, setAuthMode] = useState(initialAuthMode);
@@ -958,9 +958,11 @@ export default function Landing({ initialAuthMode = 'register' }) {
   };
 
   return (
-    <main className="landing-page">
+    <main className={`landing-page${authOnly ? ' landing-page--auth-only' : ''}`}>
       <style>{`
         .landing-page { background: #191917; color: #eeeae2; min-width: 320px; font-family: var(--font-sans); }
+        .landing-page--auth-only { min-height: 100svh; }
+        .landing-page--auth-only .landing-shell { height: calc(100svh - 78px); min-height: 650px; }
         .landing-site-nav { position: sticky; z-index: 50; top: 0; border-bottom: 1px solid rgba(31,31,27,.15); background: rgba(249,247,241,.94); color: #1f2822; backdrop-filter: blur(18px); }
         .landing-site-nav-inner { display: flex; width: min(100% - 64px, 1380px); min-height: 78px; align-items: center; gap: clamp(24px, 4vw, 64px); margin: 0 auto; }
         .landing-site-nav-brand { display: inline-flex; flex: 0 0 auto; align-items: center; text-decoration: none; }
@@ -1378,10 +1380,12 @@ export default function Landing({ initialAuthMode = 'register' }) {
 
         <section className="landing-access" aria-label="Account access">
           <div className="landing-access-inner"><PublicAuthPanel mode={authMode} onModeChange={setMode} /></div>
-          <span className="landing-scroll-cue"><ArrowRight size={14} /> Explore the platform below</span>
+          {!authOnly && <span className="landing-scroll-cue"><ArrowRight size={14} /> Explore the platform below</span>}
         </section>
       </section>
 
+      {!authOnly && (
+        <>
       <LandingNewsPreview />
 
       <div className="landing-tone-transition is-dark-to-paper" aria-hidden="true" />
@@ -1503,6 +1507,8 @@ export default function Landing({ initialAuthMode = 'register' }) {
         </div>
         <div className="landing-container landing-footer-bottom"><p>© 2026 GuanyiSearch. All rights reserved.</p><div className="landing-footer-links"><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms of Service</Link></div></div>
       </footer>
+        </>
+      )}
     </main>
   );
 }
