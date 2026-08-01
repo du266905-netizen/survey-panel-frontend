@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowUpRight, ChevronDown, Menu, Search, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
+import HomeLegacySections from '../components/HomeLegacySections';
 import { useAuth } from '../components/AuthContext';
 import listeningRoom from '../assets/home/listening-room.jpg';
 import seaStudy from '../assets/home/sea-study.jpg';
@@ -230,6 +231,7 @@ export default function HomeAtlas() {
           />
         </div>
       </section>
+      <HomeLegacySections />
     </main>
   );
 }
