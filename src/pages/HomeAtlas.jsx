@@ -1,49 +1,64 @@
-import { useEffect, useState } from 'react';
-import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { ArrowUpRight, ChevronDown, Menu, Search, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
+import PublicAuthPanel from '../components/PublicAuthPanel';
 import { useAuth } from '../components/AuthContext';
-import { getNewsWall } from '../api/realApi';
 import listeningRoom from '../assets/home/listening-room.jpg';
-import personSignal from '../assets/home/person-signal.png';
 import seaStudy from '../assets/home/sea-study.jpg';
 import streetCrossing from '../assets/home/crosswalk.jpg';
-import referralPeople from '../assets/referral-people.jpg';
 import './HomeAtlas.css';
 
 const navigation = [
   {
     label: 'Explore',
     items: [
-      { to: '/news', eyebrow: 'World view', title: 'News Wall', note: 'Step outside your usual feed.' },
-      { to: '/how-it-works', eyebrow: 'Approach', title: 'How it works', note: 'Understand surveys, rewards, and participation.' },
+      { to: '/news', eyebrow: 'World view', title: 'News Wall' },
+      { to: '/how-it-works', eyebrow: 'Approach', title: 'How it works' },
     ],
   },
   {
     label: 'Take part',
     items: [
-      { to: '/partners', eyebrow: 'Participation', title: 'Available surveys', note: 'Find eligible opportunities and earn toward rewards.' },
-      { to: '/wallet', eyebrow: 'Recognition', title: 'Rewards', note: 'Follow verified progress and available choices.' },
+      { to: '/partners', eyebrow: 'Participation', title: 'Available surveys' },
+      { to: '/wallet', eyebrow: 'Recognition', title: 'Rewards' },
     ],
   },
   {
     label: 'Standards',
     items: [
-      { to: '/privacy', eyebrow: 'People first', title: 'Your information', note: 'Plain-language commitments for real people.' },
-      { to: '/terms', eyebrow: 'Terms', title: 'Participation terms', note: 'The shared ground rules.' },
+      { to: '/privacy', eyebrow: 'People first', title: 'Your information' },
+      { to: '/terms', eyebrow: 'Terms', title: 'Participation terms' },
     ],
   },
 ];
 
-function articleExcerpt(article) {
-  return article?.summary || article?.description || article?.content || 'Open the News Wall to read the latest published context.';
-}
-
 function AtlasNavigation({ user }) {
+  const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const closeMenus = () => setActiveMenu(null);
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const query = searchTerm.trim();
+    navigate(query ? `/news?search=${encodeURIComponent(query)}` : '/news');
+    setMobileOpen(false);
+  };
+
+  const searchField = (className) => (
+    <form className={className} role="search" onSubmit={handleSearch}>
+      <Search aria-hidden="true" size={16} strokeWidth={1.9} />
+      <input
+        type="search"
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        placeholder="Search the News Wall"
+        aria-label="Search the News Wall"
+      />
+    </form>
+  );
 
   return (
     <header className="atlas-navigation">
@@ -77,7 +92,6 @@ function AtlasNavigation({ user }) {
                 <Link className="atlas-nav-menu-item" to={item.to} key={item.title} onClick={closeMenus}>
                   <span>{item.eyebrow}</span>
                   <strong>{item.title}</strong>
-                  <small>{item.note}</small>
                 </Link>
               ))}
             </div>
@@ -86,9 +100,10 @@ function AtlasNavigation({ user }) {
       </nav>
 
       <div className="atlas-nav-actions">
+        {searchField('atlas-nav-search')}
         {!user && <Link className="atlas-sign-in" to="/login">Sign in</Link>}
         <Link className="atlas-register" to={user ? '/dashboard' : '/register'}>
-          {user ? 'Open workspace' : 'Join the panel'}
+          {user ? 'Open workspace' : 'Join us'}
           <ArrowUpRight size={17} strokeWidth={1.8} />
         </Link>
         <button
@@ -103,6 +118,7 @@ function AtlasNavigation({ user }) {
       </div>
 
       <div className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`}>
+        {searchField('atlas-mobile-search')}
         {navigation.map((group) => (
           <div className="atlas-mobile-group" key={group.label}>
             <p>{group.label}</p>
@@ -119,7 +135,7 @@ function AtlasNavigation({ user }) {
   );
 }
 
-function AtlasNode({ name, className, to, eyebrow, title, note, image, onActive, onInactive, children }) {
+function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onInactive, soon = false }) {
   const content = (
     <>
       <span className="atlas-node-image">
@@ -128,18 +144,13 @@ function AtlasNode({ name, className, to, eyebrow, title, note, image, onActive,
       <span className="atlas-node-copy">
         <span>{eyebrow}</span>
         <strong>{title}</strong>
-        <small>{note}</small>
+        {soon && <em>Coming soon</em>}
       </span>
-      {children}
     </>
   );
 
   if (!to) {
-    return (
-      <article className={`atlas-node atlas-node--static ${className}`} aria-label={`${title} Coming soon.`}>
-        {content}
-      </article>
-    );
+    return <article className={`atlas-node atlas-node--static ${className}`} aria-label={`${title}. Coming soon.`}>{content}</article>;
   }
 
   return (
@@ -156,32 +167,24 @@ function AtlasNode({ name, className, to, eyebrow, title, note, image, onActive,
   );
 }
 
-export default function HomeAtlas() {
+function AuthOverlay({ mode, onClose }) {
+  const navigate = useNavigate();
+
+  return (
+    <div className="atlas-auth-overlay" role="dialog" aria-modal="true" aria-label={mode === 'login' ? 'Sign in' : 'Create account'}>
+      <button className="atlas-auth-backdrop" type="button" aria-label="Close account access" onClick={onClose} />
+      <div className="atlas-auth-shell landing-access-inner">
+        <button className="atlas-auth-close" type="button" aria-label="Close account access" onClick={onClose}><X size={21} /></button>
+        <PublicAuthPanel mode={mode} onModeChange={(nextMode) => navigate(nextMode === 'login' ? '/login' : '/register')} />
+      </div>
+    </div>
+  );
+}
+
+export default function HomeAtlas({ authMode = null }) {
   const { user } = useAuth();
-  const [featuredArticle, setFeaturedArticle] = useState(null);
+  const navigate = useNavigate();
   const [activeNode, setActiveNode] = useState('');
-
-  useEffect(() => {
-    let active = true;
-
-    getNewsWall({ country: 'US', limit: 1 })
-      .then(({ data }) => {
-        if (active) setFeaturedArticle(data?.[0] || null);
-      })
-      .catch(() => {
-        if (active) setFeaturedArticle(null);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  const featuredTitle = featuredArticle?.title || 'Follow the signals worth discussing.';
-  const featuredImage = featuredArticle?.imageUrl || seaStudy;
-  const featuredLink = featuredArticle?.id ? `/news/${featuredArticle.id}` : '/news';
-  const featuredSource = featuredArticle?.sourceName || 'News Wall';
-  const featuredCategory = featuredArticle?.category || 'Today’s context';
 
   return (
     <main className={`home-atlas ${activeNode ? `is-${activeNode}` : ''}`}>
@@ -189,50 +192,35 @@ export default function HomeAtlas() {
 
       <section className="atlas-stage" aria-labelledby="atlas-title">
         <div className="atlas-stage-heading">
-          <p>GUANYISEARCH / PEOPLE IN THE PICTURE</p>
-          <h1 id="atlas-title">Make time count.<br />Keep the world in view.</h1>
-          <div className="atlas-introduction">
-            <span className="atlas-introduction-rule" />
-            <p>Take eligible surveys toward gift card rewards, read beyond your usual feed, and make room for perspectives worth sharing.</p>
-          </div>
+          <h1 id="atlas-title">Think independently.<br />Discern what matters.</h1>
           <div className="atlas-primary-actions">
             <Link className="atlas-primary-link" to={user ? '/dashboard' : '/register'}>
-              {user ? 'Open your workspace' : 'Start earning'}
+              {user ? 'Open workspace' : 'Join us'}
               <ArrowUpRight size={19} strokeWidth={1.8} />
             </Link>
-            <Link className="atlas-quiet-link" to="/news">Explore the News Wall <ArrowUpRight size={17} strokeWidth={1.8} /></Link>
+            <Link className="atlas-quiet-link" to="/news">Open News Wall <ArrowUpRight size={17} strokeWidth={1.8} /></Link>
           </div>
         </div>
 
-        <div className="atlas-map" aria-label="Explore GuanyiSearch">
-          <svg className="atlas-wires" viewBox="0 0 1200 790" preserveAspectRatio="none" aria-hidden="true">
-            <path className="atlas-wire atlas-wire--news" d="M 592 404 C 499 336 461 262 290 231" />
-            <path className="atlas-wire atlas-wire--part" d="M 597 409 C 709 320 809 250 993 220" />
-            <path className="atlas-wire atlas-wire--survey" d="M 598 408 C 497 454 419 535 238 579" />
-            <path className="atlas-wire atlas-wire--rewards" d="M 604 411 C 718 475 824 562 1001 609" />
-            <path className="atlas-wire atlas-wire--standards" d="M 604 409 C 747 389 860 409 1093 406" />
+        <div className="atlas-map" aria-label="Ways to explore GuanyiSearch">
+          <span className="atlas-orbit atlas-orbit--one" aria-hidden="true" />
+          <span className="atlas-orbit atlas-orbit--two" aria-hidden="true" />
+          <span className="atlas-signal atlas-signal--one" aria-hidden="true" />
+          <span className="atlas-signal atlas-signal--two" aria-hidden="true" />
+          <span className="atlas-signal atlas-signal--three" aria-hidden="true" />
+          <svg className="atlas-wires" viewBox="0 0 1200 650" preserveAspectRatio="none" aria-hidden="true">
+            <path className="atlas-wire atlas-wire--news" d="M 605 338 C 499 258 449 184 236 174" />
+            <path className="atlas-wire atlas-wire--survey" d="M 603 340 C 722 430 827 487 1004 506" />
+            <path className="atlas-wire atlas-wire--community" d="M 603 340 C 521 457 421 533 255 570" />
           </svg>
 
           <AtlasNode
             name="news"
             className="atlas-node--news"
             to="/news"
-            eyebrow="THE DAILY WALL"
-            title="See beyond your feed."
-            note="World signals gathered for a more considered read."
+            eyebrow="NEWS WALL"
+            title="See the wider picture."
             image={streetCrossing}
-            onActive={setActiveNode}
-            onInactive={() => setActiveNode('')}
-          />
-
-          <AtlasNode
-            name="part"
-            className="atlas-node--part"
-            to="/privacy"
-            eyebrow="PEOPLE FIRST"
-            title="Not just data points."
-            note="Technology should make participation clearer, not smaller."
-            image={personSignal}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
           />
@@ -241,69 +229,25 @@ export default function HomeAtlas() {
             name="survey"
             className="atlas-node--survey"
             to="/partners"
-            eyebrow="TIME WELL SPENT"
-            title="Earn toward rewards."
-            note="Complete eligible surveys and work toward gift card choices."
+            eyebrow="SURVEYS"
+            title="Make your time count."
             image={listeningRoom}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
           />
 
           <AtlasNode
-            name="rewards"
-            className="atlas-node--rewards"
-            to="/wallet"
-            eyebrow="VERIFIED PROGRESS"
-            title="See what you have built."
-            note="Follow your activity and reward choices in one place."
-            image={referralPeople}
-            onActive={setActiveNode}
-            onInactive={() => setActiveNode('')}
-          />
-
-          <AtlasNode
             name="community"
-            className="atlas-node--standards"
-            eyebrow="COMMUNITY / SOON"
+            className="atlas-node--community"
+            eyebrow="COMMUNITY"
             title="A place for perspective."
-            note="Bring a signal, question, or point of view into a thoughtful discussion."
-            image="/human-manifesto/shoreline-painting.jpg"
-            onActive={setActiveNode}
-            onInactive={() => setActiveNode('')}
+            image={seaStudy}
+            soon
           />
-
-          <Link
-            className="atlas-featured-story"
-            to={featuredLink}
-            onMouseEnter={() => setActiveNode('feature')}
-            onMouseLeave={() => setActiveNode('')}
-            onFocus={() => setActiveNode('feature')}
-            onBlur={() => setActiveNode('')}
-          >
-            <span className="atlas-featured-image">
-              <img src={featuredImage} alt="" onError={(event) => { event.currentTarget.src = seaStudy; }} />
-            </span>
-            <span className="atlas-featured-copy">
-            <span>{featuredCategory || 'TODAY\'S WORLD VIEW'}</span>
-              <strong>{featuredTitle}</strong>
-              <small>{articleExcerpt(featuredArticle)}</small>
-              <em>From {featuredSource} <ArrowUpRight size={15} strokeWidth={1.8} /></em>
-            </span>
-          </Link>
-
-          <span className="atlas-map-caption atlas-map-caption--left">EARN · READ · CONTRIBUTE</span>
-          <span className="atlas-map-caption atlas-map-caption--right">PEOPLE BEFORE PROFILES</span>
         </div>
       </section>
 
-      <section className="atlas-footer-bridge" aria-label="Explore GuanyiSearch">
-        <p>Earn with purpose. Read with range. Speak when it matters.</p>
-        <div>
-          <Link to="/news">News Wall <ArrowUpRight size={16} /></Link>
-          <Link to="/partners">Take part <ArrowUpRight size={16} /></Link>
-          <Link to="/how-it-works">Our approach <ArrowUpRight size={16} /></Link>
-        </div>
-      </section>
+      {authMode && !user && <AuthOverlay mode={authMode} onClose={() => navigate('/')} />}
     </main>
   );
 }

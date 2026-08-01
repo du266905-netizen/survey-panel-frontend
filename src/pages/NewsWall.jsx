@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, Newspaper, Sparkles, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import Logo from '../components/Logo';
@@ -285,6 +285,7 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
 
 export default function NewsWall() {
   const { user } = useAuth();
+  const [searchParams] = useSearchParams();
   const isPublicView = !user;
   const [country, setCountry] = useState('US');
   const [category, setCategory] = useState('tech');
@@ -303,6 +304,17 @@ export default function NewsWall() {
     () => new Set((preferences?.categories || []).filter((item) => item.subscribed).map((item) => item.id)),
     [preferences]
   );
+
+  const searchQuery = searchParams.get('search')?.trim() || '';
+  const visibleArticles = useMemo(() => {
+    if (!searchQuery) return articles;
+    const query = searchQuery.toLocaleLowerCase();
+    return articles.filter((article) =>
+      [article.title, summaryFor(article), article.sourceName, article.category]
+        .filter(Boolean)
+        .some((value) => String(value).toLocaleLowerCase().includes(query))
+    );
+  }, [articles, searchQuery]);
 
   const loadNews = async () => {
     const requestId = requestIdRef.current + 1;
@@ -422,12 +434,12 @@ export default function NewsWall() {
       <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {loading && !articles.length ? (
           Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[22rem] animate-pulse rounded-xl bg-slate-100" />)
-        ) : !articles.length ? (
+        ) : !visibleArticles.length ? (
           <div className="card col-span-full flex min-h-48 items-center justify-center p-8 text-sm font-semibold text-slate-500">
-            No news available for this region and topic yet.
+            {searchQuery ? `No stories match “${searchQuery}” in this selection.` : 'No news available for this region and topic yet.'}
           </div>
         ) : (
-          articles.map((article) => <NewsStoryCard key={article.id} article={article} />)
+          visibleArticles.map((article) => <NewsStoryCard key={article.id} article={article} />)
         )}
       </section>
 
