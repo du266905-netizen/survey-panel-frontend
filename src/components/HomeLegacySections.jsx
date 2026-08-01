@@ -6,11 +6,16 @@ import './HomeLegacySections.css';
 
 const footerGroups = [
   {
-    label: 'Discover',
+    label: 'About us',
     links: [
       { label: 'How it works', to: '/how-it-works' },
+      { label: 'Our approach', to: '/our-approach' },
+    ],
+  },
+  {
+    label: 'Explore',
+    links: [
       { label: 'News Wall', to: '/news' },
-      { label: 'Our approach', href: '#human-manifesto' },
     ],
   },
   {
@@ -108,30 +113,47 @@ function CartSketch() {
   );
 }
 
+export function HumanManifesto() {
+  return (
+    <section id="human-manifesto" className="home-manifesto" aria-labelledby="home-manifesto-title">
+      <div className="home-continuation-container">
+        <div className="home-manifesto-masthead">
+          <div>
+            <p className="home-section-label">OUR PRINCIPLE</p>
+            <h1 id="home-manifesto-title">Human First</h1>
+            <p className="home-manifesto-deck">We believe that real people will always be the starting point for research.</p>
+          </div>
+          <div className="home-manifesto-mark"><ManifestoSprout /><div><strong>REAL PEOPLE<br />REAL INSIGHT</strong><p>One real response at a time, a more trustworthy picture can grow.</p></div></div>
+        </div>
+
+        <div className="home-manifesto-spread">
+          <figure className="home-manifesto-art"><img src="/human-manifesto/shoreline-painting.jpg" alt="Impressionist shoreline landscape" loading="lazy" decoding="async" /><figcaption><strong>Real voices deserve to be heard with care.</strong></figcaption></figure>
+          <div className="home-manifesto-copy">
+            <p className="home-manifesto-lede">AI can generate endless content that appears real. But it can never recreate a particular person, in a particular moment, expressing what they truly think.</p>
+            <div className="home-manifesto-card-grid"><article className="home-manifesto-card home-manifesto-card--voices"><span>Real voices</span><p>Behind every survey result is a person who chose to share a perspective. Those individual voices make insight worth trusting.</p></article><article className="home-manifesto-card home-manifesto-card--technology"><span>Technology, in service</span><p>We use matching and real-time data to respect your time, show your impact, and keep every reward rule clear and fair.</p></article></div>
+            <p className="home-manifesto-principle"><span>Our principle</span>Human-centered does not mean rejecting technology. It means making technology serve people.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function HomeFooter() {
+  return (
+    <footer className="home-footer">
+      <div className="home-continuation-container home-footer-main">
+        <div className="home-footer-brand"><div className="home-footer-identity"><img className="home-footer-logo-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>Clear participation, considered rewards, and a place for real perspectives.</p><a href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
+        <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={item.to}>{item.label}</Link>)}</section>)}</nav>
+      </div>
+      <div className="home-continuation-container home-footer-bottom"><p>© 2026 GuanyiSearch. All rights reserved.</p><div><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms of Service</Link></div></div>
+    </footer>
+  );
+}
+
 export default function HomeLegacySections() {
   return (
     <div className="home-continuation">
-      <section id="human-manifesto" className="home-manifesto" aria-labelledby="home-manifesto-title">
-        <div className="home-continuation-container">
-          <div className="home-manifesto-masthead">
-            <div>
-              <p className="home-section-label">OUR PRINCIPLE</p>
-              <h2 id="home-manifesto-title">Human First</h2>
-              <p className="home-manifesto-deck">Real people will always be the starting point for research.</p>
-            </div>
-            <div className="home-manifesto-mark"><ManifestoSprout /><div><strong>REAL PEOPLE<br />REAL INSIGHT</strong><p>One real response at a time, a more trustworthy picture can grow.</p></div></div>
-          </div>
-
-          <div className="home-manifesto-spread">
-            <figure className="home-manifesto-art"><img src="/human-manifesto/shoreline-painting.jpg" alt="Impressionist shoreline landscape" loading="lazy" decoding="async" /><figcaption>Real voices deserve to be heard with care.</figcaption></figure>
-            <div className="home-manifesto-copy">
-              <p className="home-manifesto-lede">AI can generate endless content that appears real. But it can never recreate a particular person, in a particular moment, expressing what they truly think.</p>
-              <div className="home-manifesto-card-grid"><article><span>Real voices</span><p>Behind every survey result is a person who chose to share a perspective. Those individual voices make insight worth trusting.</p></article><article><span>Technology, in service</span><p>We use matching and real-time data to respect your time, show your impact, and keep every reward rule clear and fair.</p></article></div>
-              <p className="home-manifesto-principle"><span>Our principle</span>Human-centered does not mean rejecting technology. It means making technology serve people.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="home-global-section" aria-labelledby="home-global-title">
         <div className="home-continuation-container home-global-layout">
@@ -151,13 +173,7 @@ export default function HomeLegacySections() {
         </div>
       </section>
 
-      <footer className="home-footer">
-        <div className="home-continuation-container home-footer-main">
-          <div className="home-footer-brand"><div className="home-footer-identity"><img src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" /></div><p>Clear participation, considered rewards, and a place for real perspectives.</p><a href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
-          <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={item.to}>{item.label}</Link>)}</section>)}</nav>
-        </div>
-        <div className="home-continuation-container home-footer-bottom"><p>© 2026 GuanyiSearch. All rights reserved.</p><div><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms of Service</Link></div></div>
-      </footer>
+      <HomeFooter />
     </div>
   );
 }

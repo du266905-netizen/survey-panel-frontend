@@ -15,6 +15,7 @@ import HomeAtlas from './pages/HomeAtlas';
 import Landing from './pages/Landing';
 import NewsWall from './pages/NewsWall';
 import NewsArticlePage from './pages/NewsArticlePage';
+import OurApproach from './pages/OurApproach';
 import PanelProfilePage from './pages/PanelProfilePage';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
@@ -26,6 +27,7 @@ import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
 import Privacy from './pages/Privacy';
 import RouteScrollManager from './components/RouteScrollManager';
+import PublicSiteLayout from './components/PublicSiteLayout';
 import Terms from './pages/Terms';
 import TrafficConsole from './pages/TrafficConsole';
 import Wallet from './pages/Wallet';
@@ -50,6 +52,10 @@ function AdminRoute({ children }) {
   return isAdminRole(user?.role) ? children : <Navigate to="/dashboard" replace />;
 }
 
+function PublicPage({ children }) {
+  return <PublicSiteLayout>{children}</PublicSiteLayout>;
+}
+
 function NewsRoute() {
   const { user } = useAuth();
   return user ? (
@@ -57,7 +63,7 @@ function NewsRoute() {
       <NewsWall />
     </AppLayout>
   ) : (
-    <NewsWall />
+    <PublicPage><NewsWall /></PublicPage>
   );
 }
 
@@ -68,7 +74,7 @@ function SurveyCompleteRoute() {
       <SurveyComplete />
     </AppLayout>
   ) : (
-    <SurveyComplete />
+    <PublicPage><SurveyComplete /></PublicPage>
   );
 }
 
@@ -79,7 +85,7 @@ function SurveyWallRoute() {
       <SurveyPartners />
     </AppLayout>
   ) : (
-    <SurveyPartners />
+    <PublicPage><SurveyPartners /></PublicPage>
   );
 }
 
@@ -92,11 +98,12 @@ export default function App() {
         <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/privacy" element={<PublicPage><Privacy /></PublicPage>} />
+        <Route path="/terms" element={<PublicPage><Terms /></PublicPage>} />
+        <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
+        <Route path="/our-approach" element={<PublicPage><OurApproach /></PublicPage>} />
         <Route path="/news" element={<NewsRoute />} />
-        <Route path="/news/:articleId" element={<NewsArticlePage />} />
+        <Route path="/news/:articleId" element={<PublicPage><NewsArticlePage /></PublicPage>} />
         <Route path="/partners" element={<SurveyWallRoute />} />
         <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
         <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />

@@ -15,7 +15,8 @@
 
 .news-reading-header {
   display: grid;
-  grid-template-columns: 1fr minmax(280px, 440px) 1fr;
+  grid-template-columns: minmax(280px, 440px) auto;
+  justify-content: space-between;
   align-items: center;
   width: min(100% - 64px, 1440px);
   min-height: 92px;

@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowUpRight, CalendarDays, ExternalLink, Globe2, LoaderCircle, MessageCircle, Search, X } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { getNewsArticle, getNewsWall } from '../api/realApi';
-import Logo from '../components/Logo';
 import './NewsArticlePage.css';
 
 const categoryLabels = {
@@ -219,9 +218,6 @@ export default function NewsArticlePage() {
   return (
     <main className="news-reading-page">
       <header className="news-reading-header">
-        <Link className="news-reading-brand" to="/" aria-label="GuanyiSearch home">
-          <Logo size="md" />
-        </Link>
         <div
           className="news-reading-search-wrap"
           onBlur={(event) => {

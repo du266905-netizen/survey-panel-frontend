@@ -1,6 +1,5 @@
 import { ArrowRight, BadgeCheck, ShieldCheck, UserRoundCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Logo from '../components/Logo';
 
 const standards = [
   ['Clear eligibility', 'A transparent start helps people understand how participation begins and what comes next.', BadgeCheck],
@@ -76,16 +75,6 @@ export default function HowItWorks() {
       `}</style>
 
       <section className="how-shell">
-        <header className="how-container how-nav">
-          <Link className="how-nav-brand" to="/" aria-label="GuanyiSearch home"><Logo size="md" variant="light" /></Link>
-          <nav className="how-nav-links" aria-label="Public navigation">
-            <Link to="/">Home</Link>
-            <Link to="/news">News Wall</Link>
-            <Link className="is-active" to="/how-it-works">How it works</Link>
-            <Link className="how-nav-cta" to="/register">Create account</Link>
-          </nav>
-        </header>
-
         <section className="how-container how-hero">
           <div><p className="how-kicker">GuanyiSearch / How it works</p><h1>From a verified account to a clear reward record.</h1></div>
           <p>A considered path for account creation, profile completion, research participation, and visible records—built without exposing internal provider operations to members.</p>
@@ -116,7 +105,6 @@ export default function HowItWorks() {
         <article className="how-reward"><img src="/rewards-wallet.jpg" alt="Rewards and digital participation" /><div className="how-reward-copy"><p className="how-kicker">Reward infrastructure</p><h2>Your wallet should be understandable at a glance.</h2><p>Follow coins, transactions, and redemption requests in a single place as the reward system expands.</p><Link to="/register">Create your account <ArrowRight size={17} /></Link></div></article>
       </section>
 
-      <footer className="how-footer"><div className="how-container how-footer-row"><p>© 2026 GuanyiSearch. All rights reserved.</p><Link to="/">Back to home <ArrowRight size={14} /></Link></div></footer>
     </main>
   );
 }

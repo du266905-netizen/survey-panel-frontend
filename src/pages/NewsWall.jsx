@@ -3,7 +3,6 @@ import { ArrowUpRight, ChevronDown, Newspaper, Sparkles, X } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom';
 import { getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
-import Logo from '../components/Logo';
 import PageHeader from '../components/PageHeader';
 
 const countries = [
@@ -500,17 +499,6 @@ export default function NewsWall() {
         .news-wall-public .btn-primary { border-color: #ece7dc; background: #ece7dc; color: #1b1b19; }
         .news-wall-public .btn-secondary { border-color: rgba(244,241,232,.22); background: transparent; color: #f4f1e9; }
       `}</style>
-      <header className="news-wall-public-header sticky top-0 z-40 border-b border-white/10 bg-slate-950/92 backdrop-blur">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
-          <Link to="/" aria-label="GuanyiSearch home"><Logo size="md" variant="light" /></Link>
-          <nav className="flex items-center gap-4 text-sm font-bold">
-            <Link className="text-cyan-100" to="/news">News Wall</Link>
-            <Link className="hidden text-slate-300 transition hover:text-white sm:inline" to="/login">Sign in</Link>
-            <Link className="rounded-full bg-white px-4 py-2 text-slate-950 transition hover:bg-cyan-100" to="/register">Create account</Link>
-          </nav>
-        </div>
-      </header>
-
       <section className="news-wall-public-hero bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:py-20">
           <div>

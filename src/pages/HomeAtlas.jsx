@@ -1,139 +1,13 @@
 import { useState } from 'react';
-import { ArrowUpRight, ChevronDown, Menu, Search, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../components/Logo';
+import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import HomeLegacySections from '../components/HomeLegacySections';
 import { useAuth } from '../components/AuthContext';
-import listeningRoom from '../assets/home/listening-room.jpg';
-import seaStudy from '../assets/home/sea-study.jpg';
-import streetCrossing from '../assets/home/crosswalk.jpg';
+import PublicSiteHeader from '../components/PublicSiteHeader';
+import communityIllustration from '../assets/home/community-illustration.png';
+import newsWallIllustration from '../assets/home/news-wall-illustration.png';
+import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
 import './HomeAtlas.css';
-
-const navigation = [
-  {
-    label: 'Explore',
-    items: [
-      { to: '/news', eyebrow: 'World view', title: 'News Wall' },
-      { to: '/how-it-works', eyebrow: 'Approach', title: 'How it works' },
-    ],
-  },
-  {
-    label: 'Take part',
-    items: [
-      { to: '/partners', eyebrow: 'Participation', title: 'Available surveys' },
-      { to: '/wallet', eyebrow: 'Recognition', title: 'Rewards' },
-    ],
-  },
-  {
-    label: 'Standards',
-    items: [
-      { to: '/privacy', eyebrow: 'People first', title: 'Your information' },
-      { to: '/terms', eyebrow: 'Terms', title: 'Participation terms' },
-    ],
-  },
-];
-
-function AtlasNavigation({ user }) {
-  const navigate = useNavigate();
-  const [activeMenu, setActiveMenu] = useState(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const closeMenus = () => setActiveMenu(null);
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const query = searchTerm.trim();
-    navigate(query ? `/news?search=${encodeURIComponent(query)}` : '/news');
-    setMobileOpen(false);
-  };
-
-  const searchField = (className) => (
-    <form className={className} role="search" onSubmit={handleSearch}>
-      <Search aria-hidden="true" size={16} strokeWidth={1.9} />
-      <input
-        type="search"
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-        placeholder="Search the News Wall"
-        aria-label="Search the News Wall"
-      />
-    </form>
-  );
-
-  return (
-    <header className="atlas-navigation">
-      <Link className="atlas-brand" to="/" aria-label="GuanyiSearch home">
-        <Logo size="md" className="atlas-brand-logo" />
-      </Link>
-
-      <nav className="atlas-nav-links" aria-label="Primary navigation">
-        {navigation.map((group) => (
-          <div
-            className="atlas-nav-group"
-            key={group.label}
-            onMouseEnter={() => setActiveMenu(group.label)}
-            onMouseLeave={closeMenus}
-            onFocus={() => setActiveMenu(group.label)}
-            onBlur={(event) => {
-              if (!event.currentTarget.contains(event.relatedTarget)) closeMenus();
-            }}
-          >
-            <button
-              className="atlas-nav-trigger"
-              type="button"
-              aria-expanded={activeMenu === group.label}
-              onClick={() => setActiveMenu((current) => (current === group.label ? null : group.label))}
-            >
-              {group.label}
-              <ChevronDown aria-hidden="true" size={15} strokeWidth={1.8} />
-            </button>
-            <div className={`atlas-nav-menu ${activeMenu === group.label ? 'is-open' : ''}`}>
-              {group.items.map((item) => (
-                <Link className="atlas-nav-menu-item" to={item.to} key={item.title} onClick={closeMenus}>
-                  <span>{item.eyebrow}</span>
-                  <strong>{item.title}</strong>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </nav>
-
-      <div className="atlas-nav-actions">
-        {searchField('atlas-nav-search')}
-        {!user && <Link className="atlas-sign-in" to="/login">Sign in</Link>}
-        <Link className="atlas-register" to={user ? '/dashboard' : '/register'}>
-          {user ? 'Open workspace' : 'Join us'}
-          <ArrowUpRight size={17} strokeWidth={1.8} />
-        </Link>
-        <button
-          className={`atlas-menu-button ${mobileOpen ? 'is-open' : ''}`}
-          type="button"
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((open) => !open)}
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-
-      <div className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`}>
-        {searchField('atlas-mobile-search')}
-        {navigation.map((group) => (
-          <div className="atlas-mobile-group" key={group.label}>
-            <p>{group.label}</p>
-            {group.items.map((item) => (
-              <Link to={item.to} key={item.title} onClick={() => setMobileOpen(false)}>
-                {item.title}
-                <ArrowUpRight size={16} strokeWidth={1.8} />
-              </Link>
-            ))}
-          </div>
-        ))}
-      </div>
-    </header>
-  );
-}
 
 function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onInactive, soon = false }) {
   const content = (
@@ -173,7 +47,7 @@ export default function HomeAtlas() {
 
   return (
     <main className={`home-atlas ${activeNode ? `is-${activeNode}` : ''}`}>
-      <AtlasNavigation user={user} />
+      <PublicSiteHeader />
 
       <section className="atlas-stage" aria-labelledby="atlas-title">
         <div className="atlas-stage-heading">
@@ -204,8 +78,8 @@ export default function HomeAtlas() {
             className="atlas-node--news"
             to="/news"
             eyebrow="NEWS WALL"
-            title="See the wider picture."
-            image={streetCrossing}
+            title="See the world's perspective. Stay up to date."
+            image={newsWallIllustration}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
           />
@@ -215,8 +89,8 @@ export default function HomeAtlas() {
             className="atlas-node--survey"
             to="/partners"
             eyebrow="SURVEYS"
-            title="Make your time count."
-            image={listeningRoom}
+            title="Take surveys and earn gift cards and more."
+            image={surveyParticipationIllustration}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
           />
@@ -226,7 +100,7 @@ export default function HomeAtlas() {
             className="atlas-node--community"
             eyebrow="COMMUNITY"
             title="A place for perspective."
-            image={seaStudy}
+            image={communityIllustration}
             soon
           />
         </div>
