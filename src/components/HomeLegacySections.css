@@ -34,7 +34,7 @@
 .home-manifesto-card-grid p { margin: 0; color: #34463b; font-size: clamp(16px, 1.2vw, 18px); letter-spacing: -.018em; line-height: 1.52; }
 .home-manifesto-principle { max-width: 700px; margin: 12px 0 0; background: #1b3a2c; color: #f4efe2; font-family: var(--font-serif); font-size: clamp(23px, 2vw, 31px); font-weight: 700; letter-spacing: -.035em; line-height: 1.12; padding: clamp(24px, 3vw, 36px); }
 .home-manifesto-principle span { display: block; margin-bottom: 14px; color: #c7d0b1; font-family: var(--font-sans); font-size: 10px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
-.home-global-section { position: relative; overflow: hidden; border-top: 1px solid var(--continuation-rule); border-bottom: 1px solid var(--continuation-rule); background: repeating-linear-gradient(0deg, transparent 0 7px, rgba(40, 67, 54, .02) 8px 9px), #edf1ea; }
+.home-global-section { position: relative; overflow: hidden; border-top: 1px solid var(--continuation-rule); border-bottom: 1px solid var(--continuation-rule); background: repeating-linear-gradient(0deg, transparent 0 7px, rgba(40, 67, 54, .018) 8px 9px), var(--continuation-paper); }
 .home-global-layout { display: grid; grid-template-columns: minmax(280px, .72fr) minmax(0, 1.28fr); gap: clamp(46px, 8vw, 124px); align-items: center; min-height: 490px; padding: clamp(64px, 7vw, 104px) 0; }
 .home-global-visual { position: relative; min-height: 320px; }
 .home-globe-frame { position: absolute; inset: 0; display: grid; place-items: center; }
