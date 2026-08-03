@@ -76,6 +76,7 @@ export default function HomeAtlas() {
     setIsSubmittingContact(true);
     try {
       await createSupportTicket({
+        source: 'PUBLIC_HOME_CONTACT',
         category: 'OTHER',
         subject,
         messages: [{
