@@ -5,6 +5,7 @@ import { getNewsWall } from '../api/realApi';
 import GlobalGlobe from '../components/GlobalGlobe';
 import Logo from '../components/Logo';
 import PublicAuthPanel from '../components/PublicAuthPanel';
+import PublicSiteHeader from '../components/PublicSiteHeader';
 
 const socialLinks = [
   { id: 'x', label: 'X / Twitter', href: 'https://x.com/GUANYISEARCH' },
@@ -1353,7 +1354,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         @media (max-width: 700px) { .landing-brand-mark { top: 30%; left: 55%; width: min(100vw, 460px); opacity: .3; } }
       `}</style>
 
-      <LandingNavigation search={location.search} />
+      <PublicSiteHeader />
 
       <section className="landing-shell">
         <section className="landing-brand" aria-labelledby="landing-title">
