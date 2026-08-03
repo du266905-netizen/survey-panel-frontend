@@ -1,0 +1,59 @@
+.app-shell {
+  background:
+    radial-gradient(ellipse 42% 30% at 8% 0%, rgba(104, 137, 111, .075), transparent 72%),
+    radial-gradient(ellipse 36% 28% at 92% 10%, rgba(61, 84, 70, .04), transparent 74%),
+    #f8f9f6 !important;
+  color: #1e2a23;
+}
+
+.app-shell::before {
+  background:
+    radial-gradient(ellipse 45% 34% at 10% 8%, rgba(255, 255, 255, .62), transparent 74%),
+    radial-gradient(ellipse 45% 48% at 88% 94%, rgba(104, 137, 111, .035), transparent 78%);
+}
+
+.app-shell-grain {
+  opacity: .26;
+  background-image: linear-gradient(rgba(49, 70, 57, .014) 1px, transparent 1px), linear-gradient(90deg, rgba(49, 70, 57, .01) 1px, transparent 1px);
+}
+
+.app-topbar {
+  border-bottom-color: rgba(44, 62, 49, .14);
+  background: rgba(251, 251, 248, .92);
+  box-shadow: 0 12px 30px rgba(35, 54, 43, .06);
+}
+
+.app-sidebar {
+  border-right-color: rgba(44, 62, 49, .13);
+  background: rgba(238, 242, 237, .88);
+}
+
+.app-main:not(.app-main-dashboard) { background: #f8f9f6; }
+
+.app-shell .card {
+  border-color: rgba(44, 62, 49, .14);
+  background: rgba(255, 255, 253, .82);
+  box-shadow: 0 14px 30px rgba(35, 54, 43, .06), inset 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+.app-shell .field {
+  border-color: rgba(44, 62, 49, .17);
+  background: rgba(255, 255, 253, .86);
+  color: #253129;
+}
+
+.app-shell .field::placeholder { color: #949c94; }
+.app-shell .table-head { background: rgba(49, 70, 57, .045); color: #68736a; }
+.app-shell .table-cell { border-color: rgba(49, 70, 57, .1); color: #4f5b52; }
+.app-shell .bg-white, .app-shell .bg-white\/90, .app-shell .bg-white\/95 { background-color: rgba(255, 255, 253, .9) !important; }
+.app-shell .bg-slate-50 { background-color: rgba(49, 70, 57, .035) !important; }
+.app-shell .bg-slate-100 { background-color: rgba(49, 70, 57, .06) !important; }
+.app-shell .bg-slate-200 { background-color: rgba(49, 70, 57, .09) !important; }
+.app-shell .border-slate-100, .app-shell .border-slate-200, .app-shell .border-slate-200\/80, .app-shell .border-slate-300 { border-color: rgba(49, 70, 57, .13) !important; }
+
+.app-main-dashboard { background: #f0f3ee !important; box-shadow: inset 1px 0 rgba(72, 80, 70, .11) !important; }
+.dashboard-board { background: #fbfbf8 !important; }
+.app-main-dashboard .dashboard-command .btn-secondary { background: #fffefd; }
+.app-shell .app-main-dashboard .field, .app-shell .app-main-dashboard .recharts-default-tooltip { background: #fffefd !important; }
+.dashboard-chart-empty { background: #f3f6f1 !important; }
+.wallet-hero { background: radial-gradient(circle at 10% 0%, rgba(104, 137, 111, .12), transparent 33%), #fbfbf8 !important; }

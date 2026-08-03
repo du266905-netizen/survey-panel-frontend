@@ -90,6 +90,8 @@ function SurveyWallRoute() {
 }
 
 export default function App() {
+  const { user } = useAuth();
+
   return (
     <>
       <RouteScrollManager />
@@ -230,7 +232,7 @@ export default function App() {
         <Route path="/" element={<HomeAtlas />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
-      <SupportChatWidget />
+      {user && <SupportChatWidget />}
     </>
   );
 }

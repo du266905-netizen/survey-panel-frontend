@@ -9,6 +9,7 @@ import './index.css';
 import './styles/paper-contrast-fixes.css';
 import './pages/WorkspaceSurfaceTheme.css';
 import './styles/action-feedback.css';
+import './styles/authenticated-palette.css';
 
 window.history.scrollRestoration = 'manual';
 
