@@ -152,9 +152,10 @@
   max-width: 780px;
   margin: 25px 0 0;
   color: var(--news-ink);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
   font-size: clamp(48px, 5.35vw, 82px);
-  font-weight: 690;
+  font-weight: 600;
   letter-spacing: -.055em;
   line-height: .97;
 }

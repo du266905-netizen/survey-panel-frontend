@@ -155,7 +155,7 @@
 .video-hero-scrim { z-index: -1; background: linear-gradient(90deg, rgba(8, 17, 13, .72), rgba(8, 17, 13, .36) 52%, rgba(8, 17, 13, .58)), linear-gradient(180deg, rgba(8, 17, 13, .18), rgba(8, 17, 13, .45)); }
 .video-hero-content { display: flex; width: min(100% - 48px, 920px); flex-direction: column; align-items: center; text-align: center; }
 .video-hero-eyebrow { margin: 0; color: rgba(255, 253, 249, .88); font-size: clamp(.72rem, 1vw, .9rem); font-weight: 800; letter-spacing: .14em; line-height: 1.35; text-transform: uppercase; }
-.video-hero h1 { max-width: 920px; margin: clamp(22px, 2.5vw, 34px) 0 0; color: #fffdf9; font-family: var(--font-sans); font-size: clamp(4rem, 7.5vw, 7.7rem); font-weight: 760; letter-spacing: -.07em; line-height: .9; }
+.video-hero h1 { max-width: 920px; margin: clamp(22px, 2.5vw, 34px) 0 0; color: #fffdf9; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(4rem, 7.5vw, 7.7rem); font-weight: 600; letter-spacing: -.07em; line-height: .9; }
 .video-hero-description { max-width: 680px; margin: clamp(24px, 2.6vw, 34px) 0 0; color: rgba(255, 253, 249, .83); font-size: clamp(1rem, 1.35vw, 1.25rem); font-weight: 520; line-height: 1.52; }
 .video-hero-cta { min-height: 54px; margin-top: clamp(28px, 3vw, 40px); padding: 0 23px; font-size: 1rem; }
 
@@ -187,7 +187,8 @@
   max-width: 560px;
   margin: 0;
   color: var(--atlas-ink);
-  font-family: var(--font-accent);
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
   font-size: clamp(3.3rem, 5.35vw, 5.9rem);
   font-weight: 500;
   letter-spacing: -0.065em;

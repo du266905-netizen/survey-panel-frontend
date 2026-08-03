@@ -28,11 +28,11 @@ export default function HowItWorks() {
         .how-nav-links .how-nav-cta { border: 1px solid rgba(244,241,232,.23); border-radius: 999px; color: #fff; padding: 9px 14px; }
         .how-hero { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(280px,.65fr); gap: clamp(38px, 9vw, 130px); align-items: end; min-height: 510px; padding: clamp(70px, 9vw, 132px) 0 clamp(76px, 8vw, 110px); }
         .how-kicker { margin: 0; color: #beb5a5; font-size: 11px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
-        .how-hero h1 { max-width: 760px; margin: 17px 0 0; color: var(--color-paper); font-family: var(--font-serif); font-size: clamp(53px, 6.4vw, 92px); font-weight: 800; letter-spacing: -.06em; line-height: .94; }
+        .how-hero h1 { max-width: 760px; margin: 17px 0 0; color: var(--color-paper); font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(53px, 6.4vw, 92px); font-weight: 600; letter-spacing: -.06em; line-height: .94; }
         .how-hero > p { max-width: 420px; margin: 0 0 5px; color: rgba(236,233,226,.66); font-size: 17px; line-height: 1.86; }
         .how-platform { border-top: 1px solid rgba(244,241,232,.15); background: #181817; padding: clamp(72px, 8vw, 120px) 0; }
         .how-platform-head { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(42px, 9vw, 138px); align-items: start; }
-        .how-platform-head h2, .how-panelist-head h2 { max-width: 620px; margin: 15px 0 0; color: var(--color-paper); font-family: var(--font-serif); font-size: clamp(38px, 4.7vw, 67px); font-weight: 800; letter-spacing: -.048em; line-height: 1.0; }
+        .how-platform-head h2, .how-panelist-head h2 { max-width: 620px; margin: 15px 0 0; color: var(--color-paper); font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(38px, 4.7vw, 67px); font-weight: 600; letter-spacing: -.048em; line-height: 1.0; }
         .how-platform-head > p, .how-panelist-head > p { max-width: 545px; margin: 8px 0 0; color: rgba(236,233,226,.66); font-size: 16px; line-height: 1.87; }
         .how-photo-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 16px; margin-top: clamp(46px, 6vw, 82px); }
         .how-photo { position: relative; min-height: 350px; overflow: hidden; border-radius: 22px; background: #222220; }
@@ -45,7 +45,7 @@ export default function HowItWorks() {
         .how-photo-caption strong { display: block; max-width: 580px; margin-top: 7px; color: #fff; font-size: clamp(18px, 2vw, 25px); line-height: 1.2; }
         .how-standards { background: #1d1d1c; border-top: 1px solid rgba(244,241,232,.12); border-bottom: 1px solid rgba(244,241,232,.12); padding: clamp(76px, 8vw, 124px) 0; }
         .how-standards-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: clamp(42px, 9vw, 130px); }
-        .how-standards-copy h2 { max-width: 515px; margin: 14px 0 0; color: var(--color-paper); font-family: var(--font-serif); font-size: clamp(37px, 4.3vw, 61px); font-weight: 800; letter-spacing: -.045em; line-height: 1.03; }
+        .how-standards-copy h2 { max-width: 515px; margin: 14px 0 0; color: var(--color-paper); font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(37px, 4.3vw, 61px); font-weight: 600; letter-spacing: -.045em; line-height: 1.03; }
         .how-standards-copy > p { max-width: 465px; color: rgba(236,233,226,.66); font-size: 16px; line-height: 1.85; }
         .how-standard-list { display: grid; border-top: 1px solid rgba(244,241,232,.2); }
         .how-standard { display: grid; grid-template-columns: 48px 1fr; gap: 18px; border-bottom: 1px solid rgba(244,241,232,.2); padding: 25px 0; }
@@ -64,7 +64,7 @@ export default function HowItWorks() {
         .how-reward img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .52; }
         .how-reward:after { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,20,19,.94), rgba(20,20,19,.3)); content: ''; }
         .how-reward-copy { position: relative; z-index: 1; max-width: 560px; padding: clamp(38px, 6vw, 78px); }
-        .how-reward-copy h2 { margin: 14px 0 0; color: #fff; font-family: var(--font-serif); font-size: clamp(35px, 4.3vw, 58px); font-weight: 800; letter-spacing: -.045em; line-height: 1.02; }
+        .how-reward-copy h2 { margin: 14px 0 0; color: #fff; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(35px, 4.3vw, 58px); font-weight: 600; letter-spacing: -.045em; line-height: 1.02; }
         .how-reward-copy > p { color: rgba(238,235,228,.69); font-size: 16px; line-height: 1.82; }
         .how-reward-copy a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(244,241,232,.22); border-radius: 999px; background: #f3efe4; color: #111; font-size: 14px; font-weight: 850; text-decoration: none; padding: 13px 18px; }
         .how-footer { border-top: 1px solid rgba(244,241,232,.12); padding: 30px 0; }
