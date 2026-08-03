@@ -8,6 +8,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import './index.css';
 import './styles/paper-contrast-fixes.css';
 import './pages/WorkspaceSurfaceTheme.css';
+import './styles/action-feedback.css';
 
 window.history.scrollRestoration = 'manual';
 

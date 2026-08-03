@@ -1,0 +1,81 @@
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-primary,
+  .app-shell .btn-primary,
+  .app-main-dashboard .dashboard-command .btn-primary,
+  .atlas-register,
+  .atlas-primary-link,
+  .public-auth-submit,
+  .recovery-submit,
+  .profile-invite-action,
+  .profile-survey-primary-action,
+  .first-survey-completion-action,
+  .survey-result-action,
+  .news-source-handoff-confirm,
+  .support-request-actions button[type='submit'],
+  .marketing-upload-button,
+  .marketing-artwork-reset {
+    --syringe-fill: #3f7157;
+    box-shadow: inset 0 0 0 0 var(--syringe-fill), 0 10px 24px rgba(22, 52, 39, .16);
+    transition: color .32s ease, border-color .32s ease, transform .32s ease, box-shadow .52s cubic-bezier(.16, .88, .27, 1);
+  }
+
+  .btn-primary:hover:not(:disabled),
+  .app-shell .btn-primary:hover:not(:disabled),
+  .app-main-dashboard .dashboard-command .btn-primary:hover:not(:disabled),
+  .atlas-register:hover,
+  .atlas-primary-link:hover,
+  .public-auth-submit:hover:not(:disabled),
+  .recovery-submit:hover:not(:disabled),
+  .profile-invite-action:hover:not(:disabled),
+  .profile-survey-primary-action:hover:not(:disabled),
+  .first-survey-completion-action:hover:not(:disabled),
+  .survey-result-action:hover:not(:disabled),
+  .news-source-handoff-confirm:hover:not(:disabled),
+  .support-request-actions button[type='submit']:hover:not(:disabled),
+  .marketing-upload-button:hover,
+  .marketing-artwork-reset:hover:not(:disabled) {
+    border-color: #3f7157;
+    box-shadow: inset 28rem 0 0 0 var(--syringe-fill), 0 15px 30px rgba(22, 52, 39, .24);
+    color: #fffdf8;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary,
+  .app-shell .btn-secondary,
+  .app-main-dashboard .dashboard-command .btn-secondary,
+  .app-main-dashboard .dashboard-records-section .btn-secondary,
+  .public-auth-email-cta,
+  .news-source-handoff-cancel,
+  .support-request-actions button:not([type='submit']) {
+    --syringe-fill: #285647;
+    box-shadow: inset 0 0 0 0 var(--syringe-fill);
+    transition: color .32s ease, border-color .32s ease, transform .32s ease, box-shadow .52s cubic-bezier(.16, .88, .27, 1);
+  }
+
+  .btn-secondary:hover:not(:disabled),
+  .app-shell .btn-secondary:hover:not(:disabled),
+  .app-main-dashboard .dashboard-command .btn-secondary:hover:not(:disabled),
+  .app-main-dashboard .dashboard-records-section .btn-secondary:hover:not(:disabled),
+  .public-auth-email-cta:hover:not(:disabled),
+  .news-source-handoff-cancel:hover:not(:disabled),
+  .support-request-actions button:not([type='submit']):hover:not(:disabled) {
+    border-color: #285647;
+    box-shadow: inset 28rem 0 0 0 var(--syringe-fill);
+    color: #fffdf8;
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-secondary,
+  .atlas-register,
+  .atlas-primary-link,
+  .public-auth-submit,
+  .public-auth-email-cta,
+  .recovery-submit,
+  .profile-invite-action,
+  .profile-survey-primary-action,
+  .first-survey-completion-action,
+  .survey-result-action { transition-duration: 0ms; }
+}
