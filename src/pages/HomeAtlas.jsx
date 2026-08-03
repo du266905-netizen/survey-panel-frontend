@@ -5,7 +5,6 @@ import HomeLegacySections from '../components/HomeLegacySections';
 import { useAuth } from '../components/AuthContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import communityIllustration from '../assets/home/community-illustration.png';
-import listeningRoom from '../assets/home/listening-room.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
 import './HomeAtlas.css';
@@ -53,7 +52,15 @@ export default function HomeAtlas() {
       <section className="video-hero-section" aria-labelledby="video-hero-title">
         <div className="video-hero">
           <div className="video-hero-media" aria-hidden="true">
-            <img className="video-hero-poster" src={listeningRoom} alt="" />
+            <iframe
+              className="video-hero-player"
+              src="https://player.mediadelivery.net/embed/719414/d40516f5-d9e6-4eec-9c46-730d9d58ade3?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
+              title=""
+              loading="eager"
+              tabIndex={-1}
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+            />
           </div>
           <div className="video-hero-scrim" aria-hidden="true" />
           <div className="video-hero-content">

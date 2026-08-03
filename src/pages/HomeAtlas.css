@@ -150,8 +150,8 @@
   color: #fffdf9;
 }
 .video-hero-media, .video-hero-scrim { position: absolute; inset: 0; }
-.video-hero-media { z-index: -2; background: #17251f; }
-.video-hero-poster { width: 100%; height: 100%; object-fit: cover; object-position: 58% center; filter: saturate(.78) contrast(.96) brightness(.74); transform: scale(1.012); }
+.video-hero-media { z-index: -2; overflow: hidden; background: #17251f; }
+.video-hero-player { position: absolute; top: 50%; left: 50%; width: max(100%, 177.78vh); height: max(100%, 56.25vw); border: 0; pointer-events: none; transform: translate(-50%, -50%); }
 .video-hero-scrim { z-index: -1; background: linear-gradient(90deg, rgba(8, 17, 13, .72), rgba(8, 17, 13, .36) 52%, rgba(8, 17, 13, .58)), linear-gradient(180deg, rgba(8, 17, 13, .18), rgba(8, 17, 13, .45)); }
 .video-hero-content { display: flex; width: min(100% - 48px, 920px); flex-direction: column; align-items: center; text-align: center; }
 .video-hero-eyebrow { margin: 0; color: rgba(255, 253, 249, .88); font-size: clamp(.72rem, 1vw, .9rem); font-weight: 800; letter-spacing: .14em; line-height: 1.35; text-transform: uppercase; }
@@ -363,7 +363,6 @@
   .video-hero-content { width: min(100% - 40px, 560px); }
   .video-hero h1 { font-size: clamp(3.6rem, 15.5vw, 5.6rem); }
   .video-hero-description { font-size: 1rem; }
-  .video-hero-poster { object-position: 63% center; }
   .atlas-stage { display: block; min-height: 0; padding: 48px 22px 38px; }
   .atlas-stage-heading { max-width: 560px; }
   .atlas-stage-heading h2 { font-size: clamp(3.15rem, 13vw, 5rem); }
