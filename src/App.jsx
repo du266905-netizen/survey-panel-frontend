@@ -67,6 +67,17 @@ function NewsRoute() {
   );
 }
 
+function NewsArticleRoute() {
+  const { user } = useAuth();
+  return user ? (
+    <AppLayout>
+      <NewsArticlePage />
+    </AppLayout>
+  ) : (
+    <PublicPage><NewsArticlePage /></PublicPage>
+  );
+}
+
 function SurveyCompleteRoute() {
   const { user } = useAuth();
   return user ? (
@@ -105,7 +116,7 @@ export default function App() {
         <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
         <Route path="/our-approach" element={<PublicPage><OurApproach /></PublicPage>} />
         <Route path="/news" element={<NewsRoute />} />
-        <Route path="/news/:articleId" element={<PublicPage><NewsArticlePage /></PublicPage>} />
+        <Route path="/news/:articleId" element={<NewsArticleRoute />} />
         <Route path="/partners" element={<SurveyWallRoute />} />
         <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
         <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />

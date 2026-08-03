@@ -27,6 +27,8 @@ const categoryTones = {
   news: { bg: 'rgba(194, 211, 207, .07)', border: 'rgba(194, 211, 207, .17)', text: '#c2d3cf', accent: '#95b9b2' },
 };
 
+const NEWS_WALL_SCROLL_KEY = 'guanyisearch.news-wall-scroll-position';
+
 function categoryInfo(value) {
   const raw = String(value || '').toLowerCase();
   const matched = categories.find((item) => item.id === raw || item.label.toLowerCase() === raw);
@@ -138,10 +140,10 @@ function articleImage(article) {
   );
 }
 
-function NewsStoryCard({ article }) {
+function NewsStoryCard({ article, onOpen }) {
   return (
     <article className="card group flex h-full overflow-hidden">
-      <Link className="flex h-full w-full flex-col text-left no-underline" to={`/news/${encodeURIComponent(article.id)}`}>
+      <Link className="flex h-full w-full flex-col text-left no-underline" to={`/news/${encodeURIComponent(article.id)}`} onClick={onOpen}>
         <div className="aspect-[1.78] shrink-0 overflow-hidden border-b border-slate-100">
           {articleImage(article)}
         </div>
@@ -378,6 +380,30 @@ export default function NewsWall() {
     };
   }, [country, category]);
 
+  useEffect(() => {
+    if (loading || briefLoading) return undefined;
+
+    const storedPosition = Number(window.sessionStorage.getItem(NEWS_WALL_SCROLL_KEY));
+    if (!Number.isFinite(storedPosition) || storedPosition < 0) return undefined;
+
+    let nestedFrame;
+    const frame = window.requestAnimationFrame(() => {
+      nestedFrame = window.requestAnimationFrame(() => {
+        window.scrollTo({ top: storedPosition, left: 0, behavior: 'auto' });
+        window.sessionStorage.removeItem(NEWS_WALL_SCROLL_KEY);
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      if (nestedFrame) window.cancelAnimationFrame(nestedFrame);
+    };
+  }, [briefLoading, loading]);
+
+  const rememberNewsPosition = () => {
+    window.sessionStorage.setItem(NEWS_WALL_SCROLL_KEY, String(window.scrollY));
+  };
+
   const toggleSubscription = async (categoryId) => {
     if (isPublicView) {
       setAuthPrompt('Create a free account or sign in to save topic subscriptions.');
@@ -438,7 +464,7 @@ export default function NewsWall() {
             {searchQuery ? `No stories match “${searchQuery}” in this selection.` : 'No news available for this region and topic yet.'}
           </div>
         ) : (
-          visibleArticles.map((article) => <NewsStoryCard key={article.id} article={article} />)
+          visibleArticles.map((article) => <NewsStoryCard key={article.id} article={article} onOpen={rememberNewsPosition} />)
         )}
       </section>
 
