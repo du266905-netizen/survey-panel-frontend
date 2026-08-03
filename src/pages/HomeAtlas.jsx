@@ -5,6 +5,7 @@ import HomeLegacySections from '../components/HomeLegacySections';
 import { useAuth } from '../components/AuthContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import communityIllustration from '../assets/home/community-illustration.png';
+import listeningRoom from '../assets/home/listening-room.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
 import './HomeAtlas.css';
@@ -49,9 +50,27 @@ export default function HomeAtlas() {
     <main className={`home-atlas ${activeNode ? `is-${activeNode}` : ''}`}>
       <PublicSiteHeader />
 
+      <section className="video-hero-section" aria-labelledby="video-hero-title">
+        <div className="video-hero">
+          <div className="video-hero-media" aria-hidden="true">
+            <img className="video-hero-poster" src={listeningRoom} alt="" />
+          </div>
+          <div className="video-hero-scrim" aria-hidden="true" />
+          <div className="video-hero-content">
+            <p className="video-hero-eyebrow">Every voice leaves an echo.</p>
+            <h1 id="video-hero-title">Your opinion<br />shapes the world.</h1>
+            <p className="video-hero-description">Discover global perspectives, share what you think, and earn rewards by taking surveys.</p>
+            <Link className="atlas-primary-link video-hero-cta" to={user ? '/dashboard' : '/register'}>
+              Join us
+              <ArrowUpRight size={19} strokeWidth={1.8} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="atlas-stage" aria-labelledby="atlas-title">
         <div className="atlas-stage-heading">
-          <h1 id="atlas-title">Think independently.<br />Discern what matters.</h1>
+          <h2 id="atlas-title">Think independently.<br />Discern what matters.</h2>
           <div className="atlas-primary-actions">
             <Link className="atlas-primary-link" to={user ? '/dashboard' : '/register'}>
               {user ? 'Open workspace' : 'Join us'}
