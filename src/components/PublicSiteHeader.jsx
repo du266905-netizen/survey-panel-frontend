@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { ArrowUpRight, ChevronDown, Menu, Search, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
@@ -29,12 +29,22 @@ const navigation = [
   },
 ];
 
-export default function PublicSiteHeader() {
+export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!heroOverlay) return undefined;
+
+    const updateScrolledState = () => setIsScrolled(window.scrollY > 24);
+    updateScrolledState();
+    window.addEventListener('scroll', updateScrolledState, { passive: true });
+    return () => window.removeEventListener('scroll', updateScrolledState);
+  }, [heroOverlay]);
 
   const closeMenus = () => setActiveMenu(null);
   const closeNavigation = () => {
@@ -61,9 +71,9 @@ export default function PublicSiteHeader() {
   );
 
   return (
-    <header className="atlas-navigation public-site-header">
+    <header className={`atlas-navigation public-site-header${heroOverlay ? ' is-hero-overlay' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
       <Link className="atlas-brand" to="/" aria-label="GuanyiSearch home" onClick={closeNavigation}>
-        <Logo size="md" className="atlas-brand-logo" />
+        <Logo size="md" variant={heroOverlay && !isScrolled ? 'light' : 'dark'} className="atlas-brand-logo" />
       </Link>
 
       <nav className="atlas-nav-links" aria-label="Primary navigation">
