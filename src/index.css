@@ -1561,7 +1561,7 @@ textarea {
   .recovery-panel-inner { width: min(100%, 510px); min-height: 0; padding: 27px 20px 38px; }
   .recovery-card, .recovery-card-reset { margin-top: 27px; margin-bottom: 0; padding: 25px 21px; }
   .recovery-strength-list { grid-template-columns: 1fr; gap: 5px; }
-  .app-topbar { position: relative; }
+  .app-topbar { position: sticky; top: 0; }
   .app-brand-lockup { gap: 8px; }
   .app-brand-mark { width: 26px; height: 26px; }
   .app-logo { width: 142px; }

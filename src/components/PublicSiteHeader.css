@@ -3,7 +3,8 @@
   --atlas-forest: #285647;
   --atlas-paper: #f7f5ef;
   --atlas-rule: rgba(36, 56, 46, .16);
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 20;
   display: grid;
   grid-template-columns: minmax(174px, 1fr) auto minmax(318px, 1fr);

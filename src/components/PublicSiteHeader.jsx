@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, Menu, Search, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
@@ -36,6 +36,24 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  const menuCloseTimer = useRef(null);
+
+  const clearMenuCloseTimer = () => {
+    if (menuCloseTimer.current === null) return;
+    window.clearTimeout(menuCloseTimer.current);
+    menuCloseTimer.current = null;
+  };
+  const closeMenus = () => {
+    clearMenuCloseTimer();
+    setActiveMenu(null);
+  };
+  const scheduleMenuClose = () => {
+    clearMenuCloseTimer();
+    menuCloseTimer.current = window.setTimeout(() => {
+      menuCloseTimer.current = null;
+      setActiveMenu(null);
+    }, 180);
+  };
 
   useEffect(() => {
     if (!heroOverlay) return undefined;
@@ -46,7 +64,8 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
     return () => window.removeEventListener('scroll', updateScrolledState);
   }, [heroOverlay]);
 
-  const closeMenus = () => setActiveMenu(null);
+  useEffect(() => () => clearMenuCloseTimer(), []);
+
   const closeNavigation = () => {
     closeMenus();
     setMobileOpen(false);
@@ -81,8 +100,11 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
           <Fragment key={group.label}>
             <div
               className="atlas-nav-group"
-              onMouseEnter={() => setActiveMenu(group.label)}
-              onMouseLeave={closeMenus}
+              onMouseEnter={() => {
+                clearMenuCloseTimer();
+                setActiveMenu(group.label);
+              }}
+              onMouseLeave={scheduleMenuClose}
               onBlur={(event) => {
                 if (!event.currentTarget.contains(event.relatedTarget)) closeMenus();
               }}
@@ -91,12 +113,19 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                 className="atlas-nav-trigger"
                 type="button"
                 aria-expanded={activeMenu === group.label}
-                onClick={() => setActiveMenu((current) => (current === group.label ? null : group.label))}
+                onClick={() => {
+                  clearMenuCloseTimer();
+                  setActiveMenu((current) => (current === group.label ? null : group.label));
+                }}
               >
                 {group.label}
                 <ChevronDown aria-hidden="true" size={15} strokeWidth={1.8} />
               </button>
-              <div className={`atlas-nav-menu ${activeMenu === group.label ? 'is-open' : ''}`}>
+              <div
+                className={`atlas-nav-menu ${activeMenu === group.label ? 'is-open' : ''}`}
+                onMouseEnter={clearMenuCloseTimer}
+                onMouseLeave={scheduleMenuClose}
+              >
                 {group.items.map((item) => (
                   <Link className="atlas-nav-menu-item" to={item.to} key={item.title} onClick={closeNavigation}>
                     <span>{item.eyebrow}</span>
