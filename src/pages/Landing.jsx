@@ -1040,8 +1040,8 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-access-nav .landing-nav-pill { border: 1px solid #252522; border-radius: 999px; color: #171714; padding: 9px 14px; }
         .landing-access-inner { display: flex; min-height: 0; flex: 1; flex-direction: column; align-items: center; justify-content: flex-start; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding: 42px 12px 72px; scroll-padding-top: 42px; scrollbar-width: thin; scrollbar-color: rgba(58,57,52,.32) transparent; }
         .public-auth-panel { width: min(100%, 400px); }
-        .public-auth-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid rgba(34,33,30,.2); }
-        .public-auth-tabs button { border: 0; border-bottom: 2px solid transparent; background: transparent; color: #858178; cursor: pointer; font-size: 13px; font-weight: 800; padding: 0 0 13px; }
+        .public-auth-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; width: 100%; border-bottom: 1px solid rgba(34,33,30,.2); }
+        .public-auth-tabs button { display: grid; min-width: 0; min-height: 46px; box-sizing: border-box; place-items: center; border: 0; border-bottom: 2px solid transparent; background: transparent; color: #858178; cursor: pointer; font-size: 13px; font-weight: 800; line-height: 1; text-align: center; padding: 0 0 12px; }
         .public-auth-tabs button.is-active { border-color: #171714; color: #171714; }
         .public-auth-content { padding-top: 31px; }
         .public-auth-eyebrow { margin: 0 0 8px; color: #69665e; font-size: 10px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
