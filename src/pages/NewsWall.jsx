@@ -470,19 +470,19 @@ export default function NewsWall() {
   return (
     <main className="news-wall-public min-h-screen bg-slate-50 text-slate-950">
       <style>{`
-        .news-wall-public { background: #f7f5ef; color: #17251f; }
-        .news-wall-public-hero { border-bottom: 1px solid rgba(36,56,46,.16); background: radial-gradient(circle at 76% 18%, rgba(170,184,156,.16), transparent 30%), repeating-linear-gradient(0deg, transparent 0 7px, rgba(40,67,54,.018) 8px 9px), #f7f5ef !important; color: #17251f; }
+        .news-wall-public { background: #f7f7f3; color: #17251f; }
+        .news-wall-public-hero { border-bottom: 1px solid rgba(36,56,46,.16); background: radial-gradient(circle at 76% 18%, rgba(170,184,156,.13), transparent 30%), repeating-linear-gradient(0deg, transparent 0 7px, rgba(40,67,54,.012) 8px 9px), #f7f7f3 !important; color: #17251f; }
         .news-wall-public-hero > div > div > p:first-child { color: #285647 !important; }
         .news-wall-public-hero > div > div > h1 { color: #17251f; font-family: var(--font-display); font-optical-sizing: auto; font-weight: 600; }
         .news-wall-public-hero > div > div > p:last-child { color: #59675f !important; }
         .news-wall-public-body { max-width: 1280px; }
-        .news-wall-public .card { border-color: rgba(36,56,46,.16); background: #fffdf8; box-shadow: 0 12px 24px rgba(35,54,43,.06); }
+        .news-wall-public .card { border-color: rgba(36,56,46,.16); background: #fffefd; box-shadow: 0 12px 24px rgba(35,54,43,.06); }
         .news-wall-public .text-slate-950, .news-wall-public .text-slate-700 { color: #17251f; }
         .news-wall-public .text-slate-600, .news-wall-public .text-slate-500, .news-wall-public .text-slate-400 { color: #59675f; }
         .news-wall-public .text-cyan-700, .news-wall-public .text-cyan-800 { color: #285647; }
         .news-wall-public .text-cyan-900 { color: #17251f; }
-        .news-wall-public .bg-white { background-color: #fffdf8; }
-        .news-wall-public .bg-slate-50, .news-wall-public .bg-slate-100 { background-color: #eef1eb; }
+        .news-wall-public .bg-white { background-color: #fffefd; }
+        .news-wall-public .bg-slate-50, .news-wall-public .bg-slate-100 { background-color: #f0f3ee; }
         .news-wall-public .border-slate-100, .news-wall-public .border-slate-200 { border-color: rgba(36,56,46,.13); }
         .news-wall-public .border-cyan-100, .news-wall-public .border-cyan-200 { border-color: rgba(40,86,71,.18); }
         .news-wall-public .bg-cyan-50, .news-wall-public .bg-cyan-100 { background-color: #e6eee5; }
@@ -490,7 +490,7 @@ export default function NewsWall() {
         .news-wall-public .border-amber-200 { border-color: rgba(176,130,47,.3); }
         .news-wall-public .text-amber-800 { color: #806125; }
         .news-wall-public .news-category-pill { box-shadow: none; }
-        .news-wall-public .btn-primary { border-color: #285647; background: #285647; color: #f7f5ef; }
+        .news-wall-public .btn-primary { border-color: #285647; background: #285647; color: #f7f7f3; }
         .news-wall-public .btn-secondary { border-color: rgba(40,86,71,.32); background: transparent; color: #285647; }
       `}</style>
       <section className="news-wall-public-hero bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">

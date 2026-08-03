@@ -1,13 +1,13 @@
 .news-reading-page {
   --news-ink: #1f2924;
   --news-muted: #716d64;
-  --news-line: #ded9ce;
-  --news-paper: #faf9f5;
-  --news-paper-deep: #f3efe6;
+  --news-line: #dce2da;
+  --news-paper: #f8f9f6;
+  --news-paper-deep: #f0f3ee;
   min-height: 100vh;
   overflow: hidden;
   background:
-    linear-gradient(rgba(76, 68, 54, .025) 1px, transparent 1px),
+    linear-gradient(rgba(49, 70, 57, .014) 1px, transparent 1px),
     var(--news-paper);
   background-size: 100% 7px;
   color: var(--news-ink);

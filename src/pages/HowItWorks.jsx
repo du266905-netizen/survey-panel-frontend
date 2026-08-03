@@ -74,26 +74,26 @@ export default function HowItWorks() {
         @media (max-width: 760px) { .how-container { width: min(100% - 40px, 1240px); } .how-nav { align-items: flex-start; flex-direction: column; gap: 18px; } .how-nav-links { width: 100%; justify-content: flex-start; gap: 15px; } .how-nav-links a { font-size: 12px; } .how-nav-links .how-nav-cta { margin-left: auto; } .how-hero, .how-platform-head, .how-standards-grid { grid-template-columns: 1fr; gap: 28px; } .how-hero { min-height: 0; padding: 76px 0; } .how-hero h1 { font-size: clamp(48px, 14vw, 68px); } .how-hero > p { margin: 0; font-size: 15px; } .how-photo-grid { grid-template-columns: 1fr; } .how-photo, .how-photo.is-wide { grid-column: auto; min-height: 320px; } .how-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .how-step { min-height: 0; } .how-step h3 { margin-top: 26px; } .how-reward { min-height: 490px; margin-top: 46px; } .how-reward-copy { padding: 44px 28px; } .how-footer-row { align-items: flex-start; flex-direction: column; } }
       `}</style>
       <style>{`
-        .how-page { background: #f7f5ef; color: #17251f; }
-        .how-shell { background: radial-gradient(circle at 78% 8%, rgba(170,184,156,.16), transparent 24%), repeating-linear-gradient(0deg, transparent 0 7px, rgba(40,67,54,.018) 8px 9px), #f7f5ef; }
+        .how-page { background: #f7f7f3; color: #17251f; }
+        .how-shell { background: radial-gradient(circle at 78% 8%, rgba(170,184,156,.13), transparent 24%), repeating-linear-gradient(0deg, transparent 0 7px, rgba(40,67,54,.012) 8px 9px), #f7f7f3; }
         .how-kicker { color: #52705f; }
         .how-hero h1, .how-platform-head h2, .how-panelist-head h2, .how-standards-copy h2 { color: #17251f; }
         .how-hero > p, .how-platform-head > p, .how-panelist-head > p, .how-standards-copy > p, .how-standard p, .how-step p { color: #59675f; }
-        .how-platform { border-color: rgba(36,56,46,.16); background: #faf8f2; }
+        .how-platform { border-color: rgba(36,56,46,.16); background: #fbfbf8; }
         .how-photo { background: #e4e8df; }
-        .how-standards { border-color: rgba(36,56,46,.16); background: #eef1eb; }
+        .how-standards { border-color: rgba(36,56,46,.16); background: #f0f3ee; }
         .how-standard-list, .how-standard { border-color: rgba(36,56,46,.2); }
         .how-standard-icon { border-color: rgba(40,86,71,.28); color: #285647; }
         .how-standard h3 { color: #17251f; }
-        .how-panelists { background: #faf8f2; }
-        .how-step { border-color: rgba(36,56,46,.16); background: #fffdf8; }
+        .how-panelists { background: #fbfbf8; }
+        .how-step { border-color: rgba(36,56,46,.16); background: #fffefd; }
         .how-step > span { color: #557662; }
         .how-step h3 { color: #17251f; }
         .how-reward { background: #dfe8dc; }
         .how-reward:after { background: linear-gradient(90deg, rgba(23,37,31,.9), rgba(23,37,31,.28)); }
-        .how-reward-copy h2 { color: #f7f5ef; }
-        .how-reward-copy > p { color: rgba(247,245,239,.82); }
-        .how-reward-copy a { border-color: #f7f5ef; background: #f7f5ef; color: #17251f; }
+        .how-reward-copy h2 { color: #f7f7f3; }
+        .how-reward-copy > p { color: rgba(247,247,243,.82); }
+        .how-reward-copy a { border-color: #f7f7f3; background: #f7f7f3; color: #17251f; }
       `}</style>
 
       <section className="how-shell">

@@ -4,6 +4,7 @@
   .app-main-dashboard .dashboard-command .btn-primary,
   .atlas-register,
   .atlas-primary-link,
+  .landing-site-nav-actions .landing-site-nav-join,
   .public-auth-submit,
   .public-auth-code,
   .recovery-submit,
@@ -15,9 +16,24 @@
   .support-request-actions button[type='submit'],
   .marketing-upload-button,
   .marketing-artwork-reset {
-    --syringe-fill: #b56a63;
-    box-shadow: inset 0 0 0 0 var(--syringe-fill), 0 10px 24px rgba(90, 49, 44, .16);
-    transition: color .44s ease, background-color .44s ease, border-color .44s ease, box-shadow .76s cubic-bezier(.22, .75, .2, 1);
+    --syringe-fill: #181917;
+    --syringe-hover-ink: #fff;
+    --syringe-hover-border: #181917;
+    --syringe-shadow: 0 8px 20px rgba(24, 32, 27, .1);
+    --syringe-hover-shadow: 0 10px 24px rgba(24, 25, 23, .16);
+    box-shadow: inset 0 0 0 0 var(--syringe-fill), var(--syringe-shadow);
+    transition: color .72s ease, background .72s ease, border-color .72s ease, box-shadow 1.25s cubic-bezier(.22, .72, .2, 1);
+  }
+
+  .public-auth-submit,
+  .public-auth-code,
+  .marketing-upload-button,
+  .marketing-artwork-reset {
+    --syringe-fill: #f8f9f6;
+    --syringe-hover-ink: #181917;
+    --syringe-hover-border: #d7ddd5;
+    --syringe-shadow: 0 8px 20px rgba(18, 20, 18, .11);
+    --syringe-hover-shadow: 0 9px 22px rgba(18, 20, 18, .08);
   }
 
   .btn-primary:hover:not(:disabled),
@@ -25,6 +41,7 @@
   .app-main-dashboard .dashboard-command .btn-primary:hover:not(:disabled),
   .atlas-register:hover,
   .atlas-primary-link:hover,
+  .landing-site-nav-actions .landing-site-nav-join:hover,
   .public-auth-submit:hover:not(:disabled),
   .public-auth-code:hover:not(:disabled),
   .recovery-submit:hover:not(:disabled),
@@ -36,9 +53,9 @@
   .support-request-actions button[type='submit']:hover:not(:disabled),
   .marketing-upload-button:hover,
   .marketing-artwork-reset:hover:not(:disabled) {
-    border-color: #99524d;
-    box-shadow: inset 32rem 0 0 0 var(--syringe-fill), 0 14px 28px rgba(90, 49, 44, .2);
-    color: #fffdf8;
+    border-color: var(--syringe-hover-border);
+    box-shadow: inset 32rem 0 0 0 var(--syringe-fill), var(--syringe-hover-shadow);
+    color: var(--syringe-hover-ink);
     transform: none;
   }
 
@@ -49,9 +66,11 @@
   .public-auth-email-cta,
   .news-source-handoff-cancel,
   .support-request-actions button:not([type='submit']) {
-    --syringe-fill: #94504f;
+    --syringe-fill: #181917;
+    --syringe-hover-ink: #fff;
+    --syringe-hover-border: #181917;
     box-shadow: inset 0 0 0 0 var(--syringe-fill);
-    transition: color .44s ease, background-color .44s ease, border-color .44s ease, box-shadow .76s cubic-bezier(.22, .75, .2, 1);
+    transition: color .72s ease, background .72s ease, border-color .72s ease, box-shadow 1.25s cubic-bezier(.22, .72, .2, 1);
   }
 
   .btn-secondary:hover:not(:disabled),
@@ -61,9 +80,9 @@
   .public-auth-email-cta:hover:not(:disabled),
   .news-source-handoff-cancel:hover:not(:disabled),
   .support-request-actions button:not([type='submit']):hover:not(:disabled) {
-    border-color: #854341;
+    border-color: var(--syringe-hover-border);
     box-shadow: inset 32rem 0 0 0 var(--syringe-fill);
-    color: #fffdf8;
+    color: var(--syringe-hover-ink);
     transform: none;
   }
 }

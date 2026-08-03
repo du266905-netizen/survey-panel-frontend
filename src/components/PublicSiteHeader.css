@@ -1,7 +1,7 @@
 .atlas-navigation.public-site-header {
   --atlas-ink: #17251f;
   --atlas-forest: #285647;
-  --atlas-paper: #f7f5ef;
+  --atlas-paper: #f7f7f3;
   --atlas-rule: rgba(36, 56, 46, .16);
   position: sticky;
   top: 0;
@@ -13,7 +13,7 @@
   min-height: 74px;
   padding: 0 5.5vw;
   border-bottom: 1px solid var(--atlas-rule);
-  background: #f7f5ef;
+  background: #f7f7f3;
   color: var(--atlas-ink);
   font-family: var(--font-sans);
   backdrop-filter: blur(18px);
@@ -40,8 +40,8 @@
 .atlas-nav-search input, .atlas-mobile-search input { min-width: 0; width: 100%; border: 0; outline: 0; color: var(--atlas-ink); background: transparent; font: inherit; font-size: .78rem; }
 .atlas-nav-search input::placeholder, .atlas-mobile-search input::placeholder { color: #87948c; }
 .atlas-sign-in { color: var(--atlas-ink); font-size: .89rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
-.atlas-register { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 42px; padding: 0 17px; border: 1px solid var(--atlas-forest); border-radius: 999px; color: var(--atlas-paper); background: var(--atlas-forest); font-size: .86rem; font-weight: 800; text-decoration: none; white-space: nowrap; transition: transform 170ms ease, background 170ms ease; }
-.atlas-register:hover { background: #183c30; transform: translateY(-1px); }
+.atlas-register { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 42px; padding: 0 17px; border: 1px solid var(--atlas-forest); border-radius: 999px; color: var(--atlas-paper); background: var(--atlas-forest); font-size: .86rem; font-weight: 800; text-decoration: none; white-space: nowrap; transition: color .72s ease, background .72s ease, border-color .72s ease, box-shadow 1.25s cubic-bezier(.22,.72,.2,1); }
+.atlas-register:hover { background: var(--atlas-forest); transform: none; }
 .atlas-menu-button, .atlas-mobile-menu { display: none; }
 
 .public-site-header.is-hero-overlay {
@@ -64,12 +64,12 @@
 .public-site-header.is-hero-overlay .atlas-nav-search input { color: #fffdf9; }
 .public-site-header.is-hero-overlay .atlas-nav-search input::placeholder { color: rgba(255, 253, 249, .68); }
 .public-site-header.is-hero-overlay .atlas-register { border-color: rgba(255, 253, 249, .36); background: rgba(25, 72, 55, .88); color: #fffdf9; }
-.public-site-header.is-hero-overlay .atlas-register:hover { background: #1b4c3a; }
+.public-site-header.is-hero-overlay .atlas-register:hover { background: rgba(25, 72, 55, .88); transform: none; }
 
 .public-site-header.is-hero-overlay.is-scrolled {
   position: fixed;
   border-bottom-color: var(--atlas-rule);
-  background: rgba(247, 245, 239, .94);
+  background: rgba(247, 247, 243, .94);
   color: var(--atlas-ink);
   box-shadow: 0 12px 30px rgba(22, 37, 29, .09);
   backdrop-filter: blur(18px);
@@ -101,7 +101,7 @@
   .public-site-header { grid-template-columns: 1fr auto; }
   .atlas-nav-links { display: none; }
   .atlas-menu-button { display: inline-flex; padding: 5px; }
-  .atlas-mobile-menu { position: absolute; top: calc(100% + 1px); right: 0; left: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding: 24px 5.5vw 29px; border-bottom: 1px solid var(--atlas-rule); background: rgba(247, 245, 239, .98); box-shadow: 0 20px 35px rgba(32, 45, 37, .1); clip-path: inset(0 0 100% 0); pointer-events: none; transition: clip-path 220ms ease; }
+  .atlas-mobile-menu { position: absolute; top: calc(100% + 1px); right: 0; left: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding: 24px 5.5vw 29px; border-bottom: 1px solid var(--atlas-rule); background: rgba(247, 247, 243, .98); box-shadow: 0 20px 35px rgba(32, 45, 37, .1); clip-path: inset(0 0 100% 0); pointer-events: none; transition: clip-path 220ms ease; }
   .atlas-mobile-menu.is-open { clip-path: inset(0); pointer-events: auto; }
   .atlas-mobile-search { grid-column: 1 / -1; min-height: 42px; padding: 0 13px; }
   .atlas-mobile-direct-link, .atlas-mobile-group a { display: flex; align-items: center; justify-content: space-between; color: var(--atlas-ink); font-family: var(--font-serif); font-size: 1.06rem; text-decoration: none; }
