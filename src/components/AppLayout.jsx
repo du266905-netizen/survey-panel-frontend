@@ -14,6 +14,7 @@ const navItems = [
   { to: '/partners#surveys', label: 'Surveys', icon: Users, hash: '#surveys' },
   { to: '/partners#more-opportunities', label: 'More survey opportunities', icon: Compass, hash: '#more-opportunities' },
   { to: '/news', label: 'News Wall', icon: Newspaper },
+  { to: '/community', label: 'Community', icon: MessageCircleMore },
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
 ];
 
@@ -32,7 +33,7 @@ export default function AppLayout({ children }) {
   const isPanelist = isPanelistRole(user?.role);
   const roleLabel = isAdmin ? 'Admin' : user?.role === 'panelist' ? 'Panelist' : 'Member';
   const referralOpenRequested = new URLSearchParams(location.search).get('referral') === 'true';
-  const usesEditorialWorkspaceSurface = location.pathname === '/dashboard' || location.pathname === '/activity';
+  const usesEditorialWorkspaceSurface = location.pathname === '/dashboard' || location.pathname === '/activity' || location.pathname === '/community';
 
   function cancelUserMenuClose() {
     if (userMenuCloseTimerRef.current) {
