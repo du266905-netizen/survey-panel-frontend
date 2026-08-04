@@ -408,10 +408,28 @@
 }
 
 .dashboard-board {
+  position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(56, 66, 57, .16);
   border-bottom: 1px solid rgba(56, 66, 57, .16);
-  background: #eff0e9;
+  background: #f3f5f0;
+}
+
+.dashboard-board::after {
+  position: absolute;
+  z-index: 2;
+  inset: 16px;
+  background:
+    linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) left top / 15px 1px no-repeat,
+    linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) left top / 1px 15px no-repeat,
+    linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) right top / 15px 1px no-repeat,
+    linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) right top / 1px 15px no-repeat,
+    linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) left bottom / 15px 1px no-repeat,
+    linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) left bottom / 1px 15px no-repeat,
+    linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) right bottom / 15px 1px no-repeat,
+    linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) right bottom / 1px 15px no-repeat;
+  content: '';
+  pointer-events: none;
 }
 
 .dashboard-board-intro {
@@ -762,7 +780,7 @@
     linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) right 16px bottom 16px / 15px 1px no-repeat,
     linear-gradient(rgba(75, 104, 80, .45), rgba(75, 104, 80, .45)) right 16px bottom 16px / 1px 15px no-repeat,
     radial-gradient(circle at 92% 16%, rgba(180, 145, 78, .1), transparent 26%),
-    #fbfbf7;
+    #f7f8f4;
   padding: clamp(32px, 4.5vw, 58px) clamp(28px, 5vw, 82px) clamp(36px, 4.5vw, 62px);
 }
 

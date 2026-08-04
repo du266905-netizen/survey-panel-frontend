@@ -98,7 +98,6 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
           <div className="referral-launcher-copy">
             <span>Invite program</span>
             <strong>Share a<br />good match.</strong>
-            <p>Bring someone thoughtful into the panel.</p>
           </div>
           <ReferralPeopleArtwork className="referral-launcher-art" />
           <button className="referral-launcher-action" type="button" onClick={() => setOpen(true)}>
