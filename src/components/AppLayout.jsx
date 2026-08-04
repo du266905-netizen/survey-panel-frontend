@@ -21,7 +21,7 @@ const panelistNavItems = navItems
   .filter((item) => item.to !== '/wallet')
   .map((item) => (item.to === '/dashboard' ? { ...item, label: 'Home', icon: House } : item));
 
-const panelistPrompts = ['Browse News Wall', 'Start a survey', 'Explore community'];
+const panelistPrompts = ['Browse news', 'Start a survey', 'Explore community'];
 
 function PanelistPrompt() {
   const [promptIndex, setPromptIndex] = useState(0);
