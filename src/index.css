@@ -529,22 +529,6 @@ textarea {
 }
 .app-user-summary > span:first-child { color: #1b1a16; font-size: 17px; }
 .app-user-summary > span:last-child { color: #777168; }
-.app-user-name-line { display: inline-flex; align-items: baseline; justify-content: flex-end; gap: 10px; white-space: nowrap; }
-.app-user-prompt {
-  display: inline-flex;
-  min-width: 168px;
-  align-items: baseline;
-  gap: 4px;
-  color: #718077;
-  font-family: var(--font-sans);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .035em;
-  line-height: 1;
-}
-.app-user-typed-word { min-width: 90px; color: #2a573e; text-align: left; }
-.app-user-typing-cursor { width: 1px; height: 11px; margin-left: 1px; background: #af8440; animation: app-user-typing-cursor .9s steps(1, end) infinite; }
-@keyframes app-user-typing-cursor { 0%, 48% { opacity: 1; } 49%, 100% { opacity: 0; } }
 .app-user-chevron {
   color: #777168;
   transition: transform .18s ease, color .18s ease;
@@ -586,10 +570,6 @@ textarea {
 .app-user-menu-item.is-danger { color: rgba(245, 179, 181, .82); }
 .app-user-menu-item.is-danger svg { color: rgba(245, 179, 181, .62); }
 .app-user-menu-item.is-danger:hover { background: rgba(135, 48, 55, .16); color: #ffc9ca; }
-
-@media (prefers-reduced-motion: reduce) {
-  .app-user-typing-cursor { animation: none; }
-}
 
 .app-frame { min-height: calc(100vh - 76px); }
 .app-sidebar {
@@ -1615,7 +1595,7 @@ textarea {
   left: 24px;
   bottom: 24px;
   width: min(258px, calc(100vw - 48px));
-  min-height: 144px;
+  min-height: 154px;
   overflow: hidden;
   border: 0;
   border-radius: 18px;
@@ -1859,7 +1839,7 @@ textarea {
   .referral-modal-rules li { min-height: 0; padding: 12px 16px; }
 }
 @media (max-width: 640px) {
-  .referral-launcher { left: 14px; bottom: 14px; width: min(252px, calc(100vw - 28px)); min-height: 142px; }
+  .referral-launcher { left: 14px; bottom: 14px; width: min(252px, calc(100vw - 28px)); min-height: 150px; }
   .referral-launcher-copy { width: 140px; padding: 15px; }
   .referral-launcher-copy strong { font-size: 20px; }
   .referral-launcher-art { top: 0; bottom: 0; right: 0; width: 109px; height: auto; }

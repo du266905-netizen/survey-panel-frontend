@@ -22,6 +22,60 @@ function newsDate(value) {
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
+const welcomePrompts = ['Browse news', 'Start a survey', 'Explore community'];
+
+function WelcomePrompt() {
+  const [promptIndex, setPromptIndex] = useState(0);
+  const [characterCount, setCharacterCount] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const activePrompt = welcomePrompts[promptIndex];
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+    updatePreference();
+    mediaQuery.addEventListener('change', updatePreference);
+    return () => mediaQuery.removeEventListener('change', updatePreference);
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return undefined;
+
+    let delay = 52;
+    let update;
+
+    if (!isDeleting && characterCount < activePrompt.length) {
+      update = () => setCharacterCount((currentCount) => currentCount + 1);
+    } else if (!isDeleting) {
+      delay = 1800;
+      update = () => setIsDeleting(true);
+    } else if (characterCount > 0) {
+      delay = 30;
+      update = () => setCharacterCount((currentCount) => currentCount - 1);
+    } else {
+      delay = 260;
+      update = () => {
+        setPromptIndex((currentIndex) => (currentIndex + 1) % welcomePrompts.length);
+        setIsDeleting(false);
+      };
+    }
+
+    const timeoutId = window.setTimeout(update, delay);
+    return () => window.clearTimeout(timeoutId);
+  }, [activePrompt.length, characterCount, isDeleting, prefersReducedMotion]);
+
+  const visiblePrompt = prefersReducedMotion ? activePrompt : activePrompt.slice(0, characterCount);
+
+  return (
+    <div className="dashboard-welcome-prompt" aria-hidden="true">
+      <span>Let’s begin:</span>
+      <strong>{visiblePrompt}</strong>
+      <i />
+    </div>
+  );
+}
+
 function HomeNewsCard({ article }) {
   return (
     <article className="home-news-card">
@@ -69,6 +123,7 @@ export default function Dashboard() {
           <div className="dashboard-welcome-copy">
             <p>Your space</p>
             <h1>{greeting}, {displayName}.</h1>
+            <WelcomePrompt />
             <span>Explore at your own pace. Your next opportunity is ready when you are.</span>
           </div>
           <div className="dashboard-balance-card" aria-label={`${formatCoinNumber(balance)} Coins available`}>
