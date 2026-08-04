@@ -16,6 +16,8 @@ const navItems = [
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
 ];
 
+const panelistNavItems = navItems.filter((item) => item.to !== '/wallet');
+
 export default function AppLayout({ children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -57,7 +59,7 @@ export default function AppLayout({ children }) {
     navigate('/profile');
   };
 
-  const navigationLink = (item) => {
+  const navigationLink = (item, className = 'app-nav-link') => {
     const Icon = item.icon;
     return (
       <NavLink
@@ -67,7 +69,7 @@ export default function AppLayout({ children }) {
           const isSectionActive = item.hash
             ? location.pathname === '/partners' && (location.hash === item.hash || (!location.hash && item.hash === '#surveys'))
             : isActive;
-          return `app-nav-link ${isSectionActive ? 'is-active' : ''}`;
+          return `${className} ${isSectionActive ? 'is-active' : ''}`;
         }}
       >
         <Icon size={17} strokeWidth={1.8} />
@@ -93,11 +95,12 @@ export default function AppLayout({ children }) {
               <div className="app-brand-lockup" aria-label="GuanyiSearch">
                 <Logo size="md" className="app-logo" />
               </div>
-              <span className="app-topbar-divider hidden sm:block" aria-hidden="true" />
-              <p className="app-topbar-context hidden text-xs sm:block">{isPanelist ? 'Panelist workspace' : 'Operations workspace'}</p>
+              {isAdmin && <span className="app-topbar-divider hidden sm:block" aria-hidden="true" />}
+              {isAdmin && <p className="app-topbar-context hidden text-xs sm:block">Operations workspace</p>}
+              {isPanelist && <nav className="app-panelist-nav hidden lg:flex" aria-label="Main navigation">{panelistNavItems.map((item) => navigationLink(item, 'app-panelist-nav-link'))}</nav>}
             </div>
             <div className="flex items-center gap-3 sm:gap-4">
-              <WalletBalanceMenu />
+              {isAdmin && <WalletBalanceMenu />}
               <div
                 ref={userMenuRef}
                 className="app-user-menu"
@@ -127,6 +130,12 @@ export default function AppLayout({ children }) {
                     <Settings size={15} />
                     <span>Account settings</span>
                   </button>
+                  {isPanelist && (
+                    <NavLink className="app-user-menu-item" to="/wallet" onClick={() => setUserMenuOpen(false)} role="menuitem">
+                      <Gift size={15} />
+                      <span>Rewards & wallet</span>
+                    </NavLink>
+                  )}
                   <button className="app-user-menu-item is-danger" type="button" onClick={handleLogout} role="menuitem">
                     <LogOut size={15} />
                     <span>Log out</span>
@@ -139,32 +148,30 @@ export default function AppLayout({ children }) {
         </header>
 
       <div className="app-frame flex">
-        <aside className="app-sidebar w-[272px] shrink-0 px-4 py-6">
-          <div className="app-sidebar-label">Workspace</div>
-          <nav className="space-y-1">
-            {navItems.map(navigationLink)}
-            {isAdmin && (
-              <>
-                <div className="app-sidebar-label app-sidebar-label-secondary">Operations</div>
-                {adminLink('/team', 'Team', UserPlus)}
-                {adminLink('/workers', 'Orbit Operations', UserCog)}
-                {adminLink('/orbit/settlement', 'Settlement Review', ClipboardCheck)}
-                {adminLink('/admin/rewards', 'Reward Center', Gift)}
-                {adminLink('/admin/panelists', 'Panel Profiles', ListFilter)}
-                {adminLink('/admin/partners', 'Partners', Users)}
-                {adminLink('/admin/database', 'Database', Database)}
-                {adminLink('/admin/marketing-assets', 'Marketing Assets', Image)}
-                {adminLink('/admin/support', 'Support Requests', MessageCircleMore)}
-                {adminLink('/admin', 'Admin Dashboard', ShieldCheck, true)}
-              </>
-            )}
-          </nav>
-          <div className="app-sidebar-foot">
-            <span className="app-sidebar-status" aria-hidden="true" />
-            Secure workspace
-          </div>
-        </aside>
-        <main className={`app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10 ${location.pathname === '/dashboard' ? 'app-main-dashboard' : ''}`}>
+        {isAdmin && (
+          <aside className="app-sidebar w-[272px] shrink-0 px-4 py-6">
+            <div className="app-sidebar-label">Workspace</div>
+            <nav className="space-y-1">
+              {navItems.map(navigationLink)}
+              <div className="app-sidebar-label app-sidebar-label-secondary">Operations</div>
+              {adminLink('/team', 'Team', UserPlus)}
+              {adminLink('/workers', 'Orbit Operations', UserCog)}
+              {adminLink('/orbit/settlement', 'Settlement Review', ClipboardCheck)}
+              {adminLink('/admin/rewards', 'Reward Center', Gift)}
+              {adminLink('/admin/panelists', 'Panel Profiles', ListFilter)}
+              {adminLink('/admin/partners', 'Partners', Users)}
+              {adminLink('/admin/database', 'Database', Database)}
+              {adminLink('/admin/marketing-assets', 'Marketing Assets', Image)}
+              {adminLink('/admin/support', 'Support Requests', MessageCircleMore)}
+              {adminLink('/admin', 'Admin Dashboard', ShieldCheck, true)}
+            </nav>
+            <div className="app-sidebar-foot">
+              <span className="app-sidebar-status" aria-hidden="true" />
+              Secure workspace
+            </div>
+          </aside>
+        )}
+        <main className={`app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10 ${location.pathname === '/dashboard' ? 'app-main-dashboard' : ''} ${isPanelist ? 'app-main-panelist' : ''}`}>
           <div key={location.pathname} className="app-route-enter">
             {children || <Outlet />}
           </div>
