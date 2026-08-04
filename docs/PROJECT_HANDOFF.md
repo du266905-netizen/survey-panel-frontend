@@ -29,7 +29,8 @@
 - 从新闻详情返回新闻墙时，会恢复到用户刚才点击新闻卡片的页面位置。
 - 登录后的工作区已统一为更明亮、偏白的中性色调；认证页仍保留其独立品牌分栏布局。
 - 用户端工作区不再显示侧边栏或“小组成员工作区”上下文；管理员仍保留侧边栏，用户端改用轻量顶部导航和连续内容区。
-- 用户仪表板根据浏览器本地时间显示问候语，并在首屏显示硬币余额与估值；奖励钱包入口已移至右上角账户下拉菜单。
+- 用户顶部入口显示为 `Home`。Home 保留本地时间问候、问卷引导和硬币余额，并在余额卡中提供打开钱包的行动入口。
+- Home 新增使用真实 News Wall 内容的新闻引导区；参与趋势已移至右上角账户下拉菜单中的 `Dashboard` 独立页面，奖励钱包入口继续位于同一菜单。
 
 ## 核心文件
 
@@ -38,7 +39,7 @@
 - 第二页后续内容：`src/components/HomeLegacySections.jsx`、`src/components/HomeLegacySections.css`
 - 新闻墙与详情：`src/pages/NewsWall.jsx`、`src/pages/NewsArticlePage.jsx`
 - 路由分流：`src/App.jsx`
-- 用户工作区外壳与仪表板：`src/components/AppLayout.jsx`、`src/pages/Dashboard.jsx`、`src/pages/WorkspaceSurfaceTheme.css`
+- 用户工作区外壳与仪表板：`src/components/AppLayout.jsx`、`src/pages/Dashboard.jsx`、`src/pages/ActivityDashboard.jsx`、`src/pages/WorkspaceSurfaceTheme.css`
 - 联系表单接口：`src/api/supportApi.js`
 - 后端联系通知：相邻后端仓库的 `src/routes/supportRoutes.js`、`src/services/supportService.js`、`src/services/emailService.js`
 

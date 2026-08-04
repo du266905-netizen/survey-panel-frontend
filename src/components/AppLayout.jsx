@@ -16,7 +16,9 @@ const navItems = [
   { to: '/wallet', label: 'Wallet', icon: WalletCards },
 ];
 
-const panelistNavItems = navItems.filter((item) => item.to !== '/wallet');
+const panelistNavItems = navItems
+  .filter((item) => item.to !== '/wallet')
+  .map((item) => (item.to === '/dashboard' ? { ...item, label: 'Home' } : item));
 
 export default function AppLayout({ children }) {
   const { user, logout } = useAuth();
@@ -28,6 +30,7 @@ export default function AppLayout({ children }) {
   const isPanelist = isPanelistRole(user?.role);
   const roleLabel = isAdmin ? 'Admin' : user?.role === 'panelist' ? 'Panelist' : 'Member';
   const referralOpenRequested = new URLSearchParams(location.search).get('referral') === 'true';
+  const usesEditorialWorkspaceSurface = location.pathname === '/dashboard' || location.pathname === '/activity';
 
   useEffect(() => {
     setUserMenuOpen(false);
@@ -131,6 +134,12 @@ export default function AppLayout({ children }) {
                     <span>Account settings</span>
                   </button>
                   {isPanelist && (
+                    <NavLink className="app-user-menu-item" to="/activity" onClick={() => setUserMenuOpen(false)} role="menuitem">
+                      <BarChart3 size={15} />
+                      <span>Dashboard</span>
+                    </NavLink>
+                  )}
+                  {isPanelist && (
                     <NavLink className="app-user-menu-item" to="/wallet" onClick={() => setUserMenuOpen(false)} role="menuitem">
                       <Gift size={15} />
                       <span>Rewards & wallet</span>
@@ -171,7 +180,7 @@ export default function AppLayout({ children }) {
             </div>
           </aside>
         )}
-        <main className={`app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10 ${location.pathname === '/dashboard' ? 'app-main-dashboard' : ''} ${isPanelist ? 'app-main-panelist' : ''}`}>
+        <main className={`app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10 ${usesEditorialWorkspaceSurface ? 'app-main-dashboard' : ''} ${isPanelist ? 'app-main-panelist' : ''}`}>
           <div key={location.pathname} className="app-route-enter">
             {children || <Outlet />}
           </div>

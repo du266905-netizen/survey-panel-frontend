@@ -7,6 +7,7 @@ import MarketingAssets from './pages/MarketingAssets';
 import AdminPartners from './pages/AdminPartners';
 import AdminPanelists from './pages/AdminPanelists';
 import AdminRewards from './pages/AdminRewards';
+import ActivityDashboard from './pages/ActivityDashboard';
 import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
@@ -129,6 +130,7 @@ export default function App() {
         >
           <Route path="/onboarding" element={<Navigate to="/panel-profile" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/activity" element={<ActivityDashboard />} />
           <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/referrals" element={<Navigate to="/dashboard?referral=true" replace />} />

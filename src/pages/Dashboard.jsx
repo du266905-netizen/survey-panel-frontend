@@ -1,59 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { ArrowUpRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, Newspaper } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { getDashboard } from '../api/realApi';
+import { getDashboard, getNewsWall } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import { useProfileSurvey } from '../components/ProfileSurveyContext';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber } from '../utils/formatters';
 import { isPanelistRole } from '../utils/roles';
 import { formatUsdEstimate } from '../utils/wallet';
-
-const chartTooltipStyle = {
-  backgroundColor: '#fffdfa',
-  border: '1px solid rgba(53, 62, 53, .16)',
-  borderRadius: 4,
-  color: '#1f2a23',
-  boxShadow: '0 12px 28px rgba(47, 54, 45, .09)',
-};
-
-function dateKey(date) {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-}
-
-function recordDate(record) {
-  const value = record.auditTime && record.auditTime !== '-' ? record.auditTime : record.startTime || record.time;
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? null : date;
-}
-
-function buildTrend(records, dayCount) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const points = Array.from({ length: dayCount }, (_, index) => {
-    const date = new Date(today);
-    date.setDate(today.getDate() - (dayCount - index - 1));
-    return {
-      key: dateKey(date),
-      day: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-      completed: 0,
-      coins: 0,
-    };
-  });
-  const byDay = new Map(points.map((point) => [point.key, point]));
-
-  records.forEach((record) => {
-    if (record.status !== 'completed') return;
-    const date = recordDate(record);
-    const point = date ? byDay.get(dateKey(date)) : null;
-    if (!point) return;
-    point.completed += 1;
-    point.coins += Number(record.coinsReward || 0);
-  });
-
-  return points;
-}
 
 function localGreeting() {
   const hour = new Date().getHours();
@@ -62,15 +16,38 @@ function localGreeting() {
   return 'Good evening';
 }
 
+function newsDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'Latest story';
+  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+
+function HomeNewsCard({ article }) {
+  return (
+    <article className="home-news-card">
+      <Link to={`/news/${encodeURIComponent(article.id)}`}>
+        <div className="home-news-image">
+          {article.imageUrl ? <img src={article.imageUrl} alt="" loading="lazy" /> : <Newspaper size={28} strokeWidth={1.4} />}
+        </div>
+        <div className="home-news-copy">
+          <div>
+            <span>{newsDate(article.publishedAt || article.createdAt || article.date)}</span>
+            <em>{article.category || 'News'}</em>
+          </div>
+          <h2>{article.title}</h2>
+          <b>Read story <ArrowUpRight size={15} /></b>
+        </div>
+      </Link>
+    </article>
+  );
+}
+
 export default function Dashboard() {
   const { user } = useAuth();
   const { panelProfile } = useProfileSurvey();
-  const { data, loading } = useAsyncData(getDashboard, []);
-  const [trendRange, setTrendRange] = useState(7);
+  const { data } = useAsyncData(getDashboard, []);
+  const { data: homeNews, loading: newsLoading } = useAsyncData(() => getNewsWall({ limit: 3 }), []);
   const [greeting, setGreeting] = useState(localGreeting);
-  const records = data?.records || [];
-  const trend = useMemo(() => buildTrend(records, trendRange), [records, trendRange]);
-  const hasTrendActivity = trend.some((point) => point.completed > 0 || point.coins > 0);
   const completedOffers = data?.stats.completedOffers ?? 0;
   const isPanelist = isPanelistRole(user?.role);
   const displayName = user?.username || user?.displayName || 'there';
@@ -101,15 +78,17 @@ export default function Dashboard() {
               <strong>{formatCoinNumber(balance)} <em>Coins</em></strong>
             </span>
             <span className="dashboard-balance-estimate">≈ {formatUsdEstimate(balanceUsd, panelProfile?.country)}</span>
+            <Link className="dashboard-balance-action" to="/wallet">Open wallet <ArrowUpRight size={14} /></Link>
           </div>
         </section>
       )}
+
       <section className="dashboard-board">
         <div className="dashboard-board-intro">
           <header className="dashboard-command">
             <div className="dashboard-command-copy">
               <p className="dashboard-command-kicker">Start earning today</p>
-              <h1>One good survey can start the streak.</h1>
+              <h2>One good survey can start the streak.</h2>
               <p>{nextAction}</p>
               <div className="dashboard-command-actions">
                 <Link className="btn-primary" to="/partners">
@@ -149,56 +128,30 @@ export default function Dashboard() {
             <p>Tip: finish your first survey and check back when the wall looks quiet — inventory rotates.</p>
           </aside>
         </div>
+      </section>
 
-        <section className="dashboard-trend-card">
-          <div className="dashboard-trend-heading">
+      {isPanelist && (
+        <section className="home-news-guide" aria-labelledby="home-news-title">
+          <div className="home-news-guide-head">
             <div>
-              <p className="dashboard-command-kicker">Your activity</p>
-              <h2>Participation trend</h2>
-              <p>Daily completed offers and approved Coins.</p>
+              <p className="dashboard-command-kicker">News Wall</p>
+              <h2 id="home-news-title">A wider view, whenever you need it.</h2>
+              <span>Follow the stories shaping the conversations behind tomorrow’s research.</span>
             </div>
-            <label>
-              <span>Period</span>
-              <select className="field" value={trendRange} onChange={(event) => setTrendRange(Number(event.target.value))}>
-                <option value={7}>Last 7 days</option>
-                <option value={30}>Last 30 days</option>
-              </select>
-            </label>
+            <Link className="home-news-guide-link" to="/news">Explore News Wall <ArrowUpRight size={16} /></Link>
           </div>
-          <div className="dashboard-chart-wrap">
-            {loading ? (
-              <div className="h-full animate-pulse rounded-lg bg-slate-100" />
-            ) : (
-              <>
-                {!hasTrendActivity && (
-                  <div className="dashboard-chart-empty">
-                    <p>Trend will appear after your first approved survey.</p>
-                    <span>No cleared activity in the selected period yet.</span>
-                  </div>
-                )}
-                <div className={hasTrendActivity ? 'h-full' : 'h-full dashboard-chart-muted'}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(58, 69, 59, .12)" vertical={false} />
-                      <XAxis dataKey="day" tick={{ fill: '#888b82', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
-                      <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#888b82', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
-                      <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#888b82', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
-                      <Tooltip
-                        contentStyle={chartTooltipStyle}
-                        labelStyle={{ color: '#1f2a23' }}
-                        formatter={(value, name) => [name === 'Coins' ? `${formatCoinNumber(value)} Coins` : value, name]}
-                      />
-                      <Legend wrapperStyle={{ paddingTop: 14 }} />
-                      <Bar yAxisId="completed" dataKey="completed" name="Completed offers" fill="#9ec8bd" radius={[3, 3, 0, 0]} maxBarSize={28} />
-                      <Line yAxisId="coins" type="monotone" dataKey="coins" name="Coins" stroke="#ba9655" strokeWidth={2.5} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
-                    </ComposedChart>
-                  </ResponsiveContainer>
-                </div>
-              </>
+          <div className="home-news-grid">
+            {newsLoading && Array.from({ length: 3 }, (_, index) => <div key={index} className="home-news-card home-news-card-loading" aria-hidden="true" />)}
+            {!newsLoading && homeNews?.slice(0, 3).map((article) => <HomeNewsCard key={article.id} article={article} />)}
+            {!newsLoading && !homeNews?.length && (
+              <div className="home-news-empty">
+                <p>Fresh reading will appear here as the News Wall updates.</p>
+                <Link to="/news">Open News Wall <ArrowUpRight size={15} /></Link>
+              </div>
             )}
           </div>
         </section>
-      </section>
+      )}
     </div>
   );
 }
