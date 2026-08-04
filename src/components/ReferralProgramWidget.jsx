@@ -23,6 +23,7 @@ function ReferralPeopleArtwork({ className = '', imageSrc = referralPeopleImage 
 export default function ReferralProgramWidget({ openFromRoute = false }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(openFromRoute);
+  const [launcherVisible, setLauncherVisible] = useState(true);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -92,17 +93,22 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
 
   return (
     <>
-      <aside className="referral-launcher" aria-label="Invite program">
-        <div className="referral-launcher-copy">
-          <span>Invite program</span>
-          <strong>Share a<br />good match.</strong>
-          <p>Bring someone thoughtful into the panel.</p>
-        </div>
-        <ReferralPeopleArtwork className="referral-launcher-art" />
-        <button className="referral-launcher-orbit" type="button" onClick={() => setOpen(true)} aria-label="Open invite program">
-          <ArrowUpRight />
-        </button>
-      </aside>
+      {launcherVisible && (
+        <aside className="referral-launcher" aria-label="Invite program">
+          <div className="referral-launcher-copy">
+            <span>Invite program</span>
+            <strong>Share a<br />good match.</strong>
+            <p>Bring someone thoughtful into the panel.</p>
+          </div>
+          <ReferralPeopleArtwork className="referral-launcher-art" />
+          <button className="referral-launcher-action" type="button" onClick={() => setOpen(true)}>
+            Invite someone <ArrowUpRight size={14} />
+          </button>
+          <button className="referral-launcher-dismiss" type="button" onClick={() => setLauncherVisible(false)} aria-label="Dismiss invite prompt">
+            <X size={15} />
+          </button>
+        </aside>
+      )}
 
       {open && typeof document !== 'undefined' && createPortal(
         <div className="referral-modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && closeProgram()}>

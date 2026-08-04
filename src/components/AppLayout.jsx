@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, ChevronDown, ClipboardCheck, Compass, Database, Gift, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, ChevronDown, ClipboardCheck, Compass, Database, Gift, House, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
@@ -7,6 +7,7 @@ import { isAdminRole, isPanelistRole } from '../utils/roles';
 import { ProfileSurveyProvider } from './ProfileSurveyContext';
 import ReferralProgramWidget from './ReferralProgramWidget';
 import WalletBalanceMenu from './WalletBalanceMenu';
+import { HomeFooter } from './HomeLegacySections';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -18,13 +19,14 @@ const navItems = [
 
 const panelistNavItems = navItems
   .filter((item) => item.to !== '/wallet')
-  .map((item) => (item.to === '/dashboard' ? { ...item, label: 'Home' } : item));
+  .map((item) => (item.to === '/dashboard' ? { ...item, label: 'Home', icon: House } : item));
 
 export default function AppLayout({ children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const userMenuRef = useRef(null);
+  const userMenuCloseTimerRef = useRef(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const isAdmin = isAdminRole(user?.role);
   const isPanelist = isPanelistRole(user?.role);
@@ -32,33 +34,64 @@ export default function AppLayout({ children }) {
   const referralOpenRequested = new URLSearchParams(location.search).get('referral') === 'true';
   const usesEditorialWorkspaceSurface = location.pathname === '/dashboard' || location.pathname === '/activity';
 
-  useEffect(() => {
+  function cancelUserMenuClose() {
+    if (userMenuCloseTimerRef.current) {
+      window.clearTimeout(userMenuCloseTimerRef.current);
+      userMenuCloseTimerRef.current = null;
+    }
+  }
+
+  function closeUserMenuImmediately() {
+    cancelUserMenuClose();
     setUserMenuOpen(false);
+  }
+
+  function openUserMenu() {
+    cancelUserMenuClose();
+    setUserMenuOpen(true);
+  }
+
+  function closeUserMenuWithDelay() {
+    cancelUserMenuClose();
+    userMenuCloseTimerRef.current = window.setTimeout(() => {
+      setUserMenuOpen(false);
+      userMenuCloseTimerRef.current = null;
+    }, 180);
+  }
+
+  function toggleUserMenu() {
+    cancelUserMenuClose();
+    setUserMenuOpen((value) => !value);
+  }
+
+  useEffect(() => {
+    closeUserMenuImmediately();
   }, [location.pathname]);
 
   useEffect(() => {
     const handlePointerDown = (event) => {
-      if (!userMenuRef.current?.contains(event.target)) setUserMenuOpen(false);
+      if (!userMenuRef.current?.contains(event.target)) closeUserMenuImmediately();
     };
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape') setUserMenuOpen(false);
+      if (event.key === 'Escape') closeUserMenuImmediately();
     };
     document.addEventListener('pointerdown', handlePointerDown);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('pointerdown', handlePointerDown);
       document.removeEventListener('keydown', handleKeyDown);
+      cancelUserMenuClose();
     };
   }, []);
 
   const handleLogout = () => {
-    setUserMenuOpen(false);
+    closeUserMenuImmediately();
     logout();
     navigate('/login');
   };
 
   const goToProfile = () => {
-    setUserMenuOpen(false);
+    closeUserMenuImmediately();
     navigate('/profile');
   };
 
@@ -107,13 +140,13 @@ export default function AppLayout({ children }) {
               <div
                 ref={userMenuRef}
                 className="app-user-menu"
-                onMouseEnter={() => setUserMenuOpen(true)}
-                onMouseLeave={() => setUserMenuOpen(false)}
+                onMouseEnter={openUserMenu}
+                onMouseLeave={closeUserMenuWithDelay}
               >
               <button
                 className={`app-user-trigger ${userMenuOpen ? 'is-open' : ''}`}
                 type="button"
-                onClick={() => setUserMenuOpen((value) => !value)}
+                onClick={toggleUserMenu}
                 aria-haspopup="menu"
                 aria-expanded={userMenuOpen}
               >
@@ -134,15 +167,21 @@ export default function AppLayout({ children }) {
                     <span>Account settings</span>
                   </button>
                   {isPanelist && (
-                    <NavLink className="app-user-menu-item" to="/activity" onClick={() => setUserMenuOpen(false)} role="menuitem">
+                    <NavLink className="app-user-menu-item" to="/activity" onClick={closeUserMenuImmediately} role="menuitem">
                       <BarChart3 size={15} />
                       <span>Dashboard</span>
                     </NavLink>
                   )}
                   {isPanelist && (
-                    <NavLink className="app-user-menu-item" to="/wallet" onClick={() => setUserMenuOpen(false)} role="menuitem">
+                    <NavLink className="app-user-menu-item" to="/wallet" onClick={closeUserMenuImmediately} role="menuitem">
                       <Gift size={15} />
                       <span>Rewards & wallet</span>
+                    </NavLink>
+                  )}
+                  {isPanelist && (
+                    <NavLink className="app-user-menu-item" to="/dashboard?referral=true" onClick={closeUserMenuImmediately} role="menuitem">
+                      <Users size={15} />
+                      <span>Invite program</span>
                     </NavLink>
                   )}
                   <button className="app-user-menu-item is-danger" type="button" onClick={handleLogout} role="menuitem">
@@ -186,7 +225,8 @@ export default function AppLayout({ children }) {
           </div>
         </main>
         </div>
-        <ReferralProgramWidget openFromRoute={referralOpenRequested} />
+        {isPanelist && <HomeFooter />}
+        {isPanelist && <ReferralProgramWidget openFromRoute={referralOpenRequested} />}
       </div>
     </ProfileSurveyProvider>
   );

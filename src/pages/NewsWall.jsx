@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronDown, Newspaper, Sparkles, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Newspaper, Search, Sparkles, X } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -286,7 +286,7 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
 
 export default function NewsWall() {
   const { user } = useAuth();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const isPublicView = !user;
   const [country, setCountry] = useState('US');
   const [category, setCategory] = useState('tech');
@@ -301,12 +301,14 @@ export default function NewsWall() {
   const requestIdRef = useRef(0);
   const briefRequestIdRef = useRef(0);
 
+  const searchQuery = searchParams.get('search')?.trim() || '';
+  const [searchInput, setSearchInput] = useState(searchQuery);
+
   const subscribedCategories = useMemo(
     () => new Set((preferences?.categories || []).filter((item) => item.subscribed).map((item) => item.id)),
     [preferences]
   );
 
-  const searchQuery = searchParams.get('search')?.trim() || '';
   const visibleArticles = useMemo(() => {
     if (!searchQuery) return articles;
     const query = searchQuery.toLocaleLowerCase();
@@ -316,6 +318,10 @@ export default function NewsWall() {
         .some((value) => String(value).toLocaleLowerCase().includes(query))
     );
   }, [articles, searchQuery]);
+
+  useEffect(() => {
+    setSearchInput(searchQuery);
+  }, [searchQuery]);
 
   const loadNews = async () => {
     const requestId = requestIdRef.current + 1;
@@ -429,6 +435,22 @@ export default function NewsWall() {
     }
   };
 
+  const submitNewsSearch = (event) => {
+    event.preventDefault();
+    const nextParams = new URLSearchParams(searchParams);
+    const nextQuery = searchInput.trim();
+    if (nextQuery) nextParams.set('search', nextQuery);
+    else nextParams.delete('search');
+    setSearchParams(nextParams, { replace: true });
+  };
+
+  const clearNewsSearch = () => {
+    setSearchInput('');
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.delete('search');
+    setSearchParams(nextParams, { replace: true });
+  };
+
   const newsFilters = (
     <NewsFilters
       country={country}
@@ -442,13 +464,36 @@ export default function NewsWall() {
     />
   );
 
+  const workspaceNewsActions = (
+    <div className="news-wall-toolbar">
+      <form className="news-search" onSubmit={submitNewsSearch} role="search">
+        <Search size={16} aria-hidden="true" />
+        <input
+          type="search"
+          value={searchInput}
+          onChange={(event) => setSearchInput(event.target.value)}
+          placeholder="Search this news wall"
+          aria-label="Search this news wall"
+        />
+        {searchInput && (
+          <button className="news-search-clear" type="button" onClick={clearNewsSearch} aria-label="Clear news search">
+            <X size={14} />
+          </button>
+        )}
+        <button className="news-search-submit" type="submit">Search</button>
+      </form>
+      {newsFilters}
+    </div>
+  );
+
   const content = (
     <>
       {!isPublicView && (
         <PageHeader
           title="News Wall"
           description="Follow lightweight news signals and stories worth tracking."
-          action={newsFilters}
+          action={workspaceNewsActions}
+          className="news-workspace-header"
         />
       )}
 
