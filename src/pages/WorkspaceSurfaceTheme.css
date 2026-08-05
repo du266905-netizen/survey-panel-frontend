@@ -1006,8 +1006,8 @@
 .research-activities-notice p { margin: 0; font-size: 13px; font-weight: 700; line-height: 1.55; }
 @media (max-width: 520px) { .research-profile-task-card { width: 100%; } .research-profile-task-art { height: 204px; } }
 
-/* Matches the homepage primary action: a quiet forest-green pill with a slow highlight sweep. */
-.action-injection { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 42px; border: 1px solid #1f4a30; border-radius: 999px !important; background-color: #1f4a30 !important; background-image: linear-gradient(100deg, transparent 37%, rgba(255, 255, 255, .17) 50%, transparent 63%) !important; background-position: -170% 0; background-size: 130% 100%; color: #f7f7f3; font-size: .86rem; font-weight: 800; transition: color .72s ease, background-color .72s ease, border-color .72s ease, background-position .72s ease, box-shadow 1.25s cubic-bezier(.22,.72,.2,1); }
-.action-injection:hover:not(:disabled) { border-color: #1f4a30; background-color: #1f4a30 !important; background-position: 230% 0; box-shadow: none; transform: none; }
+/* Homepage-style primary action: forest green slowly injects into ink black. */
+.action-injection { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 42px; border: 1px solid #1f4a30; border-radius: 999px !important; background-color: #1f4a30 !important; background-image: linear-gradient(90deg, #111 0 50%, #1f4a30 50% 100%) !important; background-position: 100% 0; background-size: 205% 100%; color: #f7f7f3; font-size: .86rem; font-weight: 800; transition: color .72s ease, border-color .72s ease, background-position .72s cubic-bezier(.22,.72,.2,1), box-shadow 1.25s cubic-bezier(.22,.72,.2,1); }
+.action-injection:hover:not(:disabled) { border-color: #111; background-color: #111 !important; background-position: 0 0; box-shadow: none; transform: none; }
 .action-injection:focus-visible { outline: 2px solid #1f4a30; outline-offset: 3px; }
 .action-injection-dark { border-color: #1f4a30; }
