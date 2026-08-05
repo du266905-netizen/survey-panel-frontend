@@ -12,6 +12,7 @@ import { isPanelistRole } from '../utils/roles';
 
 const activeSurveyStorageKey = 'guanyi-active-survey';
 const dismissedSurveyStoragePrefix = 'guanyi-dismissed-surveys';
+const onlineSurveyProviderSlugs = new Set(['cpx-research']);
 
 function friendlyStartError(error) {
   if (error.response?.status === 503) return 'No surveys are available right now.';
@@ -148,7 +149,7 @@ export default function SurveyPartners() {
   const { data, loading, error } = useAsyncData(loadSurveyWall, [user?.id || 'guest', wallRefreshKey]);
   const sections = data?.sections || [];
   const surveySection = sections.find((section) => section.id === 'surveys') || { id: 'surveys', title: 'Online surveys', subtitle: 'Choose from available online surveys.', items: [] };
-  const allSurveyItems = surveySection.items || [];
+  const allSurveyItems = (surveySection.items || []).filter((item) => onlineSurveyProviderSlugs.has(item.partnerSlug));
   const surveyItems = useMemo(
     () => allSurveyItems.filter((item) => !dismissedSurveyIds.includes(item.id)),
     [allSurveyItems, dismissedSurveyIds]
