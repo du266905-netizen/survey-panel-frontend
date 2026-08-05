@@ -42,7 +42,7 @@ export default function ResearchActivities() {
                   isComplete ? (
                     <button type="button" disabled><CheckCircle2 size={16} /> Completed</button>
                   ) : (
-                    <Link to="/panel-profile">{started ? 'Continue profile' : 'Complete profile'} <ArrowRight size={16} /></Link>
+                    <Link className="action-injection" to="/panel-profile">{started ? 'Continue profile' : 'Complete profile'} <ArrowRight size={16} /></Link>
                   )
                 )}
               </div>

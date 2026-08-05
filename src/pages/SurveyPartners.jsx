@@ -73,7 +73,7 @@ function SurveyCard({ item, isPanelist, isStarting, hasActiveSurvey, onStart }) 
         <p className="mt-1.5 truncate text-xs font-semibold text-slate-400">{item.publicSurveyCode}</p>
 
         <button
-          className="mt-3.5 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-slate-950 px-3 text-sm font-bold text-white transition hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-60"
+          className="action-injection action-injection-dark mt-3.5 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-slate-950 px-3 text-sm font-bold text-white transition hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-60"
           type="button"
           disabled={!isPanelist || isStarting || hasActiveSurvey}
           onClick={onStart}
@@ -94,7 +94,6 @@ export default function SurveyPartners() {
   const [wallRefreshKey, setWallRefreshKey] = useState(0);
   const [startingId, setStartingId] = useState('');
   const [startError, setStartError] = useState('');
-  const [showAllSurveys, setShowAllSurveys] = useState(false);
   const [activeSurvey, setActiveSurvey] = useState(null);
   const [dismissedSurveyIds, setDismissedSurveyIds] = useState([]);
   const [resultNotice, setResultNotice] = useState(null);
@@ -110,8 +109,7 @@ export default function SurveyPartners() {
     () => allSurveyItems.filter((item) => !dismissedSurveyIds.includes(item.id)),
     [allSurveyItems, dismissedSurveyIds]
   );
-  const displayedSurveyItems = showAllSurveys ? surveyItems : surveyItems.slice(0, 6);
-  const hiddenSurveyCount = Math.max(0, surveyItems.length - displayedSurveyItems.length);
+  const displayedSurveyItems = surveyItems;
   const recommendations = surveyItems.slice(0, 2);
   const surveyGridClass = 'grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
   const hasActiveSurvey = Boolean(activeSurvey?.recordId);
@@ -255,7 +253,7 @@ export default function SurveyPartners() {
         action={
           moreSurveyEntry && (
             <button
-              className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-[#1f4a30] px-4 text-sm font-bold text-white shadow-sm transition hover:bg-[#153c26] disabled:cursor-not-allowed disabled:opacity-60"
+              className="action-injection inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-[#1f4a30] px-4 text-sm font-bold text-white shadow-sm transition hover:bg-[#153c26] disabled:cursor-not-allowed disabled:opacity-60"
               type="button"
               disabled={!isPanelist || startingId === moreSurveyEntry.id}
               onClick={() => handleStart(moreSurveyEntry)}
@@ -306,11 +304,6 @@ export default function SurveyPartners() {
                 />
               ))}
             </div>
-            {hiddenSurveyCount > 0 && (
-              <button className="mt-4 inline-flex h-10 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50" type="button" onClick={() => setShowAllSurveys(true)}>
-                View {hiddenSurveyCount} more surveys
-              </button>
-            )}
           </>
         )}
       </section>

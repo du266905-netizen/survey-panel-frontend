@@ -111,7 +111,7 @@ export default function CommunityHub() {
           <h2>{selectedArea.title}</h2>
           <span>{selectedArea.description}</span>
           {selectedArea.to ? (
-            <button className="community-hub-detail-action" type="button" onClick={() => navigate(selectedArea.to)}>
+            <button className="community-hub-detail-action action-injection" type="button" onClick={() => navigate(selectedArea.to)}>
               {selectedArea.action} <ArrowUpRight size={15} />
             </button>
           ) : (
@@ -136,16 +136,15 @@ export default function CommunityHub() {
             return (
               <button
                 key={area.id}
-                className={`community-hub-area ${isSelected ? 'is-selected' : ''} ${area.to ? 'is-primary-entry' : ''}`}
+                className={`community-hub-area ${isSelected ? 'is-selected' : ''}`}
                 type="button"
                 role="tab"
                 aria-selected={isSelected}
-                onClick={() => (area.to ? navigate(area.to) : selectArea(index))}
+                onClick={() => selectArea(index)}
               >
                 <span>{area.number}</span>
                 <AreaIcon size={17} strokeWidth={1.7} />
                 <strong>{area.label}</strong>
-                {area.to && <em>Explore <ArrowUpRight size={13} /></em>}
               </button>
             );
           })}
