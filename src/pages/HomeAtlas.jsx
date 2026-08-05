@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowUpRight, LoaderCircle, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
@@ -39,6 +39,60 @@ function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onIna
     >
       {content}
     </Link>
+  );
+}
+
+const atlasPrompts = ['Read the latest news', 'Join a survey', 'Share your view'];
+
+function AtlasTypewriter() {
+  const [promptIndex, setPromptIndex] = useState(0);
+  const [characterCount, setCharacterCount] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const activePrompt = atlasPrompts[promptIndex];
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+    updatePreference();
+    mediaQuery.addEventListener('change', updatePreference);
+    return () => mediaQuery.removeEventListener('change', updatePreference);
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return undefined;
+
+    let delay = 52;
+    let update;
+
+    if (!isDeleting && characterCount < activePrompt.length) {
+      update = () => setCharacterCount((currentCount) => currentCount + 1);
+    } else if (!isDeleting) {
+      delay = 1800;
+      update = () => setIsDeleting(true);
+    } else if (characterCount > 0) {
+      delay = 30;
+      update = () => setCharacterCount((currentCount) => currentCount - 1);
+    } else {
+      delay = 260;
+      update = () => {
+        setPromptIndex((currentIndex) => (currentIndex + 1) % atlasPrompts.length);
+        setIsDeleting(false);
+      };
+    }
+
+    const timeoutId = window.setTimeout(update, delay);
+    return () => window.clearTimeout(timeoutId);
+  }, [activePrompt.length, characterCount, isDeleting, prefersReducedMotion]);
+
+  const visiblePrompt = prefersReducedMotion ? activePrompt : activePrompt.slice(0, characterCount);
+
+  return (
+    <div className="atlas-map-typewriter" aria-label={`Let’s begin: ${activePrompt}`}>
+      <span>Let’s begin:</span>
+      <strong>{visiblePrompt}</strong>
+      <i aria-hidden="true" />
+    </div>
   );
 }
 
@@ -172,6 +226,7 @@ export default function HomeAtlas() {
             <path className="atlas-wire atlas-wire--survey" d="M 603 340 C 722 430 827 487 1004 506" />
             <path className="atlas-wire atlas-wire--community" d="M 603 340 C 521 457 421 533 255 570" />
           </svg>
+          <AtlasTypewriter />
 
           <AtlasNode
             name="news"
@@ -198,10 +253,12 @@ export default function HomeAtlas() {
           <AtlasNode
             name="community"
             className="atlas-node--community"
+            to={user ? '/community' : '/register'}
             eyebrow="COMMUNITY"
-            title="A place for perspective."
+            title="Join the community."
             image={communityIllustration}
-            soon
+            onActive={setActiveNode}
+            onInactive={() => setActiveNode('')}
           />
         </div>
       </section>

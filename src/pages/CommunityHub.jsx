@@ -6,17 +6,16 @@ import communityResearchReview from '../assets/community/community-research-revi
 import communityResearchTable from '../assets/community/community-research-table.jpg';
 import communitySubmissionDesk from '../assets/community/community-submission-desk.jpg';
 
-const rotationDelay = 7000;
+const rotationDelay = 8000;
 
 const communityAreas = [
   {
     id: 'latest-brief',
     number: '01',
     label: 'Latest brief',
-    title: 'A read on what matters now.',
-    description: 'News signals and community updates stay clearly labeled by source, so you know what is reported and what is being explored.',
-    detail: 'Signals set research priorities — not a verdict on what is true.',
-    action: 'Read the latest brief',
+    title: 'See today’s updates.',
+    description: 'Read short updates about current news, new surveys, and new community discussions.',
+    action: 'Read updates',
     icon: Newspaper,
     image: communityLatestBrief,
     imageAlt: 'A close look at a person’s eye',
@@ -25,10 +24,9 @@ const communityAreas = [
     id: 'activities',
     number: '02',
     label: 'Join an activity',
-    title: 'Take part when a live opportunity opens.',
-    description: 'Surveys, quick questions, and future sessions will show their purpose, timing, and reward before you decide to join.',
-    detail: 'Your time and the intended use of each response should always be clear.',
-    action: 'See live activities',
+    title: 'Take a survey or join a session.',
+    description: 'Before you start, you will see the topic, estimated time, and reward.',
+    action: 'View activities',
     icon: Users,
     image: communityActivity,
     imageAlt: 'A person sharing feedback on a small screen',
@@ -37,10 +35,9 @@ const communityAreas = [
     id: 'discussion',
     number: '03',
     label: 'Discussion',
-    title: 'Share perspective, not a binary verdict.',
-    description: 'Join a published prompt with the context needed for a useful conversation — no forced right-or-wrong answer.',
-    detail: 'Careful responses can help turn a broad issue into a stronger study.',
-    action: 'Open the discussion',
+    title: 'Share what you think.',
+    description: 'Read a question, then leave a comment. There is no forced right-or-wrong answer.',
+    action: 'Join a discussion',
     icon: MessageCircle,
     image: communityResearchTable,
     imageAlt: 'People gathered around laptops and a shared table',
@@ -49,10 +46,9 @@ const communityAreas = [
     id: 'propose-topic',
     number: '04',
     label: 'Propose a topic',
-    title: 'Tell us what deserves a closer look.',
-    description: 'Share a lived experience, local change, or unresolved question. The editorial team can decide whether it becomes a discussion or study.',
-    detail: 'You suggest the issue; we shape the research question with care.',
-    action: 'Propose a topic',
+    title: 'Tell us what you want to understand.',
+    description: 'Send us a local story, a problem you noticed, or a question you want people to answer.',
+    action: 'Suggest a topic',
     icon: FileText,
     image: communitySubmissionDesk,
     imageAlt: 'A person writing a note at a desk',
@@ -61,10 +57,9 @@ const communityAreas = [
     id: 'research-review',
     number: '05',
     label: 'Research review',
-    title: 'Return to what the community learned.',
-    description: 'Completed work will explain why it was run, what was heard, and what can happen next without exposing individual responses.',
-    detail: 'A clear record keeps participation connected to a real outcome.',
-    action: 'Read research reviews',
+    title: 'See what people said.',
+    description: 'Read a short summary of completed community research and what happens next.',
+    action: 'View results',
     icon: BookOpen,
     image: communityResearchReview,
     imageAlt: 'A research team working together in a sunlit office',
@@ -82,6 +77,19 @@ export default function CommunityHub() {
 
   const goPrevious = useCallback(() => selectArea(activeAreaIndex - 1), [activeAreaIndex, selectArea]);
   const goNext = useCallback(() => selectArea(activeAreaIndex + 1), [activeAreaIndex, selectArea]);
+
+  useEffect(() => {
+    const preloadedImages = communityAreas.map((area) => {
+      const image = new Image();
+      image.src = area.image;
+      image.decode?.().catch(() => {});
+      return image;
+    });
+
+    return () => {
+      preloadedImages.forEach((image) => image.removeAttribute('src'));
+    };
+  }, []);
 
   useEffect(() => {
     const rotation = window.setTimeout(goNext, rotationDelay);
@@ -103,7 +111,7 @@ export default function CommunityHub() {
         <header className="community-hub-intro">
           <p>Community</p>
           <h1 id="community-hub-title">Listen closer.<br />Build better questions.</h1>
-          <span>A practical place for news signals, shared perspective, and research the community can return to.</span>
+          <span>Read updates, take part in activities, and share what matters to you.</span>
         </header>
 
         <aside key={selectedArea.id} className="community-hub-detail" aria-live="polite">
