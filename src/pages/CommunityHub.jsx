@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, FileText, MessageCircle, Newspaper, Users } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import communityActivity from '../assets/community/community-activity.jpg';
 import communityLatestBrief from '../assets/community/community-latest-brief.jpg';
 import communityResearchReview from '../assets/community/community-research-review.jpg';
@@ -25,7 +26,8 @@ const communityAreas = [
     label: 'Join an activity',
     title: 'Take a survey or join a session.',
     description: 'Before you start, you will see the topic, estimated time, and reward.',
-    action: 'View activities',
+    action: 'View research',
+    to: '/partners#research',
     icon: Users,
     image: communityActivity,
   },
@@ -62,6 +64,7 @@ const communityAreas = [
 ];
 
 export default function CommunityHub() {
+  const navigate = useNavigate();
   const [activeAreaIndex, setActiveAreaIndex] = useState(0);
   const selectedArea = communityAreas[activeAreaIndex];
   const SelectedIcon = selectedArea.icon;
@@ -107,7 +110,13 @@ export default function CommunityHub() {
           <p>{selectedArea.number} · {selectedArea.label}</p>
           <h2>{selectedArea.title}</h2>
           <span>{selectedArea.description}</span>
-          <div className="community-hub-detail-action">{selectedArea.action}</div>
+          {selectedArea.to ? (
+            <button className="community-hub-detail-action" type="button" onClick={() => navigate(selectedArea.to)}>
+              {selectedArea.action}
+            </button>
+          ) : (
+            <div className="community-hub-detail-action is-static">Coming later</div>
+          )}
         </aside>
 
         <div className="community-hub-controls" aria-label="Community guide controls">

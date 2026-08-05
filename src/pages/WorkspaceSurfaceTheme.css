@@ -966,7 +966,9 @@
 .community-hub-detail > p { margin-top: 15px; color: #748076; font-size: 9px; }
 .community-hub-detail h2 { margin: 7px 0 0; color: #233329; font-family: var(--font-reading); font-size: 24px; font-weight: 700; letter-spacing: -.04em; line-height: 1.03; }
 .community-hub-detail > span { margin-top: 10px; color: #657168; font-size: 11px; font-weight: 650; line-height: 1.55; }
-.community-hub-detail-action { display: inline-flex; align-items: center; width: max-content; min-height: 28px; margin-top: 14px; border-bottom: 1px solid rgba(37, 76, 55, .44); color: #254c37; font-size: 10px; font-weight: 850; letter-spacing: .02em; }
+.community-hub-detail-action { display: inline-flex; align-items: center; width: max-content; min-height: 28px; margin-top: 14px; border: 0; border-bottom: 1px solid rgba(37, 76, 55, .44); background: transparent; color: #254c37; cursor: pointer; font-size: 10px; font-weight: 850; letter-spacing: .02em; padding: 0; }
+.community-hub-detail-action:hover { color: #173624; }
+.community-hub-detail-action.is-static { border-bottom-color: transparent; color: #7a837d; cursor: default; }
 .community-hub-controls { position: absolute; right: clamp(30px, 3.25vw, 52px); bottom: 132px; display: inline-flex; align-items: center; gap: 10px; color: #fffdf8; }
 .community-hub-controls button { display: grid; width: 33px; height: 33px; place-items: center; border: 1px solid rgba(255, 253, 249, .56); background: rgba(12, 21, 16, .25); color: #fffdf8; cursor: pointer; transition: background .2s ease, transform .2s ease; }
 .community-hub-controls button:hover { background: rgba(255, 253, 249, .2); transform: translateY(-1px); }
