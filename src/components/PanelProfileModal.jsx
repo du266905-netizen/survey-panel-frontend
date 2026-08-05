@@ -14,7 +14,10 @@ import {
   genderOptions,
   householdIncomeOptions,
   industryOptions,
+  languageOptions,
   maritalStatusOptions,
+  participationFormatOptions,
+  researchTopicOptions,
 } from '../constants/panelProfileOptions';
 
 const monthOptions = Array.from({ length: 12 }, (_, index) => ({ value: String(index + 1), label: new Date(Date.UTC(2026, index, 1)).toLocaleDateString('en-US', { month: 'long' }) }));
@@ -30,6 +33,7 @@ function initialDraft(profile) {
     adminAreaCode: profile?.adminAreaCode || '',
     cityOrRegion: profile?.cityOrRegion || '',
     postalCode: profile?.postalCode || '',
+    language: profile?.language || '',
     birthYear: profile?.birthYear ? String(profile.birthYear) : '',
     birthMonth: profile?.birthMonth ? String(profile.birthMonth) : '',
     birthDay: profile?.birthDay ? String(profile.birthDay) : '',
@@ -41,6 +45,8 @@ function initialDraft(profile) {
     hasChildren: profile?.hasChildren || '',
     childrenAgeBands: profile?.childrenAgeBands || [],
     householdIncomeUsd: profile?.householdIncomeUsd || '',
+    researchTopics: profile?.researchTopics || [],
+    participationFormats: profile?.participationFormats || [],
   };
 }
 
@@ -49,6 +55,7 @@ function questionSteps(draft) {
   const steps = [
     { key: 'intro', kind: 'intro' },
     { key: 'country', kind: 'select', title: 'Where do you currently live?', description: 'Choose your country or territory of residence.' },
+    { key: 'language', kind: 'options', title: 'Which language do you prefer for research invitations?', description: 'We use this to show activities and updates in a language you can use comfortably.', options: languageOptions },
     { key: 'birthDate', kind: 'birthDate', title: 'What is your date of birth?', description: 'We use this only to determine your age group for matching.' },
     { key: 'gender', kind: 'options', title: 'What is your gender?', description: 'Choose the option that best describes you.', options: genderOptions },
     { key: 'educationLevel', kind: 'options', title: 'What is the highest level of education you have completed?', description: 'Select your completed highest level.', options: educationOptions },
@@ -76,6 +83,9 @@ function questionSteps(draft) {
   if (draft.country === 'US') {
     steps.push({ key: 'householdIncomeUsd', kind: 'options', title: 'What is your approximate annual household income before tax?', description: 'Choose the range that best fits your household.', options: householdIncomeOptions });
   }
+
+  steps.push({ key: 'researchTopics', kind: 'multi', title: 'Which topics are you most interested in?', description: 'Select every topic you would be open to hearing about.', options: researchTopicOptions, exclusiveValues: ['prefer_not_to_say'] });
+  steps.push({ key: 'participationFormats', kind: 'multi', title: 'Which types of activities are you open to?', description: 'Select every format that could work for you. This does not guarantee an invitation.', options: participationFormatOptions, exclusiveValues: ['not_sure_yet'] });
 
   return steps;
 }
@@ -231,19 +241,20 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
       persist({ birthYear: Number(draft.birthYear), birthMonth: Number(draft.birthMonth), birthDay: Number(draft.birthDay) });
       return;
     }
-    if (currentStep.key === 'childrenAgeBands' && draft.childrenAgeBands.length) {
-      persist({ childrenAgeBands: draft.childrenAgeBands });
+    if (currentStep.kind === 'multi') {
+      const selectedValues = draft[currentStep.key] || [];
+      if (selectedValues.length) persist({ [currentStep.key]: selectedValues });
     }
   };
 
-  const toggleChildrenAgeBand = (value) => {
+  const toggleMultiChoice = (fieldName, value, exclusiveValues = []) => {
     setDraft((current) => {
-      const currentValues = current.childrenAgeBands || [];
-      if (value === 'prefer_not_to_say') return { ...current, childrenAgeBands: ['prefer_not_to_say'] };
-      const withoutPreference = currentValues.filter((entry) => entry !== 'prefer_not_to_say');
+      const currentValues = current[fieldName] || [];
+      if (exclusiveValues.includes(value)) return { ...current, [fieldName]: [value] };
+      const withoutExclusiveValue = currentValues.filter((entry) => !exclusiveValues.includes(entry));
       return {
         ...current,
-        childrenAgeBands: withoutPreference.includes(value) ? withoutPreference.filter((entry) => entry !== value) : [...withoutPreference, value],
+        [fieldName]: withoutExclusiveValue.includes(value) ? withoutExclusiveValue.filter((entry) => entry !== value) : [...withoutExclusiveValue, value],
       };
     });
   };
@@ -327,12 +338,13 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     }
 
     if (currentStep.kind === 'multi') {
+      const selectedValues = draft[currentStep.key] || [];
       return (
         <form onSubmit={submitText} className="profile-survey-form">
           <div className="profile-survey-options">
-            {currentStep.options.map((option) => <LargeOption key={option.value} label={option.label} multi selected={draft.childrenAgeBands.includes(option.value)} disabled={saving} onClick={() => toggleChildrenAgeBand(option.value)} />)}
+            {currentStep.options.map((option) => <LargeOption key={option.value} label={option.label} multi selected={selectedValues.includes(option.value)} disabled={saving} onClick={() => toggleMultiChoice(currentStep.key, option.value, currentStep.exclusiveValues)} />)}
           </div>
-          <button className="profile-survey-primary-action" type="submit" disabled={saving || !draft.childrenAgeBands.length}>Continue <ChevronRight size={18} /></button>
+          <button className="profile-survey-primary-action" type="submit" disabled={saving || !selectedValues.length}>Continue <ChevronRight size={18} /></button>
         </form>
       );
     }

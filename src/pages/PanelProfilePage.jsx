@@ -10,7 +10,7 @@ export default function PanelProfilePage() {
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
   const [profile, setProfile] = useState(null);
-  const [rewardCoins, setRewardCoins] = useState(150);
+  const [rewardCoins, setRewardCoins] = useState(1000);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function PanelProfilePage() {
           return;
         }
         setProfile(response.data.profile);
-        setRewardCoins(response.data.rewardCoins || 150);
+        setRewardCoins(response.data.rewardCoins || 1000);
       })
       .catch((caughtError) => {
         if (mounted) setError(caughtError.response?.data?.message || 'Unable to load your panel profile.');

@@ -30,6 +30,30 @@ export const ageRangeOptions = [
   ['18_24', '18–24'], ['25_34', '25–34'], ['35_44', '35–44'], ['45_54', '45–54'], ['55_64', '55–64'], ['65_plus', '65+'],
 ].map(([value, label]) => ({ value, label }));
 
+export const languageOptions = [
+  ['en', 'English'], ['zh_hans', 'Chinese (Simplified)'], ['zh_hant', 'Chinese (Traditional)'], ['es', 'Spanish'], ['fr', 'French'], ['ja', 'Japanese'], ['ko', 'Korean'], ['other', 'Another language'],
+].map(([value, label]) => ({ value, label }));
+
+export const researchTopicOptions = [
+  ['technology_and_digital_life', 'Technology and digital life'],
+  ['everyday_products_and_shopping', 'Everyday products and shopping'],
+  ['media_and_culture', 'Media and culture'],
+  ['community_and_local_life', 'Community and local life'],
+  ['education_and_work', 'Education and work'],
+  ['health_and_wellbeing', 'Health and wellbeing'],
+  ['environment_and_sustainability', 'Environment and sustainability'],
+  ['prefer_not_to_say', 'Prefer not to say'],
+].map(([value, label]) => ({ value, label }));
+
+export const participationFormatOptions = [
+  ['online_survey', 'Short online surveys'],
+  ['online_interview_or_group', 'Online interviews or small groups'],
+  ['in_person_activity', 'In-person activities near me'],
+  ['product_or_service_testing', 'Product or service testing'],
+  ['community_discussion', 'Community discussions'],
+  ['not_sure_yet', 'I am not sure yet'],
+].map(([value, label]) => ({ value, label }));
+
 export const genderOptions = [
   ['male', 'Male'], ['female', 'Female'], ['non_binary', 'Non-binary'], ['prefer_not_to_say', 'Prefer not to say'],
 ].map(([value, label]) => ({ value, label }));

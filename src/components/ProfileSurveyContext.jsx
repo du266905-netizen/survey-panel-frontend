@@ -7,7 +7,7 @@ const ProfileSurveyContext = createContext(null);
 
 export function ProfileSurveyProvider({ enabled, children }) {
   const [panelProfile, setPanelProfile] = useState(null);
-  const [rewardCoins, setRewardCoins] = useState(150);
+  const [rewardCoins, setRewardCoins] = useState(1000);
   const [loading, setLoading] = useState(Boolean(enabled));
   const [open, setOpen] = useState(false);
   const [completionNotice, setCompletionNotice] = useState(null);
@@ -19,7 +19,7 @@ export function ProfileSurveyProvider({ enabled, children }) {
       const response = await getPanelProfile();
       const nextProfile = response.data.profile;
       setPanelProfile(nextProfile);
-      setRewardCoins(response.data.rewardCoins || 150);
+      setRewardCoins(response.data.rewardCoins || 1000);
       return nextProfile;
     } finally {
       setLoading(false);
@@ -92,7 +92,7 @@ export function ProfileSurveyProvider({ enabled, children }) {
 export function useProfileSurvey() {
   return useContext(ProfileSurveyContext) || {
     panelProfile: null,
-    rewardCoins: 150,
+    rewardCoins: 1000,
     loading: false,
     openProfileSurvey: () => {},
     refreshPanelProfile: async () => null,

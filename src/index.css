@@ -1994,8 +1994,8 @@ textarea {
   z-index: 90;
   inset: 0;
   overflow: auto;
-  background: #f3eee4;
-  color: #1a2526;
+  background: #f7f7f3;
+  color: #17251f;
 }
 .profile-survey-backdrop.is-page { position: relative; min-height: 100svh; }
 .profile-survey-modal {
@@ -2005,17 +2005,17 @@ textarea {
   flex-direction: column;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 42% 31% at 13% 0%, rgba(83, 145, 140, .12), transparent 67%),
-    radial-gradient(ellipse 36% 28% at 72% 0%, rgba(176, 141, 60, .13), transparent 70%),
-    radial-gradient(ellipse 44% 40% at 93% 88%, rgba(20, 57, 60, .055), transparent 74%),
-    linear-gradient(135deg, rgba(255,255,255,.28), rgba(237,226,204,.15)),
-    #f3eee4;
+    radial-gradient(ellipse 42% 31% at 13% 0%, rgba(82, 112, 95, .11), transparent 67%),
+    radial-gradient(ellipse 36% 28% at 72% 0%, rgba(194, 171, 114, .12), transparent 70%),
+    radial-gradient(ellipse 44% 40% at 93% 88%, rgba(35, 73, 55, .05), transparent 74%),
+    linear-gradient(135deg, rgba(255,255,255,.42), rgba(238, 242, 237, .5)),
+    #f7f7f3;
 }
 .profile-survey-modal::before {
   position: absolute;
   z-index: 0;
   inset: 0;
-  background-image: linear-gradient(rgba(24, 51, 53, .018) 1px, transparent 1px), linear-gradient(90deg, rgba(24, 51, 53, .014) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(44, 62, 49, .018) 1px, transparent 1px), linear-gradient(90deg, rgba(44, 62, 49, .014) 1px, transparent 1px);
   background-size: 54px 54px;
   content: '';
   mask-image: linear-gradient(to bottom, black, transparent 84%);
@@ -2028,18 +2028,18 @@ textarea {
   height: 82px;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(214, 184, 111, .2);
-  background: #102629;
-  box-shadow: 0 13px 32px rgba(8, 22, 24, .14);
-  color: #f2ebdd;
+  border-bottom: 1px solid rgba(194, 171, 114, .22);
+  background: #17251f;
+  box-shadow: 0 13px 32px rgba(23, 37, 31, .14);
+  color: #f7f7f3;
   padding: 0 clamp(18px, 4vw, 58px);
 }
-.profile-survey-topbar::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 1px; background: linear-gradient(90deg, rgba(91, 162, 155, .75), rgba(185, 148, 61, .72) 45%, rgba(91, 162, 155, .18)); content: ''; }
+.profile-survey-topbar::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 1px; background: linear-gradient(90deg, rgba(120, 151, 125, .72), rgba(194, 171, 114, .72) 45%, rgba(120, 151, 125, .18)); content: ''; }
 .profile-survey-brand { display: flex; align-items: center; gap: 14px; }
 .profile-survey-brand img { width: 146px; height: auto; }
 .profile-survey-actions { position: relative; display: flex; align-items: center; gap: 12px; }
-.profile-survey-header-progress { width: clamp(104px, 12vw, 168px); height: 5px; overflow: hidden; border-radius: 999px; background: rgba(242, 235, 221, .22); }
-.profile-survey-header-progress span { display: block; height: 100%; border-radius: inherit; background: #bd9b4a; box-shadow: 0 0 12px rgba(189, 155, 74, .42); transition: width .35s cubic-bezier(.2,.8,.2,1); }
+.profile-survey-header-progress { width: clamp(104px, 12vw, 168px); height: 5px; overflow: hidden; border-radius: 999px; background: rgba(247, 247, 243, .22); }
+.profile-survey-header-progress span { display: block; height: 100%; border-radius: inherit; background: #c2ab72; box-shadow: 0 0 12px rgba(194, 171, 114, .42); transition: width .35s cubic-bezier(.2,.8,.2,1); }
 .profile-survey-options-control { position: relative; }
 .profile-survey-options-trigger { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 0; border-radius: 9px; background: transparent; color: rgba(242, 235, 221, .82); cursor: pointer; padding: 0; }
 .profile-survey-options-trigger:hover, .profile-survey-options-trigger[aria-expanded="true"] { background: rgba(255,255,255,.09); color: #fff; }
@@ -2070,19 +2070,19 @@ textarea {
   justify-content: space-between;
   gap: 15px;
   width: 100%;
-  border: 1px solid rgba(22, 55, 56, .18);
+  border: 1px solid rgba(44, 62, 49, .18);
   border-radius: 15px;
   background: rgba(255, 252, 245, .72);
   box-shadow: 0 8px 22px rgba(45, 55, 49, .045);
-  color: #1d2928;
+  color: #17251f;
   cursor: pointer;
   font-size: 16px;
   font-weight: 750;
   text-align: left;
   padding: 14px 18px 14px 21px;
 }
-.profile-survey-option:hover { border-color: rgba(35, 109, 106, .58); background: #fffdf7; box-shadow: 0 12px 26px rgba(38, 70, 68, .10); transform: translateY(-1px); }
-.profile-survey-option.is-selected { border-color: #206b69; background: rgba(63, 132, 127, .09); box-shadow: inset 0 0 0 1px rgba(63, 132, 127, .16); }
+.profile-survey-option:hover { border-color: rgba(37, 84, 64, .58); background: #fffdf8; box-shadow: 0 12px 26px rgba(35, 73, 55, .10); transform: translateY(-1px); }
+.profile-survey-option.is-selected { border-color: #255440; background: rgba(82, 112, 95, .1); box-shadow: inset 0 0 0 1px rgba(82, 112, 95, .16); }
 .profile-survey-option:disabled { cursor: wait; opacity: .64; transform: none; }
 .profile-survey-option-mark {
   display: grid;
@@ -2090,33 +2090,33 @@ textarea {
   height: 22px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1.5px solid rgba(25, 62, 62, .34);
+  border: 1.5px solid rgba(44, 62, 49, .34);
   border-radius: 50%;
   color: #f7f1e3;
 }
-.profile-survey-option.is-selected .profile-survey-option-mark { border-color: #16484a; background: #16484a; }
+.profile-survey-option.is-selected .profile-survey-option-mark { border-color: #255440; background: #255440; }
 .profile-survey-option-mark.is-multi { border-radius: 6px; }
 .profile-survey-country-picker { margin-top: 30px; animation: profile-question-in .35s .04s ease both; }
 .profile-survey-country-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
 .profile-survey-country-options .profile-survey-option { min-height: 60px; font-size: 15px; }
-.profile-survey-country-search { display: flex; align-items: center; gap: 10px; margin-top: 13px; border: 1px solid rgba(22, 55, 56, .2); border-radius: 13px; background: rgba(255,252,245,.68); color: #5b6762; padding: 0 16px; }
-.profile-survey-country-search:focus-within { border-color: rgba(36,108,105,.78); box-shadow: 0 0 0 4px rgba(66,142,136,.1); }
-.profile-survey-country-search input { width: 100%; min-height: 54px; border: 0; outline: 0; background: transparent; color: #1d2928; font-size: 15px; font-weight: 650; }
+.profile-survey-country-search { display: flex; align-items: center; gap: 10px; margin-top: 13px; border: 1px solid rgba(44, 62, 49, .2); border-radius: 13px; background: rgba(255,252,245,.68); color: #5b6762; padding: 0 16px; }
+.profile-survey-country-search:focus-within { border-color: rgba(37,84,64,.78); box-shadow: 0 0 0 4px rgba(82,112,95,.1); }
+.profile-survey-country-search input { width: 100%; min-height: 54px; border: 0; outline: 0; background: transparent; color: #17251f; font-size: 15px; font-weight: 650; }
 .profile-survey-country-search input::placeholder { color: #8a887f; }
 .profile-survey-country-results { display: grid; gap: 5px; margin-top: 8px; border: 1px solid rgba(22, 55, 56, .16); border-radius: 13px; background: rgba(255,252,245,.92); box-shadow: 0 12px 26px rgba(38,70,68,.08); padding: 6px; }
 .profile-survey-country-results button { border: 0; border-radius: 8px; background: transparent; color: #1d2928; cursor: pointer; font: inherit; font-size: 14px; font-weight: 650; text-align: left; padding: 10px 12px; }
 .profile-survey-country-results button:hover, .profile-survey-country-results button[aria-selected="true"] { background: rgba(63,132,127,.09); color: #16484a; }
 .profile-survey-country-results p { margin: 0; color: #67655d; font-size: 13px; padding: 10px 12px; }
 .profile-survey-form { display: grid; gap: 13px; margin-top: 34px; animation: profile-question-in .32s ease both; }
-.profile-survey-field-control { border: 1px solid rgba(22, 55, 56, .2); border-radius: 15px; background: rgba(255,252,245,.74); box-shadow: 0 8px 22px rgba(45,55,49,.05); }
-.profile-survey-field-control:focus-within { border-color: rgba(36,108,105,.78); box-shadow: 0 0 0 4px rgba(66,142,136,.1); }
+.profile-survey-field-control { border: 1px solid rgba(44, 62, 49, .2); border-radius: 15px; background: rgba(255,252,245,.74); box-shadow: 0 8px 22px rgba(45,55,49,.05); }
+.profile-survey-field-control:focus-within { border-color: rgba(37,84,64,.78); box-shadow: 0 0 0 4px rgba(82,112,95,.1); }
 .profile-survey-field-control input, .profile-survey-field-control select {
   width: 100%;
   min-height: 62px;
   border: 0;
   outline: 0;
   background: transparent;
-  color: #1d2928;
+  color: #17251f;
   font-size: 16px;
   font-weight: 700;
   padding: 0 19px;
@@ -2124,8 +2124,8 @@ textarea {
 .profile-survey-field-control select { cursor: pointer; }
 .profile-survey-date-fields { display: grid; grid-template-columns: 1.5fr .7fr 1fr; gap: 11px; }
 .profile-survey-primary-action { min-width: 180px; justify-self: start; margin-top: 8px; padding: 0 22px; }
-.profile-survey-primary-action { border-color: #123d40; background: #123d40; box-shadow: 0 13px 25px rgba(16,54,57,.2); }
-.profile-survey-primary-action:hover { background: #1a5354; box-shadow: 0 17px 30px rgba(16,54,57,.25); }
+.profile-survey-primary-action { border-color: #214b35; background: #214b35; box-shadow: 0 13px 25px rgba(33,75,53,.2); }
+.profile-survey-primary-action:hover { background: #2d6045; box-shadow: 0 17px 30px rgba(33,75,53,.25); }
 .profile-survey-primary-action:disabled, .profile-survey-skip-action:disabled { cursor: not-allowed; opacity: .52; transform: none; }
 .profile-survey-skip-action { width: max-content; justify-self: start; padding: 4px 0 0; }
 .profile-survey-back {
