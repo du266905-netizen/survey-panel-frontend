@@ -123,11 +123,10 @@
 
 ### 第十一阶段：在线调查与 Research 入口（已启动）
 
-- 用户端调查页现分为两个可直达区块：`/partners#surveys` 为 `Online surveys`，`/partners#research` 为 `Research`。
-- `Online surveys` 只展示已接入、适合在问卷墙呈现的线上问卷；卡片在宽屏使用更紧凑的四至五列网格。前端展示白名单会拦截未获准的来源；通用 CPA 目录在建立人工白名单和完成入账验证前不得自动展示给用户。
-- `Research` 取代旧的 `More survey opportunities` 导航含义，用于平台自己的问卷、研究和后续真实活动；当前没有虚构机会，只显示原生“完善参与资料”卡片。
-- 画像卡复用 `/panel-profile/horizon-oil.jpg`。未完成时可直接继续填写并明确显示首次完成奖励；完成后保留卡片并显示 `Completed`，只说明将于发现合适研究或活动时通知用户。
-- 社区的 `Join an activity` 现在可进入 `/partners#research`；其余尚未接入数据的社区入口继续明确显示为稍后开放，不伪装成可操作功能。
+- `Online surveys` 位于 `/partners#surveys`；标题旁保留 `More surveys` 入口，用于打开已接入的额外问卷墙。已展示问卷在宽屏固定为四列。前端展示白名单会拦截未获准的来源；通用 CPA 目录在建立人工白名单和完成入账验证前不得自动展示给用户。
+- `Research and activities` 现在是独立的 `/research` 页面，用于平台自己的问卷、研究和后续真实活动；当前没有虚构机会，只显示原生“完善参与资料”任务卡。
+- 画像任务卡复用 `/panel-profile/horizon-oil.jpg`，采用独立的纵向卡片布局。未完成时可直接继续填写并明确显示首次完成奖励；完成后主按钮显示 `Completed`。卡片下方明确说明：发现匹配的调查、研究或活动时会第一时间通知用户。
+- 社区的 `Join an activity` 现在直接进入 `/research`；该卡在社区底部采用高对比样式和 `Explore` 标记，详情中的主行动改为完整按钮。其余尚未接入数据的社区入口继续明确显示为稍后开放，不伪装成可操作功能。
 
 ## 尚未开发，不可对外表述为已上线
 

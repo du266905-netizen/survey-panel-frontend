@@ -12,7 +12,7 @@ import { HomeFooter } from './HomeLegacySections';
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
   { to: '/partners#surveys', label: 'Online surveys', icon: Users, hash: '#surveys' },
-  { to: '/partners#research', label: 'Research', icon: Compass, hash: '#research' },
+  { to: '/research', label: 'Research', icon: Compass },
   { to: '/news', label: 'News Wall', icon: Newspaper },
   { to: '/community', label: 'Community', icon: MessageCircleMore },
   { to: '/wallet', label: 'Wallet', icon: WalletCards },

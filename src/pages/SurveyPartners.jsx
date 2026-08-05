@@ -1,10 +1,9 @@
-import { AlertTriangle, ArrowRight, CheckCircle2, Clock3, Compass, RefreshCcw, Sparkles } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Clock3, Compass, RefreshCcw, Sparkles } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { getCurrentUser, getSurveyOutcome, getSurveyWall, startSurvey } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
 import PageHeader from '../components/PageHeader';
-import { useProfileSurvey } from '../components/ProfileSurveyContext';
 import SurveyResultModal from '../components/SurveyResultModal';
 import { useAuth } from '../components/AuthContext';
 import { useAsyncData } from '../hooks/useAsyncData';
@@ -88,53 +87,8 @@ function SurveyCard({ item, isPanelist, isStarting, hasActiveSurvey, onStart }) 
   );
 }
 
-function ResearchProfileCard({ profile, rewardCoins, profileLoading }) {
-  const isComplete = Boolean(profile?.isComplete);
-  const started = Boolean(profile?.profileStartedAt);
-
-  return (
-    <article className="overflow-hidden rounded-2xl border border-[#bac7b9] bg-[#f8faf5] shadow-[0_18px_38px_rgba(43,66,48,.09)] sm:grid sm:grid-cols-[minmax(220px,.72fr)_minmax(0,1fr)]">
-      <div className="min-h-[190px] overflow-hidden bg-[#dce5d9] sm:min-h-full">
-        <img className="h-full w-full object-cover" src="/panel-profile/horizon-oil.jpg" alt="A painted horizon" />
-      </div>
-      <div className="p-6 sm:p-7">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#51715a]">
-            <Compass size={14} /> Research profile
-          </span>
-          {profileLoading ? (
-            <span className="h-6 w-20 animate-pulse rounded-full bg-[#e0e7df]" aria-label="Loading profile status" />
-          ) : null}
-        </div>
-        <h3 className="mt-4 font-[var(--font-reading)] text-3xl font-bold tracking-[-0.035em] text-[#1d3224]">Complete your research profile.</h3>
-        <p className="mt-3 max-w-xl text-sm font-medium leading-6 text-[#607166]">
-          {isComplete
-            ? 'Your profile is ready. When we find research that fits you, we will let you know.'
-            : 'A few short answers help us find research that is more relevant to you.'}
-        </p>
-        {!profileLoading && !isComplete && <p className="mt-3 text-xs font-bold text-[#8a6c2c]">Complete it once to receive {rewardCoins} Coins.</p>}
-        {!profileLoading && (
-          isComplete ? (
-            <button className="mt-5 inline-flex h-10 cursor-default items-center justify-center gap-2 rounded-lg border border-[#b9d2bd] bg-[#e7f1e8] px-4 text-sm font-bold text-[#2d6540]" type="button" disabled>
-              <CheckCircle2 size={16} /> Completed
-            </button>
-          ) : (
-            <Link
-              className="mt-5 inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1f4a30] px-4 text-sm font-bold text-white transition hover:bg-[#153c26]"
-              to="/panel-profile"
-            >
-              {started ? 'Continue profile' : 'Complete profile'} <ArrowRight size={16} />
-            </Link>
-          )
-        )}
-      </div>
-    </article>
-  );
-}
-
 export default function SurveyPartners() {
   const { user, setUser } = useAuth();
-  const { panelProfile, rewardCoins, loading: profileLoading } = useProfileSurvey();
   const location = useLocation();
   const isPanelist = isPanelistRole(user?.role);
   const [wallRefreshKey, setWallRefreshKey] = useState(0);
@@ -149,6 +103,8 @@ export default function SurveyPartners() {
   const { data, loading, error } = useAsyncData(loadSurveyWall, [user?.id || 'guest', wallRefreshKey]);
   const sections = data?.sections || [];
   const surveySection = sections.find((section) => section.id === 'surveys') || { id: 'surveys', title: 'Online surveys', subtitle: 'Choose from available online surveys.', items: [] };
+  const moreSurveySection = sections.find((section) => section.id === 'more-opportunities');
+  const moreSurveyEntry = moreSurveySection?.items?.find((item) => item.kind === 'entry');
   const allSurveyItems = (surveySection.items || []).filter((item) => onlineSurveyProviderSlugs.has(item.partnerSlug));
   const surveyItems = useMemo(
     () => allSurveyItems.filter((item) => !dismissedSurveyIds.includes(item.id)),
@@ -157,7 +113,7 @@ export default function SurveyPartners() {
   const displayedSurveyItems = showAllSurveys ? surveyItems : surveyItems.slice(0, 6);
   const hiddenSurveyCount = Math.max(0, surveyItems.length - displayedSurveyItems.length);
   const recommendations = surveyItems.slice(0, 2);
-  const surveyGridClass = 'grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5';
+  const surveyGridClass = 'grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
   const hasActiveSurvey = Boolean(activeSurvey?.recordId);
 
   const refreshSurveyWall = () => setWallRefreshKey((value) => value + 1);
@@ -263,16 +219,20 @@ export default function SurveyPartners() {
     try {
       const response = await startSurvey({
         surveyId: item.surveyId || item.id,
+        opportunityId: item.opportunityId,
         partnerId: item.partnerSlug || item.partnerId,
         linkType: 'direct',
       });
       const redirectUrl = response.data.redirectUrl;
       const recordId = response.data.record?.id;
-      if (!redirectUrl || !recordId) throw new Error('No survey is available right now.');
+      const isEntry = item.kind === 'entry';
+      if (!redirectUrl || (!recordId && !isEntry)) throw new Error('No survey is available right now.');
 
-      const nextActiveSurvey = { recordId, itemId: item.id };
       surveyWindow.opener = null;
       surveyWindow.location.replace(redirectUrl);
+      if (isEntry) return;
+
+      const nextActiveSurvey = { recordId, itemId: item.id };
       setActiveSurvey(nextActiveSurvey);
       writeStoredValue(activeSurveyStorageKey, nextActiveSurvey);
       rememberDismissedSurvey(item.id);
@@ -289,7 +249,23 @@ export default function SurveyPartners() {
 
   return (
     <>
-      <PageHeader title="Online surveys" description="Choose an available online survey. It opens in a new tab while your GuanyiSearch task centre stays here." />
+      <PageHeader
+        title="Online surveys"
+        description="Choose an available online survey. It opens in a new tab while your GuanyiSearch task centre stays here."
+        action={
+          moreSurveyEntry && (
+            <button
+              className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-[#1f4a30] px-4 text-sm font-bold text-white shadow-sm transition hover:bg-[#153c26] disabled:cursor-not-allowed disabled:opacity-60"
+              type="button"
+              disabled={!isPanelist || startingId === moreSurveyEntry.id}
+              onClick={() => handleStart(moreSurveyEntry)}
+            >
+              {startingId === moreSurveyEntry.id ? <RefreshCcw className="animate-spin" size={16} /> : <Compass size={16} />}
+              More surveys <ArrowRight size={16} />
+            </button>
+          )
+        }
+      />
 
       {(error || startError) && (
         <div className="mb-5 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
@@ -336,24 +312,6 @@ export default function SurveyPartners() {
               </button>
             )}
           </>
-        )}
-      </section>
-
-      <section id="research" className="mt-12 scroll-mt-28 border-t border-slate-200 pt-10" aria-labelledby="research-title">
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#6e8573]">Research</p>
-            <h2 id="research-title" className="mt-1 text-2xl font-extrabold tracking-tight text-slate-950">Research and activities</h2>
-            <p className="mt-1.5 max-w-2xl text-sm leading-6 text-slate-500">Your completed profile helps us introduce research and activities that fit you.</p>
-          </div>
-        </div>
-        {isPanelist ? (
-          <ResearchProfileCard profile={panelProfile} rewardCoins={rewardCoins} profileLoading={profileLoading} />
-        ) : (
-          <div className="flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white px-5 py-5 text-sm text-slate-500">
-            <span>Sign in to complete your research profile and see relevant opportunities.</span>
-            <Link className="shrink-0 font-bold text-cyan-700 hover:text-cyan-600" to="/login">Sign in</Link>
-          </div>
         )}
       </section>
 

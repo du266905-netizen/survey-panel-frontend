@@ -966,9 +966,9 @@
 .community-hub-detail > p { margin-top: 15px; color: #748076; font-size: 9px; }
 .community-hub-detail h2 { margin: 7px 0 0; color: #233329; font-family: var(--font-reading); font-size: 24px; font-weight: 700; letter-spacing: -.04em; line-height: 1.03; }
 .community-hub-detail > span { margin-top: 10px; color: #657168; font-size: 11px; font-weight: 650; line-height: 1.55; }
-.community-hub-detail-action { display: inline-flex; align-items: center; width: max-content; min-height: 28px; margin-top: 14px; border: 0; border-bottom: 1px solid rgba(37, 76, 55, .44); background: transparent; color: #254c37; cursor: pointer; font-size: 10px; font-weight: 850; letter-spacing: .02em; padding: 0; }
-.community-hub-detail-action:hover { color: #173624; }
-.community-hub-detail-action.is-static { border-bottom-color: transparent; color: #7a837d; cursor: default; }
+.community-hub-detail-action { display: inline-flex; align-items: center; justify-content: center; gap: 7px; width: 100%; min-height: 44px; margin-top: 17px; border: 1px solid #254c37; background: #254c37; color: #fffdf8; cursor: pointer; font-size: 11px; font-weight: 850; letter-spacing: .02em; padding: 0 13px; }
+.community-hub-detail-action:hover { border-color: #173624; background: #173624; color: #fffdf8; transform: translateY(-1px); }
+.community-hub-detail-action.is-static { width: max-content; min-height: 28px; border-color: transparent; background: transparent; color: #7a837d; cursor: default; padding: 0; }
 .community-hub-controls { position: absolute; right: clamp(30px, 3.25vw, 52px); bottom: 132px; display: inline-flex; align-items: center; gap: 10px; color: #fffdf8; }
 .community-hub-controls button { display: grid; width: 33px; height: 33px; place-items: center; border: 1px solid rgba(255, 253, 249, .56); background: rgba(12, 21, 16, .25); color: #fffdf8; cursor: pointer; transition: background .2s ease, transform .2s ease; }
 .community-hub-controls button:hover { background: rgba(255, 253, 249, .2); transform: translateY(-1px); }
@@ -978,9 +978,33 @@
 .community-hub-area > span { color: rgba(255, 253, 249, .64); font-size: 9px; font-weight: 900; letter-spacing: .12em; }
 .community-hub-area > svg { margin-top: 8px; color: rgba(255, 253, 249, .88); }
 .community-hub-area strong { margin-top: 8px; color: #fffdf8; font-size: clamp(10px, .92vw, 13px); font-weight: 760; line-height: 1.12; }
+.community-hub-area em { display: none; align-items: center; gap: 4px; margin-top: 8px; color: #fffdf8; font-size: 9px; font-style: normal; font-weight: 850; letter-spacing: .04em; text-transform: uppercase; }
+.community-hub-area.is-primary-entry { border-color: rgba(255, 253, 249, .78); background: rgba(36, 83, 54, .78); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 11px 24px rgba(0, 0, 0, .17); }
+.community-hub-area.is-primary-entry em { display: inline-flex; }
 .community-hub-area:hover, .community-hub-area.is-selected { border-color: rgba(255, 253, 249, .84); background: rgba(255, 253, 249, .19); transform: translateY(-2px); }
 .community-hub-area:focus-visible { outline: 3px solid rgba(255, 253, 249, .78); outline-offset: 3px; }
 @media (max-width: 1040px) { .community-hub-intro { width: min(100%, 480px); } .community-hub-detail { width: 250px; } .community-hub-detail h2 { font-size: 21px; } .community-hub-areas { right: 30px; left: 30px; } }
-@media (max-width: 820px) { .community-hub { min-height: 0; padding: 16px; } .community-hub-stage { display: flex; min-height: auto; flex: 0 1 auto; flex-direction: column; padding: 42px 26px 28px; } .community-hub-intro { width: 100%; padding-top: 0; } .community-hub-detail { position: relative; top: auto; right: auto; width: 100%; margin-top: 26px; } .community-hub-controls { position: relative; right: auto; bottom: auto; margin-top: 18px; } .community-hub-areas { position: relative; right: auto; bottom: auto; left: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; margin-top: 14px; } .community-hub-area { min-height: 98px; } }
+@media (max-width: 820px) { .community-hub { min-height: 0; padding: 16px; } .community-hub-stage { display: flex; min-height: auto; flex: 0 1 auto; flex-direction: column; padding: 42px 26px 28px; } .community-hub-intro { width: 100%; padding-top: 0; } .community-hub-detail { position: relative; top: auto; right: auto; width: 100%; margin-top: 26px; } .community-hub-controls { position: relative; right: auto; bottom: auto; margin-top: 18px; } .community-hub-areas { position: relative; right: auto; bottom: auto; left: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; margin-top: 14px; } .community-hub-area { min-height: 108px; } }
 @media (max-width: 520px) { .community-hub { padding: 0; } .community-hub-stage { border-right: 0; border-left: 0; padding: 38px 20px 24px; } .community-hub-corners { inset: 14px; } .community-hub-intro h1 { font-size: clamp(38px, 12vw, 54px); } .community-hub-intro > span { font-size: 12px; } .community-hub-areas { grid-template-columns: 1fr; } .community-hub-area { min-height: 68px; grid-template-columns: 24px 24px minmax(0, 1fr); align-items: center; gap: 9px; } .community-hub-area > svg, .community-hub-area strong { margin-top: 0; } }
 @media (prefers-reduced-motion: reduce) { .community-hub-stage-image, .community-hub-area, .community-hub-controls button { animation: none; transition: none; } }
+
+/* Research and activities: a single real profile task until matching opportunities exist. */
+.research-activities-page { max-width: 1320px; }
+.research-profile-task-card { width: min(100%, 342px); overflow: hidden; border: 1px solid rgba(49, 83, 58, .24); border-radius: 18px; background: #f8faf5; box-shadow: 0 19px 38px rgba(40, 65, 47, .12); }
+.research-profile-task-art { position: relative; height: 182px; overflow: hidden; background: #345440; }
+.research-profile-task-art::after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20, 42, 29, .04), rgba(20, 42, 29, .53)); content: ''; }
+.research-profile-task-art img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.research-profile-task-art > span { position: absolute; z-index: 1; right: 17px; bottom: 16px; display: grid; width: 46px; height: 46px; place-items: center; border: 1px solid rgba(255, 253, 248, .66); border-radius: 50%; background: rgba(25, 57, 37, .57); color: #fffdf8; backdrop-filter: blur(9px); }
+.research-profile-task-content { display: flex; min-height: 248px; flex-direction: column; padding: 22px; }
+.research-profile-task-content > p { margin: 0; color: #6b826f; font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+.research-profile-task-content h3 { margin: 11px 0 0; color: #1d3023; font-family: var(--font-reading); font-size: 27px; font-weight: 700; letter-spacing: -.042em; line-height: 1.02; }
+.research-profile-task-content > span { margin-top: 12px; color: #627067; font-size: 12px; font-weight: 650; line-height: 1.55; }
+.research-profile-task-content > strong { margin-top: 12px; color: #836728; font-size: 11px; line-height: 1.45; }
+.research-profile-task-content > a,
+.research-profile-task-content > button { display: inline-flex; min-height: 41px; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: auto; border: 1px solid #1f4a30; border-radius: 9px; background: #1f4a30; color: #fffdf8; font-size: 13px; font-weight: 850; text-decoration: none; }
+.research-profile-task-content > a:hover { border-color: #153c26; background: #153c26; transform: translateY(-1px); }
+.research-profile-task-content > button:disabled { border-color: #b9d2bd; background: #e7f1e8; color: #2d6540; cursor: default; }
+.research-activities-notice { display: flex; align-items: center; gap: 11px; width: min(100%, 610px); margin-top: 26px; border-top: 1px solid rgba(50, 77, 57, .17); color: #506457; padding: 18px 0 0; }
+.research-activities-notice svg { flex: 0 0 auto; color: #2f6541; }
+.research-activities-notice p { margin: 0; font-size: 13px; font-weight: 700; line-height: 1.55; }
+@media (max-width: 520px) { .research-profile-task-card { width: 100%; } .research-profile-task-art { height: 204px; } }

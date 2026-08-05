@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, FileText, MessageCircle, Newspaper, Users } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, FileText, MessageCircle, Newspaper, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import communityActivity from '../assets/community/community-activity.jpg';
 import communityLatestBrief from '../assets/community/community-latest-brief.jpg';
@@ -26,8 +26,8 @@ const communityAreas = [
     label: 'Join an activity',
     title: 'Take a survey or join a session.',
     description: 'Before you start, you will see the topic, estimated time, and reward.',
-    action: 'View research',
-    to: '/partners#research',
+    action: 'Explore research and activities',
+    to: '/research',
     icon: Users,
     image: communityActivity,
   },
@@ -112,7 +112,7 @@ export default function CommunityHub() {
           <span>{selectedArea.description}</span>
           {selectedArea.to ? (
             <button className="community-hub-detail-action" type="button" onClick={() => navigate(selectedArea.to)}>
-              {selectedArea.action}
+              {selectedArea.action} <ArrowUpRight size={15} />
             </button>
           ) : (
             <div className="community-hub-detail-action is-static">Coming later</div>
@@ -136,15 +136,16 @@ export default function CommunityHub() {
             return (
               <button
                 key={area.id}
-                className={`community-hub-area ${isSelected ? 'is-selected' : ''}`}
+                className={`community-hub-area ${isSelected ? 'is-selected' : ''} ${area.to ? 'is-primary-entry' : ''}`}
                 type="button"
                 role="tab"
                 aria-selected={isSelected}
-                onClick={() => selectArea(index)}
+                onClick={() => (area.to ? navigate(area.to) : selectArea(index))}
               >
                 <span>{area.number}</span>
                 <AreaIcon size={17} strokeWidth={1.7} />
                 <strong>{area.label}</strong>
+                {area.to && <em>Explore <ArrowUpRight size={13} /></em>}
               </button>
             );
           })}

@@ -21,6 +21,7 @@ import OurApproach from './pages/OurApproach';
 import PanelProfilePage from './pages/PanelProfilePage';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
+import ResearchActivities from './pages/ResearchActivities';
 import SettlementReview from './pages/SettlementReview';
 import Settings from './pages/Settings';
 import SurveyList from './pages/SurveyList';
@@ -133,6 +134,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/activity" element={<ActivityDashboard />} />
           <Route path="/community" element={<CommunityHub />} />
+          <Route path="/research" element={<ResearchActivities />} />
           <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/referrals" element={<Navigate to="/dashboard?referral=true" replace />} />
