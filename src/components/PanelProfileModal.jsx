@@ -156,6 +156,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [completed, setCompleted] = useState(false);
+  const [completedProfile, setCompletedProfile] = useState(null);
   const [awardedCoins, setAwardedCoins] = useState(0);
   const [optionsOpen, setOptionsOpen] = useState(false);
   const steps = useMemo(() => questionSteps(draft), [draft]);
@@ -168,6 +169,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     const nextDraft = initialDraft(profile);
     setDraft(nextDraft);
     setCompleted(false);
+    setCompletedProfile(null);
     setAwardedCoins(0);
     setError('');
     setOptionsOpen(false);
@@ -196,9 +198,9 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
       setDraft(nextDraft);
       if (response.data.profile.isComplete) {
         setCompleted(true);
+        setCompletedProfile(response.data.profile);
         setAwardedCoins(response.data.awardedCoins || 0);
         onProfileSaved?.(response.data);
-        onCompleted?.({ profile: response.data.profile, awardedCoins: response.data.awardedCoins || 0 });
       } else {
         setStepIndex(Math.min(nextStepIndex, nextSteps.length - 1));
         onProfileSaved?.(response.data);
@@ -259,15 +261,23 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     });
   };
 
+  const continueAfterCompletion = () => {
+    if (onCompleted) {
+      onCompleted({ profile: completedProfile, awardedCoins });
+      return;
+    }
+    onClose();
+  };
+
   const renderQuestion = () => {
     if (completed) {
       return (
         <div className="profile-survey-success">
           <span className="profile-survey-success-icon"><ShieldCheck size={34} /></span>
-          <p className="profile-survey-eyebrow">First survey complete</p>
-          <h2>{awardedCoins ? `${awardedCoins} Coins added` : 'Your answers are saved'}</h2>
-          <p>{awardedCoins ? 'Thank you. Your first-survey reward has been added to your wallet.' : 'Thank you for sharing your perspective.'}</p>
-          <button className="profile-survey-primary-action" type="button" onClick={onClose}>Return to your workspace <ChevronRight size={18} /></button>
+          <p className="profile-survey-eyebrow">Research profile complete</p>
+          <h2>{awardedCoins ? `${awardedCoins.toLocaleString()} Coins added` : 'Your profile is up to date'}</h2>
+          <p>{awardedCoins ? 'Your completion reward is now in your wallet. We will notify you when a suitable study is available.' : 'Thank you for keeping your research profile up to date.'}</p>
+          <button className="profile-survey-primary-action" type="button" onClick={continueAfterCompletion}>Return to your workspace <ChevronRight size={18} /></button>
         </div>
       );
     }
@@ -276,11 +286,11 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
       return (
         <div className="profile-survey-intro">
           <span className="profile-survey-intro-coin"><Coins size={23} /></span>
-          <p className="profile-survey-eyebrow">Your first survey</p>
+          <p className="profile-survey-eyebrow">Your research profile</p>
           <h2>Help us match you with more relevant research.</h2>
           <p>Answer a short set of introduction questions at your own pace. You can close this at any time and continue later.</p>
-          <div className="profile-survey-reward-note"><Coins size={16} /> Complete this survey to receive <strong>{rewardCoins} Coins</strong> once.</div>
-          <button className="profile-survey-primary-action" type="button" onClick={() => setStepIndex(1)}>Start survey <ChevronRight size={18} /></button>
+          <div className="profile-survey-reward-note"><Coins size={16} /> Complete your profile to receive <strong>{rewardCoins.toLocaleString()} Coins</strong> once.</div>
+          <button className="profile-survey-primary-action" type="button" onClick={() => setStepIndex(1)}>Start profile <ChevronRight size={18} /></button>
           <a href="/privacy" className="profile-survey-privacy-link"><CircleHelp size={15} /> How we use survey information</a>
         </div>
       );

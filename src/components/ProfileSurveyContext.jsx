@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { getPanelProfile } from '../api/realApi';
+import { getCurrentUser, getPanelProfile, reconcilePanelProfileReward } from '../api/realApi';
+import { useAuth } from './AuthContext';
 import FirstSurveyCompletionModal from './FirstSurveyCompletionModal';
 import PanelProfileInviteModal from './PanelProfileInviteModal';
 
 const ProfileSurveyContext = createContext(null);
 
 export function ProfileSurveyProvider({ enabled, children }) {
+  const { setUser } = useAuth();
   const [panelProfile, setPanelProfile] = useState(null);
   const [rewardCoins, setRewardCoins] = useState(1000);
   const [loading, setLoading] = useState(Boolean(enabled));
@@ -47,13 +49,33 @@ export function ProfileSurveyProvider({ enabled, children }) {
       window.sessionStorage.removeItem('first-survey-completion');
     }
 
-    refreshPanelProfile()
-      .then((nextProfile) => {
+    const loadPanelProfile = async () => {
+      try {
+        let nextProfile = await refreshPanelProfile();
+        if (!mounted) return;
+
+        if (nextProfile?.isComplete && nextProfile.profileVersion !== 'v2') {
+          const reward = await reconcilePanelProfileReward();
+          if (!mounted) return;
+          nextProfile = reward.data.profile;
+          setPanelProfile(nextProfile);
+
+          if (reward.data.awardedCoins > 0) {
+            setCompletionNotice({ awardedCoins: Math.max(0, Number(reward.data.awardedCoins) || 0) });
+            try {
+              const currentUser = await getCurrentUser();
+              if (mounted) setUser(currentUser.data.user);
+            } catch {}
+          }
+        }
+
         if (mounted && !nextProfile?.isComplete) setOpen(true);
-      })
-      .catch(() => {
+      } catch {
         if (mounted) setLoading(false);
-      });
+      }
+    };
+
+    loadPanelProfile();
 
     return () => {
       mounted = false;

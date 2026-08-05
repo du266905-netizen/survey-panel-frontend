@@ -226,6 +226,11 @@ export const savePanelProfileProgress = async ({ answers, currentStep }) => {
   return { data: response.data };
 };
 
+export const reconcilePanelProfileReward = async () => {
+  const response = await apiClient.post('/api/panel-profile/reconcile-reward');
+  return { data: response.data };
+};
+
 export const getWallet = async () => {
   const response = await apiClient.get('/api/wallet');
   return { data: response.data };

@@ -46,10 +46,7 @@ export default function PanelProfilePage() {
     }
   };
 
-  const handleCompleted = ({ awardedCoins }) => {
-    if (typeof window !== 'undefined') {
-      window.sessionStorage.setItem('first-survey-completion', JSON.stringify({ awardedCoins }));
-    }
+  const handleCompleted = () => {
     navigate('/dashboard', { replace: true });
   };
 
