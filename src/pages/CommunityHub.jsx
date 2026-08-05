@@ -73,7 +73,6 @@ const communityAreas = [
 
 export default function CommunityHub() {
   const [activeAreaIndex, setActiveAreaIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const selectedArea = communityAreas[activeAreaIndex];
   const SelectedIcon = selectedArea.icon;
 
@@ -85,23 +84,13 @@ export default function CommunityHub() {
   const goNext = useCallback(() => selectArea(activeAreaIndex + 1), [activeAreaIndex, selectArea]);
 
   useEffect(() => {
-    if (isPaused) return undefined;
-
     const rotation = window.setTimeout(goNext, rotationDelay);
     return () => window.clearTimeout(rotation);
-  }, [activeAreaIndex, goNext, isPaused]);
+  }, [activeAreaIndex, goNext]);
 
   return (
     <section className="community-hub" aria-labelledby="community-hub-title">
-      <div
-        className="community-hub-stage"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onFocusCapture={() => setIsPaused(true)}
-        onBlurCapture={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
-        }}
-      >
+      <div className="community-hub-stage">
         <img
           key={selectedArea.id}
           className="community-hub-stage-image"
@@ -112,20 +101,16 @@ export default function CommunityHub() {
         <div className="community-hub-corners" aria-hidden="true" />
 
         <header className="community-hub-intro">
-          <p>Community workspace</p>
+          <p>Community</p>
           <h1 id="community-hub-title">Listen closer.<br />Build better questions.</h1>
           <span>A practical place for news signals, shared perspective, and research the community can return to.</span>
         </header>
 
-        <aside className="community-hub-detail" aria-live="polite">
+        <aside key={selectedArea.id} className="community-hub-detail" aria-live="polite">
           <div className="community-hub-detail-icon"><SelectedIcon size={19} strokeWidth={1.7} /></div>
           <p>{selectedArea.number} · {selectedArea.label}</p>
           <h2>{selectedArea.title}</h2>
           <span>{selectedArea.description}</span>
-          <div className="community-hub-detail-note">
-            <MessageCircle size={14} strokeWidth={1.7} />
-            <small>{selectedArea.detail}</small>
-          </div>
           <div className="community-hub-detail-action">{selectedArea.action}</div>
         </aside>
 
@@ -133,7 +118,6 @@ export default function CommunityHub() {
           <button type="button" onClick={goPrevious} aria-label="Show the previous community area">
             <ArrowLeft size={17} strokeWidth={1.8} />
           </button>
-          <span><strong>{selectedArea.number}</strong> / {String(communityAreas.length).padStart(2, '0')}</span>
           <button type="button" onClick={goNext} aria-label="Show the next community area">
             <ArrowRight size={17} strokeWidth={1.8} />
           </button>
