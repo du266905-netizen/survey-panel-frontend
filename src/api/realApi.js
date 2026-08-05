@@ -366,7 +366,7 @@ export const getSurveyWall = async ({ forceRefresh = false } = {}) => {
 
 export const getNewsWall = async (params = {}) => {
   const response = await apiClient.get('/api/news', { params });
-  return { data: response.data.items || [] };
+  return { data: response.data.items || [], meta: response.data.meta || null };
 };
 
 export const getNewsBrief = async (params = {}) => {

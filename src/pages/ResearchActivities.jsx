@@ -18,10 +18,9 @@ export default function ResearchActivities() {
 
       {isPanelist ? (
         <>
-          <section aria-labelledby="research-tasks-title">
+          <section aria-label="Research tasks">
             <div className="mb-5">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#6e8573]">Your tasks</p>
-              <h2 id="research-tasks-title" className="mt-1 text-2xl font-extrabold tracking-tight text-slate-950">Start with your research profile.</h2>
             </div>
 
             <article className="research-profile-task-card">

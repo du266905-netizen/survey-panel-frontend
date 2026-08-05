@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { ArrowLeft, ArrowUpRight, CalendarDays, Check, ExternalLink, FlaskConical, Globe2, LoaderCircle, MessageCircle, Search, X } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { getNewsArticle, getNewsWall, saveNewsResearchSignal } from '../api/realApi';
@@ -12,7 +13,6 @@ const categoryLabels = {
   entertainment: 'Culture',
 };
 
-const searchableCategories = Object.keys(categoryLabels);
 const MAX_READING_SUMMARY_WORDS = 760;
 
 function formatPublishedAt(value) {
@@ -104,9 +104,9 @@ function ArticleImage({ article }) {
 }
 
 function SourceHandoff({ article, onClose }) {
-  if (!article?.link) return null;
+  if (!article?.link || typeof document === 'undefined') return null;
 
-  return (
+  return createPortal(
     <div className="news-source-handoff-backdrop" role="presentation" onMouseDown={onClose}>
       <section
         className="news-source-handoff"
@@ -130,7 +130,8 @@ function SourceHandoff({ article, onClose }) {
           </a>
         </div>
       </section>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -190,18 +191,13 @@ export default function NewsArticlePage() {
     const timeout = window.setTimeout(async () => {
       setSearching(true);
       try {
-        const responses = await Promise.all(
-          searchableCategories.map((category) => getNewsWall({
-            country: article?.country || 'US',
-            category,
-            limit: 20,
-          }))
-        );
-        const uniqueResults = new Map();
-        responses.flatMap((response) => response.data).forEach((item) => {
-          if (item?.id && matchesSearch(item, query) && !uniqueResults.has(item.id)) uniqueResults.set(item.id, item);
+        const response = await getNewsWall({
+          country: article?.country || 'US',
+          search: query,
+          window: '72h',
+          limit: 6,
         });
-        if (active) setSearchResults([...uniqueResults.values()].slice(0, 6));
+        if (active) setSearchResults(response.data || []);
       } catch {
         if (active) setSearchResults([]);
       } finally {

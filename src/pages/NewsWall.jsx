@@ -291,6 +291,7 @@ export default function NewsWall() {
   const [country, setCountry] = useState('US');
   const [category, setCategory] = useState('tech');
   const [articles, setArticles] = useState([]);
+  const [newsMeta, setNewsMeta] = useState(null);
   const [preferences, setPreferences] = useState([]);
   const [brief, setBrief] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -309,16 +310,6 @@ export default function NewsWall() {
     [preferences]
   );
 
-  const visibleArticles = useMemo(() => {
-    if (!searchQuery) return articles;
-    const query = searchQuery.toLocaleLowerCase();
-    return articles.filter((article) =>
-      [article.title, summaryFor(article), article.sourceName, article.category]
-        .filter(Boolean)
-        .some((value) => String(value).toLocaleLowerCase().includes(query))
-    );
-  }, [articles, searchQuery]);
-
   useEffect(() => {
     setSearchInput(searchQuery);
   }, [searchQuery]);
@@ -330,9 +321,13 @@ export default function NewsWall() {
     setError('');
 
     try {
-      const response = await getNewsWall({ category, ...(country === 'GLOBAL' ? {} : { country }) });
+      const response = await getNewsWall({
+        ...(country === 'GLOBAL' ? {} : { country }),
+        ...(searchQuery ? { search: searchQuery, window: '72h' } : { category }),
+      });
       if (requestId !== requestIdRef.current) return;
       setArticles(response.data || []);
+      setNewsMeta(response.meta || null);
     } catch (caughtError) {
       if (requestId !== requestIdRef.current) return;
       setError(caughtError.response?.data?.message || 'Unable to update this feed right now. Please try another region or try again shortly.');
@@ -384,7 +379,7 @@ export default function NewsWall() {
       requestIdRef.current += 1;
       briefRequestIdRef.current += 1;
     };
-  }, [country, category]);
+  }, [country, category, searchQuery]);
 
   useEffect(() => {
     if (loading || briefLoading) return undefined;
@@ -472,8 +467,8 @@ export default function NewsWall() {
           type="search"
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
-          placeholder="Search this news wall"
-          aria-label="Search this news wall"
+          placeholder="Search the past 3 days"
+          aria-label="Search news summaries from the past three days"
         />
         {searchInput && (
           <button className="news-search-clear" type="button" onClick={clearNewsSearch} aria-label="Clear news search">
@@ -491,7 +486,7 @@ export default function NewsWall() {
       {!isPublicView && (
         <PageHeader
           title="News Wall"
-          description="Follow lightweight news signals and stories worth tracking."
+          description="Today’s latest signals, with the past three days of original summaries kept searchable."
           action={workspaceNewsActions}
           className="news-workspace-header"
         />
@@ -499,17 +494,26 @@ export default function NewsWall() {
 
       {error && <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
 
-      <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} />
+      {searchQuery ? (
+        <section className="card mb-5 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">Recent archive</p>
+            <h2 className="mt-1 text-xl font-black text-slate-950">Results from the past {newsMeta?.windowHours || 72} hours</h2>
+            <p className="mt-1 text-sm font-semibold text-slate-500">Searching saved original summaries, titles, sources, and topic labels for “{searchQuery}”.</p>
+          </div>
+          <button className="btn-secondary" type="button" onClick={clearNewsSearch}>Back to today</button>
+        </section>
+      ) : <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} />}
 
       <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {loading && !articles.length ? (
           Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[22rem] animate-pulse rounded-xl bg-slate-100" />)
-        ) : !visibleArticles.length ? (
+        ) : !articles.length ? (
           <div className="card col-span-full flex min-h-48 items-center justify-center p-8 text-sm font-semibold text-slate-500">
-            {searchQuery ? `No stories match “${searchQuery}” in this selection.` : 'No news available for this region and topic yet.'}
+            {searchQuery ? `No stories match “${searchQuery}” in the past 72 hours.` : 'No news published today for this region and topic yet.'}
           </div>
         ) : (
-          visibleArticles.map((article) => <NewsStoryCard key={article.id} article={article} onOpen={rememberNewsPosition} />)
+          articles.map((article) => <NewsStoryCard key={article.id} article={article} onOpen={rememberNewsPosition} />)
         )}
       </section>
 
@@ -575,7 +579,7 @@ export default function NewsWall() {
               Browse public news trends for free. Create an account when you are ready to save topic preferences and earn coins through eligible surveys.
             </p>
           </div>
-          {newsFilters}
+          {workspaceNewsActions}
         </div>
       </section>
 
