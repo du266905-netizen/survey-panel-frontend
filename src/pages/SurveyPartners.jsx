@@ -1,5 +1,5 @@
 import { AlertTriangle, ArrowRight, Clock3, Compass, RefreshCcw, Sparkles } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { getCurrentUser, getSurveyOutcome, getSurveyWall, startSurvey } from '../api/realApi';
 import CoinAmount from '../components/CoinAmount';
@@ -9,7 +9,7 @@ import { useAuth } from '../components/AuthContext';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { isPanelistRole } from '../utils/roles';
 
-const activeSurveyStorageKey = 'guanyi-active-survey';
+const activeSurveyStoragePrefix = 'guanyi-active-survey';
 const dismissedSurveyStoragePrefix = 'guanyi-dismissed-surveys';
 const onlineSurveyProviderSlugs = new Set(['cpx-research']);
 
@@ -38,6 +38,10 @@ function removeStoredValue(key) {
   try {
     window.sessionStorage.removeItem(key);
   } catch {}
+}
+
+function activeSurveyStorageKey(userId) {
+  return `${activeSurveyStoragePrefix}:${userId}`;
 }
 
 function resultNoticeFor(outcome) {
@@ -98,7 +102,9 @@ export default function SurveyPartners() {
   const [dismissedSurveyIds, setDismissedSurveyIds] = useState([]);
   const [resultNotice, setResultNotice] = useState(null);
   const [resultRecommendations, setResultRecommendations] = useState(null);
-  const loadSurveyWall = user ? getSurveyWall : () => Promise.resolve({ data: { sections: [{ id: 'surveys', title: 'Online surveys', subtitle: 'Choose from available online surveys.', items: [] }] } });
+  const loadSurveyWall = user
+    ? () => getSurveyWall({ forceRefresh: wallRefreshKey > 0 })
+    : () => Promise.resolve({ data: { sections: [{ id: 'surveys', title: 'Online surveys', subtitle: 'Choose from available online surveys.', items: [] }] } });
   const { data, loading, error } = useAsyncData(loadSurveyWall, [user?.id || 'guest', wallRefreshKey]);
   const sections = data?.sections || [];
   const surveySection = sections.find((section) => section.id === 'surveys') || { id: 'surveys', title: 'Online surveys', subtitle: 'Choose from available online surveys.', items: [] };
@@ -114,13 +120,16 @@ export default function SurveyPartners() {
   const surveyGridClass = 'grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
   const hasActiveSurvey = Boolean(activeSurvey?.recordId);
 
-  const refreshSurveyWall = () => setWallRefreshKey((value) => value + 1);
+  const refreshSurveyWall = useCallback(() => setWallRefreshKey((value) => value + 1), []);
 
-  const rememberDismissedSurvey = (surveyId) => {
-    const next = [...new Set([...dismissedSurveyIds, surveyId])].slice(-100);
-    setDismissedSurveyIds(next);
-    if (user?.id) writeStoredValue(`${dismissedSurveyStoragePrefix}:${user.id}`, next);
-  };
+  const rememberDismissedSurvey = useCallback((surveyId) => {
+    if (!surveyId) return;
+    setDismissedSurveyIds((current) => {
+      const next = [...new Set([...current, surveyId])].slice(-100);
+      if (user?.id) writeStoredValue(`${dismissedSurveyStoragePrefix}:${user.id}`, next);
+      return next;
+    });
+  }, [user?.id]);
 
   const refreshUserWallet = async () => {
     try {
@@ -139,7 +148,7 @@ export default function SurveyPartners() {
 
       let refreshedRecommendations = [];
       try {
-        const refreshedWall = await getSurveyWall();
+        const refreshedWall = await getSurveyWall({ forceRefresh: true });
         const refreshedSection = (refreshedWall.data.sections || []).find((section) => section.id === 'surveys');
         refreshedRecommendations = (refreshedSection?.items || [])
           .filter((item) => item.id !== activeSurvey.itemId && !dismissedSurveyIds.includes(item.id))
@@ -148,14 +157,16 @@ export default function SurveyPartners() {
 
       setResultRecommendations(refreshedRecommendations);
       setResultNotice(resultNoticeFor(outcome));
+      rememberDismissedSurvey(activeSurvey.itemId);
       setActiveSurvey(null);
-      removeStoredValue(activeSurveyStorageKey);
+      removeStoredValue(activeSurveyStorageKey(user?.id));
       refreshSurveyWall();
       await refreshUserWallet();
     } catch (caughtError) {
       if (caughtError.response?.status === 404) {
         setActiveSurvey(null);
-        removeStoredValue(activeSurveyStorageKey);
+        removeStoredValue(activeSurveyStorageKey(user?.id));
+        refreshSurveyWall();
       }
     }
   };
@@ -167,7 +178,7 @@ export default function SurveyPartners() {
       return;
     }
 
-    const storedActiveSurvey = readStoredValue(activeSurveyStorageKey, null);
+    const storedActiveSurvey = readStoredValue(activeSurveyStorageKey(user.id), null);
     if (storedActiveSurvey?.recordId) setActiveSurvey(storedActiveSurvey);
     setDismissedSurveyIds(readStoredValue(`${dismissedSurveyStoragePrefix}:${user.id}`, []));
   }, [user?.id]);
@@ -186,7 +197,10 @@ export default function SurveyPartners() {
     if (!activeSurvey?.recordId) return undefined;
 
     const checkWhenVisible = () => {
-      if (document.visibilityState === 'visible') void checkActiveSurvey();
+      if (document.visibilityState === 'visible') {
+        refreshSurveyWall();
+        void checkActiveSurvey();
+      }
     };
     const interval = window.setInterval(() => void checkActiveSurvey(), 15000);
     window.addEventListener('focus', checkWhenVisible);
@@ -232,7 +246,7 @@ export default function SurveyPartners() {
 
       const nextActiveSurvey = { recordId, itemId: item.id };
       setActiveSurvey(nextActiveSurvey);
-      writeStoredValue(activeSurveyStorageKey, nextActiveSurvey);
+      writeStoredValue(activeSurveyStorageKey(user.id), nextActiveSurvey);
       rememberDismissedSurvey(item.id);
       setResultNotice(null);
       setResultRecommendations(null);

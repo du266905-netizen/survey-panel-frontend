@@ -346,6 +346,82 @@
 
 .news-reading-whatsapp a:hover { color: #9a6e35; }
 
+.news-research-signal {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  column-gap: 11px;
+  border-top: 1px solid var(--news-line);
+  border-bottom: 1px solid var(--news-line);
+  margin: 27px 0 0;
+  padding: 22px 0;
+}
+
+.news-research-signal-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(40, 86, 71, .22);
+  border-radius: 50%;
+  background: #edf1e8;
+  color: #365b43;
+}
+
+.news-research-signal > p {
+  align-self: end;
+  margin: 0;
+  color: #6f7d6c;
+  font-size: 10px;
+  font-weight: 840;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.news-research-signal h2 {
+  grid-column: 1 / -1;
+  margin: 15px 0 0;
+  color: #27352c;
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 670;
+  letter-spacing: -.035em;
+  line-height: 1.02;
+}
+
+.news-research-signal > span {
+  grid-column: 1 / -1;
+  margin-top: 12px;
+  color: #667066;
+  font-size: 13px;
+  font-weight: 590;
+  line-height: 1.58;
+}
+
+.news-research-signal-button {
+  grid-column: 1 / -1;
+  justify-self: start;
+  width: auto;
+  margin-top: 17px;
+  padding: 0 16px;
+}
+
+.news-research-signal > strong,
+.news-research-signal-login {
+  display: inline-flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  margin-top: 17px;
+  color: #285647;
+  font-size: 12px;
+  font-weight: 820;
+  text-decoration: none;
+}
+
+.news-research-signal-login:hover { color: #9a6e35; }
+.news-research-signal > em { grid-column: 1 / -1; margin-top: 12px; color: #9b4e2d; font-size: 12px; font-style: normal; font-weight: 700; line-height: 1.45; }
+
 .news-reading-state {
   display: grid;
   place-items: center;

@@ -347,9 +347,9 @@ export const getSurveysByPartner = async (partnerId) => {
   };
 };
 
-export const getSurveyWall = async () => {
+export const getSurveyWall = async ({ forceRefresh = false } = {}) => {
   const response = await apiClient.get('/api/survey/list', {
-    params: { pageSize: 100 },
+    params: { pageSize: 100, ...(forceRefresh ? { refresh: 'true' } : {}) },
   });
 
   return {
@@ -383,6 +383,8 @@ export const voteNewsArticle = async (articleId, stance) => {
   const response = await apiClient.post(`/api/news/${articleId}/vote`, { stance });
   return { data: response.data.article };
 };
+
+export const saveNewsResearchSignal = (articleId) => voteNewsArticle(articleId, 'approve');
 
 export const getNewsPreferences = async () => {
   const response = await apiClient.get('/api/news/preferences');

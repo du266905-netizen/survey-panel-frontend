@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, FileText, MessageCircle, Newspaper, Users } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, FileText, MessageCircle, Newspaper, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import communityActivity from '../assets/community/community-activity.jpg';
 import communityLatestBrief from '../assets/community/community-latest-brief.jpg';
@@ -111,11 +111,11 @@ export default function CommunityHub() {
           <h2>{selectedArea.title}</h2>
           <span>{selectedArea.description}</span>
           {selectedArea.to ? (
-            <button className="community-hub-detail-action action-injection" type="button" onClick={() => navigate(selectedArea.to)}>
-              {selectedArea.action} <ArrowUpRight size={15} />
+            <button className="community-hub-detail-arrow action-injection" type="button" onClick={() => navigate(selectedArea.to)} aria-label={selectedArea.action} title={selectedArea.action}>
+              <ArrowRight size={19} strokeWidth={2} />
             </button>
           ) : (
-            <div className="community-hub-detail-action is-static">Coming later</div>
+            <div className="community-hub-detail-status">Coming later</div>
           )}
         </aside>
 

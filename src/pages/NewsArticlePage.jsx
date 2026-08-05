@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowUpRight, CalendarDays, ExternalLink, Globe2, LoaderCircle, MessageCircle, Search, X } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CalendarDays, Check, ExternalLink, FlaskConical, Globe2, LoaderCircle, MessageCircle, Search, X } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import { getNewsArticle, getNewsWall } from '../api/realApi';
+import { getNewsArticle, getNewsWall, saveNewsResearchSignal } from '../api/realApi';
+import { useAuth } from '../components/AuthContext';
 import './NewsArticlePage.css';
 
 const categoryLabels = {
@@ -135,6 +136,7 @@ function SourceHandoff({ article, onClose }) {
 
 export default function NewsArticlePage() {
   const { articleId } = useParams();
+  const { user } = useAuth();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -143,6 +145,8 @@ export default function NewsArticlePage() {
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [savingResearchSignal, setSavingResearchSignal] = useState(false);
+  const [researchSignalError, setResearchSignalError] = useState('');
 
   useEffect(() => {
     let active = true;
@@ -214,6 +218,22 @@ export default function NewsArticlePage() {
   const summaryParagraphs = useMemo(() => splitSummary(articleSummary(article)), [article]);
   const publishedDate = formatPublishedAt(article?.publishedAt);
   const publishedTime = formatPublishedTime(article?.publishedAt);
+  const hasResearchSignal = ['research', 'approve'].includes(String(article?.userVote || '').toLowerCase());
+
+  const saveResearchSignal = async () => {
+    if (!article?.id || savingResearchSignal || hasResearchSignal) return;
+
+    setSavingResearchSignal(true);
+    setResearchSignalError('');
+    try {
+      const response = await saveNewsResearchSignal(article.id);
+      setArticle(response.data);
+    } catch (caughtError) {
+      setResearchSignalError(caughtError.response?.data?.message || 'Unable to save your research signal right now.');
+    } finally {
+      setSavingResearchSignal(false);
+    }
+  };
 
   return (
     <main className="news-reading-page">
@@ -313,6 +333,25 @@ export default function NewsArticlePage() {
                   <strong>{article.sourceName || 'Original reporting'}</strong>
                 </div>
               </div>
+              <section className="news-research-signal" aria-labelledby="news-research-signal-title">
+                <div className="news-research-signal-icon" aria-hidden="true"><FlaskConical size={18} /></div>
+                <p>News signal</p>
+                <h2 id="news-research-signal-title">Worth researching further?</h2>
+                <span>This helps prioritize possible topics. It is not a fact-check or a verdict on this report.</span>
+                {user ? (
+                  hasResearchSignal ? (
+                    <strong><Check size={15} /> Signal saved</strong>
+                  ) : (
+                    <button className="news-research-signal-button action-injection" type="button" onClick={saveResearchSignal} disabled={savingResearchSignal}>
+                      {savingResearchSignal ? <LoaderCircle className="animate-spin" size={15} /> : <FlaskConical size={15} />}
+                      Worth researching
+                    </button>
+                  )
+                ) : (
+                  <Link className="news-research-signal-login" to="/login">Sign in to add a signal <ArrowUpRight size={15} /></Link>
+                )}
+                {researchSignalError && <em>{researchSignalError}</em>}
+              </section>
               {article.link && (
                 <button className="news-reading-source-button" type="button" onClick={() => setSourceHandoffOpen(true)}>
                   View original reporting <ArrowUpRight size={17} />
