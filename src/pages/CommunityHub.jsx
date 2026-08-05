@@ -18,7 +18,6 @@ const communityAreas = [
     action: 'Read updates',
     icon: Newspaper,
     image: communityLatestBrief,
-    imageAlt: 'A close look at a person’s eye',
   },
   {
     id: 'activities',
@@ -29,7 +28,6 @@ const communityAreas = [
     action: 'View activities',
     icon: Users,
     image: communityActivity,
-    imageAlt: 'A person sharing feedback on a small screen',
   },
   {
     id: 'discussion',
@@ -40,7 +38,6 @@ const communityAreas = [
     action: 'Join a discussion',
     icon: MessageCircle,
     image: communityResearchTable,
-    imageAlt: 'People gathered around laptops and a shared table',
   },
   {
     id: 'propose-topic',
@@ -51,7 +48,6 @@ const communityAreas = [
     action: 'Suggest a topic',
     icon: FileText,
     image: communitySubmissionDesk,
-    imageAlt: 'A person writing a note at a desk',
   },
   {
     id: 'research-review',
@@ -62,7 +58,6 @@ const communityAreas = [
     action: 'View results',
     icon: BookOpen,
     image: communityResearchReview,
-    imageAlt: 'A research team working together in a sunlit office',
   },
 ];
 
@@ -79,19 +74,6 @@ export default function CommunityHub() {
   const goNext = useCallback(() => selectArea(activeAreaIndex + 1), [activeAreaIndex, selectArea]);
 
   useEffect(() => {
-    const preloadedImages = communityAreas.map((area) => {
-      const image = new Image();
-      image.src = area.image;
-      image.decode?.().catch(() => {});
-      return image;
-    });
-
-    return () => {
-      preloadedImages.forEach((image) => image.removeAttribute('src'));
-    };
-  }, []);
-
-  useEffect(() => {
     const rotation = window.setTimeout(goNext, rotationDelay);
     return () => window.clearTimeout(rotation);
   }, [activeAreaIndex, goNext]);
@@ -99,12 +81,18 @@ export default function CommunityHub() {
   return (
     <section className="community-hub" aria-labelledby="community-hub-title">
       <div className="community-hub-stage">
-        <img
-          key={selectedArea.id}
-          className="community-hub-stage-image"
-          src={selectedArea.image}
-          alt={selectedArea.imageAlt}
-        />
+        <div className="community-hub-stage-media" aria-hidden="true">
+          {communityAreas.map((area, index) => (
+            <img
+              key={area.id}
+              className={`community-hub-stage-image ${index === activeAreaIndex ? 'is-active' : ''}`}
+              src={area.image}
+              alt=""
+              loading="eager"
+              decoding="async"
+            />
+          ))}
+        </div>
         <div className="community-hub-stage-wash" aria-hidden="true" />
         <div className="community-hub-corners" aria-hidden="true" />
 
