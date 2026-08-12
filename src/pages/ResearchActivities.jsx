@@ -1,9 +1,59 @@
-import { ArrowRight, BellRing, CheckCircle2, Compass } from 'lucide-react';
+import { ArrowRight, BellRing, CheckCircle2, Clock3, Compass, Gift, LoaderCircle, Send, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import PageHeader from '../components/PageHeader';
 import { useProfileSurvey } from '../components/ProfileSurveyContext';
 import { useAuth } from '../components/AuthContext';
 import { isPanelistRole } from '../utils/roles';
+import { applyToResearchOpportunity, getResearchOpportunities } from '../api/realApi';
+
+const applicationLabels = {
+  APPLIED: 'Applied',
+  SELECTED: 'Selected',
+  NOT_SELECTED: 'Not selected',
+  COMPLETED: 'Completed',
+};
+
+function formatDeadline(value) {
+  if (!value) return null;
+  const deadline = new Date(value);
+  if (Number.isNaN(deadline.getTime())) return null;
+  return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(deadline);
+}
+
+function OpportunityCard({ opportunity, onApply, applying }) {
+  const application = opportunity.application;
+  const applicationLabel = applicationLabels[application?.status] || null;
+  const deadline = formatDeadline(opportunity.deadline);
+
+  return (
+    <article className="research-opportunity-card">
+      <div className="research-opportunity-card-heading">
+        <span>{opportunity.format}</span>
+        {opportunity.topic && <small><Tag size={12} /> {opportunity.topic}</small>}
+      </div>
+      <h3>{opportunity.title}</h3>
+      <p>{opportunity.summary}</p>
+      <dl className="research-opportunity-details">
+        {opportunity.estimatedMinutes && <div><dt><Clock3 size={14} /> Time</dt><dd>{opportunity.estimatedMinutes} min</dd></div>}
+        <div><dt><Gift size={14} /> Reward</dt><dd>{opportunity.rewardDescription}</dd></div>
+        {deadline && <div><dt>Deadline</dt><dd>{deadline}</dd></div>}
+      </dl>
+      {opportunity.requirements && <p className="research-opportunity-requirements">{opportunity.requirements}</p>}
+      {application ? (
+        <div className={`research-opportunity-status is-${application.status.toLowerCase()}`}>
+          <CheckCircle2 size={16} />
+          <span>{applicationLabel}</span>
+        </div>
+      ) : (
+        <button className="action-injection research-opportunity-apply" type="button" onClick={() => onApply(opportunity.id)} disabled={applying || !opportunity.isOpen}>
+          {applying ? <LoaderCircle className="animate-spin" size={16} /> : <Send size={16} />}
+          {opportunity.isOpen ? 'Apply to participate' : 'Closed'}
+        </button>
+      )}
+    </article>
+  );
+}
 
 export default function ResearchActivities() {
   const { user } = useAuth();
@@ -11,10 +61,54 @@ export default function ResearchActivities() {
   const isPanelist = isPanelistRole(user?.role);
   const isComplete = Boolean(panelProfile?.isComplete);
   const started = Boolean(panelProfile?.profileStartedAt);
+  const [opportunities, setOpportunities] = useState([]);
+  const [opportunitiesLoading, setOpportunitiesLoading] = useState(true);
+  const [opportunitiesError, setOpportunitiesError] = useState('');
+  const [applyingToId, setApplyingToId] = useState('');
+
+  useEffect(() => {
+    let active = true;
+    if (!isPanelist) {
+      setOpportunities([]);
+      setOpportunitiesLoading(false);
+      return undefined;
+    }
+
+    const loadOpportunities = async () => {
+      setOpportunitiesLoading(true);
+      setOpportunitiesError('');
+      try {
+        const response = await getResearchOpportunities();
+        if (active) setOpportunities(response.data.opportunities || []);
+      } catch (caughtError) {
+        if (active) setOpportunitiesError(caughtError.response?.data?.message || 'Unable to load matched opportunities right now.');
+      } finally {
+        if (active) setOpportunitiesLoading(false);
+      }
+    };
+
+    loadOpportunities();
+    return () => { active = false; };
+  }, [isPanelist, isComplete]);
+
+  const applyToOpportunity = async (opportunityId) => {
+    if (!opportunityId || applyingToId) return;
+    setApplyingToId(opportunityId);
+    setOpportunitiesError('');
+    try {
+      const response = await applyToResearchOpportunity({ opportunityId });
+      const updated = response.data.opportunity;
+      setOpportunities((current) => current.map((opportunity) => (opportunity.id === updated.id ? updated : opportunity)));
+    } catch (caughtError) {
+      setOpportunitiesError(caughtError.response?.data?.message || 'Unable to submit your application right now.');
+    } finally {
+      setApplyingToId('');
+    }
+  };
 
   return (
     <section className="research-activities-page">
-      <PageHeader title="Research and activities" description="Complete your profile so we can introduce research and activities that fit you." />
+      <PageHeader title="Research and activities" description="See platform research that fits your profile and keep track of your applications." />
 
       {isPanelist ? (
         <>
@@ -48,9 +142,33 @@ export default function ResearchActivities() {
             </article>
           </section>
 
+          <section className="research-opportunities-section" aria-labelledby="matched-opportunities-title">
+            <div className="research-opportunities-section-heading">
+              <div>
+                <p>Matched for you</p>
+                <h2 id="matched-opportunities-title">Research opportunities</h2>
+              </div>
+              {!opportunitiesLoading && <span>{opportunities.length} {opportunities.length === 1 ? 'match' : 'matches'}</span>}
+            </div>
+            {opportunitiesLoading ? (
+              <div className="research-opportunities-grid" aria-label="Loading research opportunities">
+                {Array.from({ length: 3 }).map((_, index) => <div key={index} className="research-opportunity-skeleton" />)}
+              </div>
+            ) : opportunities.length ? (
+              <div className="research-opportunities-grid">
+                {opportunities.map((opportunity) => <OpportunityCard key={opportunity.id} opportunity={opportunity} applying={applyingToId === opportunity.id} onApply={applyToOpportunity} />)}
+              </div>
+            ) : (
+              <div className="research-opportunities-empty">
+                {isComplete ? 'There are no matching research opportunities right now.' : 'Complete your research profile to see opportunities that fit you.'}
+              </div>
+            )}
+            {opportunitiesError && <p className="research-opportunities-error" role="alert">{opportunitiesError}</p>}
+          </section>
+
           <aside className="research-activities-notice">
             <BellRing size={19} />
-            <p>When a survey, research study, or activity matches you, we will let you know right away.</p>
+            <p>When a survey, research study, or activity matches you, we will let you know right away. Applying does not guarantee selection.</p>
           </aside>
         </>
       ) : (

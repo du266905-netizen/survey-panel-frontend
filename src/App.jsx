@@ -6,6 +6,7 @@ import AdminSupportTickets from './pages/AdminSupportTickets';
 import MarketingAssets from './pages/MarketingAssets';
 import AdminPartners from './pages/AdminPartners';
 import AdminPanelists from './pages/AdminPanelists';
+import AdminResearchOpportunities from './pages/AdminResearchOpportunities';
 import AdminRewards from './pages/AdminRewards';
 import ActivityDashboard from './pages/ActivityDashboard';
 import CommunityHub from './pages/CommunityHub';
@@ -194,6 +195,14 @@ export default function App() {
             element={
               <AdminRoute>
                 <AdminPanelists />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/research-opportunities"
+            element={
+              <AdminRoute>
+                <AdminResearchOpportunities />
               </AdminRoute>
             }
           />

@@ -208,6 +208,7 @@ export default function AppLayout({ children }) {
               {adminLink('/orbit/settlement', 'Settlement Review', ClipboardCheck)}
               {adminLink('/admin/rewards', 'Reward Center', Gift)}
               {adminLink('/admin/panelists', 'Panel Profiles', ListFilter)}
+              {adminLink('/admin/research-opportunities', 'Research opportunities', Compass)}
               {adminLink('/admin/partners', 'Partners', Users)}
               {adminLink('/admin/database', 'Database', Database)}
               {adminLink('/admin/marketing-assets', 'Marketing Assets', Image)}

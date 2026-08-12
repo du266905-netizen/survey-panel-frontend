@@ -231,6 +231,43 @@ export const reconcilePanelProfileReward = async () => {
   return { data: response.data };
 };
 
+export const getResearchOpportunities = async () => {
+  const response = await apiClient.get('/api/research-opportunities');
+  return { data: response.data };
+};
+
+export const applyToResearchOpportunity = async ({ opportunityId, memberNote }) => {
+  const response = await apiClient.post(`/api/research-opportunities/${opportunityId}/applications`, {
+    ...(memberNote ? { memberNote } : {}),
+  });
+  return { data: response.data };
+};
+
+export const getAdminResearchOpportunities = async () => {
+  const response = await apiClient.get('/api/admin/research-opportunities');
+  return { data: response.data };
+};
+
+export const createAdminResearchOpportunity = async (opportunity) => {
+  const response = await apiClient.post('/api/admin/research-opportunities', opportunity);
+  return { data: response.data };
+};
+
+export const updateAdminResearchOpportunity = async ({ opportunityId, ...update }) => {
+  const response = await apiClient.patch(`/api/admin/research-opportunities/${opportunityId}`, update);
+  return { data: response.data };
+};
+
+export const getAdminResearchApplications = async (opportunityId) => {
+  const response = await apiClient.get(`/api/admin/research-opportunities/${opportunityId}/applications`);
+  return { data: response.data };
+};
+
+export const updateAdminResearchApplication = async ({ opportunityId, applicationId, ...update }) => {
+  const response = await apiClient.patch(`/api/admin/research-opportunities/${opportunityId}/applications/${applicationId}`, update);
+  return { data: response.data };
+};
+
 export const getWallet = async () => {
   const response = await apiClient.get('/api/wallet');
   return { data: response.data };
