@@ -80,8 +80,11 @@ export default function ResearchActivities() {
       try {
         const response = await getResearchOpportunities();
         if (active) setOpportunities(response.data.opportunities || []);
-      } catch (caughtError) {
-        if (active) setOpportunitiesError(caughtError.response?.data?.message || 'Unable to load matched opportunities right now.');
+      } catch {
+        if (active) {
+          setOpportunities([]);
+          setOpportunitiesError('');
+        }
       } finally {
         if (active) setOpportunitiesLoading(false);
       }
@@ -148,7 +151,7 @@ export default function ResearchActivities() {
                 <p>Matched for you</p>
                 <h2 id="matched-opportunities-title">Research opportunities</h2>
               </div>
-              {!opportunitiesLoading && <span>{opportunities.length} {opportunities.length === 1 ? 'match' : 'matches'}</span>}
+              {!opportunitiesLoading && opportunities.length > 0 && <span>{opportunities.length} {opportunities.length === 1 ? 'match' : 'matches'}</span>}
             </div>
             {opportunitiesLoading ? (
               <div className="research-opportunities-grid" aria-label="Loading research opportunities">
@@ -160,16 +163,18 @@ export default function ResearchActivities() {
               </div>
             ) : (
               <div className="research-opportunities-empty">
-                {isComplete ? 'There are no matching research opportunities right now.' : 'Complete your research profile to see opportunities that fit you.'}
+                When we find research that fits you, we’ll let you know right away.
               </div>
             )}
             {opportunitiesError && <p className="research-opportunities-error" role="alert">{opportunitiesError}</p>}
           </section>
 
-          <aside className="research-activities-notice">
-            <BellRing size={19} />
-            <p>When a survey, research study, or activity matches you, we will let you know right away. Applying does not guarantee selection.</p>
-          </aside>
+          {opportunities.length > 0 && (
+            <aside className="research-activities-notice">
+              <BellRing size={19} />
+              <p>Applying does not guarantee selection.</p>
+            </aside>
+          )}
         </>
       ) : (
         <div className="rounded-xl border border-slate-200 bg-white px-5 py-5 text-sm text-slate-500">

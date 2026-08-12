@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import PageHeader from '../components/PageHeader';
+import { isAdminRole } from '../utils/roles';
 
 const countries = [
   { id: 'GLOBAL', label: 'Global' },
@@ -90,7 +91,7 @@ function formatBriefDate(value) {
   });
 }
 
-function DailyBriefDescription({ brief, loading, error, country }) {
+function DailyBriefDescription({ brief, loading, error, country, showOperationalStatus }) {
   const briefCountry = brief?.country || country;
 
   return (
@@ -116,7 +117,7 @@ function DailyBriefDescription({ brief, loading, error, country }) {
             <div className="h-4 w-11/12 animate-pulse rounded-full bg-slate-100" />
             <div className="h-4 w-8/12 animate-pulse rounded-full bg-slate-100" />
           </div>
-        ) : error ? (
+        ) : error && showOperationalStatus ? (
           <p className="text-sm font-semibold leading-7 text-slate-500">Today’s editorial summary is temporarily unavailable. The latest stories are still available below.</p>
         ) : (
           <p className="max-w-5xl text-sm leading-7 text-slate-600">
@@ -126,6 +127,35 @@ function DailyBriefDescription({ brief, loading, error, country }) {
       </div>
     </section>
   );
+}
+
+function useDelayedPopover(delay = 180) {
+  const [open, setOpen] = useState(false);
+  const closeTimerRef = useRef(null);
+
+  const cancelClose = () => {
+    if (closeTimerRef.current) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const openNow = () => {
+    cancelClose();
+    setOpen(true);
+  };
+
+  const closeLater = () => {
+    cancelClose();
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpen(false);
+      closeTimerRef.current = null;
+    }, delay);
+  };
+
+  useEffect(() => () => cancelClose(), []);
+
+  return { open, setOpen, openNow, closeLater, cancelClose };
 }
 
 function articleImage(article) {
@@ -166,14 +196,17 @@ function NewsStoryCard({ article, onOpen }) {
 }
 
 function CompactSelect({ label, value, onChange, options, ariaLabel, optionLabel }) {
-  const [open, setOpen] = useState(false);
+  const { open, setOpen, openNow, closeLater, cancelClose } = useDelayedPopover();
   const selectedOption = options.find((item) => item.id === value) || options[0];
 
   return (
     <div
       className="group relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={openNow}
+      onMouseLeave={closeLater}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) closeLater();
+      }}
     >
       <button
         type="button"
@@ -181,8 +214,11 @@ function CompactSelect({ label, value, onChange, options, ariaLabel, optionLabel
         aria-label={ariaLabel}
         aria-expanded={open}
         aria-haspopup="listbox"
-        onClick={() => setOpen((current) => !current)}
-        onFocus={() => setOpen(true)}
+        onClick={() => {
+          cancelClose();
+          setOpen((current) => !current);
+        }}
+        onFocus={openNow}
         onKeyDown={(event) => {
           if (event.key === 'Escape') setOpen(false);
         }}
@@ -218,7 +254,7 @@ function CompactSelect({ label, value, onChange, options, ariaLabel, optionLabel
 }
 
 function NewsFilters({ country, category, isPublicView, subscribedCategories, loading, onCountryChange, onCategoryChange, onToggleSubscription }) {
-  const [topicsOpen, setTopicsOpen] = useState(false);
+  const { open: topicsOpen, setOpen: setTopicsOpen, openNow: openTopics, closeLater: closeTopics, cancelClose: cancelTopicsClose } = useDelayedPopover();
 
   return (
     <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
@@ -242,16 +278,22 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
       {!isPublicView && (
         <div
           className="group relative"
-          onMouseEnter={() => setTopicsOpen(true)}
-          onMouseLeave={() => setTopicsOpen(false)}
+          onMouseEnter={openTopics}
+          onMouseLeave={closeTopics}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) closeTopics();
+          }}
         >
           <button
             type="button"
             className="flex h-10 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:border-slate-300 focus-visible:border-cyan-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-100"
             aria-expanded={topicsOpen}
             aria-haspopup="menu"
-            onClick={() => setTopicsOpen((current) => !current)}
-            onFocus={() => setTopicsOpen(true)}
+            onClick={() => {
+              cancelTopicsClose();
+              setTopicsOpen((current) => !current);
+            }}
+            onFocus={openTopics}
             onKeyDown={(event) => {
               if (event.key === 'Escape') setTopicsOpen(false);
             }}
@@ -288,6 +330,7 @@ export default function NewsWall() {
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const isPublicView = !user;
+  const isAdmin = isAdminRole(user?.role);
   const [country, setCountry] = useState('US');
   const [category, setCategory] = useState('tech');
   const [articles, setArticles] = useState([]);
@@ -487,15 +530,15 @@ export default function NewsWall() {
       {!isPublicView && (
         <PageHeader
           title="News Wall"
-          description={isLatestFallback
+          description={isAdmin && isLatestFallback
             ? 'No new stories are available for this region yet, so the latest verified signals remain visible.'
-            : 'Today’s latest signals, with the past three days of original summaries kept searchable.'}
+            : 'Latest stories and perspectives, in one place.'}
           action={workspaceNewsActions}
           className="news-workspace-header"
         />
       )}
 
-      {error && <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
+      {isAdmin && error && <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">{error}</div>}
 
       {searchQuery ? (
         <section className="card mb-5 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
@@ -508,7 +551,7 @@ export default function NewsWall() {
         </section>
       ) : (
         <>
-          {isLatestFallback && (
+          {isAdmin && isLatestFallback && (
             <section className="card mb-5 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
               <div>
                 <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">Latest available</p>
@@ -517,7 +560,7 @@ export default function NewsWall() {
               </div>
             </section>
           )}
-          <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} />
+          <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} showOperationalStatus={isAdmin} />
         </>
       )}
 
@@ -526,7 +569,7 @@ export default function NewsWall() {
           Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[22rem] animate-pulse rounded-xl bg-slate-100" />)
         ) : !articles.length ? (
           <div className="card col-span-full flex min-h-48 items-center justify-center p-8 text-sm font-semibold text-slate-500">
-            {searchQuery ? `No stories match “${searchQuery}” in the past 72 hours.` : 'No recent stories are available for this region and topic yet.'}
+            {searchQuery ? `No stories match “${searchQuery}” in the past 72 hours.` : (isAdmin ? 'No recent stories are available for this region and topic yet.' : 'More stories will appear here as they are available.')}
           </div>
         ) : (
           articles.map((article) => <NewsStoryCard key={article.id} article={article} onOpen={rememberNewsPosition} />)
