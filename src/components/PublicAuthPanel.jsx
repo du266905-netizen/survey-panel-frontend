@@ -103,14 +103,14 @@ function GoogleButton({ mode, agreedToTerms, onCredential, onError }) {
   return <div ref={containerRef} className="min-h-11" />;
 }
 
-export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
+export default function PublicAuthPanel({ mode = 'register', onModeChange, accountType = 'PARTICIPANT' }) {
   const navigate = useNavigate();
   const location = useLocation();
   const panelRef = useRef(null);
   const { setUser } = useAuth();
   const [registerExpanded, setRegisterExpanded] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ displayName: '', email: '', password: '', verificationCode: '' });
+  const [registerForm, setRegisterForm] = useState({ displayName: '', email: '', password: '', verificationCode: '', organizationName: '', organizationType: '', roleTitle: '' });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -159,7 +159,8 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
   const finishAuth = useCallback(
     (response) => {
       setUser(response.data.user);
-      navigate('/dashboard', { replace: true });
+      const destination = String(response.data.user?.role || '').toUpperCase() === 'BUSINESS' ? '/business/workspace' : '/dashboard';
+      navigate(destination, { replace: true });
     },
     [navigate, setUser]
   );
@@ -225,6 +226,9 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
     setLoading(true);
     setError('');
     try {
+      if (accountType === 'BUSINESS' && (!registerForm.organizationName.trim() || !registerForm.organizationType)) {
+        return showError('Tell us the organization you are representing before creating the account.');
+      }
       await verifyEmailCode({ email: registerForm.email, code: registerForm.verificationCode });
       finishAuth(
         await register({
@@ -232,6 +236,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
           turnstileToken,
           agreedToTermsAt: new Date().toISOString(),
           referredBy,
+          accountType,
         })
       );
     } catch (caughtError) {
@@ -257,9 +262,9 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
       </div>
 
       <div className="public-auth-content">
-        <p className="public-auth-eyebrow">{isLogin ? 'Welcome back' : 'Join the verified panel'}</p>
-        <h2 id="public-auth-title">{isLogin ? 'Continue where you left off.' : 'Your perspective belongs here.'}</h2>
-        <p className="public-auth-intro">{isLogin ? 'Access your survey wall, wallet, and activity records.' : 'Create a panelist account, verify your email, and begin your first survey.'}</p>
+        <p className="public-auth-eyebrow">{isLogin ? 'Welcome back' : accountType === 'BUSINESS' ? 'Business workspace' : 'Join the verified panel'}</p>
+        <h2 id="public-auth-title">{isLogin ? 'Continue where you left off.' : accountType === 'BUSINESS' ? 'Start with a real research question.' : 'Your perspective belongs here.'}</h2>
+        <p className="public-auth-intro">{isLogin ? 'Sign in to continue to your workspace.' : accountType === 'BUSINESS' ? 'Create a business account to submit a project brief and receive a tailored proposal.' : 'Create a participant account, verify your email, and begin your first survey.'}</p>
 
         {!isLogin && (
           <label className="public-auth-consent">
@@ -269,10 +274,10 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
         )}
 
         <div className={loading ? 'pointer-events-none opacity-60' : ''}>
-          <GoogleButton mode={mode} agreedToTerms={agreedToTerms} onCredential={handleGoogleCredential} onError={showError} />
+          {accountType === 'BUSINESS' ? null : <GoogleButton mode={mode} agreedToTerms={agreedToTerms} onCredential={handleGoogleCredential} onError={showError} />}
         </div>
 
-        <div className="public-auth-divider"><span>or continue with email</span></div>
+        {accountType === 'BUSINESS' ? null : <div className="public-auth-divider"><span>or continue with email</span></div>}
 
         {isLogin ? (
           <form className="public-auth-form" onSubmit={handleLogin}>
@@ -287,6 +292,11 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange }) {
           <form className="public-auth-form public-auth-register-form" onSubmit={handleRegister}>
             <button className="public-auth-back" type="button" onClick={() => { setRegisterExpanded(false); resetFormScroll(); }}><ChevronLeft size={16} /> Other sign-up options</button>
             <label><span>Display name</span><span className="public-auth-input"><input type="text" autoComplete="name" placeholder="How should we call you?" value={registerForm.displayName} onChange={(event) => setRegisterForm({ ...registerForm, displayName: event.target.value })} required /></span></label>
+            {accountType === 'BUSINESS' && <>
+              <label><span>Organization</span><span className="public-auth-input"><input type="text" autoComplete="organization" placeholder="Your company, institution, or practice" value={registerForm.organizationName} onChange={(event) => setRegisterForm({ ...registerForm, organizationName: event.target.value })} required /></span></label>
+              <label><span>Organization type</span><span className="public-auth-input"><select value={registerForm.organizationType} onChange={(event) => setRegisterForm({ ...registerForm, organizationType: event.target.value })} required><option value="">Select one</option><option value="BUSINESS">Business</option><option value="RESEARCH_OR_EDUCATION">Research or education</option><option value="NONPROFIT_OR_PUBLIC">Nonprofit or public organization</option><option value="INDEPENDENT_RESEARCHER">Independent researcher</option></select></span></label>
+              <label><span>Your role <em>Optional</em></span><span className="public-auth-input"><input type="text" autoComplete="organization-title" placeholder="For example, Research lead" value={registerForm.roleTitle} onChange={(event) => setRegisterForm({ ...registerForm, roleTitle: event.target.value })} /></span></label>
+            </>}
             <label><span>Email address</span><span className="public-auth-input"><Mail size={17} /><input type="email" autoComplete="email" placeholder="you@example.com" value={registerForm.email} onChange={(event) => setRegisterForm({ ...registerForm, email: event.target.value, verificationCode: '' })} required /></span></label>
             <button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : 'Send verification code'}</button>
             <label><span>Email code</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label>

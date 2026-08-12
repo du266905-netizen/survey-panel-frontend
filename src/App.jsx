@@ -40,6 +40,11 @@ import WorkerMonitor from './pages/WorkerMonitor';
 import AgentPrecheck from './pages/AgentPrecheck';
 import SupportChatWidget from './components/SupportChatWidget';
 import { isAdminRole } from './utils/roles';
+import { isBusinessRole } from './utils/roles';
+import Business from './pages/Business';
+import BusinessAccess from './pages/BusinessAccess';
+import BusinessWorkspace from './pages/BusinessWorkspace';
+import JoinChoice from './pages/JoinChoice';
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -54,6 +59,11 @@ function PublicEntry({ children }) {
 function AdminRoute({ children }) {
   const { user } = useAuth();
   return isAdminRole(user?.role) ? children : <Navigate to="/dashboard" replace />;
+}
+
+function BusinessRoute({ children }) {
+  const { user } = useAuth();
+  return isBusinessRole(user?.role) ? children : <Navigate to="/business/access" replace />;
 }
 
 function PublicPage({ children }) {
@@ -113,6 +123,11 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" authOnly /></PublicEntry>} />
         <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
+        <Route path="/join" element={<JoinChoice />} />
+        <Route path="/business" element={<Business />} />
+        <Route path="/business/access" element={<BusinessAccess />} />
+        <Route path="/business/login" element={<BusinessAccess />} />
+        <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PublicPage><Privacy /></PublicPage>} />

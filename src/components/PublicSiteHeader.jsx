@@ -142,7 +142,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       <div className="atlas-nav-actions">
         {searchField('atlas-nav-search')}
         {!user && <Link className="atlas-sign-in" to="/login">Sign in</Link>}
-        <Link className="atlas-register" to={user ? '/dashboard' : '/register'}>
+        <Link className="atlas-register" to={user ? (user.role === 'business' ? '/business/workspace' : '/dashboard') : '/join'}>
           {user ? 'Open workspace' : 'Join us'}
           <ArrowUpRight size={17} strokeWidth={1.8} />
         </Link>

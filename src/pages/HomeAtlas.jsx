@@ -172,7 +172,7 @@ export default function HomeAtlas() {
             <p className="video-hero-eyebrow">Every voice leaves an echo.</p>
             <h1 id="video-hero-title">Your opinion<br />shapes the world.</h1>
             <p className="video-hero-description">Discover global perspectives, share what you think, and earn rewards by taking surveys.</p>
-            <Link className="atlas-primary-link video-hero-cta" to={user ? '/dashboard' : '/register'}>
+            <Link className="atlas-primary-link video-hero-cta" to={user ? '/dashboard' : '/join'}>
               Join us
               <ArrowUpRight size={19} strokeWidth={1.8} />
             </Link>

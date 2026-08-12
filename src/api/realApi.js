@@ -155,7 +155,7 @@ export const googleLogin = async ({ credential, agreedToTermsAt, referredBy }) =
   };
 };
 
-export const register = async ({ email, password, displayName, verificationCode, turnstileToken, agreedToTermsAt, referredBy }) => {
+export const register = async ({ email, password, displayName, verificationCode, turnstileToken, agreedToTermsAt, referredBy, accountType, organizationName, organizationType, roleTitle }) => {
   const response = await apiClient.post('/api/auth/register', {
     email,
     password,
@@ -165,6 +165,10 @@ export const register = async ({ email, password, displayName, verificationCode,
     agreedToTermsAt,
     referredBy,
     referralDeviceId: getReferralDeviceId(),
+    accountType,
+    organizationName,
+    organizationType,
+    roleTitle,
   });
   persistSession(response.data);
 
@@ -174,6 +178,16 @@ export const register = async ({ email, password, displayName, verificationCode,
       user: normalizeUser(response.data.user),
     },
   };
+};
+
+export const getBusinessWorkspace = async () => {
+  const response = await apiClient.get('/api/business/workspace');
+  return { data: response.data };
+};
+
+export const createBusinessProject = async (payload) => {
+  const response = await apiClient.post('/api/business/projects', payload);
+  return { data: response.data };
 };
 
 export const sendEmailCode = async ({ email }) => {
