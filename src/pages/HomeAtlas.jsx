@@ -3,6 +3,7 @@ import { ArrowUpRight, LoaderCircle, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import HomeLegacySections from '../components/HomeLegacySections';
+import CookieConsentBanner from '../components/CookieConsentBanner';
 import { useAuth } from '../components/AuthContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import communityIllustration from '../assets/home/community-illustration.png';
@@ -263,6 +264,7 @@ export default function HomeAtlas() {
         </div>
       </section>
       <HomeLegacySections />
+      <CookieConsentBanner />
     </main>
   );
 }

@@ -106,7 +106,7 @@ export default function Privacy() {
           <article>
             <span>Non-essential</span>
             <h3>Optional measurement</h3>
-            <p>We do not currently use non-essential analytics cookies in the panel. If that changes, we will update this policy and request consent where required.</p>
+            <p>We record your Cookie preference in your browser. Optional analytics and personalized advertising remain off until you choose them. When we add an optional measurement or advertising service, we will only enable it after the matching preference has been selected and will update this policy before using it.</p>
           </article>
         </div>
       </LegalSection>
