@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { googleLogin, login, register, sendEmailCode, verifyEmailCode } from '../api/realApi';
 import { useAuth } from './AuthContext';
 import TurnstileWidget from './TurnstileWidget';
+import './PublicAuthPanel.css';
 
 const GOOGLE_SCRIPT_SRC = 'https://accounts.google.com/gsi/client?hl=en';
 const codeCooldownSeconds = 60;
@@ -274,10 +275,10 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
         )}
 
         <div className={loading ? 'pointer-events-none opacity-60' : ''}>
-          {accountType === 'BUSINESS' ? null : <GoogleButton mode={mode} agreedToTerms={agreedToTerms} onCredential={handleGoogleCredential} onError={showError} />}
+          {accountType !== 'BUSINESS' || isLogin ? <GoogleButton mode={mode} agreedToTerms={agreedToTerms} onCredential={handleGoogleCredential} onError={showError} /> : null}
         </div>
 
-        {accountType === 'BUSINESS' ? null : <div className="public-auth-divider"><span>or continue with email</span></div>}
+        {accountType !== 'BUSINESS' || isLogin ? <div className="public-auth-divider"><span>or continue with email</span></div> : null}
 
         {isLogin ? (
           <form className="public-auth-form" onSubmit={handleLogin}>

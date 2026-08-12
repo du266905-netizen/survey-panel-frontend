@@ -39,13 +39,7 @@ export default function CookieConsentBanner() {
     setHasChoice(true);
   };
 
-  if (hasChoice) {
-    return (
-      <button className="cookie-consent-reopen" type="button" onClick={() => { setHasChoice(false); setIsManaging(true); }}>
-        Cookie settings
-      </button>
-    );
-  }
+  if (hasChoice) return null;
 
   return (
     <section className="cookie-consent" aria-label="Cookie preferences">

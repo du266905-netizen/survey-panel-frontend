@@ -6,6 +6,7 @@ import HomeLegacySections from '../components/HomeLegacySections';
 import CookieConsentBanner from '../components/CookieConsentBanner';
 import { useAuth } from '../components/AuthContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
+import { ConnectionLineArt } from '../components/ResearchLineArt';
 import communityIllustration from '../assets/home/community-illustration.png';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
@@ -168,6 +169,7 @@ export default function HomeAtlas() {
             />
           </div>
           <div className="video-hero-scrim" aria-hidden="true" />
+          <ConnectionLineArt className="video-hero-line-art" />
           <div className="video-hero-content">
             <p className="video-hero-eyebrow">Every voice leaves an echo.</p>
             <h1 id="video-hero-title">Your opinion<br />shapes the world.</h1>
