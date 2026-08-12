@@ -303,6 +303,7 @@ export default function NewsWall() {
   const briefRequestIdRef = useRef(0);
 
   const searchQuery = searchParams.get('search')?.trim() || '';
+  const isLatestFallback = !searchQuery && newsMeta?.mode === 'latest';
   const [searchInput, setSearchInput] = useState(searchQuery);
 
   const subscribedCategories = useMemo(
@@ -486,7 +487,9 @@ export default function NewsWall() {
       {!isPublicView && (
         <PageHeader
           title="News Wall"
-          description="Today’s latest signals, with the past three days of original summaries kept searchable."
+          description={isLatestFallback
+            ? 'No new stories are available for this region yet, so the latest verified signals remain visible.'
+            : 'Today’s latest signals, with the past three days of original summaries kept searchable.'}
           action={workspaceNewsActions}
           className="news-workspace-header"
         />
@@ -503,14 +506,27 @@ export default function NewsWall() {
           </div>
           <button className="btn-secondary" type="button" onClick={clearNewsSearch}>Back to today</button>
         </section>
-      ) : <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} />}
+      ) : (
+        <>
+          {isLatestFallback && (
+            <section className="card mb-5 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">Latest available</p>
+                <h2 className="mt-1 text-xl font-black text-slate-950">Showing the most recent verified stories</h2>
+                <p className="mt-1 text-sm font-semibold text-slate-500">Today’s feed has not published new stories for this region yet. These signals are from the past {newsMeta?.windowHours || 48} hours.</p>
+              </div>
+            </section>
+          )}
+          <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} />
+        </>
+      )}
 
       <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {loading && !articles.length ? (
           Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[22rem] animate-pulse rounded-xl bg-slate-100" />)
         ) : !articles.length ? (
           <div className="card col-span-full flex min-h-48 items-center justify-center p-8 text-sm font-semibold text-slate-500">
-            {searchQuery ? `No stories match “${searchQuery}” in the past 72 hours.` : 'No news published today for this region and topic yet.'}
+            {searchQuery ? `No stories match “${searchQuery}” in the past 72 hours.` : 'No recent stories are available for this region and topic yet.'}
           </div>
         ) : (
           articles.map((article) => <NewsStoryCard key={article.id} article={article} onOpen={rememberNewsPosition} />)
