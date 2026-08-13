@@ -111,7 +111,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const { setUser } = useAuth();
   const [registerExpanded, setRegisterExpanded] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ displayName: '', email: '', password: '', verificationCode: '', organizationName: '', organizationType: '', roleTitle: '' });
+  const [registerForm, setRegisterForm] = useState({ displayName: '', email: '', password: '', verificationCode: '', organizationName: '', organizationType: '', roleTitle: '', phone: '' });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -223,14 +223,14 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const handleRegister = async (event) => {
     event.preventDefault();
     if (!agreedToTerms) return showError('Please agree to the Terms of Service and Privacy Policy.');
-    if (!/^\d{6}$/.test(registerForm.verificationCode)) return showError('Enter the 6-digit email verification code.');
+    if (accountType !== 'BUSINESS' && !/^\d{6}$/.test(registerForm.verificationCode)) return showError('Enter the 6-digit email verification code.');
     setLoading(true);
     setError('');
     try {
-      if (accountType === 'BUSINESS' && (!registerForm.organizationName.trim() || !registerForm.organizationType)) {
-        return showError('Tell us the organization you are representing before creating the account.');
+      if (accountType === 'BUSINESS' && (!registerForm.organizationName.trim() || !registerForm.organizationType || !registerForm.roleTitle || !registerForm.phone.trim())) {
+        return showError('Please complete your organization, research role, and phone number.');
       }
-      await verifyEmailCode({ email: registerForm.email, code: registerForm.verificationCode });
+      if (accountType !== 'BUSINESS') await verifyEmailCode({ email: registerForm.email, code: registerForm.verificationCode });
       finishAuth(
         await register({
           ...registerForm,
@@ -275,10 +275,10 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
         )}
 
         <div className={loading ? 'pointer-events-none opacity-60' : ''}>
-          {accountType !== 'BUSINESS' || isLogin ? <GoogleButton mode={mode} agreedToTerms={agreedToTerms} onCredential={handleGoogleCredential} onError={showError} /> : null}
+          {accountType !== 'BUSINESS' ? <GoogleButton mode={mode} agreedToTerms={agreedToTerms} onCredential={handleGoogleCredential} onError={showError} /> : null}
         </div>
 
-        {accountType !== 'BUSINESS' || isLogin ? <div className="public-auth-divider"><span>or continue with email</span></div> : null}
+        {accountType !== 'BUSINESS' ? <div className="public-auth-divider"><span>or continue with email</span></div> : null}
 
         {isLogin ? (
           <form className="public-auth-form" onSubmit={handleLogin}>
@@ -287,20 +287,20 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
             <div className="public-auth-secondary"><Link to="/forgot-password">Forgot password?</Link></div>
             <button className="public-auth-submit" type="submit" disabled={loading}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : 'Sign in'}{!loading && <Check size={17} />}</button>
           </form>
-        ) : !registerExpanded ? (
+        ) : !registerExpanded && accountType !== 'BUSINESS' ? (
           <button className="public-auth-email-cta" type="button" onClick={() => { setRegisterExpanded(true); resetFormScroll(); }}><Mail size={18} /> Continue with email</button>
         ) : (
           <form className="public-auth-form public-auth-register-form" onSubmit={handleRegister}>
-            <button className="public-auth-back" type="button" onClick={() => { setRegisterExpanded(false); resetFormScroll(); }}><ChevronLeft size={16} /> Other sign-up options</button>
-            <label><span>Display name</span><span className="public-auth-input"><input type="text" autoComplete="name" placeholder="How should we call you?" value={registerForm.displayName} onChange={(event) => setRegisterForm({ ...registerForm, displayName: event.target.value })} required /></span></label>
+            {accountType !== 'BUSINESS' && <button className="public-auth-back" type="button" onClick={() => { setRegisterExpanded(false); resetFormScroll(); }}><ChevronLeft size={16} /> Other sign-up options</button>}
+            <label><span>{accountType === 'BUSINESS' ? 'Contact name' : 'Display name'}</span><span className="public-auth-input"><input type="text" autoComplete="name" placeholder={accountType === 'BUSINESS' ? 'Your name' : 'How should we call you?'} value={registerForm.displayName} onChange={(event) => setRegisterForm({ ...registerForm, displayName: event.target.value })} required /></span></label>
             {accountType === 'BUSINESS' && <>
               <label><span>Organization</span><span className="public-auth-input"><input type="text" autoComplete="organization" placeholder="Your company, institution, or practice" value={registerForm.organizationName} onChange={(event) => setRegisterForm({ ...registerForm, organizationName: event.target.value })} required /></span></label>
               <label><span>Organization type</span><span className="public-auth-input"><select value={registerForm.organizationType} onChange={(event) => setRegisterForm({ ...registerForm, organizationType: event.target.value })} required><option value="">Select one</option><option value="BUSINESS">Business</option><option value="RESEARCH_OR_EDUCATION">Research or education</option><option value="NONPROFIT_OR_PUBLIC">Nonprofit or public organization</option><option value="INDEPENDENT_RESEARCHER">Independent researcher</option></select></span></label>
-              <label><span>Your role <em>Optional</em></span><span className="public-auth-input"><input type="text" autoComplete="organization-title" placeholder="For example, Research lead" value={registerForm.roleTitle} onChange={(event) => setRegisterForm({ ...registerForm, roleTitle: event.target.value })} /></span></label>
+              <label><span>Research role</span><span className="public-auth-input"><select value={registerForm.roleTitle} onChange={(event) => setRegisterForm({ ...registerForm, roleTitle: event.target.value })} required><option value="">Select one</option><option value="Analytics / data science">Analytics / data science</option><option value="Customer success / service">Customer success / service</option><option value="Engineering">Engineering</option><option value="Marketing">Marketing</option><option value="Product / UX design">Product / UX design</option><option value="Product management">Product management</option><option value="Research operations">Research operations</option><option value="UX / user research">UX / user research</option></select></span></label>
+              <label><span>Phone number</span><span className="public-auth-input"><input type="tel" autoComplete="tel" placeholder="Country code and number" value={registerForm.phone} onChange={(event) => setRegisterForm({ ...registerForm, phone: event.target.value })} required /></span></label>
             </>}
             <label><span>Email address</span><span className="public-auth-input"><Mail size={17} /><input type="email" autoComplete="email" placeholder="you@example.com" value={registerForm.email} onChange={(event) => setRegisterForm({ ...registerForm, email: event.target.value, verificationCode: '' })} required /></span></label>
-            <button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : 'Send verification code'}</button>
-            <label><span>Email code</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label>
+            {accountType !== 'BUSINESS' && <><button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : 'Send verification code'}</button><label><span>Email code</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label></>}
             <label><span>Password</span><span className="public-auth-input"><LockKeyhole size={17} /><input type={showPassword ? 'text' : 'password'} autoComplete="new-password" minLength="8" placeholder="At least 8 characters" value={registerForm.password} onChange={(event) => setRegisterForm({ ...registerForm, password: event.target.value })} required /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></span></label>
             <TurnstileWidget theme="dark" onVerify={setTurnstileToken} onExpire={clearTurnstileToken} onError={clearTurnstileToken} />
             <button className="public-auth-submit" type="submit" disabled={loading || !turnstileToken}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : 'Create account'}{!loading && <Check size={17} />}</button>

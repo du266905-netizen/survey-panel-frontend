@@ -27,3 +27,22 @@ export function VerificationLineArt({ className = '' }) {
     </svg>
   );
 }
+
+export function ResearchBriefArt({ className = '' }) {
+  return (
+    <svg className={`research-brief-art ${className}`} viewBox="0 0 520 420" fill="none" aria-hidden="true">
+      <path className="research-brief-art-orbit" d="M68 108C123 27 248 31 308 105c49 61 109 67 162 8" />
+      <rect className="research-brief-art-paper" x="132" y="74" width="235" height="272" rx="18" />
+      <rect x="170" y="114" width="75" height="14" rx="7" />
+      <path d="M170 161h147M170 196h112M170 231h126" />
+      <rect className="research-brief-art-check" x="169" y="260" width="28" height="28" rx="7" />
+      <path d="m176 274 7 7 13-15" />
+      <path d="M215 274h96" />
+      <circle className="research-brief-art-node" cx="338" cy="89" r="18" />
+      <path d="m330 89 6 6 11-13" />
+      <path className="research-brief-art-spark" d="m91 244 5 12 12 5-12 5-5 12-5-12-12-5 12-5 5-12Z" />
+      <path className="research-brief-art-spark research-brief-art-spark--small" d="m420 210 3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8Z" />
+      <circle className="research-brief-art-dot" cx="406" cy="295" r="7" />
+    </svg>
+  );
+}

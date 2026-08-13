@@ -3,7 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import { HomeFooter } from '../components/HomeLegacySections';
 import PublicSiteHeader from '../components/PublicSiteHeader';
-import { ConnectionLineArt } from '../components/ResearchLineArt';
+import { ResearchBriefArt } from '../components/ResearchLineArt';
 import './Business.css';
 
 const services = [
@@ -28,7 +28,7 @@ export default function Business() {
             <div className="business-hero-actions"><Link className="business-button" to="/business/access">Start a project <ArrowRight size={17} /></Link><a className="business-text-link" href="#how-it-works">How it works</a></div>
           </div>
           <aside className="business-hero-visual" aria-label="Illustration of research collaboration">
-            <ConnectionLineArt />
+            <ResearchBriefArt />
             <div className="business-brief-preview">
               <p>PROJECT BRIEF</p><strong>What should we learn before we move?</strong>
               <div><span>Audience</span><b>People relevant to your question</b></div>

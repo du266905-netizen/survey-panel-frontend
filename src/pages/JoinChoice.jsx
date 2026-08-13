@@ -2,7 +2,6 @@ import { ArrowRight, BriefcaseBusiness, CircleUserRound, ShieldCheck } from 'luc
 import { Link } from 'react-router-dom';
 import { HomeFooter } from '../components/HomeLegacySections';
 import PublicSiteHeader from '../components/PublicSiteHeader';
-import { ConnectionLineArt } from '../components/ResearchLineArt';
 import './Business.css';
 
 export default function JoinChoice() {
@@ -11,7 +10,6 @@ export default function JoinChoice() {
       <PublicSiteHeader />
       <section className="join-choice-hero">
         <div className="business-container">
-          <ConnectionLineArt className="join-choice-line-art" />
           <h1>Make your next insight count.</h1>
           <p className="business-lede">Share your perspective in studies that suit you, or bring us a question worth answering.</p>
           <div className="join-choice-grid">
