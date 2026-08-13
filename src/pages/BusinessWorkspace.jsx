@@ -8,6 +8,7 @@ import './Business.css';
 
 const emptyProject = { title: '', researchGoal: '', audienceDescription: '', studyFormat: 'SURVEY', countries: '', languages: '', targetParticipants: '', estimatedMinutes: '', timeline: '', incentiveBudget: 'NEED_GUIDANCE', additionalContext: '' };
 const statusLabel = { RECEIVED: 'Received', REVIEW: 'In review', PROPOSAL: 'Proposal ready', CONFIRMED: 'Confirmed', RECRUITING: 'Recruiting', COMPLETED: 'Completed' };
+const projectFilters = [['ALL', 'All'], ['RECEIVED', 'Received'], ['REVIEW', 'In review'], ['PROPOSAL', 'Proposal ready'], ['CONFIRMED', 'Confirmed'], ['COMPLETED', 'Completed']];
 
 const projectTypes = {
   questionnaire: {
@@ -38,12 +39,14 @@ export default function BusinessWorkspace() {
   const [openChooser, setOpenChooser] = useState(false);
   const [openForm, setOpenForm] = useState(false);
   const [projectType, setProjectType] = useState('questionnaire');
+  const [activeFilter, setActiveFilter] = useState('ALL');
   const [form, setForm] = useState(emptyProject);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
 
   const selectedType = projectTypes[projectType];
   const isQuestionnaire = projectType === 'questionnaire';
+  const visibleProjects = activeFilter === 'ALL' ? workspace.projects : workspace.projects.filter((project) => project.status === activeFilter);
 
   useEffect(() => {
     let active = true;
@@ -89,17 +92,18 @@ export default function BusinessWorkspace() {
         <aside><p>WORKSPACE</p><strong>Projects</strong><span>Create a questionnaire or scope a tailored study. Each request is reviewed before work begins.</span><Link to="/business">About Business research <ArrowRight size={14} /></Link></aside>
         <section className="business-projects">
           <div className="business-projects-head">
-            <div><p className="business-eyebrow">PROJECTS</p><h1>Choose how to begin.</h1><p>Start with a custom questionnaire when you need structured feedback, or a tailored study when the method needs to fit the decision.</p></div>
+            <div><p className="business-eyebrow">RESEARCH WORKSPACE</p><h1>Projects</h1><p>Start a custom questionnaire for structured feedback, or a tailored study when the method needs to fit the decision.</p></div>
             <button className="business-button" type="button" onClick={() => setOpenChooser(true)}><Plus size={17} /> New project</button>
           </div>
           {message && <p className="business-workspace-message">{message}</p>}
           {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> Loading workspace</div> : workspace.projects.length ? (
-            <div className="business-project-list">
-              {workspace.projects.map((project) => {
+            <><div className="business-project-toolbar" role="tablist" aria-label="Filter projects">{projectFilters.map(([value, label]) => <button key={value} type="button" role="tab" aria-selected={activeFilter === value} className={activeFilter === value ? 'is-active' : ''} onClick={() => setActiveFilter(value)}>{label} <span>{value === 'ALL' ? workspace.projects.length : workspace.projects.filter((project) => project.status === value).length}</span></button>)}</div><div className="business-project-list">
+              {visibleProjects.map((project) => {
                 const type = typeForProject(project);
                 return <article key={project.id}><div><span className={`business-status status-${String(project.status).toLowerCase()}`}>{statusLabel[project.status] || project.status}</span><p className="business-project-kind">{type.eyebrow}</p><h2>{project.title}</h2><p>{project.researchGoal}</p></div><dl><div><dt>Format</dt><dd>{project.studyFormat.replaceAll('_', ' ').toLowerCase()}</dd></div><div><dt>Audience</dt><dd>{project.audienceDescription}</dd></div><div><dt>Updated</dt><dd>{new Date(project.updatedAt).toLocaleDateString()}</dd></div></dl></article>;
               })}
-            </div>
+              {!visibleProjects.length && <div className="business-project-filter-empty"><FilePenLine size={22} /><strong>No projects in this view.</strong><span>Choose another status or start a new project.</span></div>}
+            </div></>
           ) : (
             <div className="business-start-grid">
               {Object.entries(projectTypes).map(([typeKey, type]) => {

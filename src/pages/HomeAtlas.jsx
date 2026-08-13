@@ -269,7 +269,7 @@ export default function HomeAtlas() {
             className="atlas-node--business"
             to="/business"
             eyebrow="BUSINESS"
-            title="Bring a research question."
+            title="Custom questionnaires and tailored studies."
             image={businessHandshake}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}

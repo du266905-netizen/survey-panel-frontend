@@ -24,29 +24,29 @@ export default function Business() {
         <div className="business-container business-hero-layout">
           <div>
             <p className="business-eyebrow">BUSINESS RESEARCH</p>
-            <h1>Custom questionnaires and research, built around your next decision.</h1>
-            <p className="business-lede">Choose a structured questionnaire or a tailored study. We review the objective, method, and practical scope with you before work begins.</p>
-            <div className="business-hero-actions"><Link className="business-button" to="/business/access">Open research workspace <ArrowRight size={17} /></Link><a className="business-text-link" href="#how-it-works">Our approach</a></div>
+            <h1>Research built around a decision.</h1>
+            <p className="business-lede">Custom questionnaires and tailored studies for teams that need credible evidence before they act. Start with a concise enquiry; scope and next steps are reviewed with you.</p>
+            <div className="business-hero-actions"><Link className="business-button" to="/business/access">Discuss a project <ArrowRight size={17} /></Link><a className="business-text-link" href="#how-it-works">How it works</a></div>
           </div>
           <aside className="business-hero-visual" aria-label="Illustration of research collaboration">
             <div className="business-brief-preview">
-              <p>RESEARCH REQUEST</p><strong>Choose the right format for the decision ahead.</strong>
-              <div><span>Option one</span><b>Custom questionnaire</b></div>
-              <div><span>Option two</span><b>Tailored research study</b></div>
-              <div><span>Next step</span><b>Scope review and clear plan</b></div>
+              <p>RESEARCH OUTLINE</p><strong>Evidence before the next decision.</strong>
+              <div><span>Service</span><b>Custom questionnaire or tailored study</b></div>
+              <div><span>Scope</span><b>Audience, method, and timing</b></div>
+              <div><span>Next step</span><b>Review the right approach together</b></div>
             </div>
           </aside>
         </div>
       </section>
       <section id="how-it-works" className="business-section">
-        <div className="business-container"><p className="business-eyebrow">HOW WORK BEGINS</p><h2>Pick the format. Make the scope clear.</h2><div className="business-steps">
-          <article><ClipboardPenLine /><span>01</span><h3>Choose a route</h3><p>Start a custom questionnaire for structured feedback, or a tailored study for deeper qualitative work.</p></article>
-          <article><FileCheck2 /><span>02</span><h3>Define the brief</h3><p>Set the decision, audience, timing, regions, and any practical constraints in one request.</p></article>
-          <article><UsersRound /><span>03</span><h3>Review the plan</h3><p>We confirm the workable method and scope before the project progresses in your workspace.</p></article>
+        <div className="business-container"><p className="business-eyebrow">HOW IT STARTS</p><h2>A practical route from question to research plan.</h2><div className="business-steps">
+          <article><ClipboardPenLine /><span>01</span><h3>Share the decision</h3><p>Outline the decision, audience, region, and evidence you need to move forward.</p></article>
+          <article><FileCheck2 /><span>02</span><h3>Scope the right method</h3><p>We review whether a questionnaire, interview, usability session, or discussion fits the work.</p></article>
+          <article><UsersRound /><span>03</span><h3>Manage the project</h3><p>Once agreed, project status and the next confirmed step are visible in one workspace.</p></article>
         </div></div>
       </section>
-      <section className="business-section business-section--soft"><div className="business-container"><p className="business-eyebrow">WHAT WE CAN HELP WITH NOW</p><div className="business-service-grid">{services.map(([title, copy]) => <article key={title}><CheckCircle2 size={19} /><h3>{title}</h3><p>{copy}</p></article>)}</div><figure className="business-editorial-illustration"><img src={researchCollaboration} alt="Two people discussing research feedback" loading="lazy" decoding="async" /><figcaption><span>START WITH A CONVERSATION</span><strong>Good research begins with a clear question and the people who can answer it.</strong></figcaption></figure></div></section>
-      <section className="business-cta"><div className="business-container"><div><p className="business-eyebrow">START A PROJECT</p><h2>Choose a questionnaire or a tailored study.</h2></div><Link className="business-button" to="/business/access">Open research workspace <ArrowRight size={17} /></Link></div></section>
+      <section className="business-section business-section--soft"><div className="business-container"><p className="business-eyebrow">SERVICES</p><div className="business-service-grid">{services.map(([title, copy]) => <article key={title}><CheckCircle2 size={19} /><h3>{title}</h3><p>{copy}</p></article>)}</div><figure className="business-editorial-illustration"><img src={researchCollaboration} alt="Two people discussing research feedback" loading="lazy" decoding="async" /><figcaption><span>START WITH A CONVERSATION</span><strong>Good research begins with a clear decision and the people who can inform it.</strong></figcaption></figure></div></section>
+      <section className="business-cta"><div className="business-container"><div><p className="business-eyebrow">START A CONVERSATION</p><h2>Tell us the decision. We’ll help define the research.</h2></div><Link className="business-button" to="/business/access">Discuss a project <ArrowRight size={17} /></Link></div></section>
       <HomeFooter />
     </main>
   );

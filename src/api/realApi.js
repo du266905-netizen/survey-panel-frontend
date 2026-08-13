@@ -189,6 +189,21 @@ export const createBusinessProject = async (payload) => {
   return { data: response.data };
 };
 
+export const submitBusinessInquiry = async ({ contactName, email, organizationType, region, content }) => {
+  const response = await apiClient.post('/api/support/handoff', {
+    contactEmail: email,
+    contactName,
+    category: 'OTHER',
+    subject: 'Business research enquiry',
+    source: 'PUBLIC_HOME_CONTACT',
+    messages: [{
+      role: 'user',
+      content: `Organisation type: ${organizationType}\nRegion: ${region}\n\n${content}`,
+    }],
+  });
+  return { data: response.data };
+};
+
 export const sendEmailCode = async ({ email }) => {
   const response = await apiClient.post('/api/auth/send-email-code', { email });
   return { data: response.data };
