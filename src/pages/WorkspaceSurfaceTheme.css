@@ -1024,7 +1024,7 @@
 .research-opportunity-status.is-not_selected { border-color: #ded5c7; background: #f7f3ed; color: #786b5c; }
 .research-opportunity-status.is-completed { border-color: #b9d2bd; background: #e7f1e8; color: #2d6540; }
 .research-opportunity-skeleton { min-height: 337px; border-radius: 15px; background: linear-gradient(110deg, #f0f3ed 30%, #fbfcf9 46%, #f0f3ed 62%); background-size: 230% 100%; animation: research-opportunity-loading 1.35s ease infinite; }
-.research-opportunities-empty { border: 1px dashed rgba(50, 77, 57, .25); border-radius: 15px; background: rgba(249, 251, 247, .8); color: #657168; padding: 33px 24px; font-size: 13px; font-weight: 700; text-align: center; }
+.research-opportunities-empty { display: grid; min-height: 210px; place-items: center; align-content: center; gap: 4px; overflow: hidden; border: 1px dashed rgba(50, 77, 57, .25); border-radius: 15px; background: rgba(249, 251, 247, .8); color: #657168; padding: 20px 24px; font-size: 13px; font-weight: 700; text-align: center; }.research-opportunities-empty img { display: block; width: min(100%, 215px); height: 145px; margin: -30px 0 -14px; object-fit: cover; object-position: 52% 39%; mix-blend-mode: multiply; opacity: .88; }.research-opportunities-empty span { max-width: 420px; }
 .research-opportunities-error { margin: 12px 0 0; color: #a14a3b; font-size: 12px; font-weight: 750; }
 @keyframes research-opportunity-loading { to { background-position: -130% 0; } }
 @media (max-width: 520px) { .research-profile-task-card { width: 100%; } .research-profile-task-art { height: 204px; } }

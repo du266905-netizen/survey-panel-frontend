@@ -427,7 +427,7 @@
   animation: atlas-dash 3.4s linear infinite;
   transition: stroke 180ms ease, stroke-width 180ms ease, opacity 180ms ease;
 }
-.home-atlas.is-news .atlas-wire--news, .home-atlas.is-survey .atlas-wire--survey, .home-atlas.is-community .atlas-wire--community { stroke: #c1893f; stroke-width: 2.45; }
+.home-atlas.is-news .atlas-wire--news, .home-atlas.is-survey .atlas-wire--survey, .home-atlas.is-community .atlas-wire--community, .home-atlas.is-business .atlas-wire--business { stroke: #c1893f; stroke-width: 2.45; }
 
 .atlas-map-typewriter {
   position: absolute;
@@ -480,7 +480,9 @@
 .atlas-node--news { top: 13%; left: 0; animation: atlas-float-one 6.2s ease-in-out infinite; }
 .atlas-node--survey { right: 1%; bottom: 13%; animation: atlas-float-two 7.5s ease-in-out infinite; }
 .atlas-node--community { bottom: 2%; left: 19%; animation: atlas-float-three 6.8s ease-in-out infinite; }
+.atlas-node--business { top: 12%; right: 0; animation: atlas-float-four 7.1s ease-in-out infinite; }
 .atlas-node--community .atlas-node-image { background: #d7e0da; }
+.atlas-node--business .atlas-node-image { background: #f0e8de; }
 
 @keyframes atlas-spin { to { transform: rotate(360deg); } }
 @keyframes atlas-spin-reverse { to { transform: rotate(-360deg); } }
@@ -489,6 +491,7 @@
 @keyframes atlas-float-one { 50% { transform: translate(8px, -13px) rotate(-0.7deg); } }
 @keyframes atlas-float-two { 50% { transform: translate(-10px, -14px) rotate(0.8deg); } }
 @keyframes atlas-float-three { 50% { transform: translate(8px, 8px) rotate(-0.6deg); } }
+@keyframes atlas-float-four { 50% { transform: translate(-7px, -9px) rotate(0.55deg); } }
 @keyframes atlas-signal-one { 50% { transform: translate(22px, -18px) scale(1.35); } }
 @keyframes atlas-signal-two { 50% { transform: translate(-17px, 13px) scale(1.4); } }
 @keyframes atlas-signal-three { 50% { transform: translate(11px, -20px) scale(1.55); } }
@@ -547,7 +550,7 @@
   .atlas-map { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; min-height: 0; margin-top: 48px; }
   .atlas-map::before, .atlas-map::after, .atlas-wires, .atlas-orbit, .atlas-signal { display: none; }
   .atlas-map-typewriter { position: relative; top: auto; left: auto; min-width: 0; max-width: 100%; flex-wrap: wrap; row-gap: 4px; grid-column: 1 / -1; justify-self: start; transform: none; }
-  .atlas-node, .atlas-node--news, .atlas-node--survey, .atlas-node--community { position: relative; inset: auto; width: auto; max-width: none; animation: none; }
+  .atlas-node, .atlas-node--news, .atlas-node--survey, .atlas-node--community, .atlas-node--business { position: relative; inset: auto; width: auto; max-width: none; animation: none; }
   .atlas-node:hover, .atlas-node:focus-visible { transform: translateY(-3px); }
   .atlas-node { grid-template-columns: 54px minmax(0, 1fr); gap: 10px; }
   .atlas-node-image { width: 54px; height: 54px; }

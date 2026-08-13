@@ -7,6 +7,7 @@ import CookieConsentBanner from '../components/CookieConsentBanner';
 import { useAuth } from '../components/AuthContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import communityIllustration from '../assets/home/community-illustration.png';
+import businessHandshake from '../assets/illustrations/business-handshake.png';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
 import './HomeAtlas.css';
@@ -43,7 +44,7 @@ function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onIna
   );
 }
 
-const atlasPrompts = ['Read the latest news', 'Join a survey', 'Share your view'];
+const atlasPrompts = ['Read the latest news', 'Join a survey', 'Share your view', 'Bring a research question'];
 
 function AtlasTypewriter() {
   const [promptIndex, setPromptIndex] = useState(0);
@@ -226,6 +227,7 @@ export default function HomeAtlas() {
             <path className="atlas-wire atlas-wire--news" d="M 605 338 C 499 258 449 184 236 174" />
             <path className="atlas-wire atlas-wire--survey" d="M 603 340 C 722 430 827 487 1004 506" />
             <path className="atlas-wire atlas-wire--community" d="M 603 340 C 521 457 421 533 255 570" />
+            <path className="atlas-wire atlas-wire--business" d="M 605 338 C 714 257 818 180 1000 164" />
           </svg>
           <AtlasTypewriter />
 
@@ -258,6 +260,17 @@ export default function HomeAtlas() {
             eyebrow="COMMUNITY"
             title="Join the community."
             image={communityIllustration}
+            onActive={setActiveNode}
+            onInactive={() => setActiveNode('')}
+          />
+
+          <AtlasNode
+            name="business"
+            className="atlas-node--business"
+            to="/business"
+            eyebrow="BUSINESS"
+            title="Bring a research question."
+            image={businessHandshake}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
           />

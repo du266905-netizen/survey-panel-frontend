@@ -6,6 +6,7 @@ import { useProfileSurvey } from '../components/ProfileSurveyContext';
 import { useAuth } from '../components/AuthContext';
 import { isPanelistRole } from '../utils/roles';
 import { applyToResearchOpportunity, getResearchOpportunities } from '../api/realApi';
+import participantChecklistCard from '../assets/illustrations/participant-checklist-card.png';
 
 const applicationLabels = {
   APPLIED: 'Applied',
@@ -163,7 +164,8 @@ export default function ResearchActivities() {
               </div>
             ) : (
               <div className="research-opportunities-empty">
-                When we find research that fits you, we’ll let you know right away.
+                <img src={participantChecklistCard} alt="" aria-hidden="true" />
+                <span>When we find research that fits you, we’ll let you know right away.</span>
               </div>
             )}
             {opportunitiesError && <p className="research-opportunities-error" role="alert">{opportunitiesError}</p>}
