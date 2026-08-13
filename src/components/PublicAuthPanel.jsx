@@ -49,7 +49,7 @@ function loadGoogleScript() {
   return googleScriptPromise;
 }
 
-function GoogleButton({ mode, agreedToTerms, onCredential, onError }) {
+function GoogleButton({ mode, onCredential, onError }) {
   const containerRef = useRef(null);
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -62,10 +62,6 @@ function GoogleButton({ mode, agreedToTerms, onCredential, onError }) {
         window.google.accounts.id.initialize({
           client_id: clientId,
           callback: (response) => {
-            if (mode === 'register' && !agreedToTerms) {
-              onError('Please agree to the Terms of Service and Privacy Policy before continuing.');
-              return;
-            }
             if (!response.credential) {
               onError('Google did not return a sign-in credential. Please try again.');
               return;
@@ -90,7 +86,7 @@ function GoogleButton({ mode, agreedToTerms, onCredential, onError }) {
     return () => {
       active = false;
     };
-  }, [agreedToTerms, clientId, mode, onCredential, onError]);
+  }, [clientId, mode, onCredential, onError]);
 
   if (!clientId) {
     return (
@@ -112,7 +108,6 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const [registerExpanded, setRegisterExpanded] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ displayName: '', email: '', password: '', verificationCode: '', organizationType: '', region: '' });
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -222,7 +217,6 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    if (!agreedToTerms) return showError('Please agree to the Terms of Service and Privacy Policy.');
     if (accountType !== 'BUSINESS' && !/^\d{6}$/.test(registerForm.verificationCode)) return showError('Enter the 6-digit email verification code.');
     setLoading(true);
     setError('');
@@ -267,15 +261,10 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
         <h2 id="public-auth-title">{isLogin ? 'Continue where you left off.' : accountType === 'BUSINESS' ? 'Create your research workspace.' : 'Your perspective belongs here.'}</h2>
         <p className="public-auth-intro">{isLogin ? 'Sign in to continue to your workspace.' : accountType === 'BUSINESS' ? 'Use your workspace to request a custom questionnaire or a tailored research study.' : 'Create a participant account, verify your email, and begin your first survey.'}</p>
 
-        {!isLogin && (
-          <label className="public-auth-consent">
-            <input type="checkbox" checked={agreedToTerms} onChange={(event) => setAgreedToTerms(event.target.checked)} />
-            <span>I agree to the <Link to="/terms" target="_blank">Terms</Link> and <Link to="/privacy" target="_blank">Privacy Policy</Link>.</span>
-          </label>
-        )}
+        <p className="public-auth-consent">By {isLogin ? 'signing in' : 'creating an account'}, you agree to the <Link to="/terms" target="_blank">Terms of Service</Link> and <Link to="/privacy" target="_blank">Privacy Policy</Link>.</p>
 
         <div className={loading ? 'pointer-events-none opacity-60' : ''}>
-          {accountType !== 'BUSINESS' ? <GoogleButton mode={mode} agreedToTerms={agreedToTerms} onCredential={handleGoogleCredential} onError={showError} /> : null}
+          {accountType !== 'BUSINESS' ? <GoogleButton mode={mode} onCredential={handleGoogleCredential} onError={showError} /> : null}
         </div>
 
         {accountType !== 'BUSINESS' ? <div className="public-auth-divider"><span>or continue with email</span></div> : null}

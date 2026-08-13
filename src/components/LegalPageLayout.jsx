@@ -13,7 +13,7 @@ export function LegalSection({ number, id, title, children }) {
   );
 }
 
-export default function LegalPageLayout({ eyebrow, title, intro, sections, children }) {
+export default function LegalPageLayout({ eyebrow, title, intro, sections, children, audience = 'For Guanyi Media users', effectiveDate = 'Effective August 13, 2026' }) {
   return (
     <main className="legal-page">
       <div className="legal-page-grain" aria-hidden="true" />
@@ -23,8 +23,8 @@ export default function LegalPageLayout({ eyebrow, title, intro, sections, child
           <h1>{title}</h1>
           <p className="legal-hero-copy">{intro}</p>
           <div className="legal-meta">
-            <span>Effective June 6, 2026</span>
-            <span>For registered Guanyi Media panelists</span>
+            <span>{effectiveDate}</span>
+            <span>{audience}</span>
           </div>
         </div>
       </section>
