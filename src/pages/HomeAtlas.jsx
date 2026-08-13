@@ -7,7 +7,7 @@ import CookieConsentBanner from '../components/CookieConsentBanner';
 import { useAuth } from '../components/AuthContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import communityIllustration from '../assets/home/community-illustration.png';
-import businessHandshake from '../assets/illustrations/business-handshake.png';
+import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
 import './HomeAtlas.css';

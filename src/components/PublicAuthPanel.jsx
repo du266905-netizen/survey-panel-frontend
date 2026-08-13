@@ -111,7 +111,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const { setUser } = useAuth();
   const [registerExpanded, setRegisterExpanded] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ displayName: '', email: '', password: '', verificationCode: '', organizationName: '', organizationType: '', roleTitle: '', phone: '' });
+  const [registerForm, setRegisterForm] = useState({ displayName: '', email: '', password: '', verificationCode: '', organizationType: '', region: '' });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -227,8 +227,8 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
     setLoading(true);
     setError('');
     try {
-      if (accountType === 'BUSINESS' && (!registerForm.organizationName.trim() || !registerForm.organizationType || !registerForm.roleTitle || !registerForm.phone.trim())) {
-        return showError('Please complete your organization, research role, and phone number.');
+      if (accountType === 'BUSINESS' && (!registerForm.organizationType || !registerForm.region.trim())) {
+        return showError('Please choose your organization type and region.');
       }
       if (accountType !== 'BUSINESS') await verifyEmailCode({ email: registerForm.email, code: registerForm.verificationCode });
       finishAuth(
@@ -264,8 +264,8 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
 
       <div className="public-auth-content">
         <p className="public-auth-eyebrow">{isLogin ? 'Welcome back' : accountType === 'BUSINESS' ? 'Business workspace' : 'Join the verified panel'}</p>
-        <h2 id="public-auth-title">{isLogin ? 'Continue where you left off.' : accountType === 'BUSINESS' ? 'Start with a real research question.' : 'Your perspective belongs here.'}</h2>
-        <p className="public-auth-intro">{isLogin ? 'Sign in to continue to your workspace.' : accountType === 'BUSINESS' ? 'Create a business account to submit a project brief and receive a tailored proposal.' : 'Create a participant account, verify your email, and begin your first survey.'}</p>
+        <h2 id="public-auth-title">{isLogin ? 'Continue where you left off.' : accountType === 'BUSINESS' ? 'Create your research workspace.' : 'Your perspective belongs here.'}</h2>
+        <p className="public-auth-intro">{isLogin ? 'Sign in to continue to your workspace.' : accountType === 'BUSINESS' ? 'Use your workspace to request a custom questionnaire or a tailored research study.' : 'Create a participant account, verify your email, and begin your first survey.'}</p>
 
         {!isLogin && (
           <label className="public-auth-consent">
@@ -294,10 +294,8 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
             {accountType !== 'BUSINESS' && <button className="public-auth-back" type="button" onClick={() => { setRegisterExpanded(false); resetFormScroll(); }}><ChevronLeft size={16} /> Other sign-up options</button>}
             <label><span>{accountType === 'BUSINESS' ? 'Contact name' : 'Display name'}</span><span className="public-auth-input"><input type="text" autoComplete="name" placeholder={accountType === 'BUSINESS' ? 'Your name' : 'How should we call you?'} value={registerForm.displayName} onChange={(event) => setRegisterForm({ ...registerForm, displayName: event.target.value })} required /></span></label>
             {accountType === 'BUSINESS' && <>
-              <label><span>Organization</span><span className="public-auth-input"><input type="text" autoComplete="organization" placeholder="Your company, institution, or practice" value={registerForm.organizationName} onChange={(event) => setRegisterForm({ ...registerForm, organizationName: event.target.value })} required /></span></label>
               <label><span>Organization type</span><span className="public-auth-input"><select value={registerForm.organizationType} onChange={(event) => setRegisterForm({ ...registerForm, organizationType: event.target.value })} required><option value="">Select one</option><option value="BUSINESS">Business</option><option value="RESEARCH_OR_EDUCATION">Research or education</option><option value="NONPROFIT_OR_PUBLIC">Nonprofit or public organization</option><option value="INDEPENDENT_RESEARCHER">Independent researcher</option></select></span></label>
-              <label><span>Research role</span><span className="public-auth-input"><select value={registerForm.roleTitle} onChange={(event) => setRegisterForm({ ...registerForm, roleTitle: event.target.value })} required><option value="">Select one</option><option value="Analytics / data science">Analytics / data science</option><option value="Customer success / service">Customer success / service</option><option value="Engineering">Engineering</option><option value="Marketing">Marketing</option><option value="Product / UX design">Product / UX design</option><option value="Product management">Product management</option><option value="Research operations">Research operations</option><option value="UX / user research">UX / user research</option></select></span></label>
-              <label><span>Phone number</span><span className="public-auth-input"><input type="tel" autoComplete="tel" placeholder="Country code and number" value={registerForm.phone} onChange={(event) => setRegisterForm({ ...registerForm, phone: event.target.value })} required /></span></label>
+              <label><span>Region</span><span className="public-auth-input"><input type="text" autoComplete="address-level1" placeholder="Country or region" value={registerForm.region} onChange={(event) => setRegisterForm({ ...registerForm, region: event.target.value })} required /></span></label>
             </>}
             <label><span>Email address</span><span className="public-auth-input"><Mail size={17} /><input type="email" autoComplete="email" placeholder="you@example.com" value={registerForm.email} onChange={(event) => setRegisterForm({ ...registerForm, email: event.target.value, verificationCode: '' })} required /></span></label>
             {accountType !== 'BUSINESS' && <><button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : 'Send verification code'}</button><label><span>Email code</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label></>}

@@ -13,7 +13,7 @@ export default function BusinessAccess() {
     <main className="business-access-page">
       <Link className="business-access-brand" to="/business"><ArrowLeft size={16} /> Business research</Link>
       <div className="business-access-layout">
-        <section className="business-access-intro"><VerificationLineArt /><p className="business-eyebrow">YOUR BUSINESS WORKSPACE</p><h1>Move from a question to a real project.</h1><p>Create a separate business account to submit project briefs, receive proposals, and follow each approved project.</p><ul><li>Your contact details are used to manage your project.</li><li>Participants only see the information relevant to taking part.</li><li>Client identity stays private unless you choose to disclose it.</li></ul></section>
+        <section className="business-access-intro"><VerificationLineArt /><p className="business-eyebrow">RESEARCH WORKSPACE</p><h1>A clear place to start a study.</h1><p>Create a workspace to request a custom questionnaire or a tailored research study, then track each approved project in one place.</p><ul><li>Your business profile uses only your name, email, organization type, and region; a password protects access.</li><li>Project details stay within your workspace until a study is agreed.</li></ul></section>
         <div className="business-access-panel"><PublicAuthPanel mode={mode} onModeChange={setMode} accountType="BUSINESS" /></div>
       </div>
     </main>

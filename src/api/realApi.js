@@ -155,7 +155,7 @@ export const googleLogin = async ({ credential, agreedToTermsAt, referredBy }) =
   };
 };
 
-export const register = async ({ email, password, displayName, verificationCode, turnstileToken, agreedToTermsAt, referredBy, accountType, organizationName, organizationType, roleTitle }) => {
+export const register = async ({ email, password, displayName, verificationCode, turnstileToken, agreedToTermsAt, referredBy, accountType, organizationType, region }) => {
   const response = await apiClient.post('/api/auth/register', {
     email,
     password,
@@ -166,9 +166,8 @@ export const register = async ({ email, password, displayName, verificationCode,
     referredBy,
     referralDeviceId: getReferralDeviceId(),
     accountType,
-    organizationName,
     organizationType,
-    roleTitle,
+    region,
   });
   persistSession(response.data);
 

@@ -3,6 +3,7 @@ import { ArrowUpRight, ChevronDown, Menu, Search, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
+import { isBusinessRole } from '../utils/roles';
 import './PublicSiteHeader.css';
 
 const navigation = [
@@ -142,7 +143,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       <div className="atlas-nav-actions">
         {searchField('atlas-nav-search')}
         {!user && <Link className="atlas-sign-in" to="/login">Sign in</Link>}
-        <Link className="atlas-register" to={user ? (user.role === 'business' ? '/business/workspace' : '/dashboard') : '/join'}>
+        <Link className="atlas-register" to={user ? (isBusinessRole(user.role) ? '/business/workspace' : '/dashboard') : '/join'}>
           {user ? 'Open workspace' : 'Join us'}
           <ArrowUpRight size={17} strokeWidth={1.8} />
         </Link>
