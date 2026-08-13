@@ -136,6 +136,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
               </div>
             </div>
             {index === 0 && <Link className="atlas-nav-link" to="/news" onClick={closeNavigation}>News Wall</Link>}
+            {index === 1 && <Link className="atlas-nav-link" to="/business" onClick={closeNavigation}>For organisations</Link>}
           </Fragment>
         ))}
       </nav>
@@ -162,6 +163,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
         {searchField('atlas-mobile-search')}
         <Link className="atlas-mobile-direct-link" to="/news" onClick={closeNavigation}>News Wall <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
+        <Link className="atlas-mobile-direct-link" to="/business" onClick={closeNavigation}>For organisations <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         {navigation.map((group) => (
           <div className="atlas-mobile-group" key={group.label}>
             <p>{group.label}</p>

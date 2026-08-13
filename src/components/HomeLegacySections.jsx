@@ -27,6 +27,13 @@ const footerGroups = [
     ],
   },
   {
+    label: 'For organisations',
+    links: [
+      { label: 'Custom questionnaires', to: '/business' },
+      { label: 'Tailored research', to: '/business' },
+    ],
+  },
+  {
     label: 'Standards',
     links: [
       { label: 'Privacy', to: '/privacy' },
@@ -143,7 +150,7 @@ export function HomeFooter() {
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">
-        <div className="home-footer-brand"><div className="home-footer-identity"><img className="home-footer-logo-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>Clear participation, considered rewards, and a place for real perspectives.</p><a href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
+        <div className="home-footer-brand"><div className="home-footer-identity"><img className="home-footer-logo-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>A considered research space for participants and organisations: clear opportunities, credible input, and practical next steps.</p><a href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
         <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={item.to}>{item.label}</Link>)}</section>)}</nav>
       </div>
       <div className="home-continuation-container home-footer-bottom"><p>© 2026 GuanyiSearch. All rights reserved.</p><div><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms of Service</Link></div></div>
