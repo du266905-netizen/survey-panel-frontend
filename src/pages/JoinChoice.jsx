@@ -25,8 +25,8 @@ export default function JoinChoice() {
               <span className="join-choice-icon"><BriefcaseBusiness size={26} strokeWidth={1.6} /></span>
               <p>FOR ORGANIZATIONS &amp; RESEARCHERS</p>
               <h2>Run research with us</h2>
-              <p>Start with a concise enquiry for a custom questionnaire or a tailored study, then agree the appropriate scope together.</p>
-              <ul><li>Custom questionnaires, interviews, and usability sessions</li><li>A direct enquiry, not a sample-marketplace promise</li><li>Confirmed projects tracked in one workspace</li></ul>
+              <p>Start with a concise enquiry for a custom questionnaire or a tailored study, built around the decision your team needs to make.</p>
+              <ul><li>Custom questionnaires, interviews, and usability sessions</li><li>Research shaped around your decision and audience</li><li>One workspace for project planning and progress</li></ul>
               <Link to="/business" className="business-button">Run research with us <ArrowRight size={17} /></Link>
             </article>
           </div>
