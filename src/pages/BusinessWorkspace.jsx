@@ -7,8 +7,8 @@ import Logo from '../components/Logo';
 import './Business.css';
 
 const emptyProject = { title: '', researchGoal: '', audienceDescription: '', studyFormat: 'SURVEY', countries: '', languages: '', targetParticipants: '', estimatedMinutes: '', timeline: '', incentiveBudget: 'NEED_GUIDANCE', additionalContext: '' };
-const statusLabel = { RECEIVED: 'Received', REVIEW: 'In review', PROPOSAL: 'Proposal ready', CONFIRMED: 'Confirmed', RECRUITING: 'Recruiting', COMPLETED: 'Completed' };
-const projectFilters = [['ALL', 'All'], ['RECEIVED', 'Received'], ['REVIEW', 'In review'], ['PROPOSAL', 'Proposal ready'], ['CONFIRMED', 'Confirmed'], ['COMPLETED', 'Completed']];
+const statusLabel = { RECEIVED: 'Received', REVIEW: 'Planning', PROPOSAL: 'Project details', CONFIRMED: 'Active', RECRUITING: 'In field', COMPLETED: 'Completed' };
+const projectFilters = [['ALL', 'All'], ['RECEIVED', 'Received'], ['REVIEW', 'Planning'], ['PROPOSAL', 'Project details'], ['CONFIRMED', 'Active'], ['COMPLETED', 'Completed']];
 
 const projectTypes = {
   questionnaire: {
@@ -74,7 +74,7 @@ export default function BusinessWorkspace() {
       setWorkspace((current) => ({ ...current, projects: [response.data.project, ...current.projects] }));
       setForm(emptyProject);
       setOpenForm(false);
-      setMessage('Your request has been received. We will review the scope and follow up with the next step.');
+      setMessage('Your request has been received. We will be in touch with the next step.');
     } catch (error) {
       setMessage(error.response?.data?.message || 'We could not submit this request. Please review the details and try again.');
     } finally {

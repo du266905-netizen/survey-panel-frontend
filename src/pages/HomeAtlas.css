@@ -11,7 +11,7 @@
   overflow-x: hidden;
   background: var(--atlas-paper);
   color: var(--atlas-ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-reading);
 }
 
 .cookie-consent {
@@ -321,6 +321,7 @@
 }
 .atlas-contact-form label em { color: #879087; font-size: .63rem; font-style: normal; letter-spacing: .06em; }
 .atlas-contact-form input,
+.atlas-contact-form select,
 .atlas-contact-form textarea {
   width: 100%;
   border: 1px solid rgba(47, 76, 62, .22);
@@ -336,7 +337,9 @@
 .atlas-contact-form input { min-height: 43px; padding: 0 12px; }
 .atlas-contact-form textarea { min-height: 92px; padding: 11px 12px; resize: vertical; }
 .atlas-contact-form input:focus,
+.atlas-contact-form select:focus,
 .atlas-contact-form textarea:focus { border-color: rgba(40, 86, 71, .65); background: #fffefd; box-shadow: 0 0 0 3px rgba(75, 116, 91, .12); }
+.atlas-phone-input { display: grid !important; grid-template-columns: minmax(92px, .44fr) minmax(0, 1fr); gap: 8px; }.atlas-phone-input select, .atlas-phone-input input { min-width: 0; }
 .atlas-contact-submit {
   display: inline-flex;
   align-items: center;

@@ -10,6 +10,7 @@ import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
+import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import './HomeAtlas.css';
 
 function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onInactive, soon = false }) {
@@ -104,7 +105,9 @@ export default function HomeAtlas() {
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
+    phoneCountry: 'US',
     phone: '',
+    region: 'US',
     subject: '',
     message: '',
   });
@@ -123,6 +126,7 @@ export default function HomeAtlas() {
     const name = contactForm.name.trim();
     const email = contactForm.email.trim();
     const phone = contactForm.phone.trim();
+    const phonePrefix = phoneCountryOptions.find((option) => option.value === contactForm.phoneCountry)?.dialCode || '';
     const subject = contactForm.subject.trim();
     const message = contactForm.message.trim();
 
@@ -137,12 +141,12 @@ export default function HomeAtlas() {
         subject,
         messages: [{
           role: 'user',
-          content: phone ? `${message}\n\nContact number: ${phone}` : message,
+          content: `${message}${phone ? `\n\nContact number: ${phonePrefix} ${phone}` : ''}\nRegion: ${countryLabel(contactForm.region)}`,
         }],
         contactName: name,
         contactEmail: email,
       });
-      setContactForm({ name: '', email: '', phone: '', subject: '', message: '' });
+      setContactForm({ name: '', email: '', phoneCountry: 'US', phone: '', region: 'US', subject: '', message: '' });
       setContactStatus('Thank you. Your message has been received.');
     } catch (caughtError) {
       setContactStatus(caughtError.response?.data?.message || 'We could not send your message. Please try again.');
@@ -198,7 +202,11 @@ export default function HomeAtlas() {
             </label>
             <label>
               <span>Contact number <em>Optional</em></span>
-              <input name="phone" type="tel" value={contactForm.phone} onChange={updateContactField} autoComplete="tel" maxLength={40} />
+              <span className="atlas-phone-input"><select name="phoneCountry" value={contactForm.phoneCountry} onChange={updateContactField} aria-label="Phone country or territory">{phoneCountryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.dialCode}</option>)}</select><input name="phone" type="tel" inputMode="tel" value={contactForm.phone} onChange={updateContactField} autoComplete="tel-national" maxLength={32} /></span>
+            </label>
+            <label>
+              <span>Country or territory</span>
+              <select name="region" value={contactForm.region} onChange={updateContactField} autoComplete="country">{countryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label}</option>)}</select>
             </label>
             <label>
               <span>Subject</span>

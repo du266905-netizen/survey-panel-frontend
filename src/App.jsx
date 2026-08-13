@@ -127,6 +127,7 @@ export default function App() {
         <Route path="/business" element={<Business />} />
         <Route path="/business/access" element={<BusinessAccess />} />
         <Route path="/business/login" element={<BusinessAccess />} />
+        <Route path="/business/register" element={<BusinessAccess />} />
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />

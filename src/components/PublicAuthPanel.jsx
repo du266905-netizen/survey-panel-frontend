@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Check, ChevronLeft, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { googleLogin, login, register, sendEmailCode, verifyEmailCode } from '../api/realApi';
+import { countryFlag, countryLabel, countryOptions } from '../constants/panelProfileOptions';
 import { useAuth } from './AuthContext';
 import TurnstileWidget from './TurnstileWidget';
 import './PublicAuthPanel.css';
@@ -228,6 +229,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
       finishAuth(
         await register({
           ...registerForm,
+          region: accountType === 'BUSINESS' ? countryLabel(registerForm.region) : registerForm.region,
           turnstileToken,
           agreedToTermsAt: new Date().toISOString(),
           referredBy,
@@ -284,7 +286,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
             <label><span>{accountType === 'BUSINESS' ? 'Contact name' : 'Display name'}</span><span className="public-auth-input"><input type="text" autoComplete="name" placeholder={accountType === 'BUSINESS' ? 'Your name' : 'How should we call you?'} value={registerForm.displayName} onChange={(event) => setRegisterForm({ ...registerForm, displayName: event.target.value })} required /></span></label>
             {accountType === 'BUSINESS' && <>
               <label><span>Organization type</span><span className="public-auth-input"><select value={registerForm.organizationType} onChange={(event) => setRegisterForm({ ...registerForm, organizationType: event.target.value })} required><option value="">Select one</option><option value="BUSINESS">Business</option><option value="RESEARCH_OR_EDUCATION">Research or education</option><option value="NONPROFIT_OR_PUBLIC">Nonprofit or public organization</option><option value="INDEPENDENT_RESEARCHER">Independent researcher</option></select></span></label>
-              <label><span>Region</span><span className="public-auth-input"><input type="text" autoComplete="address-level1" placeholder="Country or region" value={registerForm.region} onChange={(event) => setRegisterForm({ ...registerForm, region: event.target.value })} required /></span></label>
+              <label><span>Region</span><span className="public-auth-input"><select autoComplete="country" value={registerForm.region} onChange={(event) => setRegisterForm({ ...registerForm, region: event.target.value })} required><option value="">Select your country or territory</option>{countryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label}</option>)}</select></span></label>
             </>}
             <label><span>Email address</span><span className="public-auth-input"><Mail size={17} /><input type="email" autoComplete="email" placeholder="you@example.com" value={registerForm.email} onChange={(event) => setRegisterForm({ ...registerForm, email: event.target.value, verificationCode: '' })} required /></span></label>
             {accountType !== 'BUSINESS' && <><button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : 'Send verification code'}</button><label><span>Email code</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label></>}
