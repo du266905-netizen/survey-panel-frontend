@@ -18,6 +18,7 @@ const navigation = [
     label: 'Take part',
     items: [
       { to: '/partners', eyebrow: 'Participation', title: 'Available surveys' },
+      { to: '/news', eyebrow: 'Daily brief', title: 'News Wall' },
       { to: '/wallet', eyebrow: 'Recognition', title: 'Rewards' },
     ],
   },
@@ -97,7 +98,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       </Link>
 
       <nav className="atlas-nav-links" aria-label="Primary navigation">
-        {navigation.map((group, index) => (
+        {navigation.map((group) => (
           <Fragment key={group.label}>
             <div
               className="atlas-nav-group"
@@ -135,10 +136,9 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                 ))}
               </div>
             </div>
-            {index === 0 && <Link className="atlas-nav-link" to="/news" onClick={closeNavigation}>News Wall</Link>}
-            {index === 1 && <Link className="atlas-nav-link" to="/business" onClick={closeNavigation}>For organisations</Link>}
           </Fragment>
         ))}
+        <Link className="atlas-nav-link atlas-nav-link--business" to="/business" onClick={closeNavigation}>For organisations</Link>
       </nav>
 
       <div className="atlas-nav-actions">
@@ -162,7 +162,6 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
 
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
         {searchField('atlas-mobile-search')}
-        <Link className="atlas-mobile-direct-link" to="/news" onClick={closeNavigation}>News Wall <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         <Link className="atlas-mobile-direct-link" to="/business" onClick={closeNavigation}>For organisations <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         {navigation.map((group) => (
           <div className="atlas-mobile-group" key={group.label}>
