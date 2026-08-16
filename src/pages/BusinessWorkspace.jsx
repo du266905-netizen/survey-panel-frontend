@@ -7,13 +7,13 @@ import {
   LoaderCircle,
   LogOut,
   Plus,
+  UserRound,
   UsersRound,
   X,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getBusinessWorkspace } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
-import Logo from '../components/Logo';
 import './Business.css';
 
 const emptyProject = {
@@ -72,7 +72,7 @@ const typeForProject = (project) => (
 );
 
 export default function BusinessWorkspace() {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [workspace, setWorkspace] = useState({ profile: null, projects: [] });
   const [loading, setLoading] = useState(true);
@@ -83,6 +83,7 @@ export default function BusinessWorkspace() {
   const [form, setForm] = useState(emptyProject);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
 
   const selectedType = projectTypes[projectType];
   const isQuestionnaire = projectType === 'questionnaire';
@@ -130,6 +131,10 @@ export default function BusinessWorkspace() {
       setWorkspace((current) => ({ ...current, projects: [response.data.project, ...current.projects] }));
       setForm(emptyProject);
       setOpenForm(false);
+      if (response.data.project.questionnaire) {
+        navigate(`/business/projects/${response.data.project.id}`);
+        return;
+      }
       setMessage('Your project is ready in this workspace.');
     } catch (error) {
       setMessage(error.response?.data?.message || 'We could not create this project. Please check the details and try again.');
@@ -140,17 +145,6 @@ export default function BusinessWorkspace() {
 
   return (
     <main className="business-workspace">
-      <header className="business-workspace-header">
-        <Link to="/business/workspace" aria-label="GuanyiSearch projects"><Logo size="md" /></Link>
-        <button
-          className="business-workspace-logout"
-          type="button"
-          onClick={() => { logout(); navigate('/business/login'); }}
-        >
-          <LogOut size={15} /> Sign out
-        </button>
-      </header>
-
       <div className="business-workspace-body business-workspace-body--rail">
         <aside className="business-workspace-rail" aria-label="Workspace navigation">
           <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
@@ -160,6 +154,13 @@ export default function BusinessWorkspace() {
           <Link to="/business/access" title="Contact sales" aria-label="Contact sales">
             <FileText size={20} />
           </Link>
+          <div className="business-workspace-account">
+            <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label="Account menu" aria-expanded={accountMenuOpen}>
+              <UserRound size={20} />
+              <span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span>
+            </button>
+            {accountMenuOpen && <div><strong>{user?.displayName || 'Client account'}</strong><span>{user?.email}</span><button type="button" onClick={() => { logout(); navigate('/business/login'); }}><LogOut size={15} /> Sign out</button></div>}
+          </div>
         </aside>
 
         <section className="business-projects">
@@ -216,6 +217,7 @@ export default function BusinessWorkspace() {
                         <div><dt>Audience</dt><dd>{project.audienceDescription}</dd></div>
                         <div><dt>Updated</dt><dd>{new Date(project.updatedAt).toLocaleDateString()}</dd></div>
                       </dl>
+                      {project.questionnaire && <Link className="business-project-open" to={`/business/projects/${project.id}`}>Open questionnaire <ArrowRight size={15} /></Link>}
                     </article>
                   );
                 })}

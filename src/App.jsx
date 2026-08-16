@@ -3,6 +3,7 @@ import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminSupportTickets from './pages/AdminSupportTickets';
+import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
 import MarketingAssets from './pages/MarketingAssets';
 import AdminPartners from './pages/AdminPartners';
 import AdminPanelists from './pages/AdminPanelists';
@@ -44,6 +45,8 @@ import { isBusinessRole } from './utils/roles';
 import Business from './pages/Business';
 import BusinessAccess from './pages/BusinessAccess';
 import BusinessWorkspace from './pages/BusinessWorkspace';
+import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
+import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
 
 function ProtectedRoute({ children }) {
@@ -129,6 +132,8 @@ export default function App() {
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
+        <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireBuilder /></BusinessRoute>} />
+        <Route path="/business/s/:publicId" element={<PublicBusinessQuestionnaire />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PublicPage><Privacy /></PublicPage>} />
@@ -253,6 +258,10 @@ export default function App() {
                 <MarketingAssets />
               </AdminRoute>
             }
+          />
+          <Route
+            path="/admin/business-questionnaires"
+            element={<AdminRoute><AdminBusinessQuestionnaires /></AdminRoute>}
           />
           <Route
             path="/admin/support"

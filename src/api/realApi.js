@@ -189,6 +189,56 @@ export const createBusinessProject = async (payload) => {
   return { data: response.data };
 };
 
+export const getBusinessProject = async (projectId) => {
+  const response = await apiClient.get(`/api/business/projects/${projectId}`);
+  return { data: response.data };
+};
+
+export const getBusinessQuestionnaireResponses = async (projectId) => {
+  const response = await apiClient.get(`/api/business/projects/${projectId}/questionnaire/responses`);
+  return { data: response.data };
+};
+
+export const saveBusinessQuestionnaire = async (projectId, payload) => {
+  const response = await apiClient.put(`/api/business/projects/${projectId}/questionnaire`, payload);
+  return { data: response.data };
+};
+
+export const publishBusinessQuestionnaire = async (projectId, { sensitiveDataAcknowledged = false } = {}) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/questionnaire/publish`, { sensitiveDataAcknowledged });
+  return { data: response.data };
+};
+
+export const archiveBusinessQuestionnaire = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/questionnaire/archive`);
+  return { data: response.data };
+};
+
+export const duplicateBusinessQuestionnaire = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/questionnaire/duplicate`);
+  return { data: response.data };
+};
+
+export const getAdminBusinessQuestionnaires = async (status = 'PENDING_REVIEW') => {
+  const response = await apiClient.get('/api/admin/business-questionnaires', { params: { status } });
+  return { data: response.data };
+};
+
+export const reviewAdminBusinessQuestionnaire = async (id, status) => {
+  const response = await apiClient.patch(`/api/admin/business-questionnaires/${id}/review`, { status });
+  return { data: response.data };
+};
+
+export const getPublicBusinessQuestionnaire = async (publicId) => {
+  const response = await apiClient.get(`/api/business/public/${publicId}`);
+  return { data: response.data };
+};
+
+export const submitPublicBusinessQuestionnaire = async (publicId, payload) => {
+  const response = await apiClient.post(`/api/business/public/${publicId}/responses`, payload);
+  return { data: response.data };
+};
+
 export const submitBusinessInquiry = async ({ contactName, email, organizationType, region, phone, content }) => {
   const response = await apiClient.post('/api/support/handoff', {
     contactEmail: email,

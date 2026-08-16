@@ -116,6 +116,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const [codeCooldown, setCodeCooldown] = useState(0);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [businessLoginMissing, setBusinessLoginMissing] = useState(false);
   const referredBy = new URLSearchParams(location.search).get('ref') || undefined;
 
   useEffect(() => {
@@ -132,6 +133,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
     setError('');
     setMessage('');
     setShowPassword(false);
+    setBusinessLoginMissing(false);
   }, [mode]);
 
   const showError = useCallback((value) => {
@@ -185,7 +187,12 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
     try {
       finishAuth(await login(loginForm));
     } catch (caughtError) {
-      showError(caughtError.response?.data?.message || 'Login failed. Please check your email and password.');
+      if (accountType === 'BUSINESS' && [401, 404].includes(caughtError.response?.status)) {
+        setBusinessLoginMissing(true);
+        showError('We could not find a client workspace for those details. Check your email and password, or create a workspace.');
+      } else {
+        showError(caughtError.response?.data?.message || 'Login failed. Please check your email and password.');
+      }
     } finally {
       setLoading(false);
     }
@@ -218,14 +225,14 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    if (accountType !== 'BUSINESS' && !/^\d{6}$/.test(registerForm.verificationCode)) return showError('Enter the 6-digit email verification code.');
+    if (!/^\d{6}$/.test(registerForm.verificationCode)) return showError('Enter the 6-digit email verification code.');
     setLoading(true);
     setError('');
     try {
       if (accountType === 'BUSINESS' && (!registerForm.organizationType || !registerForm.region.trim())) {
         return showError('Please choose your organization type and region.');
       }
-      if (accountType !== 'BUSINESS') await verifyEmailCode({ email: registerForm.email, code: registerForm.verificationCode });
+      await verifyEmailCode({ email: registerForm.email, code: registerForm.verificationCode });
       finishAuth(
         await register({
           ...registerForm,
@@ -261,7 +268,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
       <div className="public-auth-content">
         <p className="public-auth-eyebrow">{isLogin ? 'Welcome back' : accountType === 'BUSINESS' ? 'Business workspace' : 'Join the verified panel'}</p>
         <h2 id="public-auth-title">{isLogin ? 'Continue where you left off.' : accountType === 'BUSINESS' ? 'Create your research workspace.' : 'Your perspective belongs here.'}</h2>
-        <p className="public-auth-intro">{isLogin ? 'Sign in to continue to your workspace.' : accountType === 'BUSINESS' ? 'Use your workspace to request a custom questionnaire or a tailored research study.' : 'Create a participant account, verify your email, and begin your first survey.'}</p>
+        <p className="public-auth-intro">{isLogin ? 'Sign in to continue to your workspace.' : accountType === 'BUSINESS' ? 'Create, share, and manage questionnaires alongside your research projects.' : 'Create a participant account, verify your email, and begin your first survey.'}</p>
 
         <p className="public-auth-consent">By {isLogin ? 'signing in' : 'creating an account'}, you agree to the <Link to="/terms" target="_blank">Terms of Service</Link> and <Link to="/privacy" target="_blank">Privacy Policy</Link>.</p>
 
@@ -277,6 +284,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
             <label><span>Password</span><span className="public-auth-input"><LockKeyhole size={17} /><input type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Your password" value={loginForm.password} onChange={(event) => setLoginForm({ ...loginForm, password: event.target.value })} required /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></span></label>
             <div className="public-auth-secondary"><Link to="/forgot-password">Forgot password?</Link></div>
             <button className="public-auth-submit" type="submit" disabled={loading}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : 'Sign in'}{!loading && <Check size={17} />}</button>
+            {businessLoginMissing && <button className="public-auth-email-cta" type="button" onClick={() => changeMode('register')}>Create a workspace</button>}
           </form>
         ) : !registerExpanded && accountType !== 'BUSINESS' ? (
           <button className="public-auth-email-cta" type="button" onClick={() => { setRegisterExpanded(true); resetFormScroll(); }}><Mail size={18} /> Continue with email</button>
@@ -289,10 +297,10 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
               <label><span>Region</span><span className="public-auth-input"><select autoComplete="country" value={registerForm.region} onChange={(event) => setRegisterForm({ ...registerForm, region: event.target.value })} required><option value="">Select your country or territory</option>{countryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label}</option>)}</select></span></label>
             </>}
             <label><span>Email address</span><span className="public-auth-input"><Mail size={17} /><input type="email" autoComplete="email" placeholder="you@example.com" value={registerForm.email} onChange={(event) => setRegisterForm({ ...registerForm, email: event.target.value, verificationCode: '' })} required /></span></label>
-            {accountType !== 'BUSINESS' && <><button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : 'Send verification code'}</button><label><span>Email code</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label></>}
+            <><button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : 'Send verification code'}</button><label><span>Email code</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label></>
             <label><span>Password</span><span className="public-auth-input"><LockKeyhole size={17} /><input type={showPassword ? 'text' : 'password'} autoComplete="new-password" minLength="8" placeholder="At least 8 characters" value={registerForm.password} onChange={(event) => setRegisterForm({ ...registerForm, password: event.target.value })} required /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></span></label>
-            <TurnstileWidget theme="dark" onVerify={setTurnstileToken} onExpire={clearTurnstileToken} onError={clearTurnstileToken} />
-            <button className="public-auth-submit" type="submit" disabled={loading || !turnstileToken}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : 'Create account'}{!loading && <Check size={17} />}</button>
+            {accountType !== 'BUSINESS' && <TurnstileWidget theme="dark" onVerify={setTurnstileToken} onExpire={clearTurnstileToken} onError={clearTurnstileToken} />}
+            <button className="public-auth-submit" type="submit" disabled={loading || (accountType !== 'BUSINESS' && !turnstileToken)}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : 'Create account'}{!loading && <Check size={17} />}</button>
           </form>
         )}
 

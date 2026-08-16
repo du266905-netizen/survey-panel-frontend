@@ -30,7 +30,7 @@ export default function JoinChoice() {
               <Link to="/business" className="business-button">Run research with us <ArrowRight size={17} /></Link>
             </article>
           </div>
-          <p className="join-choice-note"><ShieldCheck size={16} /> Participant information is never presented as a product. Research projects are reviewed before recruitment begins.</p>
+          <p className="join-choice-note"><ShieldCheck size={16} /> Participant information is never presented as a product.</p>
         </div>
       </section>
       <HomeFooter />

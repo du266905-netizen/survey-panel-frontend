@@ -213,6 +213,7 @@ export default function AppLayout({ children }) {
               {adminLink('/admin/database', 'Database', Database)}
               {adminLink('/admin/marketing-assets', 'Marketing Assets', Image)}
               {adminLink('/admin/support', 'Support Requests', MessageCircleMore)}
+              {adminLink('/admin/business-questionnaires', 'Questionnaire publication', ClipboardCheck)}
               {adminLink('/admin', 'Admin Dashboard', ShieldCheck, true)}
             </nav>
             <div className="app-sidebar-foot">
