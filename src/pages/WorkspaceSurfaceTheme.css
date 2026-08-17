@@ -993,7 +993,7 @@
 .research-profile-task-art > span { position: absolute; z-index: 1; right: 17px; bottom: 16px; display: grid; width: 46px; height: 46px; place-items: center; border: 1px solid rgba(255, 253, 248, .66); border-radius: 50%; background: rgba(25, 57, 37, .57); color: #fffdf8; backdrop-filter: blur(9px); }
 .research-profile-task-content { display: flex; min-height: 248px; flex-direction: column; padding: 22px; }
 .research-profile-task-content > p { margin: 0; color: #6b826f; font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
-.research-profile-task-content h3 { margin: 11px 0 0; color: #1d3023; font-family: var(--font-reading); font-size: 27px; font-weight: 700; letter-spacing: -.042em; line-height: 1.02; }
+.research-profile-task-content h3 { margin: 11px 0 0; color: #1d3023; font-family: var(--font-sans); font-size: 23px; font-weight: 780; letter-spacing: -.035em; line-height: 1.12; }
 .research-profile-task-content > span { margin-top: 12px; color: #627067; font-size: 12px; font-weight: 650; line-height: 1.55; }
 .research-profile-task-content > strong { margin-top: 12px; color: #836728; font-size: 11px; line-height: 1.45; }
 .research-profile-task-content > a,
@@ -1006,13 +1006,13 @@
 .research-opportunities-section { margin-top: 44px; }
 .research-opportunities-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 17px; padding-bottom: 14px; border-bottom: 1px solid rgba(50, 77, 57, .17); }
 .research-opportunities-section-heading p { margin: 0; color: #6b826f; font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
-.research-opportunities-section-heading h2 { margin: 7px 0 0; color: #1d3023; font-family: var(--font-reading); font-size: clamp(28px, 3vw, 38px); font-weight: 700; letter-spacing: -.045em; line-height: 1; }
+.research-opportunities-section-heading h2 { margin: 7px 0 0; color: #1d3023; font-family: var(--font-sans); font-size: clamp(24px, 2.4vw, 32px); font-weight: 800; letter-spacing: -.04em; line-height: 1.08; }
 .research-opportunities-section-heading > span { flex: 0 0 auto; border: 1px solid rgba(50, 77, 57, .16); border-radius: 999px; background: #fbfcf9; color: #59705f; padding: 7px 11px; font-size: 11px; font-weight: 850; }
 .research-opportunities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 16px; }
 .research-opportunity-card { display: flex; min-height: 337px; flex-direction: column; border: 1px solid rgba(49, 83, 58, .22); border-radius: 15px; background: #fffefa; box-shadow: 0 12px 28px rgba(40, 65, 47, .08); padding: 21px; }
 .research-opportunity-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 9px; color: #55715c; font-size: 10px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
 .research-opportunity-card-heading small { display: inline-flex; align-items: center; gap: 4px; color: #7a837d; font-size: 9px; font-weight: 800; letter-spacing: .03em; text-align: right; text-transform: none; }
-.research-opportunity-card h3 { margin: 16px 0 0; color: #1d3023; font-family: var(--font-reading); font-size: 25px; font-weight: 700; letter-spacing: -.04em; line-height: 1.04; }
+.research-opportunity-card h3 { margin: 16px 0 0; color: #1d3023; font-family: var(--font-sans); font-size: 20px; font-weight: 800; letter-spacing: -.035em; line-height: 1.15; }
 .research-opportunity-card > p { margin: 12px 0 0; color: #617067; font-size: 12px; font-weight: 630; line-height: 1.55; }
 .research-opportunity-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0 0; border-top: 1px solid rgba(50, 77, 57, .12); padding-top: 15px; }
 .research-opportunity-details div { min-width: 0; }
@@ -1069,6 +1069,42 @@
 .admin-research-error { margin: 15px 0 0; color: #a14a3b; font-size: 12px; font-weight: 750; }
 @media (max-width: 880px) { .admin-research-form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .admin-research-create { padding: 18px; } .admin-research-form-grid { grid-template-columns: 1fr; } .admin-research-field-wide { grid-column: auto; } .admin-research-create-actions, .admin-research-list-heading, .admin-research-application { align-items: stretch; flex-direction: column; } .admin-research-create-actions .action-injection { width: 100%; } .admin-research-application label { flex-basis: auto; } }
+
+/* Admin uses the same calm, practical paper workspace as the research client, without member navigation. */
+.app-shell-admin { background: #f7f7f3; color: #203228; font-family: var(--font-sans); }
+.app-shell-admin::before, .app-shell-admin .app-shell-grain { display: none; }
+.app-shell-admin .app-topbar { border-bottom-color: rgba(36, 56, 46, .14); background: rgba(247, 247, 243, .96); box-shadow: none; }
+.app-shell-admin .app-topbar-context { color: #64746b; font-family: var(--font-sans); font-size: 10px; font-weight: 850; letter-spacing: .14em; }
+.app-shell-admin .app-sidebar { border-right: 1px solid rgba(36, 56, 46, .14); background: #eef2ed; backdrop-filter: none; }
+.app-shell-admin .app-sidebar::after { display: none; }
+.app-shell-admin .app-sidebar-label { color: #718076; font-family: var(--font-sans); font-size: 9px; font-weight: 900; letter-spacing: .14em; }
+.app-shell-admin .app-nav-link { border-radius: 4px; color: #52665a; font-family: var(--font-sans); font-size: 13px; font-weight: 720; }
+.app-shell-admin .app-nav-link:hover { background: rgba(49, 83, 58, .07); color: #1f4834; }
+.app-shell-admin .app-nav-link.is-active { background: #285647; box-shadow: none; color: #fffefa; }
+.app-shell-admin .app-nav-link.is-active svg { color: #dcebd8; }
+.app-shell-admin .app-sidebar-foot { border-top-color: rgba(36, 56, 46, .13); color: #718076; font-family: var(--font-sans); }
+.app-main-admin { min-height: calc(100vh - 76px); background: #f7f7f3; }
+.app-main-admin .app-page-header { border-bottom: 1px solid rgba(36, 56, 46, .15); margin-bottom: 32px; padding-bottom: 20px; }
+.app-main-admin .app-page-header h1, .app-main-admin .card h2, .app-main-admin .card h3 { font-family: var(--font-sans); }
+.app-main-admin .app-page-header h1 { color: #203228 !important; font-size: clamp(29px, 3vw, 42px); font-weight: 820; letter-spacing: -.05em; line-height: 1.04; }
+.app-main-admin .app-page-header p { max-width: 650px; color: #627168 !important; font-family: var(--font-sans); font-size: 14px; font-weight: 540; line-height: 1.6; }
+.app-main-admin .card { border-color: rgba(36, 56, 46, .16); border-radius: 4px; background: #fffefa; box-shadow: none; backdrop-filter: none; }
+.app-main-admin .field { border-color: rgba(36, 56, 46, .22); border-radius: 4px; background: #fffefa; color: #26382c; font-family: var(--font-sans); }
+.app-main-admin .btn-primary { border-color: #285647; background: #285647; color: #fffefa; }
+.app-main-admin .btn-primary:hover { border-color: #183c2a; background: #183c2a; }
+.app-main-admin .btn-secondary { border-color: rgba(36, 56, 46, .2); border-radius: 4px; background: #fffefa; color: #315a45; }
+.app-main-admin .app-data-table { border-color: rgba(36, 56, 46, .16); border-radius: 4px; box-shadow: none; }
+.app-main-admin .table-head { background: #eef2ed; color: #64746b; }
+.app-main-admin .table-cell { border-color: rgba(36, 56, 46, .11); color: #45584c; }
+.app-main-admin .bg-slate-950 { background-color: #285647 !important; }
+.app-main-admin .text-slate-950 { color: #203228 !important; }
+.app-main-admin .text-slate-700 { color: #52665a !important; }
+.app-main-admin .text-slate-600, .app-main-admin .text-slate-500 { color: #68776e !important; }
+.app-main-admin .bg-slate-50 { background-color: #f1f4ef !important; }
+.app-main-admin .border-slate-100, .app-main-admin .border-slate-200 { border-color: rgba(36, 56, 46, .13) !important; }
+.app-main-admin .text-cyan-600, .app-main-admin .text-cyan-700 { color: #315a45 !important; }
+.app-main-admin .bg-cyan-50 { background-color: #eaf2e8 !important; }
+.app-main-admin .border-cyan-200 { border-color: #c9dac8 !important; }
 
 /* Homepage-style primary action: forest green slowly injects into ink black. */
 .action-injection { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 42px; border: 1px solid #1f4a30; border-radius: 999px !important; background-color: #1f4a30 !important; background-image: linear-gradient(90deg, #111 0 50%, #1f4a30 50% 100%) !important; background-position: 100% 0; background-size: 205% 100%; color: #f7f7f3; font-size: .86rem; font-weight: 800; transition: color .72s ease, border-color .72s ease, background-position .72s cubic-bezier(.22,.72,.2,1), box-shadow 1.25s cubic-bezier(.22,.72,.2,1); }

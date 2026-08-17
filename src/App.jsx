@@ -4,6 +4,7 @@ import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminSupportTickets from './pages/AdminSupportTickets';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
+import AdminBusinessProjects from './pages/AdminBusinessProjects';
 import MarketingAssets from './pages/MarketingAssets';
 import AdminPartners from './pages/AdminPartners';
 import AdminPanelists from './pages/AdminPanelists';
@@ -64,6 +65,11 @@ function AdminRoute({ children }) {
   return isAdminRole(user?.role) ? children : <Navigate to="/dashboard" replace />;
 }
 
+function MemberRoute({ children }) {
+  const { user } = useAuth();
+  return isAdminRole(user?.role) ? <Navigate to="/admin" replace /> : children;
+}
+
 function BusinessRoute({ children }) {
   const { user } = useAuth();
   return isBusinessRole(user?.role) ? children : <Navigate to="/business/access" replace />;
@@ -75,6 +81,7 @@ function PublicPage({ children }) {
 
 function NewsRoute() {
   const { user } = useAuth();
+  if (isAdminRole(user?.role)) return <Navigate to="/admin" replace />;
   return user ? (
     <AppLayout>
       <NewsWall />
@@ -97,6 +104,7 @@ function NewsArticleRoute() {
 
 function SurveyCompleteRoute() {
   const { user } = useAuth();
+  if (isAdminRole(user?.role)) return <Navigate to="/admin" replace />;
   return user ? (
     <AppLayout>
       <SurveyComplete />
@@ -108,6 +116,7 @@ function SurveyCompleteRoute() {
 
 function SurveyWallRoute() {
   const { user } = useAuth();
+  if (isAdminRole(user?.role)) return <Navigate to="/admin" replace />;
   return user ? (
     <AppLayout>
       <SurveyPartners />
@@ -144,7 +153,7 @@ export default function App() {
         <Route path="/news/:articleId" element={<NewsArticleRoute />} />
         <Route path="/partners" element={<SurveyWallRoute />} />
         <Route path="/survey/complete" element={<SurveyCompleteRoute />} />
-        <Route path="/panel-profile" element={<ProtectedRoute><PanelProfilePage /></ProtectedRoute>} />
+        <Route path="/panel-profile" element={<ProtectedRoute><MemberRoute><PanelProfilePage /></MemberRoute></ProtectedRoute>} />
         <Route
           element={
             <ProtectedRoute>
@@ -152,17 +161,17 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="/onboarding" element={<Navigate to="/panel-profile" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/activity" element={<ActivityDashboard />} />
-          <Route path="/community" element={<CommunityHub />} />
-          <Route path="/research" element={<ResearchActivities />} />
-          <Route path="/partners/:partnerId/surveys" element={<SurveyList />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/referrals" element={<Navigate to="/dashboard?referral=true" replace />} />
-          <Route path="/records" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/onboarding" element={<MemberRoute><Navigate to="/panel-profile" replace /></MemberRoute>} />
+          <Route path="/dashboard" element={<MemberRoute><Dashboard /></MemberRoute>} />
+          <Route path="/activity" element={<MemberRoute><ActivityDashboard /></MemberRoute>} />
+          <Route path="/community" element={<MemberRoute><CommunityHub /></MemberRoute>} />
+          <Route path="/research" element={<MemberRoute><ResearchActivities /></MemberRoute>} />
+          <Route path="/partners/:partnerId/surveys" element={<MemberRoute><SurveyList /></MemberRoute>} />
+          <Route path="/wallet" element={<MemberRoute><Wallet /></MemberRoute>} />
+          <Route path="/referrals" element={<MemberRoute><Navigate to="/dashboard?referral=true" replace /></MemberRoute>} />
+          <Route path="/records" element={<MemberRoute><Navigate to="/dashboard" replace /></MemberRoute>} />
+          <Route path="/profile" element={<MemberRoute><Profile /></MemberRoute>} />
+          <Route path="/settings" element={<MemberRoute><Settings /></MemberRoute>} />
           <Route
             path="/team"
             element={
@@ -262,6 +271,10 @@ export default function App() {
           <Route
             path="/admin/business-questionnaires"
             element={<AdminRoute><AdminBusinessQuestionnaires /></AdminRoute>}
+          />
+          <Route
+            path="/admin/business-projects"
+            element={<AdminRoute><AdminBusinessProjects /></AdminRoute>}
           />
           <Route
             path="/admin/support"

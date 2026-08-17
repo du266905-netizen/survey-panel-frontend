@@ -10,6 +10,7 @@ const CATEGORY_LABELS = {
   PARTICIPATION: 'Participation',
   REWARDS: 'Coins & rewards',
   PRIVACY: 'Privacy request',
+  BUSINESS: 'Business sales',
   OTHER: 'Other',
 };
 
@@ -104,8 +105,8 @@ export default function AdminSupportTickets() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Support Requests"
-        description="A structured queue with the issue area, summary, visitor details, and internal handling notes."
+        title="Sales & support"
+        description="One operational queue for business sales enquiries and participant support, with contact details and internal handling notes."
         action={<button className="btn-secondary" type="button" onClick={loadTickets} disabled={loading}><RefreshCcw size={16} className={loading ? 'animate-spin' : ''} /> Refresh</button>}
       />
 

@@ -334,7 +334,7 @@
   line-height: 1.3;
   transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
 }
-.atlas-contact-form input { min-height: 43px; padding: 0 12px; }
+.atlas-contact-form input, .atlas-contact-form select { min-height: 43px; padding: 0 12px; }
 .atlas-contact-form textarea { min-height: 92px; padding: 11px 12px; resize: vertical; }
 .atlas-contact-form input:focus,
 .atlas-contact-form select:focus,
@@ -365,6 +365,23 @@
 .atlas-contact-status { margin: 0; font-size: .82rem; font-weight: 650; line-height: 1.45; }
 .atlas-contact-status.is-success { color: #285647; }
 .atlas-contact-status.is-error { color: #9d4237; }
+
+/* Contact area: a quiet editorial form, with enough width for real contact details. */
+.atlas-stage { grid-template-columns: minmax(500px, .94fr) minmax(0, 1.06fr); gap: clamp(48px, 6vw, 112px); }
+.atlas-contact-panel { width: min(100%, 560px); }
+.atlas-contact-panel h2 { max-width: 520px; font-size: clamp(2.25rem, 3vw, 3.7rem); line-height: .98; }
+.atlas-contact-intro { max-width: 470px; font-family: var(--font-sans); font-size: .95rem; font-weight: 540; line-height: 1.65; }
+.atlas-contact-form { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; row-gap: 15px; font-family: var(--font-sans); }
+.atlas-contact-form label { min-width: 0; }
+.atlas-contact-form label > span { font-family: var(--font-sans); font-size: .68rem; }
+.atlas-contact-form input, .atlas-contact-form select, .atlas-contact-form textarea { font-family: var(--font-sans); font-size: .92rem; }
+.atlas-contact-field--phone, .atlas-contact-field--message, .atlas-contact-submit, .atlas-contact-status { grid-column: 1 / -1; }
+.atlas-phone-input { grid-template-columns: minmax(220px, .9fr) minmax(0, 1fr) !important; max-width: 500px; }
+.atlas-contact-submit { width: max-content; min-width: 182px; padding: 0 21px; }
+
+@media (max-width: 1080px) {
+  .atlas-stage { grid-template-columns: minmax(440px, .92fr) minmax(0, 1.08fr); gap: 34px; }
+}
 
 .atlas-map {
   position: relative;
@@ -563,6 +580,9 @@
 @media (max-width: 520px) {
   .atlas-register { display: none; }
   .atlas-contact-panel h2 { letter-spacing: -0.07em; }
+  .atlas-contact-form { grid-template-columns: 1fr; }
+  .atlas-contact-field--phone, .atlas-contact-field--message, .atlas-contact-submit, .atlas-contact-status { grid-column: auto; }
+  .atlas-phone-input { grid-template-columns: 1fr !important; max-width: none; }
   .atlas-map { grid-template-columns: 1fr; }
   .atlas-node { grid-template-columns: 60px minmax(0, 1fr); }
   .atlas-node-image { width: 60px; height: 60px; }
@@ -570,4 +590,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .home-atlas *, .home-atlas *::before, .home-atlas *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Keep the contact route editorial rather than turning its copy into a mobile billboard. */
+@media (max-width: 800px) {
+  .atlas-contact-panel h2 { font-size: clamp(2.2rem, 8.5vw, 3.4rem); line-height: 1; }
 }

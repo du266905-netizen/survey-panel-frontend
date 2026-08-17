@@ -68,7 +68,9 @@
 .business-projects-guide li span { color: #335d47; font-size: 10px; font-weight: 900; letter-spacing: .1em; }
 .business-project-toolbar button, .business-project-list, .business-project-list h2, .business-project-list p, .business-project-list dd, .business-workspace-message, .business-workspace-loading { font-family: var(--font-sans); }
 .business-project-list h2 { font-size: 22px; font-weight: 800; letter-spacing: -.04em; }
-.business-project-list article { position: relative; padding-bottom: 55px; }.business-project-open { position: absolute; right: 24px; bottom: 20px; display: inline-flex; align-items: center; gap: 6px; color: #285647; font-size: 12px; font-weight: 850; text-decoration: none; }.business-project-open:hover { text-decoration: underline; text-underline-offset: 4px; }
+.business-project-list article { position: relative; padding-bottom: 55px; }.business-project-open { display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: #285647; cursor: pointer; font: 850 12px var(--font-sans); text-decoration: none; }.business-project-open:hover { text-decoration: underline; text-underline-offset: 4px; }.business-project-actions { position: absolute; right: 24px; bottom: 20px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 14px; }.business-project-quote-note { position: absolute; bottom: 5px; left: 24px; margin: 0; color: #718076; font-size: 10px; font-weight: 650; }
+.business-workspace-rail .business-workspace-notification > button { width: 44px; height: 44px; border-color: transparent; border-radius: 10px; background: transparent; color: #64756b; }.business-workspace-rail .business-workspace-notification > button:hover, .business-workspace-rail .business-workspace-notification > button.is-open { border-color: rgba(44, 88, 65, .16); background: #fffefa; color: #285647; }.business-workspace-rail .business-workspace-notification > button > span { border-color: #f1f4f0; }
+.business-quote-dialog { position: relative; width: min(100%, 620px); border: 1px solid rgba(36,56,46,.2); background: #fffefa; box-shadow: 13px 15px 0 rgba(86,124,96,.14); padding: clamp(25px, 4vw, 40px); }.business-quote-dialog h2 { margin: 9px 0 0; color: #20382b; font-family: var(--font-sans); font-size: clamp(28px, 4vw, 39px); font-weight: 820; letter-spacing: -.05em; }.business-quote-dialog dl { display: grid; gap: 12px; border-top: 1px solid rgba(36,56,46,.14); border-bottom: 1px solid rgba(36,56,46,.14); margin: 25px 0 0; padding: 17px 0; }.business-quote-dialog dl div { display: flex; justify-content: space-between; gap: 20px; }.business-quote-dialog dt { color: #708076; font-size: 11px; font-weight: 800; }.business-quote-dialog dd { margin: 0; color: #263b2e; font-size: 13px; font-weight: 800; text-align: right; }.business-quote-scope { display: grid; gap: 7px; margin-top: 19px; }.business-quote-scope strong { color: #3a5946; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }.business-quote-scope p { margin: 0 0 9px; color: #53665a; font-size: 13px; line-height: 1.6; white-space: pre-wrap; }.business-quote-decline { display: grid; gap: 7px; margin-top: 16px; color: #53665a; font-size: 12px; font-weight: 750; }.business-quote-decline textarea { min-height: 80px; border: 1px solid rgba(36,56,46,.2); background: #fffefa; color: #263b2e; font: inherit; padding: 10px; resize: vertical; }.business-quote-actions { display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(36,56,46,.14); margin-top: 22px; padding-top: 17px; }.business-quote-actions > button { display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(36,56,46,.2); background: #fffefa; color: #315a45; cursor: pointer; font: 800 12px var(--font-sans); padding: 10px 12px; }.business-quote-actions > .business-button { border-color: #285647; background: #285647; color: #fffefa; }.business-quote-actions > .business-quote-decline-button { border-color: #9f4235; background: #9f4235; color: #fffefa; }
 .business-project-modal form, .business-project-modal--chooser > section { font-family: var(--font-sans); }
 .business-project-modal h2, .business-project-modal--chooser h2 { font-family: var(--font-sans); font-weight: 820; }
 .business-chooser-grid strong { font-family: var(--font-sans); font-weight: 800; }
@@ -78,19 +80,43 @@
 .business-sales-callout span { display: block; max-width: 440px; margin-top: 4px; color: #627268; font-size: 12px; font-weight: 540; line-height: 1.5; }
 .business-sales-callout a { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; color: #285647; font-size: 12px; font-weight: 850; text-decoration: none; white-space: nowrap; }
 .business-sales-callout a:hover { color: #173c2a; text-decoration: underline; text-underline-offset: 4px; }
+
+/* Shared editorial hierarchy: display serif is reserved for concise titles; controls stay practical. */
+.business-public-page, .join-choice-page, .business-access-page, .business-workspace { font-family: var(--font-sans); }
+.business-hero h1, .join-choice-hero h1, .business-access-intro h1, .business-contact-intro h1, .business-login-layout h1 { font-family: var(--font-display); font-size: clamp(38px, 4.4vw, 62px); font-weight: 560; letter-spacing: -.052em; line-height: .98; }
+.business-lede, .business-contact-intro > p, .business-login-layout > section > p, .business-access-intro > p:last-of-type { font-family: var(--font-sans); font-weight: 540; line-height: 1.7; }
+.business-contact-layout, .business-login-layout { grid-template-columns: minmax(300px, .78fr) minmax(500px, 1.08fr); width: min(100%, 1180px); gap: clamp(52px, 8vw, 128px); }
+.business-contact-intro h1, .business-login-layout h1 { max-width: 510px; font-size: clamp(36px, 4vw, 54px); }
+.business-contact-form { box-shadow: 12px 14px 0 rgba(121, 156, 130, .14); }
+.business-contact-form textarea, .business-contact-form input, .business-contact-form select { min-height: 48px; font-size: 14px; }
+.business-contact-form textarea { min-height: 166px; }
+.business-contact-phone-field { grid-column: 1 / -1; width: min(100%, 430px); }
+.business-phone-input { grid-template-columns: minmax(220px, .9fr) minmax(0, 1fr); }
+.public-auth-content h2 { font-family: var(--font-display); font-size: clamp(29px, 3.1vw, 39px); font-weight: 560; letter-spacing: -.04em; }
+.business-access-panel .public-auth-consent { display: block; }
+.business-access-panel .public-auth-consent a { white-space: nowrap; }
 @media (max-width: 800px) {
+  .business-contact-layout, .business-login-layout { grid-template-columns: 1fr; width: min(100%, 560px); margin-top: 48px; }
+  .business-contact-intro, .business-login-layout > section { position: static; }
+  .business-contact-grid { grid-template-columns: 1fr; }
   .business-workspace-body.business-workspace-body--rail { grid-template-columns: 56px minmax(0, 1fr); }
   .business-workspace-rail { display: flex !important; padding: 15px 6px !important; }
   .business-workspace-rail a { width: 42px; }
   .business-project-head-actions { align-self: stretch; justify-content: space-between; padding-top: 0; }
   .business-projects-empty-layout { grid-template-columns: 1fr; }
-  .business-project-open { position: static; grid-column: 1 / -1; margin-top: -12px; }
+  .business-project-actions { position: static; justify-content: flex-start; margin-top: 15px; }.business-project-quote-note { position: static; margin-top: 10px; }
   .business-sales-callout { align-items: flex-start; flex-direction: column; }
 }
 @media (max-width: 520px) {
   .business-workspace-body.business-workspace-body--rail { grid-template-columns: 56px minmax(0, 1fr); }
   .business-workspace-rail { display: flex !important; padding: 12px 6px !important; }
   .business-workspace-rail-mark { width: 36px; height: 27px; }
-  .business-workspace-rail a, .business-workspace-account > button { width: 40px; }
+  .business-workspace-rail a, .business-workspace-account > button, .business-workspace-rail .business-workspace-notification > button { width: 40px; }
   .business-projects { padding: 31px 21px; }
+}
+
+@media (max-width: 520px) {
+  .business-hero h1, .join-choice-hero h1, .business-access-intro h1, .business-contact-intro h1, .business-login-layout h1 { font-size: clamp(34px, 10vw, 46px); line-height: 1; }
+  .business-contact-phone-field { width: 100%; }
+  .business-phone-input { grid-template-columns: 1fr; }
 }

@@ -229,6 +229,46 @@ export const reviewAdminBusinessQuestionnaire = async (id, status) => {
   return { data: response.data };
 };
 
+export const getAdminBusinessProjects = async (status = 'ALL') => {
+  const response = await apiClient.get('/api/admin/business-projects', { params: { status } });
+  return { data: response.data };
+};
+
+export const updateAdminBusinessProject = async (id, status) => {
+  const response = await apiClient.patch(`/api/admin/business-projects/${id}`, { status });
+  return { data: response.data };
+};
+
+export const createAdminBusinessQuote = async (id, payload) => {
+  const response = await apiClient.post(`/api/admin/business-projects/${id}/quotes`, payload);
+  return { data: response.data };
+};
+
+export const decideBusinessProjectQuote = async (projectId, quoteId, payload) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/quotes/${quoteId}/decision`, payload);
+  return { data: response.data };
+};
+
+export const submitBusinessProject = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/submit`);
+  return { data: response.data };
+};
+
+export const getNotifications = async () => {
+  const response = await apiClient.get('/api/notifications');
+  return { data: response.data };
+};
+
+export const markNotificationRead = async (id) => {
+  const response = await apiClient.patch(`/api/notifications/${id}/read`);
+  return { data: response.data };
+};
+
+export const markAllNotificationsRead = async () => {
+  const response = await apiClient.patch('/api/notifications/read-all');
+  return { data: response.data };
+};
+
 export const getPublicBusinessQuestionnaire = async (publicId) => {
   const response = await apiClient.get(`/api/business/public/${publicId}`);
   return { data: response.data };
@@ -243,9 +283,9 @@ export const submitBusinessInquiry = async ({ contactName, email, organizationTy
   const response = await apiClient.post('/api/support/handoff', {
     contactEmail: email,
     contactName,
-    category: 'OTHER',
+    category: 'BUSINESS',
     subject: 'Business research enquiry',
-    source: 'PUBLIC_HOME_CONTACT',
+    source: 'BUSINESS_SALES',
     messages: [{
       role: 'user',
       content: `Organisation type: ${organizationType}\nRegion: ${region}${phone ? `\nPhone: ${phone}` : ''}\n\n${content}`,

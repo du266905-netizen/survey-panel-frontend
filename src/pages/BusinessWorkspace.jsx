@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowRight,
+  Check,
   ClipboardList,
   FileText,
   LayoutDashboard,
@@ -11,9 +12,10 @@ import {
   UsersRound,
   X,
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { createBusinessProject, getBusinessWorkspace } from '../api/realApi';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { createBusinessProject, decideBusinessProjectQuote, getBusinessWorkspace, submitBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
+import NotificationBell from '../components/NotificationBell';
 import './Business.css';
 
 const emptyProject = {
@@ -31,20 +33,27 @@ const emptyProject = {
 };
 
 const statusLabel = {
-  RECEIVED: 'Received',
-  REVIEW: 'Planning',
-  PROPOSAL: 'Project details',
-  CONFIRMED: 'Active',
-  RECRUITING: 'In field',
+  DRAFT: 'Draft',
+  SUBMITTED_FOR_REVIEW: 'Submitted for review',
+  QUOTE_REQUIRED: 'Quote requested',
+  QUOTE_SENT: 'Quote ready',
+  CLIENT_ACCEPTED: 'Awaiting payment',
+  FUNDED: 'Funded',
+  RECRUITING: 'Recruiting',
+  LIVE: 'Live',
   COMPLETED: 'Completed',
 };
 
 const projectFilters = [
   ['ALL', 'All'],
-  ['RECEIVED', 'Received'],
-  ['REVIEW', 'Planning'],
-  ['PROPOSAL', 'Project details'],
-  ['CONFIRMED', 'Active'],
+  ['DRAFT', 'Draft'],
+  ['SUBMITTED_FOR_REVIEW', 'In review'],
+  ['QUOTE_REQUIRED', 'Quote requested'],
+  ['QUOTE_SENT', 'Quote ready'],
+  ['CLIENT_ACCEPTED', 'Awaiting payment'],
+  ['FUNDED', 'Funded'],
+  ['RECRUITING', 'Recruiting'],
+  ['LIVE', 'Live'],
   ['COMPLETED', 'Completed'],
 ];
 
@@ -74,6 +83,7 @@ const typeForProject = (project) => (
 export default function BusinessWorkspace() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [workspace, setWorkspace] = useState({ profile: null, projects: [] });
   const [loading, setLoading] = useState(true);
   const [openChooser, setOpenChooser] = useState(false);
@@ -84,6 +94,9 @@ export default function BusinessWorkspace() {
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [quoteProject, setQuoteProject] = useState(null);
+  const [quoteDecision, setQuoteDecision] = useState('');
+  const [declineReason, setDeclineReason] = useState('');
 
   const selectedType = projectTypes[projectType];
   const isQuestionnaire = projectType === 'questionnaire';
@@ -95,7 +108,11 @@ export default function BusinessWorkspace() {
     let active = true;
     getBusinessWorkspace()
       .then((response) => {
-        if (active) setWorkspace(response.data);
+        if (!active) return;
+        setWorkspace(response.data);
+        const quoteId = new URLSearchParams(location.search).get('quote');
+        const matchingProject = quoteId ? (response.data.projects || []).find((project) => project.latestQuote?.id === quoteId && project.latestQuote?.status === 'SENT') : null;
+        if (matchingProject) setQuoteProject(matchingProject);
       })
       .catch(() => {
         if (active) setMessage('We could not load your projects. Please refresh and try again.');
@@ -104,7 +121,7 @@ export default function BusinessWorkspace() {
         if (active) setLoading(false);
       });
     return () => { active = false; };
-  }, []);
+  }, [location.search]);
 
   const update = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -143,6 +160,33 @@ export default function BusinessWorkspace() {
     }
   };
 
+  const requestProposal = async (project) => {
+    if (submitting) return;
+    setSubmitting(true); setMessage('');
+    try {
+      const response = await submitBusinessProject(project.id);
+      setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? response.data.project : item) }));
+      setMessage('Your research brief is with our team for scope and pricing.');
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'We could not submit this brief. Please try again.');
+    } finally { setSubmitting(false); }
+  };
+
+  const decideQuote = async (decision) => {
+    const project = quoteProject;
+    const quote = project?.latestQuote;
+    if (!project || !quote || submitting) return;
+    setSubmitting(true); setMessage('');
+    try {
+      const response = await decideBusinessProjectQuote(project.id, quote.id, { decision, ...(decision === 'DECLINE' && declineReason.trim() ? { declineReason: declineReason.trim() } : {}) });
+      setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? response.data.project : item) }));
+      setQuoteProject(null); setQuoteDecision(''); setDeclineReason('');
+      setMessage(decision === 'ACCEPT' ? 'Quote accepted. We will confirm funding before recruitment begins.' : 'Quote declined. Our team can prepare a revised scope when you are ready.');
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'We could not record your response to this quote.');
+    } finally { setSubmitting(false); }
+  };
+
   return (
     <main className="business-workspace">
       <div className="business-workspace-body business-workspace-body--rail">
@@ -154,6 +198,7 @@ export default function BusinessWorkspace() {
           <Link to="/business/access" title="Contact sales" aria-label="Contact sales">
             <FileText size={20} />
           </Link>
+          <NotificationBell className="business-workspace-notification" />
           <div className="business-workspace-account">
             <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label="Account menu" aria-expanded={accountMenuOpen}>
               <UserRound size={20} />
@@ -217,7 +262,12 @@ export default function BusinessWorkspace() {
                         <div><dt>Audience</dt><dd>{project.audienceDescription}</dd></div>
                         <div><dt>Updated</dt><dd>{new Date(project.updatedAt).toLocaleDateString()}</dd></div>
                       </dl>
-                      {project.questionnaire && <Link className="business-project-open" to={`/business/projects/${project.id}`}>Open questionnaire <ArrowRight size={15} /></Link>}
+                      <div className="business-project-actions">
+                        {project.questionnaire && <Link className="business-project-open" to={`/business/projects/${project.id}`}>Open questionnaire <ArrowRight size={15} /></Link>}
+                        {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? 'Submitting…' : 'Submit for review'} <ArrowRight size={15} /></button>}
+                        {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>Review quote <ArrowRight size={15} /></button>}
+                      </div>
+                      {project.latestQuote && <p className="business-project-quote-note">{project.latestQuote.status === 'SENT' ? `Quote v${project.latestQuote.version} is ready to review.` : `Quote v${project.latestQuote.version}: ${project.latestQuote.status.toLowerCase().replaceAll('_', ' ')}.`}</p>}
                     </article>
                   );
                 })}
@@ -350,6 +400,7 @@ export default function BusinessWorkspace() {
           </form>
         </div>
       )}
+      {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label="Close"><X size={18} /></button><p className="business-eyebrow">PROJECT QUOTE</p><h2 id="business-quote-title">Review your proposal.</h2><p className="business-form-intro">Accepting confirms that your organization agrees to this scope. Recruitment starts only after funding is confirmed.</p><dl><div><dt>Project</dt><dd>{quoteProject.title}</dd></div><div><dt>Quote</dt><dd>{new Intl.NumberFormat('en-US', { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>Valid until</dt><dd>{new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>Scope included</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>Terms</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">Why does this not work for your team? <textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder="Optional feedback for a revised proposal." /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>Keep reviewing</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : 'Decline quote'}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>Decline</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : 'Accept quote'} <Check size={16} /></button></>}</div></section></div>}
     </main>
   );
 }

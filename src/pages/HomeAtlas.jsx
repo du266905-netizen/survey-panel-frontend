@@ -192,27 +192,27 @@ export default function HomeAtlas() {
           <p className="atlas-contact-intro">Share your question or idea. We will follow up using the details you provide.</p>
 
           <form className="atlas-contact-form" onSubmit={submitContactForm}>
-            <label>
+            <label className="atlas-contact-field--name">
               <span>Your name</span>
               <input name="name" value={contactForm.name} onChange={updateContactField} autoComplete="name" maxLength={80} required />
             </label>
-            <label>
+            <label className="atlas-contact-field--email">
               <span>Your email</span>
               <input name="email" type="email" value={contactForm.email} onChange={updateContactField} autoComplete="email" maxLength={254} required />
             </label>
-            <label>
+            <label className="atlas-contact-field--phone">
               <span>Contact number <em>Optional</em></span>
-              <span className="atlas-phone-input"><select name="phoneCountry" value={contactForm.phoneCountry} onChange={updateContactField} aria-label="Phone country or territory">{phoneCountryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.dialCode}</option>)}</select><input name="phone" type="tel" inputMode="tel" value={contactForm.phone} onChange={updateContactField} autoComplete="tel-national" maxLength={32} /></span>
+              <span className="atlas-phone-input"><select name="phoneCountry" value={contactForm.phoneCountry} onChange={updateContactField} aria-label="Phone country or territory">{phoneCountryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label} ({country.dialCode})</option>)}</select><input name="phone" type="tel" inputMode="tel" value={contactForm.phone} onChange={updateContactField} autoComplete="tel-national" placeholder="Phone number" maxLength={32} /></span>
             </label>
-            <label>
+            <label className="atlas-contact-field--region">
               <span>Country or territory</span>
               <select name="region" value={contactForm.region} onChange={updateContactField} autoComplete="country">{countryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label}</option>)}</select>
             </label>
-            <label>
+            <label className="atlas-contact-field--subject">
               <span>Subject</span>
               <input name="subject" value={contactForm.subject} onChange={updateContactField} maxLength={140} required />
             </label>
-            <label>
+            <label className="atlas-contact-field--message">
               <span>Message</span>
               <textarea name="message" value={contactForm.message} onChange={updateContactField} maxLength={1800} required />
             </label>
