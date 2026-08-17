@@ -13,7 +13,7 @@ const timeLabel = (value) => {
   return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(value));
 };
 
-export default function NotificationBell({ className = '' }) {
+export default function NotificationBell({ className = '', presentation = 'popover' }) {
   const navigate = useNavigate();
   const ref = useRef(null);
   const [open, setOpen] = useState(false);
@@ -59,7 +59,7 @@ export default function NotificationBell({ className = '' }) {
       <Bell size={18} />
       {unreadCount > 0 && <span>{unreadCount > 9 ? '9+' : unreadCount}</span>}
     </button>
-    {open && <section className="notification-popover" aria-label="Notifications">
+    {open && <section className={`notification-popover${presentation === 'modal' ? ' notification-popover--modal' : ''}`} aria-label="Notifications">
       <header><div><strong>Notifications</strong><small>{unreadCount ? `${unreadCount} unread` : 'You’re up to date'}</small></div>{unreadCount > 0 && <button type="button" onClick={readAll}><CheckCheck size={14} /> Mark all read</button>}</header>
       <div className="notification-list">{notifications.length ? notifications.map((notification) => <button type="button" key={notification.id} className={notification.readAt ? '' : 'is-unread'} onClick={() => openNotification(notification)}><span><strong>{notification.title}</strong><em>{timeLabel(notification.createdAt)}</em></span><small>{notification.body}</small></button>) : <p>No notifications yet.</p>}</div>
     </section>}

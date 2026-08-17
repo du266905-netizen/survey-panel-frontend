@@ -48,12 +48,12 @@
 .business-workspace-rail a:hover::after, .business-workspace-rail a:focus-visible::after { opacity: 1; transform: translateX(0); }
 .business-projects { max-width: 1180px; padding: clamp(38px, 5vw, 66px); }
 .business-projects-head { align-items: flex-start; }
-.business-projects h1 { margin: 7px 0 0; font-family: var(--font-sans); font-size: clamp(32px, 3.2vw, 46px); font-weight: 820; letter-spacing: -.05em; line-height: 1; }
+.business-projects h1 { margin: 7px 0 0; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(36px, 3.5vw, 52px); font-weight: 560; letter-spacing: -.052em; line-height: .96; }
 .business-projects-head > div > p:last-child { max-width: 510px; margin-top: 12px; font-family: var(--font-sans); font-size: 14px; font-weight: 540; }
 .business-project-head-actions { display: flex; align-items: center; justify-content: flex-end; gap: 18px; padding-top: 6px; }
 .business-sales-link { display: inline-flex; align-items: center; gap: 6px; color: #315a45; font-size: 12px; font-weight: 800; text-decoration: none; white-space: nowrap; }
 .business-sales-link:hover { color: #183c2b; text-decoration: underline; text-underline-offset: 4px; }
-.business-project-count { color: #718076; font-size: 12px; font-weight: 750; padding-top: 12px; }
+.business-project-count { display: inline-flex; min-height: 28px; align-items: center; color: #718076; font-size: 12px; font-weight: 750; }
 .business-projects-empty-layout { display: grid; grid-template-columns: minmax(280px, .78fr) minmax(320px, .7fr); gap: 16px; max-width: 960px; margin-top: 40px; }
 .business-create-project-card { display: grid; min-height: 330px; align-content: center; justify-items: center; gap: 17px; border: 1px solid rgba(36, 56, 46, .18); border-radius: 2px; background: #fffefa; color: #243d30; cursor: pointer; font-family: var(--font-sans); padding: 34px; text-align: center; }
 .business-create-project-card:hover { border-color: #3e7658; box-shadow: 8px 9px 0 rgba(121, 156, 130, .16); transform: translate(-2px, -2px); }
@@ -70,6 +70,9 @@
 .business-project-list h2 { font-size: 22px; font-weight: 800; letter-spacing: -.04em; }
 .business-project-list article { position: relative; padding-bottom: 55px; }.business-project-open { display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: #285647; cursor: pointer; font: 850 12px var(--font-sans); text-decoration: none; }.business-project-open:hover { text-decoration: underline; text-underline-offset: 4px; }.business-project-actions { position: absolute; right: 24px; bottom: 20px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 14px; }.business-project-quote-note { position: absolute; bottom: 5px; left: 24px; margin: 0; color: #718076; font-size: 10px; font-weight: 650; }
 .business-workspace-rail .business-workspace-notification > button { width: 44px; height: 44px; border-color: transparent; border-radius: 10px; background: transparent; color: #64756b; }.business-workspace-rail .business-workspace-notification > button:hover, .business-workspace-rail .business-workspace-notification > button.is-open { border-color: rgba(44, 88, 65, .16); background: #fffefa; color: #285647; }.business-workspace-rail .business-workspace-notification > button > span { border-color: #f1f4f0; }
+.business-workspace .notification-popover--modal { position: fixed; z-index: 100; top: 84px; right: auto; left: 50%; width: min(420px, calc(100vw - 32px)); border-radius: 12px; transform: translateX(-50%); }
+.business-workspace .notification-popover--modal header { padding: 16px 17px; }
+.business-workspace .notification-popover--modal .notification-list { max-height: min(480px, calc(100svh - 190px)); }
 .business-quote-dialog { position: relative; width: min(100%, 620px); border: 1px solid rgba(36,56,46,.2); background: #fffefa; box-shadow: 13px 15px 0 rgba(86,124,96,.14); padding: clamp(25px, 4vw, 40px); }.business-quote-dialog h2 { margin: 9px 0 0; color: #20382b; font-family: var(--font-sans); font-size: clamp(28px, 4vw, 39px); font-weight: 820; letter-spacing: -.05em; }.business-quote-dialog dl { display: grid; gap: 12px; border-top: 1px solid rgba(36,56,46,.14); border-bottom: 1px solid rgba(36,56,46,.14); margin: 25px 0 0; padding: 17px 0; }.business-quote-dialog dl div { display: flex; justify-content: space-between; gap: 20px; }.business-quote-dialog dt { color: #708076; font-size: 11px; font-weight: 800; }.business-quote-dialog dd { margin: 0; color: #263b2e; font-size: 13px; font-weight: 800; text-align: right; }.business-quote-scope { display: grid; gap: 7px; margin-top: 19px; }.business-quote-scope strong { color: #3a5946; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }.business-quote-scope p { margin: 0 0 9px; color: #53665a; font-size: 13px; line-height: 1.6; white-space: pre-wrap; }.business-quote-decline { display: grid; gap: 7px; margin-top: 16px; color: #53665a; font-size: 12px; font-weight: 750; }.business-quote-decline textarea { min-height: 80px; border: 1px solid rgba(36,56,46,.2); background: #fffefa; color: #263b2e; font: inherit; padding: 10px; resize: vertical; }.business-quote-actions { display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(36,56,46,.14); margin-top: 22px; padding-top: 17px; }.business-quote-actions > button { display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(36,56,46,.2); background: #fffefa; color: #315a45; cursor: pointer; font: 800 12px var(--font-sans); padding: 10px 12px; }.business-quote-actions > .business-button { border-color: #285647; background: #285647; color: #fffefa; }.business-quote-actions > .business-quote-decline-button { border-color: #9f4235; background: #9f4235; color: #fffefa; }
 .business-project-modal form, .business-project-modal--chooser > section { font-family: var(--font-sans); }
 .business-project-modal h2, .business-project-modal--chooser h2 { font-family: var(--font-sans); font-weight: 820; }
@@ -106,6 +109,7 @@
   .business-projects-empty-layout { grid-template-columns: 1fr; }
   .business-project-actions { position: static; justify-content: flex-start; margin-top: 15px; }.business-project-quote-note { position: static; margin-top: 10px; }
   .business-sales-callout { align-items: flex-start; flex-direction: column; }
+  .business-workspace .notification-popover--modal { top: 18px; }
 }
 @media (max-width: 520px) {
   .business-workspace-body.business-workspace-body--rail { grid-template-columns: 56px minmax(0, 1fr); }

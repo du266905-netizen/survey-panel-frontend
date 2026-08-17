@@ -3,7 +3,6 @@ import {
   ArrowRight,
   Check,
   ClipboardList,
-  FileText,
   LayoutDashboard,
   LoaderCircle,
   LogOut,
@@ -195,23 +194,20 @@ export default function BusinessWorkspace() {
           <Link className="is-active" to="/business/workspace" title="Projects" aria-label="Projects">
             <LayoutDashboard size={20} />
           </Link>
-          <Link to="/business/access" title="Contact sales" aria-label="Contact sales">
-            <FileText size={20} />
-          </Link>
-          <NotificationBell className="business-workspace-notification" />
+          <NotificationBell className="business-workspace-notification" presentation="modal" />
           <div className="business-workspace-account">
             <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label="Account menu" aria-expanded={accountMenuOpen}>
               <UserRound size={20} />
               <span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span>
             </button>
-            {accountMenuOpen && <div><strong>{user?.displayName || 'Client account'}</strong><span>{user?.email}</span><button type="button" onClick={() => { logout(); navigate('/business/login'); }}><LogOut size={15} /> Sign out</button></div>}
+            {accountMenuOpen && <div><strong>{user?.displayName || 'Client account'}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate('/profile'); }}><UserRound size={15} /> Account</button><button type="button" onClick={() => { logout(); navigate('/business/login'); }}><LogOut size={15} /> Sign out</button></div>}
           </div>
         </aside>
 
         <section className="business-projects">
           <div className="business-projects-head">
             <div>
-              <p className="business-eyebrow">PROJECTS</p>
+              <p className="business-eyebrow">RESEARCH WORKSPACE</p>
               <h1>Projects</h1>
               <p>Create a custom questionnaire or tailored research project when you are ready to learn from people.</p>
             </div>
@@ -221,7 +217,7 @@ export default function BusinessWorkspace() {
                 <button className="business-button" type="button" onClick={() => setOpenChooser(true)}>
                   <Plus size={17} /> New project
                 </button>
-              ) : <span className="business-project-count">0 projects</span>}
+              ) : <span className="business-project-count">No projects yet</span>}
             </div>
           </div>
 

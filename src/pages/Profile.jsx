@@ -76,8 +76,6 @@ export default function Profile() {
       ['Member ID', user?.memberId || user?.id],
       ['Group', user?.group],
       ['Team', user?.team],
-      ['Login IP', user?.loginIp],
-      ['Login Region', user?.loginRegion],
       ['Email', user?.email],
     ];
 
