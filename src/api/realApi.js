@@ -194,6 +194,15 @@ export const getBusinessProject = async (projectId) => {
   return { data: response.data };
 };
 
+export const updateBusinessProject = async (projectId, payload) => {
+  const response = await apiClient.put(`/api/business/projects/${projectId}`, payload);
+  return { data: response.data };
+};
+
+export const deleteBusinessProject = async (projectId) => {
+  await apiClient.delete(`/api/business/projects/${projectId}`);
+};
+
 export const getBusinessQuestionnaireResponses = async (projectId) => {
   const response = await apiClient.get(`/api/business/projects/${projectId}/questionnaire/responses`);
   return { data: response.data };

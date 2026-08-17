@@ -46,6 +46,7 @@ import { isBusinessRole } from './utils/roles';
 import Business from './pages/Business';
 import BusinessAccess from './pages/BusinessAccess';
 import BusinessWorkspace from './pages/BusinessWorkspace';
+import BusinessAccount from './pages/BusinessAccount';
 import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
@@ -67,7 +68,8 @@ function AdminRoute({ children }) {
 
 function MemberRoute({ children }) {
   const { user } = useAuth();
-  return isAdminRole(user?.role) ? <Navigate to="/admin" replace /> : children;
+  if (isAdminRole(user?.role)) return <Navigate to="/admin" replace />;
+  return isBusinessRole(user?.role) ? <Navigate to="/business/workspace" replace /> : children;
 }
 
 function BusinessRoute({ children }) {
@@ -141,6 +143,7 @@ export default function App() {
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
+        <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireBuilder /></BusinessRoute>} />
         <Route path="/business/s/:publicId" element={<PublicBusinessQuestionnaire />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
