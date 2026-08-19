@@ -20,7 +20,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
-import businessHandshake from '../assets/illustrations/business-handshake.jpg';
+import researchSupportCampus from '../assets/business/research-support-campus.jpg';
 import './Business.css';
 
 const emptyProject = {
@@ -254,12 +254,12 @@ export default function BusinessWorkspace() {
         {activeView === 'support' ? <section className="business-projects business-support-view">
           <div className="business-projects-head">
             <div><p className="business-eyebrow">RESEARCH SUPPORT</p><h1>Plan with a clear brief.</h1><p>Share the decision, people, and timing that matter. Your workspace keeps the request and its next steps together.</p></div>
-            <button className="business-button" type="button" onClick={openNewProject}><Plus size={17} /> New research request</button>
+            <button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}><Plus size={17} /> Create a questionnaire</button>
           </div>
           <div className="business-support-layout">
             <section className="business-support-card"><p>WORKSPACE OWNER</p><h2>{user?.displayName || 'Client account'}</h2><span>{workspace.profile?.organizationName || 'Research workspace'}</span><dl><div><dt>Projects</dt><dd>{workspace.projects.length}</dd></div><div><dt>In progress</dt><dd>{workspace.projects.filter((project) => !['DRAFT', 'COMPLETED'].includes(project.status)).length}</dd></div></dl><button type="button" onClick={() => navigate('/business/account')}>Manage account <ArrowRight size={15} /></button></section>
             <section className="business-support-card business-support-steps"><p>HOW WE WORK</p><h2>Bring the question. We prepare the route.</h2><ol><li><span>01</span> Save a concise research brief.</li><li><span>02</span> Submit it when you are ready for a proposal.</li><li><span>03</span> Follow confirmed project progress here.</li></ol></section>
-            <aside className="business-support-art"><img src={businessHandshake} alt="Colleagues reviewing a research brief together" loading="lazy" decoding="async" /><div><p>NEED A STARTING POINT?</p><strong>Describe the decision your team needs to make.</strong><button type="button" onClick={openNewProject}>Prepare a brief <ArrowRight size={15} /></button></div></aside>
+            <aside className="business-support-art"><img src={researchSupportCampus} alt="A campus building viewed from above" loading="lazy" decoding="async" /><div><p>NEED A STARTING POINT?</p><strong>Describe the decision your team needs to make.</strong><button type="button" onClick={openNewProject}>Prepare a brief <ArrowRight size={15} /></button></div></aside>
           </div>
         </section> : <section className="business-projects">
           <div className="business-projects-head">
@@ -269,11 +269,7 @@ export default function BusinessWorkspace() {
               <p>Keep each research brief, proposal, and confirmed next step in one place.</p>
             </div>
             <div className="business-project-head-actions">
-              {workspace.projects.length ? (
-                <button className="business-button" type="button" onClick={openNewProject}>
-                  <Plus size={17} /> New research request
-                </button>
-              ) : <span className="business-project-count">No projects yet</span>}
+              <Link className="business-button" to="/business/access">Contact sales <ArrowRight size={17} /></Link>
             </div>
           </div>
 

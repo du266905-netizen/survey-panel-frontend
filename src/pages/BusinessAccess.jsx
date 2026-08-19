@@ -4,6 +4,8 @@ import { ArrowLeft, ArrowRight, LoaderCircle } from 'lucide-react';
 import PublicAuthPanel from '../components/PublicAuthPanel';
 import { submitBusinessInquiry } from '../api/realApi';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
+import createWorkspace from '../assets/business/create-workspace.jpg';
+import signInWorkspace from '../assets/business/sign-in-workspace.jpg';
 import './Business.css';
 
 const initialForm = { content: '', email: '', name: '', organizationType: '', phoneCountry: 'US', phone: '', region: 'US' };
@@ -38,7 +40,7 @@ export default function BusinessAccess() {
     <main className="business-access-page business-contact-page">
       <Link className="business-access-brand" to="/business"><ArrowLeft size={16} /> Back</Link>
       {authMode ? (
-        <div className="business-login-layout"><section><p className="business-eyebrow">CLIENT WORKSPACE</p><h1>{authMode === 'login' ? 'Sign in to your projects.' : 'Create your workspace.'}</h1><p>See your projects, progress, and next steps in one place.</p></section><div className="business-access-panel"><PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(nextMode === 'login' ? '/business/login' : '/business/register', { replace: true })} accountType="BUSINESS" /></div></div>
+        <div className="business-login-layout"><section className={`business-login-intro business-login-intro--${authMode}`}><img src={authMode === 'login' ? signInWorkspace : createWorkspace} alt="" decoding="async" /><div><p className="business-eyebrow">CLIENT WORKSPACE</p><h1>{authMode === 'login' ? 'Welcome back to your projects.' : 'Create your research workspace.'}</h1><p>{authMode === 'login' ? 'Review your briefs, confirmed proposals, and the next step for each project.' : 'Keep your briefs, confirmed scope, and research progress in one considered place.'}</p></div></section><div className="business-access-panel"><PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(nextMode === 'login' ? '/business/login' : '/business/register', { replace: true })} accountType="BUSINESS" /></div></div>
       ) : (
         <div className="business-contact-layout">
           <section className="business-contact-intro"><p className="business-eyebrow">BUSINESS RESEARCH</p><h1>Turn your next question into useful evidence.</h1><p>Tell us what you need to learn. We will help you find the right research route for your team.</p></section>
