@@ -22,12 +22,12 @@
 
 /* Questionnaire editor cards follow the same medium, functional sans-serif hierarchy. */
 .business-builder, .business-builder * { font-family: var(--font-sans); }
-.business-builder-title { font-weight: 650; }
+.business-builder-title { font-family: var(--font-display); font-weight: 560; }
 .business-question-card { background: #e7f0e5; border-color: rgba(36, 86, 67, .16); }
-.business-question-card textarea { font-size: 16px; font-weight: 550; }
+.business-question-card textarea { font-family: var(--font-reading); font-size: 18px; font-weight: 600; }
 .business-question-card-head { font-weight: 750; }
 .business-question-controls select, .business-question-controls label, .business-question-choices input { font-weight: 550; }
 .business-builder-sidebar section { background: #eef5ec; }
-.business-builder-sidebar h2, .business-share-card strong, .business-response-list h2 { font-weight: 650; }
+.business-builder-sidebar h2, .business-share-card strong, .business-response-list h2 { font-family: var(--font-reading); font-weight: 650; }
 @media (max-width: 850px) { .business-builder-layout { grid-template-columns: 1fr; }.business-builder-main { border-right: 0; padding: 40px 22px; }.business-builder-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 22px; }.business-builder-sidebar > section:first-child { grid-column: 1 / -1; } }
 @media (max-width: 560px) { .business-builder-header { align-items: flex-start; flex-direction: column; padding: 15px 18px; }.business-builder-header > div { width: 100%; justify-content: flex-end; }.business-builder-sidebar { grid-template-columns: 1fr; }.business-builder-sidebar > section:first-child { grid-column: auto; }.business-add-question { align-items: flex-start; flex-wrap: wrap; }.business-add-question button { margin-left: 33px; }.business-question-controls { align-items: flex-start; flex-direction: column; gap: 10px; } }
