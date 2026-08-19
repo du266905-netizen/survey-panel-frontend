@@ -6,6 +6,8 @@ import { submitBusinessInquiry } from '../api/realApi';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import createWorkspace from '../assets/business/create-workspace.jpg';
 import signInWorkspace from '../assets/business/sign-in-workspace.jpg';
+import contactSalesCity from '../assets/business/contact-sales-city.jpg';
+import { HomeFooter } from '../components/HomeLegacySections';
 import './Business.css';
 
 const initialForm = { content: '', email: '', name: '', organizationType: '', phoneCountry: 'US', phone: '', region: 'US' };
@@ -37,13 +39,14 @@ export default function BusinessAccess() {
   };
 
   return (
+    <>
     <main className="business-access-page business-contact-page">
       <Link className="business-access-brand" to="/business"><ArrowLeft size={16} /> Back</Link>
       {authMode ? (
         <div className="business-login-layout"><section className={`business-login-intro business-login-intro--${authMode}`}><img src={authMode === 'login' ? signInWorkspace : createWorkspace} alt="" decoding="async" /><div><p className="business-eyebrow">CLIENT WORKSPACE</p><h1>{authMode === 'login' ? 'Welcome back to your projects.' : 'Create your research workspace.'}</h1><p>{authMode === 'login' ? 'Review your briefs, confirmed proposals, and the next step for each project.' : 'Keep your briefs, confirmed scope, and research progress in one considered place.'}</p></div></section><div className="business-access-panel"><PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(nextMode === 'login' ? '/business/login' : '/business/register', { replace: true })} accountType="BUSINESS" /></div></div>
       ) : (
         <div className="business-contact-layout">
-          <section className="business-contact-intro"><p className="business-eyebrow">BUSINESS RESEARCH</p><h1>Turn your next question into useful evidence.</h1><p>Tell us what you need to learn. We will help you find the right research route for your team.</p></section>
+          <section className="business-contact-intro business-contact-intro--art"><img src={contactSalesCity} alt="" decoding="async" /><div><p className="business-eyebrow">BUSINESS RESEARCH</p><h1>Turn your next question into useful evidence.</h1><p>Tell us what you need to learn. We will help you find the right research route for your team.</p></div></section>
           <form className="business-contact-form" onSubmit={submit}>
             <label>What would you like to research?<textarea name="content" value={form.content} onChange={update} placeholder="The decision, audience, and question you need to answer." minLength="20" maxLength="1800" required /></label>
             <div className="business-contact-grid"><label>Contact email<input name="email" type="email" autoComplete="email" value={form.email} onChange={update} placeholder="you@organisation.com" required /></label><label>Name<input name="name" autoComplete="name" value={form.name} onChange={update} placeholder="Your name" required /></label><label>Organisation type<select name="organizationType" value={form.organizationType} onChange={update} required><option value="">Select one</option><option value="Business">Business</option><option value="Research or education">Research or education</option><option value="Nonprofit or public organisation">Nonprofit or public organisation</option><option value="Independent researcher">Independent researcher</option></select></label><label>Region<select name="region" autoComplete="country" value={form.region} onChange={update} required>{countryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label}</option>)}</select></label><label className="business-contact-phone-field">Phone number <em>Optional</em><span className="business-phone-input"><select name="phoneCountry" value={form.phoneCountry} onChange={update} aria-label="Phone country or territory">{phoneCountryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label} ({country.dialCode})</option>)}</select><input name="phone" type="tel" inputMode="tel" autoComplete="tel-national" value={form.phone} onChange={update} placeholder="Phone number" maxLength="32" /></span></label></div>
@@ -53,5 +56,7 @@ export default function BusinessAccess() {
         </div>
       )}
     </main>
+    <HomeFooter />
+    </>
   );
 }

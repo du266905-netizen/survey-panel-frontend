@@ -41,7 +41,7 @@ import WorkerDetail from './pages/WorkerDetail';
 import WorkerMonitor from './pages/WorkerMonitor';
 import AgentPrecheck from './pages/AgentPrecheck';
 import SupportChatWidget from './components/SupportChatWidget';
-import { isAdminRole } from './utils/roles';
+import { isAdminRole, isPanelistRole } from './utils/roles';
 import { isBusinessRole } from './utils/roles';
 import Business from './pages/Business';
 import BusinessAccess from './pages/BusinessAccess';
@@ -299,7 +299,7 @@ export default function App() {
         <Route path="/" element={<HomeAtlas />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
-      {user && <SupportChatWidget />}
+      {isPanelistRole(user?.role) && <SupportChatWidget />}
     </>
   );
 }

@@ -183,7 +183,7 @@
 .business-login-intro { height: calc(100svh - 78px); }
 .business-login-intro > img { filter: none; }
 .business-login-intro::after { display: none; }
-.business-login-layout .business-access-panel { display: flex; min-height: calc(100svh - 78px); align-items: flex-start; padding: clamp(42px, 7vw, 92px); }
+.business-login-layout .business-access-panel { display: flex; min-height: calc(100svh - 78px); align-items: flex-start; padding: 0 clamp(42px, 7vw, 92px); }
 .business-login-layout .public-auth-panel { width: 100%; max-width: none; }
 
 /* Titles carry the editorial face; supporting project information remains practical. */
@@ -197,4 +197,18 @@
   .business-login-layout { grid-template-columns: 1fr; margin-top: 28px; }
   .business-login-intro { position: relative !important; top: auto; height: 310px; }
   .business-login-layout .business-access-panel { min-height: 0; padding: 28px 0 0; }
+}
+
+/* The contact route uses the same full-height artwork grammar as client access. */
+.business-contact-layout { width: 100%; max-width: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; margin: 20px auto 0; }
+.business-contact-intro--art { position: sticky; top: 20px; display: grid; height: calc(100svh - 78px); min-height: 0; overflow: hidden; padding: 0; }
+.business-contact-intro--art > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.business-contact-intro--art > div { position: relative; align-self: end; max-width: 520px; padding: clamp(28px, 5vw, 70px); }
+.business-contact-intro--art h1 { font-family: var(--font-display); font-weight: 560; }
+.business-contact-intro--art > div > p:last-child { color: #435b4d; }
+.business-contact-layout .business-contact-form { align-self: start; min-height: calc(100svh - 78px); border: 0; box-shadow: none; background: #fff; padding: clamp(42px, 7vw, 92px); }
+@media (max-width: 800px) {
+  .business-contact-layout { grid-template-columns: 1fr; margin-top: 28px; }
+  .business-contact-intro--art { position: relative; top: auto; height: 310px; }
+  .business-contact-layout .business-contact-form { min-height: 0; padding: 28px 0; }
 }
