@@ -257,6 +257,8 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   };
 
   const isLogin = mode === 'login';
+  const businessTermsPath = accountType === 'BUSINESS' ? '/business/terms' : '/terms';
+  const termsLabel = accountType === 'BUSINESS' ? 'Business Researcher Terms' : 'Terms of Service';
 
   return (
     <section ref={panelRef} className="public-auth-panel" aria-labelledby="public-auth-title">
@@ -270,7 +272,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
         <h2 id="public-auth-title">{isLogin ? 'Continue where you left off.' : accountType === 'BUSINESS' ? 'Create your research workspace.' : 'Your perspective belongs here.'}</h2>
         <p className="public-auth-intro">{isLogin ? 'Sign in to continue to your workspace.' : accountType === 'BUSINESS' ? 'Create, share, and manage questionnaires alongside your research projects.' : 'Create a participant account, verify your email, and begin your first survey.'}</p>
 
-        <p className="public-auth-consent">By {isLogin ? 'signing in' : 'creating an account'}, you agree to the <Link to="/terms" target="_blank">Terms of Service</Link> and <Link to="/privacy" target="_blank">Privacy Policy</Link>.</p>
+        <p className="public-auth-consent">By {isLogin ? 'signing in' : 'creating an account'}, you agree to the <Link to={businessTermsPath} target="_blank">{termsLabel}</Link> and <Link to="/privacy" target="_blank">Privacy Policy</Link>.</p>
 
         <div className={loading ? 'pointer-events-none opacity-60' : ''}>
           {accountType !== 'BUSINESS' ? <GoogleButton mode={mode} onCredential={handleGoogleCredential} onError={showError} /> : null}

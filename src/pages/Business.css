@@ -206,7 +206,7 @@
 .business-contact-intro--art > div { position: relative; align-self: end; max-width: 520px; padding: clamp(28px, 5vw, 70px); }
 .business-contact-intro--art h1 { font-family: var(--font-display); font-weight: 560; }
 .business-contact-intro--art > div > p:last-child { color: #435b4d; }
-.business-contact-layout .business-contact-form { align-self: start; min-height: calc(100svh - 78px); border: 0; box-shadow: none; background: #fff; padding: clamp(42px, 7vw, 92px); }
+.business-contact-layout .business-contact-form { align-self: start; min-height: calc(100svh - 78px); border: 0; box-shadow: none; background: #fff; padding: 0 clamp(42px, 7vw, 92px) clamp(42px, 7vw, 92px); }
 @media (max-width: 800px) {
   .business-contact-layout { grid-template-columns: 1fr; margin-top: 28px; }
   .business-contact-intro--art { position: relative; top: auto; height: 310px; }

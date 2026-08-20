@@ -35,6 +35,7 @@ import Privacy from './pages/Privacy';
 import RouteScrollManager from './components/RouteScrollManager';
 import PublicSiteLayout from './components/PublicSiteLayout';
 import Terms from './pages/Terms';
+import BusinessResearcherTerms from './pages/BusinessResearcherTerms';
 import TrafficConsole from './pages/TrafficConsole';
 import Wallet from './pages/Wallet';
 import WorkerDetail from './pages/WorkerDetail';
@@ -150,6 +151,7 @@ export default function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PublicPage><Privacy /></PublicPage>} />
         <Route path="/terms" element={<PublicPage><Terms /></PublicPage>} />
+        <Route path="/business/terms" element={<PublicPage><BusinessResearcherTerms /></PublicPage>} />
         <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
         <Route path="/our-approach" element={<PublicPage><OurApproach /></PublicPage>} />
         <Route path="/news" element={<NewsRoute />} />
