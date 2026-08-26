@@ -164,7 +164,7 @@ export default function HomeAtlas() {
           <div className="video-hero-media" aria-hidden="true">
             <iframe
               className="video-hero-player"
-              src="https://player.mediadelivery.net/embed/719414/d40516f5-d9e6-4eec-9c46-730d9d58ade3?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
+              src="https://player.mediadelivery.net/embed/736633/4029db8d-0274-4c0c-b4a0-2dcd6b381344?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
               title=""
               loading="eager"
               tabIndex={-1}
