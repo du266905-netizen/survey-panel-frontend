@@ -10,6 +10,8 @@ import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
+import peopleAtSunset from '../assets/home/people-at-sunset.jpg';
+import heroBrandMark from '../assets/home/guanyi-hero-mark.png';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import './HomeAtlas.css';
 
@@ -162,26 +164,33 @@ export default function HomeAtlas() {
       <section className="video-hero-section" aria-labelledby="video-hero-title">
         <div className="video-hero">
           <div className="video-hero-media" aria-hidden="true">
-            <iframe
-              className="video-hero-player"
-              src="https://player.mediadelivery.net/embed/736633/4029db8d-0274-4c0c-b4a0-2dcd6b381344?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
-              title=""
-              loading="eager"
-              tabIndex={-1}
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
-              allowFullScreen
-            />
+            <img src={peopleAtSunset} alt="" />
           </div>
           <div className="video-hero-scrim" aria-hidden="true" />
           <div className="video-hero-content">
-            <p className="video-hero-eyebrow">Every voice leaves an echo.</p>
-            <h1 id="video-hero-title">Your opinion<br />shapes the world.</h1>
-            <p className="video-hero-description">Discover global perspectives, share what you think, and earn rewards by taking surveys.</p>
+            <p className="video-hero-eyebrow">GuanyiSearch / Research with people</p>
+            <h1 id="video-hero-title"><span>Every voice</span><span>carries</span><span>forward.</span></h1>
+            <p className="video-hero-description">Take part in thoughtful research, share what you see, and help turn lived experience into clearer decisions.</p>
             <Link className="atlas-primary-link video-hero-cta" to={user ? '/dashboard' : '/join'}>
               Join us
               <ArrowUpRight size={19} strokeWidth={1.8} />
             </Link>
           </div>
+          <div className="video-hero-paths" aria-label="Explore GuanyiSearch">
+            <Link to="/partners" className="video-hero-path">
+              <span>Take part</span>
+              <strong>Find surveys and share your point of view.</strong>
+            </Link>
+            <Link to="/business" className="video-hero-path">
+              <span>For organisations</span>
+              <strong>Plan a questionnaire or a tailored study.</strong>
+            </Link>
+            <Link to="/news" className="video-hero-path">
+              <span>News Wall</span>
+              <strong>See the conversations moving through our community.</strong>
+            </Link>
+          </div>
+          <img className="video-hero-mark" src={heroBrandMark} alt="" aria-hidden="true" />
         </div>
       </section>
 

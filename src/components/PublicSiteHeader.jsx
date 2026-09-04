@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronDown, Menu, Search, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
 import { isBusinessRole } from '../utils/roles';
@@ -33,10 +33,8 @@ const navigation = [
 
 export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const menuCloseTimer = useRef(null);
 
@@ -72,25 +70,6 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
     closeMenus();
     setMobileOpen(false);
   };
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const query = searchTerm.trim();
-    navigate(query ? `/news?search=${encodeURIComponent(query)}` : '/news');
-    setMobileOpen(false);
-  };
-  const searchField = (className) => (
-    <form className={className} role="search" onSubmit={handleSearch}>
-      <Search aria-hidden="true" size={16} strokeWidth={1.9} />
-      <input
-        type="search"
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-        placeholder="Search the News Wall"
-        aria-label="Search the News Wall"
-      />
-    </form>
-  );
-
   return (
     <header className={`atlas-navigation public-site-header${heroOverlay ? ' is-hero-overlay' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
       <Link className="atlas-brand" to="/" aria-label="GuanyiSearch home" onClick={closeNavigation}>
@@ -142,7 +121,6 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       </nav>
 
       <div className="atlas-nav-actions">
-        {searchField('atlas-nav-search')}
         {!user && <Link className="atlas-sign-in" to="/login">Sign in</Link>}
         <Link className="atlas-register" to={user ? (isBusinessRole(user.role) ? '/business/workspace' : '/dashboard') : '/join'}>
           {user ? 'Open workspace' : 'Join us'}
@@ -161,7 +139,6 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       </div>
 
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
-        {searchField('atlas-mobile-search')}
         <Link className="atlas-mobile-direct-link" to="/business" onClick={closeNavigation}>For organisations <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         {navigation.map((group) => (
           <div className="atlas-mobile-group" key={group.label}>
