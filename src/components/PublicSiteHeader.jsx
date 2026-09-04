@@ -2,8 +2,9 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import Logo from './Logo';
 import { isBusinessRole } from '../utils/roles';
+import brandMarkLight from '../assets/home/guanyi-hero-mark.png';
+import brandMarkDark from '../assets/home/guanyi-brand-mark-dark.png';
 import './PublicSiteHeader.css';
 
 const navigation = [
@@ -73,7 +74,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   return (
     <header className={`atlas-navigation public-site-header${heroOverlay ? ' is-hero-overlay' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
       <Link className="atlas-brand" to="/" aria-label="GuanyiSearch home" onClick={closeNavigation}>
-        <Logo size="md" variant={heroOverlay && !isScrolled ? 'light' : 'dark'} className="atlas-brand-logo" />
+        <img className="atlas-brand-mark" src={heroOverlay && !isScrolled ? brandMarkLight : brandMarkDark} alt="" aria-hidden="true" />
       </Link>
 
       <nav className="atlas-nav-links" aria-label="Primary navigation">

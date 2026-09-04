@@ -11,7 +11,6 @@ import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
 import peopleAtSunset from '../assets/home/people-at-sunset.jpg';
-import heroBrandMark from '../assets/home/guanyi-hero-mark.png';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import './HomeAtlas.css';
 
@@ -168,7 +167,7 @@ export default function HomeAtlas() {
           </div>
           <div className="video-hero-scrim" aria-hidden="true" />
           <div className="video-hero-content">
-            <p className="video-hero-eyebrow">GuanyiSearch / Research with people</p>
+            <p className="video-hero-eyebrow">Insights &amp; services</p>
             <h1 id="video-hero-title"><span>Every voice</span><span>carries</span><span>forward.</span></h1>
             <p className="video-hero-description">Take part in thoughtful research, share what you see, and help turn lived experience into clearer decisions.</p>
             <Link className="atlas-primary-link video-hero-cta" to={user ? '/dashboard' : '/join'}>
@@ -176,21 +175,6 @@ export default function HomeAtlas() {
               <ArrowUpRight size={19} strokeWidth={1.8} />
             </Link>
           </div>
-          <div className="video-hero-paths" aria-label="Explore GuanyiSearch">
-            <Link to="/partners" className="video-hero-path">
-              <span>Take part</span>
-              <strong>Find surveys and share your point of view.</strong>
-            </Link>
-            <Link to="/business" className="video-hero-path">
-              <span>For organisations</span>
-              <strong>Plan a questionnaire or a tailored study.</strong>
-            </Link>
-            <Link to="/news" className="video-hero-path">
-              <span>News Wall</span>
-              <strong>See the conversations moving through our community.</strong>
-            </Link>
-          </div>
-          <img className="video-hero-mark" src={heroBrandMark} alt="" aria-hidden="true" />
         </div>
       </section>
 

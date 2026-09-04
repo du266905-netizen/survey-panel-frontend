@@ -44,21 +44,11 @@ const footerGroups = [
 
 const socialLinks = [
   { id: 'x', label: 'X / Twitter', href: 'https://x.com/GUANYISEARCH' },
-  { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61591672089947' },
-  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/guanyisearch_/' },
   { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/guanyisearch/' },
   { id: 'whatsapp', label: 'Join our community', href: 'https://whatsapp.com/channel/0029Vb8T5zhJf05W6ZZmi83F' },
 ];
 
 function SocialGlyph({ id }) {
-  if (id === 'instagram') {
-    return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" strokeWidth="2.2" /><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" strokeWidth="2.2" /><circle cx="17.25" cy="6.75" r="1.35" fill="currentColor" /></svg>;
-  }
-
-  if (id === 'facebook') {
-    return <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.1 8.65h3.15V4h-3.72C9.4 4 7 6.46 7 10.1v2.4H4v4.38h3V23h4.85v-6.12h3.74l.7-4.38h-4.44v-1.95c0-1.26.62-1.9 2.25-1.9Z" /></svg>;
-  }
-
   if (id === 'linkedin') {
     return <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.15 7.25A2.6 2.6 0 1 1 5.18 2a2.6 2.6 0 0 1-.03 5.25ZM2.78 22V9.22h4.78V22H2.78Zm7.12 0V9.22h4.58v1.75h.06c.64-1.12 2.08-2.14 4.17-2.14 4.1 0 5.02 2.7 5.02 6.2V22h-4.78v-6.25c0-1.5-.03-3.43-2.1-3.43-2.1 0-2.18 1.67-2.18 3.34V22H9.9Z" /></svg>;
   }
@@ -155,7 +145,7 @@ export function HomeFooter() {
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">
-        <div className="home-footer-brand"><div className="home-footer-identity"><img className="home-footer-logo-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>A considered research space for participants and organisations: clear opportunities, credible input, and practical next steps.</p><a href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
+        <div className="home-footer-brand"><div className="home-footer-identity"><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>A considered research space for participants and organisations: clear opportunities, credible input, and practical next steps.</p><a href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
         <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={item.to}>{item.label}</Link>)}</section>)}</nav>
       </div>
       <div className="home-continuation-container home-footer-bottom"><p>© 2026 GuanyiSearch. All rights reserved.</p><div><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms of Service</Link></div></div>
