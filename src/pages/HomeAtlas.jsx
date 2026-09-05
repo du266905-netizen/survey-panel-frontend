@@ -10,7 +10,7 @@ import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
-import peopleAtSunset from '../assets/home/people-at-sunset.jpg';
+import skyReflection from '../assets/home/sky-reflection.jpg';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import './HomeAtlas.css';
 
@@ -163,7 +163,7 @@ export default function HomeAtlas() {
       <section className="video-hero-section" aria-labelledby="video-hero-title">
         <div className="video-hero">
           <div className="video-hero-media" aria-hidden="true">
-            <img src={peopleAtSunset} alt="" />
+            <img src={skyReflection} alt="" />
           </div>
           <div className="video-hero-scrim" aria-hidden="true" />
           <div className="video-hero-content">
