@@ -12,7 +12,7 @@
   gap: 10px;
   min-height: 66px;
   padding: 0 clamp(24px, 2.6vw, 46px);
-  width: min(calc(100% - clamp(32px, 5.5vw, 112px)), 1240px);
+  width: min(72vw, 1180px);
   margin: 18px auto 0;
   border: 1px solid var(--atlas-rule);
   border-radius: 3px;
@@ -50,7 +50,7 @@
   top: 18px;
   right: 0;
   left: 0;
-  width: min(calc(100% - clamp(32px, 5.5vw, 112px)), 1240px);
+  width: min(72vw, 1180px);
   margin: 0 auto;
   border: 1px solid rgba(255, 253, 249, .26);
   border-radius: 3px;
@@ -84,7 +84,7 @@
 .public-site-header.is-hero-overlay.is-scrolled .atlas-nav-link:focus-visible { color: var(--atlas-forest); }
 .public-site-header.is-hero-overlay.is-scrolled .atlas-register { border-color: var(--atlas-forest); background: var(--atlas-forest); color: var(--atlas-paper); }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .public-site-header.is-hero-overlay:not(.is-scrolled) .atlas-mobile-menu { border-bottom-color: rgba(255, 253, 249, .2); background: rgba(8, 25, 17, .96); box-shadow: 0 20px 36px rgba(0, 0, 0, .25); }
   .public-site-header.is-hero-overlay:not(.is-scrolled) .atlas-mobile-direct-link,
   .public-site-header.is-hero-overlay:not(.is-scrolled) .atlas-mobile-group a { color: #fffdf9; }
@@ -92,7 +92,7 @@
   .public-site-header.is-hero-overlay:not(.is-scrolled) .atlas-mobile-group > p { color: #b7d0bd; }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .public-site-header { grid-template-columns: 1fr auto; }
   .atlas-nav-links { display: none; }
   .atlas-menu-button { display: inline-flex; padding: 5px; }
