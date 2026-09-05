@@ -3,7 +3,7 @@ import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { isBusinessRole } from '../utils/roles';
-import brandMarkLight from '../assets/home/guanyi-hero-mark.png';
+import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import brandMarkDark from '../assets/home/guanyi-brand-mark-dark.png';
 import './PublicSiteHeader.css';
 

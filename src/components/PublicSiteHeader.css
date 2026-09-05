@@ -4,24 +4,28 @@
   --atlas-paper: #f7f7f3;
   --atlas-rule: rgba(36, 56, 46, .16);
   position: sticky;
-  top: 0;
+  top: 18px;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(178px, .82fr) auto minmax(230px, .82fr);
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
   min-height: 66px;
   padding: 0 clamp(24px, 2.6vw, 46px);
-  border-bottom: 1px solid var(--atlas-rule);
+  width: min(calc(100% - clamp(32px, 5.5vw, 112px)), 1240px);
+  margin: 18px auto 0;
+  border: 1px solid var(--atlas-rule);
+  border-radius: 3px;
   background: #f7f7f3;
   color: var(--atlas-ink);
   font-family: var(--font-sans);
+  box-shadow: 0 10px 22px rgba(22, 37, 29, .045);
   backdrop-filter: blur(18px);
 }
 .atlas-brand { display: inline-flex; align-items: center; width: max-content; }
-.atlas-brand-mark { display: block; width: 42px; height: 42px; object-fit: contain; }
+.atlas-brand-mark { display: block; width: auto; height: 40px; max-width: 53px; object-fit: contain; }
 .atlas-nav-links, .atlas-nav-actions { display: flex; align-items: center; }
-.atlas-nav-links { gap: 2px; }
+.atlas-nav-links { justify-content: center; gap: 2px; }
 .atlas-nav-group { position: relative; display: flex; align-items: center; }
 .atlas-nav-trigger, .atlas-menu-button { appearance: none; border: 0; color: var(--atlas-ink); background: transparent; cursor: pointer; }
 .atlas-nav-trigger, .atlas-nav-link { display: inline-flex; align-items: center; gap: 5px; padding: 11px 9px; color: var(--atlas-ink); font-size: .84rem; font-weight: 700; text-decoration: none; }
@@ -46,7 +50,7 @@
   top: 18px;
   right: 0;
   left: 0;
-  width: min(calc(100% - clamp(32px, 5.5vw, 112px)), 1350px);
+  width: min(calc(100% - clamp(32px, 5.5vw, 112px)), 1240px);
   margin: 0 auto;
   border: 1px solid rgba(255, 253, 249, .26);
   border-radius: 3px;
@@ -101,8 +105,8 @@
 }
 
 @media (max-width: 800px) {
-  .public-site-header { min-height: 66px; padding: 0 22px; }
-  .atlas-brand-mark { width: 37px; height: 37px; }
+  .public-site-header { top: 10px; width: calc(100% - 24px); min-height: 62px; margin-top: 10px; padding: 0 22px; }
+  .atlas-brand-mark { width: auto; height: 34px; max-width: 46px; }
   .atlas-sign-in { display: none; }
   .atlas-register { min-height: 38px; padding: 0 13px; font-size: .76rem; }
   .atlas-register svg { display: none; }
@@ -111,7 +115,7 @@
 }
 
 @media (max-width: 800px) {
-  .public-site-header.is-hero-overlay { top: 10px; width: calc(100% - 24px); }
+  .public-site-header.is-hero-overlay { top: 10px; width: calc(100% - 24px); margin-top: 0; }
   .public-site-header.is-hero-overlay.is-scrolled { top: 10px; width: calc(100% - 24px); }
 }
 
