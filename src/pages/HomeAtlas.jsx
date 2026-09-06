@@ -278,7 +278,7 @@ export default function HomeAtlas() {
         </div>
       </section>
 
-      <section className="atlas-evidence" aria-labelledby="atlas-evidence-title">
+      <section className="atlas-evidence" aria-label="About GuanyiSearch">
         <div className="atlas-evidence-frame">
           <div className="atlas-evidence-video">
             <iframe
@@ -290,8 +290,6 @@ export default function HomeAtlas() {
             />
           </div>
           <div className="atlas-evidence-copy">
-            <p className="atlas-evidence-kicker">GUANYISEARCH / GLOBAL PERSPECTIVE</p>
-            <h2 id="atlas-evidence-title">Research that meets people where they are.</h2>
             <p>The world is never one-size-fits-all. GUANYISEARCH listens deeply, blending global vision with local research expertise. Grounded in scientific sample design and rigorous qualitative-quantitative methodologies, we consistently uphold internationally recognized research ethics and data privacy standards to uncover authentic insights—empowering better decisions and better lives.</p>
             <p className="atlas-evidence-statement">Let every choice be evidence-based.</p>
           </div>
