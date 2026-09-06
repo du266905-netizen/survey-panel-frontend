@@ -277,6 +277,26 @@ export default function HomeAtlas() {
           />
         </div>
       </section>
+
+      <section className="atlas-evidence" aria-labelledby="atlas-evidence-title">
+        <div className="atlas-evidence-frame">
+          <div className="atlas-evidence-video">
+            <iframe
+              src="https://player.mediadelivery.net/embed/745435/cff19686-e67a-4701-bbc6-9121c85d5d5b?autoplay=true&loop=false&muted=true&preload=true&responsive=true"
+              title="GuanyiSearch research in context"
+              loading="lazy"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+            />
+          </div>
+          <div className="atlas-evidence-copy">
+            <p className="atlas-evidence-kicker">GUANYISEARCH / GLOBAL PERSPECTIVE</p>
+            <h2 id="atlas-evidence-title">Research that meets people where they are.</h2>
+            <p>The world is never one-size-fits-all. GUANYISEARCH listens deeply, blending global vision with local research expertise. Grounded in scientific sample design and rigorous qualitative-quantitative methodologies, we consistently uphold internationally recognized research ethics and data privacy standards to uncover authentic insights—empowering better decisions and better lives.</p>
+            <p className="atlas-evidence-statement">Let every choice be evidence-based.</p>
+          </div>
+        </div>
+      </section>
       <HomeLegacySections />
       <CookieConsentBanner />
     </main>
