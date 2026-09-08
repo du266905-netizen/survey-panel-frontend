@@ -33,6 +33,7 @@ import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
 import Privacy from './pages/Privacy';
 import RouteScrollManager from './components/RouteScrollManager';
+import PageMotion from './components/PageMotion';
 import PublicSiteLayout from './components/PublicSiteLayout';
 import Terms from './pages/Terms';
 import BusinessResearcherTerms from './pages/BusinessResearcherTerms';
@@ -135,6 +136,7 @@ export default function App() {
   return (
     <>
       <RouteScrollManager />
+      <PageMotion>
       <Routes>
         <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" authOnly /></PublicEntry>} />
         <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
@@ -301,6 +303,7 @@ export default function App() {
         <Route path="/" element={<HomeAtlas />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
+      </PageMotion>
       {isPanelistRole(user?.role) && <SupportChatWidget />}
     </>
   );

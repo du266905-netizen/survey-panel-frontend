@@ -7,6 +7,7 @@ import '@fontsource-variable/source-serif-4';
 import App from './App';
 import { AuthProvider } from './components/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
+import { LanguageProvider } from './components/LanguageContext';
 import './index.css';
 import './styles/paper-contrast-fixes.css';
 import './pages/WorkspaceSurfaceTheme.css';
@@ -19,9 +20,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </LanguageProvider>
       </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>

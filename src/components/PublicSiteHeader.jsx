@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Globe2, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { isBusinessRole } from '../utils/roles';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import brandMarkDark from '../assets/home/guanyi-brand-mark-dark.png';
+import { useLanguage } from './LanguageContext';
 import './PublicSiteHeader.css';
 
 const navigation = [
@@ -34,6 +35,7 @@ const navigation = [
 
 export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
+  const { activeLanguage, language, languages, setLanguage } = useLanguage();
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -70,6 +72,10 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   const closeNavigation = () => {
     closeMenus();
     setMobileOpen(false);
+  };
+  const selectLanguage = (code) => {
+    setLanguage(code);
+    closeMenus();
   };
   return (
     <header className={`atlas-navigation public-site-header${heroOverlay ? ' is-hero-overlay' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
@@ -122,6 +128,50 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       </nav>
 
       <div className="atlas-nav-actions">
+        <div
+          className="atlas-language-group"
+          onMouseEnter={() => {
+            clearMenuCloseTimer();
+            setActiveMenu('language');
+          }}
+          onMouseLeave={scheduleMenuClose}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) closeMenus();
+          }}
+        >
+          <button
+            className="atlas-language-trigger"
+            type="button"
+            aria-expanded={activeMenu === 'language'}
+            aria-haspopup="listbox"
+            onClick={() => {
+              clearMenuCloseTimer();
+              setActiveMenu((current) => (current === 'language' ? null : 'language'));
+            }}
+          >
+            <Globe2 aria-hidden="true" size={17} strokeWidth={1.8} />
+            <span>{activeLanguage.shortLabel}</span>
+            <ChevronDown aria-hidden="true" size={14} strokeWidth={1.8} />
+          </button>
+          <div className={`atlas-language-menu ${activeMenu === 'language' ? 'is-open' : ''}`} role="listbox" aria-label="Choose language">
+            <p>Language</p>
+            <div>
+              {languages.map((item) => (
+                <button
+                  key={item.code}
+                  type="button"
+                  role="option"
+                  aria-selected={language === item.code}
+                  className={language === item.code ? 'is-selected' : ''}
+                  onClick={() => selectLanguage(item.code)}
+                >
+                  <span>{item.label}</span>
+                  <small>{item.shortLabel}</small>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
         {!user && <Link className="atlas-sign-in" to="/login">Sign in</Link>}
         <Link className="atlas-register" to={user ? (isBusinessRole(user.role) ? '/business/workspace' : '/dashboard') : '/join'}>
           {user ? 'Open workspace' : 'Join us'}
@@ -141,6 +191,16 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
 
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
         <Link className="atlas-mobile-direct-link" to="/business" onClick={closeNavigation}>For organisations <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
+        <div className="atlas-mobile-language">
+          <p><Globe2 size={15} strokeWidth={1.8} /> Language</p>
+          <div role="listbox" aria-label="Choose language">
+            {languages.map((item) => (
+              <button key={item.code} type="button" role="option" aria-selected={language === item.code} className={language === item.code ? 'is-selected' : ''} onClick={() => selectLanguage(item.code)}>
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
         {navigation.map((group) => (
           <div className="atlas-mobile-group" key={group.label}>
             <p>{group.label}</p>

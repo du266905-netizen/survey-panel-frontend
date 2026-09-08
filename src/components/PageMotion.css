@@ -1,0 +1,25 @@
+.page-motion-shell {
+  min-width: 0;
+  animation: page-motion-enter 420ms cubic-bezier(.2, .75, .25, 1) both;
+}
+
+.page-motion-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 620ms cubic-bezier(.2, .75, .25, 1) var(--page-motion-delay, 0ms), transform 620ms cubic-bezier(.2, .75, .25, 1) var(--page-motion-delay, 0ms);
+}
+
+.page-motion-reveal.page-motion-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes page-motion-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-motion-shell { animation: none; }
+  .page-motion-reveal { opacity: 1; transform: none; transition: none; }
+}
