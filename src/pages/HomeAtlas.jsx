@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowUpRight, LoaderCircle, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
@@ -47,14 +47,12 @@ function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onIna
   );
 }
 
-const atlasPrompts = ['Read the latest news', 'Join a survey', 'Share your view', 'Bring a research question'];
-
-function AtlasTypewriter() {
+function AtlasTypewriter({ prompts, begin }) {
   const [promptIndex, setPromptIndex] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const activePrompt = atlasPrompts[promptIndex];
+  const activePrompt = prompts[promptIndex];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -81,7 +79,7 @@ function AtlasTypewriter() {
     } else {
       delay = 260;
       update = () => {
-        setPromptIndex((currentIndex) => (currentIndex + 1) % atlasPrompts.length);
+        setPromptIndex((currentIndex) => (currentIndex + 1) % prompts.length);
         setIsDeleting(false);
       };
     }
@@ -93,8 +91,8 @@ function AtlasTypewriter() {
   const visiblePrompt = prefersReducedMotion ? activePrompt : activePrompt.slice(0, characterCount);
 
   return (
-    <div className="atlas-map-typewriter" aria-label={`Let’s begin: ${activePrompt}`}>
-      <span>Let’s begin:</span>
+    <div className="atlas-map-typewriter" aria-label={`${begin} ${activePrompt}`}>
+      <span>{begin}</span>
       <strong>{visiblePrompt}</strong>
       <i aria-hidden="true" />
     </div>
@@ -103,7 +101,12 @@ function AtlasTypewriter() {
 
 export default function HomeAtlas() {
   const { user } = useAuth();
-  const { publicCopy } = useLanguage();
+  const { language, publicCopy } = useLanguage();
+  const copy = publicCopy.home;
+  const regionNames = useMemo(() => {
+    try { return new Intl.DisplayNames([language], { type: 'region' }); } catch { return null; }
+  }, [language]);
+  const localizedCountry = (country) => regionNames?.of(country.value) || country.label;
   const [activeNode, setActiveNode] = useState('');
   const [contactForm, setContactForm] = useState({
     name: '',
@@ -150,9 +153,9 @@ export default function HomeAtlas() {
         contactEmail: email,
       });
       setContactForm({ name: '', email: '', phoneCountry: 'US', phone: '', region: 'US', subject: '', message: '' });
-      setContactStatus('Thank you. Your message has been received.');
+      setContactStatus(copy.received);
     } catch (caughtError) {
-      setContactStatus(caughtError.response?.data?.message || 'We could not send your message. Please try again.');
+      setContactStatus(caughtError.response?.data?.message || copy.sendError);
     } finally {
       setIsSubmittingContact(false);
     }
@@ -182,38 +185,38 @@ export default function HomeAtlas() {
 
       <section className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">
-          <p className="atlas-contact-kicker">GET IN TOUCH</p>
-          <h2 id="atlas-contact-title">Tell us what matters to you.</h2>
-          <p className="atlas-contact-intro">Share your question or idea. We will follow up using the details you provide.</p>
+          <p className="atlas-contact-kicker">{copy.contactKicker}</p>
+          <h2 id="atlas-contact-title">{copy.contactTitle}</h2>
+          <p className="atlas-contact-intro">{copy.contactIntro}</p>
 
           <form className="atlas-contact-form" onSubmit={submitContactForm}>
             <label className="atlas-contact-field--name">
-              <span>Your name</span>
+              <span>{copy.name}</span>
               <input name="name" value={contactForm.name} onChange={updateContactField} autoComplete="name" maxLength={80} required />
             </label>
             <label className="atlas-contact-field--email">
-              <span>Your email</span>
+              <span>{copy.email}</span>
               <input name="email" type="email" value={contactForm.email} onChange={updateContactField} autoComplete="email" maxLength={254} required />
             </label>
             <label className="atlas-contact-field--phone">
-              <span>Contact number <em>Optional</em></span>
-              <span className="atlas-phone-input"><select name="phoneCountry" value={contactForm.phoneCountry} onChange={updateContactField} aria-label="Phone country or territory">{phoneCountryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label} ({country.dialCode})</option>)}</select><input name="phone" type="tel" inputMode="tel" value={contactForm.phone} onChange={updateContactField} autoComplete="tel-national" placeholder="Phone number" maxLength={32} /></span>
+              <span>{copy.contactNumber} <em>{copy.optional}</em></span>
+              <span className="atlas-phone-input"><select name="phoneCountry" value={contactForm.phoneCountry} onChange={updateContactField} aria-label={copy.country}>{phoneCountryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {localizedCountry(country)} ({country.dialCode})</option>)}</select><input name="phone" type="tel" inputMode="tel" value={contactForm.phone} onChange={updateContactField} autoComplete="tel-national" placeholder={copy.phonePlaceholder} maxLength={32} /></span>
             </label>
             <label className="atlas-contact-field--region">
-              <span>Country or territory</span>
-              <select name="region" value={contactForm.region} onChange={updateContactField} autoComplete="country">{countryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label}</option>)}</select>
+              <span>{copy.country}</span>
+              <select name="region" value={contactForm.region} onChange={updateContactField} autoComplete="country">{countryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {localizedCountry(country)}</option>)}</select>
             </label>
             <label className="atlas-contact-field--subject">
-              <span>Subject</span>
+              <span>{copy.subject}</span>
               <input name="subject" value={contactForm.subject} onChange={updateContactField} maxLength={140} required />
             </label>
             <label className="atlas-contact-field--message">
-              <span>Message</span>
+              <span>{copy.message}</span>
               <textarea name="message" value={contactForm.message} onChange={updateContactField} maxLength={1800} required />
             </label>
             <button className="atlas-contact-submit" type="submit" disabled={isSubmittingContact}>
               {isSubmittingContact ? <LoaderCircle size={17} className="atlas-contact-spinner" /> : <Send size={17} />}
-              {isSubmittingContact ? 'Sending' : 'Send message'}
+              {isSubmittingContact ? copy.sending : copy.send}
               {!isSubmittingContact && <ArrowUpRight size={17} />}
             </button>
             {contactStatus && <p className={`atlas-contact-status ${contactStatus.startsWith('Thank') ? 'is-success' : 'is-error'}`} role="status">{contactStatus}</p>}
@@ -232,14 +235,14 @@ export default function HomeAtlas() {
             <path className="atlas-wire atlas-wire--community" d="M 603 340 C 521 457 421 533 255 570" />
             <path className="atlas-wire atlas-wire--business" d="M 605 338 C 714 257 818 180 1000 164" />
           </svg>
-          <AtlasTypewriter />
+          <AtlasTypewriter prompts={copy.prompts} begin={copy.begin} />
 
           <AtlasNode
             name="news"
             className="atlas-node--news"
             to="/news"
-            eyebrow="NEWS WALL"
-            title="See the world's perspective. Stay up to date."
+            eyebrow={copy.nodes.news[0]}
+            title={copy.nodes.news[1]}
             image={newsWallIllustration}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
@@ -249,8 +252,8 @@ export default function HomeAtlas() {
             name="survey"
             className="atlas-node--survey"
             to="/partners"
-            eyebrow="SURVEYS"
-            title="Take surveys and earn gift cards and more."
+            eyebrow={copy.nodes.survey[0]}
+            title={copy.nodes.survey[1]}
             image={surveyParticipationIllustration}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
@@ -260,8 +263,8 @@ export default function HomeAtlas() {
             name="community"
             className="atlas-node--community"
             to={user ? '/community' : '/register'}
-            eyebrow="COMMUNITY"
-            title="Join the community."
+            eyebrow={copy.nodes.community[0]}
+            title={copy.nodes.community[1]}
             image={communityIllustration}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
@@ -271,8 +274,8 @@ export default function HomeAtlas() {
             name="business"
             className="atlas-node--business"
             to="/business"
-            eyebrow="BUSINESS"
-            title="Custom questionnaires and tailored studies."
+            eyebrow={copy.nodes.business[0]}
+            title={copy.nodes.business[1]}
             image={businessHandshake}
             onActive={setActiveNode}
             onInactive={() => setActiveNode('')}
@@ -280,20 +283,20 @@ export default function HomeAtlas() {
         </div>
       </section>
 
-      <section className="atlas-evidence" aria-label="About GuanyiSearch">
+      <section className="atlas-evidence" aria-label={publicCopy.navigation.about}>
         <div className="atlas-evidence-frame">
           <div className="atlas-evidence-video">
             <iframe
               src="https://player.mediadelivery.net/embed/745435/cff19686-e67a-4701-bbc6-9121c85d5d5b?autoplay=true&loop=false&muted=true&preload=true&responsive=true"
-              title="GuanyiSearch research in context"
+              title={publicCopy.hero.eyebrow}
               loading="lazy"
               allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
               allowFullScreen
             />
           </div>
           <div className="atlas-evidence-copy">
-            <p>The world is never one-size-fits-all. GUANYISEARCH listens deeply, blending global vision with local research expertise. Grounded in scientific sample design and rigorous qualitative-quantitative methodologies, we consistently uphold internationally recognized research ethics and data privacy standards to uncover authentic insights—empowering better decisions and better lives.</p>
-            <p className="atlas-evidence-statement">Let every choice be evidence-based.</p>
+            <p>{copy.evidence}</p>
+            <p className="atlas-evidence-statement">{copy.evidenceStatement}</p>
           </div>
         </div>
       </section>

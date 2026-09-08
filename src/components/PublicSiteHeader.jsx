@@ -1,11 +1,12 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronDown, Globe2, Menu, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { isBusinessRole } from '../utils/roles';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import brandMarkDark from '../assets/home/guanyi-brand-mark-dark.png';
 import { useLanguage } from './LanguageContext';
+import LanguageGlobe from './LanguageGlobe';
 import './PublicSiteHeader.css';
 
 const navigation = [
@@ -32,6 +33,16 @@ const navigation = [
     ],
   },
 ];
+
+const itemCopyKey = {
+  '/how-it-works': 'how',
+  '/our-approach': 'approach',
+  '/partners': 'surveys',
+  '/news': 'news',
+  '/wallet': 'rewards',
+  '/privacy': 'privacy',
+  '/terms': 'terms',
+};
 
 export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
@@ -117,7 +128,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                 {group.items.map((item) => (
                   <Link className="atlas-nav-menu-item" to={item.to} key={item.title} onClick={closeNavigation}>
                     <span>{item.eyebrow}</span>
-                    <strong>{item.title}</strong>
+                    <strong>{publicCopy.navigation.items[itemCopyKey[item.to]] || item.title}</strong>
                   </Link>
                 ))}
               </div>
@@ -150,7 +161,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
               setActiveMenu((current) => (current === 'language' ? null : 'language'));
             }}
           >
-            <Globe2 aria-hidden="true" size={20} strokeWidth={1.8} />
+            <LanguageGlobe aria-hidden="true" size={21} strokeWidth={1.75} />
             <ChevronDown aria-hidden="true" size={14} strokeWidth={1.8} />
           </button>
           <div className={`atlas-language-menu ${activeMenu === 'language' ? 'is-open' : ''}`} role="listbox" aria-label="Choose language">
@@ -190,7 +201,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
         <Link className="atlas-mobile-direct-link" to="/business" onClick={closeNavigation}>{publicCopy.navigation.organisations} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         <div className="atlas-mobile-language">
-          <p><Globe2 size={15} strokeWidth={1.8} /> Language</p>
+          <p><LanguageGlobe size={16} strokeWidth={1.75} /> Language</p>
           <div role="listbox" aria-label="Choose language">
             {languages.map((item) => (
               <button key={item.code} type="button" role="option" aria-selected={language === item.code} className={language === item.code ? 'is-selected' : ''} onClick={() => selectLanguage(item.code)}>
@@ -204,7 +215,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
             <p>{publicCopy.navigation[{ 'About us': 'about', 'Take part': 'takePart', Standards: 'standards' }[group.label]] || group.label}</p>
             {group.items.map((item) => (
               <Link to={item.to} key={item.title} onClick={closeNavigation}>
-                {item.title}
+                {publicCopy.navigation.items[itemCopyKey[item.to]] || item.title}
                 <ArrowUpRight size={16} strokeWidth={1.8} />
               </Link>
             ))}

@@ -1,46 +1,50 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlobalGlobe from './GlobalGlobe';
 import Logo from './Logo';
+import { useLanguage } from './LanguageContext';
+import LanguageGlobe from './LanguageGlobe';
 import './HomeLegacySections.css';
 
-const footerGroups = [
+function getFooterGroups(copy) {
+  return [
   {
-    label: 'About us',
+    label: copy.about,
     links: [
-      { label: 'How it works', to: '/how-it-works' },
-      { label: 'Our approach', to: '/our-approach' },
+      { label: copy.how, to: '/how-it-works' },
+      { label: copy.approach, to: '/our-approach' },
     ],
   },
   {
-    label: 'Explore',
+    label: copy.explore,
     links: [
-      { label: 'News Wall', to: '/news' },
+      { label: copy.news, to: '/news' },
     ],
   },
   {
-    label: 'Participate',
+    label: copy.participate,
     links: [
-      { label: 'Find surveys', to: '/partners' },
-      { label: 'Rewards & wallet', to: '/wallet' },
-      { label: 'Invite program', to: '/referrals' },
+      { label: copy.surveys, to: '/partners' },
+      { label: copy.wallet, to: '/wallet' },
+      { label: copy.invite, to: '/referrals' },
     ],
   },
   {
-    label: 'For organisations',
+    label: copy.organisations,
     links: [
-      { label: 'Custom questionnaires', to: '/business' },
-      { label: 'Tailored research', to: '/business' },
+      { label: copy.questionnaires, to: '/business' },
+      { label: copy.studies, to: '/business' },
     ],
   },
   {
-    label: 'Standards',
+    label: copy.standards,
     links: [
-      { label: 'Privacy', to: '/privacy' },
-      { label: 'Terms', to: '/terms' },
+      { label: copy.privacy, to: '/privacy' },
+      { label: copy.terms, to: '/terms' },
     ],
   },
-];
+  ];
+}
 
 const socialLinks = [
   { id: 'x', label: 'X / Twitter', href: 'https://x.com/GUANYISEARCH' },
@@ -116,24 +120,26 @@ function CartSketch() {
 }
 
 export function HumanManifesto() {
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy.approach;
   return (
     <section id="human-manifesto" className="home-manifesto" aria-labelledby="home-manifesto-title">
       <div className="home-continuation-container">
         <div className="home-manifesto-masthead">
           <div>
-            <p className="home-section-label">OUR PRINCIPLE</p>
-            <h1 id="home-manifesto-title">Human First</h1>
-            <p className="home-manifesto-deck">We believe that real people will always be the starting point for research.</p>
+            <p className="home-section-label">{copy.principle}</p>
+            <h1 id="home-manifesto-title">{copy.title}</h1>
+            <p className="home-manifesto-deck">{copy.deck}</p>
           </div>
-          <div className="home-manifesto-mark"><ManifestoSprout /><div><strong>REAL PEOPLE<br />REAL INSIGHT</strong><p>One real response at a time, a more trustworthy picture can grow.</p></div></div>
+          <div className="home-manifesto-mark"><ManifestoSprout /><div><strong>{copy.mark[0]}<br />{copy.mark[1]}</strong><p>{copy.markBody}</p></div></div>
         </div>
 
         <div className="home-manifesto-spread">
-          <figure className="home-manifesto-art"><img src="/human-manifesto/shoreline-painting.jpg" alt="Impressionist shoreline landscape" loading="lazy" decoding="async" /><figcaption><strong>Real voices deserve to be heard with care.</strong></figcaption></figure>
+          <figure className="home-manifesto-art"><img src="/human-manifesto/shoreline-painting.jpg" alt={copy.imageAlt} loading="lazy" decoding="async" /><figcaption><strong>{copy.imageCaption}</strong></figcaption></figure>
           <div className="home-manifesto-copy">
-            <p className="home-manifesto-lede">AI can generate endless content that appears real. But it can never recreate a particular person, in a particular moment, expressing what they truly think.</p>
-            <div className="home-manifesto-card-grid"><article className="home-manifesto-card home-manifesto-card--voices"><span>Real voices</span><p>Behind every survey result is a person who chose to share a perspective. Those individual voices make insight worth trusting.</p></article><article className="home-manifesto-card home-manifesto-card--technology"><span>Technology, in service</span><p>We use matching and real-time data to respect your time, show your impact, and keep every reward rule clear and fair.</p></article></div>
-            <p className="home-manifesto-principle"><span>Our principle</span>Human-centered does not mean rejecting technology. It means making technology serve people.</p>
+            <p className="home-manifesto-lede">{copy.lede}</p>
+            <div className="home-manifesto-card-grid"><article className="home-manifesto-card home-manifesto-card--voices"><span>{copy.voices}</span><p>{copy.voicesBody}</p></article><article className="home-manifesto-card home-manifesto-card--technology"><span>{copy.technology}</span><p>{copy.technologyBody}</p></article></div>
+            <p className="home-manifesto-principle"><span>{copy.principleLabel}</span>{copy.principleBody}</p>
           </div>
         </div>
       </div>
@@ -142,35 +148,40 @@ export function HumanManifesto() {
 }
 
 export function HomeFooter() {
+  const { language, languages, setLanguage, publicCopy } = useLanguage();
+  const copy = publicCopy.home.footer;
+  const footerGroups = getFooterGroups(copy);
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">
-        <div className="home-footer-brand"><div className="home-footer-identity"><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>A considered research space for participants and organisations: clear opportunities, credible input, and practical next steps.</p><a href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
+        <div className="home-footer-brand"><div className="home-footer-identity"><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>{copy.description}</p><a href="mailto:heguanyi@guanyi-media.com">{copy.contact} <ArrowRight size={16} /></a><label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">Language</span><select value={language} onChange={(event) => setLanguage(event.target.value)} aria-label="Choose language">{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
         <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={item.to}>{item.label}</Link>)}</section>)}</nav>
       </div>
-      <div className="home-continuation-container home-footer-bottom"><p>© 2026 GuanyiSearch. All rights reserved.</p><div><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms of Service</Link></div></div>
+      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to="/privacy">{copy.privacyPolicy}</Link><Link to="/terms">{copy.termsService}</Link></div></div>
     </footer>
   );
 }
 
 export default function HomeLegacySections() {
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy.home;
   return (
     <div className="home-continuation">
 
       <section className="home-global-section" aria-labelledby="home-global-title">
         <div className="home-continuation-container home-global-layout">
           <div className="home-global-visual"><div className="home-globe-frame"><GlobalGlobe /></div></div>
-          <div className="home-global-copy"><p className="home-section-label">GLOBAL PERSPECTIVE</p><h2 id="home-global-title">Research begins with people, in every context.</h2><p>A global view reminds us that every response comes from a different life, place, and point of view. The platform keeps each participation journey clear and considered from the first step to reward.</p></div>
+          <div className="home-global-copy"><h2 id="home-global-title">{copy.globalTitle}</h2><p>{copy.globalBody}</p></div>
         </div>
       </section>
 
       <section className="home-rewards-section" aria-labelledby="home-rewards-title">
         <div className="home-continuation-container home-rewards-layout">
-          <div className="home-rewards-heading"><p className="home-section-label">REWARDS &amp; PANEL</p><h2 id="home-rewards-title">A little more to look forward to.</h2><p>Join the panel for surveys that value your time, special tasks, and clear reward opportunities.</p></div>
+          <div className="home-rewards-heading"><p className="home-section-label">{copy.rewardsLabel}</p><h2 id="home-rewards-title">{copy.rewardsTitle}</h2><p>{copy.rewardsBody}</p></div>
           <div className="home-reward-grid">
-            <article className="home-reward-card home-reward-gift"><GiftSketch /><div><span>For everyday moments</span><h3>Gift cards</h3><p>Complete eligible surveys, build your Coins balance, and choose from selected gift-card rewards.</p></div></article>
-            <article className="home-reward-card home-reward-token"><TokenSketch /><div><span>Where available</span><h3>Tokens</h3><p>In supported regions, selected token reward options can be part of your next redemption choice.</p></div></article>
-            <article className="home-reward-card home-reward-panel"><CartSketch /><div><span>Inside the panel</span><h3>Special tasks</h3><p>From time to time, eligible members can receive an additional task and another way to earn Coins.</p></div></article>
+            <article className="home-reward-card home-reward-gift"><GiftSketch /><div><span>{copy.rewardCards[0][0]}</span><h3>{copy.rewardCards[0][1]}</h3><p>{copy.rewardCards[0][2]}</p></div></article>
+            <article className="home-reward-card home-reward-token"><TokenSketch /><div><span>{copy.rewardCards[1][0]}</span><h3>{copy.rewardCards[1][1]}</h3><p>{copy.rewardCards[1][2]}</p></div></article>
+            <article className="home-reward-card home-reward-panel"><CartSketch /><div><span>{copy.rewardCards[2][0]}</span><h3>{copy.rewardCards[2][1]}</h3><p>{copy.rewardCards[2][2]}</p></div></article>
           </div>
         </div>
       </section>

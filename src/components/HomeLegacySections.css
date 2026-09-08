@@ -105,6 +105,10 @@
 .home-footer-wordmark { width: clamp(136px, 16vw, 222px); max-width: none; }
 .home-footer-brand > p { max-width: 370px; margin: 20px 0 0; color: rgba(239, 235, 224, .68); font-size: 14px; line-height: 1.7; }
 .home-footer-brand > a { display: inline-flex; align-items: center; gap: 8px; margin-top: 21px; border-bottom: 1px solid rgba(243, 239, 229, .35); color: #f6f1e7; font-size: 14px; font-weight: 800; padding-bottom: 6px; text-decoration: none; }
+.home-footer-language { position: relative; display: inline-flex; align-items: center; gap: 9px; min-width: 212px; margin-top: 25px; border: 1px solid rgba(243, 239, 229, .55); border-radius: 10px; color: #f5f1e8; padding: 0 13px; }
+.home-footer-language select { width: 100%; min-height: 47px; appearance: none; border: 0; outline: 0; color: inherit; background: transparent; cursor: pointer; font-family: var(--font-sans); font-size: .93rem; font-weight: 700; padding: 0 22px 0 0; }
+.home-footer-language select option { color: #203129; background: #fff; }
+.home-footer-language > svg:last-child { position: absolute; right: 12px; pointer-events: none; }
 .home-social-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
 .home-social-links a { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid rgba(240, 237, 230, .2); color: rgba(244, 241, 232, .86); transition: transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease; }
 .home-social-links a:hover { border-color: #d5c888; background: #d5c888; color: #1a2b21; transform: translateY(-2px); }
