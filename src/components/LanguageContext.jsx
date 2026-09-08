@@ -69,6 +69,18 @@ Object.entries(localizedHomeByLanguage).forEach(([language, home]) => {
   publicCopyByLanguage[language] = { ...publicCopyByLanguage[language], home };
 });
 
+const localizedFooterCorrections = {
+  ja: { rights: '© 2026 GuanyiSearch。無断転載を禁じます。' },
+  ko: { rights: '© 2026 GuanyiSearch. 모든 권리 보유.' },
+};
+
+Object.entries(localizedFooterCorrections).forEach(([language, footer]) => {
+  publicCopyByLanguage[language] = {
+    ...publicCopyByLanguage[language],
+    home: { ...publicCopyByLanguage[language].home, footer: { ...publicCopyByLanguage[language].home.footer, ...footer } },
+  };
+});
+
 const localizedNavigationItems = {
   de: ['So funktioniert es', 'Unser Ansatz', 'Verfügbare Umfragen', 'News Wall', 'Belohnungen', 'Ihre Daten', 'Teilnahmebedingungen'],
   fr: ['Comment ça marche', 'Notre approche', 'Enquêtes disponibles', 'Fil d’actualité', 'Récompenses', 'Vos données', 'Conditions de participation'],
