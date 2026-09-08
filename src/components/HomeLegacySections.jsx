@@ -2,7 +2,7 @@ import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlobalGlobe from './GlobalGlobe';
 import Logo from './Logo';
-import { useLanguage } from './LanguageContext';
+import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import './HomeLegacySections.css';
 
@@ -148,16 +148,16 @@ export function HumanManifesto() {
 }
 
 export function HomeFooter() {
-  const { language, languages, setLanguage, publicCopy } = useLanguage();
+  const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const copy = publicCopy.home.footer;
   const footerGroups = getFooterGroups(copy);
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">
-        <div className="home-footer-brand"><div className="home-footer-identity"><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>{copy.description}</p><a href="mailto:heguanyi@guanyi-media.com">{copy.contact} <ArrowRight size={16} /></a><label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">Language</span><select value={language} onChange={(event) => setLanguage(event.target.value)} aria-label="Choose language">{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
-        <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={item.to}>{item.label}</Link>)}</section>)}</nav>
+        <div className="home-footer-brand"><div className="home-footer-identity"><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>{copy.description}</p><a href="mailto:heguanyi@guanyi-media.com">{copy.contact} <ArrowRight size={16} /></a><label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">Language</span><select value={language} onChange={(event) => navigateToLanguage(event.target.value)} aria-label="Choose language">{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
+        <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={withLanguage(item.to, language)}>{item.label}</Link>)}</section>)}</nav>
       </div>
-      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to="/privacy">{copy.privacyPolicy}</Link><Link to="/terms">{copy.termsService}</Link></div></div>
+      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link></div></div>
     </footer>
   );
 }

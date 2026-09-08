@@ -5,7 +5,7 @@ import { createSupportTicket } from '../api/supportApi';
 import HomeLegacySections from '../components/HomeLegacySections';
 import CookieConsentBanner from '../components/CookieConsentBanner';
 import { useAuth } from '../components/AuthContext';
-import { useLanguage } from '../components/LanguageContext';
+import { useLanguage, withLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
@@ -175,7 +175,7 @@ export default function HomeAtlas() {
             <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
             <h1 id="video-hero-title">{publicCopy.hero.lines.map((line) => <span key={line}>{line}</span>)}</h1>
             <p className="video-hero-description">{publicCopy.hero.description}</p>
-            <Link className="atlas-primary-link video-hero-cta" to={user ? '/dashboard' : '/join'}>
+            <Link className="atlas-primary-link video-hero-cta" to={withLanguage(user ? '/dashboard' : '/join', language)}>
               {publicCopy.navigation.join}
               <ArrowUpRight size={19} strokeWidth={1.8} />
             </Link>
@@ -240,7 +240,7 @@ export default function HomeAtlas() {
           <AtlasNode
             name="news"
             className="atlas-node--news"
-            to="/news"
+            to={withLanguage('/news', language)}
             eyebrow={copy.nodes.news[0]}
             title={copy.nodes.news[1]}
             image={newsWallIllustration}
@@ -251,7 +251,7 @@ export default function HomeAtlas() {
           <AtlasNode
             name="survey"
             className="atlas-node--survey"
-            to="/partners"
+            to={withLanguage('/partners', language)}
             eyebrow={copy.nodes.survey[0]}
             title={copy.nodes.survey[1]}
             image={surveyParticipationIllustration}
@@ -262,7 +262,7 @@ export default function HomeAtlas() {
           <AtlasNode
             name="community"
             className="atlas-node--community"
-            to={user ? '/community' : '/register'}
+            to={withLanguage(user ? '/community' : '/register', language)}
             eyebrow={copy.nodes.community[0]}
             title={copy.nodes.community[1]}
             image={communityIllustration}
@@ -273,7 +273,7 @@ export default function HomeAtlas() {
           <AtlasNode
             name="business"
             className="atlas-node--business"
-            to="/business"
+            to={withLanguage('/business', language)}
             eyebrow={copy.nodes.business[0]}
             title={copy.nodes.business[1]}
             image={businessHandshake}

@@ -25,6 +25,11 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use((config) => {
   const token = window.localStorage.getItem('surveyToken');
+  const locale = document.documentElement.lang || new URLSearchParams(window.location.search).get('lang') || 'en-US';
+
+  // Accept-Language is CORS-safelisted and gives public, locale-aware endpoints
+  // the same preference as the page without exposing implementation details.
+  config.headers['Accept-Language'] = locale;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

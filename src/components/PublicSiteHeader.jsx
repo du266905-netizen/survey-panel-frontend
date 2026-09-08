@@ -5,7 +5,7 @@ import { useAuth } from './AuthContext';
 import { isBusinessRole } from '../utils/roles';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import brandMarkDark from '../assets/home/guanyi-brand-mark-dark.png';
-import { useLanguage } from './LanguageContext';
+import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import './PublicSiteHeader.css';
 
@@ -46,7 +46,7 @@ const itemCopyKey = {
 
 export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
-  const { language, languages, setLanguage, publicCopy } = useLanguage();
+  const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -85,12 +85,12 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
     setMobileOpen(false);
   };
   const selectLanguage = (code) => {
-    setLanguage(code);
     closeMenus();
+    navigateToLanguage(code);
   };
   return (
     <header className={`atlas-navigation public-site-header${heroOverlay ? ' is-hero-overlay' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
-      <Link className="atlas-brand" to="/" aria-label="GuanyiSearch home" onClick={closeNavigation}>
+      <Link className="atlas-brand" to={withLanguage('/', language)} aria-label="GuanyiSearch home" onClick={closeNavigation}>
         <img className="atlas-brand-mark" src={heroOverlay && !isScrolled ? brandMarkLight : brandMarkDark} alt="" aria-hidden="true" />
       </Link>
 
@@ -126,8 +126,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                 onMouseLeave={scheduleMenuClose}
               >
                 {group.items.map((item) => (
-                  <Link className="atlas-nav-menu-item" to={item.to} key={item.title} onClick={closeNavigation}>
-                    <span>{item.eyebrow}</span>
+                  <Link className="atlas-nav-menu-item" to={withLanguage(item.to, language)} key={item.title} onClick={closeNavigation}>
                     <strong>{publicCopy.navigation.items[itemCopyKey[item.to]] || item.title}</strong>
                   </Link>
                 ))}
@@ -135,7 +134,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
             </div>
           </Fragment>
         ))}
-        <Link className="atlas-nav-link atlas-nav-link--business" to="/business" onClick={closeNavigation}>{publicCopy.navigation.organisations}</Link>
+        <Link className="atlas-nav-link atlas-nav-link--business" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations}</Link>
       </nav>
 
       <div className="atlas-nav-actions">
@@ -181,8 +180,8 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
             </div>
           </div>
         </div>
-        {!user && <Link className="atlas-sign-in" to="/login">{publicCopy.navigation.signIn}</Link>}
-        <Link className="atlas-register" to={user ? (isBusinessRole(user.role) ? '/business/workspace' : '/dashboard') : '/join'}>
+        {!user && <Link className="atlas-sign-in" to={withLanguage('/login', language)}>{publicCopy.navigation.signIn}</Link>}
+        <Link className="atlas-register" to={withLanguage(user ? (isBusinessRole(user.role) ? '/business/workspace' : '/dashboard') : '/join', language)}>
           {user ? publicCopy.navigation.workspace : publicCopy.navigation.join}
           <ArrowUpRight size={17} strokeWidth={1.8} />
         </Link>
@@ -199,7 +198,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       </div>
 
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
-        <Link className="atlas-mobile-direct-link" to="/business" onClick={closeNavigation}>{publicCopy.navigation.organisations} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
+        <Link className="atlas-mobile-direct-link" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         <div className="atlas-mobile-language">
           <p><LanguageGlobe size={16} strokeWidth={1.75} /> Language</p>
           <div role="listbox" aria-label="Choose language">
@@ -214,7 +213,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
           <div className="atlas-mobile-group" key={group.label}>
             <p>{publicCopy.navigation[{ 'About us': 'about', 'Take part': 'takePart', Standards: 'standards' }[group.label]] || group.label}</p>
             {group.items.map((item) => (
-              <Link to={item.to} key={item.title} onClick={closeNavigation}>
+              <Link to={withLanguage(item.to, language)} key={item.title} onClick={closeNavigation}>
                 {publicCopy.navigation.items[itemCopyKey[item.to]] || item.title}
                 <ArrowUpRight size={16} strokeWidth={1.8} />
               </Link>
