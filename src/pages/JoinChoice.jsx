@@ -35,9 +35,28 @@ const joinCopy = {
   },
 };
 
+function joinFallbackCopy(home) {
+  const footer = home.footer;
+  return {
+    title: home.rewardsTitle,
+    lede: home.globalBody,
+    participantLabel: footer.participate,
+    participantTitle: home.nodes.survey[0],
+    participantBody: home.nodes.survey[1],
+    participantPoints: [footer.surveys, footer.wallet, footer.privacy],
+    participantAction: footer.surveys,
+    organisationLabel: footer.organisations,
+    organisationTitle: home.nodes.business[0],
+    organisationBody: home.nodes.business[1],
+    organisationPoints: [footer.questionnaires, footer.studies, footer.contact],
+    organisationAction: footer.contact,
+    note: home.evidenceStatement,
+  };
+}
+
 export default function JoinChoice() {
-  const { language } = useLanguage();
-  const copy = joinCopy[language] || joinCopy['en-US'];
+  const { language, publicCopy } = useLanguage();
+  const copy = joinCopy[language] || joinFallbackCopy(publicCopy.home);
 
   return (
     <main className="business-public-page join-choice-page">

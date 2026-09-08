@@ -35,6 +35,17 @@ const publicCopyByLanguage = {
   tr: { navigation: { about: 'Hakkımızda', takePart: 'Katılın', standards: 'Standartlar', organisations: 'Kuruluşlar için', signIn: 'Giriş yap', join: 'Bize katılın', workspace: 'Çalışma alanını aç' }, hero: { eyebrow: 'GUANYISEARCH / İÇGÖRÜLER & HİZMETLER', lines: ['Her ses', 'bizi', 'ileri taşır.'], description: 'Düşünceli araştırmalara katılın, gördüklerinizi paylaşın ve yaşanmış deneyimleri daha net kararlara dönüştürmeye yardımcı olun.' } },
 };
 
+// Traditional Chinese uses its own editorial copy rather than falling back to English.
+publicCopyByLanguage['zh-Hant'].approach = {
+  principle: '我們的理念', title: '以人為先', deck: '我們相信，真實的人永遠是研究的起點。',
+  mark: ['真實的人', '真實的洞察'], markBody: '每一份真實回應，都讓更可信的圖景逐漸成形。',
+  imageAlt: '印象派海岸風景', imageCaption: '真實的聲音，值得被認真聆聽。',
+  lede: '人工智慧可以生成看似真實的無盡內容，卻無法重現某個具體的人，在某個具體的時刻，表達自己真正所想。',
+  voices: '真實的聲音', voicesBody: '每一項調研結果背後，都是一個選擇分享觀點的人。正是這些獨特的聲音，讓洞察值得信賴。',
+  technology: '技術，為人服務', technologyBody: '我們利用配對和即時資料來尊重你的時間、呈現你的影響，並讓每一項獎勵規則都清晰、公平。',
+  principleLabel: '我們的理念', principleBody: '以人為本並不意味著拒絕技術，而是讓技術始終服務於人。',
+};
+
 // Marketing copy is intentionally stored locally. A language choice must change the
 // complete public homepage, rather than only swapping the hero line.
 const localizedHomeByLanguage = {
