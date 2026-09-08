@@ -35,7 +35,7 @@ const navigation = [
 
 export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
-  const { activeLanguage, language, languages, setLanguage } = useLanguage();
+  const { language, languages, setLanguage, publicCopy } = useLanguage();
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -106,7 +106,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                   setActiveMenu((current) => (current === group.label ? null : group.label));
                 }}
               >
-                {group.label}
+                {publicCopy.navigation[{ 'About us': 'about', 'Take part': 'takePart', Standards: 'standards' }[group.label]] || group.label}
                 <ChevronDown aria-hidden="true" size={15} strokeWidth={1.8} />
               </button>
               <div
@@ -124,7 +124,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
             </div>
           </Fragment>
         ))}
-        <Link className="atlas-nav-link atlas-nav-link--business" to="/business" onClick={closeNavigation}>For organisations</Link>
+        <Link className="atlas-nav-link atlas-nav-link--business" to="/business" onClick={closeNavigation}>{publicCopy.navigation.organisations}</Link>
       </nav>
 
       <div className="atlas-nav-actions">
@@ -142,6 +142,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
           <button
             className="atlas-language-trigger"
             type="button"
+            aria-label="Choose language"
             aria-expanded={activeMenu === 'language'}
             aria-haspopup="listbox"
             onClick={() => {
@@ -149,12 +150,10 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
               setActiveMenu((current) => (current === 'language' ? null : 'language'));
             }}
           >
-            <Globe2 aria-hidden="true" size={17} strokeWidth={1.8} />
-            <span>{activeLanguage.shortLabel}</span>
+            <Globe2 aria-hidden="true" size={20} strokeWidth={1.8} />
             <ChevronDown aria-hidden="true" size={14} strokeWidth={1.8} />
           </button>
           <div className={`atlas-language-menu ${activeMenu === 'language' ? 'is-open' : ''}`} role="listbox" aria-label="Choose language">
-            <p>Language</p>
             <div>
               {languages.map((item) => (
                 <button
@@ -165,16 +164,15 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                   className={language === item.code ? 'is-selected' : ''}
                   onClick={() => selectLanguage(item.code)}
                 >
-                  <span>{item.label}</span>
-                  <small>{item.shortLabel}</small>
+                  {item.label}
                 </button>
               ))}
             </div>
           </div>
         </div>
-        {!user && <Link className="atlas-sign-in" to="/login">Sign in</Link>}
+        {!user && <Link className="atlas-sign-in" to="/login">{publicCopy.navigation.signIn}</Link>}
         <Link className="atlas-register" to={user ? (isBusinessRole(user.role) ? '/business/workspace' : '/dashboard') : '/join'}>
-          {user ? 'Open workspace' : 'Join us'}
+          {user ? publicCopy.navigation.workspace : publicCopy.navigation.join}
           <ArrowUpRight size={17} strokeWidth={1.8} />
         </Link>
         <button
@@ -190,7 +188,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       </div>
 
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
-        <Link className="atlas-mobile-direct-link" to="/business" onClick={closeNavigation}>For organisations <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
+        <Link className="atlas-mobile-direct-link" to="/business" onClick={closeNavigation}>{publicCopy.navigation.organisations} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         <div className="atlas-mobile-language">
           <p><Globe2 size={15} strokeWidth={1.8} /> Language</p>
           <div role="listbox" aria-label="Choose language">
@@ -203,7 +201,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
         </div>
         {navigation.map((group) => (
           <div className="atlas-mobile-group" key={group.label}>
-            <p>{group.label}</p>
+            <p>{publicCopy.navigation[{ 'About us': 'about', 'Take part': 'takePart', Standards: 'standards' }[group.label]] || group.label}</p>
             {group.items.map((item) => (
               <Link to={item.to} key={item.title} onClick={closeNavigation}>
                 {item.title}

@@ -5,6 +5,7 @@ import { createSupportTicket } from '../api/supportApi';
 import HomeLegacySections from '../components/HomeLegacySections';
 import CookieConsentBanner from '../components/CookieConsentBanner';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
@@ -102,6 +103,7 @@ function AtlasTypewriter() {
 
 export default function HomeAtlas() {
   const { user } = useAuth();
+  const { publicCopy } = useLanguage();
   const [activeNode, setActiveNode] = useState('');
   const [contactForm, setContactForm] = useState({
     name: '',
@@ -167,11 +169,11 @@ export default function HomeAtlas() {
           </div>
           <div className="video-hero-scrim" aria-hidden="true" />
           <div className="video-hero-content">
-            <p className="video-hero-eyebrow">GUANYISEARCH / Insights &amp; services</p>
-            <h1 id="video-hero-title"><span>Every voice</span><span>carries</span><span>forward.</span></h1>
-            <p className="video-hero-description">Take part in thoughtful research, share what you see, and help turn lived experience into clearer decisions.</p>
+            <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
+            <h1 id="video-hero-title">{publicCopy.hero.lines.map((line) => <span key={line}>{line}</span>)}</h1>
+            <p className="video-hero-description">{publicCopy.hero.description}</p>
             <Link className="atlas-primary-link video-hero-cta" to={user ? '/dashboard' : '/join'}>
-              Join us
+              {publicCopy.navigation.join}
               <ArrowUpRight size={19} strokeWidth={1.8} />
             </Link>
           </div>
