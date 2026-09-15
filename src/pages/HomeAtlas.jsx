@@ -165,6 +165,7 @@ export default function HomeAtlas() {
 
   return (
     <main className={`home-atlas ${activeNode ? `is-${activeNode}` : ''}`}>
+      <div className="home-atlas-frame" aria-hidden="true" />
       <PublicSiteHeader heroOverlay />
 
       <section className="video-hero-section" aria-labelledby="video-hero-title">
