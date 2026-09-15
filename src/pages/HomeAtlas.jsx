@@ -103,6 +103,8 @@ export default function HomeAtlas() {
   const { user } = useAuth();
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
+  const [heroLead, ...heroRest] = publicCopy.hero.lines;
+  const heroLines = [heroLead, heroRest.join(['zh-CN', 'zh-Hant', 'ja', 'ko'].includes(language) ? '' : ' ')].filter(Boolean);
   const regionNames = useMemo(() => {
     try { return new Intl.DisplayNames([language], { type: 'region' }); } catch { return null; }
   }, [language]);
@@ -170,7 +172,7 @@ export default function HomeAtlas() {
           <div className="video-hero-content">
             <div className="video-hero-copy">
               <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
-              <h1 id="video-hero-title">{publicCopy.hero.lines.map((line) => <span key={line}>{line}</span>)}</h1>
+              <h1 id="video-hero-title">{heroLines.map((line) => <span key={line}>{line}</span>)}</h1>
               <p className="video-hero-description">{publicCopy.hero.description}</p>
               <Link className="atlas-primary-link video-hero-cta" to={withLanguage(user ? '/dashboard' : '/join', language)}>
                 {publicCopy.navigation.join}
