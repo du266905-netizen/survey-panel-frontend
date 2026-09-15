@@ -167,18 +167,19 @@ export default function HomeAtlas() {
 
       <section className="video-hero-section" aria-labelledby="video-hero-title">
         <div className="video-hero">
-          <div className="video-hero-media" aria-hidden="true">
-            <img src={skyReflection} alt="" />
-          </div>
-          <div className="video-hero-scrim" aria-hidden="true" />
           <div className="video-hero-content">
-            <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
-            <h1 id="video-hero-title">{publicCopy.hero.lines.map((line) => <span key={line}>{line}</span>)}</h1>
-            <p className="video-hero-description">{publicCopy.hero.description}</p>
-            <Link className="atlas-primary-link video-hero-cta" to={withLanguage(user ? '/dashboard' : '/join', language)}>
-              {publicCopy.navigation.join}
-              <ArrowUpRight size={19} strokeWidth={1.8} />
-            </Link>
+            <div className="video-hero-copy">
+              <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
+              <h1 id="video-hero-title">{publicCopy.hero.lines.map((line) => <span key={line}>{line}</span>)}</h1>
+              <p className="video-hero-description">{publicCopy.hero.description}</p>
+              <Link className="atlas-primary-link video-hero-cta" to={withLanguage(user ? '/dashboard' : '/join', language)}>
+                {publicCopy.navigation.join}
+                <ArrowUpRight size={19} strokeWidth={1.8} />
+              </Link>
+            </div>
+            <div className="video-hero-media" aria-hidden="true">
+              <img src={skyReflection} alt="" />
+            </div>
           </div>
         </div>
       </section>
