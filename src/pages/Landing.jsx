@@ -6,6 +6,7 @@ import GlobalGlobe from '../components/GlobalGlobe';
 import Logo from '../components/Logo';
 import PublicAuthPanel from '../components/PublicAuthPanel';
 import PublicSiteHeader from '../components/PublicSiteHeader';
+import { useLanguage } from '../components/LanguageContext';
 
 const socialLinks = [
   { id: 'x', label: 'X / Twitter', href: 'https://x.com/GUANYISEARCH' },
@@ -931,6 +932,7 @@ function ResearchLedgerIllustration() {
 export default function Landing({ initialAuthMode = 'register', authOnly = false }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { publicCopy } = useLanguage();
   const [authMode, setAuthMode] = useState(initialAuthMode);
 
   useEffect(() => setAuthMode(initialAuthMode), [initialAuthMode]);
@@ -1362,8 +1364,8 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
       <section className="landing-shell">
         <section className="landing-brand" aria-labelledby="landing-title">
           <div className="landing-brand-header">
-            <span className="landing-brand-kicker">Research participation platform</span>
-            <span className="landing-brand-kicker">For considered participation</span>
+            <span className="landing-brand-kicker">{publicCopy.hero.eyebrow}</span>
+            <span className="landing-brand-kicker">{publicCopy.home.evidenceStatement}</span>
           </div>
           <img
             className="landing-brand-mark"
@@ -1372,12 +1374,12 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
             aria-hidden="true"
           />
           <div className="landing-brand-content">
-            <h1 id="landing-title">Research participation, made more accountable.</h1>
-            <p>GuanyiSearch connects paid research surveys, daily news signals, transparent rewards, and quality-aware operations in one carefully designed platform.</p>
+            <h1 id="landing-title">{publicCopy.hero.lines.join(' ')}</h1>
+            <p>{publicCopy.hero.description}</p>
             <div className="landing-brand-proof">
-              <span><BadgeCheck size={16} /> Verified entry</span>
-              <span><CircleDollarSign size={16} /> Reward visibility</span>
-              <span><ShieldCheck size={16} /> Privacy-minded</span>
+              <span><BadgeCheck size={16} /> {publicCopy.home.nodes.survey[0]}</span>
+              <span><CircleDollarSign size={16} /> {publicCopy.home.rewardsLabel}</span>
+              <span><ShieldCheck size={16} /> {publicCopy.home.footer.privacy}</span>
             </div>
           </div>
         </section>

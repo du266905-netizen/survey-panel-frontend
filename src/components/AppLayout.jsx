@@ -8,6 +8,7 @@ import { ProfileSurveyProvider } from './ProfileSurveyContext';
 import ReferralProgramWidget from './ReferralProgramWidget';
 import NotificationBell from './NotificationBell';
 import { HomeFooter } from './HomeLegacySections';
+import { useLanguage, withLanguage } from './LanguageContext';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -24,6 +25,7 @@ const panelistNavItems = navItems
 
 export default function AppLayout({ children }) {
   const { user, logout } = useAuth();
+  const { language } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const userMenuRef = useRef(null);
@@ -88,12 +90,12 @@ export default function AppLayout({ children }) {
   const handleLogout = () => {
     closeUserMenuImmediately();
     logout();
-    navigate('/login');
+    navigate(withLanguage('/login', language));
   };
 
   const goToProfile = () => {
     closeUserMenuImmediately();
-    navigate('/profile');
+    navigate(withLanguage('/profile', language));
   };
 
   const navigationLink = (item, className = 'app-nav-link') => {
@@ -101,7 +103,7 @@ export default function AppLayout({ children }) {
     return (
       <NavLink
         key={item.to}
-        to={item.to}
+        to={withLanguage(item.to, language)}
         className={({ isActive }) => {
           const isSectionActive = item.hash
             ? location.pathname === '/partners' && (location.hash === item.hash || (!location.hash && item.hash === '#surveys'))
@@ -116,7 +118,7 @@ export default function AppLayout({ children }) {
   };
 
   const adminLink = (to, label, Icon, end = false) => (
-    <NavLink key={to} to={to} end={end} className={({ isActive }) => `app-nav-link ${isActive ? 'is-active' : ''}`}>
+    <NavLink key={to} to={withLanguage(to, language)} end={end} className={({ isActive }) => `app-nav-link ${isActive ? 'is-active' : ''}`}>
       <Icon size={17} strokeWidth={1.8} />
       <span>{label}</span>
     </NavLink>
