@@ -11,7 +11,7 @@ import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
-import skyReflection from '../assets/home/sky-reflection.jpg';
+import mountainHorizon from '../assets/home/mountain-horizon.jpg';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import './HomeAtlas.css';
 
@@ -181,7 +181,7 @@ export default function HomeAtlas() {
               </Link>
             </div>
             <div className="video-hero-media" aria-hidden="true">
-              <img src={skyReflection} alt="" />
+              <img src={mountainHorizon} alt="" />
             </div>
           </div>
         </div>
