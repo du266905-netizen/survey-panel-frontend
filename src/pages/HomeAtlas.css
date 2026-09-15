@@ -246,15 +246,41 @@
 @keyframes video-hero-rise { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 
 .atlas-evidence {
+  position: relative;
+  isolation: isolate;
   padding: clamp(54px, 7vw, 118px) 5.5vw;
   background:
-    radial-gradient(circle at 95% 7%, rgba(218, 190, 135, .17), transparent 28rem),
-    radial-gradient(circle at 8% 98%, rgba(123, 161, 137, .2), transparent 28rem),
-    #1b352b;
-  color: #f7f3e9;
+    radial-gradient(circle at 95% 7%, rgba(218, 190, 135, .12), transparent 28rem),
+    repeating-linear-gradient(0deg, rgba(40, 67, 54, .022) 0 1px, transparent 1px 8px),
+    #f7f7f3;
+  color: var(--atlas-ink);
+}
+
+.atlas-evidence::before,
+.atlas-evidence::after {
+  position: absolute;
+  z-index: 0;
+  content: '';
+  pointer-events: none;
+}
+
+.atlas-evidence::before { inset: 20px; border: 1px solid rgba(47, 83, 65, .34); }
+.atlas-evidence::after {
+  inset: 20px;
+  background:
+    linear-gradient(#285647, #285647) left top / 15px 1px no-repeat,
+    linear-gradient(#285647, #285647) left top / 1px 15px no-repeat,
+    linear-gradient(#285647, #285647) right top / 15px 1px no-repeat,
+    linear-gradient(#285647, #285647) right top / 1px 15px no-repeat,
+    linear-gradient(#285647, #285647) left bottom / 15px 1px no-repeat,
+    linear-gradient(#285647, #285647) left bottom / 1px 15px no-repeat,
+    linear-gradient(#285647, #285647) right bottom / 15px 1px no-repeat,
+    linear-gradient(#285647, #285647) right bottom / 1px 15px no-repeat;
 }
 
 .atlas-evidence-frame {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
   gap: clamp(32px, 5.5vw, 96px);
@@ -276,7 +302,7 @@
 .atlas-evidence-copy { max-width: 525px; }
 .atlas-evidence-copy > p {
   margin: 0;
-  color: rgba(247, 243, 233, .82);
+  color: #3e5046;
   font-family: var(--font-sans);
   font-size: clamp(1.15rem, 1.55vw, 1.65rem);
   font-weight: 570;
@@ -284,7 +310,7 @@
 }
 .atlas-evidence-statement {
   margin-top: 21px !important;
-  color: #fffdf8;
+  color: #1f4d3d;
   font-family: var(--font-sans);
   font-size: clamp(1.15rem, 1.55vw, 1.65rem);
   font-weight: 760;
@@ -630,6 +656,7 @@
   .video-hero-media { aspect-ratio: 1.45 / 1; margin: 0 16px 16px; border-radius: 16px 16px 0 0; }
   .video-hero-media img { object-position: center 54%; }
   .atlas-evidence { padding: 58px 22px 64px; }
+  .atlas-evidence::before, .atlas-evidence::after { inset: 14px; }
   .atlas-evidence-frame { grid-template-columns: 1fr; gap: 34px; max-width: 650px; }
   .atlas-evidence-copy { max-width: 560px; }
   .atlas-stage { display: block; min-height: 0; padding: 48px 22px 38px; }
