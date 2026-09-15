@@ -13,6 +13,12 @@ const englishCopy = {
     globalLabel: 'Global perspective', globalTitle: 'Research begins with people, in every context.', globalBody: 'A global view reminds us that every response comes from a different life, place, and point of view. The platform keeps each participation journey clear and considered from the first step to reward.', rewardsLabel: 'Rewards & panel', rewardsTitle: 'A little more to look forward to.', rewardsBody: 'Join the panel for surveys that value your time, special tasks, and clear reward opportunities.', rewardCards: [['For everyday moments', 'Gift cards', 'Complete eligible surveys, build your Coins balance, and choose from selected gift-card rewards.'], ['Where available', 'Tokens', 'In supported regions, selected token reward options can be part of your next redemption choice.'], ['Inside the panel', 'Special tasks', 'From time to time, eligible members can receive an additional task and another way to earn Coins.']],
     footer: { description: 'A considered research space for participants and organisations: clear opportunities, credible input, and practical next steps.', contact: 'Contact the team', about: 'About us', how: 'How it works', approach: 'Our approach', explore: 'Explore', news: 'News Wall', participate: 'Participate', surveys: 'Find surveys', wallet: 'Rewards & wallet', invite: 'Invite program', organisations: 'For organisations', questionnaires: 'Custom questionnaires', studies: 'Tailored research', standards: 'Standards', privacy: 'Privacy', terms: 'Terms', rights: '© 2026 GuanyiSearch. All rights reserved.', privacyPolicy: 'Privacy Policy', termsService: 'Terms of Service' },
   },
+  workspace: {
+    nav: { home: 'Home', surveys: 'Online surveys', research: 'Research', news: 'News Wall', community: 'Community', dashboard: 'Dashboard', wallet: 'Rewards & wallet', invite: 'Invite program', profile: 'View profile', settings: 'Account settings', logout: 'Log out' },
+    dashboard: {
+      greeting: { morning: 'Good morning', afternoon: 'Good afternoon', evening: 'Good evening' }, visitor: 'there', space: 'Your space', begin: 'Let’s begin:', prompts: ['Browse news', 'Start a survey', 'Explore community'], welcome: 'Explore at your own pace. Your next opportunity is ready when you are.', coinsAvailable: '{coins} Coins available', balance: 'Coins balance', openWallet: 'Open wallet', startToday: 'Start earning today', headline: 'One good survey can start the streak.', nextWithCompletions: 'New matches move throughout the day. Check the wall while survey inventory is fresh.', nextWithoutCompletions: 'Start with one verified completion. Once it clears, your reward record begins to build.', findSurveys: 'Find surveys', rewardPath: 'Reward path', rewardPathValue: 'Surveys → Coins → Gift cards', steps: [['Find a live match', 'Survey availability changes during the day.'], ['Finish with quality', 'Partners validate completions before Coins clear.'], ['Build toward rewards', 'Gift card goals unlock from the $10 tier.']], tip: 'Tip: finish your first survey and check back when the wall looks quiet — inventory rotates.', newsWall: 'News Wall', newsTitle: 'A wider view, whenever you need it.', newsIntro: 'Follow the stories shaping the conversations behind tomorrow’s research.', exploreNews: 'Explore News Wall', freshNews: 'Fresh reading will appear here as the News Wall updates.', openNews: 'Open News Wall', readStory: 'Read story', latestStory: 'Latest story', news: 'News',
+    },
+  },
 };
 
 const publicCopyByLanguage = {
@@ -105,6 +111,21 @@ Object.entries(localizedNavigationItems).forEach(([language, [how, approach, sur
   };
 });
 
+const workspaceCopyByLanguage = {
+  'zh-CN': {
+    nav: { home: '首页', surveys: '在线问卷', research: '研究与活动', news: '资讯墙', community: '社群', dashboard: '数据概览', wallet: '奖励与钱包', invite: '邀请计划', profile: '查看个人资料', settings: '账户设置', logout: '退出登录' },
+    dashboard: {
+      greeting: { morning: '早上好', afternoon: '下午好', evening: '晚上好' }, visitor: '你好', space: '你的空间', begin: '让我们从这里开始：', prompts: ['浏览资讯', '开始问卷', '探索社群'], welcome: '按自己的节奏探索。下一次机会会在你准备好时出现。', coinsAvailable: '可用 {coins} Coins', balance: 'Coins 余额', openWallet: '打开钱包', startToday: '今天开始赚取奖励', headline: '一份高质量问卷，便能开始积累。', nextWithCompletions: '新的匹配会在一天中陆续出现。问卷资源充足时，欢迎回来看看。', nextWithoutCompletions: '先完成一份已验证的问卷。完成确认后，你的奖励记录就会开始累积。', findSurveys: '寻找问卷', rewardPath: '奖励路径', rewardPathValue: '问卷 → Coins → 礼品卡', steps: [['找到可参与的匹配', '问卷的可用情况会在一天中变化。'], ['认真完成问卷', '合作方会在 Coins 到账前确认完成情况。'], ['逐步兑换奖励', '礼品卡可从 $10 档位开始兑换。']], tip: '提示：先完成第一份问卷；当问卷墙较为空时，稍后回来再看，新的机会会持续更新。', newsWall: '资讯墙', newsTitle: '随时了解更广阔的视野。', newsIntro: '关注正在影响明日研究讨论的故事。', exploreNews: '探索资讯墙', freshNews: '资讯墙更新后，最新内容会显示在这里。', openNews: '打开资讯墙', readStory: '阅读文章', latestStory: '最新文章', news: '资讯',
+    },
+  },
+  'zh-Hant': {
+    nav: { home: '首頁', surveys: '線上問卷', research: '研究與活動', news: '資訊牆', community: '社群', dashboard: '數據總覽', wallet: '獎勵與錢包', invite: '邀請計畫', profile: '查看個人資料', settings: '帳戶設定', logout: '登出' },
+    dashboard: {
+      greeting: { morning: '早安', afternoon: '午安', evening: '晚安' }, visitor: '你好', space: '你的空間', begin: '讓我們從這裡開始：', prompts: ['瀏覽資訊', '開始問卷', '探索社群'], welcome: '依自己的步調探索。下一次機會會在你準備好時出現。', coinsAvailable: '可用 {coins} Coins', balance: 'Coins 餘額', openWallet: '開啟錢包', startToday: '今天開始累積獎勵', headline: '一份高品質問卷，便能開始累積。', nextWithCompletions: '新的匹配會在一天中陸續出現。問卷資源充足時，歡迎回來看看。', nextWithoutCompletions: '先完成一份已驗證的問卷。完成確認後，你的獎勵紀錄就會開始累積。', findSurveys: '尋找問卷', rewardPath: '獎勵路徑', rewardPathValue: '問卷 → Coins → 禮品卡', steps: [['找到可參與的匹配', '問卷的可用情況會在一天中變化。'], ['認真完成問卷', '合作方會在 Coins 到帳前確認完成情況。'], ['逐步兌換獎勵', '禮品卡可從 $10 檔位開始兌換。']], tip: '提示：先完成第一份問卷；當問卷牆較空時，稍後回來再看，新的機會會持續更新。', newsWall: '資訊牆', newsTitle: '隨時了解更廣闊的視野。', newsIntro: '關注正在影響明日研究討論的故事。', exploreNews: '探索資訊牆', freshNews: '資訊牆更新後，最新內容會顯示在這裡。', openNews: '開啟資訊牆', readStory: '閱讀文章', latestStory: '最新文章', news: '資訊',
+    },
+  },
+};
+
 export const languages = [
   { code: 'en-US', label: 'English (US)', shortLabel: 'EN-US' },
   { code: 'en-GB', label: 'English (UK)', shortLabel: 'EN-GB' },
@@ -184,6 +205,12 @@ export function LanguageProvider({ children }) {
       hero: { ...englishCopy.hero, ...(publicCopyByLanguage[language]?.hero || {}) },
       approach: { ...englishCopy.approach, ...(publicCopyByLanguage[language]?.approach || {}) },
       home: { ...englishCopy.home, ...(publicCopyByLanguage[language]?.home || {}) },
+      workspace: {
+        ...englishCopy.workspace,
+        ...(workspaceCopyByLanguage[language] || {}),
+        nav: { ...englishCopy.workspace.nav, ...(workspaceCopyByLanguage[language]?.nav || {}) },
+        dashboard: { ...englishCopy.workspace.dashboard, ...(workspaceCopyByLanguage[language]?.dashboard || {}) },
+      },
     },
   }), [language]);
 

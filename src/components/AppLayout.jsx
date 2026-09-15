@@ -11,21 +11,22 @@ import { HomeFooter } from './HomeLegacySections';
 import { useLanguage, withLanguage } from './LanguageContext';
 
 const navItems = [
-  { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
-  { to: '/partners#surveys', label: 'Online surveys', icon: Users, hash: '#surveys' },
-  { to: '/research', label: 'Research', icon: Compass },
-  { to: '/news', label: 'News Wall', icon: Newspaper },
-  { to: '/community', label: 'Community', icon: MessageCircleMore },
-  { to: '/wallet', label: 'Wallet', icon: WalletCards },
+  { to: '/dashboard', labelKey: 'dashboard', icon: BarChart3 },
+  { to: '/partners#surveys', labelKey: 'surveys', icon: Users, hash: '#surveys' },
+  { to: '/research', labelKey: 'research', icon: Compass },
+  { to: '/news', labelKey: 'news', icon: Newspaper },
+  { to: '/community', labelKey: 'community', icon: MessageCircleMore },
+  { to: '/wallet', labelKey: 'wallet', icon: WalletCards },
 ];
 
 const panelistNavItems = navItems
   .filter((item) => item.to !== '/wallet')
-  .map((item) => (item.to === '/dashboard' ? { ...item, label: 'Home', icon: House } : item));
+  .map((item) => (item.to === '/dashboard' ? { ...item, labelKey: 'home', icon: House } : item));
 
 export default function AppLayout({ children }) {
   const { user, logout } = useAuth();
-  const { language } = useLanguage();
+  const { language, publicCopy } = useLanguage();
+  const workspaceCopy = publicCopy.workspace.nav;
   const navigate = useNavigate();
   const location = useLocation();
   const userMenuRef = useRef(null);
@@ -112,7 +113,7 @@ export default function AppLayout({ children }) {
         }}
       >
         <Icon size={17} strokeWidth={1.8} />
-        <span>{item.label}</span>
+        <span>{workspaceCopy[item.labelKey]}</span>
       </NavLink>
     );
   };
@@ -172,21 +173,21 @@ export default function AppLayout({ children }) {
                     </button>
                   </>}
                   {isPanelist && (
-                    <NavLink className="app-user-menu-item" to="/activity" onClick={closeUserMenuImmediately} role="menuitem">
+                    <NavLink className="app-user-menu-item" to={withLanguage('/activity', language)} onClick={closeUserMenuImmediately} role="menuitem">
                       <BarChart3 size={15} />
-                      <span>Dashboard</span>
+                      <span>{workspaceCopy.dashboard}</span>
                     </NavLink>
                   )}
                   {isPanelist && (
-                    <NavLink className="app-user-menu-item" to="/wallet" onClick={closeUserMenuImmediately} role="menuitem">
+                    <NavLink className="app-user-menu-item" to={withLanguage('/wallet', language)} onClick={closeUserMenuImmediately} role="menuitem">
                       <Gift size={15} />
-                      <span>Rewards & wallet</span>
+                      <span>{workspaceCopy.wallet}</span>
                     </NavLink>
                   )}
                   {isPanelist && (
-                    <NavLink className="app-user-menu-item" to="/dashboard?referral=true" onClick={closeUserMenuImmediately} role="menuitem">
+                    <NavLink className="app-user-menu-item" to={withLanguage('/dashboard?referral=true', language)} onClick={closeUserMenuImmediately} role="menuitem">
                       <Users size={15} />
-                      <span>Invite program</span>
+                      <span>{workspaceCopy.invite}</span>
                     </NavLink>
                   )}
                   <button className="app-user-menu-item is-danger" type="button" onClick={handleLogout} role="menuitem">

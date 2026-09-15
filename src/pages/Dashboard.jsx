@@ -8,28 +8,27 @@ import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber } from '../utils/formatters';
 import { isPanelistRole } from '../utils/roles';
 import { formatUsdEstimate } from '../utils/wallet';
+import { useLanguage, withLanguage } from '../components/LanguageContext';
 
-function localGreeting() {
+function localGreeting(copy) {
   const hour = new Date().getHours();
-  if (hour < 12) return 'Good morning';
-  if (hour < 18) return 'Good afternoon';
-  return 'Good evening';
+  if (hour < 12) return copy.greeting.morning;
+  if (hour < 18) return copy.greeting.afternoon;
+  return copy.greeting.evening;
 }
 
-function newsDate(value) {
+function newsDate(value, language, latestStory) {
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return 'Latest story';
-  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  if (Number.isNaN(date.getTime())) return latestStory;
+  return date.toLocaleDateString(language, { month: 'short', day: 'numeric' });
 }
 
-const welcomePrompts = ['Browse news', 'Start a survey', 'Explore community'];
-
-function WelcomePrompt() {
+function WelcomePrompt({ copy }) {
   const [promptIndex, setPromptIndex] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const activePrompt = welcomePrompts[promptIndex];
+  const activePrompt = copy.prompts[promptIndex];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -56,40 +55,40 @@ function WelcomePrompt() {
     } else {
       delay = 260;
       update = () => {
-        setPromptIndex((currentIndex) => (currentIndex + 1) % welcomePrompts.length);
+        setPromptIndex((currentIndex) => (currentIndex + 1) % copy.prompts.length);
         setIsDeleting(false);
       };
     }
 
     const timeoutId = window.setTimeout(update, delay);
     return () => window.clearTimeout(timeoutId);
-  }, [activePrompt.length, characterCount, isDeleting, prefersReducedMotion]);
+  }, [activePrompt.length, characterCount, copy.prompts.length, isDeleting, prefersReducedMotion]);
 
   const visiblePrompt = prefersReducedMotion ? activePrompt : activePrompt.slice(0, characterCount);
 
   return (
     <div className="dashboard-welcome-prompt" aria-hidden="true">
-      <span>Let’s begin:</span>
+      <span>{copy.begin}</span>
       <strong>{visiblePrompt}</strong>
       <i />
     </div>
   );
 }
 
-function HomeNewsCard({ article }) {
+function HomeNewsCard({ article, language, copy }) {
   return (
     <article className="home-news-card">
-      <Link to={`/news/${encodeURIComponent(article.id)}`}>
+      <Link to={withLanguage(`/news/${encodeURIComponent(article.id)}`, language)}>
         <div className="home-news-image">
           {article.imageUrl ? <img src={article.imageUrl} alt="" loading="lazy" /> : <Newspaper size={28} strokeWidth={1.4} />}
         </div>
         <div className="home-news-copy">
           <div>
-            <span>{newsDate(article.publishedAt || article.createdAt || article.date)}</span>
-            <em>{article.category || 'News'}</em>
+            <span>{newsDate(article.publishedAt || article.createdAt || article.date, language, copy.latestStory)}</span>
+            <em>{article.category || copy.news}</em>
           </div>
           <h2>{article.title}</h2>
-          <b>Read story <ArrowUpRight size={15} /></b>
+          <b>{copy.readStory} <ArrowUpRight size={15} /></b>
         </div>
       </Link>
     </article>
@@ -98,42 +97,45 @@ function HomeNewsCard({ article }) {
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const { language, publicCopy } = useLanguage();
+  const copy = publicCopy.workspace.dashboard;
   const { panelProfile } = useProfileSurvey();
   const { data } = useAsyncData(getDashboard, []);
   const { data: homeNews, loading: newsLoading } = useAsyncData(() => getNewsWall({ limit: 3 }), []);
-  const [greeting, setGreeting] = useState(localGreeting);
+  const [greeting, setGreeting] = useState(() => localGreeting(copy));
   const completedOffers = data?.stats.completedOffers ?? 0;
   const isPanelist = isPanelistRole(user?.role);
-  const displayName = user?.username || user?.displayName || 'there';
+  const displayName = user?.username || user?.displayName || copy.visitor;
   const balance = Number(user?.coins ?? user?.coinsBalance ?? 0);
   const balanceUsd = balance / 1000;
   const nextAction = completedOffers > 0
-    ? 'New matches move throughout the day. Check the wall while survey inventory is fresh.'
-    : 'Start with one verified completion. Once it clears, your reward record begins to build.';
+    ? copy.nextWithCompletions
+    : copy.nextWithoutCompletions;
 
   useEffect(() => {
-    const intervalId = window.setInterval(() => setGreeting(localGreeting()), 60_000);
+    setGreeting(localGreeting(copy));
+    const intervalId = window.setInterval(() => setGreeting(localGreeting(copy)), 60_000);
     return () => window.clearInterval(intervalId);
-  }, []);
+  }, [copy]);
 
   return (
     <div className="dashboard-page">
       {isPanelist && (
         <section className="dashboard-welcome">
           <div className="dashboard-welcome-copy">
-            <p>Your space</p>
+            <p>{copy.space}</p>
             <h1>{greeting}, {displayName}.</h1>
-            <WelcomePrompt />
-            <span>Explore at your own pace. Your next opportunity is ready when you are.</span>
+            <WelcomePrompt copy={copy} />
+            <span>{copy.welcome}</span>
           </div>
-          <div className="dashboard-balance-card" aria-label={`${formatCoinNumber(balance)} Coins available`}>
+          <div className="dashboard-balance-card" aria-label={copy.coinsAvailable.replace('{coins}', formatCoinNumber(balance))}>
             <span className="dashboard-balance-token" aria-hidden="true">◎</span>
             <span className="dashboard-balance-copy">
-              <span>Coins balance</span>
+              <span>{copy.balance}</span>
               <strong>{formatCoinNumber(balance)} <em>Coins</em></strong>
             </span>
             <span className="dashboard-balance-estimate">≈ {formatUsdEstimate(balanceUsd, panelProfile?.country)}</span>
-            <Link className="dashboard-balance-action" to="/wallet">Open wallet <ArrowUpRight size={14} /></Link>
+            <Link className="dashboard-balance-action" to={withLanguage('/wallet', language)}>{copy.openWallet} <ArrowUpRight size={14} /></Link>
           </div>
         </section>
       )}
@@ -142,45 +144,45 @@ export default function Dashboard() {
         <div className="dashboard-board-intro">
           <header className="dashboard-command">
             <div className="dashboard-command-copy">
-              <p className="dashboard-command-kicker">Start earning today</p>
-              <h2>One good survey can start the streak.</h2>
+              <p className="dashboard-command-kicker">{copy.startToday}</p>
+              <h2>{copy.headline}</h2>
               <p>{nextAction}</p>
               <div className="dashboard-command-actions">
-                <Link className="btn-primary" to="/partners">
-                  Find surveys <ArrowUpRight size={16} />
+                <Link className="btn-primary" to={withLanguage('/partners', language)}>
+                  {copy.findSurveys} <ArrowUpRight size={16} />
                 </Link>
                 {!isPanelist && (
-                  <Link className="btn-secondary" to="/wallet">
-                    Open wallet
+                  <Link className="btn-secondary" to={withLanguage('/wallet', language)}>
+                    {copy.openWallet}
                   </Link>
                 )}
               </div>
             </div>
           </header>
 
-          <aside className="dashboard-path-panel" aria-label="Reward path">
+          <aside className="dashboard-path-panel" aria-label={copy.rewardPath}>
             <div className="dashboard-path-head">
-              <span>Reward path</span>
-              <strong>Surveys → Coins → Gift cards</strong>
+              <span>{copy.rewardPath}</span>
+              <strong>{copy.rewardPathValue}</strong>
             </div>
             <div className="dashboard-path-steps">
               <article>
                 <span>01</span>
-                <strong>Find a live match</strong>
-                <p>Survey availability changes during the day.</p>
+                <strong>{copy.steps[0][0]}</strong>
+                <p>{copy.steps[0][1]}</p>
               </article>
               <article>
                 <span>02</span>
-                <strong>Finish with quality</strong>
-                <p>Partners validate completions before Coins clear.</p>
+                <strong>{copy.steps[1][0]}</strong>
+                <p>{copy.steps[1][1]}</p>
               </article>
               <article>
                 <span>03</span>
-                <strong>Build toward rewards</strong>
-                <p>Gift card goals unlock from the $10 tier.</p>
+                <strong>{copy.steps[2][0]}</strong>
+                <p>{copy.steps[2][1]}</p>
               </article>
             </div>
-            <p>Tip: finish your first survey and check back when the wall looks quiet — inventory rotates.</p>
+            <p>{copy.tip}</p>
           </aside>
         </div>
       </section>
@@ -189,19 +191,19 @@ export default function Dashboard() {
         <section className="home-news-guide" aria-labelledby="home-news-title">
           <div className="home-news-guide-head">
             <div>
-              <p className="dashboard-command-kicker">News Wall</p>
-              <h2 id="home-news-title">A wider view, whenever you need it.</h2>
-              <span>Follow the stories shaping the conversations behind tomorrow’s research.</span>
+              <p className="dashboard-command-kicker">{copy.newsWall}</p>
+              <h2 id="home-news-title">{copy.newsTitle}</h2>
+              <span>{copy.newsIntro}</span>
             </div>
-            <Link className="home-news-guide-link" to="/news">Explore News Wall <ArrowUpRight size={16} /></Link>
+            <Link className="home-news-guide-link" to={withLanguage('/news', language)}>{copy.exploreNews} <ArrowUpRight size={16} /></Link>
           </div>
           <div className="home-news-grid">
             {newsLoading && Array.from({ length: 3 }, (_, index) => <div key={index} className="home-news-card home-news-card-loading" aria-hidden="true" />)}
-            {!newsLoading && homeNews?.slice(0, 3).map((article) => <HomeNewsCard key={article.id} article={article} />)}
+            {!newsLoading && homeNews?.slice(0, 3).map((article) => <HomeNewsCard key={article.id} article={article} language={language} copy={copy} />)}
             {!newsLoading && !homeNews?.length && (
               <div className="home-news-empty">
-                <p>Fresh reading will appear here as the News Wall updates.</p>
-                <Link to="/news">Open News Wall <ArrowUpRight size={15} /></Link>
+                <p>{copy.freshNews}</p>
+                <Link to={withLanguage('/news', language)}>{copy.openNews} <ArrowUpRight size={15} /></Link>
               </div>
             )}
           </div>
