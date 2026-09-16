@@ -8,8 +8,14 @@ import './PublicBusinessQuestionnaire.css';
 function QuestionField({ question, value, onChange }) {
   if (question.type === 'LONG_TEXT') return <textarea value={value || ''} onChange={(event) => onChange(event.target.value)} />;
   if (question.type === 'SHORT_TEXT') return <input value={value || ''} onChange={(event) => onChange(event.target.value)} />;
-  if (question.type === 'MULTIPLE_CHOICE') return <div className="public-question-options">{question.choices.map((choice) => <label key={choice}><input type="checkbox" checked={Array.isArray(value) && value.includes(choice)} onChange={(event) => onChange(event.target.checked ? [...(Array.isArray(value) ? value : []), choice] : (Array.isArray(value) ? value.filter((item) => item !== choice) : []))} /> {choice}</label>)}</div>;
-  return <div className="public-question-options">{question.choices.map((choice) => <label key={choice}><input type="radio" name={question.id} checked={value === choice} onChange={() => onChange(choice)} /> {choice}</label>)}</div>;
+  const choices = Array.isArray(question.choices) ? question.choices : [];
+  if (question.type === 'MULTIPLE_CHOICE') return <div className="public-question-options">{choices.map((choice) => <label key={choice}><input type="checkbox" checked={Array.isArray(value) && value.includes(choice)} onChange={(event) => onChange(event.target.checked ? [...(Array.isArray(value) ? value : []), choice] : (Array.isArray(value) ? value.filter((item) => item !== choice) : []))} /> {choice}</label>)}</div>;
+  return <div className="public-question-options">{choices.map((choice) => <label key={choice}><input type="radio" name={question.id} checked={value === choice} onChange={() => onChange(choice)} /> {choice}</label>)}</div>;
+}
+
+function hasAnswer(value) {
+  if (Array.isArray(value)) return value.length > 0;
+  return String(value ?? '').trim().length > 0;
 }
 
 export default function PublicBusinessQuestionnaire() {
@@ -22,6 +28,7 @@ export default function PublicBusinessQuestionnaire() {
   const [error, setError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const startedAtRef = useRef(Date.now());
+  const questions = Array.isArray(questionnaire?.questions) ? questionnaire.questions : [];
 
   useEffect(() => {
     let active = true;
@@ -34,7 +41,13 @@ export default function PublicBusinessQuestionnaire() {
 
   const submit = async (event) => {
     event.preventDefault();
-    if (submitting) return;
+    if (submitting || !questionnaire) return;
+    const missingQuestion = questions.find((question) => question.required && !hasAnswer(answers[question.id]));
+    if (missingQuestion) {
+      setError('Please answer every required question before submitting.');
+      document.getElementById(`question-${missingQuestion.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     setSubmitting(true);
     setError('');
     try {
@@ -71,7 +84,7 @@ export default function PublicBusinessQuestionnaire() {
         <span className="public-questionnaire-intro">Created by {questionnaire.creatorName}. Your responses will be provided to this creator for the stated research purpose.</span>
         {questionnaire.coverDescription && <p className="public-questionnaire-cover">{questionnaire.coverDescription}</p>}
         <div className="public-questionnaire-questions">
-          {questionnaire.questions.map((question, index) => <label className="public-question" key={question.id}><span>{index + 1}. {question.prompt} {question.required && <em>Required</em>}</span><QuestionField question={question} value={answers[question.id]} onChange={(value) => setAnswers((current) => ({ ...current, [question.id]: value }))} /></label>)}
+          {questions.map((question, index) => <fieldset className="public-question" id={`question-${question.id}`} key={question.id}><legend>{index + 1}. {question.prompt} {question.required && <em>Required</em>}</legend><QuestionField question={question} value={answers[question.id]} onChange={(value) => setAnswers((current) => ({ ...current, [question.id]: value }))} /></fieldset>)}
         </div>
         {error && <p className="public-questionnaire-error">{error}</p>}
         <div className="public-questionnaire-consent"><TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken('')} onError={() => setTurnstileToken('')} /><span>By submitting, you agree to the <a href="/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and understand that this response is shared with the questionnaire creator.</span></div>

@@ -8,6 +8,7 @@ import SurveyResultModal from '../components/SurveyResultModal';
 import { useAuth } from '../components/AuthContext';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { isPanelistRole } from '../utils/roles';
+import { toSafeHttpUrl } from '../utils/safeUrl';
 
 const activeSurveyStoragePrefix = 'guanyi-active-survey';
 const dismissedSurveyStoragePrefix = 'guanyi-dismissed-surveys';
@@ -235,7 +236,7 @@ export default function SurveyPartners() {
         partnerId: item.partnerSlug || item.partnerId,
         linkType: 'direct',
       });
-      const redirectUrl = response.data.redirectUrl;
+      const redirectUrl = toSafeHttpUrl(response.data.redirectUrl);
       const recordId = response.data.record?.id;
       const isEntry = item.kind === 'entry';
       if (!redirectUrl || (!recordId && !isEntry)) throw new Error('No survey is available right now.');

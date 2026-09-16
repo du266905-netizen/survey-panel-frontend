@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const SESSION_INVALIDATED_EVENT = 'guanyi:session-invalidated';
+
 const defaultApiBaseUrl = () => {
   if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
     return 'https://api.guanyi-media.com';
@@ -42,8 +44,8 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      window.localStorage.removeItem('surveyToken');
-      window.localStorage.removeItem('surveyUser');
+      clearSession();
+      window.dispatchEvent(new Event(SESSION_INVALIDATED_EVENT));
     }
 
     return Promise.reject(error);
@@ -64,7 +66,7 @@ export function clearSession() {
 export function getStoredUser() {
   try {
     const stored = window.localStorage.getItem('surveyUser');
-    return stored ? JSON.parse(stored) : null;
+    return stored ? normalizeUser(JSON.parse(stored)) : null;
   } catch {
     return null;
   }
@@ -77,8 +79,8 @@ export function normalizeUser(user) {
 
   return {
     ...user,
-    username: user.displayName,
-    coins: user.coinsBalance,
+    username: user.displayName || user.username || user.name || user.email || '',
+    coins: user.coinsBalance ?? user.coins ?? 0,
     group: user.groupName,
     team: user.teamName,
     role,

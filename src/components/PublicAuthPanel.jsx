@@ -194,9 +194,9 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
     (response) => {
       setUser(response.data.user);
       const destination = String(response.data.user?.role || '').toUpperCase() === 'BUSINESS' ? '/business/workspace' : '/dashboard';
-      navigate(destination, { replace: true });
+      navigate(withLanguage(destination, language), { replace: true });
     },
-    [navigate, setUser]
+    [language, navigate, setUser]
   );
 
   const handleGoogleCredential = useCallback(
@@ -261,6 +261,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const handleRegister = async (event) => {
     event.preventDefault();
     if (!/^\d{6}$/.test(registerForm.verificationCode)) return showError('Enter the 6-digit email verification code.');
+    if (accountType !== 'BUSINESS' && !turnstileToken) return showError('Please complete the security check before creating an account.');
     setLoading(true);
     setError('');
     try {
@@ -308,7 +309,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
         <h2 id="public-auth-title">{isLogin ? copy.loginTitle : accountType === 'BUSINESS' ? 'Create your research workspace.' : copy.registerTitle}</h2>
         <p className="public-auth-intro">{isLogin ? copy.loginIntro : accountType === 'BUSINESS' ? 'Create, share, and manage questionnaires alongside your research projects.' : copy.registerIntro}</p>
 
-        <p className="public-auth-consent">{isLogin ? copy.consentLogin : copy.consentRegister} <Link to={businessTermsPath} target="_blank">{termsLabel}</Link> {copy.and} <Link to={privacyPath} target="_blank">{copy.privacy}</Link>.</p>
+        <p className="public-auth-consent">{isLogin ? copy.consentLogin : copy.consentRegister} <Link to={businessTermsPath} target="_blank" rel="noopener noreferrer">{termsLabel}</Link> {copy.and} <Link to={privacyPath} target="_blank" rel="noopener noreferrer">{copy.privacy}</Link>.</p>
 
         <div className={loading ? 'pointer-events-none opacity-60' : ''}>
           {accountType !== 'BUSINESS' ? <GoogleButton mode={mode} onCredential={handleGoogleCredential} onError={showError} language={language} label={copy.google} /> : null}

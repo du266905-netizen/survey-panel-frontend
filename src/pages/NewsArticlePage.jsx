@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowUpRight, CalendarDays, Check, ExternalLink, FlaskConica
 import { Link, useParams } from 'react-router-dom';
 import { getNewsArticle, getNewsWall, saveNewsResearchSignal } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
+import { toSafeHttpUrl } from '../utils/safeUrl';
 import './NewsArticlePage.css';
 
 const categoryLabels = {
@@ -90,8 +91,9 @@ function matchesSearch(article, query) {
 }
 
 function ArticleImage({ article }) {
-  if (article?.imageUrl) {
-    return <img src={article.imageUrl} alt="" className="news-reading-image" />;
+  const imageUrl = toSafeHttpUrl(article?.imageUrl);
+  if (imageUrl) {
+    return <img src={imageUrl} alt="" className="news-reading-image" />;
   }
 
   return (
@@ -103,8 +105,8 @@ function ArticleImage({ article }) {
   );
 }
 
-function SourceHandoff({ article, onClose }) {
-  if (!article?.link || typeof document === 'undefined') return null;
+function SourceHandoff({ article, sourceUrl, onClose }) {
+  if (!sourceUrl || typeof document === 'undefined') return null;
 
   return createPortal(
     <div className="news-source-handoff-backdrop" role="presentation" onMouseDown={onClose}>
@@ -125,7 +127,7 @@ function SourceHandoff({ article, onClose }) {
         </p>
         <div className="news-source-handoff-actions">
           <button className="news-source-handoff-cancel" type="button" onClick={onClose}>Stay here</button>
-          <a className="news-source-handoff-confirm" href={article.link} target="_blank" rel="noreferrer">
+          <a className="news-source-handoff-confirm" href={sourceUrl} target="_blank" rel="noopener noreferrer">
             Open source <ExternalLink size={16} />
           </a>
         </div>
@@ -214,6 +216,7 @@ export default function NewsArticlePage() {
   const summaryParagraphs = useMemo(() => splitSummary(articleSummary(article)), [article]);
   const publishedDate = formatPublishedAt(article?.publishedAt);
   const publishedTime = formatPublishedTime(article?.publishedAt);
+  const sourceUrl = useMemo(() => toSafeHttpUrl(article?.link), [article?.link]);
   const hasResearchSignal = ['research', 'approve'].includes(String(article?.userVote || '').toLowerCase());
 
   const saveResearchSignal = async () => {
@@ -348,7 +351,7 @@ export default function NewsArticlePage() {
                 )}
                 {researchSignalError && <em>{researchSignalError}</em>}
               </section>
-              {article.link && (
+              {sourceUrl && (
                 <button className="news-reading-source-button" type="button" onClick={() => setSourceHandoffOpen(true)}>
                   View original reporting <ArrowUpRight size={17} />
                 </button>
@@ -373,7 +376,7 @@ export default function NewsArticlePage() {
         </>
       ) : null}
 
-      {sourceHandoffOpen && <SourceHandoff article={article} onClose={() => setSourceHandoffOpen(false)} />}
+      {sourceHandoffOpen && <SourceHandoff article={article} sourceUrl={sourceUrl} onClose={() => setSourceHandoffOpen(false)} />}
     </main>
   );
 }

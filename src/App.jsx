@@ -301,7 +301,7 @@ export default function App() {
           />
         </Route>
         <Route path="/" element={<HomeAtlas />} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       </PageMotion>
       {isPanelistRole(user?.role) && <SupportChatWidget />}
