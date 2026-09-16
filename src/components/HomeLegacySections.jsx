@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlobalGlobe from './GlobalGlobe';
 import Logo from './Logo';
@@ -53,6 +53,25 @@ const socialLinks = [
 ];
 
 const languageLabel = { 'zh-CN': '语言', 'zh-Hant': '語言', ja: '言語', ko: '언어', de: 'Sprache', fr: 'Langue', es: 'Idioma', it: 'Lingua', pt: 'Idioma', ru: 'Язык', tr: 'Dil', nl: 'Taal', da: 'Sprog', fi: 'Kieli', no: 'Språk', sv: 'Språk' };
+
+const footerIdentity = {
+  'en-US': {
+    title: 'About GuanyiSearch',
+    description: 'A consumer-insight collaboration network for decisions across markets. We connect participants, research initiators, and organisations around business, culture, everyday life, and public-interest questions—turning consented, thoughtfully screened local feedback into clearer decisions across regions.',
+  },
+  'en-GB': {
+    title: 'About GuanyiSearch',
+    description: 'A consumer-insight collaboration network for decisions across markets. We connect participants, research initiators, and organisations around business, culture, everyday life, and public-interest questions—turning consented, thoughtfully screened local feedback into clearer decisions across regions.',
+  },
+  'zh-CN': {
+    title: '关于 GuanyiSearch',
+    description: '我们是一个服务于跨区域经营决策的消费者洞察协作网络。我们连接参与者、研究发起人与组织，围绕商业、文化、日常生活与公共议题，将经过许可、审慎筛选的本地反馈转化为更清晰的跨区域判断。',
+  },
+  'zh-Hant': {
+    title: '關於 GuanyiSearch',
+    description: '我們是一個服務跨區域經營決策的消費者洞察協作網絡。我們連結參與者、研究發起人與組織，圍繞商業、文化、日常生活與公共議題，將經過許可、審慎篩選的在地回饋轉化為更清晰的跨區域判斷。',
+  },
+};
 
 function SocialGlyph({ id }) {
   if (id === 'linkedin') {
@@ -152,11 +171,17 @@ export function HumanManifesto() {
 export function HomeFooter() {
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const copy = publicCopy.home.footer;
+  const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
   const footerGroups = getFooterGroups(copy);
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">
-        <div className="home-footer-brand"><div className="home-footer-identity"><Logo size="lg" variant="light" className="home-footer-wordmark" /></div><p>{copy.description}</p><a href="mailto:heguanyi@guanyi-media.com">{copy.contact} <ArrowRight size={16} /></a><label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">{languageLabel[language] || 'Language'}</span><select value={language} onChange={(event) => navigateToLanguage(event.target.value)} aria-label={languageLabel[language] || 'Choose language'}>{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label><nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav></div>
+        <div className="home-footer-brand">
+          <div className="home-footer-identity"><Logo size="lg" variant="light" className="home-footer-wordmark" /></div>
+          <div className="home-footer-about"><p className="home-footer-about-title">{identity.title}</p><p>{identity.description}</p></div>
+          <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>
+          <label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">{languageLabel[language] || 'Language'}</span><select value={language} onChange={(event) => navigateToLanguage(event.target.value)} aria-label={languageLabel[language] || 'Choose language'}>{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label>
+        </div>
         <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={withLanguage(item.to, language)}>{item.label}</Link>)}</section>)}</nav>
       </div>
       <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link></div></div>
