@@ -7,6 +7,7 @@ import Logo from '../components/Logo';
 import PublicAuthPanel from '../components/PublicAuthPanel';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import { useLanguage } from '../components/LanguageContext';
+import participantStudyImage from '../assets/auth/participant-study.jpg';
 
 const socialLinks = [
   { id: 'x', label: 'X / Twitter', href: 'https://x.com/GUANYISEARCH' },
@@ -1013,14 +1014,14 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-site-nav-mobile-actions a:last-child { border-color: #183b2c; background: #183b2c; color: #f8f5ed; }
         .landing-shell { position: relative; isolation: isolate; height: min(900px, 100svh); min-height: 720px; overflow: hidden; background: #191917; }
         .landing-shell:before { position: absolute; z-index: -1; inset: 0; background: repeating-linear-gradient(116deg, rgba(255,255,255,.012) 0 1px, transparent 1px 11px), linear-gradient(120deg, rgba(255,255,255,.012), transparent 42%); content: ''; opacity: .46; pointer-events: none; }
-        .landing-brand { position: relative; display: flex; width: 58%; height: 100%; min-height: 0; flex-direction: column; overflow: hidden; margin-left: 42%; background: radial-gradient(ellipse 72% 76% at 74% 26%, rgba(92,99,79,.1), transparent 64%), linear-gradient(137deg, #1d1d1b 0%, #191917 72%, #171715 100%); color: white; padding: 34px clamp(28px, 6vw, 88px) 48px; }
-        .landing-brand:before { position: absolute; z-index: 0; inset: 0; background: linear-gradient(122deg, transparent 22%, rgba(255,255,255,.018) 52%, transparent 77%); content: ''; opacity: .7; pointer-events: none; }
-        .landing-brand:after { display: none; }
+        .landing-brand { position: relative; display: flex; width: 58%; height: 100%; min-height: 0; flex-direction: column; overflow: hidden; margin-left: 42%; background: #274a38; color: white; padding: 34px clamp(28px, 6vw, 88px) 48px; }
+        .landing-brand:before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(120deg, rgba(13,35,25,.82) 0%, rgba(20,55,39,.66) 53%, rgba(22,57,41,.38) 100%); content: ''; pointer-events: none; }
+        .landing-brand:after { position: absolute; z-index: 1; inset: 0; border: 1px solid rgba(255,255,255,.16); content: ''; pointer-events: none; }
+        .landing-brand-photo { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 49% 51%; filter: saturate(.78) contrast(.93) brightness(.94); }
         .landing-brand-header, .landing-brand-content { position: relative; z-index: 2; }
         .landing-brand-header { display: flex; align-items: center; justify-content: space-between; }
         .landing-brand-header a { display: inline-flex; }
         .landing-brand-kicker { color: rgba(232,230,223,.58); font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
-        .landing-brand-mark { position: absolute; z-index: 0; top: 22%; left: 67%; width: min(31vw, 370px); opacity: .46; transform: translate(-50%, -50%) rotate(-3deg); mix-blend-mode: screen; filter: grayscale(1) brightness(1.18) contrast(.92); pointer-events: none; animation: landing-brand-mark-breathe 13s cubic-bezier(.45, 0, .2, 1) infinite; }
         .landing-plum-cycle { position: absolute; z-index: 1; top: 7%; right: -4px; width: min(57%, 590px); opacity: .93; pointer-events: none; }
         .landing-plum-cycle:before { position: absolute; inset: 8% 3% 6% 9%; border-radius: 49% 44% 53% 45%; background: repeating-radial-gradient(ellipse at 58% 49%, rgba(219,215,205,.018) 0 1px, transparent 1px 7px); content: ''; opacity: .42; transform: rotate(-11deg); }
         .landing-plum-canvas { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 720 / 560; }
@@ -1315,7 +1316,6 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         @keyframes landing-cart-drift { 0%, 100% { transform: translateX(-9px); } 50% { transform: translateX(18px); } }
         @keyframes landing-cart-breeze { 0%, 100% { opacity: .24; transform: translateX(-12px); } 50% { opacity: .86; transform: translateX(8px); } }
         @keyframes landing-cart-wheel { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes landing-brand-mark-breathe { 0%, 100% { opacity: .42; transform: translate(-50%, -50%) translate3d(0, 0, 0) rotate(-3deg) scale(1); } 48% { opacity: .57; transform: translate(-50%, -50%) translate3d(-7px, -10px, 0) rotate(-1deg) scale(1.012); } }
         @keyframes landing-news-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
         @media (max-width: 1080px) {
           .landing-site-nav-inner { width: min(100% - 48px, 940px); min-height: 72px; justify-content: space-between; }
@@ -1355,8 +1355,6 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         @media (max-width: 1180px) { .landing-shell { display: grid; height: auto; min-height: 0; overflow: visible; grid-template-columns: 1fr; } .landing-brand, .landing-access { min-height: auto; height: auto; } .landing-brand { order: 2; width: auto; min-height: 680px; margin-left: 0; } .landing-access { position: static; order: 1; width: auto; min-width: 0; overflow: visible; border: 0; border-radius: 0; box-shadow: none; padding-bottom: 68px; } .landing-access-inner { overflow: visible; padding: 54px 0 12px; } .landing-plum-cycle { top: 13%; right: 7%; width: min(52%, 500px); } .landing-hero-sprout { top: 11%; right: 6%; width: min(49%, 470px); } .landing-news-grid { grid-template-columns: 1fr; } .landing-news-card-body h3 { min-height: 0; } .landing-footer-main { grid-template-columns: 1fr; gap: 38px; } }
         @media (max-width: 940px) { .landing-reward-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .landing-reward-card.is-panel { grid-column: 1 / -1; min-height: 400px; } }
         @media (max-width: 700px) { .landing-brand { min-height: 625px; padding: 25px 24px 31px; } .landing-brand-kicker { display: none; } .landing-plum-cycle { top: 14%; right: -32px; width: min(84%, 340px); opacity: .52; } .landing-hero-sprout { top: 12%; right: -28px; width: min(82%, 370px); opacity: .57; } .landing-brand-content h1 { font-size: 39px; } .landing-brand-content > p { font-size: 14px; line-height: 1.65; } .landing-brand-proof { grid-template-columns: 1fr; gap: 2px; margin-top: 24px; } .landing-brand-proof span { min-height: 0; padding-top: 8px; } .landing-access { padding: 20px 24px 36px; } .landing-access-inner { padding-top: 40px; } .public-auth-content h2 { font-size: 30px; } .landing-container { width: min(100% - 40px, 1200px); } .landing-news-preview { padding-bottom: 44px; } .landing-news-preview-head { align-items: flex-start; flex-direction: column; } .landing-intro, .landing-quality-grid, .landing-global { grid-template-columns: 1fr; gap: 28px; padding: 64px 0; } .landing-intro > p { font-size: 15px; } .landing-photo-grid { grid-template-columns: 1fr; padding-bottom: 64px; } .landing-photo, .landing-photo.is-short, .landing-photo.is-wide { grid-column: auto; min-height: 315px; } .landing-quality, .landing-panelists { padding: 64px 0; } .landing-global { min-height: 0; } .landing-global-visual { order: 2; min-height: 282px; } .landing-global-copy { order: 1; border-left: 0; border-bottom: 1px solid rgba(34,31,23,.24); padding: 0 0 22px; } .landing-map-frame { min-height: 0; } .landing-map-frame:after { transform: translateY(116px); } .landing-global-globe { width: min(76%, 228px); transform: translate(0, -1%); } .landing-rewards-layout { padding: 54px 0; } .landing-reward-card-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 20px; } .landing-reward-card, .landing-reward-card.is-panel { min-height: 352px; grid-column: auto; padding: 24px; } .landing-reward-card p { max-width: none; font-size: 14px; } .landing-reward-sketch { width: 150px; height: 142px; } .landing-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .landing-step { min-height: 0; } .landing-step h3 { margin-top: 25px; } .landing-reward-banner { min-height: 470px; margin-top: 45px; } .landing-reward-copy { padding: 44px 28px; } .landing-footer-main { padding-top: 48px; padding-bottom: 44px; } .landing-footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 30px; } .landing-footer-bottom { align-items: flex-start; flex-direction: column; padding: 24px 0; } .landing-footer-links { justify-content: flex-start; } }
-        @media (max-width: 1180px) { .landing-brand-mark { top: 28%; left: 55%; width: min(66vw, 460px); opacity: .42; } }
-        @media (max-width: 700px) { .landing-brand-mark { top: 30%; left: 55%; width: min(100vw, 460px); opacity: .3; } }
       `}</style>
 
       <PublicSiteHeader />
@@ -1367,12 +1365,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
             <span className="landing-brand-kicker">{publicCopy.hero.eyebrow}</span>
             <span className="landing-brand-kicker">{publicCopy.home.evidenceStatement}</span>
           </div>
-          <img
-            className="landing-brand-mark"
-            src="/guanyisearch-brand-mark.png"
-            alt=""
-            aria-hidden="true"
-          />
+          <img className="landing-brand-photo" src={participantStudyImage} alt="" aria-hidden="true" />
           <div className="landing-brand-content">
             <h1 id="landing-title">{publicCopy.hero.lines.join(' ')}</h1>
             <p>{publicCopy.hero.description}</p>

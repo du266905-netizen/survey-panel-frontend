@@ -34,7 +34,7 @@
 /* Join keeps the public editorial structure and enough room below its floating header. */
 .join-choice-page .join-choice-hero {
   background: radial-gradient(ellipse 54% 34% at 50% 0%, rgba(219, 234, 216, .46), transparent 72%), var(--future-paper);
-  padding-top: clamp(92px, 10vw, 128px);
+  padding-top: clamp(34px, 4vw, 54px);
 }
 .join-choice-page .join-choice-card { border-color: var(--future-rule); box-shadow: 0 12px 28px rgba(31, 54, 42, .045); }
 .join-choice-page .join-choice-card--participant { background: var(--future-sage); }
@@ -154,7 +154,7 @@
 .referral-modal-rules li p { color: #6d786f; }
 
 @media (max-width: 760px) {
-  .join-choice-page .join-choice-hero { padding-top: 94px; }
+  .join-choice-page .join-choice-hero { padding-top: 30px; }
   .app-shell .wallet-hero { grid-template-columns: 1fr; border-radius: 23px; padding: 25px; }
   .app-shell .wallet-hero h1 { font-size: clamp(42px, 12vw, 57px); }
   .app-shell .wallet-reward-stage, .app-shell .wallet-reward-slide, .app-shell .wallet-reward-slide.is-crypto { min-height: 245px; }
