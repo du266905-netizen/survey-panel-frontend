@@ -53,9 +53,9 @@
 .home-reward-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
 .home-reward-card { display: flex; min-height: 386px; flex-direction: column; justify-content: space-between; overflow: hidden; border: 1px solid rgba(34, 31, 23, .18); padding: clamp(22px, 2vw, 28px); transition: transform .24s ease, box-shadow .24s ease; }
 .home-reward-card:hover { box-shadow: 0 20px 38px rgba(36, 39, 33, .1); transform: translateY(-4px); }
-.home-reward-gift { background: #fff; }
-.home-reward-token { background: #f5f9f4; }
-.home-reward-panel { background: #f8faf7; }
+.home-reward-gift { background: #e3dacb; }
+.home-reward-token { background: #d8dfd1; }
+.home-reward-panel { background: #e7dfd1; }
 .home-reward-card span { color: #665f51; font-family: var(--font-accent); font-size: 19px; }
 .home-reward-card h3 { margin: 8px 0 0; color: #1c211d; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(31px, 3vw, 42px); font-weight: 600; letter-spacing: -.05em; line-height: 1; }
 .home-reward-card p { margin: 14px 0 0; color: #413f38; font-size: 15px; line-height: 1.65; }

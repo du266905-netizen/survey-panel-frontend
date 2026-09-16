@@ -74,101 +74,158 @@
 .dashboard-board { background: #fff !important; }
 
 .app-shell .wallet-page::before {
-  inset: -12px;
-  border-radius: 26px;
-  background:
-    radial-gradient(circle at 7% 0%, rgba(123, 158, 130, .10), transparent 27%),
-    radial-gradient(circle at 94% 8%, rgba(234, 222, 185, .10), transparent 30%),
-    #f8fbf7;
+  display: none;
 }
 
 .app-shell .wallet-hero {
-  border-color: rgba(44, 72, 57, .16);
-  background:
-    radial-gradient(circle at 8% 0%, rgba(128, 163, 133, .12), transparent 32%),
-    #fff !important;
-  box-shadow: 0 18px 42px rgba(35, 54, 43, .07), inset 0 1px 0 #fff;
+  gap: clamp(32px, 5vw, 72px);
+  overflow: visible;
+  border: 0;
+  border-bottom: 1px solid rgba(44, 72, 57, .16);
+  border-radius: 0;
+  background: #fff !important;
+  box-shadow: none;
+  padding: clamp(30px, 4vw, 52px) 0 48px;
 }
 
 .app-shell .wallet-hero-kicker { color: #527260; }
 .app-shell .wallet-hero h1 { color: #182b21; }
 .app-shell .wallet-hero-actions span {
   border-color: rgba(49, 82, 63, .16);
-  background: #f7faf6;
+  background: #fff;
   color: #52655a;
 }
 
+.app-shell .wallet-reward-stage { min-height: 238px; }
 .app-shell .wallet-reward-stage::before {
-  background:
-    radial-gradient(circle at 48% 44%, rgba(108, 147, 114, .16), transparent 54%),
-    radial-gradient(circle at 74% 58%, rgba(220, 196, 134, .11), transparent 58%);
+  display: none;
 }
 
 .app-shell .wallet-reward-slide,
 .app-shell .wallet-reward-slide.is-crypto {
-  border-color: rgba(44, 72, 57, .16);
-  background:
-    radial-gradient(circle at 82% 8%, rgba(225, 237, 224, .82), transparent 30%),
-    linear-gradient(145deg, #f5f9f4, #e9f0e8);
-  box-shadow: 0 18px 36px rgba(35, 54, 43, .08), inset 0 1px 0 rgba(255, 255, 255, .9);
+  min-height: 238px;
+  border: 0;
+  border-left: 1px solid rgba(44, 72, 57, .16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0 0 0 clamp(26px, 3vw, 42px);
 }
 
 .app-shell .wallet-reward-slide::before,
 .app-shell .wallet-reward-orbit {
-  border-color: rgba(47, 80, 61, .14);
-  background: rgba(255, 255, 255, .34);
+  display: none;
 }
 
 .app-shell .wallet-reward-card-face {
-  border-color: rgba(47, 80, 61, .15);
-  background: rgba(255, 255, 255, .72);
-  box-shadow: inset 0 1px 0 #fff, 0 14px 28px rgba(35, 54, 43, .07);
+  min-height: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
 }
 
-.app-shell .wallet-reward-card-face::before { background: rgba(137, 170, 125, .16); }
-.app-shell .wallet-reward-card-face span { color: #1b3528; }
-.app-shell .wallet-reward-slide p { color: #53665a; }
+.app-shell .wallet-reward-card-face::before { display: none; }
+.app-shell .wallet-reward-card-face span { color: #1b3528; font-family: var(--font-display); font-size: clamp(30px, 3.25vw, 46px); text-align: left; }
+.app-shell .wallet-reward-slide p { margin-top: 18px; color: #53665a; }
 .app-shell .wallet-reward-nav {
+  top: auto;
+  bottom: 0;
   border-color: rgba(47, 80, 61, .18);
-  background: rgba(255, 255, 255, .86);
+  background: #fff;
   color: #315b43;
-  box-shadow: 0 8px 18px rgba(35, 54, 43, .09);
+  box-shadow: none;
+  transform: none;
 }
-.app-shell .wallet-reward-nav:hover { background: #fff; color: #1f4934; }
+.app-shell .wallet-reward-nav:hover { background: #f5f8f4; color: #1f4934; transform: none; }
+.app-shell .wallet-reward-nav.is-left { left: clamp(26px, 3vw, 42px); }
+.app-shell .wallet-reward-nav.is-right { right: 0; }
+.app-shell .wallet-reward-dots { right: 96px; bottom: 15px; left: auto; }
 .app-shell .wallet-reward-dots button { background: rgba(49, 82, 63, .20); }
 .app-shell .wallet-reward-dots button.is-active { background: #527b60; }
 
 .app-shell .wallet-showcase {
-  border-color: rgba(44, 72, 57, .14);
-  background: rgba(255, 255, 255, .92);
-  box-shadow: 0 16px 34px rgba(35, 54, 43, .06), inset 0 1px 0 #fff;
+  border: 0 !important;
+  border-top: 1px solid rgba(44, 72, 57, .16) !important;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 38px 0 0 !important;
 }
 
-.app-shell .wallet-showcase::before {
-  background:
-    radial-gradient(circle at 12% 0%, rgba(221, 236, 220, .58), transparent 30%),
-    radial-gradient(circle at 94% 4%, rgba(236, 222, 181, .14), transparent 32%);
-}
+.app-shell .wallet-showcase::before { display: none; }
 
 .app-shell .wallet-showcase-head h2 { color: #1c3428; }
 .app-shell .wallet-showcase-head h2 svg { color: #487358 !important; }
 .app-shell .wallet-showcase-head p { color: #64746a; }
 .app-shell .gift-card-option {
-  border-color: rgba(44, 72, 57, .14);
-  background: #fff;
-  box-shadow: 0 10px 22px rgba(35, 54, 43, .055), inset 0 1px 0 #fff;
+  border: 0;
+  border-top: 1px solid rgba(44, 72, 57, .14);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
+.app-shell .gift-card-option:nth-last-child(-n + 2) { border-bottom: 1px solid rgba(44, 72, 57, .14); }
 .app-shell .gift-card-option:hover {
   border-color: rgba(47, 89, 65, .30);
-  box-shadow: 0 15px 28px rgba(35, 54, 43, .09), inset 0 1px 0 #fff;
+  box-shadow: none;
 }
+.app-shell .gift-card-summary { padding: 18px 0; }
 .app-shell .gift-card-summary-image {
   border-color: rgba(44, 72, 57, .12);
+  border-radius: 10px;
   background: #f6f9f4;
 }
 .app-shell .gift-card-summary-copy strong { color: #203529; }
 .app-shell .gift-card-summary-copy span { color: #6b7a70; }
 .app-shell .gift-card-summary-action { border-color: rgba(44, 72, 57, .16); color: #4e6657; }
+
+/* Non-panel routes use the same clean page surface; meaningful content states retain their own color. */
+.business-public-page,
+.join-choice-page,
+.business-access-page,
+.business-workspace,
+.business-account-page {
+  --business-paper: #fcfdfb;
+  background: #fcfdfb;
+}
+
+.business-hero,
+.business-access-page,
+.business-workspace,
+.business-account-page,
+.public-questionnaire-page,
+.public-questionnaire-state {
+  background: #fcfdfb !important;
+}
+
+.business-workspace-body > aside,
+.business-workspace-rail { background: #f7faf6 !important; }
+.business-access-panel,
+.business-contact-form,
+.business-empty,
+.business-project-list article,
+.business-start-card,
+.business-account-details,
+.business-account-settings,
+.public-questionnaire-page form { background: #fff !important; }
+
+.app-shell .gift-card-dropdown-list { gap: 0 32px; }
+
+@media (max-width: 700px) {
+  .app-shell .wallet-hero { grid-template-columns: 1fr; gap: 30px; padding-bottom: 34px; }
+  .app-shell .wallet-reward-slide { min-height: 205px; padding-left: 0; border-left: 0; border-top: 1px solid rgba(44, 72, 57, .16); padding-top: 26px; }
+  .app-shell .wallet-reward-nav.is-left { left: 0; }
+  .app-shell .wallet-reward-dots { right: 88px; }
+  .app-shell .gift-card-dropdown-list { gap: 0; }
+  .app-shell .gift-card-option:nth-last-child(-n + 2) { border-bottom: 0; }
+  .app-shell .gift-card-option:last-child { border-bottom: 1px solid rgba(44, 72, 57, .14); }
+}
 
 .gift-card-modal-backdrop { background: rgba(20, 40, 30, .36); }
 .gift-card-modal {

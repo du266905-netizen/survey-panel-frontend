@@ -1107,7 +1107,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-tone-transition.is-dark-to-paper:after { display: none; }
         .landing-tone-transition.is-paper-to-ink { height: 1px; background: rgba(34,31,23,.28); }
         .landing-tone-transition.is-paper-to-ink:after { display: none; }
-        .landing-human-manifesto { position: relative; overflow: hidden; background: #f3ede0; color: #171714; padding: clamp(40px, 4vw, 62px) 0 clamp(44px, 4.5vw, 66px); }
+        .landing-human-manifesto { position: relative; overflow: hidden; background: #fcfdfb; color: #171714; padding: clamp(40px, 4vw, 62px) 0 clamp(44px, 4.5vw, 66px); }
         .landing-human-manifesto:before { display: none; }
         .landing-human-manifesto .landing-container { width: min(100% - 72px, 1280px); }
         .landing-manifesto-inner { position: relative; z-index: 1; }
@@ -1149,7 +1149,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-manifesto-card p { color: #34342e; font-size: clamp(16px, 1.2vw, 18px); letter-spacing: -.018em; line-height: 1.52; }
         .landing-manifesto-principle { margin-top: 12px !important; background: #172c23; color: #f4efe2; font-family: var(--font-serif); font-size: clamp(23px, 2vw, 31px); font-weight: 700; letter-spacing: -.035em; line-height: 1.12; padding: clamp(24px, 3vw, 36px); }
         .landing-manifesto-principle span { color: #c7d0b1; font-family: var(--font-sans); margin-bottom: 14px; }
-        .landing-sections { background: #f3ede0; color: #171714; }
+        .landing-sections { background: #fcfdfb; color: #171714; }
         .landing-container { width: min(100% - 48px, 1200px); margin: 0 auto; }
         .landing-intro { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); gap: clamp(42px, 8vw, 112px); align-items: center; padding: 120px 0; }
         .landing-label { margin: 0; color: #aaa18a; font-size: 11px; font-weight: 900; letter-spacing: .17em; text-transform: uppercase; }
@@ -1186,7 +1186,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-quality-icon { display: grid; width: 39px; height: 39px; place-items: center; border: 1px solid rgba(255,255,255,.24); border-radius: 50%; color: rgba(231,241,239,.9); }
         .landing-quality-item h3 { margin: 0; font-size: 18px; }
         .landing-quality-item p { max-width: 455px; margin: 8px 0 0; color: rgba(255,255,255,.62); font-size: 14px; line-height: 1.7; }
-        .landing-global-section { position: relative; overflow: hidden; background: repeating-linear-gradient(0deg, transparent 0 7px, rgba(67,55,33,.016) 8px 9px), #f3ede0; color: #171714; }
+        .landing-global-section { position: relative; overflow: hidden; background: #fcfdfb; color: #171714; }
         .landing-global-section:before { position: absolute; inset: 0; border-top: 1px solid rgba(34,31,23,.24); border-bottom: 1px solid rgba(34,31,23,.18); content: ''; pointer-events: none; }
         .landing-global-section:after { position: absolute; top: 50%; left: 4%; width: min(31vw, 410px); height: 1px; background: rgba(34,31,23,.16); content: ''; pointer-events: none; }
         .landing-global { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(280px,.68fr) minmax(0,1.32fr); gap: clamp(44px, 6vw, 94px); min-height: 432px; align-items: center; padding: clamp(50px, 4.6vw, 66px) 0; }
@@ -1201,7 +1201,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-global-globe { position: relative; z-index: 1; display: block; width: min(72%, 276px); max-width: 276px; aspect-ratio: 1; filter: none; transform: translate(-1%, -1%); }
         .landing-global-globe-canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
         .landing-global-globe-canvas:active { cursor: grabbing; }
-        .landing-rewards-section { position: relative; overflow: hidden; background: radial-gradient(circle at 82% 10%, rgba(194,171,114,.16), transparent 26%), repeating-linear-gradient(0deg, transparent 0 7px, rgba(67,55,33,.016) 8px 9px), #f3ede0; color: #171714; }
+        .landing-rewards-section { position: relative; overflow: hidden; background: radial-gradient(circle at 82% 10%, rgba(194,171,114,.11), transparent 26%), #fcfdfb; color: #171714; }
         .landing-rewards-section:before { position: absolute; inset: 0; border-top: 1px solid rgba(34,31,23,.22); content: ''; pointer-events: none; }
         .landing-rewards-layout { position: relative; z-index: 1; padding: clamp(54px, 5vw, 76px) 0; }
         .landing-cart-line, .landing-cart-wheel-spoke, .landing-cart-breeze path, .landing-cart-ground { stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
@@ -1439,7 +1439,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         <section className="landing-global-section">
           <div className="landing-container landing-global" data-reveal>
             <div className="landing-global-visual" aria-hidden="true"><div className="landing-map-frame"><GlobalGlobe /></div></div>
-            <div className="landing-global-copy"><p className="landing-label">Global perspective</p><h2>Research begins with people, in every context.</h2><p>A global view reminds us that every response comes from a different life, place, and point of view. The platform keeps each participation journey clear and considered from the first step to reward.</p></div>
+            <div className="landing-global-copy"><p className="landing-label">{publicCopy.home.globalLabel}</p><h2>{publicCopy.home.globalTitle}</h2><p>{publicCopy.home.globalBody}</p></div>
           </div>
         </section>
 
@@ -1447,33 +1447,33 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
           <div className="landing-container landing-rewards-layout" data-reveal>
             <div className="landing-rewards-copy">
               <div className="landing-rewards-heading">
-                <p className="landing-label">Rewards &amp; panel</p>
-                <h2 id="landing-rewards-title">A little more to look forward to.</h2>
-                <p>Join the panel for surveys that value your time, special tasks, and clear reward opportunities.</p>
+                <p className="landing-label">{publicCopy.home.rewardsLabel}</p>
+                <h2 id="landing-rewards-title">{publicCopy.home.rewardsTitle}</h2>
+                <p>{publicCopy.home.rewardsBody}</p>
               </div>
               <div className="landing-reward-card-grid">
                 <article className="landing-reward-card is-gift">
                   <RewardGiftSketch />
                   <div>
-                    <span>For everyday moments</span>
-                    <h3>Gift cards</h3>
-                    <p>Complete eligible surveys, build your Coins balance, and choose from selected gift-card rewards.</p>
+                    <span>{publicCopy.home.rewardCards[0][0]}</span>
+                    <h3>{publicCopy.home.rewardCards[0][1]}</h3>
+                    <p>{publicCopy.home.rewardCards[0][2]}</p>
                   </div>
                 </article>
                 <article className="landing-reward-card is-token">
                   <RewardTokenSketch />
                   <div>
-                    <span>Where available</span>
-                    <h3>Tokens</h3>
-                    <p>In supported regions, selected token reward options can be part of your next redemption choice.</p>
+                    <span>{publicCopy.home.rewardCards[1][0]}</span>
+                    <h3>{publicCopy.home.rewardCards[1][1]}</h3>
+                    <p>{publicCopy.home.rewardCards[1][2]}</p>
                   </div>
                 </article>
                 <article className="landing-reward-card is-panel">
                   <RewardCartSketch />
                   <div>
-                    <span>Inside the panel</span>
-                    <h3>Special tasks</h3>
-                    <p>From time to time, eligible members can receive an additional task and another way to earn Coins.</p>
+                    <span>{publicCopy.home.rewardCards[2][0]}</span>
+                    <h3>{publicCopy.home.rewardCards[2][1]}</h3>
+                    <p>{publicCopy.home.rewardCards[2][2]}</p>
                   </div>
                 </article>
               </div>

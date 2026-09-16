@@ -16,7 +16,7 @@
   margin: 18px auto 0;
   border: 1px solid var(--atlas-rule);
   border-radius: 3px;
-  background: #f7f7f3;
+  background: #fcfdfb;
   color: var(--atlas-ink);
   font-family: var(--font-sans);
   box-shadow: 0 10px 22px rgba(22, 37, 29, .045);
@@ -82,7 +82,7 @@
   position: fixed;
   top: 18px;
   border-bottom-color: var(--atlas-rule);
-  background: rgba(247, 247, 243, .94);
+  background: rgba(252, 253, 251, .96);
   color: var(--atlas-ink);
   box-shadow: 0 12px 30px rgba(22, 37, 29, .09);
   backdrop-filter: blur(18px);
