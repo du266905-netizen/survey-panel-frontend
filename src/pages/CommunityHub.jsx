@@ -1,21 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Globe2, MapPin, SearchCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import communityCrossMarketOffice from '../assets/community/community-cross-market-office.jpg';
-import communityResearchIllustration from '../assets/community/community-research-illustration.jpg';
+import communityResearchCollage from '../assets/community/community-research-collage.png';
 
 const rotationDelay = 9000;
 
 const platformFeatures = [
   {
     id: 'cross-market-network',
-    number: '01',
-    label: 'Across markets',
     eyebrow: 'A cross-market insight network',
     title: 'Hear local voices. Make stronger decisions across markets.',
     description: 'GuanyiSearch connects participants, research initiators, and organisations around commercial, cultural, everyday, and public questions.',
-    icon: Globe2,
     image: communityCrossMarketOffice,
     action: { type: 'anchor', label: 'Book a demo', to: '#atlas-contact' },
     detail: {
@@ -27,21 +24,13 @@ const platformFeatures = [
   },
   {
     id: 'research-routes',
-    number: '02',
-    label: 'Research routes',
     eyebrow: 'From an open question to a market decision',
     title: 'Research that stays close to the market.',
-    description: 'Public cross-market topics can remain visible over time, while organisations can commission focused local research for a specific decision.',
-    icon: SearchCheck,
-    image: communityResearchIllustration,
+    description: 'Keep learning publicly. Decide precisely when it matters.',
+    supporting: 'Public cross-market topics can remain visible over time, while organisations can commission focused local research for a specific decision.',
+    image: communityResearchCollage,
     variant: 'research',
     action: { type: 'link', label: 'Start a study', to: '/business' },
-    detail: {
-      eyebrow: 'Two complementary routes',
-      title: 'Keep learning publicly. Decide precisely when it matters.',
-      description: 'Use ongoing public themes to understand context, then commission a considered study when a market decision needs a closer local read.',
-      points: ['Open cross-market topics', 'Commissioned market studies', 'Local research, shaped around the decision'],
-    },
   },
 ];
 
@@ -57,7 +46,6 @@ export default function CommunityHub() {
   const { language } = useLanguage();
   const [activeAreaIndex, setActiveAreaIndex] = useState(0);
   const selectedArea = platformFeatures[activeAreaIndex];
-  const SelectedIcon = selectedArea.icon;
 
   const selectArea = useCallback((index) => {
     setActiveAreaIndex((index + platformFeatures.length) % platformFeatures.length);
@@ -86,19 +74,27 @@ export default function CommunityHub() {
           <p>{selectedArea.eyebrow}</p>
           <h1 id="community-hub-title">{selectedArea.title}</h1>
           <span>{selectedArea.description}</span>
+          {selectedArea.supporting && <strong className="community-hub-supporting-copy">{selectedArea.supporting}</strong>}
           <FeatureAction action={selectedArea.action} language={language} />
         </header>
 
-        <aside className="community-hub-detail" aria-live="polite">
-          {selectedArea.variant === 'research' && <img className="community-hub-detail-image" src={selectedArea.image} alt="" decoding="async" />}
-          <div className="community-hub-detail-icon"><SelectedIcon size={19} strokeWidth={1.7} /></div>
-          <p>{selectedArea.number} · {selectedArea.detail.eyebrow}</p>
-          <h2>{selectedArea.detail.title}</h2>
-          <span>{selectedArea.detail.description}</span>
-          <ul>
-            {selectedArea.detail.points.map((point) => <li key={point}><MapPin size={13} strokeWidth={1.8} />{point}</li>)}
-          </ul>
-        </aside>
+        {selectedArea.variant === 'research' ? (
+          <div className="community-hub-research-visual" aria-hidden="true">
+            <div className="community-hub-research-photo-frame">
+              <img src={selectedArea.image} alt="" decoding="async" />
+            </div>
+            <img className="community-hub-research-participant" src={selectedArea.image} alt="" decoding="async" />
+          </div>
+        ) : (
+          <aside className="community-hub-detail" aria-live="polite">
+            <p>{selectedArea.detail.eyebrow}</p>
+            <h2>{selectedArea.detail.title}</h2>
+            <span>{selectedArea.detail.description}</span>
+            <ul>
+              {selectedArea.detail.points.map((point) => <li key={point}><MapPin size={13} strokeWidth={1.8} />{point}</li>)}
+            </ul>
+          </aside>
+        )}
 
         <div className="community-hub-controls" aria-label="Platform feature controls">
           <button type="button" onClick={goPrevious} aria-label="Show the previous platform feature">
@@ -109,27 +105,6 @@ export default function CommunityHub() {
           </button>
         </div>
 
-        <div className="community-hub-areas" role="tablist" aria-label="Platform features">
-          {platformFeatures.map((area, index) => {
-            const AreaIcon = area.icon;
-            const isSelected = index === activeAreaIndex;
-
-            return (
-              <button
-                key={area.id}
-                className={`community-hub-area ${isSelected ? 'is-selected' : ''}`}
-                type="button"
-                role="tab"
-                aria-selected={isSelected}
-                onClick={() => selectArea(index)}
-              >
-                <span>{area.number}</span>
-                <AreaIcon size={17} strokeWidth={1.7} />
-                <strong>{area.label}</strong>
-              </button>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
