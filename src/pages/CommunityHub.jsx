@@ -80,10 +80,7 @@ export default function CommunityHub() {
 
         {selectedArea.variant === 'research' ? (
           <div className="community-hub-research-visual" aria-hidden="true">
-            <div className="community-hub-research-photo-frame">
-              <img src={selectedArea.image} alt="" decoding="async" />
-            </div>
-            <img className="community-hub-research-participant" src={selectedArea.image} alt="" decoding="async" />
+            <img className="community-hub-research-image" src={selectedArea.image} alt="" decoding="async" />
           </div>
         ) : (
           <aside className="community-hub-detail" aria-live="polite">

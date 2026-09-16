@@ -3,6 +3,9 @@
   animation: page-motion-enter 420ms cubic-bezier(.2, .75, .25, 1) both;
 }
 
+/* A transformed ancestor captures fixed descendants. Keep the home shell untransformed so its navigation remains attached to the viewport. */
+.page-motion-shell--home { animation: none; }
+
 .page-motion-reveal {
   opacity: 0;
   transform: translateY(18px);

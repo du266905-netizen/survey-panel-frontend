@@ -45,5 +45,5 @@ export default function PageMotion({ children }) {
     return () => observer.disconnect();
   }, [pathname]);
 
-  return <div className="page-motion-shell" key={pathname} ref={shellRef}>{children}</div>;
+  return <div className={`page-motion-shell${pathname === '/' ? ' page-motion-shell--home' : ''}`} key={pathname} ref={shellRef}>{children}</div>;
 }
