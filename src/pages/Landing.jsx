@@ -964,8 +964,9 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
   return (
     <main className={`landing-page${authOnly ? ' landing-page--auth-only' : ''}`}>
       <style>{`
-        .landing-page { background: #191917; color: #eeeae2; min-width: 320px; font-family: var(--font-sans); }
-        .landing-page--auth-only { min-height: 100svh; }
+        html:has(.landing-page--auth-only), body:has(.landing-page--auth-only), #root:has(.landing-page--auth-only) { background: #102d20 !important; }
+        .landing-page { background: #102d20; color: #eeeae2; min-width: 320px; font-family: var(--font-sans); }
+        .landing-page--auth-only { min-height: 100svh; background: #102d20; }
         .landing-page--auth-only .landing-shell { height: calc(100svh - 78px); min-height: 650px; }
         .landing-site-nav { position: sticky; z-index: 50; top: 0; border-bottom: 1px solid rgba(31,31,27,.15); background: rgba(249,247,241,.94); color: #1f2822; backdrop-filter: blur(18px); }
         .landing-site-nav-inner { display: flex; width: min(100% - 64px, 1380px); min-height: 78px; align-items: center; gap: clamp(24px, 4vw, 64px); margin: 0 auto; }
@@ -1012,14 +1013,13 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-site-nav-mobile-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; padding-top: 21px; }
         .landing-site-nav-mobile-actions a { display: flex; min-height: 47px; align-items: center; justify-content: center; gap: 7px; border: 1px solid rgba(31,31,27,.2); color: #1c3025; font-size: 13px; font-weight: 850; text-decoration: none; }
         .landing-site-nav-mobile-actions a:last-child { border-color: #183b2c; background: #183b2c; color: #f8f5ed; }
-        .landing-shell { position: relative; isolation: isolate; height: min(900px, 100svh); min-height: 720px; overflow: hidden; background: #191917; }
+        .landing-shell { position: relative; isolation: isolate; height: min(900px, 100svh); min-height: 720px; overflow: hidden; background: #102d20; }
         .landing-shell:before { position: absolute; z-index: -1; inset: 0; background: repeating-linear-gradient(116deg, rgba(255,255,255,.012) 0 1px, transparent 1px 11px), linear-gradient(120deg, rgba(255,255,255,.012), transparent 42%); content: ''; opacity: .46; pointer-events: none; }
-        .landing-brand { position: relative; display: flex; width: 58%; height: 100%; min-height: 0; flex-direction: column; overflow: hidden; margin-left: 42%; background: #274a38; color: white; padding: 34px clamp(28px, 6vw, 88px) 48px; }
-        .landing-brand:before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(120deg, rgba(13,35,25,.82) 0%, rgba(20,55,39,.66) 53%, rgba(22,57,41,.38) 100%); content: ''; pointer-events: none; }
-        .landing-brand:after { position: absolute; z-index: 1; inset: 0; border: 1px solid rgba(255,255,255,.16); content: ''; pointer-events: none; }
-        .landing-brand-photo { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 49% 51%; filter: saturate(.78) contrast(.93) brightness(.94); }
+        .landing-brand { position: relative; display: flex; width: 58%; height: 100%; min-height: 0; flex-direction: column; overflow: hidden; margin-left: 42%; background: #d9ddd6; color: white; padding: 34px clamp(28px, 6vw, 88px) 48px; }
+        .landing-brand:before, .landing-brand:after { display: none; }
+        .landing-brand-photo { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 49% 51%; filter: none; }
         .landing-brand-header, .landing-brand-content { position: relative; z-index: 2; }
-        .landing-brand-header { display: flex; align-items: center; justify-content: space-between; }
+        .landing-brand-header { display: flex; align-items: center; justify-content: space-between; text-shadow: 0 1px 13px rgba(0,0,0,.72); }
         .landing-brand-header a { display: inline-flex; }
         .landing-brand-kicker { color: rgba(232,230,223,.58); font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
         .landing-plum-cycle { position: absolute; z-index: 1; top: 7%; right: -4px; width: min(57%, 590px); opacity: .93; pointer-events: none; }
@@ -1027,10 +1027,10 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-plum-canvas { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 720 / 560; }
         .landing-brand-header { animation: landing-enter-soft .8s cubic-bezier(.2,.8,.2,1) both; }
         .landing-brand-content { margin-top: auto; max-width: 590px; }
-        .landing-brand-content h1 { max-width: 620px; margin: 0; color: #f4f1e9; font-family: var(--font-serif); font-size: clamp(42px, 4.4vw, 70px); font-weight: 820; letter-spacing: -.045em; line-height: .98; }
-        .landing-brand-content > p { max-width: 525px; margin: 22px 0 0; color: rgba(233,231,225,.68); font-size: 16px; line-height: 1.75; }
+        .landing-brand-content h1 { max-width: 620px; margin: 0; color: #f4f1e9; font-family: var(--font-serif); font-size: clamp(42px, 4.4vw, 70px); font-weight: 820; letter-spacing: -.045em; line-height: .98; text-shadow: 0 2px 18px rgba(0,0,0,.72); }
+        .landing-brand-content > p { max-width: 525px; margin: 22px 0 0; color: rgba(244,241,233,.94); font-size: 16px; line-height: 1.75; text-shadow: 0 1px 12px rgba(0,0,0,.72); }
         .landing-brand-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; margin-top: 35px; }
-        .landing-brand-proof span { display: flex; min-height: 62px; align-items: center; gap: 8px; border-top: 1px solid rgba(239,237,230,.22); color: rgba(239,237,230,.76); font-size: 12px; font-weight: 700; line-height: 1.35; padding-top: 12px; }
+        .landing-brand-proof span { display: flex; min-height: 62px; align-items: center; gap: 8px; border-top: 1px solid rgba(255,255,255,.5); color: #fffdf7; font-size: 12px; font-weight: 700; line-height: 1.35; padding-top: 12px; text-shadow: 0 1px 10px rgba(0,0,0,.75); }
         .landing-brand-proof svg { flex: 0 0 auto; color: #c7c6c0; }
         .landing-brand-content h1, .landing-brand-content > p, .landing-brand-proof { opacity: 0; animation: landing-enter-soft .82s cubic-bezier(.2,.8,.2,1) both; }
         .landing-brand-content h1 { animation-delay: .12s; }

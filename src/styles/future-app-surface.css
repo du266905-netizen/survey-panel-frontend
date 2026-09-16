@@ -40,6 +40,18 @@
 .join-choice-page .join-choice-card--participant { background: var(--future-sage); }
 .join-choice-page .join-choice-card--business { background: #19392b; }
 
+/* Keep the two entry paths complete in a typical desktop opening view. */
+@media (min-width: 761px) {
+  .join-choice-page .join-choice-hero { padding-top: clamp(10px, 1.4vw, 20px); padding-bottom: clamp(34px, 4vw, 52px); }
+  .join-choice-page .join-choice-hero h1 { margin-top: 0; font-size: clamp(42px, 4vw, 58px); }
+  .join-choice-page .business-lede { margin-top: 14px; font-size: 15px; line-height: 1.55; }
+  .join-choice-page .join-choice-grid { margin-top: 22px; }
+  .join-choice-page .join-choice-card { min-height: 342px; padding: clamp(22px, 2.5vw, 31px); }
+  .join-choice-page .join-choice-card > p:first-of-type { margin-top: 17px; }
+  .join-choice-page .join-choice-card > p:not(:first-of-type) { margin-top: 12px; line-height: 1.5; }
+  .join-choice-page .join-choice-card ul { gap: 6px; margin: 16px 0; }
+}
+
 /* Reward wallet: compact functional modules instead of a page split by bare lines. */
 .app-shell .wallet-page { display: grid; gap: 26px; }
 .app-shell .wallet-hero {
