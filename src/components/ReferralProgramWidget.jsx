@@ -6,6 +6,7 @@ import referralCommunityImage from '../assets/referral-community.jpg';
 import { useNavigate } from 'react-router-dom';
 import { getReferralSummary } from '../api/realApi';
 import CoinAmount from './CoinAmount';
+import Logo from './Logo';
 
 function inviteUrl(referralCode) {
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://guanyi-media.com';
@@ -115,7 +116,7 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
           <section className="referral-modal" role="dialog" aria-modal="true" aria-labelledby="referral-modal-title">
             <header className="referral-modal-header">
               <div>
-                <span className="referral-modal-brand">GUANYISEARCH</span>
+                <Logo size="sm" className="referral-modal-brand" />
                 <span className="referral-modal-label">Invite program</span>
               </div>
               <button className="referral-modal-close" type="button" onClick={closeProgram} aria-label="Close invite program"><X size={20} /></button>

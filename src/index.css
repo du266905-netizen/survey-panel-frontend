@@ -1740,8 +1740,9 @@ textarea {
   border-bottom: 1px solid rgba(77, 81, 75, .16);
   padding: 0 34px;
 }
-.referral-modal-brand { color: #17221d; }
-.referral-modal-label { margin-left: 13px; color: #778078; }
+.referral-modal-header > div { display: flex; align-items: center; gap: 13px; min-width: 0; }
+.referral-modal-brand { width: 122px; height: auto; flex: 0 0 auto; }
+.referral-modal-label { margin-left: 0; color: #778078; }
 .referral-modal-close {
   display: grid;
   width: 40px;

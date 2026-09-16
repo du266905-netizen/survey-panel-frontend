@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, FilePenLine, LoaderCircle, Send, UserRound } from 'lucide-react';
 import { createSupportTicket, sendSupportMessage } from '../api/supportApi';
 import { useAuth } from './AuthContext';
+import Logo from './Logo';
 import './SupportChatWidget.css';
 
 const INITIAL_MESSAGE = {
@@ -149,7 +150,7 @@ export default function SupportChatWidget() {
             <div className="support-chat-title">
               <span className="support-chat-title-mark"><SupportChatGlyph size={37} decorative /></span>
               <div>
-                <span>GUANYISEARCH</span>
+                <Logo size="sm" className="support-chat-brand" />
                 <strong>How can we help?</strong>
               </div>
             </div>

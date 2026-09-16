@@ -119,7 +119,6 @@
 .referral-modal-backdrop { background: rgba(20, 38, 29, .48); backdrop-filter: blur(16px); }
 .referral-modal { width: min(100%, 1020px); border: 1px solid rgba(44, 78, 56, .16); border-radius: 30px; background: linear-gradient(135deg, #fffefb, #fbfdf9 62%, #f4f9f2); box-shadow: 0 35px 100px rgba(18, 34, 26, .35); }
 .referral-modal-header { min-height: 70px; border-bottom-color: var(--future-rule); padding: 0 34px; }
-.referral-modal-brand { color: #254333; }
 .referral-modal-label { color: #6e8374; }
 .referral-modal-close { border-color: rgba(44, 78, 56, .15); background: #fff; color: #52685a; }
 .referral-modal-close:hover { border-color: rgba(44, 78, 56, .3); background: #eff5ec; color: #244d37; }

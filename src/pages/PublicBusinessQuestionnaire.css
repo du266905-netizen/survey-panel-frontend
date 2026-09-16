@@ -49,7 +49,7 @@
   font-weight: 900;
   letter-spacing: -0.04em;
 }
-.public-questionnaire-page header img {
+.public-questionnaire-page header .public-questionnaire-mark {
   width: 36px;
   height: 28px;
   object-fit: contain;

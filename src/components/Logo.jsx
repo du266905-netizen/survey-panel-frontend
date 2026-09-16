@@ -1,19 +1,18 @@
 export default function Logo({ size = 'md', variant = 'dark', className = '' }) {
   const sizes = {
-    sm: { width: 146, height: 30 },
-    md: { width: 174, height: 36 },
-    lg: { width: 222, height: 46 },
+    sm: { width: 142, height: 22 },
+    md: { width: 178, height: 27 },
+    lg: { width: 226, height: 35 },
   };
   const s = sizes[size];
-  const src = variant === 'light' ? '/guanyisearch-logo-white.svg' : '/guanyisearch-logo.svg';
 
   return (
     <img
-      src={src}
+      src="/guanyisearch-wordmark.png"
       alt=""
       width={s.width}
       height={s.height}
-      className={`block h-auto select-none ${className}`}
+      className={`block h-auto select-none ${variant === 'light' ? 'brightness-0 invert' : ''} ${className}`}
       draggable="false"
       translate="no"
     />

@@ -3,6 +3,7 @@ import { Check, LoaderCircle } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { getPublicBusinessQuestionnaire, submitPublicBusinessQuestionnaire } from '../api/realApi';
 import TurnstileWidget from '../components/TurnstileWidget';
+import Logo from '../components/Logo';
 import './PublicBusinessQuestionnaire.css';
 
 function QuestionField({ question, value, onChange }) {
@@ -77,7 +78,7 @@ export default function PublicBusinessQuestionnaire() {
 
   return (
     <main className="public-questionnaire-page">
-      <header><img src="/guanyisearch-project-mark.png" alt="GuanyiSearch" /><span>GUANYISEARCH</span></header>
+      <header><img className="public-questionnaire-mark" src="/guanyisearch-project-mark.png" alt="" /><Logo size="sm" /></header>
       <form onSubmit={submit}>
         <p>QUESTIONNAIRE</p>
         <h1>{questionnaire.title}</h1>

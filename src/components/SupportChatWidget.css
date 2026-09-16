@@ -12,7 +12,7 @@
 .support-chat-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; border-bottom: 1px solid rgba(31,31,27,.14); padding: 14px 17px 13px; }
 .support-chat-title { display: flex; align-items: center; gap: 9px; }
 .support-chat-title-mark { display: grid; width: 44px; height: 38px; place-items: center; color: #1f1f1b; }
-.support-chat-title span:not(.support-chat-title-mark) { display: block; color: #567066; font-size: 9px; font-weight: 900; letter-spacing: .15em; }
+.support-chat-brand { width: 112px; height: auto; margin-bottom: 4px; }
 .support-chat-title strong { display: block; margin-top: 2px; color: #1f1f1b; font-family: var(--font-serif); font-size: 21px; font-weight: 720; letter-spacing: -.035em; }
 .support-chat-close { display: grid; width: 35px; height: 35px; place-items: center; border: 1px solid rgba(31,31,27,.15); border-radius: 50%; background: rgba(255,255,255,.16); color: #24463b; cursor: pointer; }
 .support-chat-close:hover { background: #e4dccd; }

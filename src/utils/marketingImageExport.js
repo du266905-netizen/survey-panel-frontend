@@ -121,11 +121,14 @@ function paperTexture(ctx, width, height) {
 }
 
 function drawBrand(ctx, x, y, { compact = false, inverted = false } = {}) {
-  setFont(ctx, compact ? 17 : 25, { weight: 800, family: SANS });
-  ctx.fillStyle = inverted ? PAPER : '#0F172A';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'top';
-  ctx.fillText('GUANYISEARCH', x, y);
+  const image = ctx.__guanyiWordmark;
+  if (!image) return;
+  const height = compact ? 15 : 22;
+  const width = height * (image.width / image.height);
+  ctx.save();
+  ctx.filter = inverted ? 'brightness(0) invert(1)' : 'none';
+  ctx.drawImage(image, x, y, width, height);
+  ctx.restore();
 }
 
 function loadImage(source) {
@@ -848,10 +851,14 @@ export async function renderMarketingAsset(canvas, {
   format = 'square',
 }) {
   const size = MARKETING_ASSET_SIZES[format] || MARKETING_ASSET_SIZES.square;
-  const artwork = templateKey === 'C' ? await loadImage(artworkSrc).catch(() => null) : null;
+  const [artwork, wordmark] = await Promise.all([
+    templateKey === 'C' ? loadImage(artworkSrc).catch(() => null) : null,
+    loadImage('/guanyisearch-wordmark.png').catch(() => null),
+  ]);
   const ctx = canvas.getContext('2d');
   canvas.width = size.width;
   canvas.height = size.height;
+  ctx.__guanyiWordmark = wordmark;
   paperTexture(ctx, size.width, size.height);
   const draw = {
     A: drawDailyBrief,
