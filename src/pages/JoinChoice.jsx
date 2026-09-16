@@ -15,6 +15,15 @@ const joinCopy = {
     organisationPoints: ['Custom questionnaires, interviews, and usability sessions', 'Research shaped around your decision and audience', 'One workspace for project planning and progress'], organisationAction: 'Run research with us',
     note: 'Participant information is never presented as a product.',
   },
+  'en-GB': {
+    title: 'Make your next insight count.',
+    lede: 'Share your perspective in studies that suit you, or bring us a question worth answering.',
+    participantLabel: 'FOR INDIVIDUALS', participantTitle: 'Join as a participant', participantBody: 'Discover real opportunities, decide what feels right for you, and earn clear rewards for your time.',
+    participantPoints: ['Browse suitable opportunities', 'See time, requirements, and reward first', 'Keep your information private'], participantAction: 'Join as a participant',
+    organisationLabel: 'FOR ORGANISATIONS & RESEARCHERS', organisationTitle: 'Run research with us', organisationBody: 'Start with a concise enquiry for a custom questionnaire or a tailored study, built around the decision your team needs to make.',
+    organisationPoints: ['Custom questionnaires, interviews, and usability sessions', 'Research shaped around your decision and audience', 'One workspace for project planning and progress'], organisationAction: 'Run research with us',
+    note: 'Participant information is never presented as a product.',
+  },
   'zh-CN': {
     title: '让下一次洞察更有意义。',
     lede: '参与适合你的研究，分享你的观点；也可以把值得回答的问题带给我们。',
