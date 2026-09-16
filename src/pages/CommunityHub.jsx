@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, FileText, MessageCircle, Newspaper, Users } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, FileText, MessageCircle, Newspaper } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import communityActivity from '../assets/community/community-activity.jpg';
 import communityLatestBrief from '../assets/community/community-latest-brief.jpg';
 import communityResearchReview from '../assets/community/community-research-review.jpg';
 import communityResearchTable from '../assets/community/community-research-table.jpg';
@@ -21,19 +20,8 @@ const communityAreas = [
     image: communityLatestBrief,
   },
   {
-    id: 'activities',
-    number: '02',
-    label: 'Join an activity',
-    title: 'Take a survey or join a session.',
-    description: 'Before you start, you will see the topic, estimated time, and reward.',
-    action: 'Explore research and activities',
-    to: '/research',
-    icon: Users,
-    image: communityActivity,
-  },
-  {
     id: 'discussion',
-    number: '03',
+    number: '02',
     label: 'Discussion',
     title: 'Share what you think.',
     description: 'Read a question, then leave a comment. There is no forced right-or-wrong answer.',
@@ -43,7 +31,7 @@ const communityAreas = [
   },
   {
     id: 'propose-topic',
-    number: '04',
+    number: '03',
     label: 'Propose a topic',
     title: 'Tell us what you want to understand.',
     description: 'Send us a local story, a problem you noticed, or a question you want people to answer.',
@@ -53,7 +41,7 @@ const communityAreas = [
   },
   {
     id: 'research-review',
-    number: '05',
+    number: '04',
     label: 'Research review',
     title: 'See what people said.',
     description: 'Read a short summary of completed community research and what happens next.',

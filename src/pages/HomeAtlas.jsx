@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { ArrowUpRight, LoaderCircle, Send } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { ArrowUpRight, LoaderCircle, Send, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import HomeLegacySections from '../components/HomeLegacySections';
@@ -44,58 +44,6 @@ function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onIna
     >
       {content}
     </Link>
-  );
-}
-
-function AtlasTypewriter({ prompts, begin }) {
-  const [promptIndex, setPromptIndex] = useState(0);
-  const [characterCount, setCharacterCount] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const activePrompt = prompts[promptIndex];
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
-    updatePreference();
-    mediaQuery.addEventListener('change', updatePreference);
-    return () => mediaQuery.removeEventListener('change', updatePreference);
-  }, []);
-
-  useEffect(() => {
-    if (prefersReducedMotion) return undefined;
-
-    let delay = 52;
-    let update;
-
-    if (!isDeleting && characterCount < activePrompt.length) {
-      update = () => setCharacterCount((currentCount) => currentCount + 1);
-    } else if (!isDeleting) {
-      delay = 1800;
-      update = () => setIsDeleting(true);
-    } else if (characterCount > 0) {
-      delay = 30;
-      update = () => setCharacterCount((currentCount) => currentCount - 1);
-    } else {
-      delay = 260;
-      update = () => {
-        setPromptIndex((currentIndex) => (currentIndex + 1) % prompts.length);
-        setIsDeleting(false);
-      };
-    }
-
-    const timeoutId = window.setTimeout(update, delay);
-    return () => window.clearTimeout(timeoutId);
-  }, [activePrompt.length, characterCount, isDeleting, prefersReducedMotion]);
-
-  const visiblePrompt = prefersReducedMotion ? activePrompt : activePrompt.slice(0, characterCount);
-
-  return (
-    <div className="atlas-map-typewriter" aria-label={`${begin} ${activePrompt}`}>
-      <span>{begin}</span>
-      <strong>{visiblePrompt}</strong>
-      <i aria-hidden="true" />
-    </div>
   );
 }
 
@@ -239,7 +187,13 @@ export default function HomeAtlas() {
             <path className="atlas-wire atlas-wire--community" d="M 603 340 C 521 457 421 533 255 570" />
             <path className="atlas-wire atlas-wire--business" d="M 605 338 C 714 257 818 180 1000 164" />
           </svg>
-          <AtlasTypewriter prompts={copy.prompts} begin={copy.begin} />
+          <Link className="atlas-activity-card" to={withLanguage('/partners', language)}>
+            <span className="atlas-activity-card-icon"><Users size={20} strokeWidth={1.7} /></span>
+            <span className="atlas-activity-card-kicker">02 · Join an activity</span>
+            <strong>Take a survey or join a session.</strong>
+            <span className="atlas-activity-card-copy">Before you start, you will see the topic, estimated time, and reward.</span>
+            <span className="atlas-activity-card-action">Explore activities <ArrowUpRight size={17} strokeWidth={1.9} /></span>
+          </Link>
 
           <AtlasNode
             name="news"

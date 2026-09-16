@@ -500,26 +500,31 @@
 }
 .home-atlas.is-news .atlas-wire--news, .home-atlas.is-survey .atlas-wire--survey, .home-atlas.is-community .atlas-wire--community, .home-atlas.is-business .atlas-wire--business { stroke: #c1893f; stroke-width: 2.45; }
 
-.atlas-map-typewriter {
+.atlas-activity-card {
   position: absolute;
-  z-index: 1;
-  top: 48%;
-  left: 51%;
-  display: inline-flex;
-  min-width: 470px;
-  align-items: baseline;
-  gap: 10px;
-  color: #748176;
-  font-family: var(--font-display);
-  font-size: clamp(27px, 2.25vw, 40px);
-  font-weight: 600;
-  letter-spacing: -.035em;
-  line-height: .98;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  width: min(100% - 96px, 336px);
+  min-height: 310px;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid rgba(42, 75, 57, .2);
+  background: rgba(255, 254, 250, .96);
+  box-shadow: 0 22px 52px rgba(30, 53, 39, .16);
+  color: var(--atlas-ink);
+  padding: 27px;
+  text-decoration: none;
   transform: translate(-50%, -50%);
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
 }
-.atlas-map-typewriter span { color: #77867b; white-space: nowrap; }
-.atlas-map-typewriter strong { min-width: 228px; color: #2a573e; font-weight: 600; white-space: nowrap; }
-.atlas-map-typewriter i { width: 1px; height: .9em; background: #af8440; animation: atlas-type-cursor .9s steps(1, end) infinite; }
+.atlas-activity-card:hover, .atlas-activity-card:focus-visible { outline: none; background: #fffefa; box-shadow: 0 28px 62px rgba(30, 53, 39, .23); transform: translate(-50%, calc(-50% - 5px)); }
+.atlas-activity-card-icon { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid rgba(43, 75, 56, .22); border-radius: 50%; background: #edf1e9; color: #2d5c42; }
+.atlas-activity-card-kicker { margin-top: 20px; color: #6f7f73; font-size: .64rem; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+.atlas-activity-card strong { max-width: 270px; margin-top: 12px; font-family: var(--font-serif); font-size: clamp(1.72rem, 2.15vw, 2.25rem); font-weight: 650; letter-spacing: -.055em; line-height: .96; }
+.atlas-activity-card-copy { max-width: 258px; margin-top: 14px; color: #657168; font-family: var(--font-sans); font-size: .83rem; font-weight: 600; line-height: 1.55; }
+.atlas-activity-card-action { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; color: #25573e; font-family: var(--font-sans); font-size: .76rem; font-weight: 800; }
 
 .atlas-node {
   position: absolute;
@@ -626,7 +631,8 @@
   .atlas-contact-panel h2 { font-size: clamp(2.75rem, 11vw, 4.5rem); }
   .atlas-map { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; min-height: 0; margin-top: 48px; }
   .atlas-map::before, .atlas-map::after, .atlas-wires, .atlas-orbit, .atlas-signal { display: none; }
-  .atlas-map-typewriter { position: relative; top: auto; left: auto; min-width: 0; max-width: 100%; flex-wrap: wrap; row-gap: 4px; grid-column: 1 / -1; justify-self: start; transform: none; }
+  .atlas-activity-card { position: relative; top: auto; left: auto; width: 100%; min-height: 0; grid-column: 1 / -1; transform: none; }
+  .atlas-activity-card:hover, .atlas-activity-card:focus-visible { transform: translateY(-3px); }
   .atlas-node, .atlas-node--news, .atlas-node--survey, .atlas-node--community, .atlas-node--business { position: relative; inset: auto; width: auto; max-width: none; animation: none; }
   .atlas-node:hover, .atlas-node:focus-visible { transform: translateY(-3px); }
   .atlas-node { grid-template-columns: 54px minmax(0, 1fr); gap: 10px; }
@@ -642,6 +648,7 @@
   .atlas-contact-field--phone, .atlas-contact-field--message, .atlas-contact-submit, .atlas-contact-status { grid-column: auto; }
   .atlas-phone-input { grid-template-columns: 1fr !important; max-width: none; }
   .atlas-map { grid-template-columns: 1fr; }
+  .atlas-activity-card { padding: 23px; }
   .atlas-node { grid-template-columns: 60px minmax(0, 1fr); }
   .atlas-node-image { width: 60px; height: 60px; }
   .video-hero { padding: 72px var(--atlas-frame-gutter) 0; }
