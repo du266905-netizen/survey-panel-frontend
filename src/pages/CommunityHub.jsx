@@ -1,76 +1,66 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, FileText, MessageCircle, Newspaper, Users } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import communityActivity from '../assets/community/community-activity.jpg';
-import communityLatestBrief from '../assets/community/community-latest-brief.jpg';
-import communityResearchReview from '../assets/community/community-research-review.jpg';
-import communityResearchTable from '../assets/community/community-research-table.jpg';
-import communitySubmissionDesk from '../assets/community/community-submission-desk.jpg';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Globe2, MapPin, SearchCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useLanguage, withLanguage } from '../components/LanguageContext';
+import communityCrossMarketOffice from '../assets/community/community-cross-market-office.jpg';
+import communityResearchIllustration from '../assets/community/community-research-illustration.jpg';
 
-const rotationDelay = 8000;
+const rotationDelay = 9000;
 
-const communityAreas = [
+const platformFeatures = [
   {
-    id: 'latest-brief',
+    id: 'cross-market-network',
     number: '01',
-    label: 'Latest brief',
-    title: 'See today’s updates.',
-    description: 'Read short updates about current news, new surveys, and new community discussions.',
-    action: 'Read updates',
-    icon: Newspaper,
-    image: communityLatestBrief,
+    label: 'Across markets',
+    eyebrow: 'A cross-market insight network',
+    title: 'Hear local voices. Make stronger decisions across markets.',
+    description: 'GuanyiSearch connects participants, research initiators, and organisations around commercial, cultural, everyday, and public questions.',
+    icon: Globe2,
+    image: communityCrossMarketOffice,
+    action: { type: 'anchor', label: 'Book a demo', to: '#atlas-contact' },
+    detail: {
+      eyebrow: 'Built for decisions in context',
+      title: 'Local feedback, connected with care.',
+      description: 'Listen to people closest to the market, then turn permitted, considered feedback into a clearer next move.',
+      points: ['Cross-market perspective', 'Local voices and lived context', 'A steadier basis for action'],
+    },
   },
   {
-    id: 'activities',
+    id: 'research-routes',
     number: '02',
-    label: 'Join an activity',
-    title: 'Take a survey or join a session.',
-    description: 'Before you start, you will see the topic, estimated time, and reward.',
-    action: 'Explore research and activities',
-    to: '/research',
-    icon: Users,
-    image: communityActivity,
-  },
-  {
-    id: 'discussion',
-    number: '03',
-    label: 'Discussion',
-    title: 'Share what you think.',
-    description: 'Read a question, then leave a comment. There is no forced right-or-wrong answer.',
-    action: 'Join a discussion',
-    icon: MessageCircle,
-    image: communityResearchTable,
-  },
-  {
-    id: 'propose-topic',
-    number: '04',
-    label: 'Propose a topic',
-    title: 'Tell us what you want to understand.',
-    description: 'Send us a local story, a problem you noticed, or a question you want people to answer.',
-    action: 'Suggest a topic',
-    icon: FileText,
-    image: communitySubmissionDesk,
-  },
-  {
-    id: 'research-review',
-    number: '05',
-    label: 'Research review',
-    title: 'See what people said.',
-    description: 'Read a short summary of completed community research and what happens next.',
-    action: 'View results',
-    icon: BookOpen,
-    image: communityResearchReview,
+    label: 'Research routes',
+    eyebrow: 'From an open question to a market decision',
+    title: 'Research that stays close to the market.',
+    description: 'Public cross-market topics can remain visible over time, while organisations can commission focused local research for a specific decision.',
+    icon: SearchCheck,
+    image: communityResearchIllustration,
+    variant: 'research',
+    action: { type: 'link', label: 'Start a study', to: '/business' },
+    detail: {
+      eyebrow: 'Two complementary routes',
+      title: 'Keep learning publicly. Decide precisely when it matters.',
+      description: 'Use ongoing public themes to understand context, then commission a considered study when a market decision needs a closer local read.',
+      points: ['Open cross-market topics', 'Commissioned market studies', 'Local research, shaped around the decision'],
+    },
   },
 ];
 
+function FeatureAction({ action, language }) {
+  if (action.type === 'anchor') {
+    return <a className="community-hub-primary-action" href={action.to}>{action.label}<ArrowUpRight size={19} strokeWidth={1.8} /></a>;
+  }
+
+  return <Link className="community-hub-primary-action" to={withLanguage(action.to, language)}>{action.label}<ArrowUpRight size={19} strokeWidth={1.8} /></Link>;
+}
+
 export default function CommunityHub() {
-  const navigate = useNavigate();
+  const { language } = useLanguage();
   const [activeAreaIndex, setActiveAreaIndex] = useState(0);
-  const selectedArea = communityAreas[activeAreaIndex];
+  const selectedArea = platformFeatures[activeAreaIndex];
   const SelectedIcon = selectedArea.icon;
 
   const selectArea = useCallback((index) => {
-    setActiveAreaIndex((index + communityAreas.length) % communityAreas.length);
+    setActiveAreaIndex((index + platformFeatures.length) % platformFeatures.length);
   }, []);
 
   const goPrevious = useCallback(() => selectArea(activeAreaIndex - 1), [activeAreaIndex, selectArea]);
@@ -83,53 +73,44 @@ export default function CommunityHub() {
 
   return (
     <section className="community-hub" aria-labelledby="community-hub-title">
-      <div className="community-hub-stage">
-        <div className="community-hub-stage-media" aria-hidden="true">
-          {communityAreas.map((area, index) => (
-            <img
-              key={area.id}
-              className={`community-hub-stage-image ${index === activeAreaIndex ? 'is-active' : ''}`}
-              src={area.image}
-              alt=""
-              loading="eager"
-              decoding="async"
-            />
-          ))}
-        </div>
+      <div className={`community-hub-stage${selectedArea.variant ? ` community-hub-stage--${selectedArea.variant}` : ''}`}>
+        {selectedArea.variant !== 'research' && (
+          <div className="community-hub-stage-media" aria-hidden="true">
+            <img className="community-hub-stage-image is-active" src={selectedArea.image} alt="" loading="eager" decoding="async" />
+          </div>
+        )}
         <div className="community-hub-stage-wash" aria-hidden="true" />
         <div className="community-hub-corners" aria-hidden="true" />
 
         <header className="community-hub-intro">
-          <p>Community</p>
-          <h1 id="community-hub-title">Listen closer.<br />Build better questions.</h1>
-          <span>Read updates, take part in activities, and share what matters to you.</span>
+          <p>{selectedArea.eyebrow}</p>
+          <h1 id="community-hub-title">{selectedArea.title}</h1>
+          <span>{selectedArea.description}</span>
+          <FeatureAction action={selectedArea.action} language={language} />
         </header>
 
-        <aside key={selectedArea.id} className="community-hub-detail" aria-live="polite">
+        <aside className="community-hub-detail" aria-live="polite">
+          {selectedArea.variant === 'research' && <img className="community-hub-detail-image" src={selectedArea.image} alt="" decoding="async" />}
           <div className="community-hub-detail-icon"><SelectedIcon size={19} strokeWidth={1.7} /></div>
-          <p>{selectedArea.number} · {selectedArea.label}</p>
-          <h2>{selectedArea.title}</h2>
-          <span>{selectedArea.description}</span>
-          {selectedArea.to ? (
-            <button className="community-hub-detail-arrow action-injection" type="button" onClick={() => navigate(selectedArea.to)} aria-label={selectedArea.action} title={selectedArea.action}>
-              <ArrowRight size={19} strokeWidth={2} />
-            </button>
-          ) : (
-            <div className="community-hub-detail-status">Coming later</div>
-          )}
+          <p>{selectedArea.number} · {selectedArea.detail.eyebrow}</p>
+          <h2>{selectedArea.detail.title}</h2>
+          <span>{selectedArea.detail.description}</span>
+          <ul>
+            {selectedArea.detail.points.map((point) => <li key={point}><MapPin size={13} strokeWidth={1.8} />{point}</li>)}
+          </ul>
         </aside>
 
-        <div className="community-hub-controls" aria-label="Community guide controls">
-          <button type="button" onClick={goPrevious} aria-label="Show the previous community area">
+        <div className="community-hub-controls" aria-label="Platform feature controls">
+          <button type="button" onClick={goPrevious} aria-label="Show the previous platform feature">
             <ArrowLeft size={17} strokeWidth={1.8} />
           </button>
-          <button type="button" onClick={goNext} aria-label="Show the next community area">
+          <button type="button" onClick={goNext} aria-label="Show the next platform feature">
             <ArrowRight size={17} strokeWidth={1.8} />
           </button>
         </div>
 
-        <div className="community-hub-areas" role="tablist" aria-label="Community areas">
-          {communityAreas.map((area, index) => {
+        <div className="community-hub-areas" role="tablist" aria-label="Platform features">
+          {platformFeatures.map((area, index) => {
             const AreaIcon = area.icon;
             const isSelected = index === activeAreaIndex;
 

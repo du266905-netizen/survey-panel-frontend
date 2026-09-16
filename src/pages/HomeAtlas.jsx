@@ -190,7 +190,7 @@ export default function HomeAtlas() {
 
       <CommunityHub />
 
-      <section className="atlas-stage" aria-labelledby="atlas-contact-title">
+      <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">
           <p className="atlas-contact-kicker">{copy.contactKicker}</p>
           <h2 id="atlas-contact-title">{copy.contactTitle}</h2>
