@@ -192,6 +192,7 @@ export default function Wallet() {
         <div className="wallet-hero-copy">
           <p className="wallet-hero-kicker">Reward wallet</p>
           <h1>Choose the reward you want next.</h1>
+          <p className="wallet-hero-intro">Browse available rewards, keep track of your Coins, and redeem whenever you reach a target.</p>
           <div className="wallet-hero-actions">
             <span>1,000 Coins = $1 USD</span>
             <span>Minimum redemption: $10</span>
