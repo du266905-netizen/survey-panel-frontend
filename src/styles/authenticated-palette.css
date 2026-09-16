@@ -57,3 +57,137 @@
 .app-shell .app-main-dashboard .field, .app-shell .app-main-dashboard .recharts-default-tooltip { background: #fffefd !important; }
 .dashboard-chart-empty { background: #f3f6f1 !important; }
 .wallet-hero { background: radial-gradient(circle at 10% 0%, rgba(104, 137, 111, .12), transparent 33%), #fbfbf8 !important; }
+
+/* Keep authenticated workspaces as light and quiet as the public home surface. */
+.app-shell {
+  background:
+    radial-gradient(ellipse 42% 30% at 8% 0%, rgba(104, 137, 111, .05), transparent 72%),
+    radial-gradient(ellipse 36% 28% at 92% 10%, rgba(61, 84, 70, .028), transparent 74%),
+    #fcfdfb !important;
+}
+
+.app-shell-grain { opacity: .08; }
+.app-topbar { background: rgba(255, 255, 253, .94); }
+.app-sidebar { background: rgba(247, 250, 246, .94); }
+.app-main:not(.app-main-dashboard) { background: #fcfdfb; }
+.app-main-dashboard { background: #f8fbf7 !important; }
+.dashboard-board { background: #fff !important; }
+
+.app-shell .wallet-page::before {
+  inset: -12px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 7% 0%, rgba(123, 158, 130, .10), transparent 27%),
+    radial-gradient(circle at 94% 8%, rgba(234, 222, 185, .10), transparent 30%),
+    #f8fbf7;
+}
+
+.app-shell .wallet-hero {
+  border-color: rgba(44, 72, 57, .16);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(128, 163, 133, .12), transparent 32%),
+    #fff !important;
+  box-shadow: 0 18px 42px rgba(35, 54, 43, .07), inset 0 1px 0 #fff;
+}
+
+.app-shell .wallet-hero-kicker { color: #527260; }
+.app-shell .wallet-hero h1 { color: #182b21; }
+.app-shell .wallet-hero-actions span {
+  border-color: rgba(49, 82, 63, .16);
+  background: #f7faf6;
+  color: #52655a;
+}
+
+.app-shell .wallet-reward-stage::before {
+  background:
+    radial-gradient(circle at 48% 44%, rgba(108, 147, 114, .16), transparent 54%),
+    radial-gradient(circle at 74% 58%, rgba(220, 196, 134, .11), transparent 58%);
+}
+
+.app-shell .wallet-reward-slide,
+.app-shell .wallet-reward-slide.is-crypto {
+  border-color: rgba(44, 72, 57, .16);
+  background:
+    radial-gradient(circle at 82% 8%, rgba(225, 237, 224, .82), transparent 30%),
+    linear-gradient(145deg, #f5f9f4, #e9f0e8);
+  box-shadow: 0 18px 36px rgba(35, 54, 43, .08), inset 0 1px 0 rgba(255, 255, 255, .9);
+}
+
+.app-shell .wallet-reward-slide::before,
+.app-shell .wallet-reward-orbit {
+  border-color: rgba(47, 80, 61, .14);
+  background: rgba(255, 255, 255, .34);
+}
+
+.app-shell .wallet-reward-card-face {
+  border-color: rgba(47, 80, 61, .15);
+  background: rgba(255, 255, 255, .72);
+  box-shadow: inset 0 1px 0 #fff, 0 14px 28px rgba(35, 54, 43, .07);
+}
+
+.app-shell .wallet-reward-card-face::before { background: rgba(137, 170, 125, .16); }
+.app-shell .wallet-reward-card-face span { color: #1b3528; }
+.app-shell .wallet-reward-slide p { color: #53665a; }
+.app-shell .wallet-reward-nav {
+  border-color: rgba(47, 80, 61, .18);
+  background: rgba(255, 255, 255, .86);
+  color: #315b43;
+  box-shadow: 0 8px 18px rgba(35, 54, 43, .09);
+}
+.app-shell .wallet-reward-nav:hover { background: #fff; color: #1f4934; }
+.app-shell .wallet-reward-dots button { background: rgba(49, 82, 63, .20); }
+.app-shell .wallet-reward-dots button.is-active { background: #527b60; }
+
+.app-shell .wallet-showcase {
+  border-color: rgba(44, 72, 57, .14);
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 16px 34px rgba(35, 54, 43, .06), inset 0 1px 0 #fff;
+}
+
+.app-shell .wallet-showcase::before {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(221, 236, 220, .58), transparent 30%),
+    radial-gradient(circle at 94% 4%, rgba(236, 222, 181, .14), transparent 32%);
+}
+
+.app-shell .wallet-showcase-head h2 { color: #1c3428; }
+.app-shell .wallet-showcase-head h2 svg { color: #487358 !important; }
+.app-shell .wallet-showcase-head p { color: #64746a; }
+.app-shell .gift-card-option {
+  border-color: rgba(44, 72, 57, .14);
+  background: #fff;
+  box-shadow: 0 10px 22px rgba(35, 54, 43, .055), inset 0 1px 0 #fff;
+}
+.app-shell .gift-card-option:hover {
+  border-color: rgba(47, 89, 65, .30);
+  box-shadow: 0 15px 28px rgba(35, 54, 43, .09), inset 0 1px 0 #fff;
+}
+.app-shell .gift-card-summary-image {
+  border-color: rgba(44, 72, 57, .12);
+  background: #f6f9f4;
+}
+.app-shell .gift-card-summary-copy strong { color: #203529; }
+.app-shell .gift-card-summary-copy span { color: #6b7a70; }
+.app-shell .gift-card-summary-action { border-color: rgba(44, 72, 57, .16); color: #4e6657; }
+
+.gift-card-modal-backdrop { background: rgba(20, 40, 30, .36); }
+.gift-card-modal {
+  border-color: rgba(44, 72, 57, .16);
+  background: #fff;
+  box-shadow: 0 32px 80px rgba(20, 40, 30, .24), inset 0 1px 0 #fff;
+  scrollbar-color: rgba(49, 82, 63, .30) transparent;
+}
+.gift-card-modal-head p { color: #66806e; }
+.gift-card-modal-head h2 { color: #1d3529; }
+.gift-card-modal-head span { color: #68786e; }
+.gift-card-modal-head button {
+  border-color: rgba(44, 72, 57, .16);
+  background: #f8fbf7;
+  color: #486252;
+}
+.gift-card-modal-head button:hover { border-color: rgba(44, 72, 57, .30); background: #fff; color: #244d37; }
+.gift-card-image-shell {
+  border-color: rgba(44, 72, 57, .12);
+  background: #f5f8f3;
+  box-shadow: inset 0 1px 12px rgba(35, 54, 43, .06);
+}

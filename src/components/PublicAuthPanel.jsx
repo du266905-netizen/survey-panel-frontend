@@ -55,6 +55,10 @@ function loadGoogleScript() {
   googleScriptPromise = new Promise((resolve, reject) => {
     const existing = document.querySelector(`script[src="${GOOGLE_SCRIPT_SRC}"]`);
     if (existing) {
+      if (window.google?.accounts?.id) {
+        resolve();
+        return;
+      }
       existing.addEventListener('load', resolve, { once: true });
       existing.addEventListener('error', () => reject(new Error('Google sign-in failed to load')), { once: true });
       return;
@@ -73,7 +77,12 @@ function loadGoogleScript() {
 
 function GoogleButton({ mode, onCredential, onError, language, label }) {
   const containerRef = useRef(null);
+  const handlersRef = useRef({ onCredential, onError });
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  useEffect(() => {
+    handlersRef.current = { onCredential, onError };
+  }, [onCredential, onError]);
 
   useEffect(() => {
     if (!clientId || !containerRef.current) return undefined;
@@ -81,34 +90,37 @@ function GoogleButton({ mode, onCredential, onError, language, label }) {
     loadGoogleScript()
       .then(() => {
         if (!active || !containerRef.current || !window.google?.accounts?.id) return;
+        const container = containerRef.current;
+        container.replaceChildren();
         window.google.accounts.id.initialize({
           client_id: clientId,
           callback: (response) => {
             if (!response.credential) {
-              onError('Google did not return a sign-in credential. Please try again.');
+              handlersRef.current.onError('Google did not return a sign-in credential. Please try again.');
               return;
             }
-            onCredential(response.credential);
+            handlersRef.current.onCredential(response.credential);
           },
           auto_select: false,
           cancel_on_tap_outside: true,
         });
-        window.google.accounts.id.renderButton(containerRef.current, {
+        window.google.accounts.id.renderButton(container, {
           type: 'standard',
           theme: 'filled_black',
           size: 'large',
           text: mode === 'login' ? 'signin_with' : 'signup_with',
           shape: 'pill',
-          width: Math.min(containerRef.current.clientWidth || 360, 380),
+          width: Math.min(container.clientWidth || 360, 380),
           logo_alignment: 'left',
           locale: language === 'zh-CN' ? 'zh_CN' : language === 'zh-Hant' ? 'zh_TW' : language.split('-')[0],
         });
       })
-      .catch(() => onError('Google sign-in could not be loaded. Please use email instead.'));
+      .catch(() => handlersRef.current.onError('Google sign-in could not be loaded. Please use email instead.'));
     return () => {
       active = false;
+      containerRef.current?.replaceChildren();
     };
-  }, [clientId, mode, onCredential, onError]);
+  }, [clientId, mode, language]);
 
   if (!clientId) {
     return (
@@ -119,7 +131,7 @@ function GoogleButton({ mode, onCredential, onError, language, label }) {
     );
   }
 
-  return <div ref={containerRef} className="min-h-11" />;
+  return <div ref={containerRef} className="notranslate min-h-11" translate="no" data-translate="no" />;
 }
 
 export default function PublicAuthPanel({ mode = 'register', onModeChange, accountType = 'PARTICIPANT' }) {

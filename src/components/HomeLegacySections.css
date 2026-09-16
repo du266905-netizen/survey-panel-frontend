@@ -1,7 +1,7 @@
 .home-continuation { --continuation-paper: var(--atlas-paper, #f7f5ef); --continuation-ink: var(--atlas-ink, #17251f); --continuation-muted: #59675f; --continuation-rule: rgba(36, 56, 46, .16); background: transparent; color: var(--continuation-ink); }
 .home-continuation-container { width: min(100% - 96px, 1280px); margin: 0 auto; }
 .home-section-label { margin: 0; color: #5a695d; font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
-.home-manifesto { position: relative; padding: clamp(40px, 4vw, 62px) 0 clamp(44px, 4.5vw, 66px); background: radial-gradient(circle at 82% 15%, rgba(170, 184, 156, .18), transparent 24%), repeating-linear-gradient(0deg, transparent 0 7px, rgba(40, 67, 54, .018) 8px 9px), var(--continuation-paper); }
+.home-manifesto { position: relative; padding: clamp(40px, 4vw, 62px) 0 clamp(44px, 4.5vw, 66px); background: radial-gradient(circle at 82% 15%, rgba(170, 184, 156, .13), transparent 24%), var(--continuation-paper); }
 .home-manifesto-masthead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, .31fr); gap: clamp(24px, 4vw, 68px); align-items: end; border-top: 1px solid var(--continuation-rule); padding-top: clamp(20px, 2vw, 28px); }
 .home-manifesto h1, .home-global-copy h2, .home-rewards-heading h2 { margin: 12px 0 0; font-family: var(--font-display); font-optical-sizing: auto; font-weight: 600; letter-spacing: -.055em; line-height: .93; }
 .home-manifesto h1 { max-width: 900px; color: #12241d; font-size: clamp(56px, 6vw, 92px); }
@@ -28,8 +28,8 @@
 .home-manifesto-lede { max-width: 670px; margin: 0; color: #25352d; font-family: var(--font-sans); font-size: clamp(17px, 1.3vw, 19px); font-weight: 680; letter-spacing: -.012em; line-height: 1.56; }
 .home-manifesto-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
 .home-manifesto-card { display: flex; min-height: clamp(180px, 14vw, 205px); flex-direction: column; gap: 17px; border: 1px solid var(--continuation-rule); padding: clamp(20px, 2vw, 28px); }
-.home-manifesto-card--voices { background: #e8e5d9; }
-.home-manifesto-card--technology { background: #dde7dc; }
+.home-manifesto-card--voices { background: #fff; }
+.home-manifesto-card--technology { background: #f8fbf7; }
 .home-manifesto-card-grid span { display: block; color: #435348; font-family: var(--font-accent); font-size: clamp(17px, 1.35vw, 21px); font-weight: 500; letter-spacing: .01em; line-height: 1.06; }
 .home-manifesto-card-grid p { margin: 0; color: #34463b; font-size: clamp(16px, 1.2vw, 18px); letter-spacing: -.018em; line-height: 1.52; }
 .home-manifesto-principle { max-width: 700px; margin: 12px 0 0; background: #1b3a2c; color: #f4efe2; font-family: var(--font-serif); font-size: clamp(23px, 2vw, 31px); font-weight: 700; letter-spacing: -.035em; line-height: 1.12; padding: clamp(24px, 3vw, 36px); }
@@ -53,9 +53,9 @@
 .home-reward-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
 .home-reward-card { display: flex; min-height: 386px; flex-direction: column; justify-content: space-between; overflow: hidden; border: 1px solid rgba(34, 31, 23, .18); padding: clamp(22px, 2vw, 28px); transition: transform .24s ease, box-shadow .24s ease; }
 .home-reward-card:hover { box-shadow: 0 20px 38px rgba(36, 39, 33, .1); transform: translateY(-4px); }
-.home-reward-gift { background: #e3dacb; }
-.home-reward-token { background: #d8dfd1; }
-.home-reward-panel { background: #e7dfd1; }
+.home-reward-gift { background: #fff; }
+.home-reward-token { background: #f5f9f4; }
+.home-reward-panel { background: #f8faf7; }
 .home-reward-card span { color: #665f51; font-family: var(--font-accent); font-size: 19px; }
 .home-reward-card h3 { margin: 8px 0 0; color: #1c211d; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(31px, 3vw, 42px); font-weight: 600; letter-spacing: -.05em; line-height: 1; }
 .home-reward-card p { margin: 14px 0 0; color: #413f38; font-size: 15px; line-height: 1.65; }

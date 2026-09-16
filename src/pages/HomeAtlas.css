@@ -3,16 +3,14 @@
   --atlas-quiet-ink: #64746b;
   --atlas-forest: #285647;
   --atlas-sage: #aebfa9;
-  --atlas-paper: #f7f7f3;
-  --atlas-paper-deep: #ecefe9;
+  --atlas-paper: #fcfdfb;
+  --atlas-paper-deep: #f4f7f2;
   --atlas-rule: rgba(36, 56, 46, 0.16);
   --atlas-frame-gutter: 28px;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  background:
-    repeating-linear-gradient(0deg, rgba(40, 67, 54, .022) 0 1px, transparent 1px 8px),
-    var(--atlas-paper);
+  background: var(--atlas-paper);
   color: var(--atlas-ink);
   font-family: var(--font-reading);
 }
@@ -108,7 +106,7 @@
   min-height: 74px;
   padding: 0 5.5vw;
   border-bottom: 1px solid var(--atlas-rule);
-  background: #f7f7f3;
+  background: var(--atlas-paper);
   backdrop-filter: blur(18px);
 }
 

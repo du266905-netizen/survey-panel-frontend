@@ -12,8 +12,8 @@ import { useLanguage, withLanguage } from './LanguageContext';
 
 const navItems = [
   { to: '/dashboard', labelKey: 'dashboard', icon: BarChart3 },
-  { to: '/partners#surveys', labelKey: 'surveys', icon: Users, hash: '#surveys' },
   { to: '/research', labelKey: 'research', icon: Compass },
+  { to: '/partners#surveys', labelKey: 'surveys', icon: Users, hash: '#surveys' },
   { to: '/news', labelKey: 'news', icon: Newspaper },
   { to: '/community', labelKey: 'community', icon: MessageCircleMore },
   { to: '/wallet', labelKey: 'wallet', icon: WalletCards },

@@ -93,7 +93,7 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
 
   return (
     <>
-      {launcherVisible && (
+      {launcherVisible && typeof document !== 'undefined' && createPortal(
         <aside className="referral-launcher" aria-label="Invite program">
           <div className="referral-launcher-copy">
             <span>Invite program</span>
@@ -106,7 +106,8 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
           <button className="referral-launcher-dismiss" type="button" onClick={() => setLauncherVisible(false)} aria-label="Dismiss invite prompt">
             <X size={15} />
           </button>
-        </aside>
+        </aside>,
+        document.body
       )}
 
       {open && typeof document !== 'undefined' && createPortal(
