@@ -967,7 +967,8 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         html:has(.landing-page--auth-only), body:has(.landing-page--auth-only), #root:has(.landing-page--auth-only) { background: #102d20 !important; }
         .landing-page { background: #102d20; color: #eeeae2; min-width: 320px; font-family: var(--font-sans); }
         .landing-page--auth-only { min-height: 100svh; background: #102d20; }
-        .landing-page--auth-only .landing-shell { height: calc(100svh - 78px); min-height: 650px; }
+        .landing-page--auth-only > .public-site-header { top: 0; margin-top: 0; }
+        .landing-page--auth-only .landing-shell { height: calc(100svh - 66px); min-height: 650px; }
         .landing-site-nav { position: sticky; z-index: 50; top: 0; border-bottom: 1px solid rgba(31,31,27,.15); background: rgba(249,247,241,.94); color: #1f2822; backdrop-filter: blur(18px); }
         .landing-site-nav-inner { display: flex; width: min(100% - 64px, 1380px); min-height: 78px; align-items: center; gap: clamp(24px, 4vw, 64px); margin: 0 auto; }
         .landing-site-nav-brand { display: inline-flex; flex: 0 0 auto; align-items: center; text-decoration: none; }
