@@ -9,6 +9,16 @@ const rotationDelay = 9000;
 
 const platformFeatures = [
   {
+    id: 'research-routes',
+    eyebrow: 'From an open question to a market decision',
+    title: 'Research that stays close to the market.',
+    description: 'Keep learning publicly. Decide precisely when it matters.',
+    supporting: 'Public cross-market topics can remain visible over time, while organisations can commission focused local research for a specific decision.',
+    image: communityResearchCollage,
+    variant: 'research',
+    action: { type: 'link', label: 'Start a study', to: '/business' },
+  },
+  {
     id: 'cross-market-network',
     eyebrow: 'A cross-market insight network',
     title: 'Hear local voices. Make stronger decisions across markets.',
@@ -21,16 +31,6 @@ const platformFeatures = [
       description: 'Listen to people closest to the market, then turn permitted, considered feedback into a clearer next move.',
       points: ['Cross-market perspective', 'Local voices and lived context', 'A steadier basis for action'],
     },
-  },
-  {
-    id: 'research-routes',
-    eyebrow: 'From an open question to a market decision',
-    title: 'Research that stays close to the market.',
-    description: 'Keep learning publicly. Decide precisely when it matters.',
-    supporting: 'Public cross-market topics can remain visible over time, while organisations can commission focused local research for a specific decision.',
-    image: communityResearchCollage,
-    variant: 'research',
-    action: { type: 'link', label: 'Start a study', to: '/business' },
   },
 ];
 
