@@ -83,6 +83,12 @@ const projectTypes = {
   },
 };
 
+const incentiveBudgetLabels = {
+  CONFIRMED: 'Incentive budget confirmed',
+  NEED_GUIDANCE: 'Incentive guidance requested',
+  NOT_APPLICABLE: 'No participant incentive planned',
+};
+
 const typeForProject = (project) => (
   project.studyFormat === 'SURVEY' ? projectTypes.questionnaire : projectTypes.research
 );
@@ -410,6 +416,11 @@ export default function BusinessWorkspace() {
               {isQuestionnaire ? 'Project name' : 'Research project name'}
               <input name="title" value={form.title} onChange={update} placeholder={isQuestionnaire ? 'For example, New product feedback' : 'For example, Member onboarding study'} required />
             </label>
+            <section className="business-brief-section">
+              <p>01 · DECISION AND PEOPLE</p>
+              <h3>Start with the decision you need to make.</h3>
+              <span>These core details help us understand what useful research needs to answer.</span>
+            </section>
             <label>
               What decision should this support?
               <textarea name="researchGoal" value={form.researchGoal} onChange={update} placeholder="Describe the decision, context, and what a useful answer would help you do." required />
@@ -420,9 +431,27 @@ export default function BusinessWorkspace() {
             </label>
 
             <div className="business-form-grid">
+              <label>
+                Where should this research be grounded?
+                <input name="countries" value={form.countries} onChange={update} placeholder="For example, Saudi Arabia and the UAE" />
+                <small>Country, market, city, or community. Optional.</small>
+              </label>
+              <label>
+                Relevant language(s)
+                <input name="languages" value={form.languages} onChange={update} placeholder="For example, Arabic and English" />
+                <small>Optional, including any language or local-expression needs.</small>
+              </label>
+            </div>
+
+            <section className="business-brief-section">
+              <p>02 · METHOD AND PRACTICAL SCOPE</p>
+              <h3>Set the shape of the work.</h3>
+              <span>These are planning details, not a commitment to a final scope, price, or launch date.</span>
+            </section>
+            <div className="business-form-grid">
               {isQuestionnaire ? (
                 <label>
-                  Estimated completion time
+                  Estimated completion time (minutes)
                   <input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder="Optional" />
                 </label>
               ) : (
@@ -443,22 +472,35 @@ export default function BusinessWorkspace() {
                 </>
               )}
               <label>
+                Target number of participants
+                <input name="targetParticipants" type="number" min="1" value={form.targetParticipants} onChange={update} placeholder="Optional" />
+                <small>An initial estimate is enough. We can discuss feasibility after submission.</small>
+              </label>
+              <label>
                 Desired timeline
                 <input name="timeline" value={form.timeline} onChange={update} placeholder="For example, next month" />
+              </label>
+              <label>
+                Participant incentive status
+                <select name="incentiveBudget" value={form.incentiveBudget} onChange={update}>
+                  <option value="NEED_GUIDANCE">I need guidance on participant incentives</option>
+                  <option value="CONFIRMED">An incentive budget is confirmed</option>
+                  <option value="NOT_APPLICABLE">No participant incentive is planned</option>
+                </select>
               </label>
             </div>
 
             <section className="business-brief-callout">
               <div>
                 <p>WHAT HAPPENS NEXT</p>
-                <strong>Save this brief first. Submit it when you are ready for a proposal.</strong>
-                <span>We will use the information you provide to prepare the appropriate next step for this project.</span>
+                <strong>Saving keeps the brief private in your workspace. Submitting asks for a proposal.</strong>
+                <span>Saving does not launch a study, recruit participants, or commit you to a scope.</span>
               </div>
               <Sparkles size={20} />
             </section>
 
             <label>
-              Materials or useful context
+              Supporting material or context
               <textarea name="additionalContext" value={form.additionalContext} onChange={update} placeholder={isQuestionnaire ? 'Question drafts, existing surveys, or constraints. Optional.' : 'Discussion guide, prototype, constraints, or other context. Optional.'} />
             </label>
             <button className="business-button" type="submit" disabled={submitting}>
@@ -468,7 +510,7 @@ export default function BusinessWorkspace() {
           </form>
         </div>
       )}
-      {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label="Close"><X size={18} /></button><p className="business-eyebrow">RESEARCH BRIEF</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>Who we need to hear from</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>Format</dt><dd>{briefProject.studyFormat.replaceAll('_', ' ').toLowerCase()}</dd></div>{briefProject.timeline && <div><dt>Preferred timing</dt><dd>{briefProject.timeline}</dd></div>}{briefProject.countries && <div><dt>Regions</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>Languages</dt><dd>{briefProject.languages}</dd></div>}</dl>{briefProject.additionalContext && <section><strong>Additional context</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>Close</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>Edit brief <Pencil size={15} /></button>}</div></section></div>}
+      {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label="Close"><X size={18} /></button><p className="business-eyebrow">RESEARCH BRIEF</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>Who we need to hear from</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>Format</dt><dd>{briefProject.studyFormat.replaceAll('_', ' ').toLowerCase()}</dd></div>{briefProject.countries && <div><dt>Market or community</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>Languages</dt><dd>{briefProject.languages}</dd></div>}{briefProject.targetParticipants && <div><dt>Target participants</dt><dd>{briefProject.targetParticipants}</dd></div>}{briefProject.estimatedMinutes && <div><dt>{briefProject.studyFormat === 'SURVEY' ? 'Estimated completion time' : 'Estimated session time'}</dt><dd>{briefProject.estimatedMinutes} minutes</dd></div>}{briefProject.timeline && <div><dt>Preferred timing</dt><dd>{briefProject.timeline}</dd></div>}<div><dt>Participant incentives</dt><dd>{incentiveBudgetLabels[briefProject.incentiveBudget] || incentiveBudgetLabels.NEED_GUIDANCE}</dd></div></dl>{briefProject.additionalContext && <section><strong>Additional context</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>Close</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>Edit brief <Pencil size={15} /></button>}</div></section></div>}
       {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label="Close"><X size={18} /></button><p className="business-eyebrow">PROJECT QUOTE</p><h2 id="business-quote-title">Review your proposal.</h2><p className="business-form-intro">Accepting confirms that your organization agrees to this scope. Recruitment starts only after funding is confirmed.</p><dl><div><dt>Project</dt><dd>{quoteProject.title}</dd></div><div><dt>Quote</dt><dd>{new Intl.NumberFormat('en-US', { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>Valid until</dt><dd>{new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>Scope included</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>Terms</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">Why does this not work for your team? <textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder="Optional feedback for a revised proposal." /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>Keep reviewing</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : 'Decline quote'}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>Decline</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : 'Accept quote'} <Check size={16} /></button></>}</div></section></div>}
       {!loading && workspace.profile && !workspace.profile.researchOnboardedAt && <div className="business-project-modal business-onboarding" role="dialog" aria-modal="true" aria-labelledby="business-onboarding-title"><section><p className="business-eyebrow">RESEARCH WORKSPACE</p><span className="business-onboarding-step">{onboardingStep + 1} / 2</span><h2 id="business-onboarding-title">{onboardingStep === 0 ? 'How will you use GuanyiSearch?' : 'What would you like to understand?'}</h2><p>{onboardingStep === 0 ? 'This helps us start your workspace with the right research path. It does not change what you can request.' : 'Choose the closest starting point. You can still request a tailored questionnaire or a managed study.'}</p>{onboardingStep === 0 ? <div className="business-onboarding-options"><button type="button" className={onboarding.researchRole === 'INDEPENDENT' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'INDEPENDENT' }))}><UserRound size={22} /><strong>Individual</strong><small>I am exploring a question in my own capacity, for study, learning, or an independent project.</small></button><button type="button" className={onboarding.researchRole === 'ORGANIZATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'ORGANIZATION' }))}><UsersRound size={22} /><strong>Organisation</strong><small>I am planning research for a business, team, university, public body, or non-profit.</small></button></div> : <div className="business-onboarding-options"><button type="button" className={onboarding.researchIntent === 'INDEPENDENT_RESEARCH' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'INDEPENDENT_RESEARCH' }))}><ClipboardList size={22} /><strong>Explore a research question</strong><small>I want a considered way to learn from people in a place or community.</small></button><button type="button" className={onboarding.researchIntent === 'MARKET_EXPLORATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_EXPLORATION' }))}><Sparkles size={22} /><strong>Understand a local market</strong><small>I want to learn how people, context, or local expression differ in a region.</small></button><button type="button" className={onboarding.researchIntent === 'MARKET_DECISION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_DECISION' }))}><BarChart3 size={22} /><strong>Prepare a market decision</strong><small>I need evidence for a product, brand, channel, or market-entry decision.</small></button></div>}<footer>{onboardingStep === 1 && <button type="button" onClick={() => setOnboardingStep(0)}>Back</button>}<button className="business-button" type="button" disabled={onboardingStep === 0 ? !onboarding.researchRole : !onboarding.researchIntent || onboardingSaving} onClick={() => onboardingStep === 0 ? setOnboardingStep(1) : saveOnboarding()}>{onboardingSaving ? <LoaderCircle className="animate-spin" size={17} /> : onboardingStep === 0 ? 'Continue' : 'Enter workspace'} {!onboardingSaving && <ArrowRight size={17} />}</button></footer></section></div>}
     </main>
