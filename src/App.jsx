@@ -50,6 +50,7 @@ import BusinessAccess from './pages/BusinessAccess';
 import BusinessWorkspace from './pages/BusinessWorkspace';
 import BusinessAccount from './pages/BusinessAccount';
 import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
+import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
 
@@ -146,6 +147,7 @@ export default function App() {
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
+        <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessQuestionnaireResults /></BusinessRoute>} />
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireBuilder /></BusinessRoute>} />
         <Route path="/business/s/:publicId" element={<PublicBusinessQuestionnaire />} />

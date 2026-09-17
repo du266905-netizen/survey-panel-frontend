@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowRight,
+  BarChart3,
   Check,
   ClipboardList,
   FileText,
@@ -17,9 +18,10 @@ import {
   X,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
+import { completeBusinessResearchOnboarding, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
+import { useLanguage, withLanguage } from '../components/LanguageContext';
 import researchSupportCampus from '../assets/business/research-support-campus.jpg';
 import './Business.css';
 
@@ -87,6 +89,7 @@ const typeForProject = (project) => (
 
 export default function BusinessWorkspace() {
   const { user, logout } = useAuth();
+  const { language } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const [workspace, setWorkspace] = useState({ profile: null, projects: [] });
@@ -106,6 +109,9 @@ export default function BusinessWorkspace() {
   const [editingProject, setEditingProject] = useState(null);
   const [briefProject, setBriefProject] = useState(null);
   const [projectMenuId, setProjectMenuId] = useState('');
+  const [onboardingStep, setOnboardingStep] = useState(0);
+  const [onboarding, setOnboarding] = useState({ researchRole: '', researchIntent: '' });
+  const [onboardingSaving, setOnboardingSaving] = useState(false);
 
   const selectedType = projectTypes[projectType];
   const isQuestionnaire = projectType === 'questionnaire';
@@ -147,6 +153,19 @@ export default function BusinessWorkspace() {
     setEditingProject(null);
     setForm(emptyProject);
     setOpenChooser(true);
+  };
+
+  const saveOnboarding = async () => {
+    if (!onboarding.researchRole || !onboarding.researchIntent || onboardingSaving) return;
+    setOnboardingSaving(true);
+    try {
+      const response = await completeBusinessResearchOnboarding(onboarding);
+      setWorkspace((current) => ({ ...current, profile: response.data.profile }));
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'We could not save your research preferences. Please try again.');
+    } finally {
+      setOnboardingSaving(false);
+    }
   };
 
   const openEditProject = (project) => {
@@ -312,7 +331,7 @@ export default function BusinessWorkspace() {
                         <div><dt>Updated</dt><dd>{new Date(project.updatedAt).toLocaleDateString()}</dd></div>
                       </dl>
                       <div className="business-project-actions">
-                        {project.questionnaire && <Link className="business-project-open" to={`/business/projects/${project.id}`}>Open questionnaire draft <ArrowRight size={15} /></Link>}
+                        {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>Open questionnaire draft <ArrowRight size={15} /></Link><Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> View results</Link></>}
                         {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? 'Submitting…' : 'Submit for review'} <ArrowRight size={15} /></button>}
                         {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>Review quote <ArrowRight size={15} /></button>}
                       </div>
@@ -451,6 +470,7 @@ export default function BusinessWorkspace() {
       )}
       {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label="Close"><X size={18} /></button><p className="business-eyebrow">RESEARCH BRIEF</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>Who we need to hear from</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>Format</dt><dd>{briefProject.studyFormat.replaceAll('_', ' ').toLowerCase()}</dd></div>{briefProject.timeline && <div><dt>Preferred timing</dt><dd>{briefProject.timeline}</dd></div>}{briefProject.countries && <div><dt>Regions</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>Languages</dt><dd>{briefProject.languages}</dd></div>}</dl>{briefProject.additionalContext && <section><strong>Additional context</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>Close</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>Edit brief <Pencil size={15} /></button>}</div></section></div>}
       {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label="Close"><X size={18} /></button><p className="business-eyebrow">PROJECT QUOTE</p><h2 id="business-quote-title">Review your proposal.</h2><p className="business-form-intro">Accepting confirms that your organization agrees to this scope. Recruitment starts only after funding is confirmed.</p><dl><div><dt>Project</dt><dd>{quoteProject.title}</dd></div><div><dt>Quote</dt><dd>{new Intl.NumberFormat('en-US', { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>Valid until</dt><dd>{new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>Scope included</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>Terms</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">Why does this not work for your team? <textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder="Optional feedback for a revised proposal." /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>Keep reviewing</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : 'Decline quote'}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>Decline</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : 'Accept quote'} <Check size={16} /></button></>}</div></section></div>}
+      {!loading && workspace.profile && !workspace.profile.researchOnboardedAt && <div className="business-project-modal business-onboarding" role="dialog" aria-modal="true" aria-labelledby="business-onboarding-title"><section><p className="business-eyebrow">RESEARCH WORKSPACE</p><span className="business-onboarding-step">{onboardingStep + 1} / 2</span><h2 id="business-onboarding-title">{onboardingStep === 0 ? 'How will you use GuanyiSearch?' : 'What would you like to understand?'}</h2><p>{onboardingStep === 0 ? 'This helps us start your workspace with the right research path. It does not change what you can request.' : 'Choose the closest starting point. You can still request a tailored questionnaire or a managed study.'}</p>{onboardingStep === 0 ? <div className="business-onboarding-options"><button type="button" className={onboarding.researchRole === 'INDEPENDENT' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'INDEPENDENT' }))}><UserRound size={22} /><strong>Individual</strong><small>I am exploring a question in my own capacity, for study, learning, or an independent project.</small></button><button type="button" className={onboarding.researchRole === 'ORGANIZATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'ORGANIZATION' }))}><UsersRound size={22} /><strong>Organisation</strong><small>I am planning research for a business, team, university, public body, or non-profit.</small></button></div> : <div className="business-onboarding-options"><button type="button" className={onboarding.researchIntent === 'INDEPENDENT_RESEARCH' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'INDEPENDENT_RESEARCH' }))}><ClipboardList size={22} /><strong>Explore a research question</strong><small>I want a considered way to learn from people in a place or community.</small></button><button type="button" className={onboarding.researchIntent === 'MARKET_EXPLORATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_EXPLORATION' }))}><Sparkles size={22} /><strong>Understand a local market</strong><small>I want to learn how people, context, or local expression differ in a region.</small></button><button type="button" className={onboarding.researchIntent === 'MARKET_DECISION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_DECISION' }))}><BarChart3 size={22} /><strong>Prepare a market decision</strong><small>I need evidence for a product, brand, channel, or market-entry decision.</small></button></div>}<footer>{onboardingStep === 1 && <button type="button" onClick={() => setOnboardingStep(0)}>Back</button>}<button className="business-button" type="button" disabled={onboardingStep === 0 ? !onboarding.researchRole : !onboarding.researchIntent || onboardingSaving} onClick={() => onboardingStep === 0 ? setOnboardingStep(1) : saveOnboarding()}>{onboardingSaving ? <LoaderCircle className="animate-spin" size={17} /> : onboardingStep === 0 ? 'Continue' : 'Enter workspace'} {!onboardingSaving && <ArrowRight size={17} />}</button></footer></section></div>}
     </main>
   );
 }

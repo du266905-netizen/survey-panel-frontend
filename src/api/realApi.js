@@ -184,6 +184,11 @@ export const getBusinessWorkspace = async () => {
   return { data: response.data };
 };
 
+export const completeBusinessResearchOnboarding = async (payload) => {
+  const response = await apiClient.put('/api/business/workspace/research-onboarding', payload);
+  return { data: response.data };
+};
+
 export const createBusinessProject = async (payload) => {
   const response = await apiClient.post('/api/business/projects', payload);
   return { data: response.data };
