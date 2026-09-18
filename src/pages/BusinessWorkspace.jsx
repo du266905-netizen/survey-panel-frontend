@@ -127,6 +127,7 @@ export default function BusinessWorkspace() {
   const { user, logout } = useAuth();
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.workspace.business;
+  const briefCopy = copy.brief;
   const navigate = useNavigate();
   const location = useLocation();
   const [workspace, setWorkspace] = useState({ profile: null, projects: [] });
@@ -152,6 +153,7 @@ export default function BusinessWorkspace() {
   const [onboardingComplete, setOnboardingComplete] = useState(false);
 
   const selectedType = projectTypes[projectType];
+  const selectedTypeCopy = briefCopy[projectType];
   const isQuestionnaire = projectType === 'questionnaire';
   const visibleProjects = activeFilter === 'ALL'
     ? workspace.projects
@@ -459,20 +461,21 @@ export default function BusinessWorkspace() {
       {openChooser && (
         <div className="business-project-modal business-project-modal--chooser" role="dialog" aria-modal="true" aria-labelledby="business-project-chooser-title">
           <section>
-            <button className="business-modal-close" type="button" onClick={() => setOpenChooser(false)} aria-label="Close"><X size={18} /></button>
-            <p className="business-eyebrow">NEW PROJECT</p>
-            <h2 id="business-project-chooser-title">What would you like us to prepare?</h2>
-            <p className="business-form-intro">Choose the service that best matches the decision your team needs to make.</p>
+            <button className="business-modal-close" type="button" onClick={() => setOpenChooser(false)} aria-label={briefCopy.close}><X size={18} /></button>
+            <p className="business-eyebrow">{briefCopy.chooserKicker}</p>
+            <h2 id="business-project-chooser-title">{briefCopy.chooserTitle}</h2>
+            <p className="business-form-intro">{briefCopy.chooserIntro}</p>
             <div className="business-chooser-grid">
               {Object.entries(projectTypes).map(([typeKey, type]) => {
                 const Icon = type.icon;
+                const typeCopy = briefCopy[typeKey];
                 return (
                   <button type="button" key={typeKey} onClick={() => chooseProjectType(typeKey)}>
                     <Icon size={22} />
-                    <span>{type.eyebrow}</span>
-                    <strong>{type.title}</strong>
-                    <small>{type.description}</small>
-                    <em>{type.button} <ArrowRight size={15} /></em>
+                    <span>{typeCopy.eyebrow}</span>
+                    <strong>{typeCopy.title}</strong>
+                    <small>{typeCopy.description}</small>
+                    <em>{typeCopy.action} <ArrowRight size={15} /></em>
                   </button>
                 );
               })}
@@ -484,108 +487,101 @@ export default function BusinessWorkspace() {
       {openForm && (
         <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-project-title">
           <form onSubmit={submit}>
-            <button className="business-modal-close" type="button" onClick={() => setOpenForm(false)} aria-label="Close"><X size={18} /></button>
-            <p className="business-eyebrow">{editingProject ? 'EDIT RESEARCH BRIEF' : selectedType.eyebrow}</p>
-            <h2 id="business-project-title">{editingProject ? 'Update this research brief.' : isQuestionnaire ? 'Request a questionnaire design.' : 'Request managed research support.'}</h2>
+            <button className="business-modal-close" type="button" onClick={() => setOpenForm(false)} aria-label={briefCopy.close}><X size={18} /></button>
+            <p className="business-eyebrow">{editingProject ? briefCopy.editKicker : selectedTypeCopy.eyebrow}</p>
+            <h2 id="business-project-title">{editingProject ? briefCopy.editTitle : selectedTypeCopy.modalTitle}</h2>
             <p className="business-form-intro">
-              {isQuestionnaire
-                ? 'Tell us what you need to understand and who matters to the decision. We will prepare a questionnaire that fits the project.'
-                : 'Tell us what needs to be learned, from whom, and by when. We will prepare the research route and proposal.'}
+              {selectedTypeCopy.intro}
             </p>
 
             <label>
-              {isQuestionnaire ? 'Project name' : 'Research project name'}
-              <input name="title" value={form.title} onChange={update} placeholder={isQuestionnaire ? 'For example, New product feedback' : 'For example, Member onboarding study'} required />
+              {selectedTypeCopy.projectLabel}
+              <input name="title" value={form.title} onChange={update} placeholder={selectedTypeCopy.projectPlaceholder} required />
             </label>
             <section className="business-brief-section">
-              <p>01 · DECISION AND PEOPLE</p>
-              <h3>Start with the decision you need to make.</h3>
-              <span>These core details help us understand what useful research needs to answer.</span>
+              <p>{briefCopy.decisionKicker}</p>
+              <h3>{briefCopy.decisionTitle}</h3>
+              <span>{briefCopy.decisionIntro}</span>
             </section>
             <label>
-              What decision should this support?
-              <textarea name="researchGoal" value={form.researchGoal} onChange={update} placeholder="Describe the decision, context, and what a useful answer would help you do." required />
+              {briefCopy.decisionLabel}
+              <textarea name="researchGoal" value={form.researchGoal} onChange={update} placeholder={briefCopy.decisionPlaceholder} required />
             </label>
             <label>
-              Who do you need to hear from?
-              <textarea name="audienceDescription" value={form.audienceDescription} onChange={update} placeholder="Describe the people, context, or experience that matters." required />
+              {briefCopy.audienceLabel}
+              <textarea name="audienceDescription" value={form.audienceDescription} onChange={update} placeholder={briefCopy.audiencePlaceholder} required />
             </label>
 
             <div className="business-form-grid">
               <label>
-                Where should this research be grounded?
-                <input name="countries" value={form.countries} onChange={update} placeholder="For example, Saudi Arabia and the UAE" />
-                <small>Country, market, city, or community. Optional.</small>
+                {briefCopy.marketLabel}
+                <input name="countries" value={form.countries} onChange={update} placeholder={briefCopy.marketPlaceholder} />
+                <small>{briefCopy.marketHelp}</small>
               </label>
               <label>
-                Relevant language(s)
-                <input name="languages" value={form.languages} onChange={update} placeholder="For example, Arabic and English" />
-                <small>Optional, including any language or local-expression needs.</small>
+                {briefCopy.languagesLabel}
+                <input name="languages" value={form.languages} onChange={update} placeholder={briefCopy.languagesPlaceholder} />
+                <small>{briefCopy.languagesHelp}</small>
               </label>
             </div>
 
             <section className="business-brief-section">
-              <p>02 · METHOD AND PRACTICAL SCOPE</p>
-              <h3>Set the shape of the work.</h3>
-              <span>These are planning details, not a commitment to a final scope, price, or launch date.</span>
+              <p>{briefCopy.scopeKicker}</p>
+              <h3>{briefCopy.scopeTitle}</h3>
+              <span>{briefCopy.scopeIntro}</span>
             </section>
             <div className="business-form-grid">
               {isQuestionnaire ? (
                 <label>
-                  Estimated completion time (minutes)
-                  <input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder="Optional" />
+                  {selectedTypeCopy.timeLabel}
+                  <input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
                 </label>
               ) : (
                 <>
                   <label>
-                    Research method
+                    {briefCopy.methodLabel}
                     <select name="studyFormat" value={form.studyFormat} onChange={update}>
-                      <option value="INTERVIEW">Interview</option>
-                      <option value="USABILITY_TEST">Usability test</option>
-                      <option value="GROUP_DISCUSSION">Group discussion</option>
-                      <option value="OTHER">Other</option>
+                      {briefCopy.methods.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                     </select>
                   </label>
                   <label>
-                    Estimated session minutes
-                    <input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder="Optional" />
+                    {selectedTypeCopy.timeLabel}
+                    <input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
                   </label>
                 </>
               )}
               <label>
-                Target number of participants
-                <input name="targetParticipants" type="number" min="1" value={form.targetParticipants} onChange={update} placeholder="Optional" />
-                <small>An initial estimate is enough. We can discuss feasibility after submission.</small>
+                {briefCopy.participantsLabel}
+                <input name="targetParticipants" type="number" min="1" value={form.targetParticipants} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
+                <small>{briefCopy.participantsHelp}</small>
               </label>
               <label>
-                Desired timeline
-                <input name="timeline" value={form.timeline} onChange={update} placeholder="For example, next month" />
+                {briefCopy.timelineLabel}
+                <input name="timeline" value={form.timeline} onChange={update} placeholder={briefCopy.timelinePlaceholder} />
               </label>
               <label>
-                Participant incentive status
+                {briefCopy.incentiveLabel}
                 <select name="incentiveBudget" value={form.incentiveBudget} onChange={update}>
-                  <option value="NEED_GUIDANCE">I need guidance on participant incentives</option>
-                  <option value="CONFIRMED">An incentive budget is confirmed</option>
-                  <option value="NOT_APPLICABLE">No participant incentive is planned</option>
+                  {briefCopy.incentives.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                 </select>
               </label>
             </div>
 
             <section className="business-brief-callout">
               <div>
-                <p>WHAT HAPPENS NEXT</p>
-                <strong>Saving keeps the brief private in your workspace. Submitting asks for a proposal.</strong>
-                <span>Saving does not launch a study, recruit participants, or commit you to a scope.</span>
+                <p>{briefCopy.nextKicker}</p>
+                <strong>{briefCopy.nextTitle}</strong>
+                <span>{briefCopy.nextBody}</span>
               </div>
               <Sparkles size={20} />
             </section>
 
             <label>
-              Supporting material or context
-              <textarea name="additionalContext" value={form.additionalContext} onChange={update} placeholder={isQuestionnaire ? 'Question drafts, existing surveys, or constraints. Optional.' : 'Discussion guide, prototype, constraints, or other context. Optional.'} />
+              {briefCopy.contextLabel}
+              <textarea name="additionalContext" value={form.additionalContext} onChange={update} placeholder={selectedTypeCopy.contextPlaceholder} />
             </label>
             <button className="business-button" type="submit" disabled={submitting}>
-              {submitting ? <LoaderCircle className="animate-spin" size={17} /> : editingProject ? 'Save changes' : 'Save research brief'}
+              {submitting ? <LoaderCircle className="animate-spin" size={17} /> : editingProject ? briefCopy.saveChanges : briefCopy.save}
               {!submitting && <ArrowRight size={17} />}
             </button>
           </form>
