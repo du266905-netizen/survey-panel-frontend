@@ -40,7 +40,7 @@ export default function BusinessQuestionnaireResults() {
         setData(nextData);
         setActiveQuestionId(nextData.questions?.[0]?.id || '');
       })
-      .catch((caughtError) => { if (active) setError(caughtError.response?.data?.message || copy.loadError); })
+      .catch(() => { if (active) setError(copy.loadError); })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [projectId, copy.loadError]);

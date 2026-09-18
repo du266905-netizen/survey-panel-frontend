@@ -41,18 +41,6 @@ const emptyProject = {
   additionalContext: '',
 };
 
-const statusLabel = {
-  DRAFT: 'Draft',
-  SUBMITTED_FOR_REVIEW: 'Submitted for review',
-  QUOTE_REQUIRED: 'Quote requested',
-  QUOTE_SENT: 'Quote ready',
-  CLIENT_ACCEPTED: 'Awaiting payment',
-  FUNDED: 'Funded',
-  RECRUITING: 'Recruiting',
-  LIVE: 'Live',
-  COMPLETED: 'Completed',
-};
-
 const projectFilters = [
   ['ALL', 'All'],
   ['DRAFT', 'Draft'],
@@ -85,12 +73,6 @@ const projectTypes = {
   },
 };
 
-const incentiveBudgetLabels = {
-  CONFIRMED: 'Incentive budget confirmed',
-  NEED_GUIDANCE: 'Incentive guidance requested',
-  NOT_APPLICABLE: 'No participant incentive planned',
-};
-
 const organizationTypeOptions = [
   { value: 'BUSINESS', title: 'Business or commercial organisation', description: 'I am planning research for a company, brand, agency, retailer, or commercial team.', icon: Building2 },
   { value: 'RESEARCH_OR_EDUCATION', title: 'Research or education institution', description: 'I am working with a university, school, research centre, or academic project.', icon: GraduationCap },
@@ -119,15 +101,13 @@ function storeOnboarding(user, value) {
   window.localStorage.setItem(key, JSON.stringify({ ...value, savedAt: new Date().toISOString() }));
 }
 
-const typeForProject = (project) => (
-  project.studyFormat === 'SURVEY' ? projectTypes.questionnaire : projectTypes.research
-);
-
 export default function BusinessWorkspace() {
   const { user, logout } = useAuth();
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.workspace.business;
   const briefCopy = copy.brief;
+  const projectsCopy = copy.projects;
+  const feedbackCopy = copy.feedback;
   const navigate = useNavigate();
   const location = useLocation();
   const [workspace, setWorkspace] = useState({ profile: null, projects: [] });
@@ -152,8 +132,10 @@ export default function BusinessWorkspace() {
   const [onboardingSaving, setOnboardingSaving] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
 
-  const selectedType = projectTypes[projectType];
   const selectedTypeCopy = briefCopy[projectType];
+  const studyFormatLabel = (format) => format === 'SURVEY'
+    ? copy.services.questionnaireTitle
+    : briefCopy.methods.find(([value]) => value === format)?.[1] || String(format || '').replaceAll('_', ' ').toLowerCase();
   const isQuestionnaire = projectType === 'questionnaire';
   const visibleProjects = activeFilter === 'ALL'
     ? workspace.projects
@@ -181,13 +163,13 @@ export default function BusinessWorkspace() {
         if (matchingProject) setQuoteProject(matchingProject);
       })
       .catch(() => {
-        if (active) setMessage('We could not load your projects. Please refresh and try again.');
+        if (active) setMessage(feedbackCopy.loadProjects);
       })
       .finally(() => {
         if (active) setLoading(false);
       });
     return () => { active = false; };
-  }, [location.search, user]);
+  }, [feedbackCopy.loadProjects, location.search, user]);
 
   const update = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -219,9 +201,9 @@ export default function BusinessWorkspace() {
       if (!status || status >= 500 || [404, 405, 501].includes(status)) {
         storeOnboarding(user, onboarding);
         setOnboardingComplete(true);
-        setMessage('Your research preferences are saved on this device for now. You can start using the workspace.');
+        setMessage(feedbackCopy.preferencesSaved);
       } else {
-        setMessage(error.response?.data?.message || 'We could not save your research preferences. Please try again.');
+        setMessage(feedbackCopy.savePreferencesError);
       }
     } finally {
       setOnboardingSaving(false);
@@ -276,23 +258,23 @@ export default function BusinessWorkspace() {
       setForm(emptyProject);
       setOpenForm(false);
       setEditingProject(null);
-      setMessage(editingProject ? 'Your research brief has been updated.' : isQuestionnaire ? 'Your questionnaire draft is ready. Add questions and collect responses before reviewing results.' : 'Your research brief is ready. Submit it when you are ready for a proposal.');
+      setMessage(editingProject ? feedbackCopy.briefUpdated : isQuestionnaire ? feedbackCopy.questionnaireReady : feedbackCopy.briefReady);
     } catch (error) {
-      setMessage(error.response?.data?.message || 'We could not create this project. Please check the details and try again.');
+      setMessage(feedbackCopy.createError);
     } finally {
       setSubmitting(false);
     }
   };
 
   const deleteProject = async (project) => {
-    if (submitting || !window.confirm(`Delete the draft “${project.title}”? This cannot be undone.`)) return;
+    if (submitting || !window.confirm(feedbackCopy.deleteConfirm.replace('{title}', project.title))) return;
     setSubmitting(true); setMessage(''); setProjectMenuId('');
     try {
       await deleteBusinessProject(project.id);
       setWorkspace((current) => ({ ...current, projects: current.projects.filter((item) => item.id !== project.id) }));
-      setMessage('Draft research brief deleted.');
+      setMessage(feedbackCopy.deleted);
     } catch (error) {
-      setMessage(error.response?.data?.message || 'We could not delete this draft. Please try again.');
+      setMessage(feedbackCopy.deleteError);
     } finally { setSubmitting(false); }
   };
 
@@ -302,9 +284,9 @@ export default function BusinessWorkspace() {
     try {
       const response = await submitBusinessProject(project.id);
       setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? response.data.project : item) }));
-      setMessage('Your research brief is with our team for scope and pricing.');
+      setMessage(feedbackCopy.submitted);
     } catch (error) {
-      setMessage(error.response?.data?.message || 'We could not submit this brief. Please try again.');
+      setMessage(feedbackCopy.submitError);
     } finally { setSubmitting(false); }
   };
 
@@ -317,16 +299,16 @@ export default function BusinessWorkspace() {
       const response = await decideBusinessProjectQuote(project.id, quote.id, { decision, ...(decision === 'DECLINE' && declineReason.trim() ? { declineReason: declineReason.trim() } : {}) });
       setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? response.data.project : item) }));
       setQuoteProject(null); setQuoteDecision(''); setDeclineReason('');
-      setMessage(decision === 'ACCEPT' ? 'Quote accepted. We will confirm funding before recruitment begins.' : 'Quote declined. Our team can prepare a revised scope when you are ready.');
+      setMessage(decision === 'ACCEPT' ? feedbackCopy.quoteAccepted : feedbackCopy.quoteDeclined);
     } catch (error) {
-      setMessage(error.response?.data?.message || 'We could not record your response to this quote.');
+      setMessage(feedbackCopy.quoteError);
     } finally { setSubmitting(false); }
   };
 
   return (
     <main className="business-workspace">
       <div className="business-workspace-body business-workspace-body--rail">
-        <aside className="business-workspace-rail" aria-label="Workspace navigation">
+        <aside className="business-workspace-rail" aria-label={copy.rail.navigation}>
           <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
           <button className={activeView === 'home' ? 'is-active' : ''} type="button" title={copy.rail.services} aria-label={copy.rail.services} onClick={() => setActiveView('home')}>
             <LayoutDashboard size={20} />
@@ -368,25 +350,25 @@ export default function BusinessWorkspace() {
           </div>
         </section> : activeView === 'results' ? <section className="business-projects business-results-index">
           <div className="business-projects-head"><div><p className="business-eyebrow">{copy.results.eyebrow}</p><h1>{copy.results.indexTitle}</h1><p>{copy.results.indexIntro}</p></div><button className="business-home-project-link" type="button" onClick={() => setActiveView('home')}>{copy.rail.services} <ArrowRight size={16} /></button></div>
-          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> Loading results</div> : questionnaireProjects.length ? <div className="business-results-index-list">{questionnaireProjects.map((project) => <article key={project.id}><div><p>{copy.services.questionnaireEyebrow}</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <section className="business-results-index-empty"><BarChart3 size={30} /><h2>{copy.results.noResultsTitle}</h2><p>{copy.results.noResultsBody}</p><button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>{copy.services.questionnaireAction} <ArrowRight size={16} /></button></section>}
+          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> {feedbackCopy.loadingResults}</div> : questionnaireProjects.length ? <div className="business-results-index-list">{questionnaireProjects.map((project) => <article key={project.id}><div><p>{copy.services.questionnaireEyebrow}</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <section className="business-results-index-empty"><BarChart3 size={30} /><h2>{copy.results.noResultsTitle}</h2><p>{copy.results.noResultsBody}</p><button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>{copy.services.questionnaireAction} <ArrowRight size={16} /></button></section>}
         </section> : <section className="business-projects">
           <div className="business-projects-head">
             <div>
-              <p className="business-eyebrow">RESEARCH WORKSPACE</p>
-              <h1>Projects</h1>
-              <p>Keep each research brief, proposal, and confirmed next step in one place.</p>
+              <p className="business-eyebrow">{projectsCopy.eyebrow}</p>
+              <h1>{projectsCopy.title}</h1>
+              <p>{projectsCopy.intro}</p>
             </div>
             <div className="business-project-head-actions">
-              <Link className="business-button" to={withLanguage('/business/access', language)}>Contact sales <ArrowRight size={17} /></Link>
+              <Link className="business-button" to={withLanguage('/business/access', language)}>{projectsCopy.contactSales} <ArrowRight size={17} /></Link>
             </div>
           </div>
 
           {message && <p className="business-workspace-message">{message}</p>}
 
-          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> Loading projects</div> : workspace.projects.length ? (
+          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> {feedbackCopy.loadingProjects}</div> : workspace.projects.length ? (
             <>
-              <div className="business-project-toolbar" role="tablist" aria-label="Filter projects">
-                {projectFilters.map(([value, label]) => (
+              <div className="business-project-toolbar" role="tablist" aria-label={projectsCopy.title}>
+                {projectFilters.map(([value]) => (
                   <button
                     key={value}
                     type="button"
@@ -395,44 +377,45 @@ export default function BusinessWorkspace() {
                     className={activeFilter === value ? 'is-active' : ''}
                     onClick={() => setActiveFilter(value)}
                   >
-                    {label} <span>{value === 'ALL' ? workspace.projects.length : workspace.projects.filter((project) => project.status === value).length}</span>
+                    {projectsCopy.filters[value]} <span>{value === 'ALL' ? workspace.projects.length : workspace.projects.filter((project) => project.status === value).length}</span>
                   </button>
                 ))}
               </div>
 
               <div className="business-project-list">
                 {visibleProjects.map((project) => {
-                  const type = typeForProject(project);
                   return (
                     <article key={project.id}>
-                      <div className="business-project-menu"><button type="button" onClick={() => setProjectMenuId((current) => current === project.id ? '' : project.id)} aria-label={`Project actions for ${project.title}`} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={19} /></button>{projectMenuId === project.id && <div><button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> View brief</button>{project.status === 'DRAFT' && <button type="button" onClick={() => openEditProject(project)}><Pencil size={14} /> Edit brief</button>}{project.status === 'DRAFT' && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> Delete draft</button>}</div>}</div>
+                      <div className="business-project-menu"><button type="button" onClick={() => setProjectMenuId((current) => current === project.id ? '' : project.id)} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={19} /></button>{projectMenuId === project.id && <div><button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> {projectsCopy.viewBrief}</button>{project.status === 'DRAFT' && <button type="button" onClick={() => openEditProject(project)}><Pencil size={14} /> {projectsCopy.editBrief}</button>}{project.status === 'DRAFT' && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> {projectsCopy.deleteDraft}</button>}</div>}</div>
                       <div>
                         <span className={`business-status status-${String(project.status).toLowerCase()}`}>
-                          {statusLabel[project.status] || project.status}
+                          {projectsCopy.statuses[project.status] || project.status}
                         </span>
-                        <p className="business-project-kind">{type.eyebrow}</p>
+                        <p className="business-project-kind">{project.studyFormat === 'SURVEY' ? copy.services.questionnaireEyebrow : briefCopy.research.eyebrow}</p>
                         <h2>{project.title}</h2>
                         <p>{project.researchGoal}</p>
                       </div>
                       <dl>
-                        <div><dt>Format</dt><dd>{project.studyFormat.replaceAll('_', ' ').toLowerCase()}</dd></div>
-                        <div><dt>Audience</dt><dd>{project.audienceDescription}</dd></div>
-                        <div><dt>Updated</dt><dd>{new Date(project.updatedAt).toLocaleDateString()}</dd></div>
+                        <div><dt>{projectsCopy.format}</dt><dd>{studyFormatLabel(project.studyFormat)}</dd></div>
+                        <div><dt>{projectsCopy.audience}</dt><dd>{project.audienceDescription}</dd></div>
+                        <div><dt>{projectsCopy.updated}</dt><dd>{new Date(project.updatedAt).toLocaleDateString(language)}</dd></div>
                       </dl>
                       <div className="business-project-actions">
-                        {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>Open questionnaire draft <ArrowRight size={15} /></Link><Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> View results</Link></>}
-                        {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? 'Submitting…' : 'Submit for review'} <ArrowRight size={15} /></button>}
-                        {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>Review quote <ArrowRight size={15} /></button>}
+                        {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{projectsCopy.openDraft} <ArrowRight size={15} /></Link><Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link></>}
+                        {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit} <ArrowRight size={15} /></button>}
+                        {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote} <ArrowRight size={15} /></button>}
                       </div>
-                      {project.latestQuote && <p className="business-project-quote-note">{project.latestQuote.status === 'SENT' ? `Quote v${project.latestQuote.version} is ready to review.` : `Quote v${project.latestQuote.version}: ${project.latestQuote.status.toLowerCase().replaceAll('_', ' ')}.`}</p>}
+                      {project.latestQuote && <p className="business-project-quote-note">{project.latestQuote.status === 'SENT'
+                        ? feedbackCopy.quoteReady.replace('{version}', project.latestQuote.version)
+                        : feedbackCopy.quoteStatus.replace('{version}', project.latestQuote.version).replace('{status}', projectsCopy.statuses[project.latestQuote.status] || project.latestQuote.status)}</p>}
                     </article>
                   );
                 })}
                 {!visibleProjects.length && (
                   <div className="business-project-filter-empty">
                     <ClipboardList size={22} />
-                    <strong>No projects in this view.</strong>
-                    <span>Choose another status or prepare a new research brief.</span>
+                    <strong>{projectsCopy.noProjects}</strong>
+                    <span>{projectsCopy.chooseAnother}</span>
                   </div>
                 )}
               </div>
@@ -441,16 +424,14 @@ export default function BusinessWorkspace() {
             <div className="business-projects-empty-layout">
               <button className="business-create-project-card" type="button" onClick={openNewProject}>
                 <span><Plus size={31} /></span>
-                <strong>Prepare a research brief</strong>
-                <small>Request a questionnaire design or managed research support.</small>
+                <strong>{projectsCopy.prepareBrief}</strong>
+                <small>{projectsCopy.prepareBriefBody}</small>
               </button>
               <section className="business-projects-guide">
-                <p>GET STARTED</p>
-                <h2>Start with the decision.</h2>
+                <p>{projectsCopy.getStarted}</p>
+                <h2>{projectsCopy.startDecision}</h2>
                 <ol>
-                  <li><span>01</span> Describe what you need to learn</li>
-                  <li><span>02</span> Tell us who matters to the decision</li>
-                  <li><span>03</span> Submit when you are ready for a proposal</li>
+                  {projectsCopy.guide.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, '0')}</span> {step}</li>)}
                 </ol>
               </section>
             </div>
@@ -587,8 +568,8 @@ export default function BusinessWorkspace() {
           </form>
         </div>
       )}
-      {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label="Close"><X size={18} /></button><p className="business-eyebrow">RESEARCH BRIEF</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>Who we need to hear from</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>Format</dt><dd>{briefProject.studyFormat.replaceAll('_', ' ').toLowerCase()}</dd></div>{briefProject.countries && <div><dt>Market or community</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>Languages</dt><dd>{briefProject.languages}</dd></div>}{briefProject.targetParticipants && <div><dt>Target participants</dt><dd>{briefProject.targetParticipants}</dd></div>}{briefProject.estimatedMinutes && <div><dt>{briefProject.studyFormat === 'SURVEY' ? 'Estimated completion time' : 'Estimated session time'}</dt><dd>{briefProject.estimatedMinutes} minutes</dd></div>}{briefProject.timeline && <div><dt>Preferred timing</dt><dd>{briefProject.timeline}</dd></div>}<div><dt>Participant incentives</dt><dd>{incentiveBudgetLabels[briefProject.incentiveBudget] || incentiveBudgetLabels.NEED_GUIDANCE}</dd></div></dl>{briefProject.additionalContext && <section><strong>Additional context</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>Close</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>Edit brief <Pencil size={15} /></button>}</div></section></div>}
-      {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label="Close"><X size={18} /></button><p className="business-eyebrow">PROJECT QUOTE</p><h2 id="business-quote-title">Review your proposal.</h2><p className="business-form-intro">Accepting confirms that your organization agrees to this scope. Recruitment starts only after funding is confirmed.</p><dl><div><dt>Project</dt><dd>{quoteProject.title}</dd></div><div><dt>Quote</dt><dd>{new Intl.NumberFormat('en-US', { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>Valid until</dt><dd>{new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>Scope included</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>Terms</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">Why does this not work for your team? <textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder="Optional feedback for a revised proposal." /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>Keep reviewing</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : 'Decline quote'}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>Decline</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : 'Accept quote'} <Check size={16} /></button></>}</div></section></div>}
+      {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label={projectsCopy.briefDialog.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.briefDialog.eyebrow}</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>{projectsCopy.briefDialog.audience}</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>{projectsCopy.briefDialog.format}</dt><dd>{studyFormatLabel(briefProject.studyFormat)}</dd></div>{briefProject.countries && <div><dt>{projectsCopy.briefDialog.market}</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>{projectsCopy.briefDialog.languages}</dt><dd>{briefProject.languages}</dd></div>}{briefProject.targetParticipants && <div><dt>{projectsCopy.briefDialog.participants}</dt><dd>{briefProject.targetParticipants}</dd></div>}{briefProject.estimatedMinutes && <div><dt>{briefProject.studyFormat === 'SURVEY' ? projectsCopy.briefDialog.completionTime : projectsCopy.briefDialog.sessionTime}</dt><dd>{projectsCopy.briefDialog.minutes.replace('{minutes}', briefProject.estimatedMinutes)}</dd></div>}{briefProject.timeline && <div><dt>{projectsCopy.briefDialog.timing}</dt><dd>{briefProject.timeline}</dd></div>}<div><dt>{projectsCopy.briefDialog.incentives}</dt><dd>{projectsCopy.briefDialog.incentiveLabels[briefProject.incentiveBudget] || projectsCopy.briefDialog.incentiveLabels.NEED_GUIDANCE}</dd></div></dl>{briefProject.additionalContext && <section><strong>{projectsCopy.briefDialog.additional}</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>{projectsCopy.briefDialog.close}</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>{projectsCopy.briefDialog.edit} <Pencil size={15} /></button>}</div></section></div>}
+      {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.quote.eyebrow}</p><h2 id="business-quote-title">{projectsCopy.quote.title}</h2><p className="business-form-intro">{projectsCopy.quote.intro}</p><dl><div><dt>{projectsCopy.quote.project}</dt><dd>{quoteProject.title}</dd></div><div><dt>{projectsCopy.quote.quote}</dt><dd>{new Intl.NumberFormat(language, { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>{projectsCopy.quote.validUntil}</dt><dd>{new Intl.DateTimeFormat(language, { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>{projectsCopy.quote.scope}</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>{projectsCopy.quote.terms}</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">{projectsCopy.quote.declineQuestion}<textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder={projectsCopy.quote.declinePlaceholder} /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>{projectsCopy.quote.keepReviewing}</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.declineQuote}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>{projectsCopy.quote.decline}</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.accept} <Check size={16} /></button></>}</div></section></div>}
       {!loading && workspace.profile && !onboardingComplete && (
         <section className="business-onboarding" aria-labelledby="business-onboarding-title">
           <div className="business-onboarding-shell">
