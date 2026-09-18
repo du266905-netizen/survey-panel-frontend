@@ -138,8 +138,9 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const location = useLocation();
   const panelRef = useRef(null);
   const { setUser } = useAuth();
-  const { language } = useLanguage();
+  const { language, publicCopy } = useLanguage();
   const copy = authCopy[language] || authCopy['en-US'];
+  const businessCopy = publicCopy.workspace.business.access;
   const [registerExpanded, setRegisterExpanded] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ displayName: '', email: '', password: '', verificationCode: '' });
@@ -290,7 +291,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const isLogin = mode === 'login';
   const businessTermsPath = withLanguage(accountType === 'BUSINESS' ? '/business/terms' : '/terms', language);
   const privacyPath = withLanguage('/privacy', language);
-  const termsLabel = accountType === 'BUSINESS' ? 'Business Researcher Terms' : language === 'zh-CN' ? '服务条款' : language === 'zh-Hant' ? '服務條款' : 'Terms of Service';
+  const termsLabel = accountType === 'BUSINESS' ? businessCopy.businessTerms : language === 'zh-CN' ? '服务条款' : language === 'zh-Hant' ? '服務條款' : 'Terms of Service';
 
   return (
     <section ref={panelRef} className="public-auth-panel" aria-labelledby="public-auth-title">
@@ -300,9 +301,9 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
       </div>
 
       <div className="public-auth-content">
-        <p className="public-auth-eyebrow">{isLogin ? copy.welcome : accountType === 'BUSINESS' ? 'Business workspace' : copy.join}</p>
-        <h2 id="public-auth-title">{isLogin ? copy.loginTitle : accountType === 'BUSINESS' ? 'Create your research workspace.' : copy.registerTitle}</h2>
-        <p className="public-auth-intro">{isLogin ? copy.loginIntro : accountType === 'BUSINESS' ? 'Create, share, and manage questionnaires alongside your research projects.' : copy.registerIntro}</p>
+        <p className="public-auth-eyebrow">{isLogin ? copy.welcome : accountType === 'BUSINESS' ? businessCopy.businessEyebrow : copy.join}</p>
+        <h2 id="public-auth-title">{isLogin ? copy.loginTitle : accountType === 'BUSINESS' ? businessCopy.businessTitle : copy.registerTitle}</h2>
+        <p className="public-auth-intro">{isLogin ? copy.loginIntro : accountType === 'BUSINESS' ? businessCopy.businessIntro : copy.registerIntro}</p>
 
         <p className="public-auth-consent">{isLogin ? copy.consentLogin : copy.consentRegister} <Link to={businessTermsPath} target="_blank" rel="noopener noreferrer">{termsLabel}</Link> {copy.and} <Link to={privacyPath} target="_blank" rel="noopener noreferrer">{copy.privacy}</Link>.</p>
 
@@ -318,17 +319,17 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
             <label><span>{copy.password}</span><span className="public-auth-input"><LockKeyhole size={17} /><input type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder={copy.password} value={loginForm.password} onChange={(event) => setLoginForm({ ...loginForm, password: event.target.value })} required /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? copy.hidePassword : copy.showPassword}>{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></span></label>
             <div className="public-auth-secondary"><Link to={withLanguage('/forgot-password', language)}>{copy.forgot}</Link></div>
             <button className="public-auth-submit" type="submit" disabled={loading}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : copy.signIn}{!loading && <Check size={17} />}</button>
-            {businessLoginMissing && <button className="public-auth-email-cta" type="button" onClick={() => changeMode('register')}>Create a workspace</button>}
+            {businessLoginMissing && <button className="public-auth-email-cta" type="button" onClick={() => changeMode('register')}>{businessCopy.createWorkspace}</button>}
           </form>
         ) : !registerExpanded && accountType !== 'BUSINESS' ? (
           <button className="public-auth-email-cta" type="button" onClick={() => { setRegisterExpanded(true); resetFormScroll(); }}><Mail size={18} /> {copy.continueEmail}</button>
         ) : (
           <form className="public-auth-form public-auth-register-form" onSubmit={handleRegister}>
             {accountType !== 'BUSINESS' && <button className="public-auth-back" type="button" onClick={() => { setRegisterExpanded(false); resetFormScroll(); }}><ChevronLeft size={16} /> {copy.back}</button>}
-            <label><span>{accountType === 'BUSINESS' ? 'Contact name' : copy.displayName}</span><span className="public-auth-input"><input type="text" autoComplete="name" placeholder={accountType === 'BUSINESS' ? 'Your name' : copy.displayPlaceholder} value={registerForm.displayName} onChange={(event) => setRegisterForm({ ...registerForm, displayName: event.target.value })} required /></span></label>
+            <label><span>{accountType === 'BUSINESS' ? businessCopy.contactName : copy.displayName}</span><span className="public-auth-input"><input type="text" autoComplete="name" placeholder={accountType === 'BUSINESS' ? businessCopy.contactPlaceholder : copy.displayPlaceholder} value={registerForm.displayName} onChange={(event) => setRegisterForm({ ...registerForm, displayName: event.target.value })} required /></span></label>
             <label><span>{copy.email}</span><span className="public-auth-input"><Mail size={17} /><input type="email" autoComplete="email" placeholder="you@example.com" value={registerForm.email} onChange={(event) => setRegisterForm({ ...registerForm, email: event.target.value, verificationCode: '' })} required /></span></label>
-            <><button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? 'Sending…' : codeCooldown ? `Resend in ${codeCooldown}s` : copy.sendCode}</button><label><span>{copy.code}</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder="6-digit code" value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label></>
-            <label><span>{copy.password}</span><span className="public-auth-input"><LockKeyhole size={17} /><input type={showPassword ? 'text' : 'password'} autoComplete="new-password" minLength="8" placeholder="At least 8 characters" value={registerForm.password} onChange={(event) => setRegisterForm({ ...registerForm, password: event.target.value })} required /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? copy.hidePassword : copy.showPassword}>{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></span></label>
+            <><button className="public-auth-code" type="button" onClick={handleSendCode} disabled={!registerForm.email || sendingCode || codeCooldown}>{sendingCode ? businessCopy.sendingCode : codeCooldown ? businessCopy.resendCode.replace('{seconds}', codeCooldown) : accountType === 'BUSINESS' ? businessCopy.sendCode : copy.sendCode}</button><label><span>{accountType === 'BUSINESS' ? businessCopy.emailCode : copy.code}</span><span className="public-auth-input"><input inputMode="numeric" autoComplete="one-time-code" maxLength="6" placeholder={accountType === 'BUSINESS' ? businessCopy.codePlaceholder : '6-digit code'} value={registerForm.verificationCode} onChange={(event) => setRegisterForm({ ...registerForm, verificationCode: event.target.value.replace(/\D/g, '').slice(0, 6) })} required /></span></label></>
+            <label><span>{copy.password}</span><span className="public-auth-input"><LockKeyhole size={17} /><input type={showPassword ? 'text' : 'password'} autoComplete="new-password" minLength="8" placeholder={accountType === 'BUSINESS' ? businessCopy.passwordPlaceholder : 'At least 8 characters'} value={registerForm.password} onChange={(event) => setRegisterForm({ ...registerForm, password: event.target.value })} required /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? copy.hidePassword : copy.showPassword}>{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></span></label>
             {accountType !== 'BUSINESS' && <TurnstileWidget theme="dark" onVerify={setTurnstileToken} onExpire={clearTurnstileToken} onError={clearTurnstileToken} />}
             <button className="public-auth-submit" type="submit" disabled={loading || (accountType !== 'BUSINESS' && !turnstileToken)}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : copy.createButton}{!loading && <Check size={17} />}</button>
           </form>

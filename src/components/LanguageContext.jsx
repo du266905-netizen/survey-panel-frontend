@@ -16,6 +16,16 @@ const englishCopy = {
   workspace: {
     nav: { home: 'Home', surveys: 'Online surveys', research: 'Research', news: 'News Wall', community: 'Community', dashboard: 'Dashboard', wallet: 'Rewards & wallet', invite: 'Invite program', profile: 'View profile', settings: 'Account settings', logout: 'Log out' },
     business: {
+      access: {
+        back: 'Back',
+        eyebrow: 'CLIENT WORKSPACE',
+        loginTitle: 'Welcome back to your projects.',
+        loginIntro: 'Review your briefs, confirmed proposals, and the next step for each project.',
+        registerTitle: 'Create your research workspace.',
+        registerIntro: 'Keep your briefs, confirmed scope, and research progress in one considered place.',
+        businessEyebrow: 'BUSINESS WORKSPACE', businessTitle: 'Create your research workspace.', businessIntro: 'Create, share, and manage questionnaires alongside your research projects.',
+        contactName: 'Contact name', contactPlaceholder: 'Your name', emailCode: 'Email code', sendCode: 'Send verification code', sendingCode: 'Sending…', resendCode: 'Resend in {seconds}s', codePlaceholder: '6-digit code', passwordPlaceholder: 'At least 8 characters', businessTerms: 'Business Researcher Terms', createWorkspace: 'Create a workspace',
+      },
       rail: { services: 'Research services', projects: 'Projects', results: 'Questionnaire results', accountMenu: 'Account menu', account: 'Account', signOut: 'Sign out', clientAccount: 'Client account', navigation: 'Workspace navigation' },
       services: {
         eyebrow: 'RESEARCH SERVICES', title: 'Research with a clear next step.', intro: 'Start with the decision you need to make in a market. Choose a questionnaire when you need structured answers at scale, or tailored research when the question needs a more considered route.', viewProjects: 'View projects',
@@ -146,6 +156,16 @@ const workspaceCopyByLanguage = {
 
 const businessWorkspaceCopyByLanguage = {
   'zh-CN': {
+    access: {
+      back: '返回',
+      eyebrow: '客户工作区',
+      loginTitle: '继续查看你的项目。',
+      loginIntro: '查看研究简报、已确认的方案，以及每个项目的下一步。',
+      registerTitle: '创建你的研究工作区。',
+      registerIntro: '在同一处管理研究简报、已确认范围与研究进度。',
+      businessEyebrow: '企业工作区', businessTitle: '创建你的研究工作区。', businessIntro: '在研究项目旁创建、分享和管理问卷。',
+      contactName: '联系人姓名', contactPlaceholder: '你的姓名', emailCode: '邮箱验证码', sendCode: '发送验证码', sendingCode: '正在发送…', resendCode: '{seconds} 秒后重发', codePlaceholder: '6 位验证码', passwordPlaceholder: '至少 8 个字符', businessTerms: 'Business 研究者条款', createWorkspace: '创建工作区',
+    },
       rail: { services: '研究服务', projects: '项目', results: '问卷结果', accountMenu: '账户菜单', account: '账户', signOut: '退出登录', clientAccount: '客户账户', navigation: '工作区导航' },
     services: {
       eyebrow: '研究服务', title: '让研究有明确的下一步。', intro: '从你需要在某个市场作出的决定开始。需要规模化的结构化回答时选择定制问卷；问题需要更审慎的路径时，选择定制研究。', viewProjects: '查看项目',
@@ -164,6 +184,16 @@ const businessWorkspaceCopyByLanguage = {
     },
   },
   'zh-Hant': {
+    access: {
+      back: '返回',
+      eyebrow: '客戶工作區',
+      loginTitle: '繼續查看你的專案。',
+      loginIntro: '查看研究簡報、已確認的方案，以及每個專案的下一步。',
+      registerTitle: '建立你的研究工作區。',
+      registerIntro: '在同一處管理研究簡報、已確認範圍與研究進度。',
+      businessEyebrow: '企業工作區', businessTitle: '建立你的研究工作區。', businessIntro: '在研究專案旁建立、分享和管理問卷。',
+      contactName: '聯絡人姓名', contactPlaceholder: '你的姓名', emailCode: '電郵驗證碼', sendCode: '發送驗證碼', sendingCode: '正在發送…', resendCode: '{seconds} 秒後重發', codePlaceholder: '6 位驗證碼', passwordPlaceholder: '至少 8 個字元', businessTerms: 'Business 研究者條款', createWorkspace: '建立工作區',
+    },
       rail: { services: '研究服務', projects: '專案', results: '問卷結果', accountMenu: '帳戶選單', account: '帳戶', signOut: '登出', clientAccount: '客戶帳戶', navigation: '工作區導覽' },
     services: {
       eyebrow: '研究服務', title: '讓研究有明確的下一步。', intro: '從你需要在某個市場作出的決定開始。需要規模化的結構化回應時選擇客製問卷；問題需要更審慎的路徑時，選擇專屬研究。', viewProjects: '查看專案',

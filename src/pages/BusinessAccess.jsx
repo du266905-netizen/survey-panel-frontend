@@ -8,6 +8,7 @@ import createWorkspace from '../assets/business/create-workspace.jpg';
 import signInWorkspace from '../assets/business/sign-in-workspace.jpg';
 import contactSalesCity from '../assets/business/contact-sales-city.jpg';
 import { HomeFooter } from '../components/HomeLegacySections';
+import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
 
 const initialForm = { content: '', email: '', name: '', organizationType: '', phoneCountry: 'US', phone: '', region: 'US' };
@@ -15,6 +16,8 @@ const initialForm = { content: '', email: '', name: '', organizationType: '', ph
 export default function BusinessAccess() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { language, publicCopy } = useLanguage();
+  const copy = publicCopy.workspace.business.access;
   const authMode = location.pathname.endsWith('/login') ? 'login' : location.pathname.endsWith('/register') ? 'register' : null;
   const [form, setForm] = useState(initialForm);
   const [submitting, setSubmitting] = useState(false);
@@ -41,9 +44,9 @@ export default function BusinessAccess() {
   return (
     <>
     <main className="business-access-page business-contact-page">
-      <Link className="business-access-brand" to="/business"><ArrowLeft size={16} /> Back</Link>
+      <Link className="business-access-brand" to={withLanguage('/business', language)}><ArrowLeft size={16} /> {copy.back}</Link>
       {authMode ? (
-        <div className="business-login-layout"><section className={`business-login-intro business-login-intro--${authMode}`}><img src={authMode === 'login' ? signInWorkspace : createWorkspace} alt="" decoding="async" /><div><p className="business-eyebrow">CLIENT WORKSPACE</p><h1>{authMode === 'login' ? 'Welcome back to your projects.' : 'Create your research workspace.'}</h1><p>{authMode === 'login' ? 'Review your briefs, confirmed proposals, and the next step for each project.' : 'Keep your briefs, confirmed scope, and research progress in one considered place.'}</p></div></section><div className="business-access-panel"><PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(nextMode === 'login' ? '/business/login' : '/business/register', { replace: true })} accountType="BUSINESS" /></div></div>
+        <div className="business-login-layout"><section className={`business-login-intro business-login-intro--${authMode}`}><img src={authMode === 'login' ? signInWorkspace : createWorkspace} alt="" decoding="async" /><div><p className="business-eyebrow">{copy.eyebrow}</p><h1>{authMode === 'login' ? copy.loginTitle : copy.registerTitle}</h1><p>{authMode === 'login' ? copy.loginIntro : copy.registerIntro}</p></div></section><div className="business-access-panel"><PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(withLanguage(nextMode === 'login' ? '/business/login' : '/business/register', language), { replace: true })} accountType="BUSINESS" /></div></div>
       ) : (
         <div className="business-contact-layout">
           <section className="business-contact-intro business-contact-intro--art"><img src={contactSalesCity} alt="" decoding="async" /><div><p className="business-eyebrow">BUSINESS RESEARCH</p><h1>Turn your next question into useful evidence.</h1><p>Tell us what you need to learn. We will help you find the right research route for your team.</p></div></section>
