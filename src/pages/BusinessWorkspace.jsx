@@ -25,7 +25,6 @@ import { completeBusinessResearchOnboarding, createBusinessProject, decideBusine
 import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-import researchSupportCampus from '../assets/business/research-support-campus.jpg';
 import './Business.css';
 
 const emptyProject = {
@@ -133,7 +132,7 @@ export default function BusinessWorkspace() {
   const [loading, setLoading] = useState(true);
   const [openChooser, setOpenChooser] = useState(false);
   const [openForm, setOpenForm] = useState(false);
-  const [activeView, setActiveView] = useState('projects');
+  const [activeView, setActiveView] = useState('home');
   const [projectType, setProjectType] = useState('questionnaire');
   const [activeFilter, setActiveFilter] = useState('ALL');
   const [form, setForm] = useState(emptyProject);
@@ -156,6 +155,7 @@ export default function BusinessWorkspace() {
   const visibleProjects = activeFilter === 'ALL'
     ? workspace.projects
     : workspace.projects.filter((project) => project.status === activeFilter);
+  const questionnaireProjects = workspace.projects.filter((project) => project.questionnaire);
 
   useEffect(() => {
     let active = true;
@@ -262,6 +262,7 @@ export default function BusinessWorkspace() {
         ...form,
         targetParticipants: form.targetParticipants || undefined,
         estimatedMinutes: form.estimatedMinutes || undefined,
+        ...(editingProject ? {} : { selfServiceQuestionnaire: isQuestionnaire }),
       };
       const response = editingProject
         ? await updateBusinessProject(editingProject.id, payload)
@@ -272,7 +273,7 @@ export default function BusinessWorkspace() {
       setForm(emptyProject);
       setOpenForm(false);
       setEditingProject(null);
-      setMessage(editingProject ? 'Your research brief has been updated.' : 'Your research brief is ready. Submit it when you are ready for a proposal.');
+      setMessage(editingProject ? 'Your research brief has been updated.' : isQuestionnaire ? 'Your questionnaire draft is ready. Add questions and collect responses before reviewing results.' : 'Your research brief is ready. Submit it when you are ready for a proposal.');
     } catch (error) {
       setMessage(error.response?.data?.message || 'We could not create this project. Please check the details and try again.');
     } finally {
@@ -324,11 +325,14 @@ export default function BusinessWorkspace() {
       <div className="business-workspace-body business-workspace-body--rail">
         <aside className="business-workspace-rail" aria-label="Workspace navigation">
           <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
-          <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title="Projects" aria-label="Projects" onClick={() => setActiveView('projects')}>
+          <button className={activeView === 'home' ? 'is-active' : ''} type="button" title="Research services" aria-label="Research services" onClick={() => setActiveView('home')}>
             <LayoutDashboard size={20} />
           </button>
-          <button className={activeView === 'support' ? 'is-active' : ''} type="button" title="Research support" aria-label="Research support" onClick={() => setActiveView('support')}>
-            <UsersRound size={20} />
+          <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title="Projects" aria-label="Projects" onClick={() => setActiveView('projects')}>
+            <ClipboardList size={20} />
+          </button>
+          <button className={activeView === 'results' ? 'is-active' : ''} type="button" title="Questionnaire results" aria-label="Questionnaire results" onClick={() => setActiveView('results')}>
+            <BarChart3 size={20} />
           </button>
           <NotificationBell className="business-workspace-notification" presentation="modal" />
           <div className="business-workspace-account">
@@ -340,16 +344,28 @@ export default function BusinessWorkspace() {
           </div>
         </aside>
 
-        {activeView === 'support' ? <section className="business-projects business-support-view">
-          <div className="business-projects-head">
-            <div><p className="business-eyebrow">RESEARCH SUPPORT</p><h1>Plan with a clear brief.</h1><p>Share the decision, people, and timing that matter. Your workspace keeps the request and its next steps together.</p></div>
-            <button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}><Plus size={17} /> Create a questionnaire</button>
+        {activeView === 'home' ? <section className="business-projects business-workspace-home">
+          <div className="business-workspace-home-intro">
+            <div><p className="business-eyebrow">RESEARCH SERVICES</p><h1>Research with a clear next step.</h1><p>Start with the decision you need to make in a market. Choose a questionnaire when you need structured answers at scale, or tailored research when the question needs a more considered route.</p></div>
+            <button className="business-home-project-link" type="button" onClick={() => setActiveView('projects')}>View projects <ArrowRight size={16} /></button>
           </div>
-          <div className="business-support-layout">
-            <section className="business-support-card"><p>WORKSPACE OWNER</p><h2>{user?.displayName || 'Client account'}</h2><span>{workspace.profile?.organizationName || 'Research workspace'}</span><dl><div><dt>Projects</dt><dd>{workspace.projects.length}</dd></div><div><dt>In progress</dt><dd>{workspace.projects.filter((project) => !['DRAFT', 'COMPLETED'].includes(project.status)).length}</dd></div></dl><button type="button" onClick={() => navigate('/business/account')}>Manage account <ArrowRight size={15} /></button></section>
-            <section className="business-support-card business-support-steps"><p>HOW WE WORK</p><h2>Bring the question. We prepare the route.</h2><ol><li><span>01</span> Save a concise research brief.</li><li><span>02</span> Submit it when you are ready for a proposal.</li><li><span>03</span> Follow confirmed project progress here.</li></ol></section>
-            <aside className="business-support-art"><img src={researchSupportCampus} alt="A campus building viewed from above" loading="lazy" decoding="async" /><div><p>NEED A STARTING POINT?</p><strong>Describe the decision your team needs to make.</strong><button type="button" onClick={openNewProject}>Prepare a brief <ArrowRight size={15} /></button></div></aside>
+          <div className="business-service-launchers">
+            <article>
+              <span><ClipboardList size={24} /></span><p>QUESTIONNAIRE DESIGN</p><h2>Custom questionnaire</h2><p>Turn a focused question into a structured questionnaire for a defined audience. Create a private draft, build the questions, and review only real responses in your workspace.</p>
+              <button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>Start a questionnaire brief <ArrowRight size={16} /></button>
+            </article>
+            <article>
+              <span><UsersRound size={24} /></span><p>TAILORED RESEARCH</p><h2>Custom research</h2><p>For cross-market decisions that need interviews, usability work, group discussion, or a more specific recruitment and research plan.</p>
+              <button className="business-button" type="button" onClick={() => chooseProjectType('research')}>Start a research brief <ArrowRight size={16} /></button>
+            </article>
           </div>
+          <div className="business-workspace-home-lower">
+            <section><p>HOW A REQUEST MOVES FORWARD</p><ol><li><span>01</span><strong>Prepare a brief</strong><small>Describe the decision, people, market and timing.</small></li><li><span>02</span><strong>Discuss the scope</strong><small>Our team reviews the brief and asks for what is needed.</small></li><li><span>03</span><strong>Review a proposal</strong><small>A scope and quote are shared before work begins.</small></li></ol></section>
+            <section className="business-results-entry"><BarChart3 size={24} /><p>QUESTIONNAIRE RESULTS</p><h2>Review what people actually said.</h2><span>{questionnaireProjects.length ? `${questionnaireProjects.length} questionnaire ${questionnaireProjects.length === 1 ? 'project is' : 'projects are'} available to review.` : 'Results appear here after a questionnaire has been prepared and receives answers.'}</span><button type="button" onClick={() => setActiveView('results')}>Open results <ArrowRight size={16} /></button></section>
+          </div>
+        </section> : activeView === 'results' ? <section className="business-projects business-results-index">
+          <div className="business-projects-head"><div><p className="business-eyebrow">QUESTIONNAIRE RESULTS</p><h1>Results</h1><p>Question summaries and individual answers are available only for questionnaires in this workspace. This area never uses demonstration data.</p></div><button className="business-home-project-link" type="button" onClick={() => setActiveView('home')}>Research services <ArrowRight size={16} /></button></div>
+          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> Loading results</div> : questionnaireProjects.length ? <div className="business-results-index-list">{questionnaireProjects.map((project) => <article key={project.id}><div><p>QUESTIONNAIRE</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} responses received</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>View results <ArrowRight size={16} /></Link></article>)}</div> : <section className="business-results-index-empty"><BarChart3 size={30} /><h2>No questionnaire results yet.</h2><p>Start a custom questionnaire, add its questions, and collect answers. Once responses are received, their summaries and answer records will appear here.</p><button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>Start a questionnaire brief <ArrowRight size={16} /></button></section>}
         </section> : <section className="business-projects">
           <div className="business-projects-head">
             <div>

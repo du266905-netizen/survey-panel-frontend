@@ -237,6 +237,50 @@
 .business-project-modal .business-form-grid small { color: #6a7a70; font: 540 11px/1.45 var(--font-sans); }
 .business-project-modal .business-brief-section + .business-form-grid { margin-top: 17px; }
 
+/* The workspace begins with two concrete research services, then shows project management. */
+.business-workspace-home { max-width: 1220px; }
+.business-workspace-home-intro { display: flex; align-items: end; justify-content: space-between; gap: 28px; max-width: 980px; }
+.business-workspace-home-intro > div { max-width: 650px; }
+.business-workspace-home h1 { max-width: 600px; font-size: clamp(38px, 4vw, 54px); }
+.business-workspace-home-intro > div > p:last-child, .business-results-index .business-projects-head > div > p:last-child { max-width: 620px; margin: 15px 0 0; color: #617167; font: 540 14px/1.62 var(--font-sans); }
+.business-home-project-link { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto; border: 0; background: transparent; color: #315f49; cursor: pointer; font: 800 12px var(--font-sans); padding: 9px 0; }
+.business-home-project-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.business-service-launchers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 42px; }
+.business-service-launchers article { display: flex; min-height: 350px; flex-direction: column; align-items: flex-start; border: 1px solid rgba(35, 75, 53, .17); background: #fffefa; padding: clamp(26px, 4vw, 40px); }
+.business-service-launchers article > span { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: #e5efe2; color: #2c684c; }
+.business-service-launchers article > p:first-of-type, .business-workspace-home-lower section > p, .business-results-entry > p, .business-results-index-list article p { margin: 24px 0 0; color: #5d7765; font: 900 10px var(--font-sans); letter-spacing: .12em; }
+.business-service-launchers h2, .business-workspace-home-lower h2, .business-results-index-empty h2, .business-results-index-list h2 { margin: 11px 0 0; color: #1e3b2b; font: 600 clamp(27px, 2.5vw, 36px)/1.02 var(--font-reading); letter-spacing: -.04em; }
+.business-service-launchers article > p:last-of-type { max-width: 480px; margin: 15px 0 26px; color: #5e6d63; font: 540 14px/1.63 var(--font-sans); }
+.business-service-launchers .business-button { margin-top: auto; }
+.business-workspace-home-lower { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(280px, .72fr); gap: 16px; margin-top: 16px; }
+.business-workspace-home-lower > section { border: 1px solid rgba(35, 75, 53, .15); background: #f0f5ed; padding: clamp(25px, 4vw, 36px); }
+.business-workspace-home-lower ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 28px 0 0; padding: 0; list-style: none; }
+.business-workspace-home-lower li { display: grid; gap: 7px; color: #365543; }
+.business-workspace-home-lower li > span { color: #5f7b69; font: 900 10px var(--font-sans); letter-spacing: .12em; }
+.business-workspace-home-lower li strong { color: #254331; font: 800 14px var(--font-sans); }
+.business-workspace-home-lower li small, .business-results-entry > span { color: #65746b; font: 540 12px/1.55 var(--font-sans); }
+.business-results-entry { display: flex; flex-direction: column; align-items: flex-start; background: #e2eee0 !important; }
+.business-results-entry > svg { color: #2c6549; }
+.business-results-entry > p { margin-top: 16px; }
+.business-results-entry h2 { font-size: 27px; }
+.business-results-entry > span { margin-top: 10px; }
+.business-results-entry button { display: inline-flex; align-items: center; gap: 7px; border: 0; background: transparent; color: #315f49; cursor: pointer; font: 850 12px var(--font-sans); margin-top: auto; padding: 21px 0 0; }
+.business-results-index-list { display: grid; gap: 13px; max-width: 940px; margin-top: 37px; }
+.business-results-index-list article { display: flex; align-items: center; justify-content: space-between; gap: 20px; border: 1px solid rgba(35, 75, 53, .16); background: #edf5eb; padding: 23px; }
+.business-results-index-list article p { margin: 0; }
+.business-results-index-list article h2 { font-family: var(--font-sans); font-size: 20px; font-weight: 800; }
+.business-results-index-list article span { display: block; margin-top: 8px; color: #64766b; font: 650 12px var(--font-sans); }
+.business-results-index-empty { display: grid; max-width: 720px; justify-items: start; border: 1px solid rgba(35, 75, 53, .15); background: #f2f6ef; margin-top: 38px; padding: clamp(28px, 5vw, 48px); }
+.business-results-index-empty > svg { color: #396d52; }
+.business-results-index-empty h2 { font-family: var(--font-sans); font-size: 26px; font-weight: 800; }
+.business-results-index-empty p { max-width: 500px; margin: 12px 0 22px; color: #617167; font: 540 13px/1.62 var(--font-sans); }
+@media (max-width: 800px) {
+  .business-workspace-home-intro, .business-results-index-list article { align-items: flex-start; flex-direction: column; }
+  .business-service-launchers, .business-workspace-home-lower { grid-template-columns: 1fr; }
+  .business-workspace-home-lower ol { grid-template-columns: 1fr; gap: 15px; }
+  .business-service-launchers article { min-height: 0; }
+}
+
 /* First-run research context is a calm transition page, rather than another workspace modal. */
 .business-onboarding { position: fixed; z-index: 140; inset: 0; display: grid; overflow: auto; place-items: center; background: #fbf8f0; color: #193828; padding: clamp(24px, 5vw, 72px); }
 .business-onboarding-shell { position: relative; width: min(100%, 940px); }
