@@ -15,6 +15,21 @@ const englishCopy = {
   },
   workspace: {
     nav: { home: 'Home', surveys: 'Online surveys', research: 'Research', news: 'News Wall', community: 'Community', dashboard: 'Dashboard', wallet: 'Rewards & wallet', invite: 'Invite program', profile: 'View profile', settings: 'Account settings', logout: 'Log out' },
+    business: {
+      rail: { services: 'Research services', projects: 'Projects', results: 'Questionnaire results', accountMenu: 'Account menu', account: 'Account', signOut: 'Sign out', clientAccount: 'Client account' },
+      services: {
+        eyebrow: 'RESEARCH SERVICES', title: 'Research with a clear next step.', intro: 'Start with the decision you need to make in a market. Choose a questionnaire when you need structured answers at scale, or tailored research when the question needs a more considered route.', viewProjects: 'View projects',
+        questionnaireEyebrow: 'QUESTIONNAIRE DESIGN', questionnaireTitle: 'Custom questionnaire', questionnaireBody: 'Turn a focused question into a structured questionnaire for a defined audience. Create a private draft, build the questions, and review only real responses in your workspace.', questionnaireAction: 'Start a questionnaire brief',
+        researchEyebrow: 'TAILORED RESEARCH', researchTitle: 'Custom research', researchBody: 'For cross-market decisions that need interviews, usability work, group discussion, or a more specific recruitment and research plan.', researchAction: 'Start a research brief',
+        processEyebrow: 'HOW A REQUEST MOVES FORWARD', processSteps: [['Prepare a brief', 'Describe the decision, people, market and timing.'], ['Discuss the scope', 'Our team reviews the brief and asks for what is needed.'], ['Review a proposal', 'A scope and quote are shared before work begins.']],
+      },
+      results: { eyebrow: 'QUESTIONNAIRE RESULTS', title: 'Review what people actually said.', emptyIntro: 'Results appear here after a questionnaire has been prepared and receives answers.', open: 'Open results', indexTitle: 'Results', indexIntro: 'Question summaries and individual answers are available only for questionnaires in this workspace. This area never uses demonstration data.', noResultsTitle: 'No questionnaire results yet.', noResultsBody: 'Start a custom questionnaire, add its questions, and collect answers. Once responses are received, their summaries and answer records will appear here.', availableOne: 'questionnaire project is available to review.', availableMany: 'questionnaire projects are available to review.', responses: 'responses received', view: 'View results' },
+      onboarding: {
+        step: 'Step {current} of {total}', titles: ['How will you use GuanyiSearch?', 'What would you like to understand?', 'What kind of organisation are you?'], intros: ['Choose the account context that best describes your work. You can still request either type of research service.', 'Choose the closest starting point. Your research brief will carry the detail when you are ready.', 'This helps us understand the context for your research request. It does not change what you can ask for.'],
+        individual: ['Individual', 'I am exploring a question in my own capacity, for study, learning, or an independent project.'], organisation: ['Organisation', 'I am planning research for a business, institution, public body, or non-profit organisation.'],
+        intents: [['Explore a research question', 'I want a considered way to learn from people in a place or community.'], ['Understand a local market', 'I want to learn how people, context, or local expression differ in a region.'], ['Prepare a market decision', 'I need evidence for a product, brand, channel, or market-entry decision.']], organisationTypes: [['Business or commercial organisation', 'I am planning research for a company, brand, agency, retailer, or commercial team.'], ['Research or education institution', 'I am working with a university, school, research centre, or academic project.'], ['Non-profit or public organisation', 'I am planning research for a charity, community organisation, public body, or civic programme.']], back: 'Back', continue: 'Continue', enter: 'Enter workspace', saving: 'Saving preferences…',
+      },
+    },
     dashboard: {
       greeting: { morning: 'Good morning', afternoon: 'Good afternoon', evening: 'Good evening' }, visitor: 'there', space: 'Your space', begin: 'Let’s begin:', prompts: ['Browse news', 'Start a survey', 'Explore community'], welcome: 'Explore at your own pace. Your next opportunity is ready when you are.', coinsAvailable: '{coins} Coins available', balance: 'Coins balance', openWallet: 'Open wallet', startToday: 'Start earning today', headline: 'One good survey can start the streak.', nextWithCompletions: 'New matches move throughout the day. Check the wall while survey inventory is fresh.', nextWithoutCompletions: 'Start with one verified completion. Once it clears, your reward record begins to build.', findSurveys: 'Find surveys', rewardPath: 'Reward path', rewardPathValue: 'Surveys → Coins → Gift cards', steps: [['Find a live match', 'Survey availability changes during the day.'], ['Finish with quality', 'Partners validate completions before Coins clear.'], ['Build toward rewards', 'Gift card goals unlock from the $10 tier.']], tip: 'Tip: finish your first survey and check back when the wall looks quiet — inventory rotates.', newsWall: 'News Wall', newsTitle: 'A wider view, whenever you need it.', newsIntro: 'Follow the stories shaping the conversations behind tomorrow’s research.', exploreNews: 'Explore News Wall', freshNews: 'Fresh reading will appear here as the News Wall updates.', openNews: 'Open News Wall', readStory: 'Read story', latestStory: 'Latest story', news: 'News',
     },
@@ -126,6 +141,39 @@ const workspaceCopyByLanguage = {
   },
 };
 
+const businessWorkspaceCopyByLanguage = {
+  'zh-CN': {
+    rail: { services: '研究服务', projects: '项目', results: '问卷结果', accountMenu: '账户菜单', account: '账户', signOut: '退出登录', clientAccount: '客户账户' },
+    services: {
+      eyebrow: '研究服务', title: '让研究有明确的下一步。', intro: '从你需要在某个市场作出的决定开始。需要规模化的结构化回答时选择定制问卷；问题需要更审慎的路径时，选择定制研究。', viewProjects: '查看项目',
+      questionnaireEyebrow: '问卷设计', questionnaireTitle: '定制问卷', questionnaireBody: '把聚焦的问题转化为面向明确对象的结构化问卷。先建立私有草稿、完善问题，再在工作区查看真实答卷。', questionnaireAction: '开始问卷简报',
+      researchEyebrow: '定制研究', researchTitle: '专属研究', researchBody: '适用于需要访谈、可用性测试、小组讨论，或需要更具体招募与研究方案的跨市场决策。', researchAction: '开始研究简报',
+      processEyebrow: '委托如何推进', processSteps: [['准备简报', '说明要作出的决定、相关人群、市场与时间。'], ['讨论范围', '团队会阅读简报，并补充完成方案所需的信息。'], ['查看方案', '工作开始前，我们会提供范围说明与报价。']],
+    },
+    results: { eyebrow: '问卷结果', title: '查看人们真实表达的内容。', emptyIntro: '问卷准备完成并收到答卷后，结果会显示在这里。', open: '查看结果', indexTitle: '结果', indexIntro: '只有本工作区中的问卷才会显示题目汇总和逐份答卷。这里不会使用演示数据。', noResultsTitle: '暂时没有问卷结果。', noResultsBody: '先创建定制问卷、补充问题并收集答卷。收到回答后，汇总和答卷记录会显示在这里。', availableOne: '个问卷项目可供查看。', availableMany: '个问卷项目可供查看。', responses: '份答卷', view: '查看结果' },
+    onboarding: {
+      step: '第 {current} 步，共 {total} 步', titles: ['你将如何使用 GuanyiSearch？', '你想了解什么？', '你的组织属于哪一类？'], intros: ['选择最符合你工作情境的账户类型。无论选择哪一种，你都可以申请两类研究服务。', '选择最接近的起点。准备好时，项目简报会承载具体信息。', '这能帮助我们理解研究委托的背景，不会改变你可以提出的问题。'],
+      individual: ['个人', '我以个人身份探索问题，用于学习、研究或独立项目。'], organisation: ['组织', '我正在为企业、机构、公共部门或非营利组织筹备研究。'],
+      intents: [['探索研究问题', '我想通过审慎的方式，了解某地或某个社群中的人。'], ['了解当地市场', '我想了解一个地区中人群、情境或本地表达的差异。'], ['准备市场决策', '我需要为产品、品牌、渠道或市场进入决策获得依据。']], organisationTypes: [['企业或商业机构', '我正在为公司、品牌、代理机构、零售商或商业团队筹备研究。'], ['研究或教育机构', '我正在与大学、学校、研究中心或学术项目合作。'], ['非营利或公共机构', '我正在为公益机构、社群组织、公共部门或社会项目筹备研究。']], back: '返回', continue: '继续', enter: '进入工作区', saving: '正在保存偏好…',
+    },
+  },
+  'zh-Hant': {
+    rail: { services: '研究服務', projects: '專案', results: '問卷結果', accountMenu: '帳戶選單', account: '帳戶', signOut: '登出', clientAccount: '客戶帳戶' },
+    services: {
+      eyebrow: '研究服務', title: '讓研究有明確的下一步。', intro: '從你需要在某個市場作出的決定開始。需要規模化的結構化回應時選擇客製問卷；問題需要更審慎的路徑時，選擇專屬研究。', viewProjects: '查看專案',
+      questionnaireEyebrow: '問卷設計', questionnaireTitle: '客製問卷', questionnaireBody: '把聚焦的問題轉化為面向明確對象的結構化問卷。先建立私有草稿、完善問題，再在工作區查看真實答卷。', questionnaireAction: '開始問卷簡報',
+      researchEyebrow: '專屬研究', researchTitle: '專屬研究', researchBody: '適用於需要訪談、可用性測試、小組討論，或需要更具體招募與研究方案的跨市場決策。', researchAction: '開始研究簡報',
+      processEyebrow: '委託如何推進', processSteps: [['準備簡報', '說明要作出的決定、相關人群、市場與時間。'], ['討論範圍', '團隊會閱讀簡報，並補充完成方案所需的資訊。'], ['查看方案', '工作開始前，我們會提供範圍說明與報價。']],
+    },
+    results: { eyebrow: '問卷結果', title: '查看人們真實表達的內容。', emptyIntro: '問卷準備完成並收到答卷後，結果會顯示在這裡。', open: '查看結果', indexTitle: '結果', indexIntro: '只有本工作區中的問卷才會顯示題目彙總和逐份答卷。這裡不會使用示範資料。', noResultsTitle: '暫時沒有問卷結果。', noResultsBody: '先建立客製問卷、補充問題並收集答卷。收到回答後，彙總和答卷紀錄會顯示在這裡。', availableOne: '個問卷專案可供查看。', availableMany: '個問卷專案可供查看。', responses: '份答卷', view: '查看結果' },
+    onboarding: {
+      step: '第 {current} 步，共 {total} 步', titles: ['你將如何使用 GuanyiSearch？', '你想了解什麼？', '你的組織屬於哪一類？'], intros: ['選擇最符合你工作情境的帳戶類型。無論選擇哪一種，你都可以申請兩類研究服務。', '選擇最接近的起點。準備好時，專案簡報會承載具體資訊。', '這能幫助我們理解研究委託的背景，不會改變你可以提出的問題。'],
+      individual: ['個人', '我以個人身分探索問題，用於學習、研究或獨立專案。'], organisation: ['組織', '我正在為企業、機構、公共部門或非營利組織籌備研究。'],
+      intents: [['探索研究問題', '我想透過審慎的方式，了解某地或某個社群中的人。'], ['了解當地市場', '我想了解一個地區中人群、情境或本地表達的差異。'], ['準備市場決策', '我需要為產品、品牌、通路或市場進入決策取得依據。']], organisationTypes: [['企業或商業機構', '我正在為公司、品牌、代理機構、零售商或商業團隊籌備研究。'], ['研究或教育機構', '我正在與大學、學校、研究中心或學術專案合作。'], ['非營利或公共機構', '我正在為公益機構、社群組織、公共部門或社會專案籌備研究。']], back: '返回', continue: '繼續', enter: '進入工作區', saving: '正在儲存偏好…',
+    },
+  },
+};
+
 export const languages = [
   { code: 'en-US', label: 'English (US)', shortLabel: 'EN-US' },
   { code: 'en-GB', label: 'English (UK)', shortLabel: 'EN-GB' },
@@ -209,6 +257,7 @@ export function LanguageProvider({ children }) {
         ...englishCopy.workspace,
         ...(workspaceCopyByLanguage[language] || {}),
         nav: { ...englishCopy.workspace.nav, ...(workspaceCopyByLanguage[language]?.nav || {}) },
+        business: { ...englishCopy.workspace.business, ...(businessWorkspaceCopyByLanguage[language] || {}) },
         dashboard: { ...englishCopy.workspace.dashboard, ...(workspaceCopyByLanguage[language]?.dashboard || {}) },
       },
     },

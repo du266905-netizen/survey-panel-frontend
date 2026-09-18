@@ -125,7 +125,8 @@ const typeForProject = (project) => (
 
 export default function BusinessWorkspace() {
   const { user, logout } = useAuth();
-  const { language } = useLanguage();
+  const { language, publicCopy } = useLanguage();
+  const copy = publicCopy.workspace.business;
   const navigate = useNavigate();
   const location = useLocation();
   const [workspace, setWorkspace] = useState({ profile: null, projects: [] });
@@ -325,47 +326,47 @@ export default function BusinessWorkspace() {
       <div className="business-workspace-body business-workspace-body--rail">
         <aside className="business-workspace-rail" aria-label="Workspace navigation">
           <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
-          <button className={activeView === 'home' ? 'is-active' : ''} type="button" title="Research services" aria-label="Research services" onClick={() => setActiveView('home')}>
+          <button className={activeView === 'home' ? 'is-active' : ''} type="button" title={copy.rail.services} aria-label={copy.rail.services} onClick={() => setActiveView('home')}>
             <LayoutDashboard size={20} />
           </button>
-          <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title="Projects" aria-label="Projects" onClick={() => setActiveView('projects')}>
+          <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title={copy.rail.projects} aria-label={copy.rail.projects} onClick={() => setActiveView('projects')}>
             <ClipboardList size={20} />
           </button>
-          <button className={activeView === 'results' ? 'is-active' : ''} type="button" title="Questionnaire results" aria-label="Questionnaire results" onClick={() => setActiveView('results')}>
+          <button className={activeView === 'results' ? 'is-active' : ''} type="button" title={copy.rail.results} aria-label={copy.rail.results} onClick={() => setActiveView('results')}>
             <BarChart3 size={20} />
           </button>
           <NotificationBell className="business-workspace-notification" presentation="modal" />
           <div className="business-workspace-account">
-            <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label="Account menu" aria-expanded={accountMenuOpen}>
+            <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={copy.rail.accountMenu} aria-expanded={accountMenuOpen}>
               <UserRound size={20} />
               <span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span>
             </button>
-            {accountMenuOpen && <div><strong>{user?.displayName || 'Client account'}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate('/business/account'); }}><UserRound size={15} /> Account</button><button type="button" onClick={() => { logout(); navigate('/business/login'); }}><LogOut size={15} /> Sign out</button></div>}
+            {accountMenuOpen && <div><strong>{user?.displayName || copy.rail.clientAccount}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {copy.rail.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.rail.signOut}</button></div>}
           </div>
         </aside>
 
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
           <div className="business-workspace-home-intro">
-            <div><p className="business-eyebrow">RESEARCH SERVICES</p><h1>Research with a clear next step.</h1><p>Start with the decision you need to make in a market. Choose a questionnaire when you need structured answers at scale, or tailored research when the question needs a more considered route.</p></div>
-            <button className="business-home-project-link" type="button" onClick={() => setActiveView('projects')}>View projects <ArrowRight size={16} /></button>
+            <div><p className="business-eyebrow">{copy.services.eyebrow}</p><h1>{copy.services.title}</h1><p>{copy.services.intro}</p></div>
+            <button className="business-home-project-link" type="button" onClick={() => setActiveView('projects')}>{copy.services.viewProjects} <ArrowRight size={16} /></button>
           </div>
           <div className="business-service-launchers">
             <article>
-              <span><ClipboardList size={24} /></span><p>QUESTIONNAIRE DESIGN</p><h2>Custom questionnaire</h2><p>Turn a focused question into a structured questionnaire for a defined audience. Create a private draft, build the questions, and review only real responses in your workspace.</p>
-              <button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>Start a questionnaire brief <ArrowRight size={16} /></button>
+              <span><ClipboardList size={24} /></span><p>{copy.services.questionnaireEyebrow}</p><h2>{copy.services.questionnaireTitle}</h2><p>{copy.services.questionnaireBody}</p>
+              <button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>{copy.services.questionnaireAction} <ArrowRight size={16} /></button>
             </article>
             <article>
-              <span><UsersRound size={24} /></span><p>TAILORED RESEARCH</p><h2>Custom research</h2><p>For cross-market decisions that need interviews, usability work, group discussion, or a more specific recruitment and research plan.</p>
-              <button className="business-button" type="button" onClick={() => chooseProjectType('research')}>Start a research brief <ArrowRight size={16} /></button>
+              <span><UsersRound size={24} /></span><p>{copy.services.researchEyebrow}</p><h2>{copy.services.researchTitle}</h2><p>{copy.services.researchBody}</p>
+              <button className="business-button" type="button" onClick={() => chooseProjectType('research')}>{copy.services.researchAction} <ArrowRight size={16} /></button>
             </article>
           </div>
           <div className="business-workspace-home-lower">
-            <section><p>HOW A REQUEST MOVES FORWARD</p><ol><li><span>01</span><strong>Prepare a brief</strong><small>Describe the decision, people, market and timing.</small></li><li><span>02</span><strong>Discuss the scope</strong><small>Our team reviews the brief and asks for what is needed.</small></li><li><span>03</span><strong>Review a proposal</strong><small>A scope and quote are shared before work begins.</small></li></ol></section>
-            <section className="business-results-entry"><BarChart3 size={24} /><p>QUESTIONNAIRE RESULTS</p><h2>Review what people actually said.</h2><span>{questionnaireProjects.length ? `${questionnaireProjects.length} questionnaire ${questionnaireProjects.length === 1 ? 'project is' : 'projects are'} available to review.` : 'Results appear here after a questionnaire has been prepared and receives answers.'}</span><button type="button" onClick={() => setActiveView('results')}>Open results <ArrowRight size={16} /></button></section>
+            <section><p>{copy.services.processEyebrow}</p><ol>{copy.services.processSteps.map(([title, description], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><strong>{title}</strong><small>{description}</small></li>)}</ol></section>
+            <section className="business-results-entry"><BarChart3 size={24} /><p>{copy.results.eyebrow}</p><h2>{copy.results.title}</h2><span>{questionnaireProjects.length ? `${questionnaireProjects.length} ${questionnaireProjects.length === 1 ? copy.results.availableOne : copy.results.availableMany}` : copy.results.emptyIntro}</span><button type="button" onClick={() => setActiveView('results')}>{copy.results.open} <ArrowRight size={16} /></button></section>
           </div>
         </section> : activeView === 'results' ? <section className="business-projects business-results-index">
-          <div className="business-projects-head"><div><p className="business-eyebrow">QUESTIONNAIRE RESULTS</p><h1>Results</h1><p>Question summaries and individual answers are available only for questionnaires in this workspace. This area never uses demonstration data.</p></div><button className="business-home-project-link" type="button" onClick={() => setActiveView('home')}>Research services <ArrowRight size={16} /></button></div>
-          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> Loading results</div> : questionnaireProjects.length ? <div className="business-results-index-list">{questionnaireProjects.map((project) => <article key={project.id}><div><p>QUESTIONNAIRE</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} responses received</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>View results <ArrowRight size={16} /></Link></article>)}</div> : <section className="business-results-index-empty"><BarChart3 size={30} /><h2>No questionnaire results yet.</h2><p>Start a custom questionnaire, add its questions, and collect answers. Once responses are received, their summaries and answer records will appear here.</p><button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>Start a questionnaire brief <ArrowRight size={16} /></button></section>}
+          <div className="business-projects-head"><div><p className="business-eyebrow">{copy.results.eyebrow}</p><h1>{copy.results.indexTitle}</h1><p>{copy.results.indexIntro}</p></div><button className="business-home-project-link" type="button" onClick={() => setActiveView('home')}>{copy.rail.services} <ArrowRight size={16} /></button></div>
+          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> Loading results</div> : questionnaireProjects.length ? <div className="business-results-index-list">{questionnaireProjects.map((project) => <article key={project.id}><div><p>{copy.services.questionnaireEyebrow}</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <section className="business-results-index-empty"><BarChart3 size={30} /><h2>{copy.results.noResultsTitle}</h2><p>{copy.results.noResultsBody}</p><button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>{copy.services.questionnaireAction} <ArrowRight size={16} /></button></section>}
         </section> : <section className="business-projects">
           <div className="business-projects-head">
             <div>
@@ -374,7 +375,7 @@ export default function BusinessWorkspace() {
               <p>Keep each research brief, proposal, and confirmed next step in one place.</p>
             </div>
             <div className="business-project-head-actions">
-              <Link className="business-button" to="/business/access">Contact sales <ArrowRight size={17} /></Link>
+              <Link className="business-button" to={withLanguage('/business/access', language)}>Contact sales <ArrowRight size={17} /></Link>
             </div>
           </div>
 
@@ -596,33 +597,29 @@ export default function BusinessWorkspace() {
         <section className="business-onboarding" aria-labelledby="business-onboarding-title">
           <div className="business-onboarding-shell">
             <img src="/guanyisearch-project-mark.png" alt="GuanyiSearch" />
-            <span className="business-onboarding-step">Step {onboardingStep + 1} of {onboarding.researchRole === 'ORGANIZATION' ? 3 : 2}</span>
+            <span className="business-onboarding-step">{copy.onboarding.step.replace('{current}', onboardingStep + 1).replace('{total}', onboarding.researchRole === 'ORGANIZATION' ? 3 : 2)}</span>
             <h1 id="business-onboarding-title">
-              {onboardingStep === 0 && 'How will you use GuanyiSearch?'}
-              {onboardingStep === 1 && 'What would you like to understand?'}
-              {onboardingStep === 2 && 'What kind of organisation are you?'}
+              {copy.onboarding.titles[onboardingStep]}
             </h1>
             <p className="business-onboarding-intro">
-              {onboardingStep === 0 && 'Choose the account context that best describes your work. You can still request either type of research service.'}
-              {onboardingStep === 1 && 'Choose the closest starting point. Your research brief will carry the detail when you are ready.'}
-              {onboardingStep === 2 && 'This helps us understand the context for your research request. It does not change what you can ask for.'}
+              {copy.onboarding.intros[onboardingStep]}
             </p>
             {onboardingStep === 0 && <div className="business-onboarding-options business-onboarding-options--two">
-              <button type="button" className={onboarding.researchRole === 'INDEPENDENT' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'INDEPENDENT', organizationType: 'INDEPENDENT_RESEARCHER' }))}><UserRound size={23} /><strong>Individual</strong><small>I am exploring a question in my own capacity, for study, learning, or an independent project.</small></button>
-              <button type="button" className={onboarding.researchRole === 'ORGANIZATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'ORGANIZATION', organizationType: current.organizationType === 'INDEPENDENT_RESEARCHER' ? '' : current.organizationType }))}><UsersRound size={23} /><strong>Organisation</strong><small>I am planning research for a business, institution, public body, or non-profit organisation.</small></button>
+              <button type="button" className={onboarding.researchRole === 'INDEPENDENT' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'INDEPENDENT', organizationType: 'INDEPENDENT_RESEARCHER' }))}><UserRound size={23} /><strong>{copy.onboarding.individual[0]}</strong><small>{copy.onboarding.individual[1]}</small></button>
+              <button type="button" className={onboarding.researchRole === 'ORGANIZATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'ORGANIZATION', organizationType: current.organizationType === 'INDEPENDENT_RESEARCHER' ? '' : current.organizationType }))}><UsersRound size={23} /><strong>{copy.onboarding.organisation[0]}</strong><small>{copy.onboarding.organisation[1]}</small></button>
             </div>}
             {onboardingStep === 1 && <div className="business-onboarding-options business-onboarding-options--three">
-              <button type="button" className={onboarding.researchIntent === 'INDEPENDENT_RESEARCH' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'INDEPENDENT_RESEARCH' }))}><ClipboardList size={22} /><strong>Explore a research question</strong><small>I want a considered way to learn from people in a place or community.</small></button>
-              <button type="button" className={onboarding.researchIntent === 'MARKET_EXPLORATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_EXPLORATION' }))}><Sparkles size={22} /><strong>Understand a local market</strong><small>I want to learn how people, context, or local expression differ in a region.</small></button>
-              <button type="button" className={onboarding.researchIntent === 'MARKET_DECISION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_DECISION' }))}><BarChart3 size={22} /><strong>Prepare a market decision</strong><small>I need evidence for a product, brand, channel, or market-entry decision.</small></button>
+              <button type="button" className={onboarding.researchIntent === 'INDEPENDENT_RESEARCH' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'INDEPENDENT_RESEARCH' }))}><ClipboardList size={22} /><strong>{copy.onboarding.intents[0][0]}</strong><small>{copy.onboarding.intents[0][1]}</small></button>
+              <button type="button" className={onboarding.researchIntent === 'MARKET_EXPLORATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_EXPLORATION' }))}><Sparkles size={22} /><strong>{copy.onboarding.intents[1][0]}</strong><small>{copy.onboarding.intents[1][1]}</small></button>
+              <button type="button" className={onboarding.researchIntent === 'MARKET_DECISION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_DECISION' }))}><BarChart3 size={22} /><strong>{copy.onboarding.intents[2][0]}</strong><small>{copy.onboarding.intents[2][1]}</small></button>
             </div>}
             {onboardingStep === 2 && <div className="business-onboarding-options business-onboarding-options--three">
-              {organizationTypeOptions.map(({ value, title, description, icon: Icon }) => <button type="button" key={value} className={onboarding.organizationType === value ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, organizationType: value }))}><Icon size={22} /><strong>{title}</strong><small>{description}</small></button>)}
+              {organizationTypeOptions.map(({ value, icon: Icon }, index) => <button type="button" key={value} className={onboarding.organizationType === value ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, organizationType: value }))}><Icon size={22} /><strong>{copy.onboarding.organisationTypes[index][0]}</strong><small>{copy.onboarding.organisationTypes[index][1]}</small></button>)}
             </div>}
             <footer>
-              {onboardingStep > 0 && <button type="button" onClick={() => setOnboardingStep((current) => current - 1)}>Back</button>}
+              {onboardingStep > 0 && <button type="button" onClick={() => setOnboardingStep((current) => current - 1)}>{copy.onboarding.back}</button>}
               <button className="business-button" type="button" disabled={(onboardingStep === 0 && !onboarding.researchRole) || (onboardingStep === 1 && !onboarding.researchIntent) || (onboardingStep === 2 && !onboarding.organizationType) || onboardingSaving} onClick={advanceOnboarding}>
-                {onboardingSaving ? <LoaderCircle className="animate-spin" size={17} /> : onboardingStep === (onboarding.researchRole === 'ORGANIZATION' ? 2 : 1) ? 'Enter workspace' : 'Continue'}
+                {onboardingSaving ? <LoaderCircle className="animate-spin" size={17} /> : onboardingStep === (onboarding.researchRole === 'ORGANIZATION' ? 2 : 1) ? copy.onboarding.enter : copy.onboarding.continue}
                 {!onboardingSaving && <ArrowRight size={17} />}
               </button>
             </footer>
