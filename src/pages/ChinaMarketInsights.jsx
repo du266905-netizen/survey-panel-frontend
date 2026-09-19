@@ -54,22 +54,22 @@ export default function ChinaMarketInsights() {
         </div>
       </section>
 
+      <section className="china-market-capabilities" aria-labelledby="china-market-capabilities-title">
+        <div className="china-market-container">
+          <div className="china-market-section-heading"><p className="china-market-kicker">EXECUTION CAPABILITY</p><h2 id="china-market-capabilities-title">Built for China’s scale, detail and pace.</h2></div>
+          <div className="china-market-capability-grid">
+            {capabilities.map(({ icon: Icon, title, body }, index) => <article key={title}><Icon size={23} strokeWidth={1.65} /><h3><span>{String(index + 1).padStart(2, '0')}</span>{title}</h3><p>{body}</p></article>)}
+          </div>
+        </div>
+      </section>
+
       <section className="china-market-context" aria-labelledby="china-market-statement-title">
         <div className="china-market-container china-market-context-grid">
           <figure className="china-market-context-image"><img src={forbiddenCity} alt="View over Beijing's Forbidden City" loading="lazy" decoding="async" /></figure>
           <div>
             <p className="china-market-kicker">MORE THAN A MARKET LABEL</p>
             <h2 id="china-market-statement-title">China is not one consumer story.</h2>
-            <p>Consumer expectations, language, media, retail, technology and daily life shift between cities, regions and communities. We do not stop at raw data: we connect what people say with the local setting around a decision, helping teams enter, grow or reposition in China with fewer costly blind spots.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="china-market-capabilities" aria-labelledby="china-market-capabilities-title">
-        <div className="china-market-container">
-          <div className="china-market-section-heading"><p className="china-market-kicker">EXECUTION CAPABILITY</p><h2 id="china-market-capabilities-title">Built for China’s scale, detail and pace.</h2></div>
-          <div className="china-market-capability-grid">
-            {capabilities.map(({ icon: Icon, title, body }, index) => <article key={title}><Icon size={23} strokeWidth={1.65} /><h3><span>{String(index + 1).padStart(2, '0')}</span>{title}</h3><p>{body}</p></article>)}
+            <p>From long-held cultural references to fast-moving urban choices, consumer expectations, language, media, retail, technology and daily life shift between cities, regions and communities. Data is stronger when it explains the “why” behind a decision, so we pair local fieldwork with a grounded reading of that context—not just a data file—helping teams enter, grow or reposition in China with fewer costly blind spots.</p>
           </div>
         </div>
       </section>

@@ -6,7 +6,7 @@ import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import './HomeLegacySections.css';
 
-function getFooterGroups(copy) {
+function getFooterGroups(copy, marketCapabilityLabel) {
   return [
   {
     label: copy.about,
@@ -34,7 +34,7 @@ function getFooterGroups(copy) {
     links: [
       { label: copy.questionnaires, to: '/business' },
       { label: copy.studies, to: '/business' },
-      { label: 'China market insights', to: '/china-market-insights' },
+      { label: marketCapabilityLabel, to: '/china-market-insights' },
     ],
   },
   {
@@ -173,7 +173,8 @@ export function HomeFooter() {
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const copy = publicCopy.home.footer;
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
-  const footerGroups = getFooterGroups(copy);
+  const marketCapabilityLabel = language === 'zh-CN' ? '中国市场洞察能力' : language === 'zh-Hant' ? '中國市場洞察能力' : 'China market insights capability';
+  const footerGroups = getFooterGroups(copy, marketCapabilityLabel);
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">

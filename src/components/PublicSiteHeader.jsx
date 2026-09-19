@@ -44,6 +44,11 @@ const itemCopyKey = {
   '/terms': 'terms',
 };
 
+const chinaMarketLabel = {
+  'zh-CN': '中国市场洞察能力',
+  'zh-Hant': '中國市場洞察能力',
+};
+
 export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
@@ -51,6 +56,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuCloseTimer = useRef(null);
+  const marketCapabilityLabel = chinaMarketLabel[language] || 'China market insights capability';
 
   const clearMenuCloseTimer = () => {
     if (menuCloseTimer.current === null) return;
@@ -135,7 +141,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
           </Fragment>
         ))}
         <Link className="atlas-nav-link atlas-nav-link--business" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations}</Link>
-        <Link className="atlas-nav-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>China market insights</Link>
+        <Link className="atlas-nav-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>{marketCapabilityLabel}</Link>
       </nav>
 
       <div className="atlas-nav-actions">
@@ -201,7 +207,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
         <div className="atlas-mobile-direct-links">
           <Link className="atlas-mobile-direct-link" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
-          <Link className="atlas-mobile-direct-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>China market insights <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
+          <Link className="atlas-mobile-direct-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>{marketCapabilityLabel} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         </div>
         <div className="atlas-mobile-language">
           <p><LanguageGlobe size={16} strokeWidth={1.75} /> Language</p>

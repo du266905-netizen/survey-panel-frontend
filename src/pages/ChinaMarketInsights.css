@@ -20,25 +20,26 @@
 .china-market-button:hover { border-color: #17251f; background: #17251f; }
 .china-market-link { color: #f6faf2; font-size: 13px; font-weight: 850; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 
-/* The second screen has one clear image and one clear idea. */
-.china-market-context { margin: 0 28px; background: var(--china-paper); padding: clamp(74px, 9vw, 124px) 0; }
-.china-market-context-grid { display: grid; grid-template-columns: minmax(310px, .92fr) minmax(320px, .8fr); gap: clamp(42px, 8vw, 130px); align-items: center; }
-.china-market-context-image { position: relative; overflow: hidden; min-height: clamp(400px, 45vw, 570px); margin: 0; background: #e5d7bf; }
+/* The second screen is the execution case: dark field, light evidence labels. */
+.china-market-capabilities { margin: 0 28px; border-top: 1px solid rgba(235, 244, 230, .18); background: #18382c; color: #f8f6ef; padding: clamp(62px, 7vw, 90px) 0; }
+.china-market-capabilities .china-market-kicker { color: #c0d9bf; }
+.china-market-section-heading { max-width: 680px; }
+.china-market-section-heading h2 { font-size: clamp(37px, 3.9vw, 54px); }
+.china-market-capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 38px; }
+.china-market-capability-grid article { min-height: 250px; border: 1px solid rgba(236, 246, 233, .24); background: rgba(12, 37, 28, .24); padding: clamp(25px, 3vw, 36px); }
+.china-market-capability-grid svg { color: #c8dc8a; }
+.china-market-capability-grid h3 { display: inline-flex; align-items: center; gap: 8px; margin: 43px 0 0; border-radius: 999px; background: #c8dc8a; color: #18382c; font-size: 14px; font-weight: 850; letter-spacing: -.015em; padding: 8px 12px; }
+.china-market-capability-grid h3 span { color: #315f4c; font-size: 9px; font-weight: 900; letter-spacing: .1em; }
+.china-market-capability-grid p { margin: 14px 0 0; color: rgba(248, 246, 239, .78); font-size: 13px; font-weight: 560; line-height: 1.68; }
+
+/* The third screen keeps one image, one idea, and a tighter reading rhythm. */
+.china-market-context { margin: 0 28px; background: var(--china-paper); padding: clamp(48px, 6vw, 78px) 0; }
+.china-market-context-grid { display: grid; grid-template-columns: minmax(310px, .92fr) minmax(320px, .8fr); gap: clamp(38px, 6vw, 86px); align-items: center; }
+.china-market-context-image { position: relative; overflow: hidden; min-height: clamp(360px, 38vw, 485px); margin: 0; background: #e5d7bf; }
 .china-market-context-image::after { position: absolute; inset: 16px; border: 1px solid rgba(255, 254, 248, .54); content: ''; pointer-events: none; }
 .china-market-context-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 52%; filter: saturate(.79) contrast(1.01); }
 .china-market-context h2 { max-width: 550px; font-size: clamp(37px, 4vw, 55px); }
-.china-market-context p:last-child { max-width: 555px; margin: 21px 0 0; color: #5b6e64; font-size: 15px; font-weight: 560; line-height: 1.72; }
-
-/* The three execution explanations are now the third screen, as ink-green tags. */
-.china-market-capabilities { margin: 0 28px; border-top: 1px solid var(--china-line); background: #e9efe9; padding: clamp(72px, 9vw, 116px) 0; }
-.china-market-section-heading { max-width: 680px; }
-.china-market-section-heading h2 { font-size: clamp(37px, 3.9vw, 54px); }
-.china-market-capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 42px; }
-.china-market-capability-grid article { min-height: 265px; border: 1px solid var(--china-line); background: #fbfaf5; padding: clamp(25px, 3vw, 36px); }
-.china-market-capability-grid svg { color: #3c694f; }
-.china-market-capability-grid h3 { display: inline-flex; align-items: center; gap: 8px; margin: 48px 0 0; border-radius: 999px; background: #183b2e; color: #f8f7f0; font-size: 14px; font-weight: 820; letter-spacing: -.015em; padding: 8px 12px; }
-.china-market-capability-grid h3 span { color: #bfdaae; font-size: 9px; font-weight: 900; letter-spacing: .1em; }
-.china-market-capability-grid p { margin: 14px 0 0; color: #5b6b62; font-size: 13px; font-weight: 560; line-height: 1.68; }
+.china-market-context p:last-child { max-width: 555px; margin: 18px 0 0; color: #5b6e64; font-size: 15px; font-weight: 560; line-height: 1.68; }
 
 .china-market-route { margin: 0 28px; background: #18382c; color: #f8f6ef; padding: clamp(70px, 8vw, 110px) 0; }
 .china-market-route-layout { display: grid; grid-template-columns: minmax(260px, .82fr) minmax(360px, 1fr); gap: clamp(48px, 10vw, 148px); }
