@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { HomeFooter } from '../components/HomeLegacySections';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-import stoneBridge from '../assets/china-market/china-stone-bridge.jpg';
 import forbiddenCity from '../assets/china-market/beijing-forbidden-city.jpg';
 import beijingSkyline from '../assets/china-market/beijing-skyline.jpg';
 import './ChinaMarketInsights.css';
@@ -37,7 +36,7 @@ export default function ChinaMarketInsights() {
 
   return (
     <main className="china-market-page">
-      <PublicSiteHeader />
+      <PublicSiteHeader heroOverlay />
       <section className="china-market-hero">
         <div className="china-market-container china-market-hero-layout">
           <div className="china-market-hero-copy">
@@ -49,31 +48,19 @@ export default function ChinaMarketInsights() {
               <Link className="china-market-link" to={withLanguage('/business', language)}>Explore research services</Link>
             </div>
           </div>
-          <figure className="china-market-hero-image">
+          <figure className="china-market-hero-image" aria-hidden="true">
             <img src={beijingSkyline} alt="Beijing skyline at dusk" decoding="async" />
-            <figcaption><span>REAL DATA · LOCAL CONTEXT</span><strong>See the market beyond the headline.</strong></figcaption>
           </figure>
         </div>
       </section>
 
-      <section className="china-market-statement" aria-labelledby="china-market-statement-title">
-        <div className="china-market-container china-market-statement-grid">
-          <p className="china-market-kicker">MORE THAN A MARKET LABEL</p>
+      <section className="china-market-context" aria-labelledby="china-market-statement-title">
+        <div className="china-market-container china-market-context-grid">
+          <figure className="china-market-context-image"><img src={forbiddenCity} alt="View over Beijing's Forbidden City" loading="lazy" decoding="async" /></figure>
           <div>
+            <p className="china-market-kicker">MORE THAN A MARKET LABEL</p>
             <h2 id="china-market-statement-title">China is not one consumer story.</h2>
             <p>Consumer expectations, language, media, retail, technology and daily life shift between cities, regions and communities. We do not stop at raw data: we connect what people say with the local setting around a decision, helping teams enter, grow or reposition in China with fewer costly blind spots.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="china-market-scenes" aria-label="China market contexts">
-        <div className="china-market-container china-market-scene-grid">
-          <figure className="china-market-scene china-market-scene--bridge"><img src={stoneBridge} alt="Sunlight across a carved stone bridge in Beijing" loading="lazy" decoding="async" /><figcaption>Context</figcaption></figure>
-          <figure className="china-market-scene china-market-scene--city"><img src={forbiddenCity} alt="Beijing city scene overlooking the Forbidden City" loading="lazy" decoding="async" /><figcaption>Everyday movement</figcaption></figure>
-          <div className="china-market-scene-copy">
-            <p className="china-market-kicker">THE VIEW BEHIND THE BRIEF</p>
-            <h2>Data is stronger when it explains the “why”.</h2>
-            <p>From long-held cultural references to fast-moving urban choices, we pair local fieldwork with a grounded reading of the context—so your team receives more than a data file.</p>
           </div>
         </div>
       </section>
@@ -82,7 +69,7 @@ export default function ChinaMarketInsights() {
         <div className="china-market-container">
           <div className="china-market-section-heading"><p className="china-market-kicker">EXECUTION CAPABILITY</p><h2 id="china-market-capabilities-title">Built for China’s scale, detail and pace.</h2></div>
           <div className="china-market-capability-grid">
-            {capabilities.map(({ icon: Icon, title, body }) => <article key={title}><Icon size={23} strokeWidth={1.65} /><h3>{title}</h3><p>{body}</p></article>)}
+            {capabilities.map(({ icon: Icon, title, body }, index) => <article key={title}><Icon size={23} strokeWidth={1.65} /><h3><span>{String(index + 1).padStart(2, '0')}</span>{title}</h3><p>{body}</p></article>)}
           </div>
         </div>
       </section>

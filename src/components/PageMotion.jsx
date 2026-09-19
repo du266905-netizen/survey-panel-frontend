@@ -45,5 +45,6 @@ export default function PageMotion({ children }) {
     return () => observer.disconnect();
   }, [pathname]);
 
-  return <div className={`page-motion-shell${pathname === '/' ? ' page-motion-shell--home' : ''}`} key={pathname} ref={shellRef}>{children}</div>;
+  const keepsViewportNavigation = pathname === '/' || pathname === '/china-market-insights';
+  return <div className={`page-motion-shell${keepsViewportNavigation ? ' page-motion-shell--home' : ''}`} key={pathname} ref={shellRef}>{children}</div>;
 }
