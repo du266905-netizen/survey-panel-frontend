@@ -53,6 +53,7 @@ import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
+import ChinaMarketInsights from './pages/ChinaMarketInsights';
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -143,6 +144,7 @@ export default function App() {
         <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
         <Route path="/join" element={<JoinChoice />} />
         <Route path="/business" element={<Business />} />
+        <Route path="/china-market-insights" element={<ChinaMarketInsights />} />
         <Route path="/business/access" element={<BusinessAccess />} />
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />

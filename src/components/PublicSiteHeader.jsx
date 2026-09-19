@@ -135,6 +135,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
           </Fragment>
         ))}
         <Link className="atlas-nav-link atlas-nav-link--business" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations}</Link>
+        <Link className="atlas-nav-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>China market insights</Link>
       </nav>
 
       <div className="atlas-nav-actions">
@@ -198,7 +199,10 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
       </div>
 
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
-        <Link className="atlas-mobile-direct-link" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
+        <div className="atlas-mobile-direct-links">
+          <Link className="atlas-mobile-direct-link" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
+          <Link className="atlas-mobile-direct-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>China market insights <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
+        </div>
         <div className="atlas-mobile-language">
           <p><LanguageGlobe size={16} strokeWidth={1.75} /> Language</p>
           <div role="listbox" aria-label="Choose language">

@@ -111,8 +111,8 @@
   .atlas-menu-button { display: inline-flex; padding: 5px; }
   .atlas-mobile-menu { position: absolute; top: calc(100% + 1px); right: 0; left: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding: 24px 5.5vw 29px; border-bottom: 1px solid var(--atlas-rule); background: rgba(247, 247, 243, .98); box-shadow: 0 20px 35px rgba(32, 45, 37, .1); clip-path: inset(0 0 100% 0); pointer-events: none; transition: clip-path 220ms ease; }
   .atlas-mobile-menu.is-open { clip-path: inset(0); pointer-events: auto; }
+  .atlas-mobile-direct-links { display: grid; grid-column: 1 / -1; gap: 12px; border-bottom: 1px solid var(--atlas-rule); padding-bottom: 17px; }
   .atlas-mobile-direct-link, .atlas-mobile-group a { display: flex; align-items: center; justify-content: space-between; color: var(--atlas-ink); font-family: var(--font-serif); font-size: 1.06rem; text-decoration: none; }
-  .atlas-mobile-direct-link { grid-column: 1 / -1; border-bottom: 1px solid var(--atlas-rule); padding-bottom: 17px; }
   .atlas-mobile-group { display: grid; gap: 7px; }
   .atlas-mobile-group > p { margin: 0 0 4px; }
   .atlas-mobile-language { grid-column: 1 / -1; border-bottom: 1px solid var(--atlas-rule); padding-bottom: 19px; }

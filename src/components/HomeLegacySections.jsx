@@ -34,6 +34,7 @@ function getFooterGroups(copy) {
     links: [
       { label: copy.questionnaires, to: '/business' },
       { label: copy.studies, to: '/business' },
+      { label: 'China market insights', to: '/china-market-insights' },
     ],
   },
   {
