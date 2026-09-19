@@ -83,7 +83,6 @@ export default function CommunityHub() {
             <div className="community-hub-research-photo-frame">
               <img src={selectedArea.image} alt="" decoding="async" />
             </div>
-            <img className="community-hub-research-foreground" src={selectedArea.image} alt="" decoding="async" />
           </div>
         ) : (
           <aside className="community-hub-detail" aria-live="polite">
