@@ -147,6 +147,7 @@ export default function BusinessWorkspace() {
   const responseCount = questionnaireProjects.reduce((total, project) => total + Number(project.questionnaire?.responseCount || 0), 0);
   const draftCount = workspace.projects.filter((project) => project.status === 'DRAFT').length;
   const recentProjects = [...workspace.projects].sort((first, second) => new Date(second.updatedAt || 0) - new Date(first.updatedAt || 0)).slice(0, 3);
+  const displayName = String(user?.displayName || user?.email?.split('@')[0] || (language === 'zh-CN' ? '朋友' : 'there')).trim();
 
   useEffect(() => {
     let active = true;
@@ -328,7 +329,7 @@ export default function BusinessWorkspace() {
         </aside>
 
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
-          <header className="business-dashboard-header"><div><h1>{language === 'zh-CN' ? '早上好。' : 'Good morning.'}</h1><p>{language === 'zh-CN' ? '从一个研究目标开始，组织项目、问卷与真实答卷。' : 'Start with a research goal, then organise projects, questionnaires, and real responses.'}</p></div><button className="business-dashboard-avatar" type="button" onClick={() => setAccountMenuOpen((value) => !value)}>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</button></header>
+          <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{language === 'zh-CN' ? '欢迎回来，' : 'Welcome back,'}</span> <strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{language === 'zh-CN' ? '从一个研究目标开始，组织项目、问卷与真实答卷。' : 'Start with a research goal, then organise projects, questionnaires, and real responses.'}</p></div></header>
           <div className="business-dashboard-actions">
             <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{language === 'zh-CN' ? '新建研究' : 'Start new research'}</strong><small>{language === 'zh-CN' ? '选择问卷或定制研究' : 'Choose a questionnaire or tailored study'}</small></div><ArrowRight size={17} /></button>
             <button type="button" onClick={() => setOpenAiStart(true)}><span className="is-amber"><BrainCircuit size={21} /></span><div><strong>Start with AI</strong><small>{language === 'zh-CN' ? '从一句需求开始准备简报' : 'Start a brief from a prompt'}</small></div><ArrowRight size={17} /></button>
