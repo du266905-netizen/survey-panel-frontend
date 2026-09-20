@@ -3,6 +3,7 @@ import {
   ArrowRight,
   BarChart3,
   Building2,
+  BrainCircuit,
   Check,
   ClipboardList,
   FileText,
@@ -14,6 +15,7 @@ import {
   MoreHorizontal,
   Pencil,
   Plus,
+  Search,
   Sparkles,
   Trash2,
   UserRound,
@@ -131,6 +133,8 @@ export default function BusinessWorkspace() {
   const [onboarding, setOnboarding] = useState({ researchRole: '', researchIntent: '', organizationType: '' });
   const [onboardingSaving, setOnboardingSaving] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [openAiStart, setOpenAiStart] = useState(false);
 
   const selectedTypeCopy = briefCopy[projectType];
   const studyFormatLabel = (format) => format === 'SURVEY'
@@ -141,6 +145,9 @@ export default function BusinessWorkspace() {
     ? workspace.projects
     : workspace.projects.filter((project) => project.status === activeFilter);
   const questionnaireProjects = workspace.projects.filter((project) => project.questionnaire);
+  const responseCount = questionnaireProjects.reduce((total, project) => total + Number(project.questionnaire?.responseCount || 0), 0);
+  const draftCount = workspace.projects.filter((project) => project.status === 'DRAFT').length;
+  const recentProjects = [...workspace.projects].sort((first, second) => new Date(second.updatedAt || 0) - new Date(first.updatedAt || 0)).slice(0, 3);
 
   useEffect(() => {
     let active = true;
@@ -178,6 +185,7 @@ export default function BusinessWorkspace() {
   const chooseProjectType = (type) => {
     setProjectType(type);
     setForm({ ...emptyProject, studyFormat: projectTypes[type].format });
+    setEditingProject(null);
     setOpenChooser(false);
     setOpenForm(true);
   };
@@ -307,46 +315,37 @@ export default function BusinessWorkspace() {
 
   return (
     <main className="business-workspace">
+      <div className="business-workspace-shell">
       <div className="business-workspace-body business-workspace-body--rail">
         <aside className="business-workspace-rail" aria-label={copy.rail.navigation}>
-          <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
-          <button className={activeView === 'home' ? 'is-active' : ''} type="button" title={copy.rail.services} aria-label={copy.rail.services} onClick={() => setActiveView('home')}>
-            <LayoutDashboard size={20} />
-          </button>
-          <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title={copy.rail.projects} aria-label={copy.rail.projects} onClick={() => setActiveView('projects')}>
-            <ClipboardList size={20} />
-          </button>
-          <button className={activeView === 'results' ? 'is-active' : ''} type="button" title={copy.rail.results} aria-label={copy.rail.results} onClick={() => setActiveView('results')}>
-            <BarChart3 size={20} />
-          </button>
-          <NotificationBell className="business-workspace-notification" presentation="modal" />
-          <div className="business-workspace-account">
-            <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={copy.rail.accountMenu} aria-expanded={accountMenuOpen}>
-              <UserRound size={20} />
-              <span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span>
-            </button>
-            {accountMenuOpen && <div><strong>{user?.displayName || copy.rail.clientAccount}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {copy.rail.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.rail.signOut}</button></div>}
+          <div className="business-workspace-brand"><img src="/guanyisearch-project-mark.png" alt="" /><strong>guanyisearch</strong></div>
+          <label className="business-workspace-search"><Search size={15} /><input type="search" placeholder={language === 'zh-CN' ? '搜索项目' : 'Search'} /><kbd>⌘ K</kbd></label>
+          <nav className="business-workspace-nav">
+            <button className={activeView === 'home' ? 'is-active' : ''} type="button" onClick={() => setActiveView('home')}><LayoutDashboard size={18} /> {language === 'zh-CN' ? '概览' : 'Overview'}</button>
+            <button className={activeView === 'projects' ? 'is-active' : ''} type="button" onClick={() => setActiveView('projects')}><ClipboardList size={18} /> {copy.rail.projects}</button>
+            <button className={activeView === 'results' ? 'is-active' : ''} type="button" onClick={() => setActiveView('results')}><BarChart3 size={18} /> {copy.rail.results}</button>
+          </nav>
+          <div className="business-workspace-side-section"><span>{language === 'zh-CN' ? '最近项目' : 'Recent projects'}</span>{recentProjects.length ? recentProjects.map((project) => <button type="button" key={project.id} onClick={() => setActiveView('projects')}><i />{project.title}</button>) : <small>{language === 'zh-CN' ? '还没有项目' : 'No projects yet'}</small>}</div>
+          <div className="business-workspace-side-bottom">
+            <NotificationBell className="business-workspace-notification" presentation="modal" />
+            <div className="business-workspace-account">
+              <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={copy.rail.accountMenu} aria-expanded={accountMenuOpen}><span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span><em>{user?.displayName || copy.rail.clientAccount}</em></button>
+              {accountMenuOpen && <div><strong>{user?.displayName || copy.rail.clientAccount}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {copy.rail.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.rail.signOut}</button></div>}
+            </div>
           </div>
         </aside>
 
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
-          <div className="business-workspace-home-intro">
-            <div><p className="business-eyebrow">{copy.services.eyebrow}</p><h1>{copy.services.title}</h1><p>{copy.services.intro}</p></div>
-            <button className="business-home-project-link" type="button" onClick={() => setActiveView('projects')}>{copy.services.viewProjects} <ArrowRight size={16} /></button>
+          <header className="business-dashboard-header"><div><h1>{language === 'zh-CN' ? '早上好。' : 'Good morning.'}</h1><p>{language === 'zh-CN' ? '从一个研究目标开始，组织项目、问卷与真实答卷。' : 'Start with a research goal, then organise projects, questionnaires, and real responses.'}</p></div><button className="business-dashboard-avatar" type="button" onClick={() => setAccountMenuOpen((value) => !value)}>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</button></header>
+          <div className="business-dashboard-actions">
+            <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{language === 'zh-CN' ? '新建研究' : 'Start new research'}</strong><small>{language === 'zh-CN' ? '选择问卷或定制研究' : 'Choose a questionnaire or tailored study'}</small></div><ArrowRight size={17} /></button>
+            <button type="button" onClick={() => setOpenAiStart(true)}><span className="is-amber"><BrainCircuit size={21} /></span><div><strong>Start with AI</strong><small>{language === 'zh-CN' ? '从一句需求开始准备简报' : 'Start a brief from a prompt'}</small></div><ArrowRight size={17} /></button>
+            <button type="button" onClick={() => chooseProjectType('questionnaire')}><span className="is-green"><ClipboardList size={21} /></span><div><strong>{language === 'zh-CN' ? '问卷设计' : 'Questionnaire design'}</strong><small>{language === 'zh-CN' ? '创建私有问卷草稿' : 'Create a private draft'}</small></div><ArrowRight size={17} /></button>
           </div>
-          <div className="business-service-launchers">
-            <article>
-              <span><ClipboardList size={24} /></span><p>{copy.services.questionnaireEyebrow}</p><h2>{copy.services.questionnaireTitle}</h2><p>{copy.services.questionnaireBody}</p>
-              <button className="business-button" type="button" onClick={() => chooseProjectType('questionnaire')}>{copy.services.questionnaireAction} <ArrowRight size={16} /></button>
-            </article>
-            <article>
-              <span><UsersRound size={24} /></span><p>{copy.services.researchEyebrow}</p><h2>{copy.services.researchTitle}</h2><p>{copy.services.researchBody}</p>
-              <button className="business-button" type="button" onClick={() => chooseProjectType('research')}>{copy.services.researchAction} <ArrowRight size={16} /></button>
-            </article>
-          </div>
-          <div className="business-workspace-home-lower">
-            <section><p>{copy.services.processEyebrow}</p><ol>{copy.services.processSteps.map(([title, description], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><strong>{title}</strong><small>{description}</small></li>)}</ol></section>
-            <section className="business-results-entry"><BarChart3 size={24} /><p>{copy.results.eyebrow}</p><h2>{copy.results.title}</h2><span>{questionnaireProjects.length ? `${questionnaireProjects.length} ${questionnaireProjects.length === 1 ? copy.results.availableOne : copy.results.availableMany}` : copy.results.emptyIntro}</span><button type="button" onClick={() => setActiveView('results')}>{copy.results.open} <ArrowRight size={16} /></button></section>
+          {message && <p className="business-workspace-message">{message}</p>}
+          <div className="business-dashboard-grid">
+            <section className="business-dashboard-statistics"><header><div><h2>{language === 'zh-CN' ? '研究概览' : 'Research overview'}</h2><p>{language === 'zh-CN' ? '只显示此工作区的真实记录。' : 'Only real records from this workspace.'}</p></div><button type="button" onClick={() => setActiveView('results')}>{language === 'zh-CN' ? '查看结果' : 'View results'}</button></header><div className="business-dashboard-stats"><article><span><ClipboardList size={17} /></span><small>{language === 'zh-CN' ? '项目' : 'Projects'}</small><strong>{workspace.projects.length}</strong></article><article><span><Pencil size={17} /></span><small>{language === 'zh-CN' ? '草稿' : 'Drafts'}</small><strong>{draftCount}</strong></article><article><span><BarChart3 size={17} /></span><small>{language === 'zh-CN' ? '已收答卷' : 'Responses'}</small><strong>{responseCount}</strong></article></div></section>
+            <section className="business-dashboard-recent"><header><div><h2>{language === 'zh-CN' ? '最近项目' : 'Recent projects'}</h2><p>{language === 'zh-CN' ? '继续处理你的研究工作。' : 'Continue work already in progress.'}</p></div><button type="button" onClick={() => setActiveView('projects')}>{language === 'zh-CN' ? '所有项目' : 'All projects'}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => setActiveView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{projectsCopy.statuses[project.status] || project.status}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{language === 'zh-CN' ? '准备第一份研究简报。' : 'Prepare your first research brief.'}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
           </div>
         </section> : activeView === 'results' ? <section className="business-projects business-results-index">
           <div className="business-projects-head"><div><p className="business-eyebrow">{copy.results.eyebrow}</p><h1>{copy.results.indexTitle}</h1><p>{copy.results.indexIntro}</p></div><button className="business-home-project-link" type="button" onClick={() => setActiveView('home')}>{copy.rail.services} <ArrowRight size={16} /></button></div>
@@ -437,7 +436,21 @@ export default function BusinessWorkspace() {
             </div>
           )}
         </section>}
-      </div>
+      </div></div>
+
+      {openAiStart && (
+        <div className="business-project-modal business-ai-start" role="dialog" aria-modal="true" aria-labelledby="business-ai-start-title">
+          <section>
+            <button className="business-modal-close" type="button" onClick={() => setOpenAiStart(false)} aria-label={briefCopy.close}><X size={18} /></button>
+            <span className="business-ai-start-icon"><BrainCircuit size={23} /></span>
+            <p className="business-eyebrow">START WITH AI</p>
+            <h2 id="business-ai-start-title">{language === 'zh-CN' ? '先说说你想了解什么。' : 'Start with what you want to understand.'}</h2>
+            <p>{language === 'zh-CN' ? '现在会将你的描述带入研究简报。接入 AI 后，它会帮助你整理问题、受众和研究路径；在此之前不会生成或声称任何研究结论。' : 'For now, your description carries into a research brief. When AI is connected, it will help structure questions, audiences, and a research path—never inventing a research finding.'}</p>
+            <label>{language === 'zh-CN' ? '研究目标' : 'Research goal'}<textarea value={aiPrompt} onChange={(event) => setAiPrompt(event.target.value)} placeholder={language === 'zh-CN' ? '例如：我们想了解中国一至四线城市消费者对新产品定位的反应。' : 'For example: understand reactions to a new product position across China.'} /></label>
+            <button className="business-button" type="button" disabled={!aiPrompt.trim()} onClick={() => { setProjectType('questionnaire'); setEditingProject(null); setForm({ ...emptyProject, researchGoal: aiPrompt.trim(), studyFormat: 'SURVEY' }); setOpenAiStart(false); setOpenForm(true); }}>{language === 'zh-CN' ? '继续准备简报' : 'Continue to brief'} <ArrowRight size={17} /></button>
+          </section>
+        </div>
+      )}
 
       {openChooser && (
         <div className="business-project-modal business-project-modal--chooser" role="dialog" aria-modal="true" aria-labelledby="business-project-chooser-title">
