@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, ArrowUpRight, Mail, ShieldCheck } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { requestPasswordReset } from '../api/realApi';
 import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -12,6 +12,9 @@ const recoveryCopy = {
 
 export default function ForgotPassword() {
   const { language } = useLanguage();
+  const location = useLocation();
+  const isBusiness = location.pathname.startsWith('/business/');
+  const signInPath = isBusiness ? '/business/login' : '/login';
   const copy = recoveryCopy[language] || { recovery: 'Account recovery', title: 'Return to your research journey.', body: 'We will send a secure, time-limited link so you can choose a new password and return when you are ready.', secure: 'Secure account recovery', back: 'Back to sign in', reset: 'Password reset', heading: 'Find your way back.', intro: 'Enter the email address linked to your account. If it is recognised, we will send reset instructions right away.', email: 'Email address', sent: 'If the email is valid, password reset instructions have been sent.', sending: 'Sending secure link…', send: 'Send reset link', remembered: 'Remembered your password?', signIn: 'Sign in instead', error: 'Unable to send password reset email.' };
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +29,7 @@ export default function ForgotPassword() {
     setError('');
 
     try {
-      await requestPasswordReset({ email });
+      await requestPasswordReset({ email, accountType: isBusiness ? 'BUSINESS' : 'PARTICIPANT' });
       setSubmitted(true);
     } catch (caughtError) {
       setError(caughtError.response?.data?.message || copy.error);
@@ -58,7 +61,7 @@ export default function ForgotPassword() {
 
         <section className="recovery-panel" aria-labelledby="forgot-password-title">
           <div className="recovery-panel-inner">
-            <Link className="recovery-return" to={withLanguage('/login', language)}>
+            <Link className="recovery-return" to={withLanguage(signInPath, language)}>
               <ArrowLeft size={16} />
               {copy.back}
             </Link>
@@ -98,7 +101,7 @@ export default function ForgotPassword() {
                 {loading ? <span className="recovery-spinner" aria-hidden="true" /> : <ArrowUpRight size={17} />}
               </button>
 
-              <p className="recovery-help">{copy.remembered} <Link to={withLanguage('/login', language)}>{copy.signIn}</Link></p>
+              <p className="recovery-help">{copy.remembered} <Link to={withLanguage(signInPath, language)}>{copy.signIn}</Link></p>
             </form>
           </div>
         </section>

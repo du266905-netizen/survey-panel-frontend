@@ -63,17 +63,25 @@ function joinFallbackCopy(home) {
   };
 }
 
-export default function JoinChoice() {
+const accessCopy = {
+  'zh-CN': { title: '选择你的登录入口。', lede: '根据你的使用身份，进入对应的账户空间。', participantAction: '参与者登录', organisationAction: '研究组织登录' },
+  'zh-Hant': { title: '選擇你的登入入口。', lede: '依你的使用身分，進入對應的帳戶空間。', participantAction: '參與者登入', organisationAction: '研究組織登入' },
+  default: { title: 'Choose your sign-in path.', lede: 'Enter the account space that matches how you work with GuanyiSearch.', participantAction: 'Participant sign in', organisationAction: 'Research organisation sign in' },
+};
+
+export default function JoinChoice({ mode = 'join' }) {
   const { language, publicCopy } = useLanguage();
   const copy = joinCopy[language] || joinFallbackCopy(publicCopy.home);
+  const isSignIn = mode === 'login';
+  const access = accessCopy[language] || accessCopy.default;
 
   return (
     <main className="business-public-page join-choice-page">
       <PublicSiteHeader />
       <section className="join-choice-hero">
         <div className="business-container">
-          <h1>{copy.title}</h1>
-          <p className="business-lede">{copy.lede}</p>
+          <h1>{isSignIn ? access.title : copy.title}</h1>
+          <p className="business-lede">{isSignIn ? access.lede : copy.lede}</p>
           <div className="join-choice-grid">
             <article className="join-choice-card join-choice-card--participant">
               <span className="join-choice-icon"><CircleUserRound size={26} strokeWidth={1.6} /></span>
@@ -81,7 +89,7 @@ export default function JoinChoice() {
               <h2>{copy.participantTitle}</h2>
               <p>{copy.participantBody}</p>
               <ul>{copy.participantPoints.map((point) => <li key={point}>{point}</li>)}</ul>
-              <Link to={withLanguage('/register', language)} className="business-button business-button--dark">{copy.participantAction} <ArrowRight size={17} /></Link>
+              <Link to={withLanguage(isSignIn ? '/login' : '/register', language)} className="business-button business-button--dark">{isSignIn ? access.participantAction : copy.participantAction} <ArrowRight size={17} /></Link>
             </article>
             <article className="join-choice-card join-choice-card--business">
               <span className="join-choice-icon"><BriefcaseBusiness size={26} strokeWidth={1.6} /></span>
@@ -89,7 +97,7 @@ export default function JoinChoice() {
               <h2>{copy.organisationTitle}</h2>
               <p>{copy.organisationBody}</p>
               <ul>{copy.organisationPoints.map((point) => <li key={point}>{point}</li>)}</ul>
-              <Link to={withLanguage('/business/login', language)} className="business-button">{copy.organisationAction} <ArrowRight size={17} /></Link>
+              <Link to={withLanguage('/business/login', language)} className="business-button">{isSignIn ? access.organisationAction : copy.organisationAction} <ArrowRight size={17} /></Link>
             </article>
           </div>
           <p className="join-choice-note"><ShieldCheck size={16} /> {copy.note}</p>

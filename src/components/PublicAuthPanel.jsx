@@ -316,7 +316,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
           <form className="public-auth-form" onSubmit={handleLogin}>
             <label><span>{copy.email}</span><span className="public-auth-input"><Mail size={17} /><input type="email" autoComplete="email" placeholder="you@example.com" value={loginForm.email} onChange={(event) => setLoginForm({ ...loginForm, email: event.target.value })} required /></span></label>
             <label><span>{copy.password}</span><span className="public-auth-input"><LockKeyhole size={17} /><input type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder={copy.password} value={loginForm.password} onChange={(event) => setLoginForm({ ...loginForm, password: event.target.value })} required /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? copy.hidePassword : copy.showPassword}>{showPassword ? <EyeOff size={17} /> : <Eye size={17} />}</button></span></label>
-            <div className="public-auth-secondary"><Link to={withLanguage('/forgot-password', language)}>{copy.forgot}</Link></div>
+            <div className="public-auth-secondary"><Link to={withLanguage(accountType === 'BUSINESS' ? '/business/forgot-password' : '/forgot-password', language)}>{copy.forgot}</Link></div>
             <button className="public-auth-submit" type="submit" disabled={loading}>{loading ? <LoaderCircle className="animate-spin" size={18} /> : copy.signIn}{!loading && <Check size={17} />}</button>
             {businessLoginMissing && <button className="public-auth-email-cta" type="button" onClick={() => changeMode('register')}>{businessCopy.createWorkspace}</button>}
           </form>

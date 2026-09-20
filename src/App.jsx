@@ -143,6 +143,7 @@ export default function App() {
         <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" authOnly /></PublicEntry>} />
         <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
         <Route path="/join" element={<JoinChoice />} />
+        <Route path="/access" element={<PublicEntry><JoinChoice mode="login" /></PublicEntry>} />
         <Route path="/business" element={<Business />} />
         <Route path="/china-market-insights" element={<ChinaMarketInsights />} />
         <Route path="/business/access" element={<BusinessAccess />} />
@@ -155,6 +156,8 @@ export default function App() {
         <Route path="/business/s/:publicId" element={<PublicBusinessQuestionnaire />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/business/forgot-password" element={<ForgotPassword />} />
+        <Route path="/business/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PublicPage><Privacy /></PublicPage>} />
         <Route path="/terms" element={<PublicPage><Terms /></PublicPage>} />
         <Route path="/business/terms" element={<PublicPage><BusinessResearcherTerms /></PublicPage>} />

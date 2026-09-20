@@ -187,7 +187,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
             </div>
           </div>
         </div>
-        {!user && <Link className="atlas-sign-in" to={withLanguage('/login', language)}>{publicCopy.navigation.signIn}</Link>}
+        {!user && <Link className="atlas-sign-in" to={withLanguage('/access', language)}>{publicCopy.navigation.signIn}</Link>}
         <Link className="atlas-register" to={withLanguage(user ? (isBusinessRole(user.role) ? '/business/workspace' : '/dashboard') : '/join', language)}>
           {user ? publicCopy.navigation.workspace : publicCopy.navigation.join}
           <ArrowUpRight size={17} strokeWidth={1.8} />

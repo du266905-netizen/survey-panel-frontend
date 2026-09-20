@@ -318,8 +318,8 @@ export const verifyEmailCode = async ({ email, code }) => {
   return { data: response.data };
 };
 
-export const requestPasswordReset = async ({ email }) => {
-  const response = await apiClient.post('/api/auth/forgot-password', { email });
+export const requestPasswordReset = async ({ email, accountType }) => {
+  const response = await apiClient.post('/api/auth/forgot-password', accountType ? { email, accountType } : { email });
   return { data: response.data };
 };
 

@@ -156,7 +156,7 @@ function LandingNavigation({ search }) {
         </nav>
 
         <div className="landing-site-nav-actions">
-          <Link to={{ pathname: '/login', search }} onClick={closeNavigation}>Sign in</Link>
+          <Link to={{ pathname: '/access', search }} onClick={closeNavigation}>Sign in</Link>
           <Link className="landing-site-nav-join" to={{ pathname: '/register', search }} onClick={closeNavigation}>Join the panel <ArrowRight size={16} /></Link>
         </div>
 
@@ -190,7 +190,7 @@ function LandingNavigation({ search }) {
             </section>
           ))}
           <div className="landing-site-nav-mobile-actions">
-            <Link to={{ pathname: '/login', search }} onClick={closeNavigation}>Sign in</Link>
+            <Link to={{ pathname: '/access', search }} onClick={closeNavigation}>Sign in</Link>
             <Link to={{ pathname: '/register', search }} onClick={closeNavigation}>Join the panel <ArrowRight size={16} /></Link>
           </div>
         </nav>

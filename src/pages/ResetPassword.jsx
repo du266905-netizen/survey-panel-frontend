@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Eye, EyeOff, KeyRound, ShieldCheck } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../api/realApi';
 import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -12,6 +12,9 @@ const resetCopy = {
 
 export default function ResetPassword() {
   const { language } = useLanguage();
+  const location = useLocation();
+  const isBusiness = location.pathname.startsWith('/business/');
+  const signInPath = isBusiness ? '/business/login' : '/login';
   const copy = resetCopy[language] || { kicker: 'Secure reset', title: 'Set a password that is yours alone.', body: 'Your account, participation history, and reward record remain in one place. Choose a new password to continue.', secure: 'Protected account access', back: 'Back to sign in', newPassword: 'New password', heading: 'Keep your account secure.', intro: 'Choose a strong password for your GuanyiSearch account. Your reset link is checked when you save it.', strength: 'Password strength', strong: 'Strong', good: 'Good', fair: 'Fair', weak: 'Weak', characters: '8+ characters', cases: 'Upper and lower case', number: 'Number or symbol', confirm: 'Confirm password', confirmPlaceholder: 'Confirm your new password', updated: 'Password updated. You can sign in with your new password.', saving: 'Saving password…', update: 'Update password', showPassword: 'Show password', hidePassword: 'Hide password', errorLink: 'Invalid or expired reset link.', errorMatch: 'Passwords do not match.', errorReset: 'Unable to reset password.' };
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email') || '';
@@ -83,7 +86,7 @@ export default function ResetPassword() {
 
         <section className="recovery-panel" aria-labelledby="reset-password-title">
           <div className="recovery-panel-inner">
-            <Link className="recovery-return" to={withLanguage('/login', language)}>
+            <Link className="recovery-return" to={withLanguage(signInPath, language)}>
               <ArrowLeft size={16} />
               {copy.back}
             </Link>
@@ -159,7 +162,7 @@ export default function ResetPassword() {
               {error && <p className="recovery-message is-error" role="alert">{error}</p>}
 
               {completed ? (
-                <Link className="recovery-submit" to={withLanguage('/login', language)}><span>{copy.back}</span><ArrowUpRight size={17} /></Link>
+                <Link className="recovery-submit" to={withLanguage(signInPath, language)}><span>{copy.back}</span><ArrowUpRight size={17} /></Link>
               ) : (
                 <button className="recovery-submit" type="submit" disabled={loading}>
                   <span>{loading ? copy.saving : copy.update}</span>
