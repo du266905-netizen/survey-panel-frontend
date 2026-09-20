@@ -89,7 +89,7 @@ export default function JoinChoice() {
               <h2>{copy.organisationTitle}</h2>
               <p>{copy.organisationBody}</p>
               <ul>{copy.organisationPoints.map((point) => <li key={point}>{point}</li>)}</ul>
-              <Link to={withLanguage('/business', language)} className="business-button">{copy.organisationAction} <ArrowRight size={17} /></Link>
+              <Link to={withLanguage('/business/login', language)} className="business-button">{copy.organisationAction} <ArrowRight size={17} /></Link>
             </article>
           </div>
           <p className="join-choice-note"><ShieldCheck size={16} /> {copy.note}</p>
