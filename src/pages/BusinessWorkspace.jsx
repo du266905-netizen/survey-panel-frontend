@@ -15,7 +15,6 @@ import {
   MoreHorizontal,
   Pencil,
   Plus,
-  Search,
   Sparkles,
   Trash2,
   UserRound,
@@ -315,23 +314,16 @@ export default function BusinessWorkspace() {
 
   return (
     <main className="business-workspace">
-      <div className="business-workspace-shell">
       <div className="business-workspace-body business-workspace-body--rail">
         <aside className="business-workspace-rail" aria-label={copy.rail.navigation}>
-          <div className="business-workspace-brand"><img src="/guanyisearch-project-mark.png" alt="" /><strong>guanyisearch</strong></div>
-          <label className="business-workspace-search"><Search size={15} /><input type="search" placeholder={language === 'zh-CN' ? '搜索项目' : 'Search'} /><kbd>⌘ K</kbd></label>
-          <nav className="business-workspace-nav">
-            <button className={activeView === 'home' ? 'is-active' : ''} type="button" onClick={() => setActiveView('home')}><LayoutDashboard size={18} /> {language === 'zh-CN' ? '概览' : 'Overview'}</button>
-            <button className={activeView === 'projects' ? 'is-active' : ''} type="button" onClick={() => setActiveView('projects')}><ClipboardList size={18} /> {copy.rail.projects}</button>
-            <button className={activeView === 'results' ? 'is-active' : ''} type="button" onClick={() => setActiveView('results')}><BarChart3 size={18} /> {copy.rail.results}</button>
-          </nav>
-          <div className="business-workspace-side-section"><span>{language === 'zh-CN' ? '最近项目' : 'Recent projects'}</span>{recentProjects.length ? recentProjects.map((project) => <button type="button" key={project.id} onClick={() => setActiveView('projects')}><i />{project.title}</button>) : <small>{language === 'zh-CN' ? '还没有项目' : 'No projects yet'}</small>}</div>
-          <div className="business-workspace-side-bottom">
-            <NotificationBell className="business-workspace-notification" presentation="modal" />
-            <div className="business-workspace-account">
-              <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={copy.rail.accountMenu} aria-expanded={accountMenuOpen}><span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span><em>{user?.displayName || copy.rail.clientAccount}</em></button>
-              {accountMenuOpen && <div><strong>{user?.displayName || copy.rail.clientAccount}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {copy.rail.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.rail.signOut}</button></div>}
-            </div>
+          <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
+          <button className={activeView === 'home' ? 'is-active' : ''} type="button" title={copy.rail.services} aria-label={copy.rail.services} onClick={() => setActiveView('home')}><LayoutDashboard size={20} /></button>
+          <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title={copy.rail.projects} aria-label={copy.rail.projects} onClick={() => setActiveView('projects')}><ClipboardList size={20} /></button>
+          <button className={activeView === 'results' ? 'is-active' : ''} type="button" title={copy.rail.results} aria-label={copy.rail.results} onClick={() => setActiveView('results')}><BarChart3 size={20} /></button>
+          <NotificationBell className="business-workspace-notification" presentation="modal" />
+          <div className="business-workspace-account">
+            <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={copy.rail.accountMenu} aria-expanded={accountMenuOpen}><UserRound size={20} /><span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span></button>
+            {accountMenuOpen && <div><strong>{user?.displayName || copy.rail.clientAccount}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {copy.rail.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.rail.signOut}</button></div>}
           </div>
         </aside>
 
@@ -436,7 +428,7 @@ export default function BusinessWorkspace() {
             </div>
           )}
         </section>}
-      </div></div>
+      </div>
 
       {openAiStart && (
         <div className="business-project-modal business-ai-start" role="dialog" aria-modal="true" aria-labelledby="business-ai-start-title">
