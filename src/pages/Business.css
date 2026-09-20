@@ -610,3 +610,15 @@
 .business-dashboard-recent > div:not(.business-dashboard-empty) { position: relative; z-index: 1; gap: 10px; }.business-dashboard-recent > div > button { border: 0; border-radius: 15px; background: rgba(255,255,255,.73); box-shadow: inset 0 0 0 1px rgba(40, 86, 61, .11); padding: 14px; }.business-dashboard-recent > div > button:hover { box-shadow: inset 0 0 0 1px rgba(40, 86, 61, .28), 0 8px 18px rgba(38, 72, 49, .08); }
 @media (max-width: 900px) { .business-dashboard-header { min-height: 0; }.business-dashboard-actions > button { min-height: 100px; } }
 @media (max-width: 620px) { .business-dashboard-header { border-radius: 18px; padding: 27px 22px; }.business-dashboard-header h1 { flex-wrap: wrap; font-size: 38px !important; }.business-dashboard-actions { gap: 12px; }.business-dashboard-actions > button { min-height: 88px; border-radius: 16px; padding: 15px; }.business-dashboard-actions > button > span { width: 39px; height: 39px; border-radius: 12px; }.business-dashboard-statistics, .business-dashboard-recent { border-radius: 18px; padding: 20px; } }
+
+/* The research contact surface shares the workspace's calm card language without changing its enquiry flow. */
+.business-contact-layout { width: min(100%, 1280px); gap: 18px; border-radius: 26px; background: linear-gradient(118deg, #f5faf3 0%, #eaf3e8 56%, #e1eddf 100%); box-shadow: inset 0 0 0 1px rgba(34, 78, 54, .1); overflow: hidden; }
+.business-contact-intro--art { position: relative; top: auto; height: min(680px, calc(100svh - 112px)); border-radius: 0; background: #214b37; }
+.business-contact-intro--art::before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(0deg, rgba(18, 57, 39, .82), rgba(18, 57, 39, .1) 63%); content: ''; }
+.business-contact-intro--art::after { position: absolute; z-index: 2; right: -82px; bottom: -112px; width: 270px; height: 270px; border: 1px solid rgba(235, 247, 233, .34); border-radius: 50%; content: ''; }
+.business-contact-intro--art > div { z-index: 3; max-width: min(470px, 84%); border-radius: 17px; background: rgba(246, 251, 244, .91); box-shadow: 0 14px 30px rgba(17, 52, 36, .14); }
+.business-contact-layout .business-contact-form { min-height: 0; align-self: stretch; background: transparent; padding: clamp(34px, 5vw, 72px); }
+.business-contact-layout .business-contact-form > label, .business-contact-layout .business-contact-grid label { color: #365b47; font-weight: 650; }
+.business-contact-layout .business-contact-form input, .business-contact-layout .business-contact-form textarea, .business-contact-layout .business-contact-form select { border-color: rgba(40, 85, 60, .16); border-radius: 12px; background: rgba(255, 255, 255, .75); }
+.business-contact-layout .business-contact-form .business-button { border: 0; border-radius: 999px; background: linear-gradient(135deg, #174634, #285c44); box-shadow: 0 12px 22px rgba(29, 70, 49, .14); }
+@media (max-width: 800px) { .business-contact-layout { border-radius: 20px; }.business-contact-intro--art { height: 330px; }.business-contact-layout .business-contact-form { padding: 28px 22px 34px; } }
