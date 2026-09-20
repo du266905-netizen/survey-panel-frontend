@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Check, ChevronLeft, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { googleLogin, login, register, sendEmailCode, verifyEmailCode } from '../api/realApi';
+import { googleLogin, login, register, sendEmailCode } from '../api/realApi';
 import { useAuth } from './AuthContext';
 import { useLanguage, withLanguage } from './LanguageContext';
 import TurnstileWidget from './TurnstileWidget';
@@ -265,7 +265,6 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
     setLoading(true);
     setError('');
     try {
-      await verifyEmailCode({ email: registerForm.email, code: registerForm.verificationCode });
       finishAuth(
         await register({
           ...registerForm,
