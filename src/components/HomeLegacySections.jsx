@@ -195,17 +195,17 @@ const globalContent = {
   en: {
     label: 'Cross-regional consumer research',
     title: 'Cross-regional consumption. Shared insight, shared growth.',
-    body: 'Consumer behaviour, brands and culture move across borders. We connect research networks across Greater China, Asia-Pacific, the Middle East, Europe and North America, helping teams compare local context, identify shared momentum and turn regional evidence into practical next steps for sustained growth.',
+    body: 'Consumer behaviour, brands and culture move across borders. We connect research networks across Greater China, Asia-Pacific, the Middle East, Europe and North America—helping teams connect cross-regional opportunity with local action, and turn shared consumer signals into practical next steps for entry, collaboration and sustained growth.',
   },
   'zh-CN': {
     label: '跨区域消费研究',
     title: '跨区域消费，让洞察共享，让发展共进。',
-    body: '消费、品牌与文化不会止步于单一市场。我们连接大中华区、亚太、中东、欧洲与北美的研究网络，帮助团队比较不同本地语境、识别共性与差异，并以跨区域证据支持进入、协同与持续发展的下一步。',
+    body: '消费、品牌与文化不会止步于单一市场。我们连接大中华区、亚太、中东、欧洲与北美的研究网络，帮助团队将跨区域机会与本地行动连接起来，并把共享的消费信号转化为进入、协同与持续发展的下一步。',
   },
   'zh-Hant': {
     label: '跨區域消費研究',
     title: '跨區域消費，讓洞察共享，讓發展共進。',
-    body: '消費、品牌與文化不會止步於單一市場。我們連結大中華區、亞太、中東、歐洲與北美的研究網絡，協助團隊比較不同在地語境、辨識共性與差異，並以跨區域證據支持進入、協同與持續發展的下一步。',
+    body: '消費、品牌與文化不會止步於單一市場。我們連結大中華區、亞太、中東、歐洲與北美的研究網絡，協助團隊把跨區域機會與在地行動連結起來，並把共享的消費訊號轉化為進入、協同與持續發展的下一步。',
   },
 };
 
