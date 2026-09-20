@@ -191,6 +191,24 @@ export default function HomeAtlas() {
       <CommunityHub />
       <HomeGlobalSection />
 
+      <section className="atlas-evidence" aria-label={publicCopy.navigation.about}>
+        <div className="atlas-evidence-frame">
+          <div className="atlas-evidence-video">
+            <iframe
+              src="https://player.mediadelivery.net/embed/745435/cff19686-e67a-4701-bbc6-9121c85d5d5b?autoplay=true&loop=false&muted=true&preload=true&responsive=true"
+              title={publicCopy.hero.eyebrow}
+              loading="lazy"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+            />
+          </div>
+          <div className="atlas-evidence-copy">
+            <p>{copy.evidence}</p>
+            <p className="atlas-evidence-statement">{copy.evidenceStatement}</p>
+          </div>
+        </div>
+      </section>
+
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">
           <p className="atlas-contact-kicker">{copy.contactKicker}</p>
@@ -291,23 +309,6 @@ export default function HomeAtlas() {
         </div>
       </section>
 
-      <section className="atlas-evidence" aria-label={publicCopy.navigation.about}>
-        <div className="atlas-evidence-frame">
-          <div className="atlas-evidence-video">
-            <iframe
-              src="https://player.mediadelivery.net/embed/745435/cff19686-e67a-4701-bbc6-9121c85d5d5b?autoplay=true&loop=false&muted=true&preload=true&responsive=true"
-              title={publicCopy.hero.eyebrow}
-              loading="lazy"
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
-              allowFullScreen
-            />
-          </div>
-          <div className="atlas-evidence-copy">
-            <p>{copy.evidence}</p>
-            <p className="atlas-evidence-statement">{copy.evidenceStatement}</p>
-          </div>
-        </div>
-      </section>
       <HomeLegacySections />
       <CookieConsentBanner />
     </main>
