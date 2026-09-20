@@ -191,19 +191,43 @@ export function HomeFooter() {
   );
 }
 
+const globalContent = {
+  en: {
+    label: 'Cross-regional consumer research',
+    title: 'Cross-regional consumption. Research beyond one market.',
+    body: 'Consumer behaviour, brands and culture move across borders. We connect research networks and partners across Asia-Pacific, Europe and the Middle East, helping teams compare local context, test opportunities and turn regional evidence into a practical next move.',
+  },
+  'zh-CN': {
+    label: '跨区域消费研究',
+    title: '跨区域消费，让你的区域研究不再局部维艰。',
+    body: '消费、品牌与文化不会止步于单一市场。我们连接亚太、欧洲与中东等区域的研究网络与合作伙伴，帮助团队比较不同本地语境、验证市场机会，并将跨区域洞察转化为清晰的下一步。',
+  },
+  'zh-Hant': {
+    label: '跨區域消費研究',
+    title: '跨區域消費，讓你的區域研究不再局部維艱。',
+    body: '消費、品牌與文化不會止步於單一市場。我們連結亞太、歐洲與中東等區域的研究網絡與合作夥伴，協助團隊比較不同在地語境、驗證市場機會，並將跨區域洞察轉化為清晰的下一步。',
+  },
+};
+
+export function HomeGlobalSection() {
+  const { language } = useLanguage();
+  const copy = globalContent[language] || globalContent.en;
+
+  return (
+    <section className="home-global-section" aria-labelledby="home-global-title">
+      <div className="home-continuation-container home-global-layout">
+        <div className="home-global-visual"><div className="home-globe-frame"><GlobalGlobe /></div></div>
+        <div className="home-global-copy"><p className="home-section-label">{copy.label}</p><h2 id="home-global-title">{copy.title}</h2><p>{copy.body}</p></div>
+      </div>
+    </section>
+  );
+}
+
 export default function HomeLegacySections() {
   const { publicCopy } = useLanguage();
   const copy = publicCopy.home;
   return (
     <div className="home-continuation">
-
-      <section className="home-global-section" aria-labelledby="home-global-title">
-        <div className="home-continuation-container home-global-layout">
-          <div className="home-global-visual"><div className="home-globe-frame"><GlobalGlobe /></div></div>
-          <div className="home-global-copy"><h2 id="home-global-title">{copy.globalTitle}</h2><p>{copy.globalBody}</p></div>
-        </div>
-      </section>
-
       <section className="home-rewards-section" aria-labelledby="home-rewards-title">
         <div className="home-continuation-container home-rewards-layout">
           <div className="home-rewards-heading"><p className="home-section-label">{copy.rewardsLabel}</p><h2 id="home-rewards-title">{copy.rewardsTitle}</h2><p>{copy.rewardsBody}</p></div>

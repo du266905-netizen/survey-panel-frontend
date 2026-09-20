@@ -3,7 +3,7 @@ import { ArrowUpRight, LoaderCircle, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import CommunityHub from './CommunityHub';
-import HomeLegacySections from '../components/HomeLegacySections';
+import HomeLegacySections, { HomeGlobalSection } from '../components/HomeLegacySections';
 import CookieConsentBanner from '../components/CookieConsentBanner';
 import { useAuth } from '../components/AuthContext';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -189,6 +189,7 @@ export default function HomeAtlas() {
       </section>
 
       <CommunityHub />
+      <HomeGlobalSection />
 
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">

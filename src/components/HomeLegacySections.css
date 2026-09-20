@@ -43,6 +43,7 @@
 .home-globe-frame .landing-global-globe { position: relative; z-index: 1; width: min(76%, 292px); aspect-ratio: 1; }
 .home-globe-frame .landing-global-globe-canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
 .home-global-copy { max-width: 680px; border-left: 1px solid var(--continuation-rule); padding: 8px 0 8px clamp(28px, 4vw, 54px); }
+.home-global-copy .home-section-label { margin: 0 0 16px; }
 .home-global-copy h2 { max-width: 610px; font-size: clamp(45px, 5vw, 72px); }
 .home-global-copy > p:last-child { max-width: 560px; margin: 22px 0 0; color: var(--continuation-muted); font-size: 17px; line-height: 1.78; }
 .home-rewards-section { position: relative; overflow: hidden; padding: clamp(72px, 8vw, 116px) 0; background: radial-gradient(circle at 84% 10%, rgba(194, 171, 114, .13), transparent 26%); }

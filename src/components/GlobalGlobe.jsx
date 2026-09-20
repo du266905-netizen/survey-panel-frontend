@@ -8,6 +8,11 @@ const land = feature(landTopology, landTopology.objects.land);
 const graticule = geoGraticule().step([20, 20]);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
 const autoRotationDegreesPerSecond = 5.5;
+const regionalMarkers = [
+  { coordinates: [112, 19] },
+  { coordinates: [16, 51] },
+  { coordinates: [48, 27] },
+];
 
 export default function GlobalGlobe() {
   const canvasRef = useRef(null);
@@ -91,6 +96,40 @@ export default function GlobalGlobe() {
         }
       }
       context.restore();
+
+      const projectVisiblePoint = (coordinates) => {
+        let projected;
+        const stream = projection.stream({
+          point(x, y) { projected = [x, y]; },
+          lineStart() {},
+          lineEnd() {},
+          polygonStart() {},
+          polygonEnd() {},
+          sphere() {},
+        });
+        stream.point(coordinates[0], coordinates[1]);
+        return projected;
+      };
+
+      regionalMarkers.forEach((marker) => {
+        const projected = projectVisiblePoint(marker.coordinates);
+        if (!projected) return;
+        const [x, y] = projected;
+        const markerRadius = clamp(radius * 0.026, 4.6, 6.2);
+
+        context.beginPath();
+        context.arc(x, y, markerRadius * 1.8, 0, Math.PI * 2);
+        context.fillStyle = 'rgba(183, 122, 54, 0.2)';
+        context.fill();
+
+        context.beginPath();
+        context.arc(x, y, markerRadius, 0, Math.PI * 2);
+        context.fillStyle = '#1b3a2c';
+        context.fill();
+        context.strokeStyle = '#f4efe2';
+        context.lineWidth = 1.15;
+        context.stroke();
+      });
 
       const paperFalloff = context.createRadialGradient(center - radius * 0.26, center - radius * 0.28, radius * 0.08, center, center, radius * 1.04);
       paperFalloff.addColorStop(0, 'rgba(255, 255, 252, 0)');
