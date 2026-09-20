@@ -4,8 +4,8 @@ import { ArrowLeft, ArrowRight, LoaderCircle } from 'lucide-react';
 import PublicAuthPanel from '../components/PublicAuthPanel';
 import { submitBusinessInquiry } from '../api/realApi';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
-import createWorkspace from '../assets/business/create-workspace.jpg';
-import signInWorkspace from '../assets/business/sign-in-workspace.jpg';
+import researcherRegistrationTeam from '../assets/business/researcher-registration-team.jpg';
+import researcherLoginMobile from '../assets/business/researcher-login-mobile.jpg';
 import contactSalesCity from '../assets/business/contact-sales-city.jpg';
 import { HomeFooter } from '../components/HomeLegacySections';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -46,7 +46,7 @@ export default function BusinessAccess() {
     <main className="business-access-page business-contact-page">
       <Link className="business-access-brand" to={withLanguage('/business', language)}><ArrowLeft size={16} /> {copy.back}</Link>
       {authMode ? (
-        <div className="business-login-layout"><section className={`business-login-intro business-login-intro--${authMode}`}><img src={authMode === 'login' ? signInWorkspace : createWorkspace} alt="" decoding="async" /><div><p className="business-eyebrow">{copy.eyebrow}</p><h1>{authMode === 'login' ? copy.loginTitle : copy.registerTitle}</h1><p>{authMode === 'login' ? copy.loginIntro : copy.registerIntro}</p></div></section><div className="business-access-panel"><PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(withLanguage(nextMode === 'login' ? '/business/login' : '/business/register', language), { replace: true })} accountType="BUSINESS" /></div></div>
+        <div className="business-login-layout"><section className={`business-login-intro business-login-intro--${authMode}`}><img src={authMode === 'login' ? researcherLoginMobile : researcherRegistrationTeam} alt="" decoding="async" /><div><p className="business-eyebrow">{copy.eyebrow}</p><h1>{authMode === 'login' ? copy.loginTitle : copy.registerTitle}</h1><p>{authMode === 'login' ? copy.loginIntro : copy.registerIntro}</p></div></section><div className="business-access-panel"><PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(withLanguage(nextMode === 'login' ? '/business/login' : '/business/register', language), { replace: true })} accountType="BUSINESS" /></div></div>
       ) : (
         <div className="business-contact-layout">
           <section className="business-contact-intro business-contact-intro--art"><img src={contactSalesCity} alt="" decoding="async" /><div><p className="business-eyebrow">BUSINESS RESEARCH</p><h1>Turn your next question into useful evidence.</h1><p>Tell us what you need to learn. We will help you find the right research route for your team.</p></div></section>

@@ -9,10 +9,10 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   min-height: 66px;
-  padding: 0 clamp(24px, 2.6vw, 46px);
-  width: min(72vw, 1180px);
+  padding: 0 clamp(24px, 2.6vw, 42px);
+  width: min(calc(100% - 48px), 1320px);
   margin: 18px auto 0;
   border: 1px solid var(--atlas-rule);
   border-radius: 3px;
@@ -25,10 +25,10 @@
 .atlas-brand { display: inline-flex; align-items: center; width: max-content; }
 .atlas-brand-mark { display: block; width: auto; height: 40px; max-width: 53px; object-fit: contain; }
 .atlas-nav-links, .atlas-nav-actions { display: flex; align-items: center; }
-.atlas-nav-links { justify-content: center; gap: 2px; }
+.atlas-nav-links { min-width: 0; justify-content: center; gap: 3px; }
 .atlas-nav-group { position: relative; display: flex; align-items: center; }
 .atlas-nav-trigger, .atlas-menu-button { appearance: none; border: 0; color: var(--atlas-ink); background: transparent; cursor: pointer; }
-.atlas-nav-trigger, .atlas-nav-link { display: inline-flex; align-items: center; gap: 5px; padding: 11px 9px; color: var(--atlas-ink); font-size: .84rem; font-weight: 700; text-decoration: none; }
+.atlas-nav-trigger, .atlas-nav-link { display: inline-flex; align-items: center; gap: 5px; padding: 11px 8px; color: var(--atlas-ink); font-size: .84rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
 .atlas-nav-link--business { margin-left: 3px; }
 .atlas-nav-trigger svg { transition: transform 180ms ease; }
 .atlas-nav-group:has(.atlas-nav-menu.is-open) .atlas-nav-trigger svg { transform: rotate(180deg); }
@@ -39,7 +39,7 @@
 .atlas-nav-menu-item:hover, .atlas-nav-menu-item:focus-visible { background: #e8ede5; outline: none; }
 .atlas-nav-menu-item span, .atlas-mobile-group > p { color: #1d604a; font-size: .68rem; font-weight: 850; letter-spacing: .13em; line-height: 1.25; text-transform: uppercase; }
 .atlas-nav-menu-item strong { font-family: var(--font-serif); font-size: 1.03rem; }
-.atlas-nav-actions { justify-content: flex-end; gap: 13px; }
+.atlas-nav-actions { justify-content: flex-end; gap: 12px; }
 .atlas-language-group { position: relative; display: flex; align-items: center; }
 .atlas-language-trigger { display: inline-flex; align-items: center; gap: 7px; border: 0; color: var(--atlas-ink); background: transparent; cursor: pointer; padding: 8px 3px; }
 .atlas-language-trigger > svg:last-child { transition: transform 180ms ease; }
@@ -60,7 +60,7 @@
   top: 18px;
   right: 0;
   left: 0;
-  width: min(72vw, 1180px);
+  width: min(calc(100% - 48px), 1320px);
   margin: 0 auto;
   border: 1px solid rgba(255, 253, 249, .26);
   border-radius: 3px;
