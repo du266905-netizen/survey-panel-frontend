@@ -9,10 +9,34 @@ const graticule = geoGraticule().step([20, 20]);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
 const autoRotationDegreesPerSecond = 5.5;
 const regionalMarkers = [
-  { coordinates: [112, 19] },
-  { coordinates: [16, 51] },
-  { coordinates: [48, 27] },
+  { id: 'china-mainland', coordinates: [116.4, 39.9] },
+  { id: 'macau', coordinates: [113.5, 22.2] },
+  { id: 'hong-kong', coordinates: [114.2, 22.3] },
+  { id: 'thailand', coordinates: [100.5, 13.7] },
+  { id: 'malaysia', coordinates: [101.7, 3.1] },
+  { id: 'singapore', coordinates: [103.8, 1.35] },
+  { id: 'philippines', coordinates: [121, 14.6] },
+  { id: 'japan', coordinates: [139.7, 35.7] },
+  { id: 'south-korea', coordinates: [127, 37.5] },
+  { id: 'indonesia', coordinates: [106.8, -6.2] },
+  { id: 'vietnam', coordinates: [106.7, 10.8] },
+  { id: 'saudi-arabia', coordinates: [46.7, 24.7] },
+  { id: 'united-arab-emirates', coordinates: [55.3, 25.2] },
+  { id: 'qatar', coordinates: [51.5, 25.3] },
+  { id: 'egypt', coordinates: [31.2, 30] },
+  { id: 'united-kingdom', coordinates: [-0.1, 51.5] },
+  { id: 'germany', coordinates: [13.4, 52.5] },
+  { id: 'france', coordinates: [2.35, 48.85] },
+  { id: 'united-states', coordinates: [-74, 40.7] },
 ];
+const markersById = new Map(regionalMarkers.map((marker) => [marker.id, marker]));
+const regionalConnections = [
+  ['china-mainland', 'macau'], ['china-mainland', 'hong-kong'], ['china-mainland', 'japan'], ['china-mainland', 'south-korea'],
+  ['china-mainland', 'vietnam'], ['china-mainland', 'thailand'], ['china-mainland', 'philippines'], ['china-mainland', 'malaysia'],
+  ['malaysia', 'singapore'], ['malaysia', 'indonesia'], ['thailand', 'vietnam'], ['vietnam', 'philippines'],
+  ['china-mainland', 'saudi-arabia'], ['saudi-arabia', 'united-arab-emirates'], ['united-arab-emirates', 'qatar'], ['qatar', 'egypt'],
+  ['saudi-arabia', 'germany'], ['germany', 'france'], ['france', 'united-kingdom'], ['france', 'united-states'],
+].map(([from, to]) => ({ type: 'LineString', coordinates: [markersById.get(from).coordinates, markersById.get(to).coordinates] }));
 
 export default function GlobalGlobe() {
   const canvasRef = useRef(null);
@@ -111,14 +135,22 @@ export default function GlobalGlobe() {
         return projected;
       };
 
+      context.strokeStyle = 'rgba(27, 58, 44, 0.48)';
+      context.lineWidth = clamp(radius * 0.005, 0.58, 0.86);
+      regionalConnections.forEach((connection) => {
+        context.beginPath();
+        path(connection);
+        context.stroke();
+      });
+
       regionalMarkers.forEach((marker) => {
         const projected = projectVisiblePoint(marker.coordinates);
         if (!projected) return;
         const [x, y] = projected;
-        const markerRadius = clamp(radius * 0.026, 4.6, 6.2);
+        const markerRadius = clamp(radius * 0.015, 2.6, 3.8);
 
         context.beginPath();
-        context.arc(x, y, markerRadius * 1.8, 0, Math.PI * 2);
+        context.arc(x, y, markerRadius * 1.95, 0, Math.PI * 2);
         context.fillStyle = 'rgba(183, 122, 54, 0.2)';
         context.fill();
 
