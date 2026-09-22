@@ -37,6 +37,10 @@
   ],
   "rewrites": [
     {
+      "source": "/email/welcome-reading-space.jpg",
+      "destination": "/email/welcome-research-feedback.jpg"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
