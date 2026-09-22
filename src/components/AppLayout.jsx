@@ -127,7 +127,7 @@ export default function AppLayout({ children }) {
 
   return (
     <ProfileSurveyProvider enabled={isPanelist}>
-      <div className={`app-shell min-h-screen${isAdmin ? ' app-shell-admin' : ''}`}>
+      <div className={`app-shell notranslate min-h-screen${isAdmin ? ' app-shell-admin' : ''}`} translate="no" data-translate="no">
         <div className="app-shell-grain" aria-hidden="true" />
         <header className="app-topbar sticky top-0 z-30">
           <div className="flex h-[76px] items-center justify-between px-5 sm:px-7">

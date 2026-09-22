@@ -314,7 +314,7 @@ export default function BusinessWorkspace() {
   };
 
   return (
-    <main className="business-workspace">
+    <main className="business-workspace notranslate" translate="no" data-translate="no">
       <div className="business-workspace-body business-workspace-body--rail">
         <aside className="business-workspace-rail" aria-label={copy.rail.navigation}>
           <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />

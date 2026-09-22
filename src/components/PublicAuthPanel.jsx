@@ -293,7 +293,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const termsLabel = accountType === 'BUSINESS' ? businessCopy.businessTerms : language === 'zh-CN' ? '服务条款' : language === 'zh-Hant' ? '服務條款' : 'Terms of Service';
 
   return (
-    <section ref={panelRef} className="public-auth-panel" aria-labelledby="public-auth-title">
+    <section ref={panelRef} className="public-auth-panel notranslate" translate="no" data-translate="no" aria-labelledby="public-auth-title">
       <div className="public-auth-tabs" role="tablist" aria-label="Account access">
         <button className={isLogin ? 'is-active' : ''} onClick={() => changeMode('login')} type="button" role="tab" aria-selected={isLogin}>{copy.signIn}</button>
         <button className={!isLogin ? 'is-active' : ''} onClick={() => changeMode('register')} type="button" role="tab" aria-selected={!isLogin}>{copy.create}</button>
