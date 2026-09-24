@@ -685,6 +685,7 @@
 .business-ai-dock .business-ai-brief-data-notice { color: #7c8b81; font: 500 10px/1.5 var(--font-sans); margin: 5px 0 0; }
 .business-ai-dock .business-ai-brief-error { margin: 9px 0 0; }
 .business-ai-dock .business-ai-save { margin-top: 14px; }
-.business-ai-conversation.is-started .business-ai-conversation-log { padding-bottom: 238px; }
-.business-ai-conversation-end { display: block; height: 1px; scroll-margin-bottom: 242px; }
-@media (max-width: 620px) { .business-ai-dock { bottom: 12px; left: calc(50% + 29px); width: calc(100vw - 82px); }.business-ai-dock::before { inset: -26px -18px -12px; }.business-ai-conversation.is-started .business-ai-conversation-log { padding-bottom: 220px; }.business-ai-conversation-end { scroll-margin-bottom: 224px; } }
+.business-ai-conversation.is-started .business-ai-dock-meta { display: none; }
+.business-ai-conversation.is-started .business-ai-conversation-log { padding-bottom: 144px; }
+.business-ai-conversation-end { display: block; height: 1px; scroll-margin-bottom: 148px; }
+@media (max-width: 620px) { .business-ai-dock { bottom: 12px; left: calc(50% + 29px); width: calc(100vw - 82px); }.business-ai-dock::before { inset: -26px -18px -12px; }.business-ai-conversation.is-started .business-ai-conversation-log { padding-bottom: 128px; }.business-ai-conversation-end { scroll-margin-bottom: 132px; } }
