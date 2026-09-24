@@ -6,6 +6,7 @@ import {
   BrainCircuit,
   Check,
   ClipboardList,
+  Eye,
   FileText,
   GraduationCap,
   LayoutDashboard,
