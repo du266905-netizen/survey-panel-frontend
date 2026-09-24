@@ -27,6 +27,7 @@ import { completeBusinessResearchOnboarding, createBusinessProject, decideBusine
 import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import welcomeMarketImage from '../assets/business/welcome-market-exploration.jpg';
 import './Business.css';
 
 const emptyProject = {
@@ -103,6 +104,30 @@ function storeOnboarding(user, value) {
   window.localStorage.setItem(key, JSON.stringify({ ...value, savedAt: new Date().toISOString() }));
 }
 
+function welcomeStorageKey(user) {
+  const identity = String(user?.id || user?.email || '').trim().toLowerCase();
+  return identity ? `guanyi-business-welcome:${identity}` : '';
+}
+
+function hasSeenWorkspaceWelcome(user) {
+  const key = welcomeStorageKey(user);
+  if (!key || typeof window === 'undefined') return false;
+  return window.localStorage.getItem(key) === 'seen';
+}
+
+function storeWorkspaceWelcome(user) {
+  const key = welcomeStorageKey(user);
+  if (!key || typeof window === 'undefined') return;
+  window.localStorage.setItem(key, 'seen');
+}
+
+function workspaceGreeting(language, returningUser) {
+  if (returningUser) return language === 'zh-CN' ? '欢迎回来，' : 'Welcome back,';
+  const hour = new Date().getHours();
+  if (language === 'zh-CN') return hour < 12 ? '早上好，' : hour < 18 ? '下午好，' : '晚上好，';
+  return hour < 12 ? 'Good morning,' : hour < 18 ? 'Good afternoon,' : 'Good evening,';
+}
+
 export default function BusinessWorkspace() {
   const { user, logout } = useAuth();
   const { language, publicCopy, navigateToLanguage } = useLanguage();
@@ -135,6 +160,8 @@ export default function BusinessWorkspace() {
   const [onboarding, setOnboarding] = useState({ researchRole: '', researchIntent: '', organizationType: '' });
   const [onboardingSaving, setOnboardingSaving] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [welcomeOpen, setWelcomeOpen] = useState(false);
+  const [returningUser, setReturningUser] = useState(false);
 
   const selectedTypeCopy = briefCopy[projectType];
   const studyFormatLabel = (format) => format === 'SURVEY'
@@ -169,6 +196,9 @@ export default function BusinessWorkspace() {
       .then((response) => {
         if (!active) return;
         setWorkspace(response.data);
+        const hasSeenWelcome = hasSeenWorkspaceWelcome(user);
+        setReturningUser(hasSeenWelcome);
+        setWelcomeOpen(!hasSeenWelcome);
         const savedOnThisDevice = readStoredOnboarding(user);
         const savedOrganizationType = organizationTypeOptions.some((option) => option.value === response.data.profile?.organizationType)
           ? response.data.profile.organizationType
@@ -354,6 +384,12 @@ export default function BusinessWorkspace() {
     } finally { setSubmitting(false); }
   };
 
+  const closeWelcome = () => {
+    storeWorkspaceWelcome(user);
+    setWelcomeOpen(false);
+    setReturningUser(true);
+  };
+
   return (
     <main className="business-workspace">
       <div className="business-workspace-body business-workspace-body--rail">
@@ -365,7 +401,7 @@ export default function BusinessWorkspace() {
           <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title={copy.rail.projects} aria-label={copy.rail.projects} onClick={() => selectWorkspaceView('projects')}><FileText size={20} /></button>
           <button className={activeView === 'results' ? 'is-active' : ''} type="button" title={copy.rail.results} aria-label={copy.rail.results} onClick={() => selectWorkspaceView('results')}><BarChart3 size={20} /></button>
           <button className="business-workspace-language" type="button" title={language === 'zh-CN' ? 'Switch to English' : '切换到中文'} aria-label={language === 'zh-CN' ? 'Switch to English' : '切换到中文'} onClick={() => navigateToLanguage(language === 'zh-CN' ? 'en-US' : 'zh-CN')}><Languages size={18} /><span>{language === 'zh-CN' ? 'EN' : '中'}</span></button>
-          <NotificationBell className="business-workspace-notification" presentation="modal" />
+          <NotificationBell className="business-workspace-notification" />
           <div className="business-workspace-account">
             <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={copy.rail.accountMenu} aria-expanded={accountMenuOpen}><UserRound size={20} /><span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span></button>
             {accountMenuOpen && <div><strong>{user?.displayName || copy.rail.clientAccount}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {copy.rail.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.rail.signOut}</button></div>}
@@ -373,11 +409,11 @@ export default function BusinessWorkspace() {
         </aside>
 
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
-          <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{language === 'zh-CN' ? '欢迎回来，' : 'Welcome back,'}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{language === 'zh-CN' ? '从一个研究目标开始，组织项目、问卷与真实答卷。' : 'Start with a research goal, then organise projects, questionnaires, and real responses.'}</p></div></header>
+          <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, returningUser)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{language === 'zh-CN' ? '从一个研究目标开始，组织项目、问卷与真实答卷。' : 'Start with a research goal, then organise projects, questionnaires, and real responses.'}</p></div></header>
           <div className="business-dashboard-actions">
             <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{language === 'zh-CN' ? '新建研究' : 'Start new research'}</strong><small>{language === 'zh-CN' ? '选择定制问卷或定制研究' : 'Choose a custom questionnaire or tailored study'}</small></div><ArrowRight size={17} /></button>
             <button type="button" onClick={() => navigate(withLanguage('/business/ai-brief', language))}><span className="is-amber"><BrainCircuit size={21} /></span><div><strong>Start with AI</strong><small>{language === 'zh-CN' ? '用对话开始一份研究简报' : 'Start a research brief in a conversation'}</small></div><ArrowRight size={17} /></button>
-            <button type="button" onClick={() => selectWorkspaceView('questionnaires')}><span className="is-green"><ClipboardList size={21} /></span><div><strong>{language === 'zh-CN' ? '问卷编辑器' : 'Questionnaire editor'}</strong><small>{language === 'zh-CN' ? '新建或继续一份私有问卷草稿' : 'Create or continue a private questionnaire draft'}</small></div><ArrowRight size={17} /></button>
+            <button type="button" onClick={() => selectWorkspaceView('questionnaires')}><span className="is-green"><ClipboardList size={21} /></span><div><strong>{language === 'zh-CN' ? '问卷编辑器' : 'Questionnaire editor'}</strong><small>{language === 'zh-CN' ? '寻找受众群体，并规划问卷研究' : 'Find your audience and plan questionnaire research'}</small></div><ArrowRight size={17} /></button>
           </div>
           {message && <p className="business-workspace-message">{message}</p>}
           <div className="business-dashboard-grid">
@@ -611,7 +647,8 @@ export default function BusinessWorkspace() {
       {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label={projectsCopy.briefDialog.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.briefDialog.eyebrow}</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>{projectsCopy.briefDialog.audience}</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>{projectsCopy.briefDialog.format}</dt><dd>{studyFormatLabel(briefProject.studyFormat)}</dd></div>{briefProject.countries && <div><dt>{projectsCopy.briefDialog.market}</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>{projectsCopy.briefDialog.languages}</dt><dd>{briefProject.languages}</dd></div>}{briefProject.targetParticipants && <div><dt>{projectsCopy.briefDialog.participants}</dt><dd>{briefProject.targetParticipants}</dd></div>}{briefProject.estimatedMinutes && <div><dt>{briefProject.studyFormat === 'SURVEY' ? projectsCopy.briefDialog.completionTime : projectsCopy.briefDialog.sessionTime}</dt><dd>{projectsCopy.briefDialog.minutes.replace('{minutes}', briefProject.estimatedMinutes)}</dd></div>}{briefProject.timeline && <div><dt>{projectsCopy.briefDialog.timing}</dt><dd>{briefProject.timeline}</dd></div>}<div><dt>{projectsCopy.briefDialog.incentives}</dt><dd>{projectsCopy.briefDialog.incentiveLabels[briefProject.incentiveBudget] || projectsCopy.briefDialog.incentiveLabels.NEED_GUIDANCE}</dd></div></dl>{briefProject.additionalContext && <section><strong>{projectsCopy.briefDialog.additional}</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>{projectsCopy.briefDialog.close}</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>{projectsCopy.briefDialog.edit} <Pencil size={15} /></button>}</div></section></div>}
       {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.quote.eyebrow}</p><h2 id="business-quote-title">{projectsCopy.quote.title}</h2><p className="business-form-intro">{projectsCopy.quote.intro}</p><dl><div><dt>{projectsCopy.quote.project}</dt><dd>{quoteProject.title}</dd></div><div><dt>{projectsCopy.quote.quote}</dt><dd>{new Intl.NumberFormat(language, { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>{projectsCopy.quote.validUntil}</dt><dd>{new Intl.DateTimeFormat(language, { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>{projectsCopy.quote.scope}</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>{projectsCopy.quote.terms}</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">{projectsCopy.quote.declineQuestion}<textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder={projectsCopy.quote.declinePlaceholder} /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>{projectsCopy.quote.keepReviewing}</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.declineQuote}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>{projectsCopy.quote.decline}</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.accept} <Check size={16} /></button></>}</div></section></div>}
       {editorStarterOpen && <div className="business-project-modal business-editor-starter-modal" role="dialog" aria-modal="true" aria-labelledby="business-editor-starter-title"><form onSubmit={createEditorDraft}><button className="business-modal-close" type="button" onClick={() => setEditorStarterOpen(false)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{language === 'zh-CN' ? '自助问卷' : 'SELF-SERVICE QUESTIONNAIRE'}</p><h2 id="business-editor-starter-title">{language === 'zh-CN' ? '先为问卷命名。' : 'Name your questionnaire first.'}</h2><p className="business-form-intro">{language === 'zh-CN' ? '这会直接创建一份私有草稿并打开题目编辑器；不会通知参与者或启动研究。' : 'This creates a private draft and opens the question editor. It does not contact participants or start research.'}</p><label>{language === 'zh-CN' ? '问卷名称' : 'Questionnaire name'}<input required minLength="3" value={editorStarter.title} onChange={(event) => setEditorStarter((current) => ({ ...current, title: event.target.value }))} placeholder={language === 'zh-CN' ? '例如：新品使用反馈' : 'For example: New product feedback'} /></label><label>{language === 'zh-CN' ? '这份问卷要帮助你做什么决定？' : 'What decision will this questionnaire support?'}<textarea required minLength="20" value={editorStarter.researchGoal} onChange={(event) => setEditorStarter((current) => ({ ...current, researchGoal: event.target.value }))} placeholder={language === 'zh-CN' ? '例如：判断是否应优化产品定价与卖点。' : 'For example: decide whether to revise product pricing and positioning.'} /></label><label>{language === 'zh-CN' ? '你希望听到谁的看法？' : 'Who do you want to hear from?'}<textarea required minLength="10" value={editorStarter.audienceDescription} onChange={(event) => setEditorStarter((current) => ({ ...current, audienceDescription: event.target.value }))} placeholder={language === 'zh-CN' ? '例如：过去三个月购买过同类产品的成年人。' : 'For example: adults who bought a similar product in the past three months.'} /></label><button className="business-button" type="submit" disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : language === 'zh-CN' ? '打开问卷编辑器' : 'Open questionnaire editor'} {!submitting && <ArrowRight size={16} />}</button></form></div>}
-      {!loading && workspace.profile && !onboardingComplete && (
+      {welcomeOpen && <div className="business-welcome-modal" role="dialog" aria-modal="true" aria-labelledby="business-welcome-title"><section><button className="business-welcome-close" type="button" onClick={closeWelcome} aria-label={language === 'zh-CN' ? '暂时关闭欢迎引导' : 'Dismiss welcome'}><X size={18} /></button><div className="business-welcome-copy"><p>{language === 'zh-CN' ? '欢迎来到 GUANYISEARCH' : 'WELCOME TO GUANYISEARCH'}</p><h2 id="business-welcome-title">{language === 'zh-CN' ? `欢迎，${displayName}。` : `Welcome, ${displayName}.`}</h2><span>{language === 'zh-CN' ? '从真实的市场声音出发，让下一次决策更有把握。只需几分钟，就能探索研究服务、整理问题并规划你想听到的受众。' : 'Start with real market voices and make your next decision with more confidence. In a few minutes, you can explore our research services, shape a question, and plan the audience you need to hear from.'}</span><ul><li>{language === 'zh-CN' ? '把决策问题整理为清晰的研究简报' : 'Turn a decision into a clear research brief'}</li><li>{language === 'zh-CN' ? '探索适合你的问卷与受众规划路径' : 'Explore the questionnaire and audience-planning path that fits'}</li><li>{language === 'zh-CN' ? '在工作区中保存、审核并跟进每一项研究' : 'Save, review, and follow every research request in one workspace'}</li></ul><div><button className="business-button" type="button" onClick={closeWelcome}>{language === 'zh-CN' ? '开始探索' : 'Start exploring'} <ArrowRight size={16} /></button><button type="button" onClick={closeWelcome}>{language === 'zh-CN' ? '稍后再说' : 'Maybe later'}</button></div></div><figure><img src={welcomeMarketImage} alt="" /></figure></section></div>}
+      {!loading && workspace.profile && !onboardingComplete && !welcomeOpen && (
         <section className="business-onboarding" aria-labelledby="business-onboarding-title">
           <header className="business-onboarding-chrome">
             <img src="/guanyisearch-project-mark.png" alt="GuanyiSearch" />
