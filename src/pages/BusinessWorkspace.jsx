@@ -132,8 +132,6 @@ export default function BusinessWorkspace() {
   const [onboarding, setOnboarding] = useState({ researchRole: '', researchIntent: '', organizationType: '' });
   const [onboardingSaving, setOnboardingSaving] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
-  const [aiPrompt, setAiPrompt] = useState('');
-  const [openAiStart, setOpenAiStart] = useState(false);
 
   const selectedTypeCopy = briefCopy[projectType];
   const studyFormatLabel = (format) => format === 'SURVEY'
@@ -332,7 +330,7 @@ export default function BusinessWorkspace() {
           <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{language === 'zh-CN' ? '欢迎回来，' : 'Welcome back,'}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{language === 'zh-CN' ? '从一个研究目标开始，组织项目、问卷与真实答卷。' : 'Start with a research goal, then organise projects, questionnaires, and real responses.'}</p></div></header>
           <div className="business-dashboard-actions">
             <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{language === 'zh-CN' ? '新建研究' : 'Start new research'}</strong><small>{language === 'zh-CN' ? '选择问卷或定制研究' : 'Choose a questionnaire or tailored study'}</small></div><ArrowRight size={17} /></button>
-            <button type="button" onClick={() => setOpenAiStart(true)}><span className="is-amber"><BrainCircuit size={21} /></span><div><strong>Start with AI</strong><small>{language === 'zh-CN' ? '从一句需求开始准备简报' : 'Start a brief from a prompt'}</small></div><ArrowRight size={17} /></button>
+            <button type="button" onClick={() => navigate(withLanguage('/business/ai-brief', language))}><span className="is-amber"><BrainCircuit size={21} /></span><div><strong>Start with AI</strong><small>{language === 'zh-CN' ? '用对话开始一份研究简报' : 'Start a research brief in a conversation'}</small></div><ArrowRight size={17} /></button>
             <button type="button" onClick={() => chooseProjectType('questionnaire')}><span className="is-green"><ClipboardList size={21} /></span><div><strong>{language === 'zh-CN' ? '问卷设计' : 'Questionnaire design'}</strong><small>{language === 'zh-CN' ? '创建私有问卷草稿' : 'Create a private draft'}</small></div><ArrowRight size={17} /></button>
           </div>
           {message && <p className="business-workspace-message">{message}</p>}
@@ -431,19 +429,6 @@ export default function BusinessWorkspace() {
         </section>}
       </div>
 
-      {openAiStart && (
-        <div className="business-project-modal business-ai-start" role="dialog" aria-modal="true" aria-labelledby="business-ai-start-title">
-          <section>
-            <button className="business-modal-close" type="button" onClick={() => setOpenAiStart(false)} aria-label={briefCopy.close}><X size={18} /></button>
-            <span className="business-ai-start-icon"><BrainCircuit size={23} /></span>
-            <p className="business-eyebrow">START WITH AI</p>
-            <h2 id="business-ai-start-title">{language === 'zh-CN' ? '先说说你想了解什么。' : 'Start with what you want to understand.'}</h2>
-            <p>{language === 'zh-CN' ? '现在会将你的描述带入研究简报。接入 AI 后，它会帮助你整理问题、受众和研究路径；在此之前不会生成或声称任何研究结论。' : 'For now, your description carries into a research brief. When AI is connected, it will help structure questions, audiences, and a research path—never inventing a research finding.'}</p>
-            <label>{language === 'zh-CN' ? '研究目标' : 'Research goal'}<textarea value={aiPrompt} onChange={(event) => setAiPrompt(event.target.value)} placeholder={language === 'zh-CN' ? '例如：我们想了解中国一至四线城市消费者对新产品定位的反应。' : 'For example: understand reactions to a new product position across China.'} /></label>
-            <button className="business-button" type="button" disabled={!aiPrompt.trim()} onClick={() => { const initialPrompt = aiPrompt.trim(); try { sessionStorage.setItem('guanyisearch.business-ai-brief.pending.v1', JSON.stringify({ brief: { goal: initialPrompt, audience: '', market: '', sample: '', timeline: '' }, messages: [], activeStep: 0 })); } catch { /* The destination page still receives navigation state. */ } setOpenAiStart(false); navigate(withLanguage('/business/ai-brief', language), { state: { initialPrompt } }); }}>{language === 'zh-CN' ? '开始引导' : 'Start guide'} <ArrowRight size={17} /></button>
-          </section>
-        </div>
-      )}
 
       {openChooser && (
         <div className="business-project-modal business-project-modal--chooser" role="dialog" aria-modal="true" aria-labelledby="business-project-chooser-title">
