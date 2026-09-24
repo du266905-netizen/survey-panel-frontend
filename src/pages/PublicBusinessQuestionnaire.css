@@ -153,6 +153,9 @@
 .public-question-options input {
   accent-color: #285647;
 }
+.public-question-options .public-question-other { align-items: center; flex-wrap: wrap; }
+.public-question-other > input[type="text"], .public-question-other > input:not([type]) { flex: 1 1 180px; min-height: 31px; border: 1px solid rgba(36,56,46,.18); border-radius: 5px; background: #fffefa; color: #1c3428; font: 500 12px var(--font-sans); padding: 0 8px; }
+.public-question-ranking { display: grid; gap: 8px; }.public-question-ranking label { display: grid; grid-template-columns: 24px 18px 1fr; align-items: center; gap: 8px; min-height: 41px; border: 1px solid rgba(36,56,46,.14); background: #fbfcf8; color: #496052; cursor: pointer; font-size: 13px; font-weight: 600; padding: 0 12px; }.public-question-ranking label > span { display: grid; width: 22px; height: 22px; place-items: center; border-radius: 999px; background: #e4efe2; color: #315a45; font-size: 11px; font-weight: 850; }.public-question-ranking input { accent-color: #285647; }.public-question-ranking small { color: #718076; font-size: 11px; font-weight: 600; }.public-rating-labels { display: flex; justify-content: space-between; gap: 12px; color: #708077; font-size: 11px; font-weight: 650; margin-top: 1px; }
 .public-questionnaire-error {
   border: 1px solid #e3b8b8;
   background: #fff3f3;
