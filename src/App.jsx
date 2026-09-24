@@ -53,6 +53,7 @@ import BusinessCustomQuestionnaireRequest from './pages/BusinessCustomQuestionna
 import BusinessAccount from './pages/BusinessAccount';
 import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
+import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
 import ChinaMarketInsights from './pages/ChinaMarketInsights';
@@ -156,6 +157,7 @@ export default function App() {
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
         <Route path="/business/ai-brief" element={<BusinessRoute><BusinessAiBrief /></BusinessRoute>} />
         <Route path="/business/custom-questionnaire" element={<BusinessRoute><BusinessCustomQuestionnaireRequest /></BusinessRoute>} />
+        <Route path="/business/delivery-preview" element={<BusinessRoute><BusinessDeliveryPreview /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessQuestionnaireResults /></BusinessRoute>} />
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireBuilder /></BusinessRoute>} />
