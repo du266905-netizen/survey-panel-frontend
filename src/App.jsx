@@ -5,6 +5,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminSupportTickets from './pages/AdminSupportTickets';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
 import AdminBusinessProjects from './pages/AdminBusinessProjects';
+import AdminDeliveryCenter from './pages/AdminDeliveryCenter';
 import MarketingAssets from './pages/MarketingAssets';
 import AdminPartners from './pages/AdminPartners';
 import AdminPanelists from './pages/AdminPanelists';
@@ -297,6 +298,10 @@ export default function App() {
           <Route
             path="/admin/business-projects"
             element={<AdminRoute><AdminBusinessProjects /></AdminRoute>}
+          />
+          <Route
+            path="/admin/delivery-centre"
+            element={<AdminRoute><AdminDeliveryCenter /></AdminRoute>}
           />
           <Route
             path="/admin/support"
