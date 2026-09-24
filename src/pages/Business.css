@@ -669,6 +669,31 @@
 .business-ai-conversation-log { display: grid; min-height: 0; flex: 0 0 auto; max-width: none; align-content: start; gap: 26px; padding: 72px 0 42px; }
 .business-ai-conversation.is-waiting .business-ai-conversation-log { display: flex; min-height: clamp(360px, calc(100svh - 305px), 690px); flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 0; }.business-ai-conversation.is-waiting .is-opening { width: 100%; text-align: center; }.business-ai-conversation.is-waiting .is-opening h1 { max-width: 760px; margin: 0 auto; font-size: clamp(42px, 5.2vw, 67px); }
 .business-ai-title-question { display: inline; color: inherit; font: inherit; letter-spacing: inherit; margin-left: .04em; }
+
+/* Keep the introductory questionnaire action unmistakably primary on every viewport. */
+.business-custom-intro-copy > div > .business-custom-intro-continue {
+  align-items: center;
+  background: var(--business-forest);
+  border: 1px solid var(--business-forest);
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(31, 83, 62, .16);
+  color: #fff;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 14px;
+  font-weight: 760;
+  gap: 8px;
+  justify-content: center;
+  line-height: 1;
+  min-height: 42px;
+  padding: 0 18px;
+}
+
+.business-custom-intro-copy > div > .business-custom-intro-continue:hover {
+  background: #173f30;
+  border-color: #173f30;
+  color: #fff;
+}
 .business-ai-conversation.is-started .business-ai-conversation-log { padding-top: 64px; }.business-ai-conversation.is-started .is-opening { display: none; }
 .business-ai-starter-example { display: flex; min-height: 33px; max-width: min(760px, 100%); align-items: baseline; justify-content: center; gap: 9px; color: #8a988e; font: 500 18px/1.55 var(--font-sans); margin: 0; text-align: center; }.business-ai-starter-example > span { flex: 0 0 auto; color: #66816e; font-weight: 700; }.business-ai-starter-example > strong { color: #6f8376; font-weight: 500; }.business-ai-starter-example > i { display: inline-block; width: 1px; height: 19px; background: #60806a; animation: business-ai-cursor 1.1s steps(1, end) infinite; vertical-align: -3px; }
 @keyframes business-ai-cursor { 50% { opacity: 0; } }
