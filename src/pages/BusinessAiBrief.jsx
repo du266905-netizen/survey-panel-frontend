@@ -136,12 +136,13 @@ export default function BusinessAiBrief() {
     const nextIndex = activeStep + 1;
     const nextField = steps[nextIndex] || null;
     const updatedBrief = { ...brief, [activeField]: value };
-    const responseText = containsChinese(value) ? copy.zh : text;
+    const shouldReplyInChinese = containsChinese(value) || containsChinese(updatedBrief.goal) || messages.some((message) => containsChinese(message.content));
+    const responseText = shouldReplyInChinese ? copy.zh : text;
     setBrief(updatedBrief);
     setMessages((current) => [...current, { id: `user-${activeField}-${current.length}`, role: 'user', content: value }]);
     setActiveStep(nextIndex); setReply(''); setGuidanceWarning(''); setGuiding(true);
     try {
-      const response = await getResearchBriefGuidance({ brief: updatedBrief, currentField: activeField, nextField, responseLanguage: containsChinese(value) ? 'zh' : 'en' });
+      const response = await getResearchBriefGuidance({ brief: updatedBrief, currentField: activeField, nextField, responseLanguage: shouldReplyInChinese ? 'zh' : 'en' });
       const guidance = response.data.guidance;
       const additions = [guidance.reply];
       if (guidance.suggestedResearchFocus) additions.push(`${responseText.suggestedFocus}: ${guidance.suggestedResearchFocus}`);
