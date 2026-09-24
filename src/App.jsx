@@ -49,6 +49,7 @@ import Business from './pages/Business';
 import BusinessAccess from './pages/BusinessAccess';
 import BusinessWorkspace from './pages/BusinessWorkspace';
 import BusinessAiBrief from './pages/BusinessAiBrief';
+import BusinessCustomQuestionnaireRequest from './pages/BusinessCustomQuestionnaireRequest';
 import BusinessAccount from './pages/BusinessAccount';
 import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
@@ -80,7 +81,7 @@ function MemberRoute({ children }) {
 function BusinessRoute({ children }) {
   const { user } = useAuth();
   return isBusinessRole(user?.role)
-    ? <div className="notranslate" translate="no" data-translate="no">{children}</div>
+    ? children
     : <Navigate to="/business/access" replace />;
 }
 
@@ -154,6 +155,7 @@ export default function App() {
         <Route path="/business/register" element={<BusinessAccess />} />
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
         <Route path="/business/ai-brief" element={<BusinessRoute><BusinessAiBrief /></BusinessRoute>} />
+        <Route path="/business/custom-questionnaire" element={<BusinessRoute><BusinessCustomQuestionnaireRequest /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessQuestionnaireResults /></BusinessRoute>} />
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireBuilder /></BusinessRoute>} />
