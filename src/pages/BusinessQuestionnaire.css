@@ -48,6 +48,7 @@
 .business-question-choices > div > span { color: #799083; font: 800 11px var(--font-sans); text-align: center; }
 .business-question-add-choice { display: inline-flex !important; align-items: center; gap: 4px; }
 .business-question-advanced { display: flex; flex-wrap: wrap; gap: 11px 16px; border-top: 1px solid rgba(36,86,67,.12); color: #597061; font: 650 11px/1.4 var(--font-sans); margin-top: 15px; padding-top: 13px; }
+.business-question-method-note { border-left: 2px solid #8dae8f; color: #65796b; font: 600 11px/1.48 var(--font-sans); margin: 12px 0 0; padding-left: 9px; }
 .business-question-advanced > label { display: inline-flex; align-items: center; gap: 6px; }.business-question-advanced input { accent-color: #285647; }
 .business-inline-number input { width: 52px; min-height: 28px; border: 1px solid rgba(36,86,67,.2); border-radius: 4px; background: #fbfdf9; color: #2c4938; font: 700 11px var(--font-sans); padding: 0 6px; }
 .business-scale-labels { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); flex: 1 1 100%; gap: 8px; }.business-scale-labels input { min-height: 33px; border: 1px solid rgba(36,86,67,.17); border-radius: 5px; background: #fbfdf9; color: #294838; font: 600 11px var(--font-sans); padding: 0 9px; }
