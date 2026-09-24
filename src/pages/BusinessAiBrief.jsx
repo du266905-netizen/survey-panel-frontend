@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, BarChart3, Check, ChevronDown, ClipboardList, LayoutDashboard, LoaderCircle, LogOut, Send, Sparkles, UserRound } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
@@ -39,14 +39,14 @@ function containsChinese(value) { return /[\u3400-\u9FFF]/.test(String(value || 
 
 const copy = {
   en: {
-    projects: 'Projects', newBrief: 'New research brief', opening: () => 'What would you like to research?', exampleLabel: 'For example',
+    projects: 'Projects', newBrief: 'New research brief', opening: () => 'What would you like to research', questionMark: '?', exampleLabel: 'For example',
     next: { audience: 'Thanks — who would you like to hear from?', market: 'Which country, market, or community should this focus on?', sample: 'About how many completed responses would you like to plan for? “Not sure” is fine.', timeline: 'When would you like an answer? A date or rough timeframe is enough.', ready: 'That is enough to prepare a private questionnaire brief. Review the optional details, then save when you are ready.' },
     placeholders: { goal: 'For example: understand how Chinese consumers view AI assistants in everyday life', audience: 'For example: adults in China who have used an AI assistant', market: 'For example: China, Shanghai, or Greater China', sample: 'For example: 300 completed responses, or “not sure”', timeline: 'For example: within two weeks', done: 'Add an optional note' },
     progress: 'Private draft', history: 'Project history', captured: (number) => `${number} of ${steps.length} details captured`, details: 'View draft details', fields: { goal: 'Research question', audience: 'People to hear from', market: 'Market or community', sample: 'Completed responses', timeline: 'Timing' },
     note: 'Draft only — no participant contact, pricing, or research findings.', dataNotice: 'AI assistance uses only the text you choose to send. Do not include personal contact details, confidential information, or files.', guideUnavailable: 'AI guidance is unavailable right now. You can keep going with the local guide.', manualGuide: 'Local guide', suggestedFocus: 'A possible focus', methodNote: 'Planning note', save: 'Save research brief', saving: 'Saving brief…', saveError: 'We could not save this brief. Please try again.', back: 'Back to projects', services: 'Workspace', results: 'Results', account: 'Account', signOut: 'Sign out',
   },
   zh: {
-    projects: '项目', newBrief: '新研究简报', opening: () => '你想研究什么？', exampleLabel: '例如',
+    projects: '项目', newBrief: '新研究简报', opening: () => '你想研究什么', questionMark: '？', exampleLabel: '例如',
     next: { audience: '好的。你希望听到哪些人的看法？', market: '你希望聚焦哪个国家、市场或社群？', sample: '你希望计划收集多少份有效回复？暂时不确定也可以。', timeline: '你希望何时拿到答案？写日期或大致时间范围都可以。', ready: '这些信息已足够准备一份私有问卷简报。你可以查看可选详情，并在准备好后保存。' },
     placeholders: { goal: '例如：了解中国消费者如何看待日常生活中的 AI 助手', audience: '例如：使用过 AI 助手的中国成年人', market: '例如：中国、上海或大中华区', sample: '例如：300 份有效回复，或“暂不确定”', timeline: '例如：两周内', done: '补充一条可选说明' },
     progress: '私有草稿', history: '项目历史', captured: (number) => `已记录 ${number}/${steps.length} 项`, details: '查看草稿详情', fields: { goal: '研究问题', audience: '希望听到谁的看法', market: '市场或社群', sample: '有效回复数量', timeline: '时间要求' },
@@ -86,6 +86,7 @@ export default function BusinessAiBrief() {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [exampleIndex, setExampleIndex] = useState(() => Math.floor(Math.random() * starterPrompts[language === 'zh-CN' ? 'zh' : 'en'].length));
   const [typedExample, setTypedExample] = useState('');
+  const composerRef = useRef(null);
   const title = useMemo(() => projectTitle(brief.goal, text.newBrief), [brief.goal, text.newBrief]);
   const activeField = steps[activeStep];
   const ready = activeStep >= steps.length;
@@ -100,24 +101,30 @@ export default function BusinessAiBrief() {
 
   useEffect(() => {
     if (hasStarted) return undefined;
-    let index = 0;
-    let deleting = false;
-    const timer = window.setInterval(() => {
-      if (!deleting) {
-        index += 1;
-        setTypedExample(example.slice(0, index));
-        if (index >= example.length) deleting = true;
+    let cancelled = false;
+    let timer;
+    const type = (index) => {
+      if (cancelled) return;
+      setTypedExample(example.slice(0, index));
+      if (index < example.length) {
+        timer = window.setTimeout(() => type(index + 1), 74);
       } else {
-        index -= 1;
-        setTypedExample(example.slice(0, Math.max(0, index)));
-        if (index <= 0) {
-          deleting = false;
+        timer = window.setTimeout(() => {
+          if (cancelled) return;
+          setTypedExample('');
           setExampleIndex((current) => (current + 1) % examples.length);
-        }
+        }, 2400);
       }
-    }, deleting ? 24 : 45);
-    return () => window.clearInterval(timer);
+    };
+    type(0);
+    return () => { cancelled = true; window.clearTimeout(timer); };
   }, [example, examples.length, hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted || guiding) return;
+    const frame = window.requestAnimationFrame(() => composerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }));
+    return () => window.cancelAnimationFrame(frame);
+  }, [guiding, hasStarted, messages.length]);
 
   const leaveBrief = () => { clearPendingBrief(); navigate(withLanguage('/business/workspace', language)); };
 
@@ -170,8 +177,8 @@ export default function BusinessAiBrief() {
       <section className="business-ai-brief-surface">
         <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button><details className="business-ai-project-history"><summary>{text.history} <ChevronDown size={14} /></summary><div><p>{text.progress}</p><strong>{title}</strong><span>{text.captured(capturedCount)}</span>{steps.filter((field) => brief[field]).map((field) => <p className="business-ai-history-field" key={field}><Check size={13} /><b>{text.fields[field]}</b><em>{brief[field]}</em></p>)}</div></details></div></header>
         <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={text.newBrief}>
-          <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sparkles size={14} /></span>}{message.opening ? <h1>{message.content}</h1> : <p>{message.content}</p>}</article>)}</div>
-          {!hasStarted && <p className="business-ai-starter-example"><span>{text.exampleLabel}</span><strong>{typedExample}</strong><i aria-hidden="true" /></p>}<form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? text.placeholders[ready ? 'done' : activeField] : ''} aria-label={text.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>
+          <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sparkles size={14} /></span>}{message.opening ? <h1>{message.content}<span className="business-ai-title-question">{text.questionMark}</span></h1> : <p>{message.content}</p>}</article>)}{!hasStarted && <p className="business-ai-starter-example"><span>{text.exampleLabel}</span><strong>{typedExample}</strong><i aria-hidden="true" /></p>}</div>
+          <form className="business-ai-composer" ref={composerRef} onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? text.placeholders[ready ? 'done' : activeField] : ''} aria-label={text.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>
           <p className="business-ai-brief-note">{text.note}</p><p className="business-ai-brief-data-notice">{text.dataNotice}</p>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : text.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}
         </section>
       </section>
