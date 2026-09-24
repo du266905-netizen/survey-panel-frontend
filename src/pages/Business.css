@@ -676,3 +676,15 @@
 .business-ai-brief-page .notification-popover--modal { position: fixed; z-index: 100; top: 50%; right: auto; left: 50%; width: min(420px, calc(100vw - 32px)); border-radius: 16px; transform: translate(-50%, -50%); }.business-ai-brief-page .notification-popover--modal header { padding: 16px 17px; }.business-ai-brief-page .notification-popover--modal .notification-list { max-height: min(480px, calc(100svh - 190px)); }
 .business-ai-conversation > .business-ai-brief-note { margin-top: 16px; }.business-ai-conversation > .business-ai-brief-data-notice { margin-top: 5px; }
 @media (max-width: 620px) { .business-ai-brief-shell { padding-left: 58px; }.business-ai-brief-rail { width: 58px; }.business-ai-brief-header { min-height: 68px; padding: 0 18px; }.business-ai-brief-wordmark { width: 91px; height: 24px; }.business-ai-brief-actions { gap: 5px; }.business-ai-project-history { font-size: 10px; }.business-ai-conversation { width: min(100% - 32px, 860px); min-height: calc(100svh - 68px); padding-bottom: 28px; }.business-ai-conversation.is-waiting .business-ai-conversation-log { min-height: calc(100svh - 290px); }.business-ai-conversation.is-waiting .is-opening h1 { font-size: 40px; }.business-ai-conversation.is-started .business-ai-conversation-log { padding-top: 40px; }.business-ai-starter-example { font-size: 15px; }.business-ai-composer { grid-template-columns: minmax(0, 1fr) 43px; border-radius: 16px; }.business-ai-composer textarea { min-height: 55px; padding: 12px; }.business-ai-composer button { width: 43px; height: 43px; border-radius: 12px; } }
+
+/* The editor is an application dock, never another chat message. */
+.business-ai-dock { position: fixed; z-index: 20; bottom: 18px; left: calc(50% + 37px); width: min(860px, calc(100vw - 130px)); box-sizing: border-box; transform: translateX(-50%); }
+.business-ai-dock::before { position: absolute; z-index: -1; inset: -35px -44px -18px; background: linear-gradient(0deg, rgba(251,252,250,.98) 38%, rgba(251,252,250,.86) 68%, transparent); content: ''; pointer-events: none; }
+.business-ai-dock .business-ai-composer { position: relative; bottom: auto; }
+.business-ai-dock .business-ai-brief-note { color: #64776a; font: 500 11px/1.55 var(--font-sans); margin: 15px 0 0; }
+.business-ai-dock .business-ai-brief-data-notice { color: #7c8b81; font: 500 10px/1.5 var(--font-sans); margin: 5px 0 0; }
+.business-ai-dock .business-ai-brief-error { margin: 9px 0 0; }
+.business-ai-dock .business-ai-save { margin-top: 14px; }
+.business-ai-conversation.is-started .business-ai-conversation-log { padding-bottom: 238px; }
+.business-ai-conversation-end { display: block; height: 1px; scroll-margin-bottom: 242px; }
+@media (max-width: 620px) { .business-ai-dock { bottom: 12px; left: calc(50% + 29px); width: calc(100vw - 82px); }.business-ai-dock::before { inset: -26px -18px -12px; }.business-ai-conversation.is-started .business-ai-conversation-log { padding-bottom: 220px; }.business-ai-conversation-end { scroll-margin-bottom: 224px; } }
