@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, BarChart3, Check, ChevronDown, ClipboardList, LayoutDashboard, LoaderCircle, LogOut, Send, Sparkles, UserRound } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BarChart3, BrainCircuit, Check, ChevronDown, ClipboardList, FileText, LayoutDashboard, LoaderCircle, LogOut, Send, Sparkles, UserRound } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -43,14 +43,14 @@ const copy = {
     next: { audience: 'Thanks — who would you like to hear from?', market: 'Which country, market, or community should this focus on?', sample: 'About how many completed responses would you like to plan for? “Not sure” is fine.', timeline: 'When would you like an answer? A date or rough timeframe is enough.', ready: 'That is enough to prepare a private questionnaire brief. Review the optional details, then save when you are ready.' },
     placeholders: { goal: 'For example: understand how Chinese consumers view AI assistants in everyday life', audience: 'For example: adults in China who have used an AI assistant', market: 'For example: China, Shanghai, or Greater China', sample: 'For example: 300 completed responses, or “not sure”', timeline: 'For example: within two weeks', done: 'Add an optional note' },
     progress: 'Private draft', history: 'Project history', captured: (number) => `${number} of ${steps.length} details captured`, details: 'View draft details', fields: { goal: 'Research question', audience: 'People to hear from', market: 'Market or community', sample: 'Completed responses', timeline: 'Timing' },
-    note: 'Draft only — no participant contact, pricing, or research findings.', dataNotice: 'AI assistance uses only the text you choose to send. Do not include personal contact details, confidential information, or files.', guideUnavailable: 'AI guidance is unavailable right now. You can keep going with the local guide.', manualGuide: 'Local guide', suggestedFocus: 'A possible focus', methodNote: 'Planning note', save: 'Save research brief', saving: 'Saving brief…', saveError: 'We could not save this brief. Please try again.', back: 'Back to projects', services: 'Workspace', results: 'Results', account: 'Account', signOut: 'Sign out',
+    note: 'Draft only — no participant contact, pricing, or research findings.', dataNotice: 'AI assistance uses only the text you choose to send. Do not include personal contact details, confidential information, or files.', guideUnavailable: 'AI guidance is unavailable right now. You can keep going with the local guide.', manualGuide: 'Local guide', suggestedFocus: 'A possible focus', methodNote: 'Planning note', save: 'Continue to questionnaire editor', saving: 'Opening editor…', saveError: 'We could not save this draft. Please try again.', back: 'Back to projects', services: 'Workspace', questionnaires: 'Questionnaire editor', results: 'Results', account: 'Account', signOut: 'Sign out',
   },
   zh: {
     projects: '项目', newBrief: '新研究简报', opening: () => '你想研究什么', questionMark: '？', exampleLabel: '例如',
     next: { audience: '好的。你希望听到哪些人的看法？', market: '你希望聚焦哪个国家、市场或社群？', sample: '你希望计划收集多少份有效回复？暂时不确定也可以。', timeline: '你希望何时拿到答案？写日期或大致时间范围都可以。', ready: '这些信息已足够准备一份私有问卷简报。你可以查看可选详情，并在准备好后保存。' },
     placeholders: { goal: '例如：了解中国消费者如何看待日常生活中的 AI 助手', audience: '例如：使用过 AI 助手的中国成年人', market: '例如：中国、上海或大中华区', sample: '例如：300 份有效回复，或“暂不确定”', timeline: '例如：两周内', done: '补充一条可选说明' },
     progress: '私有草稿', history: '项目历史', captured: (number) => `已记录 ${number}/${steps.length} 项`, details: '查看草稿详情', fields: { goal: '研究问题', audience: '希望听到谁的看法', market: '市场或社群', sample: '有效回复数量', timeline: '时间要求' },
-    note: '这只是草稿，不会联系参与者、确定价格或生成研究结论。', dataNotice: 'AI 协助只会处理你主动发送的文字。请勿输入个人联系方式、保密信息或文件内容。', guideUnavailable: 'AI 引导暂时不可用。你仍可继续使用本地引导。', manualGuide: '本地引导', suggestedFocus: '可考虑的研究重点', methodNote: '规划提示', save: '保存研究简报', saving: '正在保存简报…', saveError: '暂时无法保存这份简报，请重试。', back: '返回项目', services: '工作区', results: '结果', account: '账户', signOut: '退出登录',
+    note: '这只是草稿，不会联系参与者、确定价格或生成研究结论。', dataNotice: 'AI 协助只会处理你主动发送的文字。请勿输入个人联系方式、保密信息或文件内容。', guideUnavailable: 'AI 引导暂时不可用。你仍可继续使用本地引导。', manualGuide: '本地引导', suggestedFocus: '可考虑的研究重点', methodNote: '规划提示', save: '进入问卷编辑器', saving: '正在打开编辑器…', saveError: '暂时无法保存这份草稿，请重试。', back: '返回项目', services: '工作区', questionnaires: '问卷编辑器', results: '结果', account: '账户', signOut: '退出登录',
   },
 };
 
@@ -159,9 +159,10 @@ export default function BusinessAiBrief() {
     setSaving(true); setError('');
     try {
       const parsedSample = Number.parseInt(String(brief.sample).replaceAll(/[^0-9]/g, ''), 10);
-      const response = await createBusinessProject({ title, researchGoal: brief.goal, audienceDescription: brief.audience, studyFormat: 'SURVEY', countries: brief.market, targetParticipants: Number.isFinite(parsedSample) ? parsedSample : undefined, timeline: brief.timeline, incentiveBudget: 'NEED_GUIDANCE', additionalContext: '', selfServiceQuestionnaire: false });
+      const response = await createBusinessProject({ title, researchGoal: brief.goal, audienceDescription: brief.audience, studyFormat: 'SURVEY', countries: brief.market, targetParticipants: Number.isFinite(parsedSample) ? parsedSample : undefined, timeline: brief.timeline, incentiveBudget: 'NEED_GUIDANCE', additionalContext: '', selfServiceQuestionnaire: true });
       clearPendingBrief();
-      navigate(withLanguage('/business/workspace', language), { state: { savedBriefId: response.data.project?.id } });
+      if (response.data.project?.id) navigate(withLanguage(`/business/projects/${response.data.project.id}`, language));
+      else navigate(withLanguage('/business/workspace?view=questionnaires', language));
     } catch { setError(text.saveError); } finally { setSaving(false); }
   };
 
@@ -170,7 +171,9 @@ export default function BusinessAiBrief() {
       <aside className="business-workspace-rail business-ai-brief-rail" aria-label={text.services}>
         <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="guanyisearch" />
         <button type="button" title={text.services} aria-label={text.services} onClick={leaveBrief}><LayoutDashboard size={20} /></button>
-        <button className="is-active" type="button" title={text.projects} aria-label={text.projects} onClick={leaveBrief}><ClipboardList size={20} /></button>
+        <button className="is-active" type="button" title={language === 'zh-CN' ? 'AI 研究引导' : 'AI research guide'} aria-label={language === 'zh-CN' ? 'AI 研究引导' : 'AI research guide'}><BrainCircuit size={20} /></button>
+        <button type="button" title={text.questionnaires} aria-label={text.questionnaires} onClick={() => navigate(withLanguage('/business/workspace?view=questionnaires', language))}><ClipboardList size={20} /></button>
+        <button type="button" title={text.projects} aria-label={text.projects} onClick={() => navigate(withLanguage('/business/workspace?view=projects', language))}><FileText size={20} /></button>
         <button type="button" title={text.results} aria-label={text.results} onClick={() => navigate(withLanguage('/business/workspace?view=results', language))}><BarChart3 size={20} /></button>
         <NotificationBell className="business-workspace-notification" presentation="modal" />
         <div className="business-workspace-account"><button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={text.account} aria-expanded={accountMenuOpen}><UserRound size={20} /><span>{displayName.charAt(0).toUpperCase()}</span></button>{accountMenuOpen && <div><strong>{displayName}</strong><span>{user?.email}</span><button type="button" onClick={() => navigate(withLanguage('/business/account', language))}><UserRound size={15} /> {text.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {text.signOut}</button></div>}</div>

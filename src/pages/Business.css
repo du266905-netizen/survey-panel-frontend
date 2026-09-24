@@ -706,3 +706,21 @@
 .business-ai-conversation-log .is-user p { isolation: isolate; }
 .business-ai-conversation-log .is-user p::first-line { position: relative; }
 @media (max-width: 620px) { .business-ai-brief-header { flex-basis: 68px; }.business-ai-conversation { height: calc(100svh - 68px); }.business-ai-conversation.is-started .business-ai-conversation-log { padding: 40px 0 22px; }.business-ai-dock { padding: 10px 0 12px; }.business-ai-dock::before { inset: -26px -18px 0; }.business-ai-conversation-log { scrollbar-gutter: auto; } }
+
+/* The dashboard is a map of the working flow, not a set of disconnected entry cards. */
+.business-dashboard-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.business-workflow-card { display: grid; grid-template-columns: minmax(220px, .75fr) minmax(0, 1.25fr); gap: clamp(22px, 4vw, 58px); align-items: center; margin-top: 24px; border: 1px solid rgba(35, 82, 57, .12); border-radius: 22px; background: linear-gradient(125deg, #f5faf3, #e9f2e7); padding: clamp(24px, 4vw, 40px); }
+.business-workflow-card p { color: #547766; font: 800 11px/1.3 var(--font-sans); letter-spacing: .13em; margin: 0 0 9px; text-transform: uppercase; }
+.business-workflow-card h2 { max-width: 420px; color: #214b37; font: 520 clamp(25px, 2.8vw, 39px)/1.08 var(--font-display); letter-spacing: -.045em; margin: 0; }
+.business-workflow-card > div > span { display: block; max-width: 480px; color: #638071; font: 550 13px/1.55 var(--font-sans); margin-top: 13px; }
+.business-workflow-card ol { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; list-style: none; margin: 0; padding: 0; }
+.business-workflow-card li { display: inline-flex; align-items: center; gap: 10px; color: #416451; font: 700 12px/1.3 var(--font-sans); }
+.business-workflow-card li:not(:last-child)::after { color: #91aa99; content: '→'; }
+.business-workflow-card button, .business-workflow-card strong, .business-workflow-card .is-pending { border: 1px solid rgba(43, 90, 62, .14); border-radius: 999px; background: rgba(255,255,255,.66); color: #315a43; font: inherit; padding: 9px 12px; }
+.business-workflow-card button { cursor: pointer; }.business-workflow-card button:hover { border-color: rgba(38, 91, 60, .35); background: #fff; }
+.business-workflow-card .is-pending { color: #798a7e; }
+.business-questionnaire-hub-list { display: grid; gap: 13px; }
+.business-questionnaire-hub-list > article { display: flex; min-height: 142px; align-items: center; justify-content: space-between; gap: 25px; border: 1px solid var(--workspace-line); border-radius: 18px; background: #fff; padding: 23px 25px; }
+.business-questionnaire-hub-list > article > div:first-child { min-width: 0; }.business-questionnaire-hub-list .business-status { display: inline-flex; margin-bottom: 10px; }.business-questionnaire-hub-list p { color: #77877d; font: 700 10px/1.2 var(--font-sans); letter-spacing: .1em; margin: 0 0 5px; text-transform: uppercase; }.business-questionnaire-hub-list h2 { overflow: hidden; color: #244632; font: 600 21px/1.25 var(--font-display); margin: 0; text-overflow: ellipsis; white-space: nowrap; }.business-questionnaire-hub-list small { display: block; color: #728278; font: 600 12px/1.45 var(--font-sans); margin-top: 9px; }.business-questionnaire-hub-list > article > div:last-child { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: 9px; justify-content: flex-end; }
+@media (max-width: 1100px) { .business-dashboard-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }.business-workflow-card { grid-template-columns: 1fr; } }
+@media (max-width: 650px) { .business-dashboard-stats { grid-template-columns: 1fr; }.business-workflow-card { border-radius: 17px; padding: 22px; }.business-workflow-card h2 { font-size: 28px; }.business-workflow-card ol { gap: 8px; }.business-workflow-card li:not(:last-child)::after { display: none; }.business-questionnaire-hub-list > article { align-items: flex-start; flex-direction: column; gap: 18px; padding: 20px; }.business-questionnaire-hub-list > article > div:last-child { justify-content: flex-start; }.business-questionnaire-hub-list h2 { white-space: normal; } }
