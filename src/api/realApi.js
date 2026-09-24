@@ -189,6 +189,11 @@ export const completeBusinessResearchOnboarding = async (payload) => {
   return { data: response.data };
 };
 
+export const getResearchBriefGuidance = async (payload) => {
+  const response = await apiClient.post('/api/business/ai-brief/guidance', payload);
+  return { data: response.data };
+};
+
 export const createBusinessProject = async (payload) => {
   const response = await apiClient.post('/api/business/projects', payload);
   return { data: response.data };

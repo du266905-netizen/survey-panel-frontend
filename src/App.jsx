@@ -48,6 +48,7 @@ import { isBusinessRole } from './utils/roles';
 import Business from './pages/Business';
 import BusinessAccess from './pages/BusinessAccess';
 import BusinessWorkspace from './pages/BusinessWorkspace';
+import BusinessAiBrief from './pages/BusinessAiBrief';
 import BusinessAccount from './pages/BusinessAccount';
 import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
@@ -152,6 +153,7 @@ export default function App() {
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
+        <Route path="/business/ai-brief" element={<BusinessRoute><BusinessAiBrief /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessQuestionnaireResults /></BusinessRoute>} />
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireBuilder /></BusinessRoute>} />
