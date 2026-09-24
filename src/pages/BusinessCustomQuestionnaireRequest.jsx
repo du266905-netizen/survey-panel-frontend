@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, BarChart3, BrainCircuit, Check, ClipboardList, FileText, Languages, LayoutDashboard, LoaderCircle, LogOut, UserRound, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
@@ -27,9 +27,11 @@ export default function BusinessCustomQuestionnaireRequest() {
   const { language, navigateToLanguage } = useLanguage();
   const copy = language === 'zh-CN' ? text.zh : text.en;
   const navigate = useNavigate();
-  const [request, setRequest] = useState(initialRequest);
+  const location = useLocation();
+  const preparedRequest = location.state?.preparedRequest;
+  const [request, setRequest] = useState(() => ({ ...initialRequest, ...(preparedRequest || {}) }));
   const [step, setStep] = useState(1);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(() => !preparedRequest);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [accountOpen, setAccountOpen] = useState(false);
