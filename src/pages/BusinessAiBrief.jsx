@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, BarChart3, BrainCircuit, Check, ChevronDown, ClipboardList, FileText, LayoutDashboard, LoaderCircle, LogOut, Send, Sparkles, UserRound } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BarChart3, BrainCircuit, Check, ChevronDown, ClipboardList, FileText, Languages, LayoutDashboard, LoaderCircle, LogOut, Send, Sparkles, UserRound } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -61,7 +61,7 @@ function projectTitle(value, fallback) {
 
 export default function BusinessAiBrief() {
   const { user, logout } = useAuth();
-  const { language } = useLanguage();
+  const { language, navigateToLanguage } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const text = language === 'zh-CN' ? copy.zh : copy.en;
@@ -175,6 +175,7 @@ export default function BusinessAiBrief() {
         <button type="button" title={text.questionnaires} aria-label={text.questionnaires} onClick={() => navigate(withLanguage('/business/workspace?view=questionnaires', language))}><ClipboardList size={20} /></button>
         <button type="button" title={text.projects} aria-label={text.projects} onClick={() => navigate(withLanguage('/business/workspace?view=projects', language))}><FileText size={20} /></button>
         <button type="button" title={text.results} aria-label={text.results} onClick={() => navigate(withLanguage('/business/workspace?view=results', language))}><BarChart3 size={20} /></button>
+        <button className="business-workspace-language" type="button" title={language === 'zh-CN' ? 'Switch to English' : '切换到中文'} aria-label={language === 'zh-CN' ? 'Switch to English' : '切换到中文'} onClick={() => navigateToLanguage(language === 'zh-CN' ? 'en-US' : 'zh-CN')}><Languages size={18} /><span>{language === 'zh-CN' ? 'EN' : '中'}</span></button>
         <NotificationBell className="business-workspace-notification" presentation="modal" />
         <div className="business-workspace-account"><button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={text.account} aria-expanded={accountMenuOpen}><UserRound size={20} /><span>{displayName.charAt(0).toUpperCase()}</span></button>{accountMenuOpen && <div><strong>{displayName}</strong><span>{user?.email}</span><button type="button" onClick={() => navigate(withLanguage('/business/account', language))}><UserRound size={15} /> {text.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {text.signOut}</button></div>}</div>
       </aside>
