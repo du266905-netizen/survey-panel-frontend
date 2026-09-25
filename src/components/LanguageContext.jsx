@@ -13,6 +13,10 @@ const englishCopy = {
     globalLabel: 'Global perspective', globalTitle: 'Research begins with people, in every context.', globalBody: 'A global view reminds us that every response comes from a different life, place, and point of view. The platform keeps each participation journey clear and considered from the first step to reward.', rewardsLabel: 'Rewards & panel', rewardsTitle: 'A little more to look forward to.', rewardsBody: 'Join the panel for surveys that value your time, special tasks, and clear reward opportunities.', rewardCards: [['For everyday moments', 'Gift cards', 'Complete eligible surveys, build your Coins balance, and choose from selected gift-card rewards.'], ['Where available', 'Tokens', 'In supported regions, selected token reward options can be part of your next redemption choice.'], ['Inside the panel', 'Special tasks', 'From time to time, eligible members can receive an additional task and another way to earn Coins.']],
     footer: { description: 'A considered research space for participants and organisations: clear opportunities, credible input, and practical next steps.', contact: 'Contact the team', about: 'About us', how: 'How it works', approach: 'Our approach', explore: 'Explore', news: 'News Wall', participate: 'Participate', surveys: 'Find surveys', wallet: 'Rewards & wallet', invite: 'Invite program', organisations: 'For organisations', questionnaires: 'Custom questionnaires', studies: 'Tailored research', standards: 'Standards', privacy: 'Privacy', terms: 'Terms', rights: '© 2026 GuanyiSearch. All rights reserved.', privacyPolicy: 'Privacy Policy', termsService: 'Terms of Service' },
   },
+  participant: {
+    surveys: { title: 'Online surveys', description: 'Choose an available online survey. It opens in a new tab while your GuanyiSearch task centre stays here.', sectionTitle: 'Online surveys', sectionDescription: 'Choose from available online surveys.', reward: 'Estimated reward', available: 'Available', surveyOpen: 'Survey open', start: 'Start survey', preview: 'Preview only', more: 'More surveys', availableCount: 'available', noneSignedIn: 'New opportunities are updating. Please check back shortly.', noneGuest: 'Sign in to view surveys matched for you.', signIn: 'Sign in' },
+    news: { title: 'News Wall', description: 'Latest stories and perspectives, in one place.', searchPlaceholder: 'Search the past 3 days', searchAria: 'Search news summaries from the past three days', clearSearch: 'Clear news search', search: 'Search', heroTitle: 'Read today’s stories without the noise.', heroDescription: 'Browse public news trends for free. Create an account when you are ready to save topic preferences and earn Coins through eligible surveys.', noStories: 'More stories will appear here as they are available.' },
+  },
   workspace: {
     nav: { home: 'Home', surveys: 'Online surveys', research: 'Research', news: 'News Wall', community: 'Community', dashboard: 'Dashboard', wallet: 'Rewards & wallet', invite: 'Invite program', profile: 'View profile', settings: 'Account settings', logout: 'Log out' },
     business: {
@@ -151,6 +155,21 @@ const workspaceCopyByLanguage = {
     dashboard: {
       greeting: { morning: '早安', afternoon: '午安', evening: '晚安' }, visitor: '你好', space: '你的空間', begin: '讓我們從這裡開始：', prompts: ['瀏覽資訊', '開始問卷', '探索社群'], welcome: '依自己的步調探索。下一次機會會在你準備好時出現。', coinsAvailable: '可用 {coins} Coins', balance: 'Coins 餘額', openWallet: '開啟錢包', startToday: '今天開始累積獎勵', headline: '一份高品質問卷，便能開始累積。', nextWithCompletions: '新的匹配會在一天中陸續出現。問卷資源充足時，歡迎回來看看。', nextWithoutCompletions: '先完成一份已驗證的問卷。完成確認後，你的獎勵紀錄就會開始累積。', findSurveys: '尋找問卷', rewardPath: '獎勵路徑', rewardPathValue: '問卷 → Coins → 禮品卡', steps: [['找到可參與的匹配', '問卷的可用情況會在一天中變化。'], ['認真完成問卷', '合作方會在 Coins 到帳前確認完成情況。'], ['逐步兌換獎勵', '禮品卡可從 $10 檔位開始兌換。']], tip: '提示：先完成第一份問卷；當問卷牆較空時，稍後回來再看，新的機會會持續更新。', newsWall: '資訊牆', newsTitle: '隨時了解更廣闊的視野。', newsIntro: '關注正在影響明日研究討論的故事。', exploreNews: '探索資訊牆', freshNews: '資訊牆更新後，最新內容會顯示在這裡。', openNews: '開啟資訊牆', readStory: '閱讀文章', latestStory: '最新文章', news: '資訊',
     },
+  },
+};
+
+const participantCopyByLanguage = {
+  'zh-CN': {
+    surveys: { title: '在线问卷', description: '选择可参与的在线问卷。问卷会在新标签页中打开，GuanyiSearch 任务中心将保留在这里。', sectionTitle: '在线问卷', sectionDescription: '从当前可参与的在线问卷中选择。', reward: '预计奖励', available: '可参与', surveyOpen: '问卷已打开', start: '开始问卷', preview: '仅预览', more: '更多问卷', availableCount: '项可参与', noneSignedIn: '新的问卷机会正在更新，请稍后再来看看。', noneGuest: '登录后查看为你匹配的问卷。', signIn: '登录' },
+    news: { title: '资讯墙', description: '把最新故事与不同视角汇集在一处。', searchPlaceholder: '搜索过去 3 天的资讯', searchAria: '搜索过去三天的资讯摘要', clearSearch: '清除资讯搜索', search: '搜索', heroTitle: '轻松读懂今天正在发生的事。', heroDescription: '免费浏览公开资讯趋势。准备好保存主题偏好并通过符合条件的问卷赚取 Coins 时，再创建账户。', noStories: '更多资讯将在内容可用后显示在这里。' },
+  },
+  'zh-Hant': {
+    surveys: { title: '線上問卷', description: '選擇可參與的線上問卷。問卷會在新分頁中開啟，GuanyiSearch 任務中心將保留在這裡。', sectionTitle: '線上問卷', sectionDescription: '從目前可參與的線上問卷中選擇。', reward: '預計獎勵', available: '可參與', surveyOpen: '問卷已開啟', start: '開始問卷', preview: '僅預覽', more: '更多問卷', availableCount: '項可參與', noneSignedIn: '新的問卷機會正在更新，請稍後再回來看看。', noneGuest: '登入後查看為你配對的問卷。', signIn: '登入' },
+    news: { title: '資訊牆', description: '把最新故事與不同觀點集中在一處。', searchPlaceholder: '搜尋過去 3 天的資訊', searchAria: '搜尋過去三天的資訊摘要', clearSearch: '清除資訊搜尋', search: '搜尋', heroTitle: '輕鬆讀懂今天正在發生的事。', heroDescription: '免費瀏覽公開資訊趨勢。準備好儲存主題偏好並透過符合條件的問卷賺取 Coins 時，再建立帳戶。', noStories: '更多資訊將在內容可用後顯示在這裡。' },
+  },
+  ru: {
+    surveys: { title: 'Онлайн-опросы', description: 'Выберите доступный онлайн-опрос. Он откроется в новой вкладке, а центр задач GuanyiSearch останется здесь.', sectionTitle: 'Онлайн-опросы', sectionDescription: 'Выберите один из доступных онлайн-опросов.', reward: 'Ожидаемая награда', available: 'Доступно', surveyOpen: 'Опрос открыт', start: 'Начать опрос', preview: 'Только просмотр', more: 'Больше опросов', availableCount: 'доступно', noneSignedIn: 'Новые возможности обновляются. Пожалуйста, зайдите позже.', noneGuest: 'Войдите, чтобы увидеть подходящие для вас опросы.', signIn: 'Войти' },
+    news: { title: 'Лента новостей', description: 'Последние истории и разные взгляды — в одном месте.', searchPlaceholder: 'Искать за последние 3 дня', searchAria: 'Искать сводки новостей за последние три дня', clearSearch: 'Очистить поиск новостей', search: 'Поиск', heroTitle: 'Читайте сегодняшние истории без лишнего шума.', heroDescription: 'Бесплатно просматривайте публичные новостные тенденции. Создайте аккаунт, когда будете готовы сохранять темы и получать Coins за подходящие опросы.', noStories: 'Новые истории появятся здесь, когда станут доступны.' },
   },
 };
 
@@ -300,6 +319,12 @@ export function LanguageProvider({ children }) {
       hero: { ...englishCopy.hero, ...(publicCopyByLanguage[language]?.hero || {}) },
       approach: { ...englishCopy.approach, ...(publicCopyByLanguage[language]?.approach || {}) },
       home: { ...englishCopy.home, ...(publicCopyByLanguage[language]?.home || {}) },
+      participant: {
+        ...englishCopy.participant,
+        ...(participantCopyByLanguage[language] || {}),
+        surveys: { ...englishCopy.participant.surveys, ...(participantCopyByLanguage[language]?.surveys || {}) },
+        news: { ...englishCopy.participant.news, ...(participantCopyByLanguage[language]?.news || {}) },
+      },
       workspace: {
         ...englishCopy.workspace,
         ...(workspaceCopyByLanguage[language] || {}),

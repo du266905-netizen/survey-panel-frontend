@@ -73,8 +73,8 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
   }, [open, openFromRoute]);
 
   const referralLink = useMemo(() => inviteUrl(summary?.referralCode), [summary?.referralCode]);
-  const referrerReward = summary?.referrerRewardCoins || 500;
-  const referredReward = summary?.referredRewardCoins || 300;
+  const commissionPercent = summary?.referrerCommissionPercent || 5;
+  const referredWelcomeCoins = summary?.referredWelcomeCoins || 1000;
 
   function closeProgram() {
     setOpen(false);
@@ -97,8 +97,8 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
       {launcherVisible && typeof document !== 'undefined' && createPortal(
         <aside className="referral-launcher" aria-label="Invite program">
           <div className="referral-launcher-copy">
-            <span>Invite program</span>
-            <strong>Share a<br />good match.</strong>
+            <span>Invite someone</span>
+            <strong>Share a<br />real survey.</strong>
           </div>
           <ReferralPeopleArtwork className="referral-launcher-art" />
           <button className="referral-launcher-action" type="button" onClick={() => setOpen(true)}>
@@ -117,7 +117,7 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
             <header className="referral-modal-header">
               <div>
                 <Logo size="sm" className="referral-modal-brand" />
-                <span className="referral-modal-label">Invite program</span>
+                <span className="referral-modal-label">Invite someone</span>
               </div>
               <button className="referral-modal-close" type="button" onClick={closeProgram} aria-label="Close invite program"><X size={20} /></button>
             </header>
@@ -125,15 +125,15 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
             <div className="referral-modal-scroll">
               <section className="referral-modal-hero">
                 <div className="referral-modal-hero-copy">
-                  <p className="referral-modal-kicker"><Sparkles size={15} /> A considered introduction</p>
-                  <h2 id="referral-modal-title">Invite good people in.<br />Reward real participation.</h2>
-                  <p>Share a personal link with someone who would value taking part. Rewards unlock after their first validated survey is complete.</p>
+                  <p className="referral-modal-kicker"><Sparkles size={15} /> One genuine introduction</p>
+                  <h2 id="referral-modal-title">Invite someone who will<br />genuinely take part.</h2>
+                  <p>Invite someone who genuinely wants to take part. They receive a welcome boost when they join and another when they complete their profile; you share in {commissionPercent}% of their eligible survey Coins as they keep participating.</p>
                 </div>
                 <div className="referral-modal-reward">
                   <ReferralPeopleArtwork className="referral-modal-art" imageSrc={referralCommunityImage} />
                   <div className="referral-modal-reward-copy">
-                    <span>For a qualified first completion</span>
-                    <strong>{referrerReward.toLocaleString('en-US')} Coins</strong>
+                    <span>Welcome boost at each step</span>
+                    <strong>{referredWelcomeCoins.toLocaleString('en-US')} + {referredWelcomeCoins.toLocaleString('en-US')} Coins</strong>
                   </div>
                 </div>
               </section>
@@ -145,8 +145,8 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
                   <div className="referral-modal-card-head">
                     <span><LinkIcon size={18} /></span>
                     <div>
-                      <h3>Your invite link</h3>
-                      <p>Send it only to people you think would enjoy contributing.</p>
+                      <h3>Your personal link</h3>
+                      <p>Share it with one person who would genuinely enjoy taking surveys.</p>
                     </div>
                   </div>
                   <div className="referral-modal-link-box">
@@ -156,7 +156,7 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
                       {copied ? 'Copied' : 'Copy link'}
                     </button>
                   </div>
-                  <p className="referral-modal-note">A reward is not issued for sign-up alone. It follows a completed, validated first survey.</p>
+                  <p className="referral-modal-note">A successful registration through your link gives them {referredWelcomeCoins.toLocaleString('en-US')} Coins. Completing their profile unlocks a further {referredWelcomeCoins.toLocaleString('en-US')} Coins. One account can be linked to one inviter only.</p>
                 </article>
 
                 <div className="referral-modal-stats">
@@ -167,7 +167,7 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
                   </article>
                   <article>
                     <Gift size={19} />
-                    <span>Invite Coins earned</span>
+                    <span>Commission Coins earned</span>
                     <strong><CoinAmount value={summary?.coinsEarned || 0} /></strong>
                   </article>
                 </div>
@@ -177,14 +177,14 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
                 <div className="referral-modal-card-head">
                   <span><ShieldCheck size={18} /></span>
                   <div>
-                    <h3>How rewards unlock</h3>
-                    <p>A simple process built around real participation.</p>
+                    <h3>How this works</h3>
+                    <p>Built around a real, ongoing participation relationship.</p>
                   </div>
                 </div>
                 <ol>
-                  <li><span>01</span><div><strong>Share your link</strong><p>Your friend joins through your personal invite code.</p></div></li>
-                  <li><span>02</span><div><strong>They complete a survey</strong><p>The first survey must be completed and validated.</p></div></li>
-                  <li><span>03</span><div><strong>Both sides receive Coins</strong><p>You receive {referrerReward} Coins; your friend receives {referredReward} Coins.</p></div></li>
+                  <li><span>01</span><div><strong>Invite one person</strong><p>They join through your personal link. An account cannot be attached to multiple inviters.</p></div></li>
+                  <li><span>02</span><div><strong>They receive two welcome boosts</strong><p>They receive {referredWelcomeCoins.toLocaleString('en-US')} Coins after a successful sign-up and another {referredWelcomeCoins.toLocaleString('en-US')} Coins after completing their profile.</p></div></li>
+                  <li><span>03</span><div><strong>Earn with their real activity</strong><p>You receive {commissionPercent}% of the Coins they earn from eligible validated surveys. Profile-completion Coins are theirs in full and are never part of your commission.</p></div></li>
                 </ol>
               </section>
             </div>

@@ -31,7 +31,7 @@ function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onIna
   );
 
   if (!to) {
-    return <article className={`atlas-node atlas-node--static ${className}`} aria-label={`${title}. Coming soon.`}>{content}</article>;
+    return <article className={`atlas-node atlas-node--static ${className}`} aria-label={title}>{content}</article>;
   }
 
   return (
@@ -288,7 +288,7 @@ export default function HomeAtlas() {
           <AtlasNode
             name="community"
             className="atlas-node--community"
-            to={withLanguage(user ? '/community' : '/register', language)}
+            to={null}
             eyebrow={copy.nodes.community[0]}
             title={copy.nodes.community[1]}
             image={communityIllustration}

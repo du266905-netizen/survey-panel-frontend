@@ -12,7 +12,6 @@ import AdminPanelists from './pages/AdminPanelists';
 import AdminResearchOpportunities from './pages/AdminResearchOpportunities';
 import AdminRewards from './pages/AdminRewards';
 import ActivityDashboard from './pages/ActivityDashboard';
-import CommunityHub from './pages/CommunityHub';
 import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
@@ -189,7 +188,6 @@ export default function App() {
           <Route path="/onboarding" element={<MemberRoute><Navigate to="/panel-profile" replace /></MemberRoute>} />
           <Route path="/dashboard" element={<MemberRoute><Dashboard /></MemberRoute>} />
           <Route path="/activity" element={<MemberRoute><ActivityDashboard /></MemberRoute>} />
-          <Route path="/community" element={<MemberRoute><CommunityHub /></MemberRoute>} />
           <Route path="/research" element={<MemberRoute><ResearchActivities /></MemberRoute>} />
           <Route path="/partners/:partnerId/surveys" element={<MemberRoute><SurveyList /></MemberRoute>} />
           <Route path="/wallet" element={<MemberRoute><Wallet /></MemberRoute>} />

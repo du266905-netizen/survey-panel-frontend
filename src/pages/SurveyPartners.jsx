@@ -6,6 +6,7 @@ import CoinAmount from '../components/CoinAmount';
 import PageHeader from '../components/PageHeader';
 import SurveyResultModal from '../components/SurveyResultModal';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { isPanelistRole } from '../utils/roles';
 import { toSafeHttpUrl } from '../utils/safeUrl';
@@ -53,12 +54,12 @@ function resultNoticeFor(outcome) {
   return { type: 'interrupted', coins: 0 };
 }
 
-function SurveyCard({ item, isPanelist, isStarting, hasActiveSurvey, onStart }) {
+function SurveyCard({ item, isPanelist, isStarting, hasActiveSurvey, onStart, copy }) {
   return (
     <section className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md">
       <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-slate-50 px-4 py-3">
         <div className="min-w-0">
-          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-cyan-700">Estimated reward</span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-cyan-700">{copy.reward}</span>
           <div className="mt-0.5 text-xl font-extrabold leading-tight text-cyan-700"><CoinAmount value={item.reward} /></div>
         </div>
         <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-2 py-1 text-[11px] font-bold text-slate-600 ring-1 ring-slate-200">
@@ -72,7 +73,7 @@ function SurveyCard({ item, isPanelist, isStarting, hasActiveSurvey, onStart }) 
           <h3 className="text-base font-bold text-slate-950">{item.displayName}</h3>
           <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-cyan-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-cyan-700">
             <Sparkles size={12} />
-            Available
+            {copy.available}
           </span>
         </div>
         <p className="mt-1.5 truncate text-xs font-semibold text-slate-400">{item.publicSurveyCode}</p>
@@ -82,10 +83,10 @@ function SurveyCard({ item, isPanelist, isStarting, hasActiveSurvey, onStart }) 
           type="button"
           disabled={!isPanelist || isStarting || hasActiveSurvey}
           onClick={onStart}
-          aria-label={isPanelist ? `Start ${item.displayName}` : `Preview ${item.displayName}`}
+          aria-label={isPanelist ? `${copy.start}: ${item.displayName}` : `${copy.preview}: ${item.displayName}`}
         >
           {isPanelist && isStarting ? <RefreshCcw className="animate-spin" size={16} /> : <ArrowRight size={16} />}
-          {isPanelist ? (hasActiveSurvey ? 'Survey open' : 'Start survey') : 'Preview only'}
+          {isPanelist ? (hasActiveSurvey ? copy.surveyOpen : copy.start) : copy.preview}
         </button>
       </div>
     </section>
@@ -94,6 +95,8 @@ function SurveyCard({ item, isPanelist, isStarting, hasActiveSurvey, onStart }) 
 
 export default function SurveyPartners() {
   const { user, setUser } = useAuth();
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy.participant.surveys;
   const location = useLocation();
   const isPanelist = isPanelistRole(user?.role);
   const [wallRefreshKey, setWallRefreshKey] = useState(0);
@@ -105,10 +108,10 @@ export default function SurveyPartners() {
   const [resultRecommendations, setResultRecommendations] = useState(null);
   const loadSurveyWall = user
     ? () => getSurveyWall({ forceRefresh: wallRefreshKey > 0 })
-    : () => Promise.resolve({ data: { sections: [{ id: 'surveys', title: 'Online surveys', subtitle: 'Choose from available online surveys.', items: [] }] } });
+    : () => Promise.resolve({ data: { sections: [{ id: 'surveys', title: copy.sectionTitle, subtitle: copy.sectionDescription, items: [] }] } });
   const { data, loading, error } = useAsyncData(loadSurveyWall, [user?.id || 'guest', wallRefreshKey]);
   const sections = data?.sections || [];
-  const surveySection = sections.find((section) => section.id === 'surveys') || { id: 'surveys', title: 'Online surveys', subtitle: 'Choose from available online surveys.', items: [] };
+  const surveySection = sections.find((section) => section.id === 'surveys') || { id: 'surveys', title: copy.sectionTitle, subtitle: copy.sectionDescription, items: [] };
   const moreSurveySection = sections.find((section) => section.id === 'more-opportunities');
   const moreSurveyEntry = moreSurveySection?.items?.find((item) => item.kind === 'entry');
   const allSurveyItems = (surveySection.items || []).filter((item) => onlineSurveyProviderSlugs.has(item.partnerSlug));
@@ -263,8 +266,8 @@ export default function SurveyPartners() {
   return (
     <>
       <PageHeader
-        title="Online surveys"
-        description="Choose an available online survey. It opens in a new tab while your GuanyiSearch task centre stays here."
+        title={copy.title}
+        description={copy.description}
         action={
           moreSurveyEntry && (
             <button
@@ -274,7 +277,7 @@ export default function SurveyPartners() {
               onClick={() => handleStart(moreSurveyEntry)}
             >
               {startingId === moreSurveyEntry.id ? <RefreshCcw className="animate-spin" size={16} /> : <Compass size={16} />}
-              More surveys <ArrowRight size={16} />
+              {copy.more} <ArrowRight size={16} />
             </button>
           )
         }
@@ -283,7 +286,7 @@ export default function SurveyPartners() {
       {(error || startError) && (
         <div className="mb-5 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
           <AlertTriangle size={16} />
-          {startError || 'No surveys are available right now.'}
+          {startError || copy.noneSignedIn}
         </div>
       )}
 
@@ -293,7 +296,7 @@ export default function SurveyPartners() {
             <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">{surveySection.title}</h2>
             {surveySection.subtitle && <p className="mt-1.5 text-sm leading-6 text-slate-500">{surveySection.subtitle}</p>}
           </div>
-          {surveyItems.length > 0 && <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-500">{surveyItems.length} available</span>}
+          {surveyItems.length > 0 && <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-500">{surveyItems.length} {copy.availableCount}</span>}
         </div>
 
         {loading && user ? (
@@ -302,8 +305,8 @@ export default function SurveyPartners() {
           </div>
         ) : !surveyItems.length ? (
           <div className="flex min-h-0 items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white px-5 py-5 text-sm text-slate-500">
-            <span>{user ? 'New opportunities are updating. Please check back shortly.' : 'Sign in to view surveys matched for you.'}</span>
-            {!user && <Link className="shrink-0 font-bold text-cyan-700 hover:text-cyan-600" to="/login">Sign in</Link>}
+            <span>{user ? copy.noneSignedIn : copy.noneGuest}</span>
+            {!user && <Link className="shrink-0 font-bold text-cyan-700 hover:text-cyan-600" to="/login">{copy.signIn}</Link>}
           </div>
         ) : (
           <>
@@ -316,6 +319,7 @@ export default function SurveyPartners() {
                   isStarting={startingId === item.id}
                   hasActiveSurvey={hasActiveSurvey}
                   onStart={() => handleStart(item)}
+                  copy={copy}
                 />
               ))}
             </div>

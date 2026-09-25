@@ -15,7 +15,6 @@ const navItems = [
   { to: '/research', labelKey: 'research', icon: Compass },
   { to: '/partners#surveys', labelKey: 'surveys', icon: Users, hash: '#surveys' },
   { to: '/news', labelKey: 'news', icon: Newspaper },
-  { to: '/community', labelKey: 'community', icon: MessageCircleMore },
   { to: '/wallet', labelKey: 'wallet', icon: WalletCards },
 ];
 
@@ -36,7 +35,7 @@ export default function AppLayout({ children }) {
   const isPanelist = isPanelistRole(user?.role);
   const roleLabel = isAdmin ? 'Admin' : user?.role === 'panelist' ? 'Panelist' : 'Member';
   const referralOpenRequested = new URLSearchParams(location.search).get('referral') === 'true';
-  const usesEditorialWorkspaceSurface = location.pathname === '/dashboard' || location.pathname === '/activity' || location.pathname === '/community';
+  const usesEditorialWorkspaceSurface = location.pathname === '/dashboard' || location.pathname === '/activity';
 
   function cancelUserMenuClose() {
     if (userMenuCloseTimerRef.current) {

@@ -370,7 +370,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     <div className={`profile-survey-backdrop ${asPage ? 'is-page' : ''}`} role={asPage ? undefined : 'dialog'} aria-modal={asPage ? undefined : 'true'} aria-labelledby="panel-profile-title">
       <section className="profile-survey-modal">
         <header className="profile-survey-topbar">
-          <div className="profile-survey-brand"><Logo size="sm" variant="light" /></div>
+          <div className="profile-survey-brand"><Logo size="sm" /></div>
           <div className="profile-survey-actions">
             <div className="profile-survey-header-progress" role="progressbar" aria-label="First survey progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progressValue)}>
               <span style={{ width: `${progressValue}%` }} />

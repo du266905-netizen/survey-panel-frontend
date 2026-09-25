@@ -3,6 +3,7 @@ import { ArrowUpRight, ChevronDown, Newspaper, Search, Sparkles, X } from 'lucid
 import { Link, useSearchParams } from 'react-router-dom';
 import { getNewsBrief, getNewsPreferences, getNewsWall, updateNewsPreferences } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 import PageHeader from '../components/PageHeader';
 import { isAdminRole } from '../utils/roles';
 
@@ -328,6 +329,8 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
 
 export default function NewsWall() {
   const { user } = useAuth();
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy.participant.news;
   const [searchParams, setSearchParams] = useSearchParams();
   const isPublicView = !user;
   const isAdmin = isAdminRole(user?.role);
@@ -511,15 +514,15 @@ export default function NewsWall() {
           type="search"
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
-          placeholder="Search the past 3 days"
-          aria-label="Search news summaries from the past three days"
+          placeholder={copy.searchPlaceholder}
+          aria-label={copy.searchAria}
         />
         {searchInput && (
-          <button className="news-search-clear" type="button" onClick={clearNewsSearch} aria-label="Clear news search">
+          <button className="news-search-clear" type="button" onClick={clearNewsSearch} aria-label={copy.clearSearch}>
             <X size={14} />
           </button>
         )}
-        <button className="news-search-submit" type="submit">Search</button>
+        <button className="news-search-submit" type="submit">{copy.search}</button>
       </form>
       {newsFilters}
     </div>
@@ -529,10 +532,10 @@ export default function NewsWall() {
     <>
       {!isPublicView && (
         <PageHeader
-          title="News Wall"
+          title={copy.title}
           description={isAdmin && isLatestFallback
             ? 'No new stories are available for this region yet, so the latest verified signals remain visible.'
-            : 'Latest stories and perspectives, in one place.'}
+            : copy.description}
           action={workspaceNewsActions}
           className="news-workspace-header"
         />
@@ -569,7 +572,7 @@ export default function NewsWall() {
           Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[22rem] animate-pulse rounded-xl bg-slate-100" />)
         ) : !articles.length ? (
           <div className="card col-span-full flex min-h-48 items-center justify-center p-8 text-sm font-semibold text-slate-500">
-            {searchQuery ? `No stories match “${searchQuery}” in the past 72 hours.` : (isAdmin ? 'No recent stories are available for this region and topic yet.' : 'More stories will appear here as they are available.')}
+            {searchQuery ? `No stories match “${searchQuery}” in the past 72 hours.` : (isAdmin ? 'No recent stories are available for this region and topic yet.' : copy.noStories)}
           </div>
         ) : (
           articles.map((article) => <NewsStoryCard key={article.id} article={article} onOpen={rememberNewsPosition} />)
@@ -630,12 +633,12 @@ export default function NewsWall() {
       <section className="news-wall-public-hero bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:py-20">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">News Wall</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">{copy.title}</p>
             <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-[-0.04em] sm:text-5xl">
-              Read today’s stories without the noise.
+              {copy.heroTitle}
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
-              Browse public news trends for free. Create an account when you are ready to save topic preferences and earn coins through eligible surveys.
+              {copy.heroDescription}
             </p>
           </div>
           {workspaceNewsActions}
