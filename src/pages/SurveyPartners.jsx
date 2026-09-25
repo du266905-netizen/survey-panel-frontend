@@ -293,8 +293,8 @@ export default function SurveyPartners() {
       <section id={surveySection.id} className="scroll-mt-28">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-slate-200 pb-4">
           <div>
-            <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">{surveySection.title}</h2>
-            {surveySection.subtitle && <p className="mt-1.5 text-sm leading-6 text-slate-500">{surveySection.subtitle}</p>}
+            <h2 className="text-2xl font-extrabold tracking-tight text-slate-950">{copy.sectionTitle}</h2>
+            <p className="mt-1.5 text-sm leading-6 text-slate-500">{copy.sectionDescription}</p>
           </div>
           {surveyItems.length > 0 && <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-500">{surveyItems.length} {copy.availableCount}</span>}
         </div>
