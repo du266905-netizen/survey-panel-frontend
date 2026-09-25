@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, BarChart3, BrainCircuit, Check, ClipboardList, FileText, Languages, LayoutDashboard, LoaderCircle, LogOut, UserRound, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BarChart3, BrainCircuit, Check, ClipboardList, FileText, LayoutDashboard, LoaderCircle, LogOut, UserRound, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
+import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import serviceImage from '../assets/business/custom-questionnaire-service.jpg';
 import './Business.css';
@@ -24,7 +25,7 @@ const text = {
 
 export default function BusinessCustomQuestionnaireRequest() {
   const { user, logout } = useAuth();
-  const { language, navigateToLanguage } = useLanguage();
+  const { language } = useLanguage();
   const copy = language === 'zh-CN' ? text.zh : text.en;
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,7 +69,7 @@ export default function BusinessCustomQuestionnaireRequest() {
         <button type="button" title={copy.questionnaires} aria-label={copy.questionnaires} onClick={() => goWorkspace('questionnaires')}><ClipboardList size={20} /></button>
         <button className="is-active" type="button" title={copy.projects} aria-label={copy.projects}><FileText size={20} /></button>
         <button type="button" title={copy.results} aria-label={copy.results} onClick={() => goWorkspace('results')}><BarChart3 size={20} /></button>
-        <button className="business-workspace-language" type="button" title={language === 'zh-CN' ? 'Switch to English' : '切换到中文'} aria-label={language === 'zh-CN' ? 'Switch to English' : '切换到中文'} onClick={() => navigateToLanguage(language === 'zh-CN' ? 'en-US' : 'zh-CN')}><Languages size={18} /><span>{language === 'zh-CN' ? 'EN' : '中'}</span></button>
+        <BusinessLanguagePicker />
         <NotificationBell className="business-workspace-notification" />
         <div className="business-workspace-account"><button type="button" onClick={() => setAccountOpen((current) => !current)} aria-label={copy.account} aria-expanded={accountOpen}><UserRound size={20} /><span>{displayName.charAt(0).toUpperCase()}</span></button>{accountOpen && <div><strong>{displayName}</strong><span>{user?.email}</span><button type="button" onClick={() => navigate(withLanguage('/business/account', language))}><UserRound size={15} /> {copy.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.signOut}</button></div>}</div>
       </aside>

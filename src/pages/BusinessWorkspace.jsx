@@ -10,7 +10,6 @@ import {
   GraduationCap,
   LayoutDashboard,
   Landmark,
-  Languages,
   LoaderCircle,
   LogOut,
   MoreHorizontal,
@@ -27,6 +26,7 @@ import { completeBusinessResearchOnboarding, createBusinessProject, decideBusine
 import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import welcomeMarketImage from '../assets/business/welcome-market-exploration.jpg';
 import './Business.css';
 
@@ -130,7 +130,7 @@ function workspaceGreeting(language, returningUser) {
 
 export default function BusinessWorkspace() {
   const { user, logout } = useAuth();
-  const { language, publicCopy, navigateToLanguage } = useLanguage();
+  const { language, publicCopy } = useLanguage();
   const copy = publicCopy.workspace.business;
   const briefCopy = copy.brief;
   const projectsCopy = copy.projects;
@@ -400,7 +400,7 @@ export default function BusinessWorkspace() {
           <button className={activeView === 'questionnaires' ? 'is-active' : ''} type="button" title={language === 'zh-CN' ? '问卷编辑器' : 'Questionnaire editor'} aria-label={language === 'zh-CN' ? '问卷编辑器' : 'Questionnaire editor'} onClick={() => selectWorkspaceView('questionnaires')}><ClipboardList size={20} /></button>
           <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title={copy.rail.projects} aria-label={copy.rail.projects} onClick={() => selectWorkspaceView('projects')}><FileText size={20} /></button>
           <button className={activeView === 'results' ? 'is-active' : ''} type="button" title={copy.rail.results} aria-label={copy.rail.results} onClick={() => selectWorkspaceView('results')}><BarChart3 size={20} /></button>
-          <button className="business-workspace-language" type="button" title={language === 'zh-CN' ? 'Switch to English' : '切换到中文'} aria-label={language === 'zh-CN' ? 'Switch to English' : '切换到中文'} onClick={() => navigateToLanguage(language === 'zh-CN' ? 'en-US' : 'zh-CN')}><Languages size={18} /><span>{language === 'zh-CN' ? 'EN' : '中'}</span></button>
+          <BusinessLanguagePicker />
           <NotificationBell className="business-workspace-notification" />
           <div className="business-workspace-account">
             <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={copy.rail.accountMenu} aria-expanded={accountMenuOpen}><UserRound size={20} /><span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span></button>

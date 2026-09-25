@@ -84,7 +84,7 @@ function MemberRoute({ children }) {
 function BusinessRoute({ children }) {
   const { user } = useAuth();
   return isBusinessRole(user?.role)
-    ? children
+    ? <div className="business-translate-guard notranslate" translate="no" data-translate="no">{children}</div>
     : <Navigate to="/business/access" replace />;
 }
 

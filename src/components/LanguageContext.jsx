@@ -265,7 +265,8 @@ export function LanguageProvider({ children }) {
     }
     const destination = new URL(window.location.href);
     destination.searchParams.set('lang', nextLanguage);
-    window.location.assign(destination.toString());
+    window.history.replaceState(window.history.state, '', destination);
+    setLanguage(nextLanguage);
   };
 
   useEffect(() => {
