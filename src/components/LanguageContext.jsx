@@ -155,6 +155,13 @@ const workspaceCopyByLanguage = {
 };
 
 const businessWorkspaceCopyByLanguage = {
+  ru: {
+    rail: { services: 'Исследовательские услуги', projects: 'Проекты', results: 'Результаты анкет', accountMenu: 'Меню аккаунта', account: 'Аккаунт', signOut: 'Выйти', clientAccount: 'Аккаунт клиента', navigation: 'Навигация рабочего пространства' },
+    services: { eyebrow: 'ИССЛЕДОВАТЕЛЬСКИЕ УСЛУГИ', title: 'Исследования с понятным следующим шагом.', intro: 'Начните с решения, которое нужно принять. Выберите анкету для структурированных ответов в масштабе или индивидуальное исследование для более сложного вопроса.', viewProjects: 'Посмотреть проекты', questionnaireEyebrow: 'ДИЗАЙН АНКЕТЫ', questionnaireTitle: 'Индивидуальная анкета', questionnaireBody: 'Превратите сфокусированный вопрос в структурированную анкету для определённой аудитории.', questionnaireAction: 'Начать бриф по анкете', researchEyebrow: 'ИНДИВИДУАЛЬНОЕ ИССЛЕДОВАНИЕ', researchTitle: 'Индивидуальное исследование', researchBody: 'Для решений, которым нужны интервью, тестирование удобства, групповые обсуждения или специальный план рекрутинга.', researchAction: 'Начать исследовательский бриф', processEyebrow: 'КАК ДВИГАЕТСЯ ЗАЯВКА', processSteps: [['Подготовьте бриф', 'Опишите решение, аудиторию, рынок и сроки.'], ['Обсудите объём', 'Мы изучим бриф и уточним необходимые детали.'], ['Рассмотрите предложение', 'Объём работ и стоимость согласуются до начала.']] },
+    results: { eyebrow: 'РЕЗУЛЬТАТЫ АНКЕТ', title: 'Посмотрите, что люди действительно сказали.', emptyIntro: 'Результаты появятся здесь после подготовки анкеты и получения ответов.', open: 'Открыть результаты', indexTitle: 'Результаты', indexIntro: 'Сводки по вопросам и отдельные ответы доступны только для анкет из этого рабочего пространства. Демонстрационные данные здесь не используются.', noResultsTitle: 'Результатов анкет пока нет.', noResultsBody: 'Создайте индивидуальную анкету, добавьте вопросы и соберите ответы. После этого здесь появятся сводки и записи ответов.', availableOne: 'проект анкеты доступен для просмотра.', availableMany: 'проектов анкет доступны для просмотра.', responses: 'ответов получено', view: 'Посмотреть результаты' },
+    projects: { eyebrow: 'ИССЛЕДОВАТЕЛЬСКОЕ ПРОСТРАНСТВО', title: 'Проекты', intro: 'Храните каждый бриф, предложение и подтверждённый следующий шаг в одном месте.', contactSales: 'Связаться с командой', filters: { ALL: 'Все', DRAFT: 'Черновики', SUBMITTED_FOR_REVIEW: 'На проверке', QUOTE_REQUIRED: 'Ожидает оценки', QUOTE_SENT: 'Предложение готово', CLIENT_ACCEPTED: 'Ожидает оплаты', FUNDED: 'Финансирование подтверждено', RECRUITING: 'Идёт рекрутинг', LIVE: 'В работе', COMPLETED: 'Завершено' }, statuses: { DRAFT: 'Черновик', SUBMITTED_FOR_REVIEW: 'Отправлено на проверку', QUOTE_REQUIRED: 'Ожидает оценки', QUOTE_SENT: 'Предложение готово', CLIENT_ACCEPTED: 'Ожидает оплаты', FUNDED: 'Финансирование подтверждено', RECRUITING: 'Идёт рекрутинг', LIVE: 'В работе', COMPLETED: 'Завершено' }, format: 'Формат', audience: 'Аудитория', updated: 'Обновлено', actions: 'Действия для «{title}»', viewBrief: 'Посмотреть бриф', editBrief: 'Редактировать бриф', deleteDraft: 'Удалить черновик', openDraft: 'Открыть черновик анкеты', viewResults: 'Посмотреть результаты', submit: 'Отправить на проверку', submitting: 'Отправка…', reviewQuote: 'Посмотреть предложение', noProjects: 'В этом представлении нет проектов.', chooseAnother: 'Выберите другой статус или подготовьте новый исследовательский бриф.', prepareBrief: 'Подготовить исследовательский бриф', prepareBriefBody: 'Запросите дизайн анкеты или индивидуальную исследовательскую поддержку.', getStarted: 'Начать', startDecision: 'Начните с решения.', guide: ['Опишите, что нужно узнать', 'Укажите, чьё мнение важно', 'Когда будете готовы, отправьте запрос на оценку'] },
+    feedback: { loadProjects: 'Не удалось загрузить проекты. Обновите страницу и повторите попытку.', preferencesSaved: 'Ваши исследовательские предпочтения сохранены на этом устройстве.', briefUpdated: 'Исследовательский бриф обновлён.', questionnaireReady: 'Черновик анкеты готов.', briefReady: 'Исследовательский бриф готов.', createError: 'Не удалось создать проект. Проверьте данные и повторите попытку.', deleteConfirm: 'Удалить черновик «{title}»? Это действие нельзя отменить.', deleted: 'Черновик удалён.', deleteError: 'Не удалось удалить черновик.', submitted: 'Бриф отправлен для уточнения объёма и оценки.', submitError: 'Не удалось отправить бриф.', loadingProjects: 'Загрузка проектов', loadingResults: 'Загрузка результатов' },
+  },
   'zh-CN': {
     access: {
       back: '返回',
@@ -297,7 +304,22 @@ export function LanguageProvider({ children }) {
         ...englishCopy.workspace,
         ...(workspaceCopyByLanguage[language] || {}),
         nav: { ...englishCopy.workspace.nav, ...(workspaceCopyByLanguage[language]?.nav || {}) },
-        business: { ...englishCopy.workspace.business, ...(businessWorkspaceCopyByLanguage[language] || {}) },
+        business: (() => {
+          const base = englishCopy.workspace.business;
+          const localized = businessWorkspaceCopyByLanguage[language] || {};
+          return {
+            ...base,
+            ...localized,
+            access: { ...base.access, ...(localized.access || {}) },
+            rail: { ...base.rail, ...(localized.rail || {}) },
+            services: { ...base.services, ...(localized.services || {}) },
+            results: { ...base.results, ...(localized.results || {}), detail: { ...base.results.detail, ...(localized.results?.detail || {}) } },
+            brief: { ...base.brief, ...(localized.brief || {}), questionnaire: { ...base.brief.questionnaire, ...(localized.brief?.questionnaire || {}) }, research: { ...base.brief.research, ...(localized.brief?.research || {}) } },
+            projects: { ...base.projects, ...(localized.projects || {}), filters: { ...base.projects.filters, ...(localized.projects?.filters || {}) }, statuses: { ...base.projects.statuses, ...(localized.projects?.statuses || {}) } },
+            feedback: { ...base.feedback, ...(localized.feedback || {}) },
+            onboarding: { ...base.onboarding, ...(localized.onboarding || {}) },
+          };
+        })(),
         dashboard: { ...englishCopy.workspace.dashboard, ...(workspaceCopyByLanguage[language]?.dashboard || {}) },
       },
     },

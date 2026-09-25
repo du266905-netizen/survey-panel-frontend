@@ -3,13 +3,6 @@ import { ChevronDown } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 
-const flagByLanguage = {
-  'en-US': '🇺🇸', 'en-GB': '🇬🇧', 'zh-Hant': '🇹🇼', 'zh-CN': '🇨🇳',
-  de: '🇩🇪', fr: '🇫🇷', nl: '🇳🇱', da: '🇩🇰', es: '🇪🇸', fi: '🇫🇮',
-  it: '🇮🇹', ja: '🇯🇵', ko: '🇰🇷', no: '🇳🇴', pt: '🇵🇹', ru: '🇷🇺',
-  sv: '🇸🇪', tr: '🇹🇷',
-};
-
 export default function BusinessLanguagePicker() {
   const { activeLanguage, language, languages, navigateToLanguage } = useLanguage();
   const [open, setOpen] = useState(false);
@@ -34,6 +27,11 @@ export default function BusinessLanguagePicker() {
     setOpen(false);
     navigateToLanguage(code);
   };
+  const languageTitle = {
+    'zh-CN': '语言', 'zh-Hant': '語言', de: 'Sprache', fr: 'Langue', es: 'Idioma', it: 'Lingua',
+    nl: 'Taal', da: 'Sprog', fi: 'Kieli', no: 'Språk', pt: 'Idioma', ru: 'Язык', sv: 'Språk',
+    tr: 'Dil', ko: '언어', ja: '言語',
+  }[language] || 'Language';
 
   return <div className="business-language-picker" ref={pickerRef}>
     <button type="button" title="Choose language" aria-label="Choose language" aria-expanded={open} aria-haspopup="listbox" onClick={() => setOpen((current) => !current)}>
@@ -42,9 +40,9 @@ export default function BusinessLanguagePicker() {
       <ChevronDown className={open ? 'is-open' : ''} size={13} aria-hidden="true" />
     </button>
     {open && <div className="business-language-picker-menu" role="listbox" aria-label="Choose language">
-      <p>Language</p>
+      <p>{languageTitle}</p>
       <div>
-        {languages.map((item) => <button key={item.code} type="button" role="option" aria-selected={language === item.code} className={language === item.code ? 'is-selected' : ''} onClick={() => selectLanguage(item.code)}><span className="business-language-flag" aria-hidden="true">{flagByLanguage[item.code] || '🌐'}</span><span>{item.label}</span></button>)}
+        {languages.map((item) => <button key={item.code} type="button" role="option" aria-selected={language === item.code} className={language === item.code ? 'is-selected' : ''} onClick={() => selectLanguage(item.code)}><span>{item.label}</span></button>)}
       </div>
     </div>}
   </div>;
