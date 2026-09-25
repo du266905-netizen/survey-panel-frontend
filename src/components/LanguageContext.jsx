@@ -173,6 +173,30 @@ const participantCopyByLanguage = {
   },
 };
 
+const participantLanguageSeeds = {
+  de: ['Online-Umfragen', 'Verfügbare Online-Umfrage auswählen.', 'Voraussichtliche Belohnung', 'Verfügbar', 'Umfrage öffnen', 'Umfrage starten', 'Nur Vorschau', 'Mehr Umfragen', 'Nachrichtenwand', 'Neueste Geschichten und Perspektiven an einem Ort.', 'Lesen Sie die heutigen Geschichten ohne unnötiges Rauschen.', 'Weitere Geschichten erscheinen, sobald sie verfügbar sind.'],
+  fr: ['Sondages en ligne', 'Choisissez un sondage en ligne disponible.', 'Récompense estimée', 'Disponible', 'Sondage ouvert', 'Commencer', 'Aperçu uniquement', 'Plus de sondages', 'Fil d’actualité', 'Les dernières histoires et perspectives, au même endroit.', 'Lisez les histoires du jour sans bruit inutile.', 'D’autres histoires apparaîtront dès qu’elles seront disponibles.'],
+  nl: ['Online enquêtes', 'Kies een beschikbare online enquête.', 'Geschatte beloning', 'Beschikbaar', 'Enquête geopend', 'Enquête starten', 'Alleen voorbeeld', 'Meer enquêtes', 'Nieuwsmuur', 'De nieuwste verhalen en perspectieven op één plek.', 'Lees het nieuws van vandaag zonder ruis.', 'Meer verhalen verschijnen zodra ze beschikbaar zijn.'],
+  da: ['Onlineundersøgelser', 'Vælg en tilgængelig onlineundersøgelse.', 'Forventet belønning', 'Tilgængelig', 'Undersøgelse åben', 'Start undersøgelse', 'Kun forhåndsvisning', 'Flere undersøgelser', 'Nyhedsvæg', 'De seneste historier og perspektiver samlet ét sted.', 'Læs dagens historier uden unødvendig støj.', 'Flere historier vises, når de er tilgængelige.'],
+  es: ['Encuestas en línea', 'Elige una encuesta en línea disponible.', 'Recompensa estimada', 'Disponible', 'Encuesta abierta', 'Iniciar encuesta', 'Solo vista previa', 'Más encuestas', 'Muro de noticias', 'Las últimas historias y perspectivas, en un solo lugar.', 'Lee las historias de hoy sin ruido.', 'Aparecerán más historias cuando estén disponibles.'],
+  fi: ['Verkkokyselyt', 'Valitse saatavilla oleva verkkokysely.', 'Arvioitu palkkio', 'Saatavilla', 'Kysely avoinna', 'Aloita kysely', 'Vain esikatselu', 'Lisää kyselyitä', 'Uutisseinä', 'Uusimmat tarinat ja näkökulmat yhdessä paikassa.', 'Lue tämän päivän tarinat ilman hälyä.', 'Lisää tarinoita näkyy, kun niitä on saatavilla.'],
+  it: ['Sondaggi online', 'Scegli un sondaggio online disponibile.', 'Ricompensa stimata', 'Disponibile', 'Sondaggio aperto', 'Inizia sondaggio', 'Solo anteprima', 'Altri sondaggi', 'Bacheca notizie', 'Le storie e i punti di vista più recenti, in un unico luogo.', 'Leggi le storie di oggi senza rumore.', 'Altre storie appariranno quando saranno disponibili.'],
+  ja: ['オンラインアンケート', '参加できるオンラインアンケートを選択してください。', '予想報酬', '参加可能', 'アンケートを開く', 'アンケートを開始', 'プレビューのみ', 'さらに見る', 'ニュースウォール', '最新のニュースと視点をひとつの場所に。', '余計な情報に惑わされず、今日のニュースを読めます。', '利用できるニュースがここに追加されます。'],
+  ko: ['온라인 설문', '참여 가능한 온라인 설문을 선택하세요.', '예상 보상', '참여 가능', '설문 열기', '설문 시작', '미리보기만', '더 많은 설문', '뉴스 월', '최신 이야기와 관점을 한곳에서 확인하세요.', '불필요한 소음 없이 오늘의 이야기를 읽어보세요.', '새로운 이야기가 준비되면 여기에 표시됩니다.'],
+  no: ['Nettundersøkelser', 'Velg en tilgjengelig nettundersøkelse.', 'Anslått belønning', 'Tilgjengelig', 'Undersøkelse åpen', 'Start undersøkelse', 'Kun forhåndsvisning', 'Flere undersøkelser', 'Nyhetsvegg', 'De nyeste historiene og perspektivene samlet på ett sted.', 'Les dagens historier uten unødvendig støy.', 'Flere historier vises når de er tilgjengelige.'],
+  pt: ['Inquéritos online', 'Escolha um inquérito online disponível.', 'Recompensa estimada', 'Disponível', 'Inquérito aberto', 'Começar inquérito', 'Apenas pré-visualização', 'Mais inquéritos', 'Mural de notícias', 'As notícias e perspetivas mais recentes num só lugar.', 'Leia as histórias de hoje sem ruído.', 'Mais histórias aparecerão quando estiverem disponíveis.'],
+  sv: ['Onlineundersökningar', 'Välj en tillgänglig onlineundersökning.', 'Beräknad belöning', 'Tillgänglig', 'Undersökning öppen', 'Starta undersökning', 'Endast förhandsvisning', 'Fler undersökningar', 'Nyhetsvägg', 'De senaste berättelserna och perspektiven på ett ställe.', 'Läs dagens berättelser utan brus.', 'Fler berättelser visas när de blir tillgängliga.'],
+  tr: ['Çevrim içi anketler', 'Mevcut bir çevrim içi anket seçin.', 'Tahmini ödül', 'Mevcut', 'Anket açık', 'Anketi başlat', 'Yalnızca önizleme', 'Daha fazla anket', 'Haber duvarı', 'En yeni hikâyeler ve bakış açıları tek bir yerde.', 'Bugünün hikâyelerini gürültü olmadan okuyun.', 'Yeni hikâyeler hazır olduklarında burada görünür.'],
+};
+
+Object.entries(participantLanguageSeeds).forEach(([language, values]) => {
+  const [surveyTitle, surveyDescription, reward, available, surveyOpen, start, preview, more, newsTitle, newsDescription, heroTitle, noStories] = values;
+  participantCopyByLanguage[language] = {
+    surveys: { ...englishCopy.participant.surveys, title: surveyTitle, description: surveyDescription, sectionTitle: surveyTitle, sectionDescription: surveyDescription, reward, available, surveyOpen, start, preview, more },
+    news: { ...englishCopy.participant.news, title: newsTitle, description: newsDescription, heroTitle, noStories },
+  };
+});
+
 const businessWorkspaceCopyByLanguage = {
   ru: {
     rail: { services: 'Исследовательские услуги', projects: 'Проекты', results: 'Результаты анкет', accountMenu: 'Меню аккаунта', account: 'Аккаунт', signOut: 'Выйти', clientAccount: 'Аккаунт клиента', navigation: 'Навигация рабочего пространства' },
