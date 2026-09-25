@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <LanguageProvider>
           <AuthProvider>
-            <App />
+            <div className="app-translation-guard notranslate" translate="no" data-translate="no"><App /></div>
           </AuthProvider>
         </LanguageProvider>
       </BrowserRouter>
