@@ -426,7 +426,12 @@ export default function MarketingAssets() {
               </button>
             </div>
             {campaignError && <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{campaignError}</p>}
-            {campaignResult && <p className={`rounded-lg border px-4 py-3 text-sm font-semibold ${campaignResult.failed ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>{campaignResult.queued} queued{campaignResult.failed ? ` · ${campaignResult.failed} could not be queued` : ''}. Check your email delivery activity for final delivery status.</p>}
+            {campaignResult && (
+              <div className={`rounded-lg border px-4 py-3 text-sm ${campaignResult.failed ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>
+                <p className="font-semibold">{campaignResult.queued} queued{campaignResult.failed ? ` · ${campaignResult.failed} could not be queued` : ''}. Check your email delivery activity for final delivery status.</p>
+                {campaignResult.failed > 0 && <ul className="mt-2 space-y-1 text-xs font-normal leading-5">{(campaignResult.results || []).filter((item) => item.status === 'failed').map((item) => <li key={item.recipient}><strong>{item.recipient}</strong>: {item.reason || 'The email service rejected this request.'}</li>)}</ul>}
+              </div>
+            )}
           </div>
 
           <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
