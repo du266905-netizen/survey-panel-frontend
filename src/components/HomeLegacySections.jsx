@@ -169,7 +169,7 @@ export function HomeFooter() {
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
   const marketCapabilityLabel = language === 'zh-CN' ? '中国市场洞察能力' : language === 'zh-Hant' ? '中國市場洞察能力' : 'China market insights capability';
   const researchServicesLabel = language === 'zh-CN' ? '市场研究' : language === 'zh-Hant' ? '市場研究' : 'Market research';
-  const researchServiceLink = language === 'zh-CN' ? '从问题到决策' : language === 'zh-Hant' ? '從問題到決策' : 'From question to decision';
+  const researchServiceLink = language === 'zh-CN' ? '市场研究服务' : language === 'zh-Hant' ? '市場研究服務' : 'Market research services';
   const footerGroups = getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink);
   return (
     <footer className="home-footer">

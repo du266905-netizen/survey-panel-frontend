@@ -59,9 +59,9 @@ const chinaMarketLabel = {
 };
 
 const researchWorkspaceCopy = {
-  'zh-CN': { label: '市场研究', eyebrow: '研究工作区', title: '从问题到决策', description: '在同一工作区内推进研究规划、问卷设计与洞察交付。' },
-  'zh-Hant': { label: '市場研究', eyebrow: '研究工作區', title: '從問題到決策', description: '在同一工作區內推進研究規劃、問卷設計與洞察交付。' },
-  default: { label: 'Market research', eyebrow: 'Research workspace', title: 'From question to decision', description: 'Plan research, shape questionnaires and move toward insight in one shared workspace.' },
+  'zh-CN': { label: '市场研究', title: '市场研究服务' },
+  'zh-Hant': { label: '市場研究', title: '市場研究服務' },
+  default: { label: 'Market research', title: 'Market research services' },
 };
 
 export default function PublicSiteHeader({ heroOverlay = false }) {
