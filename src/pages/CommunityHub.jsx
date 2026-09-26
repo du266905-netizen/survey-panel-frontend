@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, MapPin } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import communityCrossMarketOffice from '../assets/community/community-cross-market-office.jpg';
@@ -10,26 +10,40 @@ const rotationDelay = 9000;
 const platformFeatures = [
   {
     id: 'research-routes',
-    eyebrow: 'Before you enter a new market',
-    title: 'Validate before you enter.',
-    description: 'Test what local consumers value, what channel partners see, and where your offer needs to change before launch.',
-    supporting: 'Focused local research gives product, growth and market-entry teams evidence they can use.',
+    eyebrow: 'Research for market-entry teams',
+    title: 'Know what needs to change before launch.',
+    description: 'When a new-market decision carries real cost, assumptions about demand, language and channels are not enough. We design focused local studies around the questions that determine whether your offer is ready.',
+    supporting: 'GuanyiSearch gives product, growth and market-entry teams a clear route from a live decision to usable local evidence.',
+    clientProblems: [
+      {
+        title: 'Demand and proposition fit',
+        description: 'Which customer need matters most, and what would make the offer more relevant locally?',
+      },
+      {
+        title: 'Message and channel fit',
+        description: 'Which language, creative and route to market will make sense to the people you need to reach?',
+      },
+      {
+        title: 'A decision you can act on',
+        description: 'What should be adapted, tested next or held back before more budget is committed?',
+      },
+    ],
     image: communityResearchCollage,
     variant: 'research',
-    action: { type: 'link', label: 'Plan a study', to: '/business' },
+    action: { type: 'link', label: 'Discuss your market question', to: '/business' },
   },
   {
     id: 'cross-market-network',
-    eyebrow: 'A cross-market insight network',
-    title: 'Local evidence for market decisions.',
-    description: 'GuanyiSearch connects participants, research initiators and organisations around questions that need a local answer.',
+    eyebrow: 'Local research, built around a real decision',
+    title: 'Make the next market move with local evidence.',
+    description: 'GuanyiSearch brings together local participants, research design and hands-on project support so teams can turn a market question into a focused study—not a generic data exercise.',
     image: communityCrossMarketOffice,
-    action: { type: 'anchor', label: 'Book a demo', to: '#atlas-contact' },
+    action: { type: 'anchor', label: 'Discuss a market question', to: '#atlas-contact' },
     detail: {
-      eyebrow: 'Built for market entry',
-      title: 'Will people buy it here?',
-      description: 'Test local demand, channel reality and the expression that makes sense before a decision travels to a new market.',
-      points: ['Consumers with local context', 'Channel and market signals', 'Clearer go-to-market decisions'],
+      eyebrow: 'For market entry and growth',
+      title: 'What will make this offer work here?',
+      description: 'Assess demand, message and channel realities before committing launch spend. We help define what to test, who to hear from and how the result informs the next move.',
+      points: ['People selected for the decision at hand', 'Local context across message and channels', 'A focused route from brief to readout'],
     },
   },
 ];
@@ -75,6 +89,19 @@ export default function CommunityHub() {
           <h1 id="community-hub-title">{selectedArea.title}</h1>
           <span>{selectedArea.description}</span>
           {selectedArea.supporting && <strong className="community-hub-supporting-copy">{selectedArea.supporting}</strong>}
+          {selectedArea.clientProblems && (
+            <div className="community-hub-client-problems" aria-label="Questions GuanyiSearch helps clients resolve">
+              <p>What we help you resolve</p>
+              <ul>
+                {selectedArea.clientProblems.map((problem) => (
+                  <li key={problem.title}>
+                    <CheckCircle2 size={15} strokeWidth={1.9} aria-hidden="true" />
+                    <span><strong>{problem.title}</strong>{problem.description}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <FeatureAction action={selectedArea.action} language={language} />
         </header>
 
