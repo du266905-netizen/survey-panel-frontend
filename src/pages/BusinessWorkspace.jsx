@@ -22,7 +22,7 @@ import {
   X,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { completeBusinessResearchOnboarding, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
+import { completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -421,6 +421,23 @@ export default function BusinessWorkspace() {
     } finally { setSubmitting(false); }
   };
 
+  const beginPayment = async (project) => {
+    if (submitting) return;
+    setSubmitting(true); setMessage('');
+    try {
+      const response = await createBusinessPayment(project.id);
+      const payment = response.data.payment;
+      setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? { ...item, latestPayment: payment } : item) }));
+      if (payment.checkoutUrl) {
+        window.location.assign(payment.checkoutUrl);
+        return;
+      }
+      setMessage('Payment checkout is being prepared for this approved quote.');
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Payment checkout is not available yet. Please return to this project later.');
+    } finally { setSubmitting(false); }
+  };
+
   const closeWelcome = () => {
     storeWorkspaceWelcome(user);
     setWelcomeOpen(false);
@@ -516,6 +533,7 @@ export default function BusinessWorkspace() {
                         {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{projectsCopy.openDraft} <ArrowRight size={15} /></Link>{project.questionnaire?.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}</>}
                         {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit} <ArrowRight size={15} /></button>}
                         {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote} <ArrowRight size={15} /></button>}
+                        {project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={submitting}>Continue to payment <ArrowRight size={15} /></button>}
                       </div>
                       {project.latestQuote && <p className="business-project-quote-note">{project.latestQuote.status === 'SENT'
                         ? feedbackCopy.quoteReady.replace('{version}', project.latestQuote.version)

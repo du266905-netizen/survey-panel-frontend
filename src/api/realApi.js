@@ -268,6 +268,13 @@ export const decideBusinessProjectQuote = async (projectId, quoteId, payload) =>
   return { data: response.data };
 };
 
+export const createBusinessPayment = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/payment`, {}, {
+    headers: { 'X-Idempotency-Key': `business-payment:${projectId}` },
+  });
+  return { data: response.data };
+};
+
 export const submitBusinessProject = async (projectId) => {
   const response = await apiClient.post(`/api/business/projects/${projectId}/submit`);
   return { data: response.data };
