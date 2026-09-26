@@ -285,6 +285,7 @@
   box-shadow: 0 18px 36px rgba(3, 21, 14, .3), inset 0 0 0 1px rgba(246, 251, 245, .2);
 }
 
+.atlas-evidence-video > div { width: 100%; }
 .atlas-evidence-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 .atlas-evidence-copy { max-width: 525px; }
@@ -304,6 +305,23 @@
   font-weight: 760;
   line-height: 1.45;
 }
+.atlas-evidence-action {
+  display: inline-flex;
+  min-height: 44px;
+  margin-top: 26px;
+  align-items: center;
+  gap: 11px;
+  padding: 0 17px;
+  border: 1px solid rgba(244, 248, 241, .42);
+  border-radius: 999px;
+  color: #f4f8f1;
+  font-family: var(--font-sans);
+  font-size: .86rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.atlas-evidence-action:hover, .atlas-evidence-action:focus-visible { border-color: #deef24; background: #deef24; color: #17251f; }
 
 .atlas-stage {
   position: relative;
@@ -519,10 +537,13 @@
   grid-column: 1 / -1;
   align-self: center;
   justify-self: center;
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   min-width: 0;
   max-width: 100%;
   align-items: baseline;
+  justify-content: center;
+  text-align: center;
   gap: 10px;
   color: #748176;
   font-family: var(--font-display);
@@ -647,7 +668,7 @@
   .atlas-node, .atlas-node--news, .atlas-node--survey, .atlas-node--community, .atlas-node--business { position: relative; inset: auto; display: grid; grid-template-columns: 58px minmax(0, 1fr); max-width: none; animation: none; transform: none; }
   .atlas-node-image { width: 58px; height: 58px; }
   .atlas-map::before, .atlas-map::after, .atlas-wires, .atlas-orbit, .atlas-signal { display: none; }
-  .atlas-map-typewriter { position: relative; top: auto; left: auto; min-width: 0; max-width: 100%; flex-wrap: wrap; row-gap: 4px; grid-column: 1 / -1; justify-self: start; transform: none; }
+  .atlas-map-typewriter { position: relative; top: auto; left: auto; min-width: 0; max-width: 100%; flex-wrap: wrap; row-gap: 4px; grid-column: 1 / -1; justify-self: center; justify-content: center; text-align: center; transform: none; }
   .atlas-node, .atlas-node--news, .atlas-node--survey, .atlas-node--community, .atlas-node--business { position: relative; inset: auto; width: auto; max-width: none; animation: none; }
   .atlas-node:hover, .atlas-node:focus-visible { transform: translateY(-3px); }
   .atlas-node { grid-template-columns: 54px minmax(0, 1fr); gap: 10px; }

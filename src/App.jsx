@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
@@ -141,6 +141,7 @@ function SurveyWallRoute() {
 
 export default function App() {
   const { user } = useAuth();
+  const location = useLocation();
 
   return (
     <>
@@ -329,7 +330,7 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       </PageMotion>
-      {isPanelistRole(user?.role) && <SupportChatWidget />}
+      {isPanelistRole(user?.role) && location.pathname !== '/' && <SupportChatWidget />}
     </>
   );
 }

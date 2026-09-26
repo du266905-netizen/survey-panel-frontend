@@ -45,7 +45,6 @@ function getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel) {
 const socialLinks = [
   { id: 'x', label: 'X / Twitter', href: 'https://x.com/GUANYISEARCH' },
   { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/guanyisearch/' },
-  { id: 'whatsapp', label: 'Join our community', href: 'https://whatsapp.com/channel/0029Vb8T5zhJf05W6ZZmi83F' },
 ];
 
 const languageLabel = { 'zh-CN': '语言', 'zh-Hant': '語言', ja: '言語', ko: '언어', de: 'Sprache', fr: 'Langue', es: 'Idioma', it: 'Lingua', pt: 'Idioma', ru: 'Язык', tr: 'Dil', nl: 'Taal', da: 'Sprog', fi: 'Kieli', no: 'Språk', sv: 'Språk' };

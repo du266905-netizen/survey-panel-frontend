@@ -8,9 +8,9 @@ const englishCopy = {
   approach: { principle: 'Our principle', title: 'Human First', deck: 'We believe that real people will always be the starting point for research.', mark: ['REAL PEOPLE', 'REAL INSIGHT'], markBody: 'One real response at a time, a more trustworthy picture can grow.', imageAlt: 'Impressionist shoreline landscape', imageCaption: 'Real voices deserve to be heard with care.', lede: 'AI can generate endless content that appears real. But it can never recreate a particular person, in a particular moment, expressing what they truly think.', voices: 'Real voices', voicesBody: 'Behind every survey result is a person who chose to share a perspective. Those individual voices make insight worth trusting.', technology: 'Technology, in service', technologyBody: 'We use matching and real-time data to respect your time, show your impact, and keep every reward rule clear and fair.', principleLabel: 'Our principle', principleBody: 'Human-centered does not mean rejecting technology. It means making technology serve people.' },
   home: {
     contactKicker: 'Get in touch', contactTitle: 'Tell us what matters to you.', contactIntro: 'Share your question or idea. We will follow up using the details you provide.', name: 'Your name', email: 'Your email', contactNumber: 'Contact number', optional: 'Optional', phonePlaceholder: 'Phone number', country: 'Country or territory', subject: 'Subject', message: 'Message', send: 'Send message', sending: 'Sending', received: 'Thank you. Your message has been received.', sendError: 'We could not send your message. Please try again.',
-    prompts: ['Read the latest news', 'Join a survey', 'Share your view', 'Bring a research question'], begin: 'Let’s begin:', nodes: { news: ['News wall', "See the world's perspective. Stay up to date."], survey: ['Surveys', 'Take surveys and earn gift cards and more.'], community: ['Community', 'Join the community.'], business: ['Business', 'Custom questionnaires and tailored studies.'] },
+    prompts: ['Read the latest news', 'Join a survey', 'Share your view', 'Bring a research question'], begin: 'Let’s begin:', nodes: { news: ['News wall', "See the world's perspective. Stay up to date."], survey: ['Surveys', 'Take surveys and earn gift cards and more.'], community: ['Community', 'Join the community.'], business: ['Market research services', 'Custom questionnaires and tailored studies.'] },
     evidence: 'The world is never one-size-fits-all. GUANYISEARCH listens deeply, blending global vision with local research expertise. Grounded in scientific sample design and rigorous qualitative-quantitative methodologies, we consistently uphold internationally recognized research ethics and data privacy standards to uncover authentic insights—empowering better decisions and better lives.', evidenceStatement: 'Let every choice be evidence-based.',
-    globalLabel: 'Global perspective', globalTitle: 'Research begins with people, in every context.', globalBody: 'A global view reminds us that every response comes from a different life, place, and point of view. The platform keeps each participation journey clear and considered from the first step to reward.', rewardsLabel: 'Rewards & panel', rewardsTitle: 'A little more to look forward to.', rewardsBody: 'Join the panel for surveys that value your time, special tasks, and clear reward opportunities.', rewardCards: [['For everyday moments', 'Gift cards', 'Complete eligible surveys, build your Coins balance, and choose from selected gift-card rewards.'], ['Where available', 'Tokens', 'In supported regions, selected token reward options can be part of your next redemption choice.'], ['Inside the panel', 'Special tasks', 'From time to time, eligible members can receive an additional task and another way to earn Coins.']],
+    globalLabel: 'Global perspective', globalTitle: 'Research begins with people, in every context.', globalBody: 'A global view reminds us that every response comes from a different life, place, and point of view. The platform keeps each participation journey clear and considered from the first step to reward.', rewardsLabel: 'Join the research community', rewardsTitle: 'Every real perspective can make an impact.', rewardsBody: 'Join the GuanyiSearch research community, where participants, research teams and organisations build a more trusted insight ecosystem together. Take part in relevant surveys and special tasks; eligible completions can earn Coins and selected gift-card rewards.', rewardCards: [['For everyday moments', 'Gift cards', 'Complete eligible surveys, build your Coins balance, and choose from selected gift-card rewards.'], ['Where available', 'Tokens', 'In supported regions, selected token reward options can be part of your next redemption choice.'], ['Inside the panel', 'Special tasks', 'From time to time, eligible members can receive an additional task and another way to earn Coins.']],
     footer: { description: 'A considered research space for participants and organisations: clear opportunities, credible input, and practical next steps.', contact: 'Contact the team', about: 'About us', how: 'How it works', approach: 'Our approach', explore: 'Explore', news: 'News Wall', participate: 'Participate', surveys: 'Find surveys', wallet: 'Rewards & wallet', invite: 'Invite program', organisations: 'For organisations', questionnaires: 'Custom questionnaires', studies: 'Tailored research', standards: 'Standards', privacy: 'Privacy', terms: 'Terms', rights: '© 2026 GuanyiSearch. All rights reserved.', privacyPolicy: 'Privacy Policy', termsService: 'Terms of Service' },
   },
   participant: {
@@ -105,6 +105,35 @@ const localizedHomeByLanguage = {
 
 Object.entries(localizedHomeByLanguage).forEach(([language, home]) => {
   publicCopyByLanguage[language] = { ...publicCopyByLanguage[language], home };
+});
+
+const homepageCampaignOverrides = {
+  'zh-CN': {
+    business: ['市场研究服务', '定制问卷与专属研究服务。'],
+    rewardsLabel: '加入研究社群',
+    rewardsTitle: '让每一次真实表达，都有回响。',
+    rewardsBody: '加入 GuanyiSearch 研究社群，与参与者、研究团队和组织共同建设更可信的洞察生态。参与适合你的问卷与特别任务；符合条件的完成可获得 Coins，并兑换精选礼品卡等奖励。',
+  },
+  'zh-Hant': {
+    business: ['市場研究服務', '客製問卷與專屬研究服務。'],
+    rewardsLabel: '加入研究社群',
+    rewardsTitle: '讓每一次真實表達，都有回響。',
+    rewardsBody: '加入 GuanyiSearch 研究社群，與參與者、研究團隊和組織共同建構更可信的洞察生態。參與適合你的問卷與特別任務；符合條件的完成可獲得 Coins，並兌換精選禮品卡等獎勵。',
+  },
+};
+
+Object.entries(homepageCampaignOverrides).forEach(([language, copy]) => {
+  const home = publicCopyByLanguage[language].home;
+  publicCopyByLanguage[language] = {
+    ...publicCopyByLanguage[language],
+    home: {
+      ...home,
+      nodes: { ...home.nodes, business: copy.business },
+      rewardsLabel: copy.rewardsLabel,
+      rewardsTitle: copy.rewardsTitle,
+      rewardsBody: copy.rewardsBody,
+    },
+  };
 });
 
 const localizedFooterCorrections = {
