@@ -141,16 +141,17 @@ function CartSketch() {
   );
 }
 
-export function HumanManifesto() {
+export function HumanManifesto({ headingLevel = 'h1' }) {
   const { publicCopy } = useLanguage();
   const copy = publicCopy.approach;
+  const Heading = headingLevel;
   return (
     <section id="human-manifesto" className="home-manifesto" aria-labelledby="home-manifesto-title">
       <div className="home-continuation-container">
         <div className="home-manifesto-masthead">
           <div>
             <p className="home-section-label">{copy.principle}</p>
-            <h1 id="home-manifesto-title">{copy.title}</h1>
+            <Heading id="home-manifesto-title">{copy.title}</Heading>
             <p className="home-manifesto-deck">{copy.deck}</p>
           </div>
           <div className="home-manifesto-mark"><ManifestoSprout /><div><strong>{copy.mark[0]}<br />{copy.mark[1]}</strong><p>{copy.markBody}</p></div></div>
