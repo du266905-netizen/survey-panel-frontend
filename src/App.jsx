@@ -3,6 +3,7 @@ import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminSupportTickets from './pages/AdminSupportTickets';
+import AdminSandbox from './pages/AdminSandbox';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
 import AdminBusinessProjects from './pages/AdminBusinessProjects';
 import AdminDeliveryCenter from './pages/AdminDeliveryCenter';
@@ -310,6 +311,10 @@ export default function App() {
                 <AdminSupportTickets />
               </AdminRoute>
             }
+          />
+          <Route
+            path="/admin/sandbox"
+            element={<AdminRoute><AdminSandbox /></AdminRoute>}
           />
           <Route
             path="/admin"

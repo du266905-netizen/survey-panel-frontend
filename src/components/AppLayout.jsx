@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, BriefcaseBusiness, ChevronDown, ClipboardCheck, Compass, Database, Gift, House, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, BriefcaseBusiness, ChevronDown, ClipboardCheck, Compass, Database, FlaskConical, Gift, House, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
@@ -215,6 +215,7 @@ export default function AppLayout({ children }) {
               {adminLink('/admin/rewards', 'Rewards & redemptions', Gift)}
               {adminLink('/admin/partners', 'Survey sources', Users)}
               <div className="app-sidebar-label app-sidebar-label-secondary">System</div>
+              {adminLink('/admin/sandbox', 'Sandbox release', FlaskConical)}
               {adminLink('/team', 'Team', UserPlus)}
               {adminLink('/workers', 'Orbit Operations', UserCog)}
               {adminLink('/orbit/settlement', 'Settlement Review', ClipboardCheck)}
