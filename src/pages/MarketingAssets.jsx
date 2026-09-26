@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AlertCircle, ArrowDownToLine, CheckCircle2, FileImage, LockKeyhole, Palette, RefreshCcw, RotateCcw, Sparkles, Upload } from 'lucide-react';
-import { getMarketingAssets } from '../api/realApi';
+import { AlertCircle, ArrowDownToLine, CheckCircle2, Eye, FileImage, LockKeyhole, Mail, Palette, RefreshCcw, RotateCcw, Send, Sparkles, Upload } from 'lucide-react';
+import { getMarketingAssets, previewMarketingCampaign, sendMarketingCampaign } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 import {
   DEFAULT_MANIFESTO,
@@ -23,6 +23,11 @@ const COUNTRY_OPTIONS = [
   { value: 'US', label: 'US' },
   { value: 'UK', label: 'UK' },
   { value: 'CA', label: 'Canada' },
+];
+
+const EMAIL_CAMPAIGN_TEMPLATES = [
+  { value: 'organization-market-research', label: 'Organisation market research', description: 'For clients and organisations considering a market decision.' },
+  { value: 'participant-community', label: 'Participant insight community', description: 'For prospective research participants and panel members.' },
 ];
 
 function formatGeneratedAt(value) {
@@ -95,6 +100,15 @@ export default function MarketingAssets() {
   const [exporting, setExporting] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [campaignTemplate, setCampaignTemplate] = useState('organization-market-research');
+  const [campaignLocale, setCampaignLocale] = useState('zh-CN');
+  const [recipientText, setRecipientText] = useState('');
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [campaignPreview, setCampaignPreview] = useState(null);
+  const [campaignError, setCampaignError] = useState('');
+  const [campaignResult, setCampaignResult] = useState(null);
+  const [previewingCampaign, setPreviewingCampaign] = useState(false);
+  const [sendingCampaign, setSendingCampaign] = useState(false);
 
   const selectedTemplate = useMemo(
     () => TEMPLATE_CATALOG.find((template) => template.key === selectedKey) || TEMPLATE_CATALOG[0],
@@ -163,6 +177,51 @@ export default function MarketingAssets() {
   };
 
   const details = availabilityDetails(selectedAsset?.details);
+  const recipientCount = useMemo(() => new Set(
+    recipientText.split(/[\s,;]+/).map((value) => value.trim().toLowerCase()).filter(Boolean)
+  ).size, [recipientText]);
+  const selectedCampaign = EMAIL_CAMPAIGN_TEMPLATES.find((template) => template.value === campaignTemplate);
+
+  const handleCampaignPreview = async () => {
+    setPreviewingCampaign(true);
+    setCampaignError('');
+    setCampaignResult(null);
+    try {
+      const response = await previewMarketingCampaign({ template: campaignTemplate, locale: campaignLocale });
+      setCampaignPreview(response.data);
+    } catch (caughtError) {
+      setCampaignError(caughtError.response?.data?.message || 'Unable to generate the email preview.');
+    } finally {
+      setPreviewingCampaign(false);
+    }
+  };
+
+  const handleCampaignSend = async () => {
+    if (!recipientCount) {
+      setCampaignError('Paste at least one complete email address before sending.');
+      return;
+    }
+    if (!marketingConsent) {
+      setCampaignError('Confirm recipient consent before sending a marketing email.');
+      return;
+    }
+    setSendingCampaign(true);
+    setCampaignError('');
+    setCampaignResult(null);
+    try {
+      const response = await sendMarketingCampaign({
+        template: campaignTemplate,
+        locale: campaignLocale,
+        recipientText,
+        confirmMarketingConsent: marketingConsent,
+      });
+      setCampaignResult(response.data);
+    } catch (caughtError) {
+      setCampaignError(caughtError.response?.data?.message || 'Unable to queue this email campaign.');
+    } finally {
+      setSendingCampaign(false);
+    }
+  };
 
   return (
     <div className="marketing-assets-page space-y-6">
@@ -315,6 +374,69 @@ export default function MarketingAssets() {
       <section className="marketing-disclosure">
         <Sparkles size={18} />
         <p><strong>Brand system:</strong> #F3EDE0 paper, #1F1F1B ink, Source Han Serif-style type, and a fixed GuanyiSearch wordmark area across all active templates.</p>
+      </section>
+
+      <section className="card overflow-hidden border-slate-200 bg-white p-0" aria-label="Marketing email campaign sender">
+        <div className="border-b border-slate-200 bg-slate-50 px-6 py-5">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700"><Mail size={15} /> Marketing email delivery</div>
+              <h2 className="mt-2 text-xl font-bold text-slate-950">Send an approved email template</h2>
+              <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-600">Choose the audience and language, paste complete recipient email addresses, then send through the dedicated marketing channel. Transactional mail is kept separate.</p>
+            </div>
+            <span className="rounded-full bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-800">Up to 100 unique recipients</span>
+          </div>
+        </div>
+
+        <div className="grid gap-6 p-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,1.1fr)]">
+          <div className="space-y-4">
+            <label className="block text-sm font-bold text-slate-800">
+              Email template
+              <select className="field mt-2 w-full" value={campaignTemplate} onChange={(event) => { setCampaignTemplate(event.target.value); setCampaignPreview(null); setCampaignResult(null); }}>
+                {EMAIL_CAMPAIGN_TEMPLATES.map((template) => <option key={template.value} value={template.value}>{template.label}</option>)}
+              </select>
+              <span className="mt-1 block text-xs font-normal leading-5 text-slate-500">{selectedCampaign?.description}</span>
+            </label>
+            <label className="block text-sm font-bold text-slate-800">
+              Language
+              <select className="field mt-2 w-full" value={campaignLocale} onChange={(event) => { setCampaignLocale(event.target.value); setCampaignPreview(null); setCampaignResult(null); }}>
+                <option value="zh-CN">中文</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+            <label className="block text-sm font-bold text-slate-800">
+              Recipient email addresses
+              <textarea className="field mt-2 min-h-44 w-full font-mono text-sm" value={recipientText} onChange={(event) => { setRecipientText(event.target.value); setCampaignResult(null); }} placeholder={'name@example.com\nteam@example.org'} />
+              <span className="mt-1 block text-xs font-normal leading-5 text-slate-500">One full email address per line, or separate them with commas. Duplicate addresses are removed automatically. A domain alone cannot be sent to.</span>
+            </label>
+            <div className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
+              <span className="font-semibold text-slate-700">Recipients ready</span>
+              <span className={`font-bold ${recipientCount > 100 ? 'text-red-700' : 'text-emerald-700'}`}>{recipientCount} / 100</span>
+            </div>
+            <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-4 text-sm leading-6 text-slate-700">
+              <input className="mt-1 h-4 w-4 accent-emerald-700" type="checkbox" checked={marketingConsent} onChange={(event) => setMarketingConsent(event.target.checked)} />
+              <span>I confirm that every recipient has consented to receive this marketing email and that this message is relevant to them.</span>
+            </label>
+            <div className="flex flex-wrap gap-3">
+              <button className="btn-secondary" type="button" onClick={handleCampaignPreview} disabled={previewingCampaign || sendingCampaign}>
+                <Eye size={16} /> {previewingCampaign ? 'Preparing preview…' : 'Preview email'}
+              </button>
+              <button className="btn-primary" type="button" onClick={handleCampaignSend} disabled={sendingCampaign || previewingCampaign || recipientCount > 100}>
+                <Send size={16} /> {sendingCampaign ? 'Queueing email…' : `Send to ${recipientCount || '…'} recipient${recipientCount === 1 ? '' : 's'}`}
+              </button>
+            </div>
+            {campaignError && <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{campaignError}</p>}
+            {campaignResult && <p className={`rounded-lg border px-4 py-3 text-sm font-semibold ${campaignResult.failed ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>{campaignResult.queued} queued{campaignResult.failed ? ` · ${campaignResult.failed} could not be queued` : ''}. Check your email delivery activity for final delivery status.</p>}
+          </div>
+
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+            <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3">
+              <span className="text-sm font-bold text-slate-800">Template preview</span>
+              {campaignPreview && <span className="max-w-[55%] truncate text-xs text-slate-500">{campaignPreview.subject}</span>}
+            </div>
+            {campaignPreview ? <iframe title="Marketing email preview" className="h-[680px] w-full bg-white" srcDoc={campaignPreview.html} sandbox="" /> : <div className="grid min-h-[680px] place-items-center p-8 text-center text-sm leading-6 text-slate-500"><div><Eye className="mx-auto mb-3 text-slate-400" size={28} /><p>Select a template and language, then preview it before sending.</p></div></div>}
+          </div>
+        </div>
       </section>
     </div>
   );

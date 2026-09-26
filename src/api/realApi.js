@@ -560,6 +560,21 @@ export const getMarketingAssets = async (params = {}) => {
   return { data: response.data };
 };
 
+export const previewMarketingCampaign = async ({ template, locale }) => {
+  const response = await apiClient.post('/api/admin/marketing-campaigns/preview', { template, locale });
+  return { data: response.data };
+};
+
+export const sendMarketingCampaign = async ({ template, locale, recipientText, confirmMarketingConsent }) => {
+  const response = await apiClient.post('/api/admin/marketing-campaigns/send', {
+    template,
+    locale,
+    recipientText,
+    confirmMarketingConsent,
+  });
+  return { data: response.data };
+};
+
 export const getNewsArticle = async (articleId) => {
   const response = await apiClient.get(`/api/news/${articleId}`);
   return { data: response.data.article };
