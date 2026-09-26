@@ -532,13 +532,15 @@
 .home-atlas.is-news .atlas-wire--news, .home-atlas.is-survey .atlas-wire--survey, .home-atlas.is-community .atlas-wire--community, .home-atlas.is-business .atlas-wire--business { stroke: #c1893f; stroke-width: 2.45; }
 
 .atlas-map-typewriter {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   z-index: 1;
   grid-column: 1 / -1;
   align-self: center;
   justify-self: center;
   display: flex;
-  width: 100%;
+  width: max-content;
   min-width: 0;
   max-width: 100%;
   align-items: baseline;
@@ -551,7 +553,7 @@
   font-weight: 600;
   letter-spacing: -.035em;
   line-height: .98;
-  transform: none;
+  transform: translate(-50%, -50%);
 }
 .atlas-map-typewriter span { color: #77867b; white-space: nowrap; }
 .atlas-map-typewriter strong { min-width: 0; color: #2a573e; font-weight: 600; white-space: normal; }

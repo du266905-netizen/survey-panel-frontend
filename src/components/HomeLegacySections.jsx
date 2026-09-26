@@ -6,13 +6,12 @@ import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import './HomeLegacySections.css';
 
-function getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel) {
+function getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink) {
   return [
   {
     label: researchServicesLabel,
     links: [
-      { label: copy.questionnaires, to: '/business' },
-      { label: copy.studies, to: '/business' },
+      { label: researchServiceLink, to: '/business' },
     ],
   },
   {
@@ -169,8 +168,9 @@ export function HomeFooter() {
   const copy = publicCopy.home.footer;
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
   const marketCapabilityLabel = language === 'zh-CN' ? '中国市场洞察能力' : language === 'zh-Hant' ? '中國市場洞察能力' : 'China market insights capability';
-  const researchServicesLabel = language === 'zh-CN' ? '研究服务' : language === 'zh-Hant' ? '研究服務' : 'Research services';
-  const footerGroups = getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel);
+  const researchServicesLabel = language === 'zh-CN' ? '市场研究' : language === 'zh-Hant' ? '市場研究' : 'Market research';
+  const researchServiceLink = language === 'zh-CN' ? '从问题到决策' : language === 'zh-Hant' ? '從問題到決策' : 'From question to decision';
+  const footerGroups = getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink);
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">

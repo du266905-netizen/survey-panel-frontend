@@ -14,8 +14,7 @@ const navigation = [
     id: 'services',
     label: 'Research services',
     items: [
-      { to: '/business', eyebrow: 'Research delivery', title: 'Custom questionnaires', copyKey: 'questionnaires' },
-      { to: '/business', eyebrow: 'Decision support', title: 'Tailored research', copyKey: 'studies' },
+      { to: '/business', serviceWorkspace: true },
     ],
   },
   {
@@ -59,6 +58,12 @@ const chinaMarketLabel = {
   'zh-Hant': '中國市場洞察能力',
 };
 
+const researchWorkspaceCopy = {
+  'zh-CN': { label: '市场研究', eyebrow: '研究工作区', title: '从问题到决策', description: '在同一工作区内推进研究规划、问卷设计与洞察交付。' },
+  'zh-Hant': { label: '市場研究', eyebrow: '研究工作區', title: '從問題到決策', description: '在同一工作區內推進研究規劃、問卷設計與洞察交付。' },
+  default: { label: 'Market research', eyebrow: 'Research workspace', title: 'From question to decision', description: 'Plan research, shape questionnaires and move toward insight in one shared workspace.' },
+};
+
 export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
@@ -67,7 +72,8 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const menuCloseTimer = useRef(null);
   const marketCapabilityLabel = chinaMarketLabel[language] || 'China market insights capability';
-  const servicesLabel = researchServicesLabel[language] || 'Research services';
+  const workspaceCopy = researchWorkspaceCopy[language] || researchWorkspaceCopy.default;
+  const servicesLabel = workspaceCopy.label || researchServicesLabel[language] || 'Research services';
   const navigationLabel = (group) => {
     if (group.id === 'services') return servicesLabel;
     if (group.id === 'participate') return publicCopy.navigation.takePart;
@@ -76,6 +82,9 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   const navigationItemLabel = (item) => item.copyKey
     ? publicCopy.home.footer[item.copyKey]
     : publicCopy.navigation.items[itemCopyKey[item.to]] || item.title;
+  const navigationItemContent = (item) => item.serviceWorkspace
+    ? workspaceCopy
+    : { eyebrow: item.eyebrow, title: navigationItemLabel(item) };
 
   const clearMenuCloseTimer = () => {
     if (menuCloseTimer.current === null) return;
@@ -150,11 +159,16 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                 onMouseEnter={clearMenuCloseTimer}
                 onMouseLeave={scheduleMenuClose}
               >
-                {group.items.map((item) => (
-                  <Link className="atlas-nav-menu-item" to={withLanguage(item.to, language)} key={`${item.to}-${item.title}`} onClick={closeNavigation}>
-                    <strong>{navigationItemLabel(item)}</strong>
-                  </Link>
-                ))}
+                {group.items.map((item) => {
+                  const content = navigationItemContent(item);
+                  return (
+                    <Link className="atlas-nav-menu-item" to={withLanguage(item.to, language)} key={`${item.to}-${content.title}`} onClick={closeNavigation}>
+                      {content.eyebrow && <span>{content.eyebrow}</span>}
+                      <strong>{content.title}</strong>
+                      {content.description && <small>{content.description}</small>}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </Fragment>
@@ -239,12 +253,10 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
         {navigation.map((group) => (
           <div className="atlas-mobile-group" key={group.id}>
             <p>{navigationLabel(group)}</p>
-            {group.items.map((item) => (
-              <Link to={withLanguage(item.to, language)} key={`${item.to}-${item.title}`} onClick={closeNavigation}>
-                {navigationItemLabel(item)}
-                <ArrowUpRight size={16} strokeWidth={1.8} />
-              </Link>
-            ))}
+            {group.items.map((item) => {
+              const content = navigationItemContent(item);
+              return <Link to={withLanguage(item.to, language)} key={`${item.to}-${content.title}`} onClick={closeNavigation}>{content.title}<ArrowUpRight size={16} strokeWidth={1.8} /></Link>;
+            })}
           </div>
         ))}
       </div>
