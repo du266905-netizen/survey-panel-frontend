@@ -976,6 +976,7 @@
 .community-hub-primary-action { display: inline-flex; min-height: 52px; align-items: center; gap: 14px; margin-top: 28px; border: 1px solid #e3f42b; border-radius: 999px; background: #e3f42b; box-shadow: 0 13px 25px rgba(0, 0, 0, .18); color: #13261c; font-family: var(--font-sans); font-size: 14px; font-weight: 860; padding: 0 21px 0 23px; text-decoration: none; transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
 .community-hub-primary-action:hover { border-color: #f1ff68; background: #f1ff68; color: #102016; transform: translateY(-2px); }
 .community-hub-primary-action:focus-visible { outline: 3px solid #fffdf8; outline-offset: 4px; }
+.community-hub-stage--research .community-hub-primary-action { margin-top: 14px; }
 .community-hub-detail { position: absolute; top: clamp(30px, 3.25vw, 52px); right: clamp(30px, 3.25vw, 52px); display: flex; width: min(100% - 60px, 322px); flex-direction: column; border: 1px solid rgba(255, 253, 248, .54); background: rgba(255, 254, 250, .95); box-shadow: 0 15px 34px rgba(0, 0, 0, .18); color: #26342b; padding: 20px; }
 .community-hub-detail > p { color: #748076; font-size: 9px; }
 .community-hub-detail h2 { margin: 7px 0 0; color: #233329; font-family: var(--font-reading); font-size: 24px; font-weight: 700; letter-spacing: -.04em; line-height: 1.03; }
