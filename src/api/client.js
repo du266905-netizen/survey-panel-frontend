@@ -10,8 +10,13 @@ const defaultApiBaseUrl = () => {
 };
 
 const configuredApiBaseUrl = String(import.meta.env.VITE_API_URL || '').trim();
+const isSandboxBuild = String(import.meta.env.VITE_DEPLOYMENT_ENV || '').trim().toLowerCase() === 'sandbox';
 
 const apiBaseUrl = (() => {
+  if (isSandboxBuild && !configuredApiBaseUrl) {
+    // A preview must fail closed rather than silently falling back to production.
+    return 'https://sandbox-api.invalid';
+  }
   try {
     const url = new URL(configuredApiBaseUrl);
     return ['http:', 'https:'].includes(url.protocol) ? configuredApiBaseUrl.replace(/\/+$/, '') : defaultApiBaseUrl();
