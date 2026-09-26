@@ -6,19 +6,19 @@ import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import './HomeLegacySections.css';
 
-function getFooterGroups(copy, marketCapabilityLabel) {
+function getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel) {
   return [
   {
-    label: copy.about,
+    label: researchServicesLabel,
     links: [
-      { label: copy.how, to: '/how-it-works' },
-      { label: copy.approach, to: '/our-approach' },
+      { label: copy.questionnaires, to: '/business' },
+      { label: copy.studies, to: '/business' },
     ],
   },
   {
-    label: copy.explore,
+    label: marketCapabilityLabel,
     links: [
-      { label: copy.news, to: '/news' },
+      { label: marketCapabilityLabel, to: '/china-market-insights' },
     ],
   },
   {
@@ -27,19 +27,14 @@ function getFooterGroups(copy, marketCapabilityLabel) {
       { label: copy.surveys, to: '/partners' },
       { label: copy.wallet, to: '/wallet' },
       { label: copy.invite, to: '/referrals' },
+      { label: copy.news, to: '/news' },
     ],
   },
   {
-    label: copy.organisations,
+    label: copy.about,
     links: [
-      { label: copy.questionnaires, to: '/business' },
-      { label: copy.studies, to: '/business' },
-      { label: marketCapabilityLabel, to: '/china-market-insights' },
-    ],
-  },
-  {
-    label: copy.standards,
-    links: [
+      { label: copy.how, to: '/how-it-works' },
+      { label: copy.approach, to: '/our-approach' },
       { label: copy.privacy, to: '/privacy' },
       { label: copy.terms, to: '/terms' },
     ],
@@ -175,7 +170,8 @@ export function HomeFooter() {
   const copy = publicCopy.home.footer;
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
   const marketCapabilityLabel = language === 'zh-CN' ? '中国市场洞察能力' : language === 'zh-Hant' ? '中國市場洞察能力' : 'China market insights capability';
-  const footerGroups = getFooterGroups(copy, marketCapabilityLabel);
+  const researchServicesLabel = language === 'zh-CN' ? '研究服务' : language === 'zh-Hant' ? '研究服務' : 'Research services';
+  const footerGroups = getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel);
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">

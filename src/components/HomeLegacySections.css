@@ -97,7 +97,7 @@
 .home-social-links a { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid rgba(240, 237, 230, .2); color: rgba(244, 241, 232, .86); transition: transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease; }
 .home-social-links a:hover { border-color: #d5c888; background: #d5c888; color: #1a2b21; transform: translateY(-2px); }
 .home-social-links svg { width: 18px; height: 18px; }
-.home-footer-nav { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 38px); align-content: start; }
+.home-footer-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 3vw, 46px); align-content: start; }
 .home-footer-nav section { display: grid; align-content: start; gap: 13px; }
 .home-footer-nav p { margin: 0 0 8px; color: #bcc7af; font-size: 10px; font-weight: 900; letter-spacing: .17em; text-transform: uppercase; }
 .home-footer-nav a { color: rgba(243, 239, 229, .72); font-size: 14px; font-weight: 700; line-height: 1.4; text-decoration: none; }

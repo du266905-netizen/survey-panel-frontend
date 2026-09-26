@@ -11,25 +11,28 @@ import './PublicSiteHeader.css';
 
 const navigation = [
   {
+    id: 'services',
+    label: 'Research services',
+    items: [
+      { to: '/business', eyebrow: 'Research delivery', title: 'Custom questionnaires', copyKey: 'questionnaires' },
+      { to: '/business', eyebrow: 'Decision support', title: 'Tailored research', copyKey: 'studies' },
+    ],
+  },
+  {
+    id: 'participate',
+    label: 'Take part',
+    items: [
+      { to: '/partners', eyebrow: 'Participation', title: 'Available surveys' },
+      { to: '/wallet', eyebrow: 'Recognition', title: 'Rewards' },
+      { to: '/news', eyebrow: 'Daily brief', title: 'News Wall' },
+    ],
+  },
+  {
+    id: 'about',
     label: 'About us',
     items: [
       { to: '/how-it-works', eyebrow: 'The panel', title: 'How it works' },
       { to: '/our-approach', eyebrow: 'People first', title: 'Our approach' },
-    ],
-  },
-  {
-    label: 'Take part',
-    items: [
-      { to: '/partners', eyebrow: 'Participation', title: 'Available surveys' },
-      { to: '/news', eyebrow: 'Daily brief', title: 'News Wall' },
-      { to: '/wallet', eyebrow: 'Recognition', title: 'Rewards' },
-    ],
-  },
-  {
-    label: 'Standards',
-    items: [
-      { to: '/privacy', eyebrow: 'People first', title: 'Your information' },
-      { to: '/terms', eyebrow: 'Terms', title: 'Participation terms' },
     ],
   },
 ];
@@ -42,6 +45,13 @@ const itemCopyKey = {
   '/wallet': 'rewards',
   '/privacy': 'privacy',
   '/terms': 'terms',
+};
+
+const researchServicesLabel = {
+  en: 'Research services',
+  'en-GB': 'Research services',
+  'zh-CN': '研究服务',
+  'zh-Hant': '研究服務',
 };
 
 const chinaMarketLabel = {
@@ -57,6 +67,15 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const menuCloseTimer = useRef(null);
   const marketCapabilityLabel = chinaMarketLabel[language] || 'China market insights capability';
+  const servicesLabel = researchServicesLabel[language] || 'Research services';
+  const navigationLabel = (group) => {
+    if (group.id === 'services') return servicesLabel;
+    if (group.id === 'participate') return publicCopy.navigation.takePart;
+    return publicCopy.navigation.about;
+  };
+  const navigationItemLabel = (item) => item.copyKey
+    ? publicCopy.home.footer[item.copyKey]
+    : publicCopy.navigation.items[itemCopyKey[item.to]] || item.title;
 
   const clearMenuCloseTimer = () => {
     if (menuCloseTimer.current === null) return;
@@ -102,7 +121,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
 
       <nav className="atlas-nav-links" aria-label="Primary navigation">
         {navigation.map((group) => (
-          <Fragment key={group.label}>
+          <Fragment key={group.id}>
             <div
               className="atlas-nav-group"
               onMouseEnter={() => {
@@ -123,7 +142,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                   setActiveMenu((current) => (current === group.label ? null : group.label));
                 }}
               >
-                {publicCopy.navigation[{ 'About us': 'about', 'Take part': 'takePart', Standards: 'standards' }[group.label]] || group.label}
+                {navigationLabel(group)}
                 <ChevronDown aria-hidden="true" size={15} strokeWidth={1.8} />
               </button>
               <div
@@ -132,15 +151,14 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
                 onMouseLeave={scheduleMenuClose}
               >
                 {group.items.map((item) => (
-                  <Link className="atlas-nav-menu-item" to={withLanguage(item.to, language)} key={item.title} onClick={closeNavigation}>
-                    <strong>{publicCopy.navigation.items[itemCopyKey[item.to]] || item.title}</strong>
+                  <Link className="atlas-nav-menu-item" to={withLanguage(item.to, language)} key={`${item.to}-${item.title}`} onClick={closeNavigation}>
+                    <strong>{navigationItemLabel(item)}</strong>
                   </Link>
                 ))}
               </div>
             </div>
           </Fragment>
         ))}
-        <Link className="atlas-nav-link atlas-nav-link--business" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations}</Link>
         <Link className="atlas-nav-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>{marketCapabilityLabel}</Link>
       </nav>
 
@@ -206,7 +224,6 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
 
       <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
         <div className="atlas-mobile-direct-links">
-          <Link className="atlas-mobile-direct-link" to={withLanguage('/business', language)} onClick={closeNavigation}>{publicCopy.navigation.organisations} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
           <Link className="atlas-mobile-direct-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>{marketCapabilityLabel} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
         </div>
         <div className="atlas-mobile-language">
@@ -220,11 +237,11 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
           </div>
         </div>
         {navigation.map((group) => (
-          <div className="atlas-mobile-group" key={group.label}>
-            <p>{publicCopy.navigation[{ 'About us': 'about', 'Take part': 'takePart', Standards: 'standards' }[group.label]] || group.label}</p>
+          <div className="atlas-mobile-group" key={group.id}>
+            <p>{navigationLabel(group)}</p>
             {group.items.map((item) => (
-              <Link to={withLanguage(item.to, language)} key={item.title} onClick={closeNavigation}>
-                {publicCopy.navigation.items[itemCopyKey[item.to]] || item.title}
+              <Link to={withLanguage(item.to, language)} key={`${item.to}-${item.title}`} onClick={closeNavigation}>
+                {navigationItemLabel(item)}
                 <ArrowUpRight size={16} strokeWidth={1.8} />
               </Link>
             ))}
