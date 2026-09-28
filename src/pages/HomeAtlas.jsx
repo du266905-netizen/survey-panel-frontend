@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import CommunityHub from './CommunityHub';
 import HomeLegacySections, { HomeGlobalSection } from '../components/HomeLegacySections';
-import CookieConsentBanner from '../components/CookieConsentBanner';
 import { useAuth } from '../components/AuthContext';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
@@ -317,7 +316,6 @@ export default function HomeAtlas() {
       </section>
 
       <HomeLegacySections />
-      <CookieConsentBanner />
     </main>
   );
 }
