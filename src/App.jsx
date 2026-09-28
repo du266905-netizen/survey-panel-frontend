@@ -59,6 +59,7 @@ import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
 import ChinaMarketInsights from './pages/ChinaMarketInsights';
+import MarketingUnsubscribe from './pages/MarketingUnsubscribe';
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -172,6 +173,7 @@ export default function App() {
         <Route path="/business/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PublicPage><Privacy /></PublicPage>} />
         <Route path="/terms" element={<PublicPage><Terms /></PublicPage>} />
+        <Route path="/email/unsubscribe" element={<MarketingUnsubscribe />} />
         <Route path="/business/terms" element={<PublicPage><BusinessResearcherTerms /></PublicPage>} />
         <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
         <Route path="/our-approach" element={<PublicPage><OurApproach /></PublicPage>} />

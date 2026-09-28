@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AlertCircle, ArrowDownToLine, CheckCircle2, Eye, FileImage, LockKeyhole, Mail, Palette, RefreshCcw, RotateCcw, Send, Sparkles, Upload } from 'lucide-react';
-import { getMarketingAssets, previewMarketingCampaign, sendMarketingCampaign } from '../api/realApi';
+import { AlertCircle, ArrowDownToLine, CheckCircle2, Clock3, Eye, FileImage, LockKeyhole, Mail, Palette, RefreshCcw, RotateCcw, Send, Sparkles, Upload } from 'lucide-react';
+import { getMarketingAssets, getMarketingContacts, getMarketingDeliveries, previewMarketingCampaign, saveMarketingContact, sendMarketingCampaign } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 import {
   DEFAULT_MANIFESTO,
@@ -109,6 +109,13 @@ export default function MarketingAssets() {
   const [campaignResult, setCampaignResult] = useState(null);
   const [previewingCampaign, setPreviewingCampaign] = useState(false);
   const [sendingCampaign, setSendingCampaign] = useState(false);
+  const [deliveryLog, setDeliveryLog] = useState([]);
+  const [marketingContacts, setMarketingContacts] = useState([]);
+  const [contactEmail, setContactEmail] = useState('');
+  const [consentSource, setConsentSource] = useState('');
+  const [savingContact, setSavingContact] = useState(false);
+  const [contactNotice, setContactNotice] = useState('');
+  const [contactError, setContactError] = useState('');
 
   const selectedTemplate = useMemo(
     () => TEMPLATE_CATALOG.find((template) => template.key === selectedKey) || TEMPLATE_CATALOG[0],
@@ -132,6 +139,11 @@ export default function MarketingAssets() {
   useEffect(() => {
     loadAssets();
   }, [country]);
+
+  useEffect(() => {
+    getMarketingDeliveries({ limit: 30 }).then((response) => setDeliveryLog(response.data?.deliveries || [])).catch(() => {});
+    getMarketingContacts().then((response) => setMarketingContacts(response.data?.contacts || [])).catch(() => {});
+  }, []);
 
   const handleDownload = async () => {
     if (!selectedAsset?.available) return;
@@ -216,10 +228,29 @@ export default function MarketingAssets() {
         confirmMarketingConsent: marketingConsent,
       });
       setCampaignResult(response.data);
+      const deliveries = await getMarketingDeliveries({ limit: 30 });
+      setDeliveryLog(deliveries.data?.deliveries || []);
     } catch (caughtError) {
       setCampaignError(caughtError.response?.data?.message || 'Unable to queue this email campaign.');
     } finally {
       setSendingCampaign(false);
+    }
+  };
+
+  const handleSaveContact = async () => {
+    setContactError('');
+    setContactNotice('');
+    setSavingContact(true);
+    try {
+      const response = await saveMarketingContact({ email: contactEmail, consentSource });
+      setMarketingContacts((current) => [response.data.contact, ...current.filter((item) => item.email !== response.data.contact.email)]);
+      setContactEmail('');
+      setConsentSource('');
+      setContactNotice('The authorised contact is ready for marketing sends.');
+    } catch (caughtError) {
+      setContactError(caughtError.response?.data?.message || 'Unable to save this authorised contact.');
+    } finally {
+      setSavingContact(false);
     }
   };
 
@@ -441,6 +472,37 @@ export default function MarketingAssets() {
             </div>
             {campaignPreview ? <iframe title="Marketing email preview" className="h-[680px] w-full bg-white" srcDoc={campaignPreview.html} sandbox="" /> : <div className="grid min-h-[680px] place-items-center p-8 text-center text-sm leading-6 text-slate-500"><div><Eye className="mx-auto mb-3 text-slate-400" size={28} /><p>Select a template and language, then preview it before sending.</p></div></div>}
           </div>
+        </div>
+      </section>
+
+      <section className="card overflow-hidden border-slate-200 bg-white p-0" aria-label="Marketing authorised contacts">
+        <div className="border-b border-slate-200 px-6 py-5">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700"><CheckCircle2 size={15} /> Authorised contacts</div>
+          <h2 className="mt-2 text-xl font-bold text-slate-950">Record marketing consent before sending</h2>
+          <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-600">Only an account with active consent or an address recorded here can receive a marketing campaign. Record the consent basis before adding the address to a send.</p>
+        </div>
+        <div className="grid gap-5 border-b border-slate-200 p-6 lg:grid-cols-[1fr_1.3fr_auto] lg:items-end">
+          <label className="block text-sm font-bold text-slate-800">Email address<input className="field mt-2 w-full" value={contactEmail} onChange={(event) => setContactEmail(event.target.value)} type="email" placeholder="name@example.com" /></label>
+          <label className="block text-sm font-bold text-slate-800">Consent record<input className="field mt-2 w-full" value={consentSource} onChange={(event) => setConsentSource(event.target.value)} maxLength={300} placeholder="Recorded subscription or other lawful basis" /></label>
+          <button className="btn-primary h-11" type="button" onClick={handleSaveContact} disabled={savingContact || !contactEmail || consentSource.trim().length < 3}>{savingContact ? 'Saving…' : 'Record consent'}</button>
+        </div>
+        {(contactNotice || contactError) && <p className={`mx-6 mt-4 rounded-lg border px-4 py-3 text-sm font-semibold ${contactError ? 'border-red-200 bg-red-50 text-red-700' : 'border-emerald-200 bg-emerald-50 text-emerald-700'}`}>{contactError || contactNotice}</p>}
+        <div className="overflow-x-auto"><table className="min-w-full text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500"><tr><th className="px-6 py-3">Contact</th><th className="px-6 py-3">Consent record</th><th className="px-6 py-3">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{marketingContacts.length ? marketingContacts.map((contact) => <tr key={contact.id}><td className="px-6 py-3 font-medium text-slate-800">{contact.email}</td><td className="px-6 py-3 text-slate-600">{contact.consentSource}</td><td className="px-6 py-3 text-emerald-700">{contact.marketingEmailOptIn ? 'Authorised' : 'Unsubscribed'}</td></tr>) : <tr><td className="px-6 py-8 text-center text-slate-500" colSpan="3">No external marketing contacts recorded.</td></tr>}</tbody></table></div>
+      </section>
+
+      <section className="card overflow-hidden border-slate-200 bg-white p-0" aria-label="Marketing delivery log">
+        <div className="border-b border-slate-200 px-6 py-5">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700"><Clock3 size={15} /> Delivery record</div>
+          <h2 className="mt-2 text-xl font-bold text-slate-950">Recent marketing sends</h2>
+          <p className="mt-1 text-sm leading-6 text-slate-600">Queue status and failure reasons are retained for operational review. Transactional mail is not shown here.</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-left text-sm">
+            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500"><tr><th className="px-6 py-3">Recipient</th><th className="px-6 py-3">Template</th><th className="px-6 py-3">Status</th><th className="px-6 py-3">Recorded</th></tr></thead>
+            <tbody className="divide-y divide-slate-100">
+              {deliveryLog.length ? deliveryLog.map((item) => <tr key={item.id}><td className="px-6 py-3 font-medium text-slate-800">{item.recipient}</td><td className="px-6 py-3 text-slate-600">{item.template} · {item.locale}</td><td className="px-6 py-3"><span className={`rounded-full px-2 py-1 text-xs font-bold ${item.status === 'QUEUED' ? 'bg-emerald-50 text-emerald-700' : item.status === 'FAILED' || item.status === 'SKIPPED_UNAUTHORIZED' ? 'bg-red-50 text-red-700' : 'bg-slate-100 text-slate-700'}`}>{item.status}{item.failureReason ? ` · ${item.failureReason}` : ''}</span></td><td className="whitespace-nowrap px-6 py-3 text-slate-500">{new Date(item.createdAt).toLocaleString()}</td></tr>) : <tr><td className="px-6 py-8 text-center text-slate-500" colSpan="4">No marketing deliveries recorded yet.</td></tr>}
+            </tbody>
+          </table>
         </div>
       </section>
     </div>

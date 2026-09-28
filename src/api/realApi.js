@@ -575,6 +575,15 @@ export const sendMarketingCampaign = async ({ template, locale, recipientText, c
   return { data: response.data };
 };
 
+export const unsubscribeMarketingEmail = async (token) => {
+  const response = await apiClient.post('/api/marketing/unsubscribe', { token });
+  return { data: response.data };
+};
+
+export const getMarketingDeliveries = async (params = {}) => apiClient.get('/api/admin/marketing-campaigns/deliveries', { params });
+export const getMarketingContacts = async () => apiClient.get('/api/admin/marketing-contacts');
+export const saveMarketingContact = async ({ email, consentSource }) => apiClient.post('/api/admin/marketing-contacts', { email, consentSource, confirmMarketingConsent: true });
+
 export const getNewsArticle = async (articleId) => {
   const response = await apiClient.get(`/api/news/${articleId}`);
   return { data: response.data.article };
