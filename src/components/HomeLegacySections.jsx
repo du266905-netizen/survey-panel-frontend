@@ -171,6 +171,13 @@ export function HomeFooter() {
   const researchServicesLabel = language === 'zh-CN' ? '市场研究' : language === 'zh-Hant' ? '市場研究' : 'Market research';
   const researchServiceLink = language === 'zh-CN' ? '市场研究服务' : language === 'zh-Hant' ? '市場研究服務' : 'Market research services';
   const footerGroups = getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink);
+  const cookieSettingsLabel = language === 'zh-CN' ? 'Cookie 设置' : language === 'zh-Hant' ? 'Cookie 設定' : 'Cookie settings';
+  const openCookieSettings = (event) => {
+    event.preventDefault();
+    if (typeof window !== 'undefined' && typeof window.Cookiebot?.renew === 'function') {
+      window.Cookiebot.renew();
+    }
+  };
   return (
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">
@@ -182,7 +189,7 @@ export function HomeFooter() {
         </div>
         <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={withLanguage(item.to, language)}>{item.label}</Link>)}</section>)}</nav>
       </div>
-      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link></div></div>
+      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a></div></div>
     </footer>
   );
 }
