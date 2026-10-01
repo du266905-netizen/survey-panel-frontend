@@ -2,9 +2,9 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import { navigationLabels } from '../constants/homepageTranslations';
 import { isBusinessRole } from '../utils/roles';
-import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
-import brandMarkDark from '../assets/home/guanyi-brand-mark-dark.png';
+import Logo from './Logo';
 import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import './PublicSiteHeader.css';
@@ -63,6 +63,13 @@ const researchWorkspaceCopy = {
   'zh-Hant': { label: '市場研究', title: '市場研究服務' },
   default: { label: 'Market research', title: 'Market research services' },
 };
+
+// every other language gets its names from constants/homepageTranslations —
+// this must run after both const declarations above
+Object.entries(navigationLabels).forEach(([code, entry]) => {
+  chinaMarketLabel[code] = entry.capability;
+  researchWorkspaceCopy[code] = { label: entry.research, title: entry.services };
+});
 
 export default function PublicSiteHeader({ heroOverlay = false }) {
   const { user } = useAuth();
@@ -125,7 +132,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   return (
     <header className={`atlas-navigation public-site-header${heroOverlay ? ' is-hero-overlay' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
       <Link className="atlas-brand" to={withLanguage('/', language)} aria-label="GuanyiSearch home" onClick={closeNavigation}>
-        <img className="atlas-brand-mark" src={heroOverlay && !isScrolled ? brandMarkLight : brandMarkDark} alt="" aria-hidden="true" />
+        <Logo size="md" variant="dark" className="atlas-brand-wordmark" />
       </Link>
 
       <nav className="atlas-nav-links" aria-label="Primary navigation">

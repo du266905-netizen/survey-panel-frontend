@@ -11,7 +11,7 @@ import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
-import mountainHorizon from '../assets/home/mountain-horizon.jpg';
+import heroCommunity from '../assets/home/hero-community.png';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import './HomeAtlas.css';
 
@@ -99,6 +99,7 @@ function AtlasTypewriter({ prompts, begin }) {
   );
 }
 
+
 export default function HomeAtlas() {
   const { user } = useAuth();
   const { language, publicCopy } = useLanguage();
@@ -175,20 +176,27 @@ export default function HomeAtlas() {
               <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
               <h1 id="video-hero-title">{heroLines.map((line) => <span key={line}>{line}</span>)}</h1>
               <p className="video-hero-description">{publicCopy.hero.description}</p>
-              <Link className="atlas-primary-link video-hero-cta" to={withLanguage(user ? '/dashboard' : '/join', language)}>
-                {publicCopy.navigation.join}
-                <ArrowUpRight size={19} strokeWidth={1.8} />
-              </Link>
+              <p className="video-hero-supporting">{publicCopy.hero.supporting}</p>
+              {/* two ways in, as the prototype has it: one entry for people who
+                  want to take part, one for teams commissioning research */}
+              <div className="video-hero-actions">
+                <Link className="atlas-primary-link video-hero-cta" to={withLanguage(user ? '/dashboard' : '/join', language)}>
+                  {publicCopy.navigation.meetCommunity}
+                  <ArrowUpRight size={19} strokeWidth={1.8} />
+                </Link>
+                <Link className="video-hero-cta video-hero-cta--outline" to={withLanguage('/business', language)}>
+                  {publicCopy.navigation.runResearch}
+                  <ArrowUpRight size={19} strokeWidth={1.8} />
+                </Link>
+              </div>
             </div>
             <div className="video-hero-media" aria-hidden="true">
-              <img src={mountainHorizon} alt="" />
+              <span className="video-hero-shape" />
+              <img className="video-hero-cutout" src={heroCommunity} alt="" />
             </div>
           </div>
         </div>
       </section>
-
-      <CommunityHub />
-      <HomeGlobalSection />
 
       <section className="atlas-evidence" aria-label={publicCopy.navigation.about}>
         <div className="atlas-evidence-frame">
@@ -214,6 +222,9 @@ export default function HomeAtlas() {
           </div>
         </div>
       </section>
+
+      <CommunityHub />
+      <HomeGlobalSection />
 
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">

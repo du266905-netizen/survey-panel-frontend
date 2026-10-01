@@ -3,8 +3,8 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 const LANGUAGE_STORAGE_KEY = 'guanyisearch-language';
 
 const englishCopy = {
-  navigation: { about: 'About us', takePart: 'Take part', standards: 'Standards', organisations: 'For organisations', signIn: 'Sign in', join: 'Join us', workspace: 'Open workspace', items: { how: 'How it works', approach: 'Our approach', surveys: 'Available surveys', news: 'News Wall', rewards: 'Rewards', privacy: 'Your information', terms: 'Participation terms' } },
-  hero: { eyebrow: 'GUANYISEARCH / Insights & services', lines: ['Break the gap.', 'Every voice', 'carries us forward.'], description: 'Take part in thoughtful research, share what you discover, and help turn lived experience into clearer decisions.' },
+  navigation: { about: 'About us', takePart: 'Take part', standards: 'Standards', organisations: 'For organisations', signIn: 'Sign in', join: 'Join us', meetCommunity: 'Meet our community', runResearch: 'Run research with us', workspace: 'Open workspace', items: { how: 'How it works', approach: 'Our approach', surveys: 'Available surveys', news: 'News Wall', rewards: 'Rewards', privacy: 'Your information', terms: 'Participation terms' } },
+  hero: { eyebrow: 'GUANYISEARCH / Insights & services', supporting: 'We connect research networks across Greater China, Asia-Pacific, the Middle East, Europe and North America — turning first-hand consumer voices into decisions organisations can defend.', lines: ['Break the gap.', 'Every voice', 'carries us forward.'], description: 'Take part in thoughtful research, share what you discover, and help turn lived experience into clearer decisions.' },
   approach: { principle: 'Our principle', title: 'Human First', deck: 'We believe that real people will always be the starting point for research.', mark: ['REAL PEOPLE', 'REAL INSIGHT'], markBody: 'One real response at a time, a more trustworthy picture can grow.', imageAlt: 'Impressionist shoreline landscape', imageCaption: 'Real voices deserve to be heard with care.', lede: 'AI can generate endless content that appears real. But it can never recreate a particular person, in a particular moment, expressing what they truly think.', voices: 'Real voices', voicesBody: 'Behind every survey result is a person who chose to share a perspective. Those individual voices make insight worth trusting.', technology: 'Technology, in service', technologyBody: 'We use matching and real-time data to respect your time, show your impact, and keep every reward rule clear and fair.', principleLabel: 'Our principle', principleBody: 'Human-centered does not mean rejecting technology. It means making technology serve people.' },
   home: {
     contactKicker: 'Get in touch', contactTitle: 'Tell us what matters to you.', contactIntro: 'Share your question or idea. We will follow up using the details you provide.', name: 'Your name', email: 'Your email', contactNumber: 'Contact number', optional: 'Optional', phonePlaceholder: 'Phone number', country: 'Country or territory', subject: 'Subject', message: 'Message', send: 'Send message', sending: 'Sending', received: 'Thank you. Your message has been received.', sendError: 'We could not send your message. Please try again.',
@@ -86,6 +86,111 @@ publicCopyByLanguage['zh-Hant'].approach = {
 
 // Marketing copy is intentionally stored locally. A language choice must change the
 // complete public homepage, rather than only swapping the hero line.
+
+/* Hero supporting line and the two entry-point labels, for every language the
+   picker offers. Merged below so the hero never falls back to English for a
+   language that has its own copy elsewhere. */
+const heroEntryCopy = {
+  'en-GB': {
+    supporting: 'We connect research networks across Greater China, Asia-Pacific, the Middle East, Europe and North America — turning first-hand consumer voices into decisions organisations can defend.',
+    meetCommunity: 'Meet our community',
+    runResearch: 'Run research with us',
+  },
+  'zh-CN': {
+    supporting: '我们连接大中华区、亚太、中东、欧洲与北美的研究网络，把第一手的消费者声音转化为组织可以据以决策的依据。',
+    meetCommunity: '认识我们的社群',
+    runResearch: '委托一项研究',
+  },
+  'zh-Hant': {
+    supporting: '我們連結大中華區、亞太、中東、歐洲與北美的研究網絡，把第一手的消費者聲音轉化為組織可以據以決策的依據。',
+    meetCommunity: '認識我們的社群',
+    runResearch: '委託一項研究',
+  },
+  de: {
+    supporting: 'Wir verbinden Forschungsnetzwerke in Großchina, Asien-Pazifik, dem Nahen Osten, Europa und Nordamerika — und machen aus unmittelbaren Verbraucherstimmen Entscheidungsgrundlagen, auf die sich Organisationen stützen können.',
+    meetCommunity: 'Unsere Community kennenlernen',
+    runResearch: 'Eine Studie beauftragen',
+  },
+  fr: {
+    supporting: 'Nous relions des réseaux d’étude en Grande Chine, en Asie-Pacifique, au Moyen-Orient, en Europe et en Amérique du Nord — pour transformer les voix des consommateurs en décisions que les organisations peuvent assumer.',
+    meetCommunity: 'Rencontrer notre communauté',
+    runResearch: 'Confier une étude',
+  },
+  nl: {
+    supporting: 'We verbinden onderzoeksnetwerken in Groot-China, Azië-Pacific, het Midden-Oosten, Europa en Noord-Amerika — en vertalen directe consumentenstemmen naar beslissingen waarop organisaties kunnen bouwen.',
+    meetCommunity: 'Ontmoet onze community',
+    runResearch: 'Een onderzoek uitbesteden',
+  },
+  da: {
+    supporting: 'Vi forbinder forskningsnetværk i Storkina, Asien-Stillehavet, Mellemøsten, Europa og Nordamerika — og omsætter forbrugernes egne stemmer til beslutninger, som organisationer kan stå inde for.',
+    meetCommunity: 'Mød vores fællesskab',
+    runResearch: 'Bestil en undersøgelse',
+  },
+  es: {
+    supporting: 'Conectamos redes de investigación en Gran China, Asia-Pacífico, Oriente Medio, Europa y Norteamérica — y convertimos las voces de los consumidores en decisiones que las organizaciones pueden defender.',
+    meetCommunity: 'Conoce nuestra comunidad',
+    runResearch: 'Encarga un estudio',
+  },
+  fi: {
+    supporting: 'Yhdistämme tutkimusverkostoja Suur-Kiinassa, Aasian ja Tyynenmeren alueella, Lähi-idässä, Euroopassa ja Pohjois-Amerikassa — ja muutamme kuluttajien omat äänet päätöksiksi, joiden takana organisaatiot voivat seisoa.',
+    meetCommunity: 'Tutustu yhteisöömme',
+    runResearch: 'Tilaa tutkimus',
+  },
+  it: {
+    supporting: 'Colleghiamo reti di ricerca in Grande Cina, Asia-Pacifico, Medio Oriente, Europa e Nord America — trasformando le voci dei consumatori in decisioni che le organizzazioni possono sostenere.',
+    meetCommunity: 'Conosci la nostra community',
+    runResearch: 'Commissiona uno studio',
+  },
+  ja: {
+    supporting: '大中華圏、アジア太平洋、中東、ヨーロッパ、北米のリサーチネットワークをつなぎ、生活者の生の声を、組織が説明できる意思決定に変えていきます。',
+    meetCommunity: 'コミュニティを見る',
+    runResearch: '調査を依頼する',
+  },
+  ko: {
+    supporting: '중화권, 아시아태평양, 중동, 유럽, 북미의 리서치 네트워크를 연결해 소비자의 생생한 목소리를 조직이 설명할 수 있는 결정으로 바꿉니다.',
+    meetCommunity: '커뮤니티 만나보기',
+    runResearch: '연구 의뢰하기',
+  },
+  no: {
+    supporting: 'Vi kobler sammen forskningsnettverk i Stor-Kina, Asia-Stillehavet, Midtøsten, Europa og Nord-Amerika — og gjør forbrukernes egne stemmer om til beslutninger organisasjoner kan stå for.',
+    meetCommunity: 'Møt fellesskapet vårt',
+    runResearch: 'Bestill en undersøkelse',
+  },
+  pt: {
+    supporting: 'Ligamos redes de investigação na Grande China, Ásia-Pacífico, Médio Oriente, Europa e América do Norte — transformando as vozes dos consumidores em decisões que as organizações podem sustentar.',
+    meetCommunity: 'Conheça a nossa comunidade',
+    runResearch: 'Encomendar um estudo',
+  },
+  ru: {
+    supporting: 'Мы объединяем исследовательские сети в Большом Китае, Азиатско-Тихоокеанском регионе, на Ближнем Востоке, в Европе и Северной Америке — превращая живые голоса потребителей в решения, которые организация может обосновать.',
+    meetCommunity: 'Познакомиться с сообществом',
+    runResearch: 'Заказать исследование',
+  },
+  sv: {
+    supporting: 'Vi kopplar samman forskningsnätverk i Stor-Kina, Asien-Stillahavsområdet, Mellanöstern, Europa och Nordamerika — och omvandlar konsumenternas egna röster till beslut som organisationer kan stå bakom.',
+    meetCommunity: 'Möt vår community',
+    runResearch: 'Beställ en studie',
+  },
+  tr: {
+    supporting: 'Büyük Çin, Asya-Pasifik, Orta Doğu, Avrupa ve Kuzey Amerika’daki araştırma ağlarını birbirine bağlıyor; tüketicilerin kendi seslerini kurumların savunabileceği kararlara dönüştürüyoruz.',
+    meetCommunity: 'Topluluğumuzla tanışın',
+    runResearch: 'Araştırma yaptırın',
+  },
+};
+
+Object.entries(heroEntryCopy).forEach(([language, entry]) => {
+  const current = publicCopyByLanguage[language] || {};
+  publicCopyByLanguage[language] = {
+    ...current,
+    hero: { ...(current.hero || {}), supporting: entry.supporting },
+    navigation: {
+      ...(current.navigation || englishCopy.navigation),
+      meetCommunity: entry.meetCommunity,
+      runResearch: entry.runResearch,
+    },
+  };
+});
+
 const localizedHomeByLanguage = {
   de: { contactKicker: 'Kontakt', contactTitle: 'Sagen Sie uns, was Ihnen wichtig ist.', contactIntro: 'Teilen Sie Ihre Frage oder Idee. Wir melden uns über die Angaben, die Sie hinterlassen.', name: 'Ihr Name', email: 'Ihre E-Mail-Adresse', contactNumber: 'Telefonnummer', optional: 'Optional', phonePlaceholder: 'Telefonnummer', country: 'Land oder Gebiet', subject: 'Betreff', message: 'Nachricht', send: 'Nachricht senden', sending: 'Wird gesendet', received: 'Vielen Dank. Ihre Nachricht ist eingegangen.', sendError: 'Ihre Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut.', prompts: ['Aktuelle Nachrichten lesen', 'An einer Umfrage teilnehmen', 'Ihre Sicht teilen', 'Eine Forschungsfrage einbringen'], begin: 'Beginnen wir:', nodes: { news: ['News Wall', 'Bleiben Sie mit Perspektiven aus aller Welt auf dem Laufenden.'], survey: ['Umfragen', 'Nehmen Sie teil und erhalten Sie Geschenkkarten und mehr.'], community: ['Community', 'Werden Sie Teil der Community.'], business: ['Unternehmen', 'Individuelle Fragebögen und maßgeschneiderte Studien.'] }, evidence: 'Die Welt ist niemals für alle gleich. GUANYISEARCH hört genau zu und verbindet globale Perspektiven mit lokaler Forschungsexpertise. Mit wissenschaftlicher Stichprobenplanung und rigorosen qualitativen wie quantitativen Methoden halten wir an international anerkannten Forschungsethik- und Datenschutzstandards fest, um echte Erkenntnisse zu gewinnen – für bessere Entscheidungen und ein besseres Leben.', evidenceStatement: 'Jede Entscheidung sollte auf Fakten beruhen.', globalTitle: 'Forschung beginnt mit Menschen – in jedem Kontext.', globalBody: 'Jede Antwort stammt aus einem anderen Leben, Ort und Blickwinkel. Deshalb gestalten wir die Teilnahme vom ersten Schritt bis zur Rückmeldung klar und sorgfältig.', rewardsLabel: 'Belohnungen & Panel', rewardsTitle: 'Noch mehr, worauf Sie sich freuen können.', rewardsBody: 'Treten Sie dem Panel bei – für Umfragen, die Ihre Zeit respektieren, besondere Aufgaben und klare Belohnungsmöglichkeiten.', rewardCards: [['Für den Alltag', 'Geschenkkarten', 'Schließen Sie passende Umfragen ab, sammeln Sie Coins und wählen Sie aus ausgewählten Geschenkkarten.'], ['Wo verfügbar', 'Token', 'In unterstützten Regionen können ausgewählte Token-Optionen Teil Ihrer nächsten Einlösung sein.'], ['Im Panel', 'Sonderaufgaben', 'Geeignete Mitglieder erhalten gelegentlich zusätzliche Aufgaben und weitere Möglichkeiten, Coins zu verdienen.']], footer: { description: 'Ein durchdachter Forschungsraum für Teilnehmende und Organisationen: klare Chancen, glaubwürdige Beiträge und praktische nächste Schritte.', contact: 'Team kontaktieren', about: 'Über uns', how: 'So funktioniert es', approach: 'Unser Ansatz', explore: 'Entdecken', news: 'News Wall', participate: 'Teilnehmen', surveys: 'Umfragen finden', wallet: 'Belohnungen & Wallet', invite: 'Einladungsprogramm', organisations: 'Für Organisationen', questionnaires: 'Individuelle Fragebögen', studies: 'Maßgeschneiderte Forschung', standards: 'Standards', privacy: 'Datenschutz', terms: 'Bedingungen', rights: '© 2026 GuanyiSearch. Alle Rechte vorbehalten.', privacyPolicy: 'Datenschutzrichtlinie', termsService: 'Nutzungsbedingungen' } },
   fr: { contactKicker: 'Nous contacter', contactTitle: 'Dites-nous ce qui compte pour vous.', contactIntro: 'Partagez votre question ou votre idée. Nous vous recontacterons grâce aux coordonnées fournies.', name: 'Votre nom', email: 'Votre e-mail', contactNumber: 'Numéro de téléphone', optional: 'Facultatif', phonePlaceholder: 'Numéro de téléphone', country: 'Pays ou territoire', subject: 'Objet', message: 'Message', send: 'Envoyer le message', sending: 'Envoi en cours', received: 'Merci. Votre message a bien été reçu.', sendError: 'Nous n’avons pas pu envoyer votre message. Veuillez réessayer.', prompts: ['Lire les dernières actualités', 'Participer à une enquête', 'Partager votre point de vue', 'Proposer une question de recherche'], begin: 'Commençons :', nodes: { news: ['Fil d’actualité', 'Découvrez des perspectives du monde et restez informé.'], survey: ['Enquêtes', 'Répondez à des enquêtes et gagnez des cartes-cadeaux et plus encore.'], community: ['Communauté', 'Rejoignez la communauté.'], business: ['Entreprises', 'Questionnaires personnalisés et études sur mesure.'] }, evidence: 'Le monde n’est jamais uniforme. GUANYISEARCH écoute attentivement, en associant une vision mondiale à une expertise locale de la recherche. Grâce à une conception scientifique des échantillons et à des méthodes qualitatives et quantitatives rigoureuses, nous respectons les normes internationales d’éthique de la recherche et de protection des données pour révéler des enseignements authentiques – au service de meilleures décisions et de meilleures vies.', evidenceStatement: 'Que chaque décision repose sur des faits.', globalTitle: 'La recherche commence avec les personnes, dans chaque contexte.', globalBody: 'Chaque réponse vient d’une vie, d’un lieu et d’un point de vue différents. Nous rendons chaque parcours de participation clair et attentif, du premier pas à la récompense.', rewardsLabel: 'Récompenses & panel', rewardsTitle: 'Encore plus à attendre.', rewardsBody: 'Rejoignez le panel pour des enquêtes qui respectent votre temps, des missions spéciales et des récompenses claires.', rewardCards: [['Pour le quotidien', 'Cartes-cadeaux', 'Terminez des enquêtes éligibles, cumulez des Coins et choisissez parmi des cartes-cadeaux sélectionnées.'], ['Selon les régions', 'Jetons', 'Dans les régions prises en charge, certaines options en jetons peuvent faire partie de votre prochain échange.'], ['Dans le panel', 'Missions spéciales', 'Les membres éligibles peuvent recevoir ponctuellement une mission supplémentaire et gagner davantage de Coins.']], footer: { description: 'Un espace de recherche réfléchi pour les participants et les organisations : opportunités claires, contributions crédibles et prochaines étapes concrètes.', contact: 'Contacter l’équipe', about: 'À propos', how: 'Comment ça marche', approach: 'Notre approche', explore: 'Explorer', news: 'Fil d’actualité', participate: 'Participer', surveys: 'Trouver des enquêtes', wallet: 'Récompenses & portefeuille', invite: 'Programme d’invitation', organisations: 'Pour les organisations', questionnaires: 'Questionnaires personnalisés', studies: 'Recherche sur mesure', standards: 'Normes', privacy: 'Confidentialité', terms: 'Conditions', rights: '© 2026 GuanyiSearch. Tous droits réservés.', privacyPolicy: 'Politique de confidentialité', termsService: 'Conditions d’utilisation' } },

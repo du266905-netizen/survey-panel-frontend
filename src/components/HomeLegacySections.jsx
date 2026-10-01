@@ -1,7 +1,9 @@
-import { ChevronDown } from 'lucide-react';
+import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlobalGlobe from './GlobalGlobe';
 import Logo from './Logo';
+import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
+import { footerIdentityTranslations, globalTranslations, navigationLabels } from '../constants/homepageTranslations';
 import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import './HomeLegacySections.css';
@@ -167,9 +169,10 @@ export function HomeFooter() {
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const copy = publicCopy.home.footer;
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
-  const marketCapabilityLabel = language === 'zh-CN' ? '中国市场洞察能力' : language === 'zh-Hant' ? '中國市場洞察能力' : 'China market insights capability';
-  const researchServicesLabel = language === 'zh-CN' ? '市场研究' : language === 'zh-Hant' ? '市場研究' : 'Market research';
-  const researchServiceLink = language === 'zh-CN' ? '市场研究服务' : language === 'zh-Hant' ? '市場研究服務' : 'Market research services';
+  const navLabels = navigationLabels[language];
+  const marketCapabilityLabel = language === 'zh-CN' ? '中国市场洞察能力' : language === 'zh-Hant' ? '中國市場洞察能力' : (navLabels?.capability || 'China market insights capability');
+  const researchServicesLabel = language === 'zh-CN' ? '市场研究' : language === 'zh-Hant' ? '市場研究' : (navLabels?.research || 'Market research');
+  const researchServiceLink = language === 'zh-CN' ? '市场研究服务' : language === 'zh-Hant' ? '市場研究服務' : (navLabels?.services || 'Market research services');
   const footerGroups = getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink);
   const cookieSettingsLabel = language === 'zh-CN' ? 'Cookie 设置' : language === 'zh-Hant' ? 'Cookie 設定' : 'Cookie settings';
   const openCookieSettings = (event) => {
@@ -182,7 +185,10 @@ export function HomeFooter() {
     <footer className="home-footer">
       <div className="home-continuation-container home-footer-main">
         <div className="home-footer-brand">
-          <div className="home-footer-identity"><Logo size="lg" variant="light" className="home-footer-wordmark" /></div>
+          <div className="home-footer-identity">
+            <img className="home-footer-mark" src={brandMarkLight} alt="" aria-hidden="true" />
+            <Logo size="lg" variant="light" className="home-footer-wordmark" />
+          </div>
           <div className="home-footer-about"><p className="home-footer-about-title">{identity.title}</p><p>{identity.description}</p></div>
           <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>
           <label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">{languageLabel[language] || 'Language'}</span><select value={language} onChange={(event) => navigateToLanguage(event.target.value)} aria-label={languageLabel[language] || 'Choose language'}>{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label>
@@ -212,6 +218,10 @@ const globalContent = {
   },
 };
 
+// the remaining languages live in constants/homepageTranslations.js
+Object.assign(globalContent, globalTranslations);
+Object.assign(footerIdentity, footerIdentityTranslations);
+
 export function HomeGlobalSection() {
   const { language } = useLanguage();
   const copy = globalContent[language] || globalContent.en;
@@ -227,13 +237,20 @@ export function HomeGlobalSection() {
 }
 
 export default function HomeLegacySections() {
-  const { publicCopy } = useLanguage();
+  const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
   return (
     <div className="home-continuation">
       <section className="home-rewards-section" aria-labelledby="home-rewards-title">
         <div className="home-continuation-container home-rewards-layout">
-          <div className="home-rewards-heading"><p className="home-section-label">{copy.rewardsLabel}</p><h2 id="home-rewards-title">{copy.rewardsTitle}</h2><p>{copy.rewardsBody}</p></div>
+          <div className="home-rewards-heading">
+            <h2 id="home-rewards-title">{copy.rewardsTitle}</h2>
+            <p>{copy.rewardsBody}</p>
+            <Link className="home-rewards-cta" to={withLanguage('/join', language)}>
+              {copy.rewardsLabel}
+              <ArrowUpRight size={16} strokeWidth={1.8} aria-hidden="true" />
+            </Link>
+          </div>
           <div className="home-reward-grid">
             <article className="home-reward-card home-reward-gift"><GiftSketch /><div><span>{copy.rewardCards[0][0]}</span><h3>{copy.rewardCards[0][1]}</h3><p>{copy.rewardCards[0][2]}</p></div></article>
             <article className="home-reward-card home-reward-token"><TokenSketch /><div><span>{copy.rewardCards[1][0]}</span><h3>{copy.rewardCards[1][1]}</h3><p>{copy.rewardCards[1][2]}</p></div></article>

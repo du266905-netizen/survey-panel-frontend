@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import communityCrossMarketOffice from '../assets/community/community-cross-market-office.jpg';
 import communityResearchCollage from '../assets/community/community-research-collage.png';
+import { communityTranslations } from '../constants/homepageTranslations';
 
 const rotationDelay = 9000;
 
@@ -96,6 +97,9 @@ const communityCopy = {
     controls: { label: '平台功能輪播控制', previous: '顯示上一項平台功能', next: '顯示下一項平台功能' },
   },
 };
+
+// the remaining languages live in constants/homepageTranslations.js
+Object.assign(communityCopy, communityTranslations);
 
 function createPlatformFeatures(copy) {
   return [

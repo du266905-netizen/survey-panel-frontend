@@ -6,7 +6,19 @@
   --atlas-paper: #fcfdfb;
   --atlas-paper-deep: #f4f7f2;
   --atlas-rule: rgba(36, 56, 46, 0.16);
-  --atlas-frame-gutter: 28px;
+  --atlas-frame-gutter: 12px;
+  /* ── prototype language ──────────────────────────────────────────────
+     paper ground, near-monochrome ink, hairline rules, small radii, and a
+     single lime accent. Sections below are expressed with these. */
+  --proto-ink: #141a17;
+  --proto-soft: #4a544d;
+  --proto-muted: #5f6862;
+  --proto-faint: #8d948d;
+  --proto-line: rgba(20, 26, 23, .11);
+  --proto-line-2: rgba(20, 26, 23, .22);
+  --proto-accent: #deef24;
+  --proto-paper: #fcfdfb;
+  --proto-radius: 6px;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
@@ -20,9 +32,7 @@
   z-index: 15;
   inset: 0;
   box-sizing: border-box;
-  border-right: var(--atlas-frame-gutter) solid #13251d;
-  border-left: var(--atlas-frame-gutter) solid #13251d;
-  box-shadow: inset 1px 0 rgba(247, 247, 243, .22), inset -1px 0 rgba(247, 247, 243, .22);
+  border: var(--atlas-frame-gutter) solid #16352a;
   pointer-events: none;
 }
 
@@ -150,36 +160,143 @@
 .atlas-register:hover, .atlas-primary-link:hover { background: var(--atlas-forest); transform: none; }
 .atlas-menu-button, .atlas-mobile-menu { display: none; }
 
-.video-hero-section { padding: 0; background: #13251d; }
+.video-hero-section { padding: 0; background: var(--atlas-paper); }
 .video-hero {
   position: relative;
   isolation: isolate;
+  box-sizing: border-box;
   display: flex;
-  min-height: 0;
+  min-height: 100svh;
   overflow: hidden;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
-  padding: clamp(82px, 5.7vw, 94px) var(--atlas-frame-gutter) 0;
-  background: #13251d;
+  padding: clamp(88px, 6.6vw, 104px) var(--atlas-frame-gutter) var(--atlas-frame-gutter);
+  background: var(--atlas-paper);
   color: #17251f;
 }
 .video-hero::before, .video-hero::after { position: absolute; z-index: 0; content: ''; pointer-events: none; }
-.video-hero::before { inset: var(--atlas-frame-gutter) var(--atlas-frame-gutter) 0; border: 1px solid rgba(247, 247, 243, .18); border-bottom: 0; }
-.video-hero::after { inset: var(--atlas-frame-gutter) var(--atlas-frame-gutter) 0; background: linear-gradient(#fff, #fff) left top / 11px 11px no-repeat, linear-gradient(#fff, #fff) right top / 11px 11px no-repeat; opacity: .72; }
-.video-hero-content { position: relative; z-index: 1; display: grid; width: 100%; overflow: hidden; background: var(--atlas-paper); box-shadow: 0 24px 70px rgba(4, 19, 12, .22); }
-.video-hero-copy { display: flex; min-height: clamp(300px, 22vw, 348px); padding: clamp(50px, 3.8vw, 68px) clamp(28px, 8vw, 132px) clamp(30px, 2.6vw, 42px); flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.video-hero-eyebrow { margin: 0; color: #345949; font-family: var(--font-sans); font-size: clamp(.62rem, .78vw, .76rem); font-weight: 800; letter-spacing: .17em; line-height: 1.35; text-transform: uppercase; animation: video-hero-rise .8s .1s both cubic-bezier(.22,.72,.2,1); }
-.video-hero h1 { display: flex; max-width: min(90vw, 1280px); margin: clamp(15px, 1.45vw, 21px) 0 0; flex-direction: column; color: #17251f; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(3.1rem, 4.65vw, 5.25rem); font-weight: 540; letter-spacing: -.065em; line-height: .88; text-wrap: balance; }
+.video-hero::before { inset: 0; border: 0; }
+
+/* Two columns, following the refined prototype: copy on the left, the plate on
+   the right. The dark ground and the lime call to action are kept — they are
+   the brand's own, and the accent only works against a dark field. */
+.video-hero-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 1.08fr);
+  gap: clamp(34px, 4.2vw, 68px);
+  align-items: center;
+  align-content: center;
+  flex: 1 1 auto;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(46px, 4.6vw, 74px) clamp(30px, 4.4vw, 68px);
+  background: var(--atlas-paper);
+}
+
+.video-hero-copy {
+  display: flex;
+  min-height: 0;
+  padding: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+}
+.video-hero-eyebrow { margin: 0; color: #345949; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .2em; line-height: 1.35; text-transform: uppercase; animation: video-hero-rise .8s .1s both cubic-bezier(.22,.72,.2,1); }
+.video-hero h1 { display: flex; max-width: 20ch; margin: clamp(18px, 1.7vw, 26px) 0 0; flex-direction: column; color: #141a17; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(44px, 6.4vw, 100px); font-weight: 500; letter-spacing: -.034em; line-height: 1.0; text-wrap: balance; }
 .video-hero h1 span { display: block; animation: video-hero-rise .95s both cubic-bezier(.22,.72,.2,1); }
 .video-hero h1 span:nth-child(1) { animation-delay: .18s; }
-.video-hero h1 span:nth-child(2) { color: #a6aaa4; font-family: var(--font-serif); font-size: .88em; font-style: italic; font-weight: 400; letter-spacing: -.065em; animation-delay: .29s; white-space: nowrap; }
-.video-hero-description { max-width: 590px; margin: clamp(17px, 1.45vw, 22px) 0 0; color: #516159; font-family: var(--font-sans); font-size: clamp(.86rem, .9vw, .96rem); font-weight: 560; line-height: 1.5; animation: video-hero-rise .85s .54s both cubic-bezier(.22,.72,.2,1); }
-.video-hero-cta { min-height: 46px; margin-top: clamp(15px, 1.45vw, 20px); padding: 0 10px 0 18px; border: 0; background: #deef24; color: #17251f; font-family: var(--font-sans); font-size: .84rem; animation: video-hero-rise .85s .64s both cubic-bezier(.22,.72,.2,1); }
-.video-hero-cta svg { display: grid; width: 35px; height: 35px; padding: 8px; border-radius: 50%; color: #fdfdfb; background: #17251f; }
-.video-hero-cta:hover { background: #cddd18; }
-.video-hero-media { position: relative; justify-self: center; width: calc(100% - var(--atlas-frame-gutter) - var(--atlas-frame-gutter)); max-width: 1280px; overflow: hidden; aspect-ratio: 2.15 / 1; margin: 0; border-radius: clamp(24px, 3vw, 42px); background: #294638; }
-.video-hero-media::after { position: absolute; inset: 0; background: linear-gradient(120deg, rgba(9, 25, 18, .23), transparent 44%, rgba(244, 193, 132, .14)); content: ''; pointer-events: none; }
-.video-hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 53%; filter: saturate(.74) contrast(.94); transform: scale(1.02); }
+.video-hero h1 span:nth-child(2) { margin-top: .06em; color: #7b827c; font-family: var(--font-serif); font-size: .74em; font-style: italic; font-weight: 400; letter-spacing: -.026em; animation-delay: .29s; }
+.video-hero-description { max-width: 52ch; margin: clamp(18px, 1.7vw, 24px) 0 0; color: #4d564f; font-family: var(--font-sans); font-size: clamp(16px, 1.22vw, 18.5px); font-weight: 400; line-height: 1.62; animation: video-hero-rise .85s .54s both cubic-bezier(.22,.72,.2,1); }
+.video-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: clamp(24px, 2.4vw, 34px); animation: video-hero-rise .85s .64s both cubic-bezier(.22,.72,.2,1); }
+.video-hero-supporting { max-width: 62ch; margin: clamp(13px, 1.2vw, 17px) 0 0; color: #5f6862; font-family: var(--font-sans); font-size: clamp(13.5px, 0.95vw, 15px); line-height: 1.72; animation: video-hero-rise .85s .6s both cubic-bezier(.22,.72,.2,1); }
+.video-hero-cta { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px; border: 1px solid #deef24; border-radius: 6px; background: #deef24; color: #17251f; font-family: var(--font-sans); font-size: 14px; font-weight: 500; text-decoration: none;
+}
+/* action-feedback.css also targets .atlas-primary-link and wins a tie, so this
+   needs the extra class to take effect. Slow start, accelerating fill. */
+/* HomeAtlas.css also carries `.atlas-primary-link:hover { background:
+   var(--atlas-forest) }`, and the hero button has that class — so its fill
+   snapped to dark green before the syringe even started. background is pinned
+   here and never transitions, leaving the sweeping fill as the only change.
+   Leaving: quick. Entering: slow sweep, label flips as the front passes it. */
+.video-hero-actions .video-hero-cta {
+  transition: color .22s ease, box-shadow .5s cubic-bezier(.4, 0, .2, 1);
+}
+.video-hero-actions .video-hero-cta:not(.video-hero-cta--outline):hover {
+  background: #deef24;
+  border-color: #deef24;
+  color: #fff;
+  transition: color .28s ease .5s, box-shadow 1.15s cubic-bezier(.52, .02, .72, .28);
+}
+/* the outline button keeps its own slower sweep; without this it inherits the
+   0.22s rule above and the fill races */
+.video-hero-actions .video-hero-cta--outline {
+  transition: color .22s ease, border-color .4s ease, box-shadow .5s cubic-bezier(.4, 0, .2, 1);
+}
+.video-hero-actions .video-hero-cta--outline:hover {
+  color: #fff;
+  transition: color .28s ease .5s, border-color .3s ease, box-shadow 1.15s cubic-bezier(.52, .02, .72, .28);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .video-hero-cta:not(.video-hero-cta--outline):hover {
+    box-shadow: inset 15rem 0 0 0 var(--syringe-fill), var(--syringe-hover-shadow);
+  }
+}
+/* the fill sweep is defined in styles/action-feedback.css — do not set a
+   transition here or it overrides the 1.25s cubic-bezier that makes it read
+   as a slow-to-fast injection */
+.video-hero-cta--outline { border-color: rgba(20, 26, 23, .22); background: transparent; color: #141a17; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .video-hero-cta--outline {
+    --syringe-fill: #141a17;
+    --syringe-hover-ink: #fff;
+    --syringe-hover-border: #141a17;
+    box-shadow: inset 0 0 0 0 var(--syringe-fill);
+    transition: color .3s ease, border-color .4s ease, box-shadow 1.15s cubic-bezier(.52, .02, .72, .28);
+  }
+  .video-hero-cta--outline:hover {
+    border-color: var(--syringe-hover-border);
+    box-shadow: inset 15rem 0 0 0 var(--syringe-fill);
+    color: var(--syringe-hover-ink);
+  }
+}
+.video-hero-cta svg { flex: none; width: 16px; height: 16px; }
+
+/* The plate is replaced by a cut-out group over a lime wedge, echoing the
+   reference sites: the people sit on the colour, and the composition runs to
+   the panel's right edge instead of floating in a frame. */
+.video-hero-media {
+  position: relative;
+  align-self: end;
+  justify-self: stretch;
+  width: auto;
+  min-height: 0;
+  margin-right: calc(-1 * clamp(30px, 4.4vw, 68px));
+  margin-bottom: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  overflow: visible;
+}
+.video-hero-shape {
+  position: absolute;
+  z-index: 1;
+  inset: 24% -10% 0 -15%;
+  background: var(--proto-accent);
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
+}
+.video-hero-cutout {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 134%;
+  max-width: none;
+  height: auto;
+  margin-left: -8%;
+  vertical-align: bottom;
+}
 
 @keyframes video-hero-rise { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 
@@ -187,13 +304,14 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  margin: clamp(28px, 4vw, 58px) 5.5vw;
-  border-radius: 28px;
-  background: radial-gradient(circle at 87% 14%, rgba(98, 150, 113, .25), transparent 30%), linear-gradient(118deg, #123b2b 0%, #174936 56%, #1c543e 100%);
-  color: #f4f8f1;
-  padding: clamp(38px, 5.6vw, 82px) clamp(24px, 5.2vw, 74px);
+  margin: 0;
+  border-top: 1px solid var(--proto-line);
+  border-bottom: 1px solid var(--proto-line);
+  background: var(--atlas-paper-deep, #f4f7f2);
+  color: var(--proto-ink);
+  padding: clamp(46px, 5vw, 78px) 5.5vw;
 }
-.atlas-evidence::after { position: absolute; z-index: -1; right: -114px; bottom: -138px; width: 350px; height: 350px; border: 1px solid rgba(225, 240, 224, .2); border-radius: 50%; content: ''; }
+.atlas-evidence::after { display: none; }
 
 .atlas-evidence-frame {
   position: relative;
@@ -210,9 +328,10 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: 16 / 9;
-  border-radius: clamp(20px, 2vw, 28px);
-  background: #081f17;
-  box-shadow: 0 18px 36px rgba(3, 21, 14, .3), inset 0 0 0 1px rgba(246, 251, 245, .2);
+  border: 1px solid var(--proto-line-2);
+  border-radius: var(--proto-radius);
+  background: var(--proto-ink);
+  box-shadow: 0 18px 44px rgba(20, 26, 23, .10);
 }
 
 .atlas-evidence-video > div { width: 100%; }
@@ -221,19 +340,20 @@
 .atlas-evidence-copy { max-width: 525px; }
 .atlas-evidence-copy > p {
   margin: 0;
-  color: rgba(242, 248, 240, .78);
-  font-family: var(--font-sans);
-  font-size: clamp(1.15rem, 1.55vw, 1.65rem);
-  font-weight: 570;
-  line-height: 1.45;
+  color: var(--proto-soft);
+  font-family: var(--font-reading);
+  font-size: clamp(1.05rem, 1.3vw, 1.32rem);
+  font-weight: 400;
+  line-height: 1.62;
 }
-.atlas-evidence-statement {
+.atlas-evidence-copy .atlas-evidence-statement {
   margin-top: 21px !important;
-  color: #f4f8f1;
-  font-family: var(--font-sans);
-  font-size: clamp(1.15rem, 1.55vw, 1.65rem);
-  font-weight: 760;
-  line-height: 1.45;
+  color: var(--proto-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.9vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -.03em;
+  line-height: 1.15;
 }
 .atlas-evidence-action {
   display: inline-flex;
@@ -242,16 +362,17 @@
   align-items: center;
   gap: 11px;
   padding: 0 17px;
-  border: 1px solid rgba(244, 248, 241, .42);
-  border-radius: 999px;
-  color: #f4f8f1;
+  border: 1px solid var(--proto-ink);
+  border-radius: var(--proto-radius);
+  background: var(--proto-ink);
+  color: #fff;
   font-family: var(--font-sans);
-  font-size: .86rem;
-  font-weight: 750;
+  font-size: .875rem;
+  font-weight: 500;
   text-decoration: none;
-  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+  transition: background .25s ease, color .25s ease, border-color .25s ease;
 }
-.atlas-evidence-action:hover, .atlas-evidence-action:focus-visible { border-color: #deef24; background: #deef24; color: #17251f; }
+.atlas-evidence-action:hover, .atlas-evidence-action:focus-visible { border-color: #1c3529; background: #1c3529; color: #fff; }
 
 .atlas-stage {
   position: relative;
@@ -263,8 +384,8 @@
   margin: 0;
   border-radius: 0;
   padding: clamp(54px, 5vw, 82px) 5.5vw clamp(48px, 4.5vw, 72px);
-  background: radial-gradient(circle at 74% 22%, rgba(190, 217, 193, .54), transparent 26rem), radial-gradient(circle at 13% 86%, rgba(236, 226, 203, .48), transparent 23rem), linear-gradient(118deg, #f7fbf6 0%, #edf5eb 56%, #e5efe3 100%);
-  box-shadow: inset 0 0 0 1px rgba(40, 84, 60, .1);
+  border-top: 1px solid var(--proto-line);
+  background: var(--proto-paper);
 }
 .atlas-stage::after { position: absolute; z-index: 0; right: -112px; bottom: -122px; width: 340px; height: 340px; border: 1px solid rgba(43, 91, 65, .14); border-radius: 50%; content: ''; pointer-events: none; }
 
@@ -331,10 +452,10 @@
 .atlas-contact-form select,
 .atlas-contact-form textarea {
   width: 100%;
-  border: 1px solid rgba(47, 76, 62, .22);
-  border-radius: 8px;
+  border: 1px solid var(--proto-line-2);
+  border-radius: var(--proto-radius);
   outline: 0;
-  background: rgba(255, 255, 252, .72);
+  background: #fff;
   color: var(--atlas-ink);
   font: inherit;
   font-size: .94rem;
@@ -355,8 +476,8 @@
   min-height: 46px;
   margin-top: 4px;
   border: 1px solid #17251f;
-  border-radius: 999px;
-  background: #17251f;
+  border-radius: var(--proto-radius);
+  background: #141a17;
   color: #fffefa;
   cursor: pointer;
   font: inherit;
@@ -376,8 +497,8 @@
 /* Contact area: a quiet editorial form, with enough width for real contact details. */
 .atlas-stage { grid-template-columns: minmax(480px, .84fr) minmax(0, 1.16fr); gap: clamp(34px, 4vw, 78px); }
 .atlas-contact-panel { width: min(100%, 560px); }
-.atlas-contact-panel h2 { max-width: 520px; font-size: clamp(2.25rem, 3vw, 3.7rem); line-height: .98; }
-.atlas-contact-intro { max-width: 470px; font-family: var(--font-sans); font-size: .95rem; font-weight: 540; line-height: 1.65; }
+.atlas-contact-panel h2 { max-width: 520px; font-family: var(--font-display); font-weight: 500; letter-spacing: -.032em; font-size: clamp(2rem, 2.7vw, 3.2rem); line-height: 1.04; }
+.atlas-contact-intro { max-width: 470px; font-family: var(--font-reading); font-size: 1rem; font-weight: 400; line-height: 1.68; color: var(--proto-muted); }
 .atlas-contact-form { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; row-gap: 15px; font-family: var(--font-sans); }
 .atlas-contact-form label { min-width: 0; }
 .atlas-contact-form label > span { font-family: var(--font-sans); font-size: .68rem; }
@@ -542,6 +663,15 @@
   .atlas-nav-search { display: none; }
 }
 
+/* the hero collapses to one column well before the copy starts to squeeze:
+   side by side it stops reading comfortably below ~1000px */
+@media (max-width: 1000px) {
+  .video-hero { min-height: 0; }
+  .video-hero-content { grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 3.4vw, 38px); align-content: start; }
+  .video-hero h1 { max-width: 24ch; }
+  .video-hero-media { aspect-ratio: 16 / 9; max-height: none; }
+}
+
 @media (max-width: 1100px) {
   .atlas-navigation { grid-template-columns: 1fr auto; }
   .atlas-nav-links { display: none; }
@@ -572,7 +702,7 @@
 }
 
 @media (max-width: 800px) {
-  .home-atlas { --atlas-frame-gutter: 24px; }
+  .home-atlas { --atlas-frame-gutter: 10px; }
   .atlas-navigation { min-height: 66px; padding: 0 22px; }
   .atlas-brand-logo { width: 146px; }
   .atlas-sign-in { display: none; }
@@ -580,9 +710,8 @@
   .atlas-register svg { display: none; }
   .atlas-nav-actions { gap: 11px; }
   .atlas-mobile-menu { grid-template-columns: 1fr; gap: 20px; padding: 22px 22px 27px; }
-  .video-hero { min-height: 0; padding: 80px var(--atlas-frame-gutter) 0; }
-  .video-hero-copy { min-height: 0; padding: 82px 24px 38px; }
-  .video-hero h1 { max-width: 100%; font-size: clamp(3rem, 11.7vw, 4.6rem); line-height: .86; }
+  .video-hero { min-height: 0; padding: 76px var(--atlas-frame-gutter) var(--atlas-frame-gutter); }
+    .video-hero h1 { max-width: 100%; font-size: clamp(38px, 7.6vw, 58px); line-height: 1.02; }
   .video-hero h1 span:nth-child(2) { white-space: normal; }
   .video-hero-description { font-size: .93rem; }
   .video-hero-media { aspect-ratio: 1.45 / 1; border-radius: 16px; }
@@ -609,7 +738,7 @@
 }
 
 @media (max-width: 520px) {
-  .home-atlas { --atlas-frame-gutter: 13px; }
+  .home-atlas { --atlas-frame-gutter: 8px; }
   .atlas-register { display: none; }
   .atlas-contact-panel h2 { letter-spacing: -0.07em; }
   .atlas-contact-form { grid-template-columns: 1fr; }
@@ -618,12 +747,11 @@
   .atlas-map { grid-template-columns: 1fr; }
   .atlas-node { grid-template-columns: 60px minmax(0, 1fr); }
   .atlas-node-image { width: 60px; height: 60px; }
-  .video-hero { padding: 72px var(--atlas-frame-gutter) 0; }
-  .video-hero-copy { padding: 74px 19px 32px; }
-  .video-hero-media { aspect-ratio: 1.05 / 1; border-radius: 13px; }
+  .video-hero { padding: 66px var(--atlas-frame-gutter) var(--atlas-frame-gutter); }
+    .video-hero-media { aspect-ratio: 1.05 / 1; border-radius: 13px; }
   .video-hero-media img { object-position: 54% 52%; }
   .video-hero-eyebrow { font-size: .62rem; letter-spacing: .13em; }
-  .video-hero h1 { font-size: clamp(2.72rem, 12.6vw, 3.7rem); }
+  .video-hero h1 { font-size: clamp(34px, 9.6vw, 46px); }
   .video-hero-description { max-width: 330px; font-size: .84rem; }
 }
 
