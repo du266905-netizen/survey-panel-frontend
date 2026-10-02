@@ -1,0 +1,320 @@
+/* Shared rail — layout and skin for the one sidebar every authenticated
+ * business page renders (see BusinessRail.jsx).
+ *
+ * IMPORTANT: this file is imported *after* Business.css on both pages, on
+ * purpose. The base sheet pins several rail properties with !important
+ * (align-items / background / padding), and the only way to win against an
+ * !important at equal specificity is another !important declared later in the
+ * cascade. Do not move these imports above `import './Business.css'`.
+ */
+
+.business-workspace-rail {
+  align-items: stretch !important;
+  gap: 0;
+  background: #f4f6f3 !important;
+  padding: 16px 13px 16px !important;
+}
+
+/* The logo keeps its artwork and size on both pages; only its alignment
+   follows the wider rail so it stays flush with the entries below it. */
+.business-workspace-rail-mark {
+  align-self: flex-start;
+  margin: 4px 0 16px 6px;
+}
+
+/* ---- grouped navigation ---- */
+
+.business-workspace-navgroups {
+  display: grid;
+  width: 100%;
+  align-content: start;
+  gap: 15px;
+}
+
+.business-workspace-navgroup {
+  display: grid;
+  gap: 2px;
+}
+
+.business-workspace-navgroup-title {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: #8d948d;
+  cursor: pointer;
+  font: 700 10px var(--font-sans);
+  letter-spacing: .13em;
+  padding: 5px 9px;
+  text-transform: uppercase;
+}
+
+.business-workspace-navgroup-title:hover {
+  color: #4a544d;
+}
+
+.business-workspace-navgroup-title svg {
+  transition: transform .18s ease;
+}
+
+.business-workspace-navgroup-title[aria-expanded='false'] svg {
+  transform: rotate(-90deg);
+}
+
+.business-workspace-navitem {
+  display: flex;
+  width: 100%;
+  min-height: 38px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #5f6862;
+  cursor: pointer;
+  font: 600 13px var(--font-sans);
+  padding: 0 10px;
+  text-align: left;
+  transition: border-color .16s ease, background .16s ease, color .16s ease;
+}
+
+.business-workspace-navitem > svg {
+  flex: 0 0 auto;
+  color: #8d948d;
+}
+
+.business-workspace-navitem > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.business-workspace-navitem:hover {
+  border-color: rgba(20, 26, 23, .10);
+  background: #ffffff;
+  color: #141a17;
+}
+
+.business-workspace-navitem:hover > svg {
+  color: #4a544d;
+}
+
+.business-workspace-navitem.is-active {
+  border-color: #17362a;
+  background: #17362a;
+  color: #ffffff;
+}
+
+.business-workspace-navitem.is-active > svg {
+  color: #ffffff;
+}
+
+.business-workspace-navitem:focus-visible {
+  outline: 2px solid #17362a;
+  outline-offset: 1px;
+}
+
+/* ---- footer: the three controls used to be centred in a 74px column; in a
+   wide rail they read as an orphaned cluster, so they gather on the bottom
+   edge behind a hairline. ---- */
+
+.business-workspace-rail > .business-language-picker {
+  align-self: flex-start;
+  border-top: 1px solid rgba(20, 26, 23, .10);
+  margin-top: auto;
+  padding-top: 15px;
+}
+
+.business-workspace-rail > .business-workspace-notification {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.business-workspace-rail .business-workspace-account {
+  align-self: flex-start;
+  margin-top: 0;
+}
+
+/* the rail is wide enough now to open the account menu upwards, inside it */
+.business-workspace-rail .business-workspace-account > div {
+  bottom: calc(100% + 10px);
+  left: 0;
+}
+
+/* ---- language picker ----
+   These rules used to be scoped to `.business-workspace`, so /business/ai-brief
+   fell back to the base stylesheet and rendered a different globe, a stray
+   "EN-US" label, and the old glass menu. Scoping them to the rail itself is
+   what actually puts the two pages on the same control. */
+
+.business-workspace-rail .business-language-picker > button {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-color: transparent;
+  color: #141a17;
+  padding: 6px 0;
+}
+
+.business-workspace-rail .business-language-picker > button:hover,
+.business-workspace-rail .business-language-picker > button:focus-visible,
+.business-workspace-rail .business-language-picker > button[aria-expanded='true'] {
+  border-color: rgba(20, 26, 23, .11);
+  background: #f2f5f0;
+  color: #141a17;
+}
+
+.business-workspace-rail .business-language-picker > button > svg:first-child {
+  flex: 0 0 auto;
+  order: 1;
+  width: 21px;
+  height: 21px;
+}
+
+.business-workspace-rail .business-language-picker > button > svg:last-child {
+  flex: 0 0 auto;
+  order: 2;
+  width: 10px;
+  height: 10px;
+}
+
+.business-workspace-rail .business-language-picker > button svg {
+  stroke-width: 1.75;
+}
+
+/* The rail shows the globe alone, matching the public header. The code label
+   was only ever a workaround for the 74px rail. */
+.business-workspace-rail .business-language-picker > button > span {
+  display: none;
+}
+
+.business-workspace-rail .business-language-picker-menu {
+  /* The picker sits at the bottom of the rail, so a vertically-centred 470px
+     menu ran past the bottom of the viewport and its last languages were
+     unreachable. Anchoring the menu's bottom to the trigger makes it open
+     upward, where there is room. */
+  top: auto;
+  bottom: 0;
+  transform: none;
+  border: 1px solid rgba(20, 26, 23, .11);
+  border-radius: 6px;
+  background: #fcfdfb;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 18px 40px rgba(20, 26, 23, .14);
+  color: #141a17;
+  padding: 8px;
+}
+
+.business-workspace-rail .business-language-picker-menu > p {
+  border-bottom: 1px solid rgba(20, 26, 23, .11);
+  color: #5f6862;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  padding: 2px 4px 9px;
+}
+
+.business-workspace-rail .business-language-picker-menu > div {
+  gap: 2px;
+  padding: 6px 0 0;
+}
+
+.business-workspace-rail .business-language-picker-menu > div > button {
+  border-radius: 4px;
+  color: #4a544d;
+  font-size: 13.5px;
+  font-weight: 400;
+  padding: 9px 11px;
+}
+
+.business-workspace-rail .business-language-picker-menu > div > button:hover,
+.business-workspace-rail .business-language-picker-menu > div > button:focus-visible {
+  background: #f1f5ef;
+  color: #141a17;
+  outline: none;
+}
+
+.business-workspace-rail .business-language-picker-menu > div > button.is-selected {
+  background: #141a17;
+  color: #fcfdfb;
+  font-weight: 500;
+}
+
+/* ---- narrow viewports ----
+   The base sheet hides the rail below 800px with `display: none`, but its own
+   `.business-workspace-rail { display: flex !important }` outranks that, so
+   the rail never actually disappears. It collapses to icons instead: every
+   entry stays clickable, only the text labels and the group heading text go. */
+
+@media (max-width: 800px) {
+  .business-workspace-rail {
+    align-items: center !important;
+    padding: 15px 7px !important;
+  }
+
+  .business-workspace-rail-mark {
+    align-self: center;
+    margin: 2px 0 12px;
+  }
+
+  .business-workspace-navgroups,
+  .business-workspace-navgroup {
+    justify-items: center;
+  }
+
+  .business-workspace-navgroup-title {
+    justify-content: center;
+    padding: 5px 0;
+  }
+
+  .business-workspace-navgroup-title > span {
+    display: none;
+  }
+
+  .business-workspace-navitem {
+    width: 44px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .business-workspace-navitem > span {
+    display: none;
+  }
+
+  .business-workspace-rail > .business-language-picker,
+  .business-workspace-rail > .business-workspace-notification,
+  .business-workspace-rail .business-workspace-account {
+    align-self: center;
+  }
+}
+
+/* ---- /business/ai-brief ----
+   That page positions the rail with `position: fixed` and makes room with a
+   padding offset on its shell, so the two have to move together. Its composer
+   dock is `position: relative; width: 100%` (Business.css:728) and therefore
+   follows the shell on its own — no dock maths needed. */
+
+.business-ai-brief-rail {
+  width: 248px;
+}
+
+.business-ai-brief-shell {
+  padding-left: 248px;
+}
+
+@media (max-width: 800px) {
+  .business-ai-brief-rail {
+    width: 64px;
+  }
+
+  .business-ai-brief-shell {
+    padding-left: 64px;
+  }
+}

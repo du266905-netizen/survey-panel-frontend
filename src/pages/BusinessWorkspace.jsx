@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   BarChart3,
   Building2,
-  BrainCircuit,
   Check,
   ClipboardList,
   FileText,
   GraduationCap,
-  LayoutDashboard,
   Landmark,
   LoaderCircle,
-  LogOut,
   MoreHorizontal,
   Pencil,
   Plus,
+  Search,
   Sparkles,
   Trash2,
   UserRound,
@@ -24,11 +22,13 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
-import NotificationBell from '../components/NotificationBell';
+import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import welcomeMarketImage from '../assets/business/welcome-market-exploration.jpg';
 import './Business.css';
+import '../components/BusinessRail.css';
+import BusinessRail from '../components/BusinessRail';
+import './BusinessWorkspaceTheme.css';
 
 const emptyProject = {
   title: '',
@@ -184,7 +184,6 @@ export default function BusinessWorkspace() {
   const [form, setForm] = useState(emptyProject);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
-  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [quoteProject, setQuoteProject] = useState(null);
   const [quoteDecision, setQuoteDecision] = useState('');
   const [declineReason, setDeclineReason] = useState('');
@@ -226,6 +225,37 @@ export default function BusinessWorkspace() {
     setActiveView(view);
     navigate(withLanguage(target, language));
   };
+
+  // The rail itself lives in components/BusinessRail, shared with
+  // /business/ai-brief. This page supplies only the current entry and what a
+  // click does — every branch keeps the handler the 74px icon rail used.
+  const handleRailSelect = (id) => {
+    if (id === 'ai') { navigate(withLanguage('/business/ai-brief', language)); return; }
+    selectWorkspaceView(id);
+  };
+
+  const workspaceSearchRef = useRef(null);
+  const [workspaceQuery, setWorkspaceQuery] = useState('');
+
+  // The top bar hands the question to the existing AI brief flow, which already
+  // accepts `location.state.initialPrompt` and posts it to the guidance endpoint.
+  const submitWorkspaceQuestion = (event) => {
+    event.preventDefault();
+    const question = workspaceQuery.trim();
+    if (!question) { workspaceSearchRef.current?.focus(); return; }
+    setWorkspaceQuery('');
+    navigate(withLanguage('/business/ai-brief', language), { state: { initialPrompt: question } });
+  };
+
+  useEffect(() => {
+    const focusSearch = (event) => {
+      if (!(event.metaKey || event.ctrlKey) || String(event.key).toLowerCase() !== 'k') return;
+      event.preventDefault();
+      workspaceSearchRef.current?.focus();
+    };
+    window.addEventListener('keydown', focusSearch);
+    return () => window.removeEventListener('keydown', focusSearch);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -447,26 +477,21 @@ export default function BusinessWorkspace() {
   return (
     <main className="business-workspace">
       <div className="business-workspace-body business-workspace-body--rail">
-        <aside className="business-workspace-rail" aria-label={copy.rail.navigation}>
-          <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
-          <button className={activeView === 'home' ? 'is-active' : ''} type="button" title={copy.rail.services} aria-label={copy.rail.services} onClick={() => selectWorkspaceView('home')}><LayoutDashboard size={20} /></button>
-          <button type="button" title={language === 'zh-CN' ? 'AI 研究引导' : 'AI research guide'} aria-label={language === 'zh-CN' ? 'AI 研究引导' : 'AI research guide'} onClick={() => navigate(withLanguage('/business/ai-brief', language))}><BrainCircuit size={20} /></button>
-          <button className={activeView === 'questionnaires' ? 'is-active' : ''} type="button" title={language === 'zh-CN' ? '问卷编辑器' : 'Questionnaire editor'} aria-label={language === 'zh-CN' ? '问卷编辑器' : 'Questionnaire editor'} onClick={() => selectWorkspaceView('questionnaires')}><ClipboardList size={20} /></button>
-          <button className={activeView === 'projects' ? 'is-active' : ''} type="button" title={copy.rail.projects} aria-label={copy.rail.projects} onClick={() => selectWorkspaceView('projects')}><FileText size={20} /></button>
-          <button className={activeView === 'results' ? 'is-active' : ''} type="button" title={copy.rail.results} aria-label={copy.rail.results} onClick={() => selectWorkspaceView('results')}><BarChart3 size={20} /></button>
-          <BusinessLanguagePicker />
-          <NotificationBell className="business-workspace-notification" />
-          <div className="business-workspace-account">
-            <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={copy.rail.accountMenu} aria-expanded={accountMenuOpen}><UserRound size={20} /><span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span></button>
-            {accountMenuOpen && <div><strong>{user?.displayName || copy.rail.clientAccount}</strong><span>{user?.email}</span><button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {copy.rail.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.rail.signOut}</button></div>}
-          </div>
-        </aside>
+        <BusinessRail activeId={activeView} onSelect={handleRailSelect} />
+
+        <header className="business-workspace-topbar">
+          <form className="business-workspace-searchbar" role="search" aria-label="ask a question in guanyisearch" onSubmit={submitWorkspaceQuestion}>
+            <Search size={17} aria-hidden="true" />
+            <input ref={workspaceSearchRef} type="search" value={workspaceQuery} onChange={(event) => setWorkspaceQuery(event.target.value)} placeholder="ask a question in guanyisearch" aria-label="ask a question in guanyisearch" />
+            <kbd aria-hidden="true">⌘K</kbd>
+          </form>
+        </header>
 
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
           <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, returningUser)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p></div></header>
           <div className="business-dashboard-actions">
             <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{workspaceText[1]}</strong><small>{workspaceText[2]}</small></div><ArrowRight size={17} /></button>
-            <button type="button" onClick={() => navigate(withLanguage('/business/ai-brief', language))}><span className="is-amber"><BrainCircuit size={21} /></span><div><strong>{workspaceText[3]}</strong><small>{workspaceText[4]}</small></div><ArrowRight size={17} /></button>
+            <button type="button" onClick={() => navigate(withLanguage('/business/ai-brief', language))}><span className="is-amber"><Sparkles size={21} /></span><div><strong>{workspaceText[3]}</strong><small>{workspaceText[4]}</small></div><ArrowRight size={17} /></button>
             <button type="button" onClick={() => selectWorkspaceView('questionnaires')}><span className="is-green"><ClipboardList size={21} /></span><div><strong>{workspaceText[5]}</strong><small>{workspaceText[6]}</small></div><ArrowRight size={17} /></button>
           </div>
           {message && <p className="business-workspace-message">{message}</p>}
@@ -706,7 +731,7 @@ export default function BusinessWorkspace() {
       {!loading && workspace.profile && !onboardingComplete && !welcomeOpen && (
         <section className="business-onboarding" aria-labelledby="business-onboarding-title">
           <header className="business-onboarding-chrome">
-            <img src="/guanyisearch-project-mark.png" alt="GuanyiSearch" />
+            <Logo size="md" variant="dark" />
             <div>
               <span>{language === 'zh-CN' ? '研究工作区' : 'Research workspace'}</span>
               <strong>{copy.onboarding.step.replace('{current}', onboardingStep + 1).replace('{total}', onboarding.researchRole === 'ORGANIZATION' ? 3 : 2)}</strong>

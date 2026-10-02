@@ -1,0 +1,745 @@
+/* Onboarding wizard palette.
+ *
+ * The wizard sat on a warm cream (#fbf8f0) with green ink and green-tinted
+ * cards, while the public site is a cool paper (#fcfdfb) with neutral ink.
+ * Side by side the two read as different brands, so the palette is moved onto
+ * the public one. Colours only — no structure, no layout, no sizing.
+ *
+ * A previous revision of this file also rearranged the workspace home. That is
+ * reverted: the authenticated workspace could not be verified from here, and a
+ * grid restructure risks hiding real content.
+ */
+
+/* ---- palette ---- */
+
+.business-onboarding {
+  --proto-ink: #141a17;
+  --proto-soft: #4a544d;
+  --proto-muted: #5f6862;
+  --proto-faint: #8d948d;
+  --proto-line: rgba(20, 26, 23, .11);
+  --proto-line-2: rgba(20, 26, 23, .22);
+  --proto-paper: #fcfdfb;
+
+  background: var(--proto-paper);
+  color: var(--proto-ink);
+}
+
+/* the top rule becomes ink rather than forest, so it matches the public frame */
+.business-onboarding::before {
+  background: var(--proto-ink);
+}
+
+.business-onboarding-chrome {
+  border-bottom: 1px solid var(--proto-line);
+}
+
+.business-onboarding-chrome > div {
+  color: var(--proto-muted);
+}
+
+.business-onboarding-chrome strong {
+  color: var(--proto-ink);
+}
+
+.business-onboarding h1 {
+  color: var(--proto-ink);
+}
+
+.business-onboarding-intro {
+  color: var(--proto-muted);
+}
+
+.business-onboarding-step {
+  color: var(--proto-faint);
+}
+
+/* cards move off the green tint onto paper with a hairline */
+.business-onboarding .business-onboarding-options button {
+  border-color: var(--proto-line);
+  background: var(--proto-paper);
+  color: var(--proto-soft);
+}
+
+.business-onboarding .business-onboarding-options button:hover,
+.business-onboarding .business-onboarding-options button.is-selected {
+  border-color: var(--proto-ink);
+  background: #eef2ec;
+  box-shadow: none;
+}
+
+.business-onboarding .business-onboarding-options strong {
+  color: var(--proto-ink);
+}
+
+.business-onboarding .business-onboarding-options small {
+  color: var(--proto-muted);
+}
+
+.business-onboarding footer > button:first-child {
+  color: var(--proto-soft);
+}
+
+/* ---- language picker ---------------------------------------------------- */
+
+/* The rail's picker was the last glass surface on the workspace: translucent
+   white chrome, 9px item radii and a green wash on hover. The public header
+   already settled this control — opaque paper, 6px shell, 4px items, a dark
+   fill for the current language — so the same values are reused here. The menu
+   still opens to the right of the rail, which is where the rail needs it.
+   All of it now lives in `src/components/BusinessRail.css` so that
+   /business/ai-brief renders the identical control. Do not re-add it here. */
+
+/* The language picker's trigger and menu skin moved to
+   `src/components/BusinessRail.css`, so /business/ai-brief renders the same
+   control. Do not re-add them here. */
+
+/* ---- workspace home: Apollo-style surface (no lime) --------------------- */
+
+/* Reference: a light ground carrying white cards with hairline edges and
+   moderate radii, one accent reserved for the primary action. The accent here
+   stays the brand forest rather than lime, per the brief.
+ *
+ * Only colour, ground, radius and the decorative gradient change. Nothing in
+ * this block touches layout, grid placement or overflow — an earlier revision
+ * did, and it hid real content in the authenticated workspace. */
+
+/* Both authenticated pages need these tokens. `--business-*` is only declared
+   on `.business-public-page / .join-choice-page / .business-access-page /
+   .business-workspace` (Business.css:1), so on /business/ai-brief every
+   `var(--business-forest)` resolved to nothing — `.business-button` there was
+   near-white text on an invalid (transparent) background, i.e. invisible. The
+   `--ap-*` tokens were scoped the same way. Declaring both sets on this page's
+   root fixes the whole class of bug rather than one button. */
+.business-workspace,
+.business-ai-brief-page {
+  --ap-ground: #f4f6f3;
+  --ap-card: #ffffff;
+  --ap-line: rgba(20, 26, 23, .10);
+  --ap-line-2: rgba(20, 26, 23, .18);
+  --ap-radius: 12px;
+  --ap-shadow: 0 1px 2px rgba(20, 26, 23, .04), 0 8px 22px rgba(20, 26, 23, .05);
+  --business-ink: #17251f;
+  --business-forest: #285647;
+  --business-paper: #f7f7f3;
+  --business-muted: #64746b;
+}
+
+.business-workspace {
+  background: var(--ap-ground);
+}
+
+/* the greeting sits on the ground; the gradient and its arc are dropped */
+.business-workspace .business-dashboard-header {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  padding: 0 0 4px;
+}
+
+.business-workspace .business-dashboard-header::after {
+  content: none;
+}
+
+/* --- the three entries: white cards, one dark lead --- */
+
+.business-workspace .business-dashboard-actions {
+  gap: 12px;
+}
+
+.business-workspace .business-dashboard-actions > button {
+  min-height: 92px;
+  border: 1px solid var(--ap-line);
+  border-radius: var(--ap-radius);
+  background: var(--ap-card);
+  box-shadow: var(--ap-shadow);
+  padding: 18px;
+}
+
+.business-workspace .business-dashboard-actions > button::after {
+  content: none;
+}
+
+.business-workspace .business-dashboard-actions > button:hover {
+  border-color: var(--ap-line-2);
+  box-shadow: 0 2px 4px rgba(20, 26, 23, .05), 0 12px 26px rgba(20, 26, 23, .08);
+}
+
+/* the lead entry keeps the brand fill — the one accent, no lime */
+.business-workspace .business-dashboard-actions > button:first-child {
+  border-color: #17362a;
+  background: #17362a;
+  color: rgba(255, 255, 255, .78);
+}
+
+.business-workspace .business-dashboard-actions > button:first-child:hover {
+  border-color: #1d4433;
+  background: #1d4433;
+}
+
+.business-workspace .business-dashboard-actions > button:first-child strong {
+  color: #ffffff;
+}
+
+.business-workspace .business-dashboard-actions > button:first-child small {
+  color: rgba(255, 255, 255, .66);
+}
+
+/* icon tiles: one family, forest on a pale wash */
+.business-workspace .business-dashboard-actions > button > span {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #eef3ec;
+  color: #2b5a45;
+}
+
+.business-workspace .business-dashboard-actions > button:first-child > span {
+  background: rgba(255, 255, 255, .14);
+  color: #ffffff;
+}
+
+.business-workspace .business-dashboard-actions .is-purple,
+.business-workspace .business-dashboard-actions .is-amber,
+.business-workspace .business-dashboard-actions .is-green {
+  background: #eef3ec;
+  color: #2b5a45;
+}
+
+.business-workspace .business-dashboard-actions strong {
+  color: #17251f;
+  font-weight: 650;
+  letter-spacing: -.014em;
+}
+
+.business-workspace .business-dashboard-actions small {
+  color: #6a776f;
+  font-weight: 450;
+  line-height: 1.5;
+}
+
+.business-workspace .business-dashboard-actions > button > svg {
+  color: #9aa39c;
+}
+
+/* --- lower panels: white cards on the ground, no shared tint --- */
+
+.business-workspace .business-dashboard-grid {
+  border-top: 0;
+  gap: 14px;
+}
+
+.business-workspace .business-dashboard-statistics,
+.business-workspace .business-dashboard-recent {
+  border: 1px solid var(--ap-line);
+  border-radius: var(--ap-radius);
+  background: var(--ap-card);
+  box-shadow: var(--ap-shadow);
+  padding: 24px;
+}
+
+.business-workspace .business-dashboard-statistics {
+  border-right: 1px solid var(--ap-line);
+}
+
+.business-workspace .business-dashboard-grid h2 {
+  color: #17251f;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.022em;
+}
+
+.business-workspace .business-dashboard-grid p {
+  color: #6a776f;
+}
+
+/* the notice becomes a quiet card rather than a green wash */
+.business-workspace .business-workspace-message {
+  border: 1px solid var(--ap-line);
+  border-radius: var(--ap-radius);
+  background: var(--ap-card);
+  color: #4a544d;
+  font-weight: 500;
+}
+
+.business-workspace .business-status {
+  border: 1px solid var(--ap-line-2);
+  border-radius: 6px;
+  background: transparent;
+  color: #4a544d;
+  font-weight: 650;
+  letter-spacing: .08em;
+}
+
+/* ---- refinement pass ---------------------------------------------------- */
+
+/* (The rail's globe sizing and stroke weight moved to
+   `src/components/BusinessRail.css`.) */
+
+/* Rail entries adopt the same card language as the panels below. */
+.business-workspace .business-workspace-rail > button,
+.business-workspace .business-workspace-rail > a {
+  border-radius: 10px;
+  color: #5f6862;
+}
+
+.business-workspace .business-workspace-rail > button:hover,
+.business-workspace .business-workspace-rail > a:hover,
+.business-workspace .business-workspace-rail > button:focus-visible {
+  border-color: var(--ap-line);
+  background: #ffffff;
+  color: #141a17;
+}
+
+.business-workspace .business-workspace-rail > button.is-active {
+  border-color: #17362a;
+  background: #17362a;
+  color: #ffffff;
+}
+
+/* The four figure tiles sat white-on-white inside the white panel, so they had
+   no edge. A hairline and a faint ground separate them without adding weight. */
+.business-workspace .business-dashboard-stats article {
+  border: 1px solid var(--ap-line);
+  border-radius: 10px;
+  background: #fafbf9;
+  box-shadow: none;
+}
+
+.business-workspace .business-dashboard-stats article > span {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--ap-line);
+  border-radius: 9px;
+  background: #eef3ec;
+  color: #2b5a45;
+}
+
+/* the per-tile accent colours belong to the old palette; one family now */
+.business-workspace .business-dashboard-stats article:nth-child(2) > span,
+.business-workspace .business-dashboard-stats article:nth-child(3) > span,
+.business-workspace .business-dashboard-stats article:nth-child(4) > span {
+  border-color: var(--ap-line);
+  color: #2b5a45;
+}
+
+.business-workspace .business-dashboard-stats small {
+  color: #6a776f;
+  font-weight: 500;
+}
+
+.business-workspace .business-dashboard-stats strong {
+  color: #17251f;
+  font-weight: 650;
+}
+
+/* the two header actions on the panels read as outlined controls */
+.business-workspace .business-dashboard-grid header > button {
+  border: 1px solid var(--ap-line-2);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #17362a;
+  font-weight: 650;
+  padding: 7px 13px;
+  transition: border-color .18s ease, background .18s ease;
+}
+
+.business-workspace .business-dashboard-grid header > button:hover {
+  border-color: #17362a;
+  background: #f4f6f3;
+}
+
+/* project rows inside the recent panel get the same edge */
+.business-workspace .business-dashboard-recent > div > button {
+  border: 1px solid var(--ap-line);
+  border-radius: 10px;
+  background: #fafbf9;
+  transition: border-color .18s ease, background .18s ease;
+}
+
+.business-workspace .business-dashboard-recent > div > button:hover {
+  border-color: var(--ap-line-2);
+  background: #ffffff;
+}
+
+/* ---- requested refinements ---------------------------------------------- */
+
+/* (The language-picker trigger, globe sizing and label rules that used to sit
+   in this neighbourhood moved to `src/components/BusinessRail.css`, where they
+   apply to /business/workspace and /business/ai-brief alike.) */
+
+/* 2 & 3. Two surfaces still carried the glass treatment — a 135deg translucent
+   gradient over a 14px backdrop blur with an inset white highlight. Both become
+   plain cards: opaque fill, hairline edge, moderate radius. */
+.business-workspace .business-results-index-empty,
+.business-workspace .business-results-index-list article {
+  border: 1px solid var(--ap-line);
+  border-radius: var(--ap-radius);
+  background: var(--ap-card);
+  box-shadow: var(--ap-shadow);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.business-ai-brief-page .business-ai-composer,
+.business-workspace .business-ai-composer {
+  border: 1px solid var(--ap-line-2);
+  border-radius: var(--ap-radius);
+  background: var(--ap-card);
+  box-shadow: 0 2px 4px rgba(20, 26, 23, .04), 0 12px 28px rgba(20, 26, 23, .07);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.business-ai-brief-page .business-ai-composer::before,
+.business-ai-brief-page .business-ai-composer::after,
+.business-workspace .business-ai-composer::before,
+.business-workspace .business-ai-composer::after {
+  display: none;
+}
+
+/* The composer's outer shell was already flat, but its textarea and send
+   button still carried the liquid-glass treatment (translucent white fills,
+   inset white highlights, a mint gradient). They follow the shell now: one
+   hairline around the whole control, and a solid ink send button. */
+.business-ai-brief-page .business-ai-composer {
+  padding: 6px;
+}
+
+.business-ai-brief-page .business-ai-composer:focus-within {
+  border-color: #17362a;
+  box-shadow: 0 0 0 3px rgba(23, 54, 42, .08);
+}
+
+.business-ai-brief-page .business-ai-composer > textarea {
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  color: #141a17;
+}
+
+.business-ai-brief-page .business-ai-composer > textarea:focus {
+  background: #fafbf9;
+  box-shadow: none;
+}
+
+.business-ai-brief-page .business-ai-composer > button {
+  border: 1px solid #17362a;
+  border-radius: 10px;
+  background: #17362a;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.business-ai-brief-page .business-ai-composer > button:disabled {
+  border-color: var(--ap-line);
+  background: #eef1ec;
+  color: #8d948d;
+}
+
+.business-ai-brief-page {
+  background: var(--ap-ground, #f4f6f3);
+}
+
+/* the AI brief's side summary was a tinted panel; it becomes a card */
+.business-ai-brief-page .business-ai-brief-summary {
+  border: 1px solid rgba(20, 26, 23, .10);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(20, 26, 23, .04), 0 8px 22px rgba(20, 26, 23, .05);
+}
+
+/* the dock that holds the notice and the composer */
+.business-ai-brief-page .business-ai-dock {
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ---- AI brief: the conversation itself ----------------------------------
+   The user's own message was the last liquid-glass surface on this page: a
+   translucent white→mint gradient over a 22px backdrop blur, inset highlights
+   and a blurred radial glow in ::before. It becomes the same solid card the
+   panels below use, and the guide's answers drop the green for the workspace
+   ink so the two sides of the conversation share one text style. */
+
+.business-ai-brief-page .business-ai-conversation-log .is-user p {
+  border: 1px solid var(--ap-line-2);
+  border-radius: 12px 12px 3px 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(20, 26, 23, .04);
+  color: #141a17;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.business-ai-brief-page .business-ai-conversation-log .is-user p::before {
+  display: none;
+}
+
+.business-ai-brief-page .business-ai-conversation-log .is-guide p {
+  color: #141a17;
+  font-size: 15.5px;
+  line-height: 1.72;
+}
+
+.business-ai-brief-page .business-ai-guide-mark {
+  border: 1px solid #17362a;
+  background: #17362a;
+  color: #ffffff;
+}
+
+/* The three service routes used to be a strip pinned in the dock. They are now
+   a card inside the conversation — one more thing the guide "says" — with a
+   labelled group, a selected state and a single confirmation action.
+   Right edge lines up with the guide's text measure (28px mark + 10px gap +
+   650px paragraph). */
+.business-ai-brief-page .business-ai-route-card {
+  display: grid;
+  max-width: 688px;
+  border: 1px solid var(--ap-line);
+  border-radius: var(--ap-radius);
+  background: #ffffff;
+  box-shadow: var(--ap-shadow);
+  padding: 18px;
+}
+
+.business-ai-brief-page .business-ai-route-card-title {
+  color: #5f6862;
+  font: 650 12px var(--font-sans);
+  margin: 0 0 14px;
+}
+
+.business-ai-brief-page .business-ai-route-options {
+  display: grid;
+  gap: 8px;
+}
+
+.business-ai-brief-page .business-ai-route-options > button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 11px;
+  border: 1px solid var(--ap-line);
+  border-radius: 10px;
+  background: #ffffff;
+  color: #141a17;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  padding: 13px 14px;
+  text-align: left;
+  transition: border-color .16s ease, background .16s ease;
+}
+
+.business-ai-brief-page .business-ai-route-options > button:hover {
+  border-color: var(--ap-line-2);
+  background: #fafbf9;
+}
+
+.business-ai-brief-page .business-ai-route-options > button.is-selected {
+  border-color: #17362a;
+  background: #f4f6f3;
+}
+
+.business-ai-brief-page .business-ai-route-options > button > i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--ap-line-2);
+  border-radius: 50%;
+  background: #ffffff;
+  margin-top: 1px;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+.business-ai-brief-page .business-ai-route-options > button.is-selected > i {
+  border-color: #17362a;
+  box-shadow: inset 0 0 0 4px #17362a;
+}
+
+.business-ai-brief-page .business-ai-route-options > button > span {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.business-ai-brief-page .business-ai-route-options b {
+  font: 650 13.5px var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-route-options small {
+  color: #5f6862;
+  font: 500 12.5px/1.55 var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-route-actions {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid var(--ap-line);
+  margin-top: 16px;
+  padding-top: 14px;
+}
+
+.business-ai-brief-page .business-ai-route-actions > .business-button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+@media (max-width: 700px) {
+  .business-ai-brief-page .business-ai-route-card {
+    max-width: none;
+  }
+}
+
+/* 4. Wizard typography. Bodoni at 38px with -.046em tracking reads cramped:
+   the face is drawn for very large sizes. The reading serif is warmer at this
+   scale, and the option titles follow it so the two levels agree. */
+.business-onboarding h1 {
+  max-width: 560px;
+  font-family: var(--font-reading);
+  font-size: clamp(30px, 3.4vw, 42px);
+  font-weight: 600;
+  letter-spacing: -.018em;
+  line-height: 1.16;
+}
+
+.business-onboarding .business-onboarding-options strong {
+  font-family: var(--font-reading);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  line-height: 1.25;
+}
+
+.business-onboarding .business-onboarding-options small {
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.business-onboarding-intro {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.business-onboarding .business-onboarding-options button {
+  padding: 24px;
+}
+
+/* =====================================================================
+   Task ④ — workspace shell: grouped rail column + top "ask" bar
+   ---------------------------------------------------------------------
+   The rail's own skin and behaviour now live in
+   `src/components/BusinessRail.css`, shared with /business/ai-brief.
+   What stays here is only what is specific to this page: where the rail,
+   the new top bar and the untouched content section sit in the grid.
+   ===================================================================== */
+
+.business-workspace-body.business-workspace-body--rail {
+  grid-template-columns: 248px minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+/* The rail spans both rows, the top bar owns row 1 of the content column, and
+   the pre-existing content section is pinned to row 2. The content itself is
+   only *placed* — never wrapped, restructured or clipped.
+
+   `position: sticky` + `height: 100svh` keeps the rail one viewport tall
+   instead of stretching it to the full document height. Without it the footer
+   controls (language, bell, account) slid to the bottom of a long page, and
+   the language menu — anchored to its trigger — had nowhere to open. This is
+   also how Apollo behaves: sidebar fixed, content scrolling.
+
+   ⚠️ The child selector is load-bearing: every page's CSS is bundled and
+   injected app-wide, so a bare `.business-workspace-rail` here also matches
+   /business/ai-brief's rail — where the rail is `position: fixed` and the
+   shell makes room with `padding-left`. The bare selector turned it into an
+   in-flow sticky block and pushed that whole page below the fold. Keep the
+   `.business-workspace-body--rail >` prefix. */
+.business-workspace-body--rail > .business-workspace-rail {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  grid-column: 1;
+  grid-row: 1 / -1;
+  box-sizing: border-box;
+  height: 100svh;
+  /* Business.css:338 pins `min-height: 100%` on this element, which would
+     stretch it back to the full document height and defeat the sticky rail. */
+  min-height: 0;
+}
+
+.business-workspace-body--rail > section {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+/* ---- top "ask" bar ---- */
+
+.business-workspace-topbar {
+  display: flex;
+  grid-column: 2;
+  grid-row: 1;
+  align-items: center;
+  border-bottom: 1px solid var(--ap-line);
+  background: #fcfdfb;
+  padding: 13px clamp(20px, 3vw, 34px);
+}
+
+.business-workspace-searchbar {
+  display: flex;
+  width: min(100%, 560px);
+  height: 42px;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--ap-line-2);
+  border-radius: var(--ap-radius);
+  background: #ffffff;
+  color: #8d948d;
+  padding: 0 12px;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+.business-workspace-searchbar:focus-within {
+  border-color: #17362a;
+  box-shadow: 0 0 0 3px rgba(23, 54, 42, .08);
+}
+
+.business-workspace-searchbar > input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #141a17;
+  font: 500 13px var(--font-sans);
+}
+
+.business-workspace-searchbar > input::placeholder {
+  color: #8d948d;
+}
+
+.business-workspace-searchbar > kbd {
+  flex: 0 0 auto;
+  border: 1px solid var(--ap-line);
+  border-radius: 6px;
+  background: #fafbf9;
+  color: #5f6862;
+  font: 650 10px var(--font-sans);
+  padding: 3px 6px;
+}
+
+@media (max-width: 1080px) {
+  .business-workspace-body.business-workspace-body--rail {
+    grid-template-columns: 212px minmax(0, 1fr);
+  }
+}
+
+/* Below 800px the shared rail collapses to a 64px icon column
+   (see BusinessRail.css); the grid column has to match it. */
+@media (max-width: 800px) {
+  .business-workspace-body.business-workspace-body--rail {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+}
