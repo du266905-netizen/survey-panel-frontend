@@ -1466,7 +1466,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} spørgsmål · {r} svar',
     welcomeHeading: 'Velkommen, {name}.',
     questionnaireEyebrow: 'Spørgeskemaresearch og målgrupperekruttering',
-    questionnaireIntro: 'Definér målgruppen og undersøgelsens omfang, før du redigerer spørgsmål. Det opretter kun et udkast; der rekrutteres, prissættes eller publiceres ikke automatisk.'
+    questionnaireIntro: 'Definér målgruppen og undersøgelsens omfang, før du redigerer spørgsmål. Det opretter kun et udkast; der rekrutteres, prissættes eller publiceres ikke automatisk.',
+    addFunds: 'Sæt penge ind',
+    balanceAria: 'Saldo {amount}. Sæt penge ind.',
+    balanceLabel: 'Saldo',
+    customAmount: 'Andet beløb',
+    customAmountPlaceholder: 'Indtast et beløb'
   },
   'de': {
     displayNameFallback: 'Gast',
@@ -1497,7 +1502,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} Fragen · {r} Antworten',
     welcomeHeading: 'Willkommen, {name}.',
     questionnaireEyebrow: 'Fragebogen-Research & Zielgruppenrekrutierung',
-    questionnaireIntro: 'Legen Sie Zielgruppe und Research-Umfang fest, bevor Sie Fragen bearbeiten. Es wird nur ein Entwurf erstellt; es wird nicht automatisch rekrutiert, bepreist oder veröffentlicht.'
+    questionnaireIntro: 'Legen Sie Zielgruppe und Research-Umfang fest, bevor Sie Fragen bearbeiten. Es wird nur ein Entwurf erstellt; es wird nicht automatisch rekrutiert, bepreist oder veröffentlicht.',
+    addFunds: 'Guthaben aufladen',
+    balanceAria: 'Guthaben {amount}. Guthaben aufladen.',
+    balanceLabel: 'Guthaben',
+    customAmount: 'Eigener Betrag',
+    customAmountPlaceholder: 'Betrag eingeben'
   },
   'en-GB': {
     displayNameFallback: 'there',
@@ -1528,7 +1538,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} questions · {r} responses',
     welcomeHeading: 'Welcome, {name}.',
     questionnaireEyebrow: 'QUESTIONNAIRE RESEARCH & AUDIENCE RECRUITMENT',
-    questionnaireIntro: 'Define the target audience and research scope before editing questions. This creates a draft only; it does not recruit, price, or publish automatically.'
+    questionnaireIntro: 'Define the target audience and research scope before editing questions. This creates a draft only; it does not recruit, price, or publish automatically.',
+    addFunds: 'Add funds',
+    balanceAria: 'Balance {amount}. Add funds.',
+    balanceLabel: 'Balance',
+    customAmount: 'Custom',
+    customAmountPlaceholder: 'Enter an amount'
   },
   'en-US': {
     displayNameFallback: 'there',
@@ -1559,7 +1574,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} questions · {r} responses',
     welcomeHeading: 'Welcome, {name}.',
     questionnaireEyebrow: 'QUESTIONNAIRE RESEARCH & AUDIENCE RECRUITMENT',
-    questionnaireIntro: 'Define the target audience and research scope before editing questions. This creates a draft only; it does not recruit, price, or publish automatically.'
+    questionnaireIntro: 'Define the target audience and research scope before editing questions. This creates a draft only; it does not recruit, price, or publish automatically.',
+    addFunds: 'Add funds',
+    balanceAria: 'Balance {amount}. Add funds.',
+    balanceLabel: 'Balance',
+    customAmount: 'Custom',
+    customAmountPlaceholder: 'Enter an amount'
   },
   'es': {
     displayNameFallback: 'usuario',
@@ -1590,7 +1610,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} preguntas · {r} respuestas',
     welcomeHeading: 'Te damos la bienvenida, {name}.',
     questionnaireEyebrow: 'Investigación con cuestionarios y reclutamiento de público',
-    questionnaireIntro: 'Define el público objetivo y el alcance de la investigación antes de editar las preguntas. Esto solo crea un borrador; no recluta, no fija precios ni publica automáticamente.'
+    questionnaireIntro: 'Define el público objetivo y el alcance de la investigación antes de editar las preguntas. Esto solo crea un borrador; no recluta, no fija precios ni publica automáticamente.',
+    addFunds: 'Recargar saldo',
+    balanceAria: 'Saldo {amount}. Recargar saldo.',
+    balanceLabel: 'Saldo',
+    customAmount: 'Otro importe',
+    customAmountPlaceholder: 'Introduce un importe'
   },
   'fi': {
     displayNameFallback: 'käyttäjä',
@@ -1621,7 +1646,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} kysymystä · {r} vastausta',
     welcomeHeading: 'Tervetuloa, {name}.',
     questionnaireEyebrow: 'Kyselytutkimus ja kohderyhmän rekrytointi',
-    questionnaireIntro: 'Määritä kohderyhmä ja tutkimuksen laajuus ennen kysymysten muokkaamista. Tämä luo vain luonnoksen; se ei rekrytoi, hinnoittele tai julkaise automaattisesti.'
+    questionnaireIntro: 'Määritä kohderyhmä ja tutkimuksen laajuus ennen kysymysten muokkaamista. Tämä luo vain luonnoksen; se ei rekrytoi, hinnoittele tai julkaise automaattisesti.',
+    addFunds: 'Lisää saldoa',
+    balanceAria: 'Saldo {amount}. Lisää saldoa.',
+    balanceLabel: 'Saldo',
+    customAmount: 'Muu summa',
+    customAmountPlaceholder: 'Syötä summa'
   },
   'fr': {
     displayNameFallback: 'invité',
@@ -1652,7 +1682,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} questions · {r} réponses',
     welcomeHeading: 'Bienvenue, {name}.',
     questionnaireEyebrow: 'Étude par questionnaire et recrutement d\'audience',
-    questionnaireIntro: 'Définissez l\'audience cible et le périmètre de l\'étude avant de modifier les questions. Cela crée uniquement un brouillon ; aucun recrutement, tarif ou publication n\'est automatique.'
+    questionnaireIntro: 'Définissez l\'audience cible et le périmètre de l\'étude avant de modifier les questions. Cela crée uniquement un brouillon ; aucun recrutement, tarif ou publication n\'est automatique.',
+    addFunds: 'Recharger le compte',
+    balanceAria: 'Solde {amount}. Recharger le compte.',
+    balanceLabel: 'Solde',
+    customAmount: 'Autre montant',
+    customAmountPlaceholder: 'Saisir un montant'
   },
   'it': {
     displayNameFallback: 'utente',
@@ -1683,7 +1718,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} domande · {r} risposte',
     welcomeHeading: 'Ti diamo il benvenuto, {name}.',
     questionnaireEyebrow: 'Ricerca con questionari e reclutamento del pubblico',
-    questionnaireIntro: 'Definisci il pubblico di riferimento e l\'ambito della ricerca prima di modificare le domande. Crea solo una bozza; non recluta, non definisce prezzi e non pubblica automaticamente.'
+    questionnaireIntro: 'Definisci il pubblico di riferimento e l\'ambito della ricerca prima di modificare le domande. Crea solo una bozza; non recluta, non definisce prezzi e non pubblica automaticamente.',
+    addFunds: 'Ricarica saldo',
+    balanceAria: 'Saldo {amount}. Ricarica saldo.',
+    balanceLabel: 'Saldo',
+    customAmount: 'Altro importo',
+    customAmountPlaceholder: 'Inserisci un importo'
   },
   'ja': {
     displayNameFallback: 'ユーザー',
@@ -1714,7 +1754,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q}件の質問・{r}件の回答',
     welcomeHeading: 'ようこそ、{name}さん。',
     questionnaireEyebrow: 'アンケート調査とオーディエンスの募集',
-    questionnaireIntro: '質問を編集する前に、対象オーディエンスと調査範囲を定義してください。作成されるのは下書きのみで、募集・価格設定・公開は自動では行われません。'
+    questionnaireIntro: '質問を編集する前に、対象オーディエンスと調査範囲を定義してください。作成されるのは下書きのみで、募集・価格設定・公開は自動では行われません。',
+    addFunds: 'チャージ',
+    balanceAria: '残高 {amount}。チャージ。',
+    balanceLabel: '残高',
+    customAmount: 'その他',
+    customAmountPlaceholder: '金額を入力'
   },
   'ko': {
     displayNameFallback: '고객',
@@ -1745,7 +1790,12 @@ export const workspaceUiTranslations = {
     questionStats: '질문 {q}개 · 응답 {r}건',
     welcomeHeading: '{name}님, 환영합니다.',
     questionnaireEyebrow: '설문 리서치 및 응답자 모집',
-    questionnaireIntro: '질문을 편집하기 전에 목표 응답자와 리서치 범위를 정의하세요. 초안만 생성되며 자동으로 모집, 가격 책정, 게시되지 않습니다.'
+    questionnaireIntro: '질문을 편집하기 전에 목표 응답자와 리서치 범위를 정의하세요. 초안만 생성되며 자동으로 모집, 가격 책정, 게시되지 않습니다.',
+    addFunds: '충전',
+    balanceAria: '잔액 {amount}. 충전.',
+    balanceLabel: '잔액',
+    customAmount: '직접 입력',
+    customAmountPlaceholder: '금액 입력'
   },
   'nl': {
     displayNameFallback: 'gast',
@@ -1776,7 +1826,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} vragen · {r} reacties',
     welcomeHeading: 'Welkom, {name}.',
     questionnaireEyebrow: 'Vragenlijstonderzoek en doelgroepwerving',
-    questionnaireIntro: 'Bepaal de doelgroep en de onderzoeksscope voordat u vragen bewerkt. Dit maakt alleen een concept aan; er wordt niet automatisch geworven, geprijsd of gepubliceerd.'
+    questionnaireIntro: 'Bepaal de doelgroep en de onderzoeksscope voordat u vragen bewerkt. Dit maakt alleen een concept aan; er wordt niet automatisch geworven, geprijsd of gepubliceerd.',
+    addFunds: 'Saldo opwaarderen',
+    balanceAria: 'Saldo {amount}. Saldo opwaarderen.',
+    balanceLabel: 'Saldo',
+    customAmount: 'Eigen bedrag',
+    customAmountPlaceholder: 'Bedrag invoeren'
   },
   'no': {
     displayNameFallback: 'deg',
@@ -1807,7 +1862,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} spørsmål · {r} svar',
     welcomeHeading: 'Velkommen, {name}.',
     questionnaireEyebrow: 'Spørreskjemaforskning og rekruttering av målgruppe',
-    questionnaireIntro: 'Definer målgruppen og research-omfanget før du redigerer spørsmål. Dette oppretter bare et utkast; det rekrutterer, priser eller publiserer ikke automatisk.'
+    questionnaireIntro: 'Definer målgruppen og research-omfanget før du redigerer spørsmål. Dette oppretter bare et utkast; det rekrutterer, priser eller publiserer ikke automatisk.',
+    addFunds: 'Sett inn penger',
+    balanceAria: 'Saldo {amount}. Sett inn penger.',
+    balanceLabel: 'Saldo',
+    customAmount: 'Annet beløp',
+    customAmountPlaceholder: 'Skriv inn et beløp'
   },
   'pt': {
     displayNameFallback: 'si',
@@ -1838,7 +1898,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} perguntas · {r} respostas',
     welcomeHeading: 'Bem-vindo, {name}.',
     questionnaireEyebrow: 'Investigação por questionário e recrutamento de público',
-    questionnaireIntro: 'Defina o público-alvo e o âmbito da investigação antes de editar as perguntas. Isto cria apenas um rascunho; não recruta, fixa preços nem publica automaticamente.'
+    questionnaireIntro: 'Defina o público-alvo e o âmbito da investigação antes de editar as perguntas. Isto cria apenas um rascunho; não recruta, fixa preços nem publica automaticamente.',
+    addFunds: 'Carregar saldo',
+    balanceAria: 'Saldo {amount}. Carregar saldo.',
+    balanceLabel: 'Saldo',
+    customAmount: 'Outro montante',
+    customAmountPlaceholder: 'Introduza um montante'
   },
   'ru': {
     displayNameFallback: 'коллега',
@@ -1869,7 +1934,12 @@ export const workspaceUiTranslations = {
     questionStats: 'Вопросов: {q} · Ответов: {r}',
     welcomeHeading: 'Здравствуйте, {name}!',
     questionnaireEyebrow: 'Опросы и подбор аудитории',
-    questionnaireIntro: 'Определите целевую аудиторию и объём исследования, прежде чем редактировать вопросы. Создаётся только черновик: набор участников, расчёт цены и публикация не выполняются автоматически.'
+    questionnaireIntro: 'Определите целевую аудиторию и объём исследования, прежде чем редактировать вопросы. Создаётся только черновик: набор участников, расчёт цены и публикация не выполняются автоматически.',
+    addFunds: 'Пополнить баланс',
+    balanceAria: 'Баланс {amount}. Пополнить баланс.',
+    balanceLabel: 'Баланс',
+    customAmount: 'Другая сумма',
+    customAmountPlaceholder: 'Введите сумму'
   },
   'sv': {
     displayNameFallback: 'där',
@@ -1900,7 +1970,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} frågor · {r} svar',
     welcomeHeading: 'Välkommen, {name}.',
     questionnaireEyebrow: 'Enkätforskning och målgruppsrekrytering',
-    questionnaireIntro: 'Definiera målgruppen och forskningens omfattning innan du redigerar frågor. Detta skapar endast ett utkast; det rekryterar, prissätter eller publicerar inte automatiskt.'
+    questionnaireIntro: 'Definiera målgruppen och forskningens omfattning innan du redigerar frågor. Detta skapar endast ett utkast; det rekryterar, prissätter eller publicerar inte automatiskt.',
+    addFunds: 'Fyll på saldo',
+    balanceAria: 'Saldo {amount}. Fyll på saldo.',
+    balanceLabel: 'Saldo',
+    customAmount: 'Annat belopp',
+    customAmountPlaceholder: 'Ange ett belopp'
   },
   'tr': {
     displayNameFallback: 'misafir',
@@ -1931,7 +2006,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} soru · {r} yanıt',
     welcomeHeading: 'Hoş geldiniz, {name}.',
     questionnaireEyebrow: 'Anket araştırması ve hedef kitle temini',
-    questionnaireIntro: 'Soruları düzenlemeden önce hedef kitleyi ve araştırma kapsamını tanımlayın. Bu yalnızca bir taslak oluşturur; otomatik olarak katılımcı bulmaz, fiyatlandırmaz veya yayımlamaz.'
+    questionnaireIntro: 'Soruları düzenlemeden önce hedef kitleyi ve araştırma kapsamını tanımlayın. Bu yalnızca bir taslak oluşturur; otomatik olarak katılımcı bulmaz, fiyatlandırmaz veya yayımlamaz.',
+    addFunds: 'Bakiye yükle',
+    balanceAria: 'Bakiye {amount}. Bakiye yükle.',
+    balanceLabel: 'Bakiye',
+    customAmount: 'Diğer tutar',
+    customAmountPlaceholder: 'Tutar girin'
   },
   'zh-CN': {
     displayNameFallback: '朋友',
@@ -1962,7 +2042,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} 道题 · {r} 份答卷',
     welcomeHeading: '欢迎，{name}。',
     questionnaireEyebrow: '问卷研究与受众招募',
-    questionnaireIntro: '先定义目标受众与研究范围，再编辑问卷题目。系统只创建草稿；不会自动招募、报价或发布。'
+    questionnaireIntro: '先定义目标受众与研究范围，再编辑问卷题目。系统只创建草稿；不会自动招募、报价或发布。',
+    addFunds: '充值',
+    balanceAria: '余额 {amount}。充值。',
+    balanceLabel: '余额',
+    customAmount: '自定义',
+    customAmountPlaceholder: '输入金额'
   },
   'zh-Hant': {
     displayNameFallback: '訪客',
@@ -1993,7 +2078,12 @@ export const workspaceUiTranslations = {
     questionStats: '{q} 個問題 · {r} 份回覆',
     welcomeHeading: '歡迎，{name}。',
     questionnaireEyebrow: '問卷研究與對象招募',
-    questionnaireIntro: '編輯問題前，請先定義目標對象與研究範圍。這只會建立草稿，不會自動招募、定價或發佈。'
+    questionnaireIntro: '編輯問題前，請先定義目標對象與研究範圍。這只會建立草稿，不會自動招募、定價或發佈。',
+    addFunds: '儲值',
+    balanceAria: '餘額 {amount}。儲值。',
+    balanceLabel: '餘額',
+    customAmount: '自訂',
+    customAmountPlaceholder: '輸入金額'
   },
 };
 

@@ -1047,3 +1047,490 @@
     grid-template-columns: 64px minmax(0, 1fr);
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Balance chip — sits immediately left of the notification bell in the research
+   top bar (workspace) and in the AI brief tools row. Two lines on the left
+   (label + amount) and the top-up action on the right; the whole chip links to
+   the payment page at /pay/.
+
+   The chip and the bell travel together at the right end of the bar, so the
+   auto margin belongs to the LEFT-most of the pair (the chip), not the bell.
+
+   Selectors are scoped to those two containers on purpose: every page's CSS is
+   bundled and injected app-wide, so a bare class here would leak into the public
+   site (see §5.11 in the handoff doc).
+   --------------------------------------------------------------------------- */
+.business-workspace-topbar > .business-workspace-balance {
+  margin-left: auto;
+}
+
+.business-workspace-topbar > .business-workspace-notification {
+  margin-left: 0;
+}
+
+.business-workspace-topbar > .business-workspace-balance,
+.business-ai-brief-page .business-ai-brief-tools .business-workspace-balance {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  height: 44px;
+  padding: 0 7px 0 14px;
+  border: 1px solid var(--ap-line);
+  border-radius: 10px;
+  background: var(--ap-card);
+  color: var(--business-forest);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.business-workspace-topbar > .business-workspace-balance:hover,
+.business-ai-brief-page .business-ai-brief-tools .business-workspace-balance:hover {
+  border-color: var(--ap-line-2);
+  background: #fafbf9;
+}
+
+.business-workspace-topbar > .business-workspace-balance:focus-visible,
+.business-ai-brief-page .business-ai-brief-tools .business-workspace-balance:focus-visible {
+  outline: 2px solid var(--business-forest);
+  outline-offset: 2px;
+}
+
+.business-workspace-balance-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.1;
+}
+
+/* Sentence case on purpose — the wider uppercase + letter-spacing treatment is
+   the one the rail group titles used to have and it reads as filler. */
+.business-workspace-balance-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #5f6862;
+}
+
+.business-workspace-balance-amount {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+}
+
+.business-workspace-balance-currency {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #5f6862;
+}
+
+.business-workspace-balance-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: var(--business-forest);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 500;
+  transition: background .15s ease;
+}
+
+.business-workspace-balance:hover .business-workspace-balance-add {
+  background: #2a352e;
+}
+
+/* Narrow screens: the top bar already carries the search field, so the chip
+   keeps the amount and drops the words. */
+@media (max-width: 800px) {
+  .business-workspace-topbar > .business-workspace-balance,
+  .business-ai-brief-page .business-ai-brief-tools .business-workspace-balance {
+    height: 40px;
+    padding: 0 5px 0 10px;
+    gap: 8px;
+  }
+  .business-workspace-balance-label,
+  .business-workspace-balance-currency,
+  .business-workspace-balance-add-label {
+    display: none;
+  }
+  .business-workspace-balance-add {
+    padding: 0 9px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Add-funds dialog — opened from the balance chip in the top bar. Structure and
+   backdrop follow the existing welcome modal (fixed overlay + centred panel).
+   Scoped under .business-funds-modal so nothing leaks into other pages.
+   --------------------------------------------------------------------------- */
+.business-funds-modal {
+  position: fixed;
+  z-index: 160;
+  inset: 0;
+  display: grid;
+  place-items: start center;
+  /* Sits above centre on purpose — a dialog that starts near the top of the
+     viewport reads as more deliberate than one floating in the middle. */
+  padding: 7vh 24px 24px;
+  overflow: auto;
+}
+
+.business-funds-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(19, 26, 22, .44);
+  cursor: pointer;
+}
+
+.business-funds-panel {
+  position: relative;
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  max-height: calc(100svh - 48px);
+  overflow: auto;
+  padding: 32px 34px 26px;
+  border-radius: 16px;
+  background: var(--ap-card);
+  color: var(--business-forest);
+  box-shadow: 0 1px 2px rgba(20, 26, 23, .05), 0 28px 60px rgba(20, 26, 23, .22);
+}
+
+.business-funds-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #5f6862;
+  cursor: pointer;
+}
+
+.business-funds-close:hover {
+  border-color: var(--ap-line);
+  background: #fafbf9;
+  color: var(--business-forest);
+}
+
+.business-funds-wordmark {
+  justify-self: center;
+  height: 20px;
+  width: auto;
+}
+
+.business-funds-head {
+  text-align: center;
+}
+
+.business-funds-head h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.business-funds-head p {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #5f6862;
+}
+
+/* --- amount ------------------------------------------------------------- */
+.business-funds-amount > label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.business-funds-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--ap-line-2);
+  border-radius: 11px;
+  background: var(--ap-card);
+}
+
+.business-funds-input:focus-within {
+  border-color: var(--business-forest);
+}
+
+.business-funds-input.is-invalid {
+  border-color: #c0655a;
+}
+
+.business-funds-input > span {
+  font-size: 19px;
+  color: #5f6862;
+}
+
+.business-funds-input > input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 19px;
+  font-weight: 500;
+  color: inherit;
+}
+
+.business-funds-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.business-funds-quick > button {
+  height: 38px;
+  padding: 0 15px;
+  border: 1px solid var(--ap-line-2);
+  border-radius: 9px;
+  background: var(--ap-card);
+  color: inherit;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.business-funds-quick > button:hover {
+  border-color: var(--business-forest);
+}
+
+.business-funds-quick > button.is-active {
+  border-color: var(--business-forest);
+  background: var(--business-forest);
+  color: #fff;
+}
+
+.business-funds-min {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #5f6862;
+}
+
+/* --- routes ------------------------------------------------------------- */
+.business-funds-routes {
+  display: grid;
+  gap: 7px;
+  padding-top: 4px;
+  border-top: 1px solid var(--ap-line);
+}
+
+.business-funds-routes > h3 {
+  margin: 0 0 4px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #5f6862;
+}
+
+.business-funds-routes > a {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 13px;
+  border: 1px solid var(--ap-line);
+  border-radius: 11px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.business-funds-routes > a:hover {
+  border-color: var(--ap-line-2);
+  background: #fafbf9;
+}
+
+.business-funds-route-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 9px;
+  background: #f1f3f0;
+  color: var(--business-forest);
+}
+
+.business-funds-route-mark.is-paypal {
+  background: #fff;
+  border: 1px solid var(--ap-line);
+}
+
+/* The monogram is a portrait symbol (0.83:1), so it is sized by height. */
+.business-funds-route-mark.is-paypal > img {
+  max-width: 18px;
+  max-height: 21px;
+  width: auto;
+  height: auto;
+}
+
+.business-funds-route-mark.is-coins {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f3f0;
+}
+
+.business-funds-route-mark.is-coins i {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.business-funds-route-mark.is-coins .is-btc { background: #f7931a; }
+.business-funds-route-mark.is-coins .is-usdt { background: #26a17b; margin-left: -7px; border: 2px solid #f1f3f0; }
+
+/* Alipay+ is a 4.13:1 wordmark, so this one mark is wider than the square
+   icons above it. */
+.business-funds-route-mark.is-alipay {
+  width: auto;
+  min-width: 34px;
+  padding: 0 7px;
+  background: #fff;
+  border: 1px solid var(--ap-line);
+}
+
+.business-funds-route-mark.is-alipay > img {
+  max-width: 44px;
+  max-height: 13px;
+  width: auto;
+  height: auto;
+}
+
+.business-funds-route-copy {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.business-funds-route-copy strong {
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -.005em;
+}
+
+.business-funds-route-copy small {
+  font-size: 12.5px;
+  color: #5f6862;
+}
+
+.business-funds-route-go {
+  flex: 0 0 auto;
+  color: #5f6862;
+  font-size: 19px;
+  line-height: 1;
+}
+
+/* --- security note ------------------------------------------------------ */
+.business-funds-secure {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 11px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ap-line);
+  color: #5f6862;
+}
+
+.business-funds-secure > svg { flex: 0 0 auto; }
+
+.business-funds-secure-copy {
+  display: grid;
+  gap: 1px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.business-funds-secure-copy strong {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--business-forest);
+}
+
+.business-funds-secure-copy small {
+  font-size: 12px;
+}
+
+.business-funds-cards {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  grid-column: 2;
+}
+
+/* Equal boxes so the row stays even across very different logo ratios. */
+.business-funds-cardbox {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 26px;
+  border: 1px solid var(--ap-line);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.business-funds-cardbox > img {
+  max-width: 28px;
+  max-height: 15px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Cryptomus ships its mark as black/white (see their brand guideline), so the
+   cube follows the app ink rather than the site's green accent. */
+.business-funds-cardbox.is-cryptomus {
+  color: var(--business-forest);
+}
+
+.business-funds-route-mark.is-cryptomus {
+  background: #f1f3f0;
+  color: var(--business-forest);
+}
+
+@media (max-width: 560px) {
+  .business-funds-modal { padding: 12px; }
+  .business-funds-panel { padding: 26px 20px 22px; gap: 18px; border-radius: 14px; }
+  .business-funds-quick > button { flex: 1 1 auto; padding: 0 10px; }
+  .business-funds-cards { display: none; }
+}

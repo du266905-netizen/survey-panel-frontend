@@ -41,6 +41,14 @@
       "destination": "/email/welcome-research-feedback.jpg"
     },
     {
+      "source": "/pay",
+      "destination": "/pay/index.html"
+    },
+    {
+      "source": "/pay/",
+      "destination": "/pay/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
