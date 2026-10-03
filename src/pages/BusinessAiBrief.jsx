@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Check, ChevronDown, LoaderCircle, Send, Sparkles
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
+import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
 import '../components/BusinessRail.css';
@@ -45,6 +46,11 @@ const copy = {
     placeholders: { goal: 'For example: understand how Chinese consumers view AI assistants in everyday life', audience: 'For example: adults in China who have used an AI assistant', market: 'For example: China, Shanghai, or Greater China', sample: 'For example: 300 completed responses, or “not sure”', timeline: 'For example: within two weeks', done: 'Add an optional note' },
     progress: 'Private draft', history: 'Project history', captured: (number) => `${number} of ${steps.length - 1} details captured`, details: 'View draft details', fields: { goal: 'Research question', route: 'Service route', audience: 'People to hear from', market: 'Market or community', sample: 'Completed responses', timeline: 'Timing' },
     note: 'Draft only — no participant contact, pricing, recruitment, publication, or research findings.', dataNotice: 'AI assistance uses only the text you choose to send. Do not include personal contact details, confidential information, or files.', guideUnavailable: 'AI guidance is unavailable right now. You can keep going with the local guide.', manualGuide: 'Local guide', suggestedFocus: 'A possible focus', methodNote: 'Planning note', save: 'Continue', saving: 'Preparing draft…', saveError: 'We could not save this draft. Please try again.', back: 'Back to projects', services: 'Workspace', questionnaires: 'Questionnaire editor', results: 'Results', account: 'Account', signOut: 'Sign out', routeTitle: 'Select one of the following', routeContinue: 'Continue',
+    routes: [
+      { value: 'QUESTIONNAIRE_SERVICE', label: 'Custom questionnaire service', note: 'Turn a decision into a reviewable questionnaire brief.' },
+      { value: 'AUDIENCE_RECRUITMENT', label: 'Questionnaire research & audience recruitment', note: 'Define a real, verifiable target audience before editing questions.' },
+      { value: 'CUSTOM_RESEARCH', label: 'Custom research support', note: 'For online qualitative interviews, usability work, or team-led research.' },
+    ],
   },
   zh: {
     projects: '项目', newBrief: '新研究简报', opening: () => '你想研究什么', questionMark: '？', exampleLabel: '例如',
@@ -52,6 +58,11 @@ const copy = {
     placeholders: { goal: '例如：了解中国消费者如何看待日常生活中的 AI 助手', audience: '例如：使用过 AI 助手的中国成年人', market: '例如：中国、上海或大中华区', sample: '例如：300 份有效回复，或“暂不确定”', timeline: '例如：两周内', done: '补充一条可选说明' },
     progress: '私有草稿', history: '项目历史', captured: (number) => `已记录 ${number}/${steps.length - 1} 项`, details: '查看草稿详情', fields: { goal: '研究问题', route: '服务路径', audience: '希望听到谁的看法', market: '市场或社群', sample: '有效回复数量', timeline: '时间要求' },
     note: '这只是草稿，不会联系参与者、确定价格或生成研究结论。', dataNotice: 'AI 协助只会处理你主动发送的文字。请勿输入个人联系方式、保密信息或文件内容。', guideUnavailable: 'AI 引导暂时不可用。你仍可继续使用本地引导。', manualGuide: '本地引导', suggestedFocus: '可考虑的研究重点', methodNote: '规划提示', save: '进入问卷编辑器', saving: '正在打开编辑器…', saveError: '暂时无法保存这份草稿，请重试。', back: '返回项目', services: '工作区', questionnaires: '问卷编辑器', results: '结果', account: '账户', signOut: '退出登录', routeTitle: '请选择以下之一', routeContinue: '继续',
+    routes: [
+      { value: 'QUESTIONNAIRE_SERVICE', label: '定制问卷服务', note: '把决策问题整理为可审核的问卷需求。' },
+      { value: 'AUDIENCE_RECRUITMENT', label: '问卷研究与受众招募', note: '先定义真实、可验证的目标受众，再进入题目编辑。' },
+      { value: 'CUSTOM_RESEARCH', label: '定制研究支持', note: '适合定性线上访谈、可用性测试或需要研究团队协作的需求。' },
+    ],
   },
 };
 
@@ -96,16 +107,20 @@ export default function BusinessAiBrief() {
   const examples = starterPrompts[language === 'zh-CN' ? 'zh' : 'en'];
   const example = examples[exampleIndex % examples.length];
 
+  // A conversation follows the language the user actually writes in, which is
+  // not necessarily the UI language: an en-US interface can receive a Chinese
+  // question. The messages already worked this way; the route card and the
+  // prompt after picking a route were still keyed to the UI language, so a
+  // Chinese question got a Chinese answer next to an English option list.
+  const conversationInChinese = containsChinese(brief.goal) || messages.some((message) => containsChinese(message.content));
+  const conversationText = conversationInChinese ? copy.zh : text;
+
   // The three service routes used to be a fixed strip at the bottom of the page.
   // They are now the same card the guide "says" inside the conversation, which
   // is how Apollo presents a choice: a labelled group, a selected state and one
   // confirmation action. The chosen value still goes through selectRoute, so the
   // downstream flow is unchanged.
-  const routeOptions = [
-    { value: 'QUESTIONNAIRE_SERVICE', label: language === 'zh-CN' ? '定制问卷服务' : 'Custom questionnaire service', note: language === 'zh-CN' ? '把决策问题整理为可审核的问卷需求。' : 'Turn a decision into a reviewable questionnaire brief.' },
-    { value: 'AUDIENCE_RECRUITMENT', label: language === 'zh-CN' ? '问卷研究与受众招募' : 'Questionnaire research & audience recruitment', note: language === 'zh-CN' ? '先定义真实、可验证的目标受众，再进入题目编辑。' : 'Define a real, verifiable target audience before editing questions.' },
-    { value: 'CUSTOM_RESEARCH', label: language === 'zh-CN' ? '定制研究支持' : 'Custom research support', note: language === 'zh-CN' ? '适合定性线上访谈、可用性测试或需要研究团队协作的需求。' : 'For online qualitative interviews, usability work, or team-led research.' },
-  ];
+  const routeOptions = conversationText.routes;
   const chosenRoute = routeOptions.find((option) => option.value === routeChoice);
 
   useEffect(() => {
@@ -184,7 +199,7 @@ export default function BusinessAiBrief() {
 
   const selectRoute = (route, label) => {
     if (activeField !== 'route') return;
-    const responseText = language === 'zh-CN' ? copy.zh : copy.en;
+    const responseText = conversationText;
     setBrief((current) => ({ ...current, route }));
     setMessages((current) => [...current, { id: `user-route-${current.length}`, role: 'user', content: label }, { id: `guide-route-next-${current.length}`, role: 'guide', content: responseText.next.audience }]);
     setActiveStep((current) => current + 1);
@@ -209,20 +224,20 @@ export default function BusinessAiBrief() {
       const response = await createBusinessProject({ title, researchGoal: brief.goal, audienceDescription: brief.audience, studyFormat: 'INTERVIEW', countries: brief.market, targetParticipants: Number.isFinite(parsedSample) ? parsedSample : undefined, timeline: brief.timeline, incentiveBudget: 'NEED_GUIDANCE', additionalContext: '', selfServiceQuestionnaire: false });
       clearPendingBrief();
       navigate(withLanguage('/business/workspace?view=projects', language), { state: { message: language === 'zh-CN' ? '研究支持需求已保存为可编辑草稿。' : 'Your research-support request is saved as an editable draft.' } });
-    } catch { setError(text.saveError); } finally { setSaving(false); }
+    } catch { setError(conversationText.saveError); } finally { setSaving(false); }
   };
 
   return <main className="business-ai-brief-page notranslate" translate="no" data-translate="no">
     <div className="business-ai-brief-shell">
       <BusinessRail className="business-ai-brief-rail" activeId="ai" onSelect={handleRailSelect} />
       <section className="business-ai-brief-surface">
-        <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button><details className="business-ai-project-history"><summary>{text.history} <ChevronDown size={14} /></summary><div><p>{text.progress}</p><strong>{title}</strong><span>{text.captured(capturedCount)}</span>{steps.filter((field) => brief[field]).map((field) => <p className="business-ai-history-field" key={field}><Check size={13} /><b>{text.fields[field]}</b><em>{brief[field]}</em></p>)}</div></details></div></header>
+        <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-tools"><div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button><details className="business-ai-project-history"><summary>{text.history} <ChevronDown size={14} /></summary><div><p>{text.progress}</p><strong>{title}</strong><span>{text.captured(capturedCount)}</span>{steps.filter((field) => brief[field]).map((field) => <p className="business-ai-history-field" key={field}><Check size={13} /><b>{text.fields[field]}</b><em>{brief[field]}</em></p>)}</div></details></div><NotificationBell className="business-workspace-notification" /></div></header>
         <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={text.newBrief}>
           <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sparkles size={14} /></span>}{message.opening ? <h1>{message.content}<span className="business-ai-title-question">{text.questionMark}</span></h1> : <p>{message.content}</p>}</article>)}
           {activeField === 'route' && (
-            <section className="business-ai-route-card" aria-label={text.routeTitle}>
-              <p className="business-ai-route-card-title">{text.routeTitle}</p>
-              <div className="business-ai-route-options" role="radiogroup" aria-label={text.routeTitle}>
+            <section className="business-ai-route-card" aria-label={conversationText.routeTitle}>
+              <p className="business-ai-route-card-title">{conversationText.routeTitle}</p>
+              <div className="business-ai-route-options" role="radiogroup" aria-label={conversationText.routeTitle}>
                 {routeOptions.map((option) => (
                   <button key={option.value} type="button" role="radio" aria-checked={routeChoice === option.value} className={routeChoice === option.value ? 'is-selected' : ''} onClick={() => setRouteChoice(option.value)}>
                     <i aria-hidden="true" />
@@ -231,12 +246,12 @@ export default function BusinessAiBrief() {
                 ))}
               </div>
               <div className="business-ai-route-actions">
-                <button className="business-button" type="button" disabled={!routeChoice} onClick={() => selectRoute(routeChoice, chosenRoute ? chosenRoute.label : '')}>{text.routeContinue} <ArrowRight size={16} /></button>
+                <button className="business-button" type="button" disabled={!routeChoice} onClick={() => selectRoute(routeChoice, chosenRoute ? chosenRoute.label : '')}>{conversationText.routeContinue} <ArrowRight size={16} /></button>
               </div>
             </section>
           )}
           {!hasStarted && <p className="business-ai-starter-example"><span>{text.exampleLabel}</span><strong>{typedExample}</strong><i aria-hidden="true" /></p>}<span className="business-ai-conversation-end" ref={conversationEndRef} aria-hidden="true" /></div>
-          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-meta"><p className="business-ai-brief-note">{text.note}</p><p className="business-ai-brief-data-notice">{text.dataNotice}</p></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : text.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? text.placeholders[ready ? 'done' : activeField] : ''} aria-label={text.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
+          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-meta"><p className="business-ai-brief-note">{text.note}</p><p className="business-ai-brief-data-notice">{text.dataNotice}</p></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : ''} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
         </section>
       </section>
     </div>

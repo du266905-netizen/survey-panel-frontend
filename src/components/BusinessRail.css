@@ -103,8 +103,8 @@
 }
 
 .business-workspace-navitem.is-active {
-  border-color: #17362a;
-  background: #17362a;
+  border-color: #141a17;
+  background: #141a17;
   color: #ffffff;
 }
 
@@ -113,7 +113,7 @@
 }
 
 .business-workspace-navitem:focus-visible {
-  outline: 2px solid #17362a;
+  outline: 2px solid #141a17;
   outline-offset: 1px;
 }
 
@@ -128,20 +128,22 @@
   padding-top: 15px;
 }
 
-.business-workspace-rail > .business-workspace-notification {
-  align-self: flex-start;
-  margin-top: 4px;
-}
-
 .business-workspace-rail .business-workspace-account {
   align-self: flex-start;
   margin-top: 0;
 }
 
-/* the rail is wide enough now to open the account menu upwards, inside it */
+/* Open to the right, exactly like the language menu. Both the base sheet and
+   an earlier revision of this file opened it upward from the bottom of the
+   rail, where it covered the globe and the notification bell. */
 .business-workspace-rail .business-workspace-account > div {
-  bottom: calc(100% + 10px);
-  left: 0;
+  top: auto;
+  bottom: 0;
+  left: calc(100% + 12px);
+  border: 1px solid rgba(20, 26, 23, .11);
+  border-radius: 8px;
+  background: #fcfdfb;
+  box-shadow: 0 18px 40px rgba(20, 26, 23, .14);
 }
 
 /* ---- language picker ----
@@ -289,7 +291,6 @@
   }
 
   .business-workspace-rail > .business-language-picker,
-  .business-workspace-rail > .business-workspace-notification,
   .business-workspace-rail .business-workspace-account {
     align-self: center;
   }

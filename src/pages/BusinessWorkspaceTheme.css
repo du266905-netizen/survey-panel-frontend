@@ -120,13 +120,21 @@
   --ap-radius: 12px;
   --ap-shadow: 0 1px 2px rgba(20, 26, 23, .04), 0 8px 22px rgba(20, 26, 23, .05);
   --business-ink: #17251f;
-  --business-forest: #285647;
+  --business-forest: #141a17;
   --business-paper: #f7f7f3;
   --business-muted: #64746b;
 }
 
 .business-workspace {
   background: var(--ap-ground);
+}
+
+/* The neutral accent needs its own hover: the base sheet lightens to a
+   green-black (#17251f), which reads as a different colour next to #141a17. */
+.business-workspace .business-button:hover,
+.business-ai-brief-page .business-button:hover {
+  border-color: #2b332f;
+  background: #2b332f;
 }
 
 /* the greeting sits on the ground; the gradient and its arc are dropped */
@@ -167,14 +175,14 @@
 
 /* the lead entry keeps the brand fill — the one accent, no lime */
 .business-workspace .business-dashboard-actions > button:first-child {
-  border-color: #17362a;
-  background: #17362a;
+  border-color: #141a17;
+  background: #141a17;
   color: rgba(255, 255, 255, .78);
 }
 
 .business-workspace .business-dashboard-actions > button:first-child:hover {
-  border-color: #1d4433;
-  background: #1d4433;
+  border-color: #2b332f;
+  background: #2b332f;
 }
 
 .business-workspace .business-dashboard-actions > button:first-child strong {
@@ -293,8 +301,8 @@
 }
 
 .business-workspace .business-workspace-rail > button.is-active {
-  border-color: #17362a;
-  background: #17362a;
+  border-color: #141a17;
+  background: #141a17;
   color: #ffffff;
 }
 
@@ -339,14 +347,14 @@
   border: 1px solid var(--ap-line-2);
   border-radius: 8px;
   background: #ffffff;
-  color: #17362a;
+  color: #141a17;
   font-weight: 650;
   padding: 7px 13px;
   transition: border-color .18s ease, background .18s ease;
 }
 
 .business-workspace .business-dashboard-grid header > button:hover {
-  border-color: #17362a;
+  border-color: #141a17;
   background: #f4f6f3;
 }
 
@@ -408,7 +416,7 @@
 }
 
 .business-ai-brief-page .business-ai-composer:focus-within {
-  border-color: #17362a;
+  border-color: #141a17;
   box-shadow: 0 0 0 3px rgba(23, 54, 42, .08);
 }
 
@@ -426,9 +434,9 @@
 }
 
 .business-ai-brief-page .business-ai-composer > button {
-  border: 1px solid #17362a;
+  border: 1px solid #141a17;
   border-radius: 10px;
-  background: #17362a;
+  background: #141a17;
   color: #ffffff;
   box-shadow: none;
 }
@@ -486,8 +494,8 @@
 }
 
 .business-ai-brief-page .business-ai-guide-mark {
-  border: 1px solid #17362a;
-  background: #17362a;
+  border: 1px solid #141a17;
+  background: #141a17;
   color: #ffffff;
 }
 
@@ -539,7 +547,7 @@
 }
 
 .business-ai-brief-page .business-ai-route-options > button.is-selected {
-  border-color: #17362a;
+  border-color: #141a17;
   background: #f4f6f3;
 }
 
@@ -555,8 +563,8 @@
 }
 
 .business-ai-brief-page .business-ai-route-options > button.is-selected > i {
-  border-color: #17362a;
-  box-shadow: inset 0 0 0 4px #17362a;
+  border-color: #141a17;
+  box-shadow: inset 0 0 0 4px #141a17;
 }
 
 .business-ai-brief-page .business-ai-route-options > button > span {
@@ -702,7 +710,7 @@
 }
 
 .business-workspace-searchbar:focus-within {
-  border-color: #17362a;
+  border-color: #141a17;
   box-shadow: 0 0 0 3px rgba(23, 54, 42, .08);
 }
 
@@ -728,6 +736,50 @@
   color: #5f6862;
   font: 650 10px var(--font-sans);
   padding: 3px 6px;
+}
+
+/* ---- notification bell, now in the top-right ----
+   It used to sit in the rail footer as a bordered circle, which is why its
+   popover had to open upward and collided with the language globe. In the top
+   bar it follows the app's ghost icon treatment and its popover opens below
+   the button, where there is room. */
+.business-workspace-topbar {
+  gap: 12px;
+}
+
+.business-workspace-topbar > .business-workspace-notification {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.business-ai-brief-page .business-ai-brief-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.business-workspace-topbar .business-workspace-notification > button,
+.business-ai-brief-page .business-ai-brief-tools .business-workspace-notification > button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #5f6862;
+}
+
+.business-workspace-topbar .business-workspace-notification > button:hover,
+.business-workspace-topbar .business-workspace-notification > button.is-open,
+.business-ai-brief-page .business-ai-brief-tools .business-workspace-notification > button:hover,
+.business-ai-brief-page .business-ai-brief-tools .business-workspace-notification > button.is-open {
+  border-color: var(--ap-line);
+  background: #fafbf9;
+  color: #141a17;
+}
+
+.business-workspace-topbar .business-workspace-notification > button > span,
+.business-ai-brief-page .business-ai-brief-tools .business-workspace-notification > button > span {
+  border-color: #fcfdfb;
 }
 
 @media (max-width: 1080px) {

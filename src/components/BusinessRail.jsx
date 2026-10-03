@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import NotificationBell from './NotificationBell';
 import BusinessLanguagePicker from './BusinessLanguagePicker';
 import { useLanguage, withLanguage } from './LanguageContext';
 import './BusinessRail.css';
@@ -101,7 +100,6 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
       </nav>
 
       <BusinessLanguagePicker />
-      <NotificationBell className="business-workspace-notification" />
 
       <div className="business-workspace-account">
         <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={rail.accountMenu || 'Account menu'} aria-expanded={accountMenuOpen}>

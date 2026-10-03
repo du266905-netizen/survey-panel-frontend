@@ -22,6 +22,7 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
+import NotificationBell from '../components/NotificationBell';
 import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import welcomeMarketImage from '../assets/business/welcome-market-exploration.jpg';
@@ -485,6 +486,7 @@ export default function BusinessWorkspace() {
             <input ref={workspaceSearchRef} type="search" value={workspaceQuery} onChange={(event) => setWorkspaceQuery(event.target.value)} placeholder="ask a question in guanyisearch" aria-label="ask a question in guanyisearch" />
             <kbd aria-hidden="true">⌘K</kbd>
           </form>
+          <NotificationBell className="business-workspace-notification" />
         </header>
 
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
