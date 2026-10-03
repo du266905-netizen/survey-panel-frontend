@@ -15,10 +15,14 @@
   padding: 16px 13px 16px !important;
 }
 
-/* The logo keeps its artwork and size on both pages; only its alignment
-   follows the wider rail so it stays flush with the entries below it. */
+/* The logo keeps its artwork on both pages; only its alignment follows the
+   wider rail so it stays flush with the entries below it, and it is a little
+   larger than the 42x32 the base sheet sets — the artwork has transparent
+   margin of its own, so it read as undersized inside the rail. */
 .business-workspace-rail-mark {
   align-self: flex-start;
+  width: 50px;
+  height: 38px;
   margin: 4px 0 16px 6px;
 }
 
@@ -46,10 +50,12 @@
   background: transparent;
   color: #8d948d;
   cursor: pointer;
-  font: 700 10px var(--font-sans);
-  letter-spacing: .13em;
+  /* Apollo's group headings are sentence case at reading size, not 10px
+     uppercase with wide tracking — that treatment read as decoration. */
+  font: 500 12.5px var(--font-sans);
+  letter-spacing: 0;
   padding: 5px 9px;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .business-workspace-navgroup-title:hover {
@@ -73,9 +79,9 @@
   border: 1px solid transparent;
   border-radius: 9px;
   background: transparent;
-  color: #5f6862;
+  color: #4a544d;
   cursor: pointer;
-  font: 600 13px var(--font-sans);
+  font: 450 13.5px var(--font-sans);
   padding: 0 10px;
   text-align: left;
   transition: border-color .16s ease, background .16s ease, color .16s ease;
@@ -106,6 +112,7 @@
   border-color: #141a17;
   background: #141a17;
   color: #ffffff;
+  font-weight: 500;
 }
 
 .business-workspace-navitem.is-active > svg {
@@ -217,10 +224,11 @@
 .business-workspace-rail .business-language-picker-menu > p {
   border-bottom: 1px solid rgba(20, 26, 23, .11);
   color: #5f6862;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .18em;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
   padding: 2px 4px 9px;
+  text-transform: none;
 }
 
 .business-workspace-rail .business-language-picker-menu > div {
@@ -263,6 +271,8 @@
 
   .business-workspace-rail-mark {
     align-self: center;
+    width: 36px;
+    height: 27px;
     margin: 2px 0 12px;
   }
 

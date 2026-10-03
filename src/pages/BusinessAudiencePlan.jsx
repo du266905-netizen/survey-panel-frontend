@@ -8,13 +8,15 @@ import './Business.css';
 const emptyPlan = { title: '', researchGoal: '', audienceDescription: '', countries: '', languages: '', targetParticipants: '', timeline: '', additionalContext: '' };
 
 export default function BusinessAudiencePlan() {
-  const { language } = useLanguage();
+  const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
-  const zh = language === 'zh-CN';
   const [plan, setPlan] = useState(() => ({ ...emptyPlan, ...(location.state?.preparedPlan || {}) }));
   const [step, setStep] = useState(1); const [saving, setSaving] = useState(false); const [error, setError] = useState('');
-  const c = zh ? { back: '返回工作区', rail: '问卷研究与受众招募', step: ['01 · 研究问题与目标受众', '02 · 招募范围与本地化'], title: ['先定义要听谁的声音。', '补充招募与本地化范围。'], intro: ['目标受众是研究条件，不是联系人名单。这里会准备一份可编辑的问卷项目草稿。', '这些信息只用于评估可行性；不会自动联系任何人、报价、招募或发布问卷。'], fields: ['研究名称', '这项研究要支持什么决策？', '你希望听到哪些人的看法？', '市场或地区', '问卷语言或本地表达需求', '计划的有效样本数', '希望的完成时间', '需要纳入的筛选条件、行业或背景'], hints: ['例如：新产品概念测试', '例如：判断目标用户是否理解产品价值，并找出优先优化的卖点。', '例如：过去三个月购买过同类产品、居住在一线和新一线城市的成年人。', '例如：中国大陆', '例如：简体中文；需要本地化表述', '例如：300，或暂不确定', '例如：两周内', '例如：金融、零售或医疗行业从业者；没有可留空。'], next: '继续：招募范围', previous: '返回', create: '创建草稿并进入编辑器', creating: '正在创建草稿…', invalid: '请先填写研究名称、决策问题和目标受众。', failed: '暂时无法创建这份草稿，请重试。', note: '草稿仅用于规划；真实受访者的本地验证、可行性和交付范围将在人工确认后进行。' } : { back: 'Back to workspace', rail: 'Questionnaire research & audience recruitment', step: ['01 · RESEARCH & AUDIENCE', '02 · RECRUITMENT SCOPE'], title: ['Define whose voice matters first.', 'Add recruitment and local context.'], intro: ['A target audience is a research condition, not a contact list. This prepares an editable questionnaire-project draft.', 'This is only for feasibility planning. It does not contact people, set a price, recruit, or publish a questionnaire.'], fields: ['Research name', 'What decision should this research support?', 'Whose perspective do you need?', 'Market or region', 'Questionnaire language or local-expression needs', 'Planned completed responses', 'Preferred timing', 'Screening conditions, industry, or context to include'], hints: ['For example: New concept test', 'For example: learn whether target customers understand the value proposition.', 'For example: adults who bought a similar product in the last three months.', 'For example: Mainland China', 'For example: Simplified Chinese with local wording', 'For example: 300, or not sure', 'For example: within two weeks', 'For example: retail, finance, or healthcare professionals only. Optional.'], next: 'Continue: recruitment scope', previous: 'Back', create: 'Create draft and open editor', creating: 'Creating draft…', invalid: 'Add a research name, decision, and target audience before continuing.', failed: 'We could not create this draft. Please try again.', note: 'This is a planning draft. Local verification, feasibility and delivery scope are confirmed by people before work begins.' };
+  // Copy comes from the language library; this page used to keep its own
+  // zh/en wording inline, so the other 16 languages fell back to English.
+  const plans = publicCopy?.workspace?.business?.audiencePlan || {};
+  const c = plans[language] || plans['en-US'] || {};;
   const update = (event) => setPlan((current) => ({ ...current, [event.target.name]: event.target.value }));
   const valid = plan.title.trim().length >= 3 && plan.researchGoal.trim().length >= 20 && plan.audienceDescription.trim().length >= 10;
   const go = (target) => navigate(withLanguage(target, language));

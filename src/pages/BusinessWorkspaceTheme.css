@@ -145,6 +145,14 @@
   padding: 0 0 4px;
 }
 
+/* The kicker above the greeting stays an eyebrow, but stops shouting: 11px at
+   weight 650 with .095em tracking read as decoration next to the display serif. */
+.business-workspace .business-dashboard-hero-line {
+  color: #8d948d !important;
+  font: 500 11.5px/1.3 var(--font-sans) !important;
+  letter-spacing: .04em;
+}
+
 .business-workspace .business-dashboard-header::after {
   content: none;
 }
@@ -447,8 +455,17 @@
   color: #8d948d;
 }
 
+/* The workspace reads as "tinted rail, white content". This page had the same
+   tint on both, so with the assistant panel collapsed the rail had nothing to
+   separate it from the conversation. Matching the workspace relationship fixes
+   that without touching the rail itself. */
 .business-ai-brief-page {
-  background: var(--ap-ground, #f4f6f3);
+  background: #ffffff;
+}
+
+/* the composer is a field, so it keeps a faint fill instead of white-on-white */
+.business-ai-brief-page .business-ai-composer {
+  background: #fafbf9;
 }
 
 /* the AI brief's side summary was a tinted panel; it becomes a card */
@@ -598,6 +615,241 @@
 @media (max-width: 700px) {
   .business-ai-brief-page .business-ai-route-card {
     max-width: none;
+  }
+}
+
+/* ---- AI assistant panel (conversation history) --------------------------
+   Apollo's assistant is a second column between the nav rail and the
+   conversation. The rail here is `position: fixed` and the shell makes room
+   with padding-left, so the panel follows the same pattern and the shell's
+   offset grows by the panel width while it is open.
+
+   The list only ever holds conversations this device actually had — there is
+   no backend for chat history, and research records live in the workspace. */
+
+.business-ai-brief-shell.has-assistant {
+  padding-left: 512px;
+}
+
+.business-ai-brief-assistant {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  left: 248px;
+  display: flex;
+  width: 264px;
+  height: 100svh;
+  box-sizing: border-box;
+  flex-direction: column;
+  border-right: 1px solid var(--ap-line);
+  background: #fafbf9;
+  padding: 16px 13px;
+}
+
+.business-ai-brief-assistant > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px 4px 14px;
+}
+
+.business-ai-brief-assistant > header strong {
+  color: #141a17;
+  font: 550 14px var(--font-sans);
+  letter-spacing: -.01em;
+}
+
+.business-ai-brief-assistant > header button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #5f6862;
+  cursor: pointer;
+}
+
+.business-ai-brief-assistant > header button:hover {
+  border-color: var(--ap-line);
+  background: #ffffff;
+  color: #141a17;
+}
+
+.business-ai-brief-assistant-actions {
+  display: grid;
+  gap: 2px;
+  border-bottom: 1px solid var(--ap-line);
+  padding-bottom: 14px;
+}
+
+.business-ai-brief-assistant-actions > button {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #4a544d;
+  cursor: pointer;
+  font: 450 13.5px var(--font-sans);
+  padding: 0 10px;
+  text-align: left;
+}
+
+.business-ai-brief-assistant-actions > button > svg {
+  flex: 0 0 auto;
+  color: #8d948d;
+}
+
+.business-ai-brief-assistant-actions > button:hover {
+  border-color: var(--ap-line);
+  background: #ffffff;
+  color: #141a17;
+}
+
+.business-ai-brief-assistant-actions > button:hover > svg {
+  color: #141a17;
+}
+
+.business-ai-brief-assistant-section {
+  color: #8d948d;
+  font: 500 12.5px var(--font-sans);
+  letter-spacing: 0;
+  margin: 16px 0 8px;
+  padding: 0 6px;
+  text-transform: none;
+}
+
+.business-ai-brief-assistant-list {
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  align-content: start;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.business-ai-brief-assistant-list > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.business-ai-brief-assistant-list > div:hover {
+  background: #ffffff;
+}
+
+.business-ai-brief-assistant-list > div.is-current {
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px var(--ap-line-2);
+}
+
+.business-ai-brief-assistant-open {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+  border: 0;
+  background: transparent;
+  color: #4a544d;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  padding: 9px 10px;
+  text-align: left;
+}
+
+.business-ai-brief-assistant-list > div.is-current .business-ai-brief-assistant-open {
+  color: #141a17;
+}
+
+.business-ai-brief-assistant-open > strong {
+  overflow: hidden;
+  font: 450 13px/1.35 var(--font-sans);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.business-ai-brief-assistant-open > small {
+  color: #8d948d;
+  font: 450 11.5px var(--font-sans);
+}
+
+.business-ai-brief-assistant-delete {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #8d948d;
+  cursor: pointer;
+  margin-right: 4px;
+  opacity: 0;
+}
+
+.business-ai-brief-assistant-list > div:hover .business-ai-brief-assistant-delete,
+.business-ai-brief-assistant-delete:focus-visible {
+  opacity: 1;
+}
+
+.business-ai-brief-assistant-delete:hover {
+  background: #f1f5ef;
+  color: #944135;
+}
+
+.business-ai-brief-assistant-empty {
+  color: #8d948d;
+  font: 500 12.5px var(--font-sans);
+  margin: 2px 0 0;
+  padding: 0 6px;
+}
+
+/* the header button that brings the panel back once it is hidden */
+.business-ai-brief-page .business-ai-brief-panel-toggle {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #5f6862;
+  cursor: pointer;
+}
+
+.business-ai-brief-page .business-ai-brief-panel-toggle:hover {
+  border-color: var(--ap-line);
+  background: #fafbf9;
+  color: #141a17;
+}
+
+/* The rail (248) plus the panel (264) leaves too little for the conversation
+   below this width, so the panel steps aside. Order matters: the 800px rule
+   has to win over the 1180px one. */
+@media (max-width: 1180px) {
+  .business-ai-brief-shell.has-assistant {
+    padding-left: 248px;
+  }
+
+  .business-ai-brief-assistant {
+    display: none;
+  }
+
+  .business-ai-brief-page .business-ai-brief-panel-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .business-ai-brief-shell.has-assistant {
+    padding-left: 64px;
   }
 }
 

@@ -23,21 +23,10 @@ import './BusinessRail.css';
  * labels, the language picker, the bell and the account menu now live here
  * once. Pages supply only two things: which entry is current, and what
  * clicking an entry should do.
+ *
+ * Every label comes from LanguageContext — this file carries no wording of its
+ * own, so adding a language never means touching the rail.
  */
-
-const railWords = {
-  'zh-CN': { overview: '总览', research: '研究', delivery: '交付', home: '概览', ai: 'AI 研究引导', questionnaires: '问卷编辑器' },
-  'zh-Hant': { overview: '總覽', research: '研究', delivery: '交付', home: '概覽', ai: 'AI 研究引導', questionnaires: '問卷編輯器' },
-};
-
-const railWordsFallback = {
-  overview: 'Overview',
-  research: 'Research',
-  delivery: 'Delivery',
-  home: 'Overview',
-  ai: 'AI research guide',
-  questionnaires: 'Questionnaire editor',
-};
 
 export default function BusinessRail({ activeId, onSelect, className = '' }) {
   const { user, logout } = useAuth();
@@ -50,18 +39,17 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
   // in LanguageContext, so these strings are translated in every locale that
   // ships one and fall back to English otherwise.
   const rail = publicCopy?.workspace?.business?.rail || {};
-  const words = railWords[language] || railWordsFallback;
   const navigationLabel = rail.navigation || 'Workspace navigation';
 
   const groups = [
-    { id: 'overview', label: words.overview, items: [
-      { id: 'home', label: words.home, icon: LayoutDashboard },
+    { id: 'overview', label: rail.overview || 'Overview', items: [
+      { id: 'home', label: rail.home || 'Overview', icon: LayoutDashboard },
     ] },
-    { id: 'research', label: words.research, items: [
-      { id: 'ai', label: words.ai, icon: Sparkles },
-      { id: 'questionnaires', label: words.questionnaires, icon: ClipboardList },
+    { id: 'research', label: rail.research || 'Research', items: [
+      { id: 'ai', label: rail.ai || 'AI research guide', icon: Sparkles },
+      { id: 'questionnaires', label: rail.questionnaires || 'Questionnaire editor', icon: ClipboardList },
     ] },
-    { id: 'delivery', label: words.delivery, items: [
+    { id: 'delivery', label: rail.delivery || 'Delivery', items: [
       { id: 'projects', label: rail.projects || 'Projects', icon: FileText },
       { id: 'results', label: rail.results || 'Questionnaire results', icon: BarChart3 },
     ] },

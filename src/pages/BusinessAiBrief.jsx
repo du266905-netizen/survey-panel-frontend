@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, ChevronDown, LoaderCircle, Send, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, ChevronDown, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Send, Sparkles, Trash2 } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -37,56 +37,72 @@ function clearPendingBrief() {
   try { sessionStorage.removeItem(PENDING_BRIEF_STORAGE_KEY); } catch { /* Restricted browser context. */ }
 }
 
-function containsChinese(value) { return /[\u3400-\u9FFF]/.test(String(value || '')); }
+const BRIEF_HISTORY_STORAGE_KEY = 'guanyisearch.business-ai-brief.history.v1';
+const BRIEF_HISTORY_LIMIT = 30;
 
-const copy = {
-  en: {
-    projects: 'Projects', newBrief: 'New research brief', opening: () => 'What would you like to research', questionMark: '?', exampleLabel: 'For example',
-    next: { route: 'Which route best fits this need? I will prepare an editable draft only.', audience: 'Thanks — who would you like to hear from?', market: 'Which country, market, or community should this focus on?', sample: 'About how many completed responses would you like to plan for? “Not sure” is fine.', timeline: 'When would you like an answer? A date or rough timeframe is enough.', ready: 'That is enough to prepare an editable planning draft. Review the details, then continue when you are ready.' },
-    placeholders: { goal: 'For example: understand how Chinese consumers view AI assistants in everyday life', audience: 'For example: adults in China who have used an AI assistant', market: 'For example: China, Shanghai, or Greater China', sample: 'For example: 300 completed responses, or “not sure”', timeline: 'For example: within two weeks', done: 'Add an optional note' },
-    progress: 'Private draft', history: 'Project history', captured: (number) => `${number} of ${steps.length - 1} details captured`, details: 'View draft details', fields: { goal: 'Research question', route: 'Service route', audience: 'People to hear from', market: 'Market or community', sample: 'Completed responses', timeline: 'Timing' },
-    note: 'Draft only — no participant contact, pricing, recruitment, publication, or research findings.', dataNotice: 'AI assistance uses only the text you choose to send. Do not include personal contact details, confidential information, or files.', guideUnavailable: 'AI guidance is unavailable right now. You can keep going with the local guide.', manualGuide: 'Local guide', suggestedFocus: 'A possible focus', methodNote: 'Planning note', save: 'Continue', saving: 'Preparing draft…', saveError: 'We could not save this draft. Please try again.', back: 'Back to projects', services: 'Workspace', questionnaires: 'Questionnaire editor', results: 'Results', account: 'Account', signOut: 'Sign out', routeTitle: 'Select one of the following', routeContinue: 'Continue',
-    routes: [
-      { value: 'QUESTIONNAIRE_SERVICE', label: 'Custom questionnaire service', note: 'Turn a decision into a reviewable questionnaire brief.' },
-      { value: 'AUDIENCE_RECRUITMENT', label: 'Questionnaire research & audience recruitment', note: 'Define a real, verifiable target audience before editing questions.' },
-      { value: 'CUSTOM_RESEARCH', label: 'Custom research support', note: 'For online qualitative interviews, usability work, or team-led research.' },
-    ],
-  },
-  zh: {
-    projects: '项目', newBrief: '新研究简报', opening: () => '你想研究什么', questionMark: '？', exampleLabel: '例如',
-    next: { route: '这项需求最适合哪条路径？我只会准备一份可编辑草稿。', audience: '好的。你希望听到哪些人的看法？', market: '你希望聚焦哪个国家、市场或社群？', sample: '你希望计划收集多少份有效回复？暂时不确定也可以。', timeline: '你希望何时拿到答案？写日期或大致时间范围都可以。', ready: '这些信息已足够准备一份可编辑的规划草稿。你可以查看详情，并在准备好后继续。' },
-    placeholders: { goal: '例如：了解中国消费者如何看待日常生活中的 AI 助手', audience: '例如：使用过 AI 助手的中国成年人', market: '例如：中国、上海或大中华区', sample: '例如：300 份有效回复，或“暂不确定”', timeline: '例如：两周内', done: '补充一条可选说明' },
-    progress: '私有草稿', history: '项目历史', captured: (number) => `已记录 ${number}/${steps.length - 1} 项`, details: '查看草稿详情', fields: { goal: '研究问题', route: '服务路径', audience: '希望听到谁的看法', market: '市场或社群', sample: '有效回复数量', timeline: '时间要求' },
-    note: '这只是草稿，不会联系参与者、确定价格或生成研究结论。', dataNotice: 'AI 协助只会处理你主动发送的文字。请勿输入个人联系方式、保密信息或文件内容。', guideUnavailable: 'AI 引导暂时不可用。你仍可继续使用本地引导。', manualGuide: '本地引导', suggestedFocus: '可考虑的研究重点', methodNote: '规划提示', save: '进入问卷编辑器', saving: '正在打开编辑器…', saveError: '暂时无法保存这份草稿，请重试。', back: '返回项目', services: '工作区', questionnaires: '问卷编辑器', results: '结果', account: '账户', signOut: '退出登录', routeTitle: '请选择以下之一', routeContinue: '继续',
-    routes: [
-      { value: 'QUESTIONNAIRE_SERVICE', label: '定制问卷服务', note: '把决策问题整理为可审核的问卷需求。' },
-      { value: 'AUDIENCE_RECRUITMENT', label: '问卷研究与受众招募', note: '先定义真实、可验证的目标受众，再进入题目编辑。' },
-      { value: 'CUSTOM_RESEARCH', label: '定制研究支持', note: '适合定性线上访谈、可用性测试或需要研究团队协作的需求。' },
-    ],
-  },
-};
+function newConversationId() {
+  return `brief-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+/* The assistant panel lists conversations, and it can only ever list the ones
+   the user actually had. There is no backend for chat history, and the research
+   records themselves live in the workspace, so this is a device-local list —
+   never a stand-in for real project data. */
+function readBriefHistory() {
+  try {
+    const value = JSON.parse(localStorage.getItem(BRIEF_HISTORY_STORAGE_KEY) || '[]');
+    return Array.isArray(value)
+      ? value.filter((item) => item && typeof item === 'object' && typeof item.id === 'string')
+      : [];
+  } catch { return []; }
+}
+
+function writeBriefHistory(items) {
+  try {
+    localStorage.setItem(BRIEF_HISTORY_STORAGE_KEY, JSON.stringify(items.slice(0, BRIEF_HISTORY_LIMIT)));
+  } catch { /* Restricted browser context — the flow still works without history. */ }
+}
+
+function containsChinese(value) { return /[\u3400-\u9FFF]/.test(String(value || '')); }
 
 function projectTitle(value, fallback) {
   const compact = String(value || '').replaceAll(/\s+/g, ' ').trim();
   return !compact ? fallback : (compact.length > 62 ? `${compact.slice(0, 59)}…` : compact);
 }
 
+function conversationWhen(value, language) {
+  const time = Number(value) || 0;
+  if (!time) return '';
+  try {
+    return new Intl.DateTimeFormat(language, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(time));
+  } catch { return ''; }
+}
+
 export default function BusinessAiBrief() {
   const { user } = useAuth();
-  const { language } = useLanguage();
+  const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
-  const text = language === 'zh-CN' ? copy.zh : copy.en;
+  // Copy comes from the language library, not from this file: it used to keep
+  // its own zh/en pair, so the other 16 languages fell back to English here.
+  const aiBrief = publicCopy?.workspace?.business?.aiBrief || {};
+  const text = aiBrief[language] || aiBrief['en-US'] || {};
+  // The guided conversation follows the language the user writes in, which is
+  // not always the interface language — see conversationText below.
+  const zhText = aiBrief['zh-CN'] || text;
+  // Guard the nested maps: a partially regenerated language library must
+  // degrade to blank labels, never white-screen the page.
+  const textFields = (value) => (value && value.fields) || {};
   const [pendingBrief] = useState(() => readPendingBrief());
   const requestedPrompt = String(location.state?.initialPrompt || '').trim();
   const initialPrompt = requestedPrompt || String(pendingBrief?.brief?.goal || '').trim();
-  const displayName = String(user?.displayName || user?.email?.split('@')[0] || (language === 'zh-CN' ? '朋友' : 'there')).trim();
+  const displayName = String(user?.displayName || user?.email?.split('@')[0] || text.displayNameFallback).trim();
   const [brief, setBrief] = useState(() => ({ goal: initialPrompt, route: requestedPrompt ? '' : String(pendingBrief?.brief?.route || ''), audience: requestedPrompt ? '' : String(pendingBrief?.brief?.audience || ''), market: requestedPrompt ? '' : String(pendingBrief?.brief?.market || ''), sample: requestedPrompt ? '' : String(pendingBrief?.brief?.sample || ''), timeline: requestedPrompt ? '' : String(pendingBrief?.brief?.timeline || '') }));
   const [messages, setMessages] = useState(() => {
     if (!requestedPrompt && Array.isArray(pendingBrief?.messages) && pendingBrief.messages.length) return pendingBrief.messages;
-    const opening = { id: 'opening-guide', role: 'guide', opening: true, content: text.opening(displayName) };
+    const opening = { id: 'opening-guide', role: 'guide', opening: true, content: text.opening };
     if (!initialPrompt) return [opening];
-    const responseText = containsChinese(initialPrompt) ? copy.zh : text;
+    const responseText = containsChinese(initialPrompt) ? zhText : text;
     return [opening, { id: 'opening-user', role: 'user', content: initialPrompt }, { id: 'opening-next', role: 'guide', content: responseText.next.route }];
   });
   const [activeStep, setActiveStep] = useState(() => requestedPrompt ? 1 : Math.min(Math.max(Number(pendingBrief?.activeStep) || 0, 0), steps.length));
@@ -98,6 +114,9 @@ export default function BusinessAiBrief() {
   const [guidanceWarning, setGuidanceWarning] = useState('');
   const [exampleIndex, setExampleIndex] = useState(() => Math.floor(Math.random() * starterPrompts[language === 'zh-CN' ? 'zh' : 'en'].length));
   const [typedExample, setTypedExample] = useState('');
+  const [conversationId, setConversationId] = useState(() => newConversationId());
+  const [history, setHistory] = useState(() => readBriefHistory());
+  const [assistantOpen, setAssistantOpen] = useState(true);
   const conversationEndRef = useRef(null);
   const title = useMemo(() => projectTitle(brief.goal, text.newBrief), [brief.goal, text.newBrief]);
   const activeField = steps[activeStep];
@@ -113,19 +132,26 @@ export default function BusinessAiBrief() {
   // prompt after picking a route were still keyed to the UI language, so a
   // Chinese question got a Chinese answer next to an English option list.
   const conversationInChinese = containsChinese(brief.goal) || messages.some((message) => containsChinese(message.content));
-  const conversationText = conversationInChinese ? copy.zh : text;
+  const conversationText = conversationInChinese ? zhText : text;
 
   // The three service routes used to be a fixed strip at the bottom of the page.
   // They are now the same card the guide "says" inside the conversation, which
   // is how Apollo presents a choice: a labelled group, a selected state and one
   // confirmation action. The chosen value still goes through selectRoute, so the
   // downstream flow is unchanged.
-  const routeOptions = conversationText.routes;
+  const routeOptions = conversationText.routes || [];
   const chosenRoute = routeOptions.find((option) => option.value === routeChoice);
 
   useEffect(() => {
     try { sessionStorage.setItem(PENDING_BRIEF_STORAGE_KEY, JSON.stringify({ brief, messages, activeStep })); } catch { /* The flow still works without session storage. */ }
-  }, [activeStep, brief, messages]);
+    // A conversation joins the assistant's list as soon as the user has said
+    // something; an untouched opening screen is not a conversation.
+    if (!messages.some((message) => message.role === 'user')) return;
+    const entry = { id: conversationId, title: projectTitle(brief.goal, text.newBrief), updatedAt: Date.now(), brief, messages, activeStep };
+    const next = [entry, ...readBriefHistory().filter((item) => item.id !== conversationId)].slice(0, BRIEF_HISTORY_LIMIT);
+    writeBriefHistory(next);
+    setHistory(next);
+  }, [activeStep, brief, messages, conversationId, text.newBrief]);
 
   useEffect(() => {
     if (hasStarted) return undefined;
@@ -156,6 +182,41 @@ export default function BusinessAiBrief() {
 
   const leaveBrief = () => { clearPendingBrief(); navigate(withLanguage('/business/workspace', language)); };
 
+  // ---- assistant panel: the conversation list lives on this device only ----
+
+  const openingMessage = () => ({ id: 'opening-guide', role: 'guide', opening: true, content: text.opening });
+
+  const startNewChat = () => {
+    setConversationId(newConversationId());
+    setBrief({ goal: '', route: '', audience: '', market: '', sample: '', timeline: '' });
+    setMessages([openingMessage()]);
+    setActiveStep(0);
+    setRouteChoice(''); setReply(''); setError(''); setGuidanceWarning('');
+    clearPendingBrief();
+  };
+
+  const openConversation = (entry) => {
+    setConversationId(entry.id);
+    setBrief({
+      goal: String(entry.brief?.goal || ''),
+      route: String(entry.brief?.route || ''),
+      audience: String(entry.brief?.audience || ''),
+      market: String(entry.brief?.market || ''),
+      sample: String(entry.brief?.sample || ''),
+      timeline: String(entry.brief?.timeline || ''),
+    });
+    setMessages(Array.isArray(entry.messages) && entry.messages.length ? entry.messages : [openingMessage()]);
+    setActiveStep(Math.min(Math.max(Number(entry.activeStep) || 0, 0), steps.length));
+    setRouteChoice(''); setReply(''); setError(''); setGuidanceWarning('');
+  };
+
+  const removeConversation = (id) => {
+    const next = readBriefHistory().filter((item) => item.id !== id);
+    writeBriefHistory(next);
+    setHistory(next);
+    if (id === conversationId) startNewChat();
+  };
+
   // The shared rail (components/BusinessRail) replaces this page's own icon
   // strip. Every entry keeps the destination it had here: "Overview" still
   // leaves the brief and clears the pending draft, the rest open a workspace
@@ -175,7 +236,7 @@ export default function BusinessAiBrief() {
     const nextField = steps[nextIndex] || null;
     const updatedBrief = { ...brief, [activeField]: value };
     const shouldReplyInChinese = containsChinese(value) || containsChinese(updatedBrief.goal) || messages.some((message) => containsChinese(message.content));
-    const responseText = shouldReplyInChinese ? copy.zh : text;
+    const responseText = shouldReplyInChinese ? zhText : text;
     setBrief(updatedBrief);
     setMessages((current) => [...current, { id: `user-${activeField}-${current.length}`, role: 'user', content: value }]);
     setActiveStep(nextIndex); setReply(''); setGuidanceWarning(''); setGuiding(true);
@@ -223,15 +284,39 @@ export default function BusinessAiBrief() {
       }
       const response = await createBusinessProject({ title, researchGoal: brief.goal, audienceDescription: brief.audience, studyFormat: 'INTERVIEW', countries: brief.market, targetParticipants: Number.isFinite(parsedSample) ? parsedSample : undefined, timeline: brief.timeline, incentiveBudget: 'NEED_GUIDANCE', additionalContext: '', selfServiceQuestionnaire: false });
       clearPendingBrief();
-      navigate(withLanguage('/business/workspace?view=projects', language), { state: { message: language === 'zh-CN' ? '研究支持需求已保存为可编辑草稿。' : 'Your research-support request is saved as an editable draft.' } });
+      navigate(withLanguage('/business/workspace?view=projects', language), { state: { message: text.savedDraftMessage } });
     } catch { setError(conversationText.saveError); } finally { setSaving(false); }
   };
 
   return <main className="business-ai-brief-page notranslate" translate="no" data-translate="no">
-    <div className="business-ai-brief-shell">
+    <div className={`business-ai-brief-shell${assistantOpen ? ' has-assistant' : ''}`}>
       <BusinessRail className="business-ai-brief-rail" activeId="ai" onSelect={handleRailSelect} />
+      {assistantOpen && (
+        <aside className="business-ai-brief-assistant" aria-label={text.assistantTitle}>
+          <header>
+            <strong>{text.assistantTitle}</strong>
+            <button type="button" onClick={() => setAssistantOpen(false)} aria-label={text.collapsePanel}><PanelLeftClose size={17} /></button>
+          </header>
+          <div className="business-ai-brief-assistant-actions">
+            <button type="button" onClick={startNewChat}><Plus size={15} /> {text.startNewChat}</button>
+            <button type="button" onClick={leaveBrief}><ArrowLeft size={15} /> {text.back}</button>
+          </div>
+          <p className="business-ai-brief-assistant-section">{text.chatsLabel}</p>
+          <div className="business-ai-brief-assistant-list">
+            {history.length ? history.map((entry) => (
+              <div key={entry.id} className={entry.id === conversationId ? 'is-current' : ''}>
+                <button type="button" className="business-ai-brief-assistant-open" onClick={() => openConversation(entry)} aria-current={entry.id === conversationId ? 'true' : undefined}>
+                  <strong>{entry.title}</strong>
+                  <small>{conversationWhen(entry.updatedAt, language)}</small>
+                </button>
+                <button type="button" className="business-ai-brief-assistant-delete" onClick={() => removeConversation(entry.id)} aria-label={text.deleteChat}><Trash2 size={14} /></button>
+              </div>
+            )) : <p className="business-ai-brief-assistant-empty">{text.noChats}</p>}
+          </div>
+        </aside>
+      )}
       <section className="business-ai-brief-surface">
-        <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-tools"><div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button><details className="business-ai-project-history"><summary>{text.history} <ChevronDown size={14} /></summary><div><p>{text.progress}</p><strong>{title}</strong><span>{text.captured(capturedCount)}</span>{steps.filter((field) => brief[field]).map((field) => <p className="business-ai-history-field" key={field}><Check size={13} /><b>{text.fields[field]}</b><em>{brief[field]}</em></p>)}</div></details></div><NotificationBell className="business-workspace-notification" /></div></header>
+        <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-tools">{!assistantOpen && <button className="business-ai-brief-panel-toggle" type="button" onClick={() => setAssistantOpen(true)} aria-label={text.showPanel}><PanelLeft size={17} /></button>}<div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button><details className="business-ai-project-history"><summary>{text.history} <ChevronDown size={14} /></summary><div><p>{text.progress}</p><strong>{title}</strong><span>{(typeof text.captured === 'function' ? text.captured(capturedCount, steps.length - 1) : '')}</span>{steps.filter((field) => brief[field]).map((field) => <p className="business-ai-history-field" key={field}><Check size={13} /><b>{textFields(text)[field]}</b><em>{brief[field]}</em></p>)}</div></details></div><NotificationBell className="business-workspace-notification" /></div></header>
         <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={text.newBrief}>
           <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sparkles size={14} /></span>}{message.opening ? <h1>{message.content}<span className="business-ai-title-question">{text.questionMark}</span></h1> : <p>{message.content}</p>}</article>)}
           {activeField === 'route' && (

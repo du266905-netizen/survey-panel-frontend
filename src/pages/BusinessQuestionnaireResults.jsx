@@ -23,6 +23,10 @@ function choiceSummary(question, responses) {
 export default function BusinessQuestionnaireResults() {
   const { projectId } = useParams();
   const { language, publicCopy } = useLanguage();
+  // Copy comes from the language library; these two strings used to be
+  // inline zh-CN ternaries, so 16 languages showed English here.
+  const resultCopy = publicCopy?.workspace?.business?.questionnaireResults || {};
+  const results = resultCopy[language] || resultCopy['en-US'] || {};
   const copy = publicCopy.workspace.business.results.detail;
   const [project, setProject] = useState(null);
   const [data, setData] = useState({ questions: [], responses: [] });
@@ -55,7 +59,7 @@ export default function BusinessQuestionnaireResults() {
   if (loading) return <main className="business-builder-loading"><LoaderCircle className="animate-spin" /> {copy.loading}</main>;
   if (error) return <main className="business-builder-loading"><strong>{error}</strong><Link to={withLanguage('/business/workspace', language)}>{copy.backToProjects}</Link></main>;
 
-  if (resultsLocked) return <main className="business-results-page business-results-page--locked"><header className="business-results-header"><Link to={withLanguage('/business/workspace?view=results', language)}><ArrowLeft size={17} /> {copy.projects}</Link></header><section className="business-results-locked"><span><LockKeyhole size={24} /></span><h1>{language === 'zh-CN' ? '暂无可查看的研究结果' : 'No research results are available yet'}</h1><p>{language === 'zh-CN' ? '结果准备好后将出现在这里。' : 'Results will appear here when they are ready.'}</p></section></main>;
+  if (resultsLocked) return <main className="business-results-page business-results-page--locked"><header className="business-results-header"><Link to={withLanguage('/business/workspace?view=results', language)}><ArrowLeft size={17} /> {copy.projects}</Link></header><section className="business-results-locked"><span><LockKeyhole size={24} /></span><h1>{results.noResultsTitle}</h1><p>{results.noResultsBody}</p></section></main>;
 
   return <main className="business-results-page">
     <header className="business-results-header"><Link to={withLanguage('/business/workspace?view=results', language)}><ArrowLeft size={17} /> {copy.projects}</Link><Link to={withLanguage(`/business/projects/${projectId}`, language)}>{copy.openQuestionnaire}</Link></header>

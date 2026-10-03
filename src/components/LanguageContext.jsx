@@ -1,4 +1,16 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+/* Namespace import on purpose: researchTranslations.js is generated, and a
+   partial regeneration must not be able to break the whole app with a missing
+   named export. Each namespace falls back to an empty map. */
+import * as researchTranslations from '../constants/researchTranslations';
+const aiBriefTranslations = researchTranslations.aiBriefTranslations || {};
+const workspaceUiTranslations = researchTranslations.workspaceUiTranslations || {};
+const customRequestTranslations = researchTranslations.customRequestTranslations || {};
+const audiencePlanTranslations = researchTranslations.audiencePlanTranslations || {};
+const businessLandingTranslations = researchTranslations.businessLandingTranslations || {};
+const questionnaireResultsTranslations = researchTranslations.questionnaireResultsTranslations || {};
+const deliveryTranslations = researchTranslations.deliveryTranslations || {};
+const workspaceHomeTranslations = researchTranslations.workspaceHomeTranslations || {};
 
 const LANGUAGE_STORAGE_KEY = 'guanyisearch-language';
 
@@ -30,7 +42,8 @@ const englishCopy = {
         businessEyebrow: 'BUSINESS WORKSPACE', businessTitle: 'Create your research workspace.', businessIntro: 'Create, share, and manage questionnaires alongside your research projects.',
         contactName: 'Contact name', contactPlaceholder: 'Your name', emailCode: 'Email code', sendCode: 'Send verification code', sendingCode: 'Sending…', resendCode: 'Resend in {seconds}s', codePlaceholder: '6-digit code', passwordPlaceholder: 'At least 8 characters', businessTerms: 'Business Researcher Terms', createWorkspace: 'Create a workspace',
       },
-      rail: { services: 'Research services', projects: 'Projects', results: 'Questionnaire results', accountMenu: 'Account menu', account: 'Account', signOut: 'Sign out', clientAccount: 'Client account', navigation: 'Workspace navigation' },
+      rail: { services: 'Research services', projects: 'Projects', results: 'Questionnaire results', accountMenu: 'Account menu', account: 'Account', signOut: 'Sign out', clientAccount: 'Client account', navigation: 'Workspace navigation',
+        overview: 'Overview', research: 'Research', delivery: 'Delivery', home: 'Overview', ai: 'AI research guide', questionnaires: 'Questionnaire editor' },
       services: {
         eyebrow: 'RESEARCH SERVICES', title: 'Research with a clear next step.', intro: 'Start with the decision you need to make in a market. Choose a questionnaire when you need structured answers at scale, or tailored research when the question needs a more considered route.', viewProjects: 'View projects',
         questionnaireEyebrow: 'QUESTIONNAIRE DESIGN', questionnaireTitle: 'Custom questionnaire', questionnaireBody: 'Turn a focused question into a structured questionnaire for a defined audience. Create a private draft, build the questions, and review only real responses in your workspace.', questionnaireAction: 'Start a questionnaire brief',
@@ -332,8 +345,27 @@ Object.entries(participantLanguageSeeds).forEach(([language, values]) => {
 });
 
 const businessWorkspaceCopyByLanguage = {
+  /* Rail wording for the languages that do not have a full research copy set.
+     Entries are additive: useLanguage() deep-merges them over the English base,
+     so a language only has to define the keys it actually translates.
+     These were written by the assistant and have NOT been reviewed by native
+     speakers — ja / ko / ru / tr / fi in particular deserve a check. */
+  de: { rail: { services: 'Forschungsleistungen', projects: 'Projekte', results: 'Umfrageergebnisse', accountMenu: 'Kontomenü', account: 'Konto', signOut: 'Abmelden', clientAccount: 'Kundenkonto', navigation: 'Arbeitsbereich-Navigation', overview: 'Übersicht', research: 'Forschung', delivery: 'Übergabe', home: 'Übersicht', ai: 'KI-Recherche', questionnaires: 'Fragebogen-Editor' } },
+  fr: { rail: { services: 'Services de recherche', projects: 'Projets', results: 'Résultats du questionnaire', accountMenu: 'Menu du compte', account: 'Compte', signOut: 'Se déconnecter', clientAccount: 'Compte client', navigation: 'Navigation de l’espace de travail', overview: 'Aperçu', research: 'Recherche', delivery: 'Livraison', home: 'Aperçu', ai: 'Recherche IA', questionnaires: 'Éditeur de questionnaire' } },
+  nl: { rail: { services: 'Onderzoeksdiensten', projects: 'Projecten', results: 'Vragenlijstresultaten', accountMenu: 'Accountmenu', account: 'Account', signOut: 'Uitloggen', clientAccount: 'Klantaccount', navigation: 'Navigatie werkruimte', overview: 'Overzicht', research: 'Onderzoek', delivery: 'Oplevering', home: 'Overzicht', ai: 'AI-onderzoek', questionnaires: 'Vragenlijsteditor' } },
+  da: { rail: { services: 'Researchydelser', projects: 'Projekter', results: 'Spørgeskemaresultater', accountMenu: 'Kontomenu', account: 'Konto', signOut: 'Log ud', clientAccount: 'Kundekonto', navigation: 'Arbejdsområdenavigation', overview: 'Oversigt', research: 'Forskning', delivery: 'Levering', home: 'Oversigt', ai: 'AI-forskning', questionnaires: 'Spørgeskemaeditor' } },
+  es: { rail: { services: 'Servicios de investigación', projects: 'Proyectos', results: 'Resultados del cuestionario', accountMenu: 'Menú de cuenta', account: 'Cuenta', signOut: 'Cerrar sesión', clientAccount: 'Cuenta de cliente', navigation: 'Navegación del espacio de trabajo', overview: 'Resumen', research: 'Investigación', delivery: 'Entrega', home: 'Resumen', ai: 'Investigación con IA', questionnaires: 'Editor de cuestionarios' } },
+  fi: { rail: { services: 'Tutkimuspalvelut', projects: 'Projektit', results: 'Kyselyn tulokset', accountMenu: 'Tilin valikko', account: 'Tili', signOut: 'Kirjaudu ulos', clientAccount: 'Asiakastili', navigation: 'Työtilan navigointi', overview: 'Yleiskatsaus', research: 'Tutkimus', delivery: 'Toimitus', home: 'Yleiskatsaus', ai: 'Tekoälytutkimus', questionnaires: 'Kyselyeditori' } },
+  it: { rail: { services: 'Servizi di ricerca', projects: 'Progetti', results: 'Risultati del questionario', accountMenu: 'Menu account', account: 'Account', signOut: 'Esci', clientAccount: 'Account cliente', navigation: 'Navigazione area di lavoro', overview: 'Panoramica', research: 'Ricerca', delivery: 'Consegna', home: 'Panoramica', ai: 'Ricerca con IA', questionnaires: 'Editor questionari' } },
+  ja: { rail: { services: 'リサーチサービス', projects: 'プロジェクト', results: 'アンケート結果', accountMenu: 'アカウントメニュー', account: 'アカウント', signOut: 'ログアウト', clientAccount: 'クライアントアカウント', navigation: 'ワークスペースのナビゲーション', overview: '概要', research: 'リサーチ', delivery: '納品', home: '概要', ai: 'AI リサーチガイド', questionnaires: 'アンケート編集' } },
+  ko: { rail: { services: '리서치 서비스', projects: '프로젝트', results: '설문 결과', accountMenu: '계정 메뉴', account: '계정', signOut: '로그아웃', clientAccount: '고객 계정', navigation: '워크스페이스 탐색', overview: '개요', research: '리서치', delivery: '전달', home: '개요', ai: 'AI 리서치 가이드', questionnaires: '설문 편집기' } },
+  no: { rail: { services: 'Forskningstjenester', projects: 'Prosjekter', results: 'Spørreskjemaresultater', accountMenu: 'Kontomeny', account: 'Konto', signOut: 'Logg ut', clientAccount: 'Kundekonto', navigation: 'Navigasjon i arbeidsområdet', overview: 'Oversikt', research: 'Forskning', delivery: 'Levering', home: 'Oversikt', ai: 'AI-forskning', questionnaires: 'Spørreskjemaeditor' } },
+  pt: { rail: { services: 'Serviços de pesquisa', projects: 'Projetos', results: 'Resultados do questionário', accountMenu: 'Menu da conta', account: 'Conta', signOut: 'Sair', clientAccount: 'Conta de cliente', navigation: 'Navegação do espaço de trabalho', overview: 'Visão geral', research: 'Pesquisa', delivery: 'Entrega', home: 'Visão geral', ai: 'Pesquisa com IA', questionnaires: 'Editor de questionários' } },
+  sv: { rail: { services: 'Forskningstjänster', projects: 'Projekt', results: 'Enkätresultat', accountMenu: 'Kontomeny', account: 'Konto', signOut: 'Logga ut', clientAccount: 'Kundkonto', navigation: 'Navigering i arbetsytan', overview: 'Översikt', research: 'Forskning', delivery: 'Leverans', home: 'Översikt', ai: 'AI-forskning', questionnaires: 'Enkätredigerare' } },
+  tr: { rail: { services: 'Araştırma hizmetleri', projects: 'Projeler', results: 'Anket sonuçları', accountMenu: 'Hesap menüsü', account: 'Hesap', signOut: 'Çıkış yap', clientAccount: 'Müşteri hesabı', navigation: 'Çalışma alanı navigasyonu', overview: 'Genel bakış', research: 'Araştırma', delivery: 'Teslim', home: 'Genel bakış', ai: 'Yapay zekâ araştırması', questionnaires: 'Anket düzenleyici' } },
   ru: {
-    rail: { services: 'Исследовательские услуги', projects: 'Проекты', results: 'Результаты анкет', accountMenu: 'Меню аккаунта', account: 'Аккаунт', signOut: 'Выйти', clientAccount: 'Аккаунт клиента', navigation: 'Навигация рабочего пространства' },
+    rail: { services: 'Исследовательские услуги', projects: 'Проекты', results: 'Результаты анкет', accountMenu: 'Меню аккаунта', account: 'Аккаунт', signOut: 'Выйти', clientAccount: 'Аккаунт клиента', navigation: 'Навигация рабочего пространства',
+      overview: 'Обзор', research: 'Исследование', delivery: 'Передача', home: 'Обзор', ai: 'ИИ-исследование', questionnaires: 'Редактор анкет' },
     services: { eyebrow: 'ИССЛЕДОВАТЕЛЬСКИЕ УСЛУГИ', title: 'Исследования с понятным следующим шагом.', intro: 'Начните с решения, которое нужно принять. Выберите анкету для структурированных ответов в масштабе или индивидуальное исследование для более сложного вопроса.', viewProjects: 'Посмотреть проекты', questionnaireEyebrow: 'ДИЗАЙН АНКЕТЫ', questionnaireTitle: 'Индивидуальная анкета', questionnaireBody: 'Превратите сфокусированный вопрос в структурированную анкету для определённой аудитории.', questionnaireAction: 'Начать бриф по анкете', researchEyebrow: 'ИНДИВИДУАЛЬНОЕ ИССЛЕДОВАНИЕ', researchTitle: 'Индивидуальное исследование', researchBody: 'Для решений, которым нужны интервью, тестирование удобства, групповые обсуждения или специальный план рекрутинга.', researchAction: 'Начать исследовательский бриф', processEyebrow: 'КАК ДВИГАЕТСЯ ЗАЯВКА', processSteps: [['Подготовьте бриф', 'Опишите решение, аудиторию, рынок и сроки.'], ['Обсудите объём', 'Мы изучим бриф и уточним необходимые детали.'], ['Рассмотрите предложение', 'Объём работ и стоимость согласуются до начала.']] },
     results: { eyebrow: 'РЕЗУЛЬТАТЫ АНКЕТ', title: 'Посмотрите, что люди действительно сказали.', emptyIntro: 'Результаты появятся здесь после подготовки анкеты и получения ответов.', open: 'Открыть результаты', indexTitle: 'Результаты', indexIntro: 'Сводки по вопросам и отдельные ответы доступны только для анкет из этого рабочего пространства. Демонстрационные данные здесь не используются.', noResultsTitle: 'Результатов анкет пока нет.', noResultsBody: 'Создайте индивидуальную анкету, добавьте вопросы и соберите ответы. После этого здесь появятся сводки и записи ответов.', availableOne: 'проект анкеты доступен для просмотра.', availableMany: 'проектов анкет доступны для просмотра.', responses: 'ответов получено', view: 'Посмотреть результаты' },
     projects: { eyebrow: 'ИССЛЕДОВАТЕЛЬСКОЕ ПРОСТРАНСТВО', title: 'Проекты', intro: 'Храните каждый бриф, предложение и подтверждённый следующий шаг в одном месте.', contactSales: 'Связаться с командой', filters: { ALL: 'Все', DRAFT: 'Черновики', SUBMITTED_FOR_REVIEW: 'На проверке', QUOTE_REQUIRED: 'Ожидает оценки', QUOTE_SENT: 'Предложение готово', CLIENT_ACCEPTED: 'Ожидает оплаты', FUNDED: 'Финансирование подтверждено', RECRUITING: 'Идёт рекрутинг', LIVE: 'В работе', COMPLETED: 'Завершено' }, statuses: { DRAFT: 'Черновик', SUBMITTED_FOR_REVIEW: 'Отправлено на проверку', QUOTE_REQUIRED: 'Ожидает оценки', QUOTE_SENT: 'Предложение готово', CLIENT_ACCEPTED: 'Ожидает оплаты', FUNDED: 'Финансирование подтверждено', RECRUITING: 'Идёт рекрутинг', LIVE: 'В работе', COMPLETED: 'Завершено' }, format: 'Формат', audience: 'Аудитория', updated: 'Обновлено', actions: 'Действия для «{title}»', viewBrief: 'Посмотреть бриф', editBrief: 'Редактировать бриф', deleteDraft: 'Удалить черновик', openDraft: 'Открыть черновик анкеты', viewResults: 'Посмотреть результаты', submit: 'Отправить на проверку', submitting: 'Отправка…', reviewQuote: 'Посмотреть предложение', noProjects: 'В этом представлении нет проектов.', chooseAnother: 'Выберите другой статус или подготовьте новый исследовательский бриф.', prepareBrief: 'Подготовить исследовательский бриф', prepareBriefBody: 'Запросите дизайн анкеты или индивидуальную исследовательскую поддержку.', getStarted: 'Начать', startDecision: 'Начните с решения.', guide: ['Опишите, что нужно узнать', 'Укажите, чьё мнение важно', 'Когда будете готовы, отправьте запрос на оценку'] },
@@ -350,7 +382,8 @@ const businessWorkspaceCopyByLanguage = {
       businessEyebrow: '企业工作区', businessTitle: '创建你的研究工作区。', businessIntro: '在研究项目旁创建、分享和管理问卷。',
       contactName: '联系人姓名', contactPlaceholder: '你的姓名', emailCode: '邮箱验证码', sendCode: '发送验证码', sendingCode: '正在发送…', resendCode: '{seconds} 秒后重发', codePlaceholder: '6 位验证码', passwordPlaceholder: '至少 8 个字符', businessTerms: 'Business 研究者条款', createWorkspace: '创建工作区',
     },
-      rail: { services: '研究服务', projects: '项目', results: '问卷结果', accountMenu: '账户菜单', account: '账户', signOut: '退出登录', clientAccount: '客户账户', navigation: '工作区导航' },
+      rail: { services: '研究服务', projects: '项目', results: '问卷结果', accountMenu: '账户菜单', account: '账户', signOut: '退出登录', clientAccount: '客户账户', navigation: '工作区导航',
+        overview: '总览', research: '研究', delivery: '交付', home: '概览', ai: 'AI 研究引导', questionnaires: '问卷编辑器' },
     services: {
       eyebrow: '研究服务', title: '让研究有明确的下一步。', intro: '从你需要在某个市场作出的决定开始。需要规模化的结构化回答时选择定制问卷；问题需要更审慎的路径时，选择定制研究。', viewProjects: '查看项目',
       questionnaireEyebrow: '问卷设计', questionnaireTitle: '定制问卷', questionnaireBody: '把聚焦的问题转化为面向明确对象的结构化问卷。先建立私有草稿、完善问题，再在工作区查看真实答卷。', questionnaireAction: '开始问卷简报',
@@ -378,7 +411,8 @@ const businessWorkspaceCopyByLanguage = {
       businessEyebrow: '企業工作區', businessTitle: '建立你的研究工作區。', businessIntro: '在研究專案旁建立、分享和管理問卷。',
       contactName: '聯絡人姓名', contactPlaceholder: '你的姓名', emailCode: '電郵驗證碼', sendCode: '發送驗證碼', sendingCode: '正在發送…', resendCode: '{seconds} 秒後重發', codePlaceholder: '6 位驗證碼', passwordPlaceholder: '至少 8 個字元', businessTerms: 'Business 研究者條款', createWorkspace: '建立工作區',
     },
-      rail: { services: '研究服務', projects: '專案', results: '問卷結果', accountMenu: '帳戶選單', account: '帳戶', signOut: '登出', clientAccount: '客戶帳戶', navigation: '工作區導覽' },
+      rail: { services: '研究服務', projects: '專案', results: '問卷結果', accountMenu: '帳戶選單', account: '帳戶', signOut: '登出', clientAccount: '客戶帳戶', navigation: '工作區導覽',
+        overview: '總覽', research: '研究', delivery: '交付', home: '概覽', ai: 'AI 研究引導', questionnaires: '問卷編輯器' },
     services: {
       eyebrow: '研究服務', title: '讓研究有明確的下一步。', intro: '從你需要在某個市場作出的決定開始。需要規模化的結構化回應時選擇客製問卷；問題需要更審慎的路徑時，選擇專屬研究。', viewProjects: '查看專案',
       questionnaireEyebrow: '問卷設計', questionnaireTitle: '客製問卷', questionnaireBody: '把聚焦的問題轉化為面向明確對象的結構化問卷。先建立私有草稿、完善問題，再在工作區查看真實答卷。', questionnaireAction: '開始問卷簡報',
@@ -501,6 +535,18 @@ export function LanguageProvider({ children }) {
             projects: { ...base.projects, ...(localized.projects || {}), filters: { ...base.projects.filters, ...(localized.projects?.filters || {}) }, statuses: { ...base.projects.statuses, ...(localized.projects?.statuses || {}) } },
             feedback: { ...base.feedback, ...(localized.feedback || {}) },
             onboarding: { ...base.onboarding, ...(localized.onboarding || {}) },
+            /* Copy for the research pages that used to keep their own zh/en
+               tables. The WHOLE maps are exposed, keyed by language code: the AI
+               brief page needs both the interface language and zh-CN, because
+               its conversation follows the language the user writes in. */
+            aiBrief: aiBriefTranslations,
+            workspaceUi: workspaceUiTranslations,
+            customRequest: customRequestTranslations,
+            audiencePlan: audiencePlanTranslations,
+            businessLanding: businessLandingTranslations,
+            questionnaireResults: questionnaireResultsTranslations,
+            delivery: deliveryTranslations,
+            workspaceHome: workspaceHomeTranslations,
           };
         })(),
         dashboard: { ...englishCopy.workspace.dashboard, ...(workspaceCopyByLanguage[language]?.dashboard || {}) },
