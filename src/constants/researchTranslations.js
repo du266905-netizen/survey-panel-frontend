@@ -1471,7 +1471,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Saldo {amount}. Sæt penge ind.',
     balanceLabel: 'Saldo',
     customAmount: 'Andet beløb',
-    customAmountPlaceholder: 'Indtast et beløb'
+    customAmountPlaceholder: 'Indtast et beløb',
+    alipayUnavailable: 'Alipay er ikke tilgængelig endnu.',
+    paymentFailed: 'Betalingen kunne ikke startes. Prøv igen.'
   },
   'de': {
     displayNameFallback: 'Gast',
@@ -1507,7 +1509,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Guthaben {amount}. Guthaben aufladen.',
     balanceLabel: 'Guthaben',
     customAmount: 'Eigener Betrag',
-    customAmountPlaceholder: 'Betrag eingeben'
+    customAmountPlaceholder: 'Betrag eingeben',
+    alipayUnavailable: 'Alipay ist noch nicht verfügbar.',
+    paymentFailed: 'Die Zahlung konnte nicht gestartet werden. Bitte erneut versuchen.'
   },
   'en-GB': {
     displayNameFallback: 'there',
@@ -1543,7 +1547,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Balance {amount}. Add funds.',
     balanceLabel: 'Balance',
     customAmount: 'Custom',
-    customAmountPlaceholder: 'Enter an amount'
+    customAmountPlaceholder: 'Enter an amount',
+    alipayUnavailable: 'Alipay is not available yet.',
+    paymentFailed: 'We could not start this payment. Please try again.'
   },
   'en-US': {
     displayNameFallback: 'there',
@@ -1579,7 +1585,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Balance {amount}. Add funds.',
     balanceLabel: 'Balance',
     customAmount: 'Custom',
-    customAmountPlaceholder: 'Enter an amount'
+    customAmountPlaceholder: 'Enter an amount',
+    alipayUnavailable: 'Alipay is not available yet.',
+    paymentFailed: 'We could not start this payment. Please try again.'
   },
   'es': {
     displayNameFallback: 'usuario',
@@ -1615,7 +1623,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Saldo {amount}. Recargar saldo.',
     balanceLabel: 'Saldo',
     customAmount: 'Otro importe',
-    customAmountPlaceholder: 'Introduce un importe'
+    customAmountPlaceholder: 'Introduce un importe',
+    alipayUnavailable: 'Alipay aún no está disponible.',
+    paymentFailed: 'No se pudo iniciar este pago. Inténtalo de nuevo.'
   },
   'fi': {
     displayNameFallback: 'käyttäjä',
@@ -1651,7 +1661,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Saldo {amount}. Lisää saldoa.',
     balanceLabel: 'Saldo',
     customAmount: 'Muu summa',
-    customAmountPlaceholder: 'Syötä summa'
+    customAmountPlaceholder: 'Syötä summa',
+    alipayUnavailable: 'Alipay ei ole vielä käytettävissä.',
+    paymentFailed: 'Maksua ei voitu aloittaa. Yritä uudelleen.'
   },
   'fr': {
     displayNameFallback: 'invité',
@@ -1687,7 +1699,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Solde {amount}. Recharger le compte.',
     balanceLabel: 'Solde',
     customAmount: 'Autre montant',
-    customAmountPlaceholder: 'Saisir un montant'
+    customAmountPlaceholder: 'Saisir un montant',
+    alipayUnavailable: 'Alipay n\'est pas encore disponible.',
+    paymentFailed: 'Impossible de lancer ce paiement. Veuillez réessayer.'
   },
   'it': {
     displayNameFallback: 'utente',
@@ -1723,7 +1737,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Saldo {amount}. Ricarica saldo.',
     balanceLabel: 'Saldo',
     customAmount: 'Altro importo',
-    customAmountPlaceholder: 'Inserisci un importo'
+    customAmountPlaceholder: 'Inserisci un importo',
+    alipayUnavailable: 'Alipay non è ancora disponibile.',
+    paymentFailed: 'Non è stato possibile avviare il pagamento. Riprova.'
   },
   'ja': {
     displayNameFallback: 'ユーザー',
@@ -1759,7 +1775,9 @@ export const workspaceUiTranslations = {
     balanceAria: '残高 {amount}。チャージ。',
     balanceLabel: '残高',
     customAmount: 'その他',
-    customAmountPlaceholder: '金額を入力'
+    customAmountPlaceholder: '金額を入力',
+    alipayUnavailable: 'Alipayはまだご利用いただけません。',
+    paymentFailed: '支払いを開始できませんでした。もう一度お試しください。'
   },
   'ko': {
     displayNameFallback: '고객',
@@ -1795,7 +1813,9 @@ export const workspaceUiTranslations = {
     balanceAria: '잔액 {amount}. 충전.',
     balanceLabel: '잔액',
     customAmount: '직접 입력',
-    customAmountPlaceholder: '금액 입력'
+    customAmountPlaceholder: '금액 입력',
+    alipayUnavailable: 'Alipay를 아직 사용할 수 없습니다.',
+    paymentFailed: '결제를 시작하지 못했습니다. 다시 시도해 주세요.'
   },
   'nl': {
     displayNameFallback: 'gast',
@@ -1831,7 +1851,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Saldo {amount}. Saldo opwaarderen.',
     balanceLabel: 'Saldo',
     customAmount: 'Eigen bedrag',
-    customAmountPlaceholder: 'Bedrag invoeren'
+    customAmountPlaceholder: 'Bedrag invoeren',
+    alipayUnavailable: 'Alipay is nog niet beschikbaar.',
+    paymentFailed: 'Deze betaling kon niet worden gestart. Probeer het opnieuw.'
   },
   'no': {
     displayNameFallback: 'deg',
@@ -1867,7 +1889,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Saldo {amount}. Sett inn penger.',
     balanceLabel: 'Saldo',
     customAmount: 'Annet beløp',
-    customAmountPlaceholder: 'Skriv inn et beløp'
+    customAmountPlaceholder: 'Skriv inn et beløp',
+    alipayUnavailable: 'Alipay er ikke tilgjengelig ennå.',
+    paymentFailed: 'Betalingen kunne ikke startes. Prøv igjen.'
   },
   'pt': {
     displayNameFallback: 'si',
@@ -1903,7 +1927,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Saldo {amount}. Carregar saldo.',
     balanceLabel: 'Saldo',
     customAmount: 'Outro montante',
-    customAmountPlaceholder: 'Introduza um montante'
+    customAmountPlaceholder: 'Introduza um montante',
+    alipayUnavailable: 'O Alipay ainda não está disponível.',
+    paymentFailed: 'Não foi possível iniciar este pagamento. Tente novamente.'
   },
   'ru': {
     displayNameFallback: 'коллега',
@@ -1939,7 +1965,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Баланс {amount}. Пополнить баланс.',
     balanceLabel: 'Баланс',
     customAmount: 'Другая сумма',
-    customAmountPlaceholder: 'Введите сумму'
+    customAmountPlaceholder: 'Введите сумму',
+    alipayUnavailable: 'Alipay пока недоступен.',
+    paymentFailed: 'Не удалось начать платёж. Попробуйте ещё раз.'
   },
   'sv': {
     displayNameFallback: 'där',
@@ -1975,7 +2003,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Saldo {amount}. Fyll på saldo.',
     balanceLabel: 'Saldo',
     customAmount: 'Annat belopp',
-    customAmountPlaceholder: 'Ange ett belopp'
+    customAmountPlaceholder: 'Ange ett belopp',
+    alipayUnavailable: 'Alipay är inte tillgängligt ännu.',
+    paymentFailed: 'Betalningen kunde inte startas. Försök igen.'
   },
   'tr': {
     displayNameFallback: 'misafir',
@@ -2011,7 +2041,9 @@ export const workspaceUiTranslations = {
     balanceAria: 'Bakiye {amount}. Bakiye yükle.',
     balanceLabel: 'Bakiye',
     customAmount: 'Diğer tutar',
-    customAmountPlaceholder: 'Tutar girin'
+    customAmountPlaceholder: 'Tutar girin',
+    alipayUnavailable: 'Alipay henüz kullanılamıyor.',
+    paymentFailed: 'Bu ödeme başlatılamadı. Lütfen tekrar deneyin.'
   },
   'zh-CN': {
     displayNameFallback: '朋友',
@@ -2047,7 +2079,9 @@ export const workspaceUiTranslations = {
     balanceAria: '余额 {amount}。充值。',
     balanceLabel: '余额',
     customAmount: '自定义',
-    customAmountPlaceholder: '输入金额'
+    customAmountPlaceholder: '输入金额',
+    alipayUnavailable: '支付宝暂不可用。',
+    paymentFailed: '无法发起支付，请重试。'
   },
   'zh-Hant': {
     displayNameFallback: '訪客',
@@ -2083,7 +2117,9 @@ export const workspaceUiTranslations = {
     balanceAria: '餘額 {amount}。儲值。',
     balanceLabel: '餘額',
     customAmount: '自訂',
-    customAmountPlaceholder: '輸入金額'
+    customAmountPlaceholder: '輸入金額',
+    alipayUnavailable: '支付寶尚未開放。',
+    paymentFailed: '無法發起付款，請重試。'
   },
 };
 

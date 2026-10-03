@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Lock, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
+import { createAlipayRecharge, createCryptoRecharge } from '../api/realApi';
 
 /* "Add funds" dialog, modelled on the top-up sheet the client asked for: the
  * amount first (with quick picks), then the payment routes, then the security
  * note. It replaces the old standalone payment page as the in-app entry point;
  * the balance chip in the top bar opens it.
  *
- * Payment routes are still placeholders — each card carries a data-method hook
+ * Crypto and Alipay rows are live; bank transfer and PayPal still carry a data-method hook
  * so the real PayPal / Cryptomus / bank URLs can be dropped in without touching
  * the layout. The SSL note and the card marks mirror what the site already
  * claims elsewhere, and no card data is collected here: the routes hand off to
@@ -61,6 +62,8 @@ export default function BusinessAddFundsModal({ open, onClose }) {
   const [amount, setAmount] = useState(String(MIN_TOP_UP));
   const [touched, setTouched] = useState(false);
   const [custom, setCustom] = useState(false);
+  const [submitting, setSubmitting] = useState('');
+  const [error, setError] = useState('');
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -152,25 +155,44 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </span>
             <span className="business-funds-route-go" aria-hidden="true">›</span>
           </a>
-          <a href="#" data-method="crypto">
+          {/* Crypto and Alipay are wired: each creates a recharge order and
+              hands off to the provider cashier. Bank transfer and PayPal are
+              still placeholders (no backend route yet). */}
+          <button
+            type="button"
+            data-method="crypto"
+            onClick={() => startPayment('crypto')}
+            disabled={!valid || Boolean(submitting)}
+          >
             <span className="business-funds-route-mark is-cryptomus" aria-hidden="true">
               <CryptomusMark size={19} />
             </span>
             <span className="business-funds-route-copy">
               <strong>Cryptocurrency</strong>
             </span>
-            <span className="business-funds-route-go" aria-hidden="true">›</span>
-          </a>
-          <a href="#" data-method="alipay">
+            <span className="business-funds-route-go" aria-hidden="true">
+              {submitting === 'crypto' ? '…' : '›'}
+            </span>
+          </button>
+          <button
+            type="button"
+            data-method="alipay"
+            onClick={() => startPayment('alipay')}
+            disabled={!valid || Boolean(submitting)}
+          >
             <span className="business-funds-route-mark is-alipay" aria-hidden="true">
               <img src="/pay/alipay.png" alt="" />
             </span>
             <span className="business-funds-route-copy">
               <strong>Alipay</strong>
             </span>
-            <span className="business-funds-route-go" aria-hidden="true">›</span>
-          </a>
+            <span className="business-funds-route-go" aria-hidden="true">
+              {submitting === 'alipay' ? '…' : '›'}
+            </span>
+          </button>
         </div>
+
+        {error ? <p className="business-funds-error" role="alert">{error}</p> : null}
 
         <footer className="business-funds-secure">
           <Lock size={17} aria-hidden="true" />

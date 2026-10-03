@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Wallet } from 'lucide-react';
 import BusinessAddFundsModal from './BusinessAddFundsModal';
+import { getBusinessAccountBalance } from '../api/realApi';
 import { useLanguage } from './LanguageContext';
 
 /* Account balance, shown in the research top bar just left of the notification
@@ -13,8 +14,16 @@ import { useLanguage } from './LanguageContext';
  * drop the TODO — nothing else in this component needs to change. */
 const PLACEHOLDER_BALANCE = { amount: '$0.00', currency: 'USD' };
 
-function formatAmount(balance) {
-  return balance.amount;
+/* The backend returns `balance` already as a 2-decimal string plus a currency
+ * code (see serializeBalance in businessCryptoBalanceService.js). */
+function formatAmount(value, currency = 'USD') {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return null;
+  try {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(numeric);
+  } catch {
+    return `$${numeric.toFixed(2)}`;
+  }
 }
 
 export default function BusinessBalanceChip({ className = '' }) {
@@ -23,10 +32,29 @@ export default function BusinessBalanceChip({ className = '' }) {
   const ui = uiMap[language] || uiMap['en-US'] || {};
 
   const [open, setOpen] = useState(false);
-  const balance = PLACEHOLDER_BALANCE;
-  const shown = formatAmount(balance);
-  // TODO: fetch the real balance once the endpoint exists; fall back to the
-  // placeholder so the top bar never renders empty.
+  const [balance, setBalance] = useState(null);
+  const [unavailable, setUnavailable] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    getBusinessAccountBalance()
+      .then((payload) => {
+        if (cancelled) return;
+        const raw = payload?.balance;
+        const amount = formatAmount(raw?.balance, raw?.currency);
+        if (amount) setBalance({ amount, currency: raw.currency || 'USD' });
+        else setUnavailable(true);
+      })
+      .catch(() => {
+        // Not signed in, or the endpoint is not deployed yet. Show a dash rather
+        // than "$0.00", which would read as a real zero balance.
+        if (!cancelled) setUnavailable(true);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  const shown = balance ? balance.amount : (unavailable ? '\u2014' : PLACEHOLDER_BALANCE.amount);
+  const currency = balance ? balance.currency : (unavailable ? '' : PLACEHOLDER_BALANCE.currency);
   const label = (ui.balanceAria || 'Balance {amount}. Add funds.').replace('{amount}', shown);
 
   return (
@@ -44,8 +72,8 @@ export default function BusinessBalanceChip({ className = '' }) {
         </span>
         <span className="business-workspace-balance-amount">
           {shown}
-          {balance.currency ? (
-            <span className="business-workspace-balance-currency">{balance.currency}</span>
+          {currency ? (
+            <span className="business-workspace-balance-currency">{currency}</span>
           ) : null}
         </span>
       </span>

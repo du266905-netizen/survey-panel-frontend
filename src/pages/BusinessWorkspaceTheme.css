@@ -1355,21 +1355,41 @@
   color: #5f6862;
 }
 
-.business-funds-routes > a {
+/* Rows are <a> when they are still placeholders and <button> once they are
+   wired to a real recharge endpoint. Both must look identical. */
+.business-funds-routes > a,
+.business-funds-routes > button {
   display: flex;
   align-items: center;
   gap: 13px;
+  width: 100%;
   padding: 10px 13px;
   border: 1px solid var(--ap-line);
   border-radius: 11px;
+  background: none;
   color: inherit;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
+  cursor: pointer;
   transition: border-color .15s ease, background .15s ease;
 }
 
-.business-funds-routes > a:hover {
+.business-funds-routes > a:hover,
+.business-funds-routes > button:hover:not(:disabled) {
   border-color: var(--ap-line-2);
   background: #fafbf9;
+}
+
+.business-funds-routes > button:disabled {
+  cursor: default;
+  opacity: .55;
+}
+
+.business-funds-error {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #b42318;
 }
 
 .business-funds-route-mark {
