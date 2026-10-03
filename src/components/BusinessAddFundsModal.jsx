@@ -75,6 +75,39 @@ export default function BusinessAddFundsModal({ open, onClose }) {
 
   if (!open) return null;
 
+  /* Both payment lines do the same thing: create an order on the backend, then
+   * hand the buyer to the provider's cashier. Nothing is credited here — the
+   * backend only credits on a signature-verified async notification or a
+   * verified trade query, so this is purely a redirect. */
+  const startPayment = async (method) => {
+    if (!valid || submitting) return;
+    setError('');
+    setSubmitting(method);
+    try {
+      const amountUsd = numeric.toFixed(2);
+      const payload = method === 'alipay'
+        ? await createAlipayRecharge({
+            amountUsd,
+            description: ui.addFunds || 'Account top-up',
+            returnUrl: `${window.location.origin}/business/workspace`,
+            idempotencyKey: `alipay:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`,
+          })
+        : await createCryptoRecharge({
+            amountUsd,
+            idempotencyKey: `crypto:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`,
+          });
+
+      const checkoutUrl = payload?.payment?.checkoutUrl;
+      if (!checkoutUrl) throw new Error('NO_CHECKOUT_URL');
+      window.location.href = checkoutUrl;
+    } catch (failure) {
+      setSubmitting('');
+      const code = failure?.response?.data?.code;
+      if (code === 'ALIPAY_NOT_CONFIGURED') setError(ui.alipayUnavailable || 'Alipay is not available yet.');
+      else setError(ui.paymentFailed || 'We could not start this payment. Please try again.');
+    }
+  };
+
   const numeric = Number(String(amount).replace(/[^0-9.]/g, ''));
   const valid = Number.isFinite(numeric) && numeric >= MIN_TOP_UP;
 
