@@ -293,23 +293,6 @@ Object.entries(localizedNavigationItems).forEach(([language, [how, approach, sur
   };
 });
 
-/* Nav labels for the participant surface used to live here for zh-CN / zh-Hant
-   only, so the other sixteen languages fell back to English. They now come from
-   the generated library (.i18n-work/panelist-*.json), merged over the English
-   base in useLanguage() — this table keeps only the dashboard copy, which is
-   still page-local. */
-const workspaceCopyByLanguage = {
-  'zh-CN': {
-    dashboard: {
-      greeting: { morning: '早上好', afternoon: '下午好', evening: '晚上好' }, visitor: '你好', space: '你的空间', begin: '让我们从这里开始：', prompts: ['浏览资讯', '开始问卷', '探索社群'], welcome: '按自己的节奏探索。下一次机会会在你准备好时出现。', coinsAvailable: '可用 {coins} Coins', balance: 'Coins 余额', openWallet: '打开钱包', startToday: '今天开始赚取奖励', headline: '一份高质量问卷，便能开始积累。', nextWithCompletions: '新的匹配会在一天中陆续出现。问卷资源充足时，欢迎回来看看。', nextWithoutCompletions: '先完成一份已验证的问卷。完成确认后，你的奖励记录就会开始累积。', findSurveys: '寻找问卷', rewardPath: '奖励路径', rewardPathValue: '问卷 → Coins → 礼品卡', steps: [['找到可参与的匹配', '问卷的可用情况会在一天中变化。'], ['认真完成问卷', '合作方会在 Coins 到账前确认完成情况。'], ['逐步兑换奖励', '礼品卡可从 $10 档位开始兑换。']], tip: '提示：先完成第一份问卷；当问卷墙较为空时，稍后回来再看，新的机会会持续更新。', newsWall: '资讯墙', newsTitle: '随时了解更广阔的视野。', newsIntro: '关注正在影响明日研究讨论的故事。', exploreNews: '探索资讯墙', freshNews: '资讯墙更新后，最新内容会显示在这里。', openNews: '打开资讯墙', readStory: '阅读文章', latestStory: '最新文章', news: '资讯',
-    },
-  },
-  'zh-Hant': {
-    dashboard: {
-      greeting: { morning: '早安', afternoon: '午安', evening: '晚安' }, visitor: '你好', space: '你的空間', begin: '讓我們從這裡開始：', prompts: ['瀏覽資訊', '開始問卷', '探索社群'], welcome: '依自己的步調探索。下一次機會會在你準備好時出現。', coinsAvailable: '可用 {coins} Coins', balance: 'Coins 餘額', openWallet: '開啟錢包', startToday: '今天開始累積獎勵', headline: '一份高品質問卷，便能開始累積。', nextWithCompletions: '新的匹配會在一天中陸續出現。問卷資源充足時，歡迎回來看看。', nextWithoutCompletions: '先完成一份已驗證的問卷。完成確認後，你的獎勵紀錄就會開始累積。', findSurveys: '尋找問卷', rewardPath: '獎勵路徑', rewardPathValue: '問卷 → Coins → 禮品卡', steps: [['找到可參與的匹配', '問卷的可用情況會在一天中變化。'], ['認真完成問卷', '合作方會在 Coins 到帳前確認完成情況。'], ['逐步兌換獎勵', '禮品卡可從 $10 檔位開始兌換。']], tip: '提示：先完成第一份問卷；當問卷牆較空時，稍後回來再看，新的機會會持續更新。', newsWall: '資訊牆', newsTitle: '隨時了解更廣闊的視野。', newsIntro: '關注正在影響明日研究討論的故事。', exploreNews: '探索資訊牆', freshNews: '資訊牆更新後，最新內容會顯示在這裡。', openNews: '開啟資訊牆', readStory: '閱讀文章', latestStory: '最新文章', news: '資訊',
-    },
-  },
-};
 
 const participantCopyByLanguage = {
   'zh-CN': {
@@ -542,7 +525,6 @@ export function LanguageProvider({ children }) {
       })(),
       workspace: {
         ...englishCopy.workspace,
-        ...(workspaceCopyByLanguage[language] || {}),
         nav: { ...englishCopy.workspace.nav, ...((panelistUiTranslations[language] || {}).nav || {}) },
         business: (() => {
           const base = englishCopy.workspace.business;
@@ -574,7 +556,32 @@ export function LanguageProvider({ children }) {
             workspaceStatic: workspaceStaticTranslations,
           };
         })(),
-        dashboard: { ...englishCopy.workspace.dashboard, ...(workspaceCopyByLanguage[language]?.dashboard || {}) },
+        /* The participant home keeps the shape Dashboard.jsx reads (greeting
+           object, prompts and steps arrays) while the wording comes from the
+           generated library, which stores it flat. The zh tables that used to
+           live here are gone: the library carries all eighteen languages. */
+        dashboard: (() => {
+          const base = englishCopy.workspace.dashboard;
+          const localized = (panelistUiTranslations[language] || {}).dashboard || {};
+          const greeting = base.greeting;
+          const basePrompts = base.prompts;
+          const baseSteps = base.steps;
+          const pick = (key, fallback) => (localized[key] === undefined ? fallback : localized[key]);
+          return {
+            ...base,
+            ...localized,
+            greeting: {
+              morning: pick('greetingMorning', greeting.morning),
+              afternoon: pick('greetingAfternoon', greeting.afternoon),
+              evening: pick('greetingEvening', greeting.evening),
+            },
+            prompts: [0, 1, 2].map((index) => pick(`prompt${index + 1}`, basePrompts[index])),
+            steps: [0, 1, 2].map((index) => [
+              pick(`step${index + 1}Title`, baseSteps[index][0]),
+              pick(`step${index + 1}Body`, baseSteps[index][1]),
+            ]),
+          };
+        })(),
       },
     },
   }), [language]);
