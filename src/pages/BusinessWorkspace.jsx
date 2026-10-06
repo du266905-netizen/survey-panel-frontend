@@ -131,6 +131,10 @@ export default function BusinessWorkspace() {
   // in this file. They now come from the language library, keyed by language.
   const workspaceUiMap = copy.workspaceUi || {};
   const ui = workspaceUiMap[language] || workspaceUiMap['en-US'] || {};
+  // Copy that used to be hardcoded English in this file now comes from the
+  // language library, keyed by language.
+  const workspaceStaticMap = copy.workspaceStatic || {};
+  const ws = workspaceStaticMap[language] || workspaceStaticMap['en-GB'] || {};
   // Home copy and the greeting used to be defined in this file (they were the
   // last page-local tables). They now come from the language library.
   const homeCopy = copy.workspaceHome || {};
@@ -434,9 +438,9 @@ export default function BusinessWorkspace() {
         window.location.assign(payment.checkoutUrl);
         return;
       }
-      setMessage('Payment checkout is being prepared for this approved quote.');
+      setMessage(ws.workspace.paymentPreparing);
     } catch (error) {
-      setMessage(error.response?.data?.message || 'Payment checkout is not available yet. Please return to this project later.');
+      setMessage(error.response?.data?.message || ws.workspace.paymentUnavailable);
     } finally { setSubmitting(false); }
   };
 
@@ -462,7 +466,7 @@ export default function BusinessWorkspace() {
         </header>
 
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
-          <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, returningUser)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p></div></header>
+          <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, returningUser)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p><button className="business-hero-cta" type="button" onClick={() => openNewProject()}>{workspaceText[1]}<ArrowRight size={16} /></button></div></header>
           <div className="business-dashboard-actions">
             <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{workspaceText[1]}</strong><small>{workspaceText[2]}</small></div><ArrowRight size={17} /></button>
             <button type="button" onClick={() => navigate(withLanguage('/business/ai-brief', language))}><span className="is-amber"><Sparkles size={21} /></span><div><strong>{workspaceText[3]}</strong><small>{workspaceText[4]}</small></div><ArrowRight size={17} /></button>
@@ -532,7 +536,7 @@ export default function BusinessWorkspace() {
                         {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{projectsCopy.openDraft} <ArrowRight size={15} /></Link>{project.questionnaire?.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}</>}
                         {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit} <ArrowRight size={15} /></button>}
                         {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote} <ArrowRight size={15} /></button>}
-                        {project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={submitting}>Continue to payment <ArrowRight size={15} /></button>}
+                        {project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={submitting}>{ws.workspace.continueToPayment} <ArrowRight size={15} /></button>}
                       </div>
                       {project.latestQuote && <p className="business-project-quote-note">{project.latestQuote.status === 'SENT'
                         ? feedbackCopy.quoteReady.replace('{version}', project.latestQuote.version)

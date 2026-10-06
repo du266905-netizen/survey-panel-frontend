@@ -11,6 +11,8 @@ const businessLandingTranslations = researchTranslations.businessLandingTranslat
 const questionnaireResultsTranslations = researchTranslations.questionnaireResultsTranslations || {};
 const deliveryTranslations = researchTranslations.deliveryTranslations || {};
 const workspaceHomeTranslations = researchTranslations.workspaceHomeTranslations || {};
+const questionnaireBuilderTranslations = researchTranslations.questionnaireBuilderTranslations || {};
+const workspaceStaticTranslations = researchTranslations.workspaceStaticTranslations || {};
 
 const LANGUAGE_STORAGE_KEY = 'guanyisearch-language';
 
@@ -547,6 +549,8 @@ export function LanguageProvider({ children }) {
             questionnaireResults: questionnaireResultsTranslations,
             delivery: deliveryTranslations,
             workspaceHome: workspaceHomeTranslations,
+            questionnaireBuilder: questionnaireBuilderTranslations,
+            workspaceStatic: workspaceStaticTranslations,
           };
         })(),
         dashboard: { ...englishCopy.workspace.dashboard, ...(workspaceCopyByLanguage[language]?.dashboard || {}) },

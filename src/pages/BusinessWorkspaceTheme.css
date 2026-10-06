@@ -1554,3 +1554,2171 @@
   .business-funds-quick > button { flex: 1 1 auto; padding: 0 10px; }
   .business-funds-cards { display: none; }
 }
+
+/* ===========================================================================
+   Product-grade surface pass — 2026-10-06
+   ---------------------------------------------------------------------------
+   Why this block exists: the research end read as washed out. The palette had
+   drifted green (ground #f4f6f3, icon forest #2b5a45, ink #17251f), four
+   near-identical values of off-white sat on top of each other with nothing to
+   separate them, type was set in a display serif at UI sizes, a decorative
+   circle leaked out of the statistics panel, and the empty state was a dashed
+   box. The user's bar for "not cheap" is the Cryptomus brand system: pure
+   black and pure white, large radii, heavy sans type, one decisive accent, no
+   tinted neutrals.
+
+   What changes:
+     1. Neutrals go genuinely neutral (no green cast) and the public site's lime
+        becomes the single accent. The old "no lime in the research end" rule
+        was lifted by the user on 2026-10-06.
+     2. Chrome (rail + top bar) is white and the content column is the ground,
+        so panels read as raised surfaces instead of more paper.
+     3. Radii step up (20px panels, 16px tiles, pill controls) and type moves to
+        the sans family at heavier weights with tight tracking.
+     4. The decorative arc is removed.
+
+   Scope: every page's CSS is bundled and injected app-wide, so anything
+   unscoped here leaks into the public site (handoff §5.11). Everything below
+   is anchored to .business-workspace / .business-ai-brief-page.
+   =========================================================================== */
+
+.business-workspace,
+.business-ai-brief-page,
+.business-builder,
+.business-builder-loading,
+.business-results-page,
+.business-account-page,
+.business-custom-request-page,
+.delivery-preview-page,
+.delivery-customer-page {
+  /* --- neutral core: no green cast anywhere --- */
+  --rs-black: #1c1f23;
+  --rs-ink: #24272c;
+  --rs-body: #565a60;
+  --rs-mute: #7f848a;
+  --rs-faint: #a1a6ac;
+  --rs-line: rgba(11, 11, 12, .10);
+  --rs-line-2: rgba(11, 11, 12, .20);
+  /* Box edges. These MUST live in this block, not only in part 3's scope:
+     `border: 1px solid var(--rs-hair)` with an undefined variable is invalid at
+     computed-value time, which resets border-style to `none` — the border
+     disappears entirely instead of falling back to a colour. That single
+     omission is what stripped every frame off the questionnaire editor. */
+  --rs-hair: rgba(17, 17, 19, .12);
+  --rs-hair-2: rgba(17, 17, 19, .22);
+  --rs-box: rgba(17, 17, 19, .16);
+  --rs-ground: #f1f1ef;
+  --rs-card: #ffffff;
+  --rs-sunken: #f5f5f3;
+  --rs-chip: #eeeeec;
+  --rs-lime: #deef24;
+  --rs-lime-deep: #c9db10;
+  --rs-lime-soft: #f3f8d2;
+  --rs-r-xl: 24px;
+  --rs-r-lg: 20px;
+  --rs-r-md: 16px;
+  --rs-r-sm: 12px;
+  --rs-shadow: 0 1px 2px rgba(11, 11, 12, .05), 0 8px 24px rgba(11, 11, 12, .06);
+  --rs-shadow-lift: 0 2px 6px rgba(11, 11, 12, .06), 0 20px 44px rgba(11, 11, 12, .10);
+
+  /* Legacy token bridge. Older rules across Business.css / BusinessRail.css
+     read these names; re-pointing them here re-skins those rules at once
+     instead of chasing every selector. */
+  --ap-ground: var(--rs-ground);
+  --ap-card: var(--rs-card);
+  --ap-line: var(--rs-line);
+  --ap-line-2: var(--rs-line-2);
+  --ap-radius: var(--rs-r-lg);
+  --ap-shadow: var(--rs-shadow);
+  --business-ink: var(--rs-ink);
+  --business-forest: var(--rs-black);
+  --business-paper: var(--rs-sunken);
+  --business-muted: var(--rs-body);
+
+  /* `styles/future-app-surface.css` is imported last in main.jsx, so its
+     `:root` palette wins over anything declared here — including
+     `.business-workspace { background: var(--future-paper) }` and the green
+     cast in `--future-ink` (#17251f). Custom properties resolve against the
+     element they are used on, so re-declaring them on this scope is enough to
+     re-point those same rules without touching that file. */
+  --future-ink: var(--rs-ink);
+  --future-body: var(--rs-body);
+  --future-paper: var(--rs-ground);
+  --future-sage: var(--rs-sunken);
+  --future-sage-strong: var(--rs-chip);
+  --future-rule: var(--rs-line);
+}
+
+/* --- chrome: white rail and white top bar over a neutral ground ----------- */
+
+.business-workspace .business-workspace-shell,
+.business-workspace .business-projects,
+.business-workspace .business-workspace-home {
+  border-radius: 0;
+  background: transparent;
+}
+
+.business-workspace {
+  background: var(--rs-ground);
+}
+
+/* `styles/authenticated-palette.css:198-205` — imported from main.jsx after the
+   page CSS — pins `.business-workspace { background: #fcfdfb !important }`.
+   A plain rule here loses to it, which is why the ground stayed paper-white no
+   matter what the tokens said. `main.` adds one element step of specificity,
+   so this outranks it while still being one line to delete on rollback. */
+main.business-workspace {
+  --business-paper: var(--rs-sunken);
+  background: var(--rs-ground) !important;
+  color: var(--rs-ink);
+}
+
+.business-workspace .business-workspace-topbar {
+  border-bottom: 1px solid var(--rs-line);
+  background: var(--rs-card);
+  padding-block: 14px;
+}
+
+/* --- rail: sentence case, quiet group heads, one black pill for the page --- */
+
+.business-workspace .business-workspace-navgroup-title,
+.business-ai-brief-page .business-workspace-navgroup-title {
+  color: var(--rs-faint);
+  font: 600 12px var(--font-sans);
+  letter-spacing: -.005em;
+  padding: 6px 10px;
+}
+
+.business-workspace .business-workspace-navgroup-title:hover,
+.business-ai-brief-page .business-workspace-navgroup-title:hover {
+  color: var(--rs-body);
+}
+
+.business-workspace .business-workspace-navitem,
+.business-ai-brief-page .business-workspace-navitem {
+  min-height: 40px;
+  border-radius: var(--rs-r-sm);
+  color: var(--rs-body);
+  font: 560 13.5px var(--font-sans);
+}
+
+.business-workspace .business-workspace-navitem > svg,
+.business-ai-brief-page .business-workspace-navitem > svg {
+  color: var(--rs-faint);
+}.business-workspace .business-workspace-navitem:hover, .business-ai-brief-page .business-workspace-navitem:hover {
+  border-color: transparent;
+  color: var(--rs-ink);
+}
+
+.business-workspace .business-workspace-navitem:hover > svg,
+.business-ai-brief-page .business-workspace-navitem:hover > svg {
+  color: var(--rs-ink);
+}
+
+.business-workspace .business-workspace-navitem.is-active,
+.business-ai-brief-page .business-workspace-navitem.is-active {
+  border-color: var(--rs-black);
+  background: var(--rs-black);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* --- top bar controls ------------------------------------------------------ */
+
+.business-workspace .business-workspace-searchbar {
+  width: min(100%, 620px);
+  height: 46px;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: var(--rs-sunken);
+  color: var(--rs-mute);
+  padding: 0 14px;
+}
+
+.business-workspace .business-workspace-searchbar > input {
+  color: var(--rs-ink);
+  font: 550 14px var(--font-sans);
+}
+
+.business-workspace .business-workspace-searchbar > input::placeholder {
+  color: var(--rs-mute);
+}
+
+.business-workspace .business-workspace-searchbar > kbd {
+  border: 1px solid var(--rs-line);
+  border-radius: 7px;
+  background: var(--rs-card);
+  color: var(--rs-body);
+  font: 600 10.5px var(--font-sans);
+  padding: 4px 7px;
+}
+
+.business-workspace .business-workspace-topbar > .business-workspace-balance {
+  height: 46px;
+  gap: 10px;
+  border: 1px solid var(--rs-line);
+  border-radius: 14px;
+  color: var(--rs-ink);
+  padding: 0 6px 0 14px;
+}
+
+.business-workspace .business-workspace-balance-label,
+.business-workspace .business-workspace-balance-currency {
+  color: var(--rs-mute);
+  font-weight: 550;
+}
+
+.business-workspace .business-workspace-balance-amount {
+  color: var(--rs-ink);
+  font-weight: 550;
+}
+
+.business-workspace .business-workspace-balance-add {
+  height: 34px;
+  border-radius: 10px;
+  background: var(--rs-black);
+  font-weight: 600;
+  padding: 0 14px;
+}
+
+/* --- greeting: sans, tight, one size step down ---------------------------- */
+
+.business-workspace .business-dashboard-header {
+  border-bottom: 0;
+  padding: 4px 0 22px;
+}
+
+.business-workspace .business-dashboard-header h1 {
+  color: var(--rs-ink) !important;
+  font: 400 clamp(28px, 2.9vw, 38px)/1.12 var(--font-sans) !important;
+  letter-spacing: -.038em !important;
+}
+
+/* the greeting used to set the name in an italic display serif, which is what
+   made the header read as a template rather than a product */
+.business-workspace .business-dashboard-header h1 span {
+  color: var(--rs-mute);
+  font-weight: 400;
+}
+
+/* Business.css:572 sets the name in an italic Songti/display serif. The
+   family and the italic have to be reset together with the colour — dropping
+   only the colour leaves the serif italic behind (it is a different rule from
+   the h1's own family). */
+.business-workspace .business-dashboard-header h1 strong {
+  color: var(--rs-ink);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 450;
+}
+
+/* --- the three entries: lime lead, neutral companions --------------------- */
+
+.business-workspace .business-dashboard-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* One lead entry spanning both columns instead of three equal cards: equal
+   weight is what made this read as a template. The lead carries the page's
+   primary verb and the only large fill on the screen. */
+.business-workspace .business-dashboard-actions > button:first-child {
+  grid-column: 1 / -1;
+  grid-template-columns: 56px minmax(0, 1fr) 34px;
+  min-height: 138px;
+  gap: 18px;
+  padding: 26px 28px;
+}
+
+.business-workspace .business-dashboard-actions > button > span,
+.business-workspace .business-dashboard-actions .is-purple,
+.business-workspace .business-dashboard-actions .is-amber,
+.business-workspace .business-dashboard-actions .is-green {
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  background: var(--rs-chip);
+  color: var(--rs-ink);
+}
+
+/* The lead entry is ink, not a slab of lime. A loud accent spread over a large
+   area is what reads as cheap; lime is worth more as a precise mark — the icon
+   tile and the arrow — against a deep ground. */
+.business-workspace .business-dashboard-actions > button:first-child {
+  border-color: var(--rs-black);
+  background: var(--rs-black);
+  color: rgba(255, 255, 255, .66);
+  box-shadow: var(--rs-shadow-lift);
+}
+
+.business-workspace .business-dashboard-actions > button:first-child:hover {
+  border-color: #1e1e21;
+  background: #1e1e21;
+}
+
+.business-workspace .business-dashboard-actions > button:first-child strong {
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: -.03em;
+}
+
+.business-workspace .business-dashboard-actions > button:first-child small {
+  color: rgba(255, 255, 255, .60);
+  font-size: 13.5px;
+}
+
+.business-workspace .business-dashboard-actions strong {
+  color: var(--rs-ink);
+  font: 500 14.5px var(--font-sans);
+  letter-spacing: -.015em;
+}
+
+.business-workspace .business-dashboard-actions small {
+  color: var(--rs-mute);
+  font: 500 12.5px/1.5 var(--font-sans);
+}
+
+.business-workspace .business-dashboard-actions > button > svg {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--rs-line);
+  border-radius: 999px;
+  color: var(--rs-mute);
+  padding: 6px;
+}
+
+.business-workspace .business-dashboard-actions > button:first-child > svg {
+  border-color: rgba(11, 11, 12, .28);
+  color: var(--rs-black);
+}
+
+/* --- panels: white cards on the ground, arc removed ----------------------- */
+
+/* stretch, not start: two panels of different heights left a ragged bottom
+   edge across the grid */
+.business-workspace .business-dashboard-grid {
+  align-items: stretch;
+  gap: 16px;
+  border-top: 0;
+}
+
+.business-workspace .business-dashboard-statistics,
+.business-workspace .business-dashboard-recent {
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-r-xl);
+  background: var(--rs-card);
+  box-shadow: var(--rs-shadow);
+  padding: 28px;
+}
+
+/* the stray 220px circle that used to sit behind the statistics header */
+.business-workspace .business-dashboard-statistics::after,
+.business-workspace .business-dashboard-recent::after {
+  content: none !important;
+}.business-workspace .business-dashboard-grid header {
+  gap: 16px;
+}
+
+.business-workspace .business-dashboard-grid h2 {
+  color: var(--rs-ink);
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -.028em;
+}
+
+.business-workspace .business-dashboard-grid header p {
+  margin-top: 4px;
+  color: var(--rs-mute);
+  font: 500 12.5px/1.45 var(--font-sans);
+}
+
+.business-workspace .business-dashboard-grid header > button,
+.business-workspace .business-dashboard-empty > button {
+  border: 1px solid var(--rs-line-2);
+  border-radius: 999px;
+  background: var(--rs-card);
+  color: var(--rs-ink);
+  font: 500 12px var(--font-sans);
+  padding: 9px 15px;
+  transition: border-color .16s ease, background .16s ease, color .16s ease;
+}
+
+/* --- figure tiles --------------------------------------------------------- */
+
+/* Four bordered boxes holding a bare figure each is the dashboard-template
+   look. The same numbers read as data once they sit in one hairline-separated
+   strip — label, then the figure, no container. */
+.business-workspace .business-dashboard-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 22px;
+  border-top: 1px solid var(--rs-line);
+  padding-top: 22px;
+}
+
+.business-workspace .business-dashboard-stats article {
+  min-height: 0;
+  align-content: start;
+  border: 0;
+  border-left: 1px solid var(--rs-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0 24px;
+}
+
+.business-workspace .business-dashboard-stats article:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+/* the per-figure icon chips were decoration on a number; the strip is quieter */
+.business-workspace .business-dashboard-stats article > span {
+  display: none;
+}
+
+/* --- recent project rows -------------------------------------------------- */
+
+.business-workspace .business-dashboard-recent > div:not(.business-dashboard-empty) {
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.business-workspace .business-dashboard-recent > div > button {
+  grid-template-columns: minmax(0, 1fr) 30px;
+  gap: 6px 12px;
+  border: 1px solid var(--rs-line);
+  border-radius: 18px;
+  background: var(--rs-card);
+  padding: 15px 17px;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.business-workspace .business-dashboard-recent > div > button:hover {
+  border-color: var(--rs-line-2);
+  box-shadow: 0 10px 22px rgba(11, 11, 12, .07);
+  transform: translateY(-1px);
+}
+
+.business-workspace .business-dashboard-recent > div > button strong {
+  color: var(--rs-ink);
+  font: 550 13.5px var(--font-sans);
+}
+
+.business-workspace .business-dashboard-recent > div > button small {
+  color: var(--rs-mute);
+  font: 500 11.5px var(--font-sans);
+}
+
+/* --- status pills: the enum names were showing through raw ----------------- */
+
+.business-workspace .business-status {
+  border: 0;
+  border-radius: 999px;
+  background: var(--rs-sunken);
+  color: var(--rs-body);
+  font: 600 9.5px var(--font-sans);
+  letter-spacing: .07em;
+  padding: 4px 9px;
+  text-transform: uppercase;
+}
+
+.business-workspace .business-status.status-submitted_for_review,
+.business-workspace .business-status.status-in_review,
+.business-workspace .business-status.status-recruiting,
+.business-workspace .business-status.status-quote_required,
+.business-workspace .business-status.status-quote_sent {
+  background: var(--rs-lime);
+  color: var(--rs-black);
+}
+
+.business-workspace .business-status.status-funded,
+.business-workspace .business-status.status-live,
+.business-workspace .business-status.status-client_accepted {
+  background: var(--rs-black);
+  color: #ffffff;
+}
+
+.business-workspace .business-status.status-completed {
+  background: var(--rs-lime-soft);
+  color: var(--rs-black);
+}
+
+/* --- empty states: no more dashed boxes ----------------------------------- */
+
+.business-workspace .business-dashboard-empty,
+.business-workspace .business-results-index-empty {
+  justify-items: start;
+  gap: 12px;
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-r-md);
+  background: var(--rs-sunken);
+  color: var(--rs-body);
+  margin-top: 18px;
+  padding: 24px;
+  box-shadow: none;
+}
+
+.business-workspace .business-dashboard-empty svg,
+.business-workspace .business-results-index-empty > svg {
+  color: var(--rs-ink);
+}
+
+.business-workspace .business-dashboard-empty strong {
+  color: var(--rs-ink);
+  font: 500 13.5px var(--font-sans);
+}
+
+.business-workspace .business-results-index-empty h2 {
+  color: var(--rs-ink);
+  font: 500 18px var(--font-sans);
+  letter-spacing: -.025em;
+}
+
+.business-workspace .business-dashboard-empty > button,
+.business-workspace .business-results-index-empty > button {
+  border-color: var(--rs-lime);
+  background: var(--rs-lime);
+  color: var(--rs-black);
+  font-weight: 500;
+}
+
+.business-workspace .business-dashboard-empty > button:hover,
+.business-workspace .business-results-index-empty > button:hover {
+  border-color: var(--rs-lime-deep);
+  background: var(--rs-lime-deep);
+  color: var(--rs-black);
+}
+
+/* --- narrow viewports: four tiles become two, then one -------------------- */
+
+@media (max-width: 1100px) {
+  .business-workspace .business-dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .business-workspace .business-dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .business-workspace .business-dashboard-stats article {
+    min-height: 104px;
+  }
+
+  .business-workspace .business-dashboard-statistics,
+  .business-workspace .business-dashboard-recent {
+    padding: 20px;
+  }
+}
+
+/* ===========================================================================
+   Product-grade surface pass — part 2: projects list and the AI brief page
+   =========================================================================== */
+
+/* --- projects list: the last surface still on the old print look ---------- */
+
+/* Business.css:206 re-pins the reading serif on project titles with
+   !important, so the family needs !important and a specificity step. */
+.business-workspace .business-projects h1 {
+  color: var(--rs-ink);
+  font-family: var(--font-sans) !important;
+  font-size: clamp(28px, 3vw, 34px) !important;
+  font-weight: 400;
+  letter-spacing: -.035em;
+}
+
+.business-workspace .business-projects-head > div > p:last-child {
+  color: var(--rs-body);
+  font-weight: 500;
+}
+
+.business-workspace .business-project-list {
+  gap: 14px;
+}
+
+.business-workspace .business-project-list h2 {
+  color: var(--rs-ink);
+  font-family: var(--font-sans) !important;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -.028em;
+}
+
+.business-workspace .business-project-list p {
+  color: var(--rs-body);
+  font-weight: 500;
+}
+
+.business-workspace .business-project-kind {
+  color: var(--rs-faint) !important;
+}
+
+.business-workspace .business-project-list dl div {
+  border-left: 1px solid var(--rs-line);
+}
+
+.business-workspace .business-project-list dt {
+  color: var(--rs-faint);
+  font-weight: 600;
+}
+
+.business-workspace .business-project-list dd {
+  color: var(--rs-ink);
+  font-weight: 620;
+}
+
+.business-workspace .business-project-toolbar button {
+  color: var(--rs-body);
+}
+
+/* --- AI brief page -------------------------------------------------------- */
+
+main.business-ai-brief-page {
+  background: var(--rs-ground) !important;
+  color: var(--rs-ink);
+}
+
+/* `.business-ai-brief-surface` is the whole content column, not just the
+   assistant panel — painting it white covers the ground across the page. It
+   stays transparent; the assistant panel carries its own fill. */
+.business-ai-brief-page .business-ai-brief-surface {
+  border-right: 0;
+  background: transparent;
+}
+
+/* The opening question was set in a large display serif with
+   `white-space: nowrap` + `text-overflow: ellipsis`, so at 1440px it rendered
+   as "What would you like to resea…". It is a question, not a decorative
+   headline — sans, wrapping, readable. */
+.business-ai-brief-page .business-ai-conversation-log .is-opening h1 {
+  overflow: visible;
+  max-width: none;
+  color: var(--rs-ink);
+  font: 400 clamp(30px, 3.4vw, 46px)/1.12 var(--font-sans);
+  letter-spacing: -.038em;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.business-ai-brief-page .business-ai-starter-example {
+  color: var(--rs-mute);
+  font-weight: 550;
+}
+
+.business-ai-brief-page .business-ai-conversation > header p,
+.business-ai-brief-page .business-ai-brief-summary header p,
+.business-ai-brief-page .business-ai-brief-summary h3 {
+  color: var(--rs-faint);
+  letter-spacing: .1em;
+}
+
+.business-ai-brief-page .business-ai-composer > button {
+  border-radius: 14px;
+}
+
+.business-ai-brief-page .business-ai-composer > button:disabled {
+  background: var(--rs-chip);
+  color: var(--rs-faint);
+}
+
+/* ===========================================================================
+   Part 3 — 大道至简 (user references: HSBC's restraint + "不要一层颜色叠一层颜色")
+   ---------------------------------------------------------------------------
+   Parts 1 and 2 kept adding layers: a grey ground, white cards on the ground,
+   panels inside the cards, a border and a shadow on each of them. That is
+   where the cheapness came from — every layer needs another edge to be told
+   apart from the one behind it, and the page ends up as a stack of nearly
+   identical off-whites.
+
+   This block collapses all of it to ONE surface. The whole content column is
+   white; structure comes from hairline rules and space, nothing else. There
+   are exactly two marks of colour on the page:
+     · the small lime square behind the primary action's icon
+     · the 2px lime rule on the current rail entry
+   Everything else is ink on white.
+   =========================================================================== */
+
+.business-workspace,
+.business-ai-brief-page {
+  --rs-hair: rgba(17, 17, 19, .10);
+  --rs-hair-2: rgba(17, 17, 19, .22);
+}
+
+/* --- one surface, and it is white ----------------------------------------- */
+
+main.business-workspace,
+main.business-ai-brief-page {
+  background: #ffffff !important;
+  color: var(--rs-ink);
+}
+
+.business-workspace .business-workspace-topbar,
+.business-ai-brief-page .business-ai-brief-header {
+  border-bottom: 1px solid var(--rs-hair);
+  background: #ffffff;
+}
+
+.business-workspace .business-workspace-rail,
+.business-ai-brief-page .business-workspace-rail {
+  border-right: 1px solid var(--rs-hair);
+  background: #ffffff !important;
+}
+
+/* --- rail: no pill; the current entry is ink plus a 2px lime rule --------- */
+
+.business-workspace .business-workspace-navitem.is-active,
+.business-ai-brief-page .business-workspace-navitem.is-active {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: inset 2px 0 0 var(--rs-lime);
+  color: var(--rs-ink);
+  font-weight: 550;
+}
+
+.business-workspace .business-workspace-navitem.is-active > svg,
+.business-ai-brief-page .business-workspace-navitem.is-active > svg {
+  color: var(--rs-ink);
+}
+
+.business-workspace .business-workspace-navitem:hover,
+.business-ai-brief-page .business-workspace-navitem:hover {
+  background: #f6f6f5;
+}
+
+/* --- top bar: hairline controls, no fills --------------------------------- */
+
+.business-workspace .business-workspace-searchbar {
+  border: 1px solid var(--rs-hair);
+  border-radius: 10px;
+  background: transparent;
+}
+
+.business-workspace .business-workspace-searchbar:focus-within {
+  border-color: var(--rs-ink);
+  background: transparent;
+  box-shadow: none;
+}
+
+.business-workspace .business-workspace-searchbar > kbd {
+  border: 0;
+  background: transparent;
+  color: var(--rs-faint);
+  padding: 0;
+}
+
+.business-workspace .business-workspace-topbar > .business-workspace-balance {
+  height: 44px;
+  border: 1px solid var(--rs-hair);
+  border-radius: 10px;
+  background: transparent;
+}
+
+.business-workspace .business-workspace-topbar > .business-workspace-balance:hover {
+  border-color: var(--rs-hair-2);
+  background: transparent;
+}
+
+/* the top-up action goes quiet: it is not the page's primary verb */
+.business-workspace .business-workspace-balance-add {
+  height: 30px;
+  border: 1px solid var(--rs-hair-2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--rs-ink);
+  font-weight: 600;
+  padding: 0 12px;
+}
+
+.business-workspace .business-workspace-balance:hover .business-workspace-balance-add {
+  border-color: var(--rs-ink);
+  background: transparent;
+}
+
+/* --- greeting: the reading serif, no italic, nothing behind it ------------ */
+
+.business-workspace .business-dashboard-header {
+  border-bottom: 0;
+  padding: 8px 0 30px;
+}
+
+.business-workspace .business-dashboard-hero-line {
+  color: #a8a8a4 !important;
+  font-weight: 600 !important;
+  letter-spacing: .18em !important;
+}
+
+.business-workspace .business-dashboard-header h1 {
+  font: 600 clamp(30px, 3vw, 40px)/1.16 var(--font-reading) !important;
+  letter-spacing: -.02em !important;
+}
+
+.business-workspace .business-dashboard-header h1 span {
+  color: #9a9a97;
+  font-weight: 500;
+}
+
+.business-workspace .business-dashboard-header h1 strong {
+  color: var(--rs-ink);
+  font-family: var(--font-reading);
+  font-weight: 600;
+}
+
+.business-workspace .business-dashboard-intro {
+  max-width: 620px;
+  color: #6f6f6b !important;
+  font-size: 14px !important;
+}
+
+/* --- the three entries: hairline rows on the page, no container ----------- */
+
+.business-workspace .business-dashboard-actions {
+  grid-template-columns: 1fr;
+  gap: 0;
+  overflow: visible;
+  border: 0;
+  border-top: 1px solid var(--rs-hair);
+  border-radius: 0;
+  background: transparent;
+}
+
+.business-workspace .business-dashboard-actions > button {
+  grid-template-columns: 30px minmax(0, 1fr) 20px;
+  min-height: 0;
+  gap: 18px;
+  border: 0;
+  border-bottom: 1px solid var(--rs-hair);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 20px 0;
+  transform: none;
+}
+
+/* Part 2's `> button:first-child` carries one more pseudo-class than the plain
+   `> button` reset above, so its ink fill and 138px height survive that reset.
+   Undo them here, at the same specificity, later in the file. */
+.business-workspace .business-dashboard-actions > button:first-child {
+  grid-column: auto;
+  grid-template-columns: 30px minmax(0, 1fr) 20px;
+  min-height: 0;
+  gap: 18px;
+  border: 0;
+  border-top: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--rs-mute);
+  padding: 22px 0 20px;
+}
+
+.business-workspace .business-dashboard-actions > button:hover {
+  background: transparent;
+  border-color: var(--rs-hair);
+  box-shadow: none;
+  transform: none;
+}
+
+.business-workspace .business-dashboard-actions > button:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* icons lose their containers; only the primary keeps a fill, and it is lime */
+.business-workspace .business-dashboard-actions > button > span,
+.business-workspace .business-dashboard-actions .is-purple,
+.business-workspace .business-dashboard-actions .is-amber,
+.business-workspace .business-dashboard-actions .is-green {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--rs-ink);
+}
+
+.business-workspace .business-dashboard-actions > button:first-child > span {
+  border: 0;
+  border-radius: 8px;
+  background: var(--rs-lime);
+  color: var(--rs-black);
+}
+
+.business-workspace .business-dashboard-actions strong,
+.business-workspace .business-dashboard-actions > button:first-child strong {
+  color: var(--rs-ink);
+  font: 500 15px var(--font-sans);
+  letter-spacing: -.015em;
+}
+
+.business-workspace .business-dashboard-actions small,
+.business-workspace .business-dashboard-actions > button:first-child small {
+  color: var(--rs-mute);
+  font: 500 12.5px/1.5 var(--font-sans);
+}
+
+.business-workspace .business-dashboard-actions > button > svg,
+.business-workspace .business-dashboard-actions > button:first-child > svg {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  color: var(--rs-faint);
+  padding: 0;
+}
+
+/* --- panels: no boxes, one rule across, one rule between ------------------ */
+
+.business-workspace .business-dashboard-grid {
+  align-items: stretch;
+  gap: 0;
+  border-top: 1px solid var(--rs-hair);
+}
+
+.business-workspace .business-dashboard-statistics,
+.business-workspace .business-dashboard-recent {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 26px 0 0;
+}
+
+.business-workspace .business-dashboard-statistics {
+  border-right: 0;
+  padding-right: 44px;
+}
+
+.business-workspace .business-dashboard-recent {
+  border-left: 1px solid var(--rs-hair);
+  padding-left: 44px;
+}
+
+.business-workspace .business-dashboard-grid header {
+  align-items: baseline;
+  border-bottom: 0;
+  padding-bottom: 4px;
+}
+
+.business-workspace .business-dashboard-grid h2 {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -.015em;
+}
+
+.business-workspace .business-dashboard-grid header p {
+  margin-top: 3px;
+  color: var(--rs-mute);
+  font-size: 12.5px;
+}
+
+/* header actions are text, underlined only on hover */
+.business-workspace .business-dashboard-grid header > button,
+.business-workspace .business-dashboard-empty > button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--rs-ink);
+  font: 600 12.5px var(--font-sans);
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--rs-hair-2);
+  text-underline-offset: 4px;
+}
+
+.business-workspace .business-dashboard-grid header > button:hover,
+.business-workspace .business-dashboard-empty > button:hover {
+  border-color: transparent;
+  background: transparent;
+  color: var(--rs-ink);
+  text-decoration-color: var(--rs-ink);
+}
+
+/* --- figures: four numbers on the page, nothing between them -------------- */
+
+.business-workspace .business-dashboard-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 26px;
+  border-top: 0;
+  padding-top: 0;
+}
+
+.business-workspace .business-dashboard-stats article,
+.business-workspace .business-dashboard-stats article:first-child {
+  min-height: 0;
+  align-content: start;
+  border: 0;
+  border-left: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0 22px 0 0;
+}
+
+.business-workspace .business-dashboard-stats article > span {
+  display: none;
+}
+
+.business-workspace .business-dashboard-stats small {
+  margin: 0;
+  color: #9a9a97;
+  font: 600 10.5px var(--font-sans);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.business-workspace .business-dashboard-stats strong {
+  margin-top: 14px;
+  color: var(--rs-ink);
+  font: 400 38px/1 var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.05em;
+}
+
+/* --- recent projects: a plain hairline list ------------------------------- */
+
+.business-workspace .business-dashboard-recent > div:not(.business-dashboard-empty) {
+  gap: 0;
+  margin-top: 18px;
+}
+
+.business-workspace .business-dashboard-recent > div > button {
+  border: 0;
+  border-bottom: 1px solid var(--rs-hair);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 15px 0;
+  transform: none;
+}
+
+.business-workspace .business-dashboard-recent > div > button:hover {
+  background: transparent;
+  border-bottom-color: var(--rs-hair-2);
+  box-shadow: none;
+  transform: none;
+}
+
+.business-workspace .business-dashboard-recent > div > button > svg {
+  color: var(--rs-faint);
+}
+
+/* status: a small lime dot and small caps — no pill, no fill */
+.business-workspace .business-status,
+.business-workspace .business-status.status-submitted_for_review,
+.business-workspace .business-status.status-in_review,
+.business-workspace .business-status.status-recruiting,
+.business-workspace .business-status.status-quote_required,
+.business-workspace .business-status.status-quote_sent,
+.business-workspace .business-status.status-funded,
+.business-workspace .business-status.status-live,
+.business-workspace .business-status.status-client_accepted,
+.business-workspace .business-status.status-completed {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--rs-mute);
+  font: 600 9.5px var(--font-sans);
+  letter-spacing: .12em;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.business-workspace .business-status::before {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--rs-hair-2);
+  content: '';
+}
+
+.business-workspace .business-status.status-submitted_for_review::before,
+.business-workspace .business-status.status-in_review::before,
+.business-workspace .business-status.status-recruiting::before,
+.business-workspace .business-status.status-quote_required::before,
+.business-workspace .business-status.status-quote_sent::before {
+  background: var(--rs-lime);
+}
+
+.business-workspace .business-status.status-funded::before,
+.business-workspace .business-status.status-live::before,
+.business-workspace .business-status.status-client_accepted::before,
+.business-workspace .business-status.status-completed::before {
+  background: var(--rs-ink);
+}
+
+/* --- empty state: no dashed box, just a quiet block on the page ----------- */
+
+.business-workspace .business-dashboard-empty,
+.business-workspace .business-results-index-empty {
+  gap: 12px;
+  border: 1px solid var(--rs-hair);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--rs-body);
+  margin-top: 18px;
+  padding: 24px;
+  box-shadow: none;
+}
+
+.business-workspace .business-dashboard-empty > button,
+.business-workspace .business-results-index-empty > button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--rs-ink);
+  font-weight: 500;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* --- projects list: same treatment, rows on rules instead of floating cards */
+
+.business-workspace .business-project-list {
+  gap: 0;
+  border-top: 1px solid var(--rs-hair);
+}
+
+.business-workspace .business-project-list article {
+  border: 0;
+  border-bottom: 1px solid var(--rs-hair);
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
+  padding: 28px 0;
+}
+
+/* --- AI page, same register ----------------------------------------------- */
+
+.business-ai-brief-page .business-ai-conversation-log .is-opening h1 {
+  font: 600 clamp(30px, 3.2vw, 44px)/1.16 var(--font-reading);
+  letter-spacing: -.02em;
+}
+
+.business-ai-brief-page .business-ai-brief-surface {
+  border-right: 0;
+  background: transparent;
+}
+
+.business-ai-brief-page .business-ai-composer {
+  border: 1px solid var(--rs-hair);
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.business-ai-brief-page .business-ai-composer > button:not(:disabled) {
+  background: var(--rs-ink);
+  color: #ffffff;
+}
+
+/* ===========================================================================
+   Part 4 — the hero band
+   ---------------------------------------------------------------------------
+   Looking again at the two references the user sent: what makes them read as
+   big-brand is not restraint. It is one photograph filling the band, one large
+   LIGHT-weight statement on top of it, and one solid saturated control. My
+   parts 1-3 had no image, no scale and no solid control at all — light type on
+   white with hairline everything is not the same thing as premium, it is just
+   empty.
+
+   Still true from part 3: one surface, hairlines instead of boxes, two marks of
+   colour. The hero adds the missing mass and the one solid button.
+   =========================================================================== */
+
+.business-workspace .business-dashboard-header {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  padding: 56px clamp(30px, 3.6vw, 58px) 52px;
+  background-color: #14161a;
+  background-image:
+    linear-gradient(96deg, rgba(12, 14, 17, .90) 0%, rgba(12, 14, 17, .74) 44%, rgba(12, 14, 17, .30) 74%, rgba(12, 14, 17, .06) 100%),
+    url('../assets/business/hero-dusk.jpg');
+  background-position: center, center 42%;
+  background-repeat: no-repeat;
+  background-size: cover, cover;
+}
+
+.business-workspace .business-dashboard-hero-line {
+  margin-bottom: 14px !important;
+  color: rgba(255, 255, 255, .58) !important;
+  font: 500 10.5px/1.3 var(--font-sans) !important;
+  letter-spacing: .2em !important;
+}
+
+/* Large and LIGHT. This is the reference's headline treatment: the size
+   carries the authority, not the weight. */
+.business-workspace .business-dashboard-header h1 {
+  max-width: 720px;
+  margin: 0 !important;
+  color: #ffffff !important;
+  font: 300 clamp(38px, 4vw, 54px)/1.08 var(--font-sans) !important;
+  letter-spacing: -.03em !important;
+}
+
+.business-workspace .business-dashboard-header h1 span,
+.business-workspace .business-dashboard-header h1 strong {
+  color: inherit;
+  font-family: var(--font-sans);
+  font-weight: 300;
+}
+
+.business-workspace .business-dashboard-intro {
+  max-width: 560px;
+  margin-top: 16px !important;
+  color: rgba(255, 255, 255, .78) !important;
+  font: 400 16px/1.6 var(--font-sans) !important;
+}
+
+/* the one solid, square, saturated control — HSBC's red button, our lime */
+.business-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  margin-top: 30px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--rs-lime);
+  color: #14161a;
+  cursor: pointer;
+  font: 500 14.5px var(--font-sans);
+  letter-spacing: -.005em;
+  padding: 0 22px;
+  transition: background .16s ease;
+}
+
+.business-hero-cta:hover {
+  background: var(--rs-lime-deep);
+}
+
+.business-hero-cta svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* The hero now carries the primary verb, so the identical row below it would
+   be the same action twice. The other two paths stay in the list. */
+.business-workspace .business-dashboard-actions > button:first-child {
+  display: none;
+}
+
+.business-workspace .business-dashboard-actions {
+  border-top: 0;
+}
+
+/* --- inset hero: the picture sits inside the reading column ---------------
+   Rendered both ways and shown to the user; the inset one was chosen. A
+   full-bleed hero reads as a marketing page, and this is a tool opened every
+   day — 530px of photograph pushes the actual work below the fold on every
+   visit. It also fixes a real compositional fault: full-bleed ran the image to
+   the viewport while the content stayed in a centred 1120px column, so the
+   page had two grids and not one edge lined up. Inset gives it one. */
+
+.business-workspace .business-dashboard-header {
+  display: flex;
+  min-height: 340px;
+  align-items: center;
+  border-radius: 3px;
+  padding: 40px clamp(28px, 3vw, 48px);
+  background-position: center, 62% 46%;
+  background-size: cover, cover;
+}
+
+.business-workspace .business-dashboard-header > div {
+  max-width: 640px;
+}
+
+.business-workspace .business-dashboard-header h1 {
+  font-size: clamp(32px, 3.2vw, 44px) !important;
+  line-height: 1.08 !important;
+}
+
+.business-workspace .business-dashboard-intro {
+  font-size: 15px !important;
+}
+
+.business-hero-cta {
+  min-height: 44px;
+  margin-top: 26px;
+}
+
+/* --- rail mark: 50x38 read as an icon, not a brand mark -------------------
+   The public footer runs its G at clamp(72px, 7.6vw, 104px). This is a step
+   up, not that size. The rail is a flex column, so a taller mark only takes a
+   little more vertical room; every nav entry keeps its position in flow. */
+
+@media (min-width: 801px) {
+  .business-workspace .business-workspace-rail-mark,
+  .business-ai-brief-page .business-workspace-rail-mark {
+    width: 70px;
+    height: 53px;
+    margin: 2px 0 22px 2px;
+  }
+}
+
+/* ===========================================================================
+   Part 5 — the workspace's remaining views (questionnaire hub, results index)
+   ---------------------------------------------------------------------------
+   The home view and the projects list are on the new language; these two views
+   still carried the old one: a black pill for the primary action, liquid-glass
+   empty states (Business.css:794) and card rows. Same treatment as the projects
+   list — hairline rows on the page, one lime solid control.
+   =========================================================================== */
+
+.business-workspace .business-projects-head > div > p:first-child {
+  color: #a1a6ac !important;
+  font: 600 10.5px var(--font-sans) !important;
+  letter-spacing: .18em !important;
+}
+
+.business-workspace .business-projects h1 {
+  font-weight: 400 !important;
+  letter-spacing: -.03em !important;
+}
+
+.business-workspace .business-projects-head > div > p:last-child {
+  max-width: 620px;
+  color: var(--rs-mute) !important;
+  font: 400 14px/1.6 var(--font-sans) !important;
+}
+
+/* the one solid control on these pages */
+.business-workspace .business-button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--rs-lime);
+  color: #14161a;
+  font: 500 14px var(--font-sans);
+  padding: 0 20px;
+}
+
+.business-workspace .business-button:hover {
+  border-color: transparent;
+  background: var(--rs-lime-deep);
+  color: #14161a;
+}
+
+/* --- questionnaire hub: hairline rows, like the projects list ------------- */
+
+.business-workspace .business-questionnaire-hub-list {
+  gap: 0;
+  border-top: 1px solid var(--rs-hair);
+  margin-top: 34px;
+}
+
+.business-workspace .business-questionnaire-hub-list > article {
+  min-height: 0;
+  border: 0;
+  border-bottom: 1px solid var(--rs-hair);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 26px 0;
+}
+
+.business-workspace .business-questionnaire-hub-list h2 {
+  color: var(--rs-ink);
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.business-workspace .business-questionnaire-hub-list p {
+  color: #a1a6ac;
+  font-weight: 600;
+}
+
+.business-workspace .business-questionnaire-hub-list small {
+  color: var(--rs-mute);
+  font-weight: 400;
+}
+
+/* row actions read as text links, not pills */
+.business-workspace .business-project-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--rs-ink);
+  font: 500 13px var(--font-sans);
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--rs-hair-2);
+  text-underline-offset: 4px;
+}
+
+.business-workspace .business-project-open:hover {
+  text-decoration-color: var(--rs-ink);
+}
+
+/* --- results index: same treatment ---------------------------------------- */
+
+.business-workspace .business-results-index-list {
+  gap: 0;
+  max-width: none;
+  border-top: 1px solid var(--rs-hair);
+  margin-top: 34px;
+}
+
+.business-workspace .business-results-index-list article {
+  border: 0;
+  border-bottom: 1px solid var(--rs-hair);
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 26px 0;
+}
+
+.business-workspace .business-results-index-list article h2 {
+  color: var(--rs-ink);
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.business-workspace .business-results-index-list article span {
+  color: var(--rs-mute);
+  font-weight: 400;
+}
+
+/* --- empty states: no fill, no glass, no dash ----------------------------- */
+
+.business-workspace .business-results-index-empty,
+.business-workspace .business-dashboard-empty {
+  max-width: 720px;
+  gap: 14px;
+  border: 1px solid var(--rs-hair);
+  border-radius: 10px;
+  background: transparent !important;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  margin-top: 34px;
+  padding: 32px;
+}
+
+.business-workspace .business-results-index-empty > svg {
+  color: var(--rs-ink);
+}
+
+.business-workspace .business-results-index-empty h2 {
+  color: var(--rs-ink);
+  font-family: var(--font-sans);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+
+.business-workspace .business-results-index-empty p {
+  max-width: 520px;
+  color: var(--rs-mute);
+  font: 400 14px/1.6 var(--font-sans);
+}
+
+/* ===========================================================================
+   Part 6 — AI brief page: header and assistant column
+   ---------------------------------------------------------------------------
+   Three things floated outside any grid here: the wordmark repeated 320px to
+   the right of the rail's own brand mark, the two header actions, and the
+   assistant column, which had no edge of its own. Same rules as everywhere
+   else — hairline instead of tint, neutral ink instead of the green cast.
+   =========================================================================== */
+
+/* the rail already carries the brand mark */
+.business-ai-brief-page .business-ai-brief-wordmark {
+  display: none;
+}
+
+.business-ai-brief-page .business-ai-brief-header {
+  border-bottom: 1px solid var(--rs-hair);
+  background: #ffffff;
+}
+
+.business-ai-brief-page .business-ai-brief-actions .business-ai-brief-back,
+.business-ai-brief-page .business-ai-brief-crumbs button,
+.business-ai-brief-page .business-ai-project-history,
+.business-ai-brief-page .business-ai-project-history summary {
+  color: var(--rs-body);
+  font: 500 13px var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-brief-actions .business-ai-brief-back:hover,
+.business-ai-brief-page .business-ai-brief-crumbs button:hover,
+.business-ai-brief-page .business-ai-project-history summary:hover {
+  color: var(--rs-ink);
+}
+
+.business-ai-brief-page .business-ai-brief-crumbs,
+.business-ai-brief-page .business-ai-brief-crumbs span,
+.business-ai-brief-page .business-ai-brief-crumbs strong {
+  color: var(--rs-body);
+  font-weight: 500;
+}
+
+/* the assistant column gets a rule, not a tint */
+.business-ai-brief-page .business-ai-brief-assistant {
+  border-right: 1px solid var(--rs-hair);
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-section > p,
+.business-ai-brief-page .business-ai-brief-assistant-empty,
+.business-ai-brief-page .business-ai-brief-assistant-list span {
+  color: var(--rs-mute);
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list button,
+.business-ai-brief-page .business-ai-brief-assistant-open {
+  color: var(--rs-ink);
+  font-weight: 500;
+}
+
+/* ===========================================================================
+   Part 7 — questionnaire editor and results (/business/projects/:id)
+   ---------------------------------------------------------------------------
+   BusinessQuestionnaire.css dressed this page in the old system throughout: a
+   green-grey ground, a dark-green publish button, pale-green question cards, a
+   DASHED tray for "add a question", green sidebar panels and a display-serif
+   title. Everything here is the same language as the rest of the research end.
+   Selectors carry the extra class step because that sheet is imported by the
+   page itself and may land after this file.
+   =========================================================================== */
+
+.business-builder,
+.business-builder-loading,
+.business-results-page {
+  background: #ffffff !important;
+  color: var(--rs-ink);
+}
+
+/* --- header --------------------------------------------------------------- */
+
+.business-builder .business-builder-header,
+.business-results-page .business-results-header {
+  min-height: 64px;
+  border-bottom: 1px solid var(--rs-hair);
+  background: #ffffff !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.business-builder .business-builder-header > a {
+  color: var(--rs-body);
+  font-weight: 500;
+}
+
+.business-builder .business-builder-header button {
+  min-height: 38px;
+  border: 1px solid var(--rs-hair-2);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--rs-ink);
+  font: 500 12.5px var(--font-sans);
+  padding: 0 14px;
+}
+
+.business-builder .business-builder-header button:hover {
+  border-color: var(--rs-ink);
+}
+
+/* the page's primary verb is the one saturated control */
+.business-builder .business-builder-header .business-builder-publish {
+  border-color: var(--rs-lime);
+  background: var(--rs-lime);
+  color: #14161a;
+}
+
+.business-builder .business-builder-header .business-builder-publish:hover {
+  border-color: var(--rs-lime-deep);
+  background: var(--rs-lime-deep);
+}
+
+/* destructive stays red, quietly */
+.business-builder .business-builder-header .business-builder-delete {
+  border-color: transparent;
+  background: transparent;
+  color: #a33f36;
+}
+
+.business-builder .business-builder-header .business-builder-delete:hover {
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* chips become quiet labels */
+.business-builder .business-builder-header > div > span {
+  border-radius: 0;
+  background: transparent;
+  color: var(--rs-mute);
+  font: 600 10.5px var(--font-sans);
+  letter-spacing: .12em;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+/* --- title: large and light, sans ----------------------------------------- */
+
+.business-builder .business-builder-title {
+  color: var(--rs-ink);
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 300;
+  letter-spacing: -.03em;
+}
+
+.business-builder .business-builder-title::placeholder {
+  color: #c2c6cb;
+}
+
+.business-builder .business-builder-lede,
+.business-builder .business-cover-field {
+  color: var(--rs-mute);
+  font-weight: 400;
+}
+
+/* --- surfaces: hairline, never a tint, never dashed ----------------------- */
+
+.business-builder .business-builder-main {
+  border-right: 1px solid var(--rs-hair);
+}
+
+.business-builder .business-question-card,
+.business-builder .business-builder-sidebar section,
+.business-builder .business-audience-modules,
+.business-builder .business-add-question,
+.business-builder .business-cover-field textarea,
+.business-builder .business-question-choices input,
+.business-builder .business-question-controls select,
+.business-builder .business-sensitive-modal > div,
+.business-results-page .business-results-questions,
+.business-results-page .business-results-records,
+.business-results-page .business-results-empty {
+  border: 1px solid var(--rs-hair);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+/* the dashed tray was the loudest cheap signal on the page */
+.business-builder .business-add-question {
+  border-style: solid;
+  background: transparent;
+}
+
+.business-builder .business-audience-modules,
+.business-builder .business-builder-sidebar section {
+  background: #ffffff;
+}
+
+.business-builder .business-question-card {
+  padding: 22px;
+}
+
+/* the question wording is the content, so it keeps the reading serif at a
+   readable size rather than the old 18px/600 slab */
+.business-builder .business-question-card textarea {
+  border: 0;
+  background: transparent;
+  font-family: var(--font-reading);
+  font-size: 19px;
+  font-weight: 500;
+  padding: 0;
+}
+
+.business-builder .business-question-card-head {
+  color: var(--rs-mute);
+  font-weight: 600;
+  letter-spacing: .12em;
+}
+
+.business-builder .business-question-controls select,
+.business-builder .business-question-controls label,
+.business-builder .business-question-choices input {
+  color: var(--rs-body);
+  font-weight: 400;
+}
+
+/* --- sidebar panels: no tint ---------------------------------------------- */
+
+.business-builder .business-builder-sidebar p,
+.business-builder .business-response-list > p {
+  color: #a1a6ac;
+  font-weight: 600;
+}
+
+.business-builder .business-builder-sidebar h2,
+.business-builder .business-share-card strong,
+.business-builder .business-response-list h2 {
+  color: var(--rs-ink);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.business-builder .business-share-card span {
+  color: var(--rs-mute);
+}
+
+/* --- load / error states -------------------------------------------------- */
+
+.business-builder-loading {
+  color: var(--rs-mute);
+  font-weight: 500;
+}
+
+.business-builder-loading a {
+  color: var(--rs-ink);
+  font-weight: 500;
+}
+
+.business-builder .business-builder-message {
+  border: 1px solid var(--rs-hair-2);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--rs-ink);
+  font-weight: 500;
+}
+
+.business-builder .business-builder-lock {
+  border: 1px solid var(--rs-hair);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--rs-body);
+}
+
+/* ---------------------------------------------------------------------------
+   Part 7b — the old sheet's fills, forced out.
+   BusinessQuestionnaire.css paints `.business-builder-sidebar` as a solid
+   #f0f4ef block and keeps pale-green fills on the cards; probing the rendered
+   page showed those winning over the class-step overrides above (the sheet is
+   imported by the page, after this file). Backgrounds and borders are pinned
+   here rather than chased selector by selector.
+   --------------------------------------------------------------------------- */
+
+.business-builder .business-builder-sidebar,
+.business-builder .business-builder-main,
+.business-builder .business-builder-sidebar section,
+.business-builder .business-question-card,
+.business-builder .business-question-choices > div,
+.business-builder .business-cover-field textarea,
+.business-builder .business-question-choices input,
+.business-builder .business-question-controls select,
+.business-builder .business-builder-title,
+.business-builder .business-builder-lede {
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.business-builder .business-question-card,
+.business-builder .business-builder-sidebar section,
+.business-builder .business-cover-field textarea,
+.business-builder .business-question-choices input,
+.business-builder .business-question-controls select {
+  border: 1px solid var(--rs-hair) !important;
+  border-radius: 10px !important;
+}
+
+/* the question wording is content, not a field: no box of its own */
+.business-builder .business-question-card textarea {
+  border: 0 !important;
+  background: transparent !important;
+}
+
+/* these two were tinted trays; they are just groupings */
+.business-builder .business-add-question,
+.business-builder .business-audience-modules {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid var(--rs-hair) !important;
+  border-radius: 0 !important;
+}
+
+/* the inline "add question" action: ink, not the old dark green */
+.business-builder .business-add-question button {
+  border: 1px solid var(--rs-ink) !important;
+  border-radius: 3px !important;
+  background: var(--rs-ink) !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+.business-builder .business-add-question button:hover {
+  background: #383c42 !important;
+  border-color: #383c42 !important;
+}
+
+/* the header's status chip is a label, not a pill */
+.business-builder .business-builder-header > div > span {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--rs-mute) !important;
+  padding: 0 !important;
+}
+
+/* sidebar panel headings and the small caps already handled above */
+
+/* ---------------------------------------------------------------------------
+   Part 7c — two things parts 7/7b missed.
+   The inline "Add question" button carries the publish class but lives in
+   .business-question-toolbar, not the header, so the header rule never reached
+   it and its dark-green gradient fill stayed. The option fields lost their
+   border to a later rule; they need to read as fields again.
+   --------------------------------------------------------------------------- */
+
+.business-builder .business-question-toolbar .business-builder-publish {
+  border: 1px solid var(--rs-ink) !important;
+  border-radius: 3px !important;
+  background: var(--rs-ink) !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+.business-builder .business-question-toolbar .business-builder-publish:hover {
+  border-color: #383c42 !important;
+  background: #383c42 !important;
+}
+
+main.business-builder .business-question-choices input,
+main.business-builder .business-question-controls select,
+main.business-builder .business-cover-field textarea {
+  border: 1px solid var(--rs-hair-2) !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  background-image: none !important;
+}
+
+/* ===========================================================================
+   Part 8 — every frame on the editor, restored
+   ---------------------------------------------------------------------------
+   Removing the fills had also removed the frames, because the border colour
+   pointed at a variable that only existed in another scope (see the token
+   block). With the variable in place the frames come back, at --rs-box (16%)
+   rather than the 12% divider tone — a box edge has to read as an edge, a
+   rule between rows does not.
+   =========================================================================== */
+
+main.business-builder .business-question-card,
+main.business-builder .business-builder-sidebar section,
+main.business-builder .business-audience-modules,
+main.business-builder .business-add-question,
+main.business-builder .business-question-toolbar,
+main.business-builder .business-builder-lock,
+main.business-builder .business-builder-message,
+main.business-builder .business-cover-field textarea,
+main.business-builder .business-question-card input,
+main.business-builder .business-question-card select,
+main.business-builder .business-question-choices input,
+main.business-builder .business-question-controls select,
+main.business-builder .business-question-controls input {
+  border: 1px solid var(--rs-box) !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  background-image: none !important;
+}
+
+main.business-builder .business-question-card,
+main.business-builder .business-builder-sidebar section,
+main.business-builder .business-audience-modules,
+main.business-builder .business-add-question,
+main.business-builder .business-question-toolbar {
+  border-radius: 10px !important;
+}
+
+/* the question wording is content, not a field: it keeps no box of its own */
+main.business-builder .business-question-card textarea {
+  border: 0 !important;
+  background: transparent !important;
+}
+
+/* the option rows are numbered fields, so the frame wraps the whole row */
+main.business-builder .business-question-choices > div {
+  border: 0 !important;
+  background: transparent !important;
+}
+
+/* ===========================================================================
+   Part 9 — the brand mark on the questionnaire editor
+   ---------------------------------------------------------------------------
+   The rail's mark and this one are different elements: the editor has no rail,
+   it carries `.business-builder-brand-mark` in its own header at 52x52 with a
+   -22px left margin that pulls it into the page padding and crowds the title
+   next to it. Enlarged to match the rail, and the negative margin released so
+   the label moves right instead of being overlapped.
+   =========================================================================== */
+
+.business-builder .business-builder-brand-mark {
+  width: 68px;
+  height: 68px;
+  margin-left: 0;
+  margin-right: 16px;
+}
+
+.business-builder .business-builder-header > a {
+  gap: 10px;
+  font-size: 13.5px;
+}
+
+@media (max-width: 620px) {
+  .business-builder .business-builder-brand-mark {
+    width: 46px;
+    height: 46px;
+    margin-right: 11px;
+  }
+}
+
+/* the rail's own mark gets a further step so the change is legible */
+@media (min-width: 801px) {
+  .business-workspace .business-workspace-rail-mark,
+  .business-ai-brief-page .business-workspace-rail-mark {
+    width: 78px;
+    height: 59px;
+    margin: 2px 0 22px 0;
+  }
+}
+
+/* ===========================================================================
+   Part 10 — account, audience plan, custom questionnaire, delivery preview
+   ---------------------------------------------------------------------------
+   The last four research pages. All four still carried the old system: display
+   serif titles, green tints, dark-green primary buttons and glassy cards.
+   NOTE: their page roots were added to the token block above FIRST — a
+   `var(--rs-*)` that is undefined on a scope resets the whole shorthand, which
+   is what silently removed every border on the editor.
+   =========================================================================== */
+
+/* --- page heads ----------------------------------------------------------- */
+
+.business-account-page .business-eyebrow,
+.business-custom-request-page .business-eyebrow,
+.delivery-preview-page .business-eyebrow,
+.delivery-preview-page .delivery-customer-heading > p,
+.delivery-customer-page .delivery-customer-heading > p {
+  color: #a1a6ac !important;
+  font: 600 10.5px var(--font-sans) !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase;
+}
+
+.business-account-page h1,
+.business-custom-request-page h1,
+.delivery-preview-page h1,
+.delivery-customer-page h1 {
+  color: var(--rs-ink) !important;
+  font-family: var(--font-sans) !important;
+  font-size: clamp(26px, 2.6vw, 32px) !important;
+  font-weight: 400 !important;
+  letter-spacing: -.03em !important;
+  line-height: 1.15 !important;
+}
+
+.business-account-page .business-account-shell p,
+.business-custom-request-page .business-custom-request-surface p,
+.delivery-preview-page .delivery-customer-heading span,
+.delivery-customer-page .delivery-customer-heading span {
+  color: var(--rs-mute);
+}
+
+/* --- surfaces: frame, never a tint or a glass ----------------------------- */
+
+.business-account-page .business-account-details,
+.business-account-page .business-account-person,
+.business-account-page .business-account-settings,
+.business-account-page .business-account-grid > *,
+.business-custom-request-page .business-custom-request-surface,
+.business-custom-request-page .business-custom-request-form,
+.business-custom-request-page .business-custom-request-grid > *,
+.business-custom-request-page .business-custom-intro-modal > section,
+.delivery-preview-page .delivery-results-card,
+.delivery-preview-page .delivery-report-card,
+.delivery-preview-page .delivery-overview-grid article,
+.delivery-preview-page .delivery-report-library article,
+.delivery-customer-page .delivery-results-card,
+.delivery-customer-page .delivery-report-card {
+  border: 1px solid var(--rs-box) !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.business-account-page .business-account-grid > *,
+.business-custom-request-page .business-custom-request-grid > * {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid var(--rs-hair) !important;
+  border-radius: 0 !important;
+}
+
+/* --- fields --------------------------------------------------------------- */
+
+.business-custom-request-page textarea,
+.business-custom-request-page input,
+.business-custom-request-page select,
+.business-account-page input,
+.business-account-page select {
+  border: 1px solid var(--rs-box) !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: var(--rs-ink) !important;
+}
+
+/* --- the one solid control per page --------------------------------------- */
+
+.business-custom-request-page .business-custom-request-next,
+.business-custom-request-page .business-custom-intro-continue,
+.business-account-page .business-button,
+.business-account-page .business-account-settings button[type='submit'] {
+  border: 0 !important;
+  border-radius: 3px !important;
+  background: var(--rs-lime) !important;
+  background-image: none !important;
+  color: #14161a !important;
+  font-weight: 500 !important;
+}
+
+.business-custom-request-page .business-custom-request-quiet,
+.business-custom-request-page .business-custom-intro-close {
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--rs-body) !important;
+  font-weight: 500 !important;
+}
+
+.business-account-page .business-account-signout {
+  border: 0 !important;
+  background: transparent !important;
+  color: #a33f36 !important;
+}
+
+/* --- delivery: tabs read as text with a rule under the current one --------- */
+
+.delivery-preview-page .delivery-customer-tabs button,
+.delivery-customer-page .delivery-customer-tabs button {
+  border: 0 !important;
+  border-bottom: 1px solid transparent !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--rs-mute) !important;
+  font: 500 13px var(--font-sans) !important;
+  padding: 10px 0 !important;
+}
+
+.delivery-preview-page .delivery-customer-tabs button.is-active,
+.delivery-customer-page .delivery-customer-tabs button.is-active {
+  border-bottom-color: var(--rs-ink) !important;
+  color: var(--rs-ink) !important;
+}
+
+.delivery-preview-page .delivery-insight-toolbar select,
+.delivery-preview-page .delivery-question-picker,
+.delivery-preview-page .delivery-view-switch button {
+  border: 1px solid var(--rs-box) !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: var(--rs-ink) !important;
+}
+
+.delivery-preview-page .delivery-view-switch button.is-active {
+  background: var(--rs-ink) !important;
+  color: #ffffff !important;
+}
+
+.delivery-preview-page .delivery-data-table > div,
+.delivery-preview-page .delivery-bars > div {
+  border-color: var(--rs-hair) !important;
+}
+
+.delivery-preview-page .delivery-report-card ol li,
+.delivery-preview-page .delivery-report-library article {
+  border-color: var(--rs-hair) !important;
+}
+
+/* --- the intro modal on the custom-questionnaire page --------------------- */
+
+.business-custom-request-page .business-custom-intro-modal {
+  background: rgba(17, 17, 19, .38) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy > p,
+.business-custom-request-page .business-custom-request-heading > p {
+  color: #a1a6ac !important;
+  font: 600 10.5px var(--font-sans) !important;
+  letter-spacing: .18em !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy h2 {
+  color: var(--rs-ink) !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 400 !important;
+  letter-spacing: -.03em !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy ol li,
+.business-custom-request-page .business-custom-intro-copy > span {
+  color: var(--rs-body) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Part 10b — the last glass on the editor.
+   Swept the rendered page for anything with a backdrop-filter or a gradient
+   background; it found the complete set. Two of them are true glass — the
+   "Research brief" and "Respondent introduction" summary rows carried a
+   135deg translucent gradient over a 15px blur. They are plain framed rows now,
+   and the blur is removed from every element the sweep turned up, not just the
+   two with gradients.
+   --------------------------------------------------------------------------- */
+
+.business-builder .business-study-brief,
+.business-builder .business-cover-field,
+.business-builder .business-audience-modules,
+.business-builder .business-question-toolbar,
+.business-builder .business-question-card,
+.business-builder .business-question-navigator,
+.business-builder .business-design-checks {
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.business-builder .business-study-brief,
+.business-builder .business-cover-field {
+  border: 1px solid var(--rs-box) !important;
+  border-radius: 10px !important;
+  background-color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+/* the intro modal's primary action; the earlier rule named a class that the
+   button may not carry, so this covers any primary button inside the dialog */
+main.business-custom-request-page .business-custom-intro-modal .business-button,
+main.business-custom-request-page .business-custom-intro-modal button[type='submit'],
+main.business-custom-request-page .business-custom-intro-copy > div > button:first-child {
+  border: 0 !important;
+  border-radius: 3px !important;
+  background: var(--rs-lime) !important;
+  background-image: none !important;
+  color: #14161a !important;
+  font-weight: 500 !important;
+}

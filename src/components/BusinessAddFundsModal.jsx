@@ -58,6 +58,10 @@ export default function BusinessAddFundsModal({ open, onClose }) {
   const { language, publicCopy } = useLanguage();
   const uiMap = publicCopy?.workspace?.business?.workspaceUi || {};
   const ui = uiMap[language] || uiMap['en-US'] || {};
+  // Copy that used to be hardcoded English in this file now comes from the
+  // language library, keyed by language.
+  const workspaceStaticMap = publicCopy?.workspace?.business?.workspaceStatic || {};
+  const ws = workspaceStaticMap[language] || workspaceStaticMap['en-GB'] || {};
 
   const [amount, setAmount] = useState(String(MIN_TOP_UP));
   const [touched, setTouched] = useState(false);
@@ -113,9 +117,9 @@ export default function BusinessAddFundsModal({ open, onClose }) {
 
   return (
     <div className="business-funds-modal" role="dialog" aria-modal="true" aria-labelledby="business-funds-title">
-      <button type="button" className="business-funds-scrim" aria-label={ui.closeDialog || 'Close'} onClick={onClose} />
+      <button type="button" className="business-funds-scrim" aria-label={ui.closeDialog || ws.funds.close} onClick={onClose} />
       <section className="business-funds-panel">
-        <button type="button" className="business-funds-close" onClick={onClose} aria-label={ui.closeDialog || 'Close'}>
+        <button type="button" className="business-funds-close" onClick={onClose} aria-label={ui.closeDialog || ws.funds.close}>
           <X size={18} aria-hidden="true" />
         </button>
 
@@ -123,11 +127,11 @@ export default function BusinessAddFundsModal({ open, onClose }) {
 
         <header className="business-funds-head">
           <h2 id="business-funds-title">{ui.addFunds || 'Add funds'}</h2>
-          <p>{ui.addFundsSubtitle || 'Top up your account to pay for research services.'}</p>
+          <p>{ui.addFundsSubtitle || ws.funds.subtitle}</p>
         </header>
 
         <div className="business-funds-amount">
-          <label htmlFor="business-funds-input">{ui.amountLabel || 'Amount (USD)'}</label>
+          <label htmlFor="business-funds-input">{ui.amountLabel || ws.funds.amountLabel}</label>
           <div className={`business-funds-input${touched && !valid ? ' is-invalid' : ''}`}>
             <span aria-hidden="true">$</span>
             <input
@@ -165,7 +169,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </button>
           </div>
           <p className="business-funds-min">
-            {(ui.minTopUp || 'Minimum top-up {amount}.').replace('{amount}', `US$${MIN_TOP_UP}`)}
+            {(ui.minTopUp || ws.funds.minTopUp).replace('{amount}', `US$${MIN_TOP_UP}`)}
           </p>
         </div>
 
@@ -175,7 +179,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18M12 3l9 5H3l9-5Z" /></svg>
             </span>
             <span className="business-funds-route-copy">
-              <strong>Bank transfer</strong>
+              <strong>{ws.funds.bankTransfer}</strong>
             </span>
             <span className="business-funds-route-go" aria-hidden="true">›</span>
           </a>
@@ -184,7 +188,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
               <img src="/pay/paypal-monogram.png" alt="" />
             </span>
             <span className="business-funds-route-copy">
-              <strong>PayPal or credit card</strong>
+              <strong>{ws.funds.paypalCard}</strong>
             </span>
             <span className="business-funds-route-go" aria-hidden="true">›</span>
           </a>
@@ -201,7 +205,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
               <CryptomusMark size={19} />
             </span>
             <span className="business-funds-route-copy">
-              <strong>Cryptocurrency</strong>
+              <strong>{ws.funds.crypto}</strong>
             </span>
             <span className="business-funds-route-go" aria-hidden="true">
               {submitting === 'crypto' ? '…' : '›'}
@@ -217,7 +221,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
               <img src="/pay/alipay.png" alt="" />
             </span>
             <span className="business-funds-route-copy">
-              <strong>Alipay</strong>
+              <strong>{ws.funds.alipay}</strong>
             </span>
             <span className="business-funds-route-go" aria-hidden="true">
               {submitting === 'alipay' ? '…' : '›'}
@@ -230,8 +234,8 @@ export default function BusinessAddFundsModal({ open, onClose }) {
         <footer className="business-funds-secure">
           <Lock size={17} aria-hidden="true" />
           <span className="business-funds-secure-copy">
-            <strong>{ui.securePaymentTitle || 'SSL secure payment'}</strong>
-            <small>{ui.securePaymentBody || 'Your information is protected by 256-bit SSL encryption.'}</small>
+            <strong>{ui.securePaymentTitle || ws.funds.secureTitle}</strong>
+            <small>{ui.securePaymentBody || ws.funds.secureBody}</small>
           </span>
           <CardMarks />
         </footer>

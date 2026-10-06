@@ -3,10 +3,16 @@ import { ArrowLeft, Check, LoaderCircle, LogOut, UserRound } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
 import { getBusinessWorkspace, updateProfile } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 import './Business.css';
 
 export default function BusinessAccount() {
   const { user, setUser, logout } = useAuth();
+  const { language, publicCopy } = useLanguage();
+  // Copy that used to be hardcoded English in this file now comes from the
+  // language library, keyed by language.
+  const workspaceStaticMap = publicCopy?.workspace?.business?.workspaceStatic || {};
+  const ws = workspaceStaticMap[language] || workspaceStaticMap['en-GB'] || {};
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [displayName, setDisplayName] = useState(user?.displayName || '');
@@ -15,7 +21,7 @@ export default function BusinessAccount() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    getBusinessWorkspace().then((response) => setProfile(response.data.profile || null)).catch(() => setError('We could not load your workspace details. Please return to projects and try again.'));
+    getBusinessWorkspace().then((response) => setProfile(response.data.profile || null)).catch(() => setError(ws.account.loadError));
   }, []);
 
   const saveName = async () => {
@@ -24,9 +30,9 @@ export default function BusinessAccount() {
     try {
       const response = await updateProfile({ displayName: displayName.trim() });
       setUser(response.data.user);
-      setMessage('Account name updated.');
+      setMessage(ws.account.nameUpdated);
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'We could not update your account name. Please try again.');
+      setError(caughtError.response?.data?.message || ws.account.nameUpdateError);
     } finally { setSaving(false); }
   };
 
@@ -36,12 +42,12 @@ export default function BusinessAccount() {
   };
 
   return <main className="business-account-page">
-    <header><img src="/guanyisearch-project-mark.png" alt="GuanyiSearch" /><button type="button" onClick={() => navigate('/business/workspace')}><ArrowLeft size={17} /> Back to projects</button></header>
+    <header><img src="/guanyisearch-project-mark.png" alt="GuanyiSearch" /><button type="button" onClick={() => navigate('/business/workspace')}><ArrowLeft size={17} /> {ws.account.backToProjects}</button></header>
     <section className="business-account-shell">
-      <div><p className="business-eyebrow">CLIENT WORKSPACE</p><h1>Account</h1><p>Manage the identity shown in your research workspace.</p></div>
+      <div><p className="business-eyebrow">{ws.account.eyebrow}</p><h1>{ws.account.title}</h1><p>{ws.account.intro}</p></div>
       <div className="business-account-grid">
-        <section className="business-account-details"><div className="business-account-person"><span><UserRound size={21} /></span><div><strong>{user?.displayName || 'Client account'}</strong><small>Workspace owner</small></div></div><dl><div><dt>Organisation</dt><dd>{profile?.organizationName || 'Research workspace'}</dd></div><div><dt>Organisation type</dt><dd>{profile?.organizationType?.replaceAll('_', ' ').toLowerCase() || 'Not set'}</dd></div><div><dt>Email</dt><dd>{user?.email || 'Not set'}</dd></div><div><dt>Region</dt><dd>{profile?.region || 'Not set'}</dd></div></dl></section>
-        <aside className="business-account-settings"><p>ACCOUNT SETTINGS</p><h2>Display name</h2><span>This name is shown beside your projects and workspace notifications.</span><label>Name<input value={displayName} onChange={(event) => setDisplayName(event.target.value)} maxLength={80} autoComplete="name" /></label>{message && <em className="is-success"><Check size={15} /> {message}</em>}{error && <em className="is-error">{error}</em>}<button className="business-button" type="button" onClick={saveName} disabled={saving || !displayName.trim()}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : 'Save name'}</button><button className="business-account-signout" type="button" onClick={signOut}><LogOut size={16} /> Sign out of this workspace</button></aside>
+        <section className="business-account-details"><div className="business-account-person"><span><UserRound size={21} /></span><div><strong>{user?.displayName || ws.account.clientFallback}</strong><small>{ws.account.workspaceOwner}</small></div></div><dl><div><dt>{ws.account.organisationLabel}</dt><dd>{profile?.organizationName || ws.account.organisationFallback}</dd></div><div><dt>{ws.account.organisationType}</dt><dd>{profile?.organizationType?.replaceAll('_', ' ').toLowerCase() || ws.account.notSet}</dd></div><div><dt>{ws.account.emailLabel}</dt><dd>{user?.email || ws.account.notSet}</dd></div><div><dt>{ws.account.regionLabel}</dt><dd>{profile?.region || ws.account.notSet}</dd></div></dl></section>
+        <aside className="business-account-settings"><p>{ws.account.settingsEyebrow}</p><h2>{ws.account.displayName}</h2><span>{ws.account.displayNameHelp}</span><label>{ws.account.nameLabel}<input value={displayName} onChange={(event) => setDisplayName(event.target.value)} maxLength={80} autoComplete="name" /></label>{message && <em className="is-success"><Check size={15} /> {message}</em>}{error && <em className="is-error">{error}</em>}<button className="business-button" type="button" onClick={saveName} disabled={saving || !displayName.trim()}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : ws.account.saveName}</button><button className="business-account-signout" type="button" onClick={signOut}><LogOut size={16} /> {ws.account.signOut}</button></aside>
       </div>
     </section>
   </main>;
