@@ -500,3 +500,8 @@
 .app-shell-panelist .dashboard-path-head {
   padding-right: 6px;
 }
+
+/* the panel's head sat 20px down from its own top rule; it comes up */
+.app-shell-panelist .dashboard-path-panel {
+  padding-top: 11px;
+}
