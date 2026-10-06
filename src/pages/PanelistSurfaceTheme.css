@@ -97,7 +97,7 @@
    under the page keeps the last block from ending up behind it. */
 .app-shell-panelist .app-main,
 .app-shell-panelist .app-main.app-main-dashboard {
-  padding-bottom: 190px;
+  padding-bottom: 0;
   background: var(--ps-brand-deep) !important;
 }
 
@@ -504,4 +504,65 @@
 /* the panel's head sat 20px down from its own top rule; it comes up */
 .app-shell-panelist .dashboard-path-panel {
   padding-top: 11px;
+}
+
+/* ---------------------------------------------------------------------------
+   15. Wallet hero — full-bleed photograph
+   Star trails over a desert horizon: a dark band, so the copy on it goes light.
+   The homepage contact section works the same way. An earlier attempt at this
+   painted white copy over a white background and shipped a blank band, so the
+   image is confirmed reachable before anything is claimed about it.
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .wallet-hero {
+  margin-left: -40px;
+  margin-right: -40px;
+  padding: 56px 40px;
+  border: 0;
+  border-radius: 0;
+  /* `!important` is external here and it took a computed-style read to find out:
+     the white copy applied from this block while the background did not, and the
+     browser reported `img=linear-gradient(135deg, rgba(255,255,253,.98)…)` plus a
+     transparent background-color — i.e. a `.wallet-hero` rule in one of the
+     shared sheets was still painting, which is what put white text on a white
+     panel the first time this was attempted. */
+  background-color: #14161a !important;
+  background-image:
+    linear-gradient(90deg,
+      rgba(12, 14, 17, .86) 0%,
+      rgba(12, 14, 17, .60) 40%,
+      rgba(12, 14, 17, .26) 72%,
+      rgba(12, 14, 17, .12) 100%),
+    url('../assets/home/panelist-wallet-hero.jpg') !important;
+  background-repeat: no-repeat !important;
+  background-size: cover, cover !important;
+  background-position: center, 50% 46% !important;
+  box-shadow: none !important;
+}
+
+.app-shell-panelist .wallet-hero h1,
+.app-shell-panelist .wallet-hero-copy :is(h1, h2) {
+  color: #ffffff;
+}
+
+.app-shell-panelist .wallet-hero-kicker {
+  color: rgba(255, 255, 255, .62);
+}
+
+.app-shell-panelist .wallet-hero-copy > p:not(.wallet-hero-kicker) {
+  color: rgba(255, 255, 255, .80);
+}
+
+.app-shell-panelist .wallet-hero-actions span {
+  border-color: rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .10);
+  color: #ffffff;
+}
+
+@media (max-width: 1023px) {
+  .app-shell-panelist .wallet-hero { margin-left: -32px; margin-right: -32px; padding: 44px 32px; }
+}
+
+@media (max-width: 639px) {
+  .app-shell-panelist .wallet-hero { margin-left: -20px; margin-right: -20px; padding: 34px 20px; }
 }
