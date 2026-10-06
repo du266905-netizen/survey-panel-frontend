@@ -96,11 +96,16 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
     <>
       {launcherVisible && typeof document !== 'undefined' && createPortal(
         <aside className="referral-launcher" aria-label="Invite program">
-          <button className="referral-launcher-action" type="button" onClick={() => setOpen(true)} aria-label="Invite someone">
-            <ReferralPeopleArtwork className="referral-launcher-art" />
+          <div className="referral-launcher-copy">
+            <span>Invite someone</span>
+            <strong>Share a<br />real survey.</strong>
+          </div>
+          <ReferralPeopleArtwork className="referral-launcher-art" />
+          <button className="referral-launcher-action" type="button" onClick={() => setOpen(true)}>
+            Invite someone <ArrowUpRight size={14} />
           </button>
           <button className="referral-launcher-dismiss" type="button" onClick={() => setLauncherVisible(false)} aria-label="Dismiss invite prompt">
-            <X size={14} />
+            <X size={15} />
           </button>
         </aside>,
         document.body
