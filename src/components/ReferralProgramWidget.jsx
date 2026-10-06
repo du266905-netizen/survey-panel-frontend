@@ -6,7 +6,9 @@ import referralCommunityImage from '../assets/referral-community.jpg';
 import { useNavigate } from 'react-router-dom';
 import { getReferralSummary } from '../api/realApi';
 import CoinAmount from './CoinAmount';
+import { useLanguage } from './LanguageContext';
 import Logo from './Logo';
+import { interpolate } from '../utils/interpolate';
 
 function inviteUrl(referralCode) {
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://guanyi-media.com';
@@ -23,6 +25,8 @@ function ReferralPeopleArtwork({ className = '', imageSrc = referralPeopleImage 
 
 export default function ReferralProgramWidget({ openFromRoute = false }) {
   const navigate = useNavigate();
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy?.panelistUi?.referral || {};
   const [open, setOpen] = useState(openFromRoute);
   const [launcherVisible, setLauncherVisible] = useState(true);
   const [summary, setSummary] = useState(null);
@@ -45,7 +49,7 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
         const response = await getReferralSummary();
         if (!cancelled) setSummary(response.data);
       } catch (caughtError) {
-        if (!cancelled) setError(caughtError.response?.data?.message || 'Your invite details are unavailable right now.');
+        if (!cancelled) setError(caughtError.response?.data?.message || copy.errorUnavailable);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -88,23 +92,23 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
-      setError('Copying is unavailable in this browser.');
+      setError(copy.errorCopy);
     }
   }
 
   return (
     <>
       {launcherVisible && typeof document !== 'undefined' && createPortal(
-        <aside className="referral-launcher" aria-label="Invite program">
+        <aside className="referral-launcher" aria-label={publicCopy?.workspace?.nav?.invite}>
           <div className="referral-launcher-copy">
-            <span>Invite someone</span>
-            <strong>Share a<br />real survey.</strong>
+            <span>{copy.inviteSomeone}</span>
+            <strong>{copy.launcherTitle}</strong>
           </div>
           <ReferralPeopleArtwork className="referral-launcher-art" />
           <button className="referral-launcher-action" type="button" onClick={() => setOpen(true)}>
-            Invite someone <ArrowUpRight size={14} />
+            {copy.inviteSomeone} <ArrowUpRight size={14} />
           </button>
-          <button className="referral-launcher-dismiss" type="button" onClick={() => setLauncherVisible(false)} aria-label="Dismiss invite prompt">
+          <button className="referral-launcher-dismiss" type="button" onClick={() => setLauncherVisible(false)} aria-label={copy.dismissPrompt}>
             <X size={15} />
           </button>
         </aside>,
@@ -117,22 +121,22 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
             <header className="referral-modal-header">
               <div>
                 <Logo size="sm" className="referral-modal-brand" />
-                <span className="referral-modal-label">Invite someone</span>
+                <span className="referral-modal-label">{copy.inviteSomeone}</span>
               </div>
-              <button className="referral-modal-close" type="button" onClick={closeProgram} aria-label="Close invite program"><X size={20} /></button>
+              <button className="referral-modal-close" type="button" onClick={closeProgram} aria-label={copy.closeProgram}><X size={20} /></button>
             </header>
 
             <div className="referral-modal-scroll">
               <section className="referral-modal-hero">
                 <div className="referral-modal-hero-copy">
-                  <p className="referral-modal-kicker"><Sparkles size={15} /> One genuine introduction</p>
-                  <h2 id="referral-modal-title">Invite someone who will<br />genuinely take part.</h2>
-                  <p>Invite someone who genuinely wants to take part. They receive a welcome boost when they join and another when they complete their profile; you share in {commissionPercent}% of their eligible survey Coins as they keep participating.</p>
+                  <p className="referral-modal-kicker"><Sparkles size={15} /> {copy.heroKicker}</p>
+                  <h2 id="referral-modal-title">{copy.heroTitle}</h2>
+                  <p>{interpolate(copy.heroBody, { percent: Number(commissionPercent).toLocaleString() })}</p>
                 </div>
                 <div className="referral-modal-reward">
                   <ReferralPeopleArtwork className="referral-modal-art" imageSrc={referralCommunityImage} />
                   <div className="referral-modal-reward-copy">
-                    <span>Welcome boost at each step</span>
+                    <span>{copy.rewardKicker}</span>
                     <strong>{referredWelcomeCoins.toLocaleString('en-US')} + {referredWelcomeCoins.toLocaleString('en-US')} Coins</strong>
                   </div>
                 </div>
@@ -145,29 +149,29 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
                   <div className="referral-modal-card-head">
                     <span><LinkIcon size={18} /></span>
                     <div>
-                      <h3>Your personal link</h3>
-                      <p>Share it with one person who would genuinely enjoy taking surveys.</p>
+                      <h3>{copy.linkTitle}</h3>
+                      <p>{copy.linkBody}</p>
                     </div>
                   </div>
                   <div className="referral-modal-link-box">
-                    <code>{loading ? 'Preparing your link…' : referralLink || 'Invite code unavailable'}</code>
+                    <code>{loading ? copy.linkLoading : referralLink || copy.linkUnavailable}</code>
                     <button type="button" onClick={copyInviteLink} disabled={!referralLink}>
                       {copied ? <Check size={16} /> : <Copy size={16} />}
-                      {copied ? 'Copied' : 'Copy link'}
+                      {copied ? copy.copied : copy.copyLink}
                     </button>
                   </div>
-                  <p className="referral-modal-note">A successful registration through your link gives them {referredWelcomeCoins.toLocaleString('en-US')} Coins. Completing their profile unlocks a further {referredWelcomeCoins.toLocaleString('en-US')} Coins. One account can be linked to one inviter only.</p>
+                  <p className="referral-modal-note">{interpolate(copy.linkNote, { coins: referredWelcomeCoins.toLocaleString() })}</p>
                 </article>
 
                 <div className="referral-modal-stats">
                   <article>
                     <Users size={19} />
-                    <span>Successful invites</span>
+                    <span>{copy.statsInvites}</span>
                     <strong>{loading ? '—' : Number(summary?.successfulInvites || 0).toLocaleString('en-US')}</strong>
                   </article>
                   <article>
                     <Gift size={19} />
-                    <span>Commission Coins earned</span>
+                    <span>{copy.statsCoins}</span>
                     <strong><CoinAmount value={summary?.coinsEarned || 0} /></strong>
                   </article>
                 </div>
@@ -177,14 +181,14 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
                 <div className="referral-modal-card-head">
                   <span><ShieldCheck size={18} /></span>
                   <div>
-                    <h3>How this works</h3>
-                    <p>Built around a real, ongoing participation relationship.</p>
+                    <h3>{copy.rulesTitle}</h3>
+                    <p>{copy.rulesBody}</p>
                   </div>
                 </div>
                 <ol>
-                  <li><span>01</span><div><strong>Invite one person</strong><p>They join through your personal link. An account cannot be attached to multiple inviters.</p></div></li>
-                  <li><span>02</span><div><strong>They receive two welcome boosts</strong><p>They receive {referredWelcomeCoins.toLocaleString('en-US')} Coins after a successful sign-up and another {referredWelcomeCoins.toLocaleString('en-US')} Coins after completing their profile.</p></div></li>
-                  <li><span>03</span><div><strong>Earn with their real activity</strong><p>You receive {commissionPercent}% of the Coins they earn from eligible validated surveys. Profile-completion Coins are theirs in full and are never part of your commission.</p></div></li>
+                  <li><span>01</span><div><strong>{copy.step1Title}</strong><p>{copy.step1Body}</p></div></li>
+                  <li><span>02</span><div><strong>{copy.step2Title}</strong><p>{interpolate(copy.step2Body, { coins: referredWelcomeCoins.toLocaleString() })}</p></div></li>
+                  <li><span>03</span><div><strong>{copy.step3Title}</strong><p>{interpolate(copy.step3Body, { percent: Number(commissionPercent).toLocaleString() })}</p></div></li>
                 </ol>
               </section>
             </div>

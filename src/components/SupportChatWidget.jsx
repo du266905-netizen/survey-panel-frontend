@@ -2,9 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, FilePenLine, LoaderCircle, Send, UserRound } from 'lucide-react';
 import { createSupportTicket, sendSupportMessage } from '../api/supportApi';
 import { useAuth } from './AuthContext';
+import { useLanguage } from './LanguageContext';
 import Logo from './Logo';
 import './SupportChatWidget.css';
 
+/* The welcome line and the quick questions stay English in this module: they
+   are the conversation content that goes to the support API (see
+   trimMessages/sendSupportMessage). Only what the panelist reads is looked up
+   in the language library at render time. */
 const INITIAL_MESSAGE = {
   role: 'assistant',
   content: 'Welcome to GuanyiSearch Support. Ask a general question, or submit a request when you need help with your account.',
@@ -16,12 +21,14 @@ const QUICK_QUESTIONS = [
   'How is my privacy handled?',
 ];
 
+/* `value` is the category sent to the support API; `label` names the
+   language-library key rendered in the topic dropdown. */
 const TICKET_CATEGORIES = [
-  { value: 'ACCOUNT', label: 'Account & access' },
-  { value: 'PARTICIPATION', label: 'Participation' },
-  { value: 'REWARDS', label: 'Coins & rewards' },
-  { value: 'PRIVACY', label: 'Privacy request' },
-  { value: 'OTHER', label: 'Something else' },
+  { value: 'ACCOUNT', label: 'categoryAccount' },
+  { value: 'PARTICIPATION', label: 'categoryParticipation' },
+  { value: 'REWARDS', label: 'categoryRewards' },
+  { value: 'PRIVACY', label: 'categoryPrivacy' },
+  { value: 'OTHER', label: 'categoryOther' },
 ];
 
 function trimMessages(messages) {
@@ -29,9 +36,10 @@ function trimMessages(messages) {
 }
 
 export function SupportChatGlyph({ size = 28, decorative = false }) {
+  const { publicCopy } = useLanguage();
   return (
     <svg className="support-chat-glyph" viewBox="0 0 120 110" width={size} height={size} aria-hidden={decorative ? 'true' : undefined} role={decorative ? undefined : 'img'}>
-      {!decorative && <title>Support</title>}
+      {!decorative && <title>{publicCopy?.panelistUi?.chat?.glyphTitle}</title>}
       <circle className="support-chat-glyph-orb" cx="89" cy="24" r="16" />
       <path className="support-chat-glyph-bubble" d="M21 34c0-14 12-23 29-23h24c16 0 27 9 27 23v14c0 14-11 23-28 23H51L30 88l4-20c-8-7-13-18-13-34Z" />
       <g className="support-chat-glyph-dots">
@@ -43,17 +51,26 @@ export function SupportChatGlyph({ size = 28, decorative = false }) {
   );
 }
 
-function Message({ message }) {
+function Message({ message, copy }) {
+  /* The seeded welcome message keeps its English content in state (it is sent
+     to the API with the conversation); the panelist reads the library copy. */
+  const isWelcomeMessage = message.role === 'assistant' && message.content === INITIAL_MESSAGE.content;
   return (
     <article className={`support-chat-message is-${message.role}`}>
-      <span className="support-chat-message-label">{message.role === 'assistant' ? 'SUPPORT' : 'YOU'}</span>
-      <p>{message.content}</p>
+      <span className="support-chat-message-label">{message.role === 'assistant' ? copy.roleSupport : copy.roleYou}</span>
+      <p>{isWelcomeMessage ? copy.initialMessage : message.content}</p>
     </article>
   );
 }
 
 export default function SupportChatWidget() {
   const { user } = useAuth();
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy?.panelistUi?.chat || {};
+  const commonCopy = publicCopy?.panelistUi?.common || {};
+  /* Quick questions render localized labels while the English array values stay
+     the message content that is submitted to the support API. */
+  const quickQuestionLabels = [copy.quickCoins, copy.quickParticipation, copy.quickPrivacy];
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([INITIAL_MESSAGE]);
   const [input, setInput] = useState('');
@@ -109,7 +126,7 @@ export default function SupportChatWidget() {
       setMessages((current) => trimMessages([...current, { role: 'assistant', content: response.data.reply }]));
       if (response.data.needsHuman) openRequestForm();
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'We could not send that message. Please try again or submit a request.');
+      setError(caughtError.response?.data?.message || copy.errorSend);
     } finally {
       setIsSending(false);
     }
@@ -131,12 +148,12 @@ export default function SupportChatWidget() {
         messages: [{ role: 'user', content: description }],
         ...(isSignedIn ? {} : { contactEmail: contactEmail.trim(), contactName: contactName.trim() || undefined }),
       });
-      setTicketStatus('Request received. Our team will follow up using your contact details.');
+      setTicketStatus(copy.requestReceived);
       setTicketSubject('');
       setTicketDescription('');
       setRequestOpen(false);
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'We could not submit your request. Please try again.');
+      setError(caughtError.response?.data?.message || copy.errorSubmit);
     } finally {
       setIsCreatingTicket(false);
     }
@@ -145,58 +162,58 @@ export default function SupportChatWidget() {
   return (
     <div className="support-chat-widget">
       {isOpen && (
-        <section className="support-chat-panel" role="dialog" aria-modal="false" aria-label="GuanyiSearch support">
+        <section className="support-chat-panel" role="dialog" aria-modal="false" aria-label={copy.dialogLabel}>
           <header className="support-chat-header">
             <div className="support-chat-title">
               <span className="support-chat-title-mark"><SupportChatGlyph size={37} decorative /></span>
               <div>
                 <Logo size="sm" className="support-chat-brand" />
-                <strong>How can we help?</strong>
+                <strong>{copy.heading}</strong>
               </div>
             </div>
-            <button type="button" className="support-chat-close" onClick={() => setIsOpen(false)} aria-label="Close support"><ChevronDown size={20} /></button>
+            <button type="button" className="support-chat-close" onClick={() => setIsOpen(false)} aria-label={copy.closeSupport}><ChevronDown size={20} /></button>
           </header>
 
-          <div className="support-chat-disclosure">Please don’t share passwords, verification codes, or payment details.</div>
+          <div className="support-chat-disclosure">{copy.disclosure}</div>
 
           <div className="support-chat-body" ref={bodyRef}>
-            {!requestOpen && messages.map((message, index) => <Message key={`${message.role}-${index}-${message.content.slice(0, 16)}`} message={message} />)}
-            {isSending && <div className="support-chat-typing"><LoaderCircle size={15} className="animate-spin" /> One moment…</div>}
+            {!requestOpen && messages.map((message, index) => <Message key={`${message.role}-${index}-${message.content.slice(0, 16)}`} message={message} copy={copy} />)}
+            {isSending && <div className="support-chat-typing"><LoaderCircle size={15} className="animate-spin" /> {copy.sending}</div>}
             {error && <div className="support-chat-error">{error}</div>}
             {ticketStatus && <div className="support-chat-success">{ticketStatus}</div>}
 
             {!messages.some((message) => message.role === 'user') && !requestOpen && (
               <div className="support-chat-suggestions">
-                <span>Common questions</span>
-                {QUICK_QUESTIONS.map((question) => <button key={question} type="button" onClick={() => submitMessage(question)}>{question}<ArrowUpRight size={15} /></button>)}
+                <span>{copy.commonQuestions}</span>
+                {QUICK_QUESTIONS.map((question, index) => <button key={question} type="button" onClick={() => submitMessage(question)}>{quickQuestionLabels[index]}<ArrowUpRight size={15} /></button>)}
               </div>
             )}
 
             {requestOpen && !ticketStatus && (
               <form className="support-request-form" onSubmit={submitSupportRequest}>
-                <div className="support-request-heading"><FilePenLine size={17} /><div><span>SUPPORT REQUEST</span><strong>Tell us what you need.</strong></div></div>
-                <p>Choose a topic and give the team a short description so your request reaches the right person.</p>
-                <label>TOPIC
+                <div className="support-request-heading"><FilePenLine size={17} /><div><span>{copy.requestKicker}</span><strong>{copy.requestTitle}</strong></div></div>
+                <p>{copy.requestIntro}</p>
+                <label>{copy.fieldTopic}
                   <select value={ticketCategory} onChange={(event) => setTicketCategory(event.target.value)}>
-                    {TICKET_CATEGORIES.map((category) => <option key={category.value} value={category.value}>{category.label}</option>)}
+                    {TICKET_CATEGORIES.map((category) => <option key={category.value} value={category.value}>{copy[category.label]}</option>)}
                   </select>
                 </label>
-                <label>SUBJECT
-                  <input value={ticketSubject} required maxLength={140} onChange={(event) => setTicketSubject(event.target.value)} placeholder="A short summary" />
+                <label>{copy.fieldSubject}
+                  <input value={ticketSubject} required maxLength={140} onChange={(event) => setTicketSubject(event.target.value)} placeholder={copy.subjectPlaceholder} />
                 </label>
-                <label>DETAILS
-                  <textarea value={ticketDescription} required maxLength={1800} onChange={(event) => setTicketDescription(event.target.value)} placeholder="What happened, and what would you like help with?" />
+                <label>{copy.fieldDetails}
+                  <textarea value={ticketDescription} required maxLength={1800} onChange={(event) => setTicketDescription(event.target.value)} placeholder={copy.detailsPlaceholder} />
                 </label>
                 {!isSignedIn && (
                   <div className="support-request-contact">
-                    <label>NAME<input value={contactName} maxLength={80} onChange={(event) => setContactName(event.target.value)} autoComplete="name" /></label>
-                    <label>EMAIL<input value={contactEmail} type="email" required maxLength={254} onChange={(event) => setContactEmail(event.target.value)} autoComplete="email" /></label>
+                    <label>{copy.fieldName}<input value={contactName} maxLength={80} onChange={(event) => setContactName(event.target.value)} autoComplete="name" /></label>
+                    <label>{copy.fieldEmail}<input value={contactEmail} type="email" required maxLength={254} onChange={(event) => setContactEmail(event.target.value)} autoComplete="email" /></label>
                   </div>
                 )}
-                {isSignedIn && <p className="support-request-signed-in">We’ll reply using the email address on your account.</p>}
+                {isSignedIn && <p className="support-request-signed-in">{copy.signedInNote}</p>}
                 <div className="support-request-actions">
-                  <button type="button" onClick={() => setRequestOpen(false)}>Back to chat</button>
-                  <button type="submit" disabled={isCreatingTicket}>{isCreatingTicket ? 'Submitting…' : 'Submit request'} <ArrowUpRight size={15} /></button>
+                  <button type="button" onClick={() => setRequestOpen(false)}>{copy.backToChat}</button>
+                  <button type="submit" disabled={isCreatingTicket}>{isCreatingTicket ? copy.submitting : copy.submitRequest} <ArrowUpRight size={15} /></button>
                 </div>
               </form>
             )}
@@ -204,18 +221,18 @@ export default function SupportChatWidget() {
 
           {!requestOpen && (
             <div className="support-chat-human-row">
-              <button type="button" onClick={openRequestForm}><UserRound size={15} /> Submit a request</button>
-              <a href="/privacy">Privacy</a>
+              <button type="button" onClick={openRequestForm}><UserRound size={15} /> {copy.submitARequest}</button>
+              <a href="/privacy">{commonCopy.privacy}</a>
             </div>
           )}
 
           <form className="support-chat-composer" onSubmit={(event) => { event.preventDefault(); submitMessage(input); }}>
-            <textarea value={input} maxLength={1800} onChange={(event) => setInput(event.target.value)} placeholder="Type your question…" aria-label="Support question" />
-            <button type="submit" disabled={!input.trim() || isSending} aria-label="Send question"><Send size={17} /></button>
+            <textarea value={input} maxLength={1800} onChange={(event) => setInput(event.target.value)} placeholder={copy.inputPlaceholder} aria-label={copy.inputLabel} />
+            <button type="submit" disabled={!input.trim() || isSending} aria-label={copy.sendLabel}><Send size={17} /></button>
           </form>
         </section>
       )}
-      <button className={`support-chat-launcher ${isOpen ? 'is-open' : ''}`} type="button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? 'Close support' : 'Open support'} aria-expanded={isOpen}>
+      <button className={`support-chat-launcher ${isOpen ? 'is-open' : ''}`} type="button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? copy.closeSupport : copy.openSupport} aria-expanded={isOpen}>
         {isOpen ? <ChevronDown size={23} /> : <SupportChatGlyph size={48} decorative />}
       </button>
     </div>
