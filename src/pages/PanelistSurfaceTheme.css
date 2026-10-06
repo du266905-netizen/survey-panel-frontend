@@ -485,3 +485,18 @@
 .app-shell-panelist .dashboard-path-panel {
   background: #ffffff;
 }
+
+/* ---------------------------------------------------------------------------
+   14. Right-hand breathing room in the reward path panel
+   The panel's right rule sat about 10px from the end of the head's text
+   ("Surveys → Coins → Gift cards"), so the line read as though it were pressing
+   the words. The panel and its head both take a real right inset.
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .dashboard-path-panel {
+  padding-right: 34px;
+}
+
+.app-shell-panelist .dashboard-path-head {
+  padding-right: 6px;
+}
