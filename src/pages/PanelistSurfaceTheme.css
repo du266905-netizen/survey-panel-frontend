@@ -566,3 +566,15 @@
 @media (max-width: 639px) {
   .app-shell-panelist .wallet-hero { margin-left: -20px; margin-right: -20px; padding: 34px 20px; }
 }
+
+/* ---------------------------------------------------------------------------
+   16. The activity card's border was sitting on its own content
+   The four edges of `.dashboard-trend-card` were 17-30px from the text inside
+   them — "YOUR ACTIVITY" against the top and left rules, the legend against the
+   bottom rule. Same defect as §13: a line too close to the words. The fix is the
+   same one: move the lines out, by giving the card its own padding.
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .dashboard-trend-card {
+  padding: 34px 38px 30px;
+}
