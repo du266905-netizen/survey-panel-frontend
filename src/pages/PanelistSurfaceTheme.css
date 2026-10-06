@@ -415,3 +415,73 @@
   font-weight: 400;
   color: var(--ps-ink);
 }
+
+/* ---------------------------------------------------------------------------
+   12. Two stand-alone items
+   --------------------------------------------------------------------------- */
+
+/* 3. The chart's empty-trend callout.
+   It sat as a tight tinted box on the plotting area, so its two lines read as
+   though they were pressed against its edges. */
+.app-shell-panelist .dashboard-chart-empty {
+  padding: 22px 28px;
+  max-width: 460px;
+  border: 1px solid var(--ps-hair);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: none;
+  text-align: center;
+}
+
+.app-shell-panelist .dashboard-chart-empty > p {
+  margin: 0 0 6px;
+  color: var(--ps-ink);
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+.app-shell-panelist .dashboard-chart-empty > span {
+  color: var(--ps-mute);
+}
+
+/* 7. The task card read a size too heavy next to the opportunity grid. */
+.app-shell-panelist .research-profile-task-card {
+  width: min(100%, 296px);
+}
+
+.app-shell-panelist .research-profile-task-art {
+  height: 148px;
+}
+
+/* ---------------------------------------------------------------------------
+   13. The reward path rows (participant home, second band)
+   Requested as "the table pressing the text". Each step is a
+   `.dashboard-path-steps article` with `padding: 14px` and a row gap of only
+   4px, stacked with nothing between them, so the three bordered boxes read as
+   table rows and the copy sits 14px from every edge. Room is added on all four
+   sides and between the rows, and the 3px coloured bar down the left becomes
+   the brand accent at 2px.
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .dashboard-path-steps {
+  display: grid;
+  row-gap: 10px;
+}
+
+.app-shell-panelist .dashboard-path-steps article {
+  padding: 18px 20px;
+  gap: 9px 14px;
+  border: 1px solid var(--ps-hair);
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.app-shell-panelist .dashboard-path-steps article::after {
+  width: 2px;
+  border-radius: 2px 0 0 2px;
+  background: var(--ps-lime);
+}
+
+.app-shell-panelist .dashboard-path-panel {
+  background: #ffffff;
+}
