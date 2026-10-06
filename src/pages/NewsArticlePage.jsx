@@ -4,34 +4,29 @@ import { ArrowLeft, ArrowUpRight, CalendarDays, Check, ExternalLink, FlaskConica
 import { Link, useParams } from 'react-router-dom';
 import { getNewsArticle, getNewsWall, saveNewsResearchSignal } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
+import { interpolate } from '../utils/interpolate';
 import { toSafeHttpUrl } from '../utils/safeUrl';
 import './NewsArticlePage.css';
 
-const categoryLabels = {
-  tech: 'Technology',
-  finance: 'Finance',
-  society: 'Society',
-  entertainment: 'Culture',
-};
-
 const MAX_READING_SUMMARY_WORDS = 760;
 
-function formatPublishedAt(value) {
-  if (!value) return 'Date unavailable';
+function formatPublishedAt(value, language, unavailableLabel) {
+  if (!value) return unavailableLabel;
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return 'Date unavailable';
-  return date.toLocaleDateString('en-US', {
+  if (Number.isNaN(date.getTime())) return unavailableLabel;
+  return date.toLocaleDateString(language, {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
   });
 }
 
-function formatPublishedTime(value) {
+function formatPublishedTime(value, language) {
   if (!value) return '';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleTimeString('en-US', {
+  return date.toLocaleTimeString(language, {
     hour: 'numeric',
     minute: '2-digit',
   });
@@ -54,17 +49,17 @@ function wordCount(value) {
   return cleanArticleText(value).split(' ').filter(Boolean).length;
 }
 
-function articleSummary(article) {
+function articleSummary(article, fallback) {
   const candidates = [article?.readingBrief, article?.summary]
     .map(cleanArticleText)
     .filter((value) => value && !/only available (?:in|on) paid plans/i.test(value));
   const preparedSummary = candidates.find((value) => wordCount(value) <= MAX_READING_SUMMARY_WORDS);
-  return preparedSummary || 'A fuller reading report is being prepared from the available reporting.';
+  return preparedSummary || fallback;
 }
 
-function articleCategory(article) {
+function articleCategory(article, labels) {
   const key = String(article?.category || '').toLowerCase();
-  return categoryLabels[key] || 'News';
+  return labels[key] || labels.news;
 }
 
 function splitSummary(value) {
@@ -105,7 +100,7 @@ function ArticleImage({ article }) {
   );
 }
 
-function SourceHandoff({ article, sourceUrl, onClose }) {
+function SourceHandoff({ article, sourceUrl, onClose, copy }) {
   if (!sourceUrl || typeof document === 'undefined') return null;
 
   return createPortal(
@@ -117,18 +112,18 @@ function SourceHandoff({ article, sourceUrl, onClose }) {
         aria-labelledby="news-source-handoff-title"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <button className="news-source-handoff-close" type="button" onClick={onClose} aria-label="Close source notice">
+        <button className="news-source-handoff-close" type="button" onClick={onClose} aria-label={copy.closeSourceNotice}>
           <X size={18} />
         </button>
-        <p className="news-source-handoff-kicker">Original reporting</p>
-        <h2 id="news-source-handoff-title">Continue to the source?</h2>
+        <p className="news-source-handoff-kicker">{copy.originalReporting}</p>
+        <h2 id="news-source-handoff-title">{copy.continueToSource}</h2>
         <p>
-          You are about to open the original reporting from {article.sourceName || 'the source'} in a new tab.
+          {interpolate(copy.sourceHandoffBody, { source: article.sourceName || copy.theSource })}
         </p>
         <div className="news-source-handoff-actions">
-          <button className="news-source-handoff-cancel" type="button" onClick={onClose}>Stay here</button>
+          <button className="news-source-handoff-cancel" type="button" onClick={onClose}>{copy.stayHere}</button>
           <a className="news-source-handoff-confirm" href={sourceUrl} target="_blank" rel="noopener noreferrer">
-            Open source <ExternalLink size={16} />
+            {copy.openSource} <ExternalLink size={16} />
           </a>
         </div>
       </section>
@@ -140,6 +135,15 @@ function SourceHandoff({ article, sourceUrl, onClose }) {
 export default function NewsArticlePage() {
   const { articleId } = useParams();
   const { user } = useAuth();
+  const { language, publicCopy } = useLanguage();
+  const copy = publicCopy?.panelistUi?.article || {};
+  const categoryLabels = {
+    tech: copy.categoryTech,
+    finance: copy.categoryFinance,
+    society: copy.categorySociety,
+    entertainment: copy.categoryCulture,
+    news: copy.categoryNews,
+  };
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -161,7 +165,7 @@ export default function NewsArticlePage() {
         const response = await getNewsArticle(articleId);
         if (active) setArticle(response.data);
       } catch (caughtError) {
-        if (active) setError(caughtError.response?.data?.message || 'This story is not available right now.');
+        if (active) setError(caughtError.response?.data?.message || copy.loadError);
       } finally {
         if (active) setLoading(false);
       }
@@ -213,9 +217,12 @@ export default function NewsArticlePage() {
     };
   }, [article?.country, searchQuery]);
 
-  const summaryParagraphs = useMemo(() => splitSummary(articleSummary(article)), [article]);
-  const publishedDate = formatPublishedAt(article?.publishedAt);
-  const publishedTime = formatPublishedTime(article?.publishedAt);
+  const summaryParagraphs = useMemo(
+    () => splitSummary(articleSummary(article, copy.summaryFallback)),
+    [article, copy.summaryFallback]
+  );
+  const publishedDate = formatPublishedAt(article?.publishedAt, language, copy.dateUnavailable);
+  const publishedTime = formatPublishedTime(article?.publishedAt, language);
   const sourceUrl = useMemo(() => toSafeHttpUrl(article?.link), [article?.link]);
   const hasResearchSignal = ['research', 'approve'].includes(String(article?.userVote || '').toLowerCase());
 
@@ -228,7 +235,7 @@ export default function NewsArticlePage() {
       const response = await saveNewsResearchSignal(article.id);
       setArticle(response.data);
     } catch (caughtError) {
-      setResearchSignalError(caughtError.response?.data?.message || 'Unable to save your research signal right now.');
+      setResearchSignalError(caughtError.response?.data?.message || copy.signalSaveError);
     } finally {
       setSavingResearchSignal(false);
     }
@@ -250,13 +257,13 @@ export default function NewsArticlePage() {
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               onFocus={() => setSearchOpen(true)}
-              placeholder="Search the News Wall"
-              aria-label="Search the News Wall"
+              placeholder={copy.searchPlaceholder}
+              aria-label={copy.searchPlaceholder}
             />
-            {searching && <LoaderCircle className="news-reading-search-loader" size={15} aria-label="Searching news" />}
+            {searching && <LoaderCircle className="news-reading-search-loader" size={15} aria-label={copy.searchingNews} />}
           </label>
           {searchOpen && searchQuery.trim().length >= 2 && (
-            <div className="news-reading-search-results" role="listbox" aria-label="News search results">
+            <div className="news-reading-search-results" role="listbox" aria-label={copy.searchResultsLabel}>
               {searchResults.length ? searchResults.map((result) => (
                 <Link
                   key={result.id}
@@ -264,42 +271,42 @@ export default function NewsArticlePage() {
                   to={`/news/${encodeURIComponent(result.id)}`}
                   onClick={() => setSearchOpen(false)}
                 >
-                  <span>{articleCategory(result)} · {formatPublishedAt(result.publishedAt)}</span>
+                  <span>{articleCategory(result, categoryLabels)} · {formatPublishedAt(result.publishedAt, language, copy.dateUnavailable)}</span>
                   <strong>{result.title}</strong>
                 </Link>
-              )) : !searching && <p className="news-reading-search-empty">No matching stories in this edition yet.</p>}
+              )) : !searching && <p className="news-reading-search-empty">{copy.searchEmpty}</p>}
             </div>
           )}
         </div>
         <Link className="news-reading-return" to="/news">
           <ArrowLeft size={16} />
-          <span>News Wall</span>
+          <span>{publicCopy?.workspace?.nav?.news}</span>
         </Link>
       </header>
 
       {loading ? (
         <section className="news-reading-state" aria-live="polite">
           <LoaderCircle className="news-reading-loader" size={22} />
-          <p>Preparing this story.</p>
+          <p>{copy.loading}</p>
         </section>
       ) : error ? (
         <section className="news-reading-state is-error">
           <p>{error}</p>
-          <Link to="/news">Return to News Wall</Link>
+          <Link to="/news">{copy.returnToNewsWall}</Link>
         </section>
       ) : article ? (
         <>
           <article className="news-reading-article">
             <section className="news-reading-intro">
               <div className="news-reading-meta">
-                <span>{articleCategory(article)}</span>
+                <span>{articleCategory(article, categoryLabels)}</span>
                 <span aria-hidden="true">·</span>
                 <time dateTime={article.publishedAt || undefined}>{publishedDate}</time>
               </div>
               <h1>{article.title}</h1>
               <div className="news-reading-source-line">
                 <Globe2 size={15} />
-                <span>Reading note based on reporting from {article.sourceName || 'the original source'}.</span>
+                <span>{interpolate(copy.readingNote, { source: article.sourceName || copy.theOriginalSource })}</span>
               </div>
             </section>
 
@@ -312,15 +319,15 @@ export default function NewsArticlePage() {
 
           <section className="news-reading-body">
             <div className="news-reading-copy">
-              <p className="news-reading-section-label">The story</p>
+              <p className="news-reading-section-label">{copy.theStory}</p>
               {summaryParagraphs.map((paragraph, index) => <p key={`${paragraph}-${index}`}>{paragraph}</p>)}
             </div>
 
-            <aside className="news-reading-aside" aria-label="Story details">
+            <aside className="news-reading-aside" aria-label={copy.storyDetails}>
               <div className="news-reading-detail">
                 <CalendarDays size={16} />
                 <div>
-                  <span>Published</span>
+                  <span>{copy.published}</span>
                   <strong>{publishedDate}</strong>
                   {publishedTime && <small>{publishedTime}</small>}
                 </div>
@@ -328,47 +335,47 @@ export default function NewsArticlePage() {
               <div className="news-reading-detail">
                 <Globe2 size={16} />
                 <div>
-                  <span>Source</span>
-                  <strong>{article.sourceName || 'Original reporting'}</strong>
+                  <span>{copy.source}</span>
+                  <strong>{article.sourceName || copy.originalReporting}</strong>
                 </div>
               </div>
               <section className="news-research-signal" aria-labelledby="news-research-signal-title">
                 <div className="news-research-signal-icon" aria-hidden="true"><FlaskConical size={18} /></div>
-                <p>News signal</p>
-                <h2 id="news-research-signal-title">Worth researching further?</h2>
-                <span>This helps prioritize possible topics. It is not a fact-check or a verdict on this report.</span>
+                <p>{copy.newsSignal}</p>
+                <h2 id="news-research-signal-title">{copy.signalQuestion}</h2>
+                <span>{copy.signalDisclaimer}</span>
                 {user ? (
                   hasResearchSignal ? (
-                    <strong><Check size={15} /> Signal saved</strong>
+                    <strong><Check size={15} /> {copy.signalSaved}</strong>
                   ) : (
                     <button className="news-research-signal-button action-injection" type="button" onClick={saveResearchSignal} disabled={savingResearchSignal}>
                       {savingResearchSignal ? <LoaderCircle className="animate-spin" size={15} /> : <FlaskConical size={15} />}
-                      Worth researching
+                      {copy.worthResearching}
                     </button>
                   )
                 ) : (
-                  <Link className="news-research-signal-login" to="/login">Sign in to add a signal <ArrowUpRight size={15} /></Link>
+                  <Link className="news-research-signal-login" to="/login">{copy.signInToAddSignal} <ArrowUpRight size={15} /></Link>
                 )}
                 {researchSignalError && <em>{researchSignalError}</em>}
               </section>
               {sourceUrl && (
                 <button className="news-reading-source-button" type="button" onClick={() => setSourceHandoffOpen(true)}>
-                  View original reporting <ArrowUpRight size={17} />
+                  {copy.viewOriginalReporting} <ArrowUpRight size={17} />
                 </button>
               )}
               <section className="news-reading-whatsapp" aria-labelledby="news-reading-whatsapp-title">
                 <div className="news-reading-whatsapp-icon" aria-hidden="true"><MessageCircle size={19} /></div>
-                <p>WhatsApp channel</p>
-                <h2 id="news-reading-whatsapp-title">Stay close to what matters.</h2>
+                <p>{copy.whatsappChannel}</p>
+                <h2 id="news-reading-whatsapp-title">{copy.whatsappTitle}</h2>
                 <span>
-                  Join for new signals and occasional special survey invitations. Eligible activities can offer up to 500,000 Coins.
+                  {copy.whatsappBody}
                 </span>
                 <a
                   href="https://whatsapp.com/channel/0029Vb8T5zhJf05W6ZZmi83F"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Join the channel <ArrowUpRight size={16} />
+                  {copy.joinChannel} <ArrowUpRight size={16} />
                 </a>
               </section>
             </aside>
@@ -376,7 +383,7 @@ export default function NewsArticlePage() {
         </>
       ) : null}
 
-      {sourceHandoffOpen && <SourceHandoff article={article} sourceUrl={sourceUrl} onClose={() => setSourceHandoffOpen(false)} />}
+      {sourceHandoffOpen && <SourceHandoff article={article} sourceUrl={sourceUrl} onClose={() => setSourceHandoffOpen(false)} copy={copy} />}
     </main>
   );
 }
