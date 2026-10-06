@@ -97,7 +97,10 @@
    under the page keeps the last block from ending up behind it. */
 .app-shell-panelist .app-main,
 .app-shell-panelist .app-main.app-main-dashboard {
-  padding-bottom: 190px;
+  /* the launcher is a 64px circle now, so the column no longer has to reserve a
+     card's worth of room — 190px here was showing up as a blank band between the
+     news wall and the footer */
+  padding-bottom: 48px;
   background: var(--ps-brand-deep) !important;
 }
 
@@ -167,16 +170,51 @@
    One solid accent per view. Secondary is a quiet outline; tertiary is plain ink.
    --------------------------------------------------------------------------- */
 
+/* `.action-injection` (WorkspaceSurfaceTheme.css:1125) is a sweep: a two-tone
+   gradient slid by `background-position`, 100% 0 to 0 0 on hover. Two things
+   went wrong with it here. This file wrote `background-image: none` to flatten
+   the button, which cut the sweep off partway — the "effect stops halfway" that
+   was reported. And because that shared rule carries `!important`, the lime fill
+   lost to it, so the buttons quietly went back to the old dark green.
+   The fix is not to switch the effect off but to re-tone it: the same gradient
+   mechanism, in brand lime, declared with `!important` for the same external
+   reason as the ground. */
+/* `!important` here is external again, and it took a probe to find out why: the
+   declaration that wins on this button is WorkspaceSurfaceTheme.css:472
+   (`background: #213e31`), whose selector is one class deeper than this one, so
+   an equally-flagged rule is what it takes. The button was rendering
+   rgb(33,62,49) — neither my lime nor index.css:1460's #20362b — which is how
+   the third rule was found. `background-image: none` is explicit because a
+   shorthand `background` upstream resets it. */
 .app-shell-panelist .btn-primary,
 .app-shell-panelist .research-opportunity-apply,
 .app-shell-panelist .gift-card-redeem-button,
 .app-shell-panelist .gift-card-summary-action {
-  border: 1px solid var(--ps-lime);
-  border-radius: 3px;
-  background: var(--ps-lime);
-  background-image: none;
-  color: #14161a;
-  font-weight: 500;
+  border: 0 !important;
+  border-radius: 3px !important;
+  background-color: var(--ps-lime) !important;
+  background-image: none !important;
+  color: #14161a !important;
+  font-weight: 500 !important;
+  box-shadow: none !important;
+}
+
+.app-shell-panelist .action-injection {
+  border: 1px solid var(--ps-lime) !important;
+  border-radius: 3px !important;
+  background-color: var(--ps-lime) !important;
+  background-image: linear-gradient(90deg, var(--ps-lime-deep) 0 50%, var(--ps-lime) 50% 100%) !important;
+  background-size: 205% 100% !important;
+  background-position: 100% 0;
+  color: #14161a !important;
+}
+
+.app-shell-panelist .action-injection:hover:not(:disabled),
+.app-shell-panelist .action-injection:focus-visible {
+  border-color: var(--ps-lime-deep) !important;
+  background-color: var(--ps-lime-deep) !important;
+  background-position: 0 0;
+  color: #14161a !important;
   box-shadow: none;
 }
 
@@ -234,48 +272,85 @@
    reason the shell scope is.
    --------------------------------------------------------------------------- */
 
-/* the referral launcher — AppLayout:238 renders it after `.app-shell` closes */
+/* The referral launcher is a portal to `document.body` (ReferralProgramWidget:97),
+   which is why `.app-shell-panelist` cannot reach it — and why addressing it by
+   its own class is safe: no other role renders it.
+
+   It used to be a 286x166 card at position:fixed over a full-width content
+   column, so it always passed across whatever was underneath. Scaling it to 68%
+   only halved that. The markup is now a single circular button instead: the copy
+   block and the absolutely positioned photo are gone, so there is no internal
+   layout left to fight, and 64px in the corner covers essentially nothing. */
+/* The box is pinned rather than merely sized. With the markup reduced to a
+   single circle, the launcher still rendered as a 64x170 white strip: the shared
+   sheet's own `.referral-launcher` rule keeps holding the height open, and a
+   plain width/height declaration does not beat it. Clearing `::after`
+   (index.css:1633, the old card body) changed the render by nothing at all —
+   the screenshot came back byte-identical — which is what ruled the pseudo
+   element out as the cause.
+   So the geometry is stated with `!important`: external reason, same as the
+   ground and the injection button. */
 .referral-launcher {
-  border: 1px solid var(--ps-hair);
-  border-radius: 10px;
-  background: #ffffff;
-  box-shadow: 0 14px 34px rgba(12, 14, 17, .14);
-  /* Probed structure: the card holds a 161x112 copy block, a 119x164 photo and
-     the action button, and BOTH the photo and the button are absolutely
-     positioned, with `.referral-launcher::after` (index.css:1633) drawing the
-     card body. Re-flowing that into a slim bar means fighting three absolute
-     boxes; pinning the box to a smaller size let them spill out of it. Scaling
-     shrinks children, body and hit areas together and cannot break a layout it
-     does not touch — at the cost of only halving the covered area, which is
-     recorded as an open item rather than claimed as fixed. */
-  transform: scale(.68);
-  transform-origin: bottom left;
+  position: fixed !important;
+  z-index: 58 !important;
+  left: 24px !important;
+  bottom: 24px !important;
+  width: 64px !important;
+  height: 64px !important;
+  min-width: 64px !important;
+  max-width: 64px !important;
+  min-height: 0 !important;
+  max-height: 64px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
 }
 
-.referral-launcher-copy > span,
-.referral-launcher-copy > p {
-  color: var(--ps-mute);
-}
-
-.referral-launcher-copy > strong {
-  color: var(--ps-ink);
-  font-family: var(--font-sans);
-  font-weight: 500;
+.referral-launcher::before,
+.referral-launcher::after {
+  content: none !important;
+  display: none !important;
 }
 
 .referral-launcher-action {
-  border: 1px solid var(--ps-hair-2);
-  border-radius: 3px;
-  background: transparent;
-  background-image: none;
-  color: var(--ps-ink);
-  font-weight: 500;
+  display: block;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--ps-hair);
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(12, 14, 17, .18);
+  cursor: pointer;
 }
 
 .referral-launcher-action:hover {
-  border-color: var(--ps-ink);
-  background: transparent;
-  color: var(--ps-ink);
+  border-color: var(--ps-hair-2);
+}
+
+.referral-launcher .referral-launcher-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* the dismiss sits as a badge on the rim, so it costs no extra footprint */
+.referral-launcher-dismiss {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--ps-hair);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ps-body);
+  cursor: pointer;
 }
 
 /* The profile questionnaire renders its own minimal header, outside the shell.
@@ -354,6 +429,15 @@
   color: var(--ps-ink);
 }
 
+/* the task card read a size too heavy next to the opportunity grid */
+.app-shell-panelist .research-profile-task-card {
+  width: min(100%, 296px);
+}
+
+.app-shell-panelist .research-profile-task-art {
+  height: 148px;
+}
+
 .app-shell-panelist .research-opportunity-details,
 .app-shell-panelist .research-opportunity-requirements {
   color: var(--ps-mute);
@@ -411,4 +495,117 @@
   font-family: var(--font-serif);
   font-weight: 400;
   color: var(--ps-ink);
+}
+
+/* ---------------------------------------------------------------------------
+   10. News article — the reading aside
+   The meta rows are separated by full-width rules that sat flush against the
+   text above and below them, so each rule read as though it were underlining
+   the last line of the block. The rows get their own breathing room.
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .news-reading-aside {
+  padding-top: 8px;
+}
+
+.app-shell-panelist .news-reading-meta {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* ---------------------------------------------------------------------------
+   11. Wallet hero — a full-bleed photograph, and the chart's empty callout
+   --------------------------------------------------------------------------- */
+
+/* Same treatment as the homepage contact band: the photograph covers the block
+   edge to edge, a white scrim runs left to right so the ink copy stays readable
+   over it, and the box is squared off because a full-bleed band has no corners.
+   The negative margins cancel the page gutter (`.app-main` is Tailwind
+   px-5 / sm:px-8 / lg:px-10) so the image reaches the viewport edge rather than
+   sitting inside a card. */
+.app-shell-panelist .wallet-hero {
+  margin-left: -40px;
+  margin-right: -40px;
+  padding: 56px 40px;
+  border: 0;
+  border-radius: 0;
+  background-color: #ffffff;
+  /* A dark band, like the homepage contact section: star trails over a desert
+     horizon, a scrim running left to right, and the copy in white. The first
+     image tried here was high-key to the point of having no contrast at all —
+     white brick, white knit, a blown window — so `cover` cropped into flat white
+     and a white scrim over it rendered as an empty band. Two position changes
+     produced byte-identical screenshots, which is what identified it as a
+     subject problem rather than a loading one. */
+  background-image:
+    linear-gradient(90deg,
+      rgba(12, 14, 17, .84) 0%,
+      rgba(12, 14, 17, .60) 40%,
+      rgba(12, 14, 17, .26) 72%,
+      rgba(12, 14, 17, .12) 100%),
+    url('../assets/home/panelist-wallet-hero.jpg');
+  background-repeat: no-repeat;
+  background-size: cover, cover;
+  background-position: center, 50% 46%;
+  box-shadow: none;
+}
+
+@media (max-width: 1023px) {
+  .app-shell-panelist .wallet-hero {
+    margin-left: -32px;
+    margin-right: -32px;
+    padding: 44px 32px;
+  }
+}
+
+@media (max-width: 639px) {
+  .app-shell-panelist .wallet-hero {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 34px 20px;
+  }
+}
+
+/* The empty-trend callout sat as a tight tinted box on the plotting area, so its
+   two lines read as though they were pressed against its edges. It gets room to
+   breathe and a cap on its measure. */
+.app-shell-panelist .dashboard-chart-empty {
+  padding: 22px 28px;
+  max-width: 460px;
+  border: 1px solid var(--ps-hair);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: none;
+  text-align: center;
+}
+
+.app-shell-panelist .dashboard-chart-empty > p {
+  margin: 0 0 6px;
+  color: var(--ps-ink);
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+.app-shell-panelist .dashboard-chart-empty > span {
+  color: var(--ps-mute);
+}
+
+/* the band went dark, so the copy on it goes light */
+.app-shell-panelist .wallet-hero h1,
+.app-shell-panelist .wallet-hero-copy :is(h1, h2) {
+  color: #ffffff;
+}
+
+.app-shell-panelist .wallet-hero-kicker {
+  color: rgba(255, 255, 255, .62);
+}
+
+.app-shell-panelist .wallet-hero-copy > p:not(.wallet-hero-kicker) {
+  color: rgba(255, 255, 255, .80);
+}
+
+.app-shell-panelist .wallet-hero-actions span {
+  border-color: rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .10);
+  color: #ffffff;
 }
