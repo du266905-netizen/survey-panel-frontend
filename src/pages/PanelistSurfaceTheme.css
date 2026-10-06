@@ -424,8 +424,8 @@
    It sat as a tight tinted box on the plotting area, so its two lines read as
    though they were pressed against its edges. */
 .app-shell-panelist .dashboard-chart-empty {
-  padding: 22px 28px;
-  max-width: 460px;
+  padding: 30px 40px;
+  max-width: 520px;
   border: 1px solid var(--ps-hair);
   border-radius: 10px;
   background: rgba(255, 255, 255, .92);

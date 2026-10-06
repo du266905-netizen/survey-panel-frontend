@@ -89,8 +89,8 @@ export default function ActivityDashboard() {
                   <ComposedChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(17, 17, 19, .10)" vertical={false} />
                     <XAxis dataKey="day" tick={{ fill: '#7f848a', fontSize: 12 }} axisLine={false} tickLine={false} interval={trendRange === 30 ? 4 : 0} />
-                    <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#7f848a', fontSize: 12 }} axisLine={false} tickLine={false} width={30} />
-                    <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#7f848a', fontSize: 12 }} axisLine={false} tickLine={false} width={48} />
+                    <YAxis yAxisId="completed" allowDecimals={false} tick={{ fill: '#7f848a', fontSize: 12, dy: -9 }} axisLine={false} tickLine={false} width={30} />
+                    <YAxis yAxisId="coins" orientation="right" tickFormatter={(value) => formatCoinNumber(value)} tick={{ fill: '#7f848a', fontSize: 12, dy: -9 }} axisLine={false} tickLine={false} width={48} />
                     <Tooltip
                       contentStyle={chartTooltipStyle}
                       labelStyle={{ color: '#24272c' }}
