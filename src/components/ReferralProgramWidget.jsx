@@ -25,10 +25,33 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(openFromRoute);
   const [launcherVisible, setLauncherVisible] = useState(true);
+  const [nearBottom, setNearBottom] = useState(false);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+
+  /* The launcher is position:fixed at bottom-left and the content column is full
+     width, so a fixed card there always crossed whatever was scrolling past it.
+     Rather than shrink it or turn it into a floating ball, it is given a moment
+     to appear: the page already reserves 190px of empty space beneath its content
+     for exactly this card, so the card is revealed once that reserved space is in
+     view — when there is nothing left for it to cover. */
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const measure = () => {
+      const el = document.documentElement;
+      const remaining = el.scrollHeight - el.scrollTop - el.clientHeight;
+      setNearBottom(remaining < 260);
+    };
+    measure();
+    window.addEventListener('scroll', measure, { passive: true });
+    window.addEventListener('resize', measure);
+    return () => {
+      window.removeEventListener('scroll', measure);
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
 
   useEffect(() => {
     if (openFromRoute) setOpen(true);
@@ -94,7 +117,7 @@ export default function ReferralProgramWidget({ openFromRoute = false }) {
 
   return (
     <>
-      {launcherVisible && typeof document !== 'undefined' && createPortal(
+      {launcherVisible && nearBottom && typeof document !== 'undefined' && createPortal(
         <aside className="referral-launcher" aria-label="Invite program">
           <div className="referral-launcher-copy">
             <span>Invite someone</span>

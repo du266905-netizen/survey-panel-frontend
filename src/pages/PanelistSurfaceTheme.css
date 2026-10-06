@@ -248,22 +248,25 @@
      shrinks children, body and hit areas together and cannot break a layout it
      does not touch — at the cost of only halving the covered area, which is
      recorded as an open item rather than claimed as fixed. */
-  transform: scale(.68);
-  transform-origin: bottom left;
+  /* At full size and nudged right: the previous scale(.68) was shrinking it to
+     194x113, and at left:24 it sat under the language selector. */
+  left: 56px;
 }
 
 .referral-launcher-copy > span,
 .referral-launcher-copy > p {
   color: var(--ps-mute);
+  font-family: var(--font-serif);
 }
 
 .referral-launcher-copy > strong {
   color: var(--ps-ink);
-  font-family: var(--font-sans);
-  font-weight: 500;
+  font-family: var(--font-serif);
+  font-weight: 400;
 }
 
 .referral-launcher-action {
+  font-family: var(--font-serif);
   border: 1px solid var(--ps-hair-2);
   border-radius: 3px;
   background: transparent;
