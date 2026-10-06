@@ -6,23 +6,18 @@ import CoinAmount from '../components/CoinAmount';
 import DataTable from '../components/DataTable';
 import StatusBadge from '../components/StatusBadge';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 import { giftCardImageSources, giftCardOptions } from '../config/giftCardOptions';
 import { formatCoinNumber, titleCase } from '../utils/formatters';
+import { interpolate } from '../utils/interpolate';
 
 const defaultGiftCardDenominations = [10, 25, 50];
 const giftCardRedemptionMinimum = 10000;
+/* Slide ids / variants are data; the wording for each slide is looked up from
+   the language library in the component (see rewardSlideCopy). */
 const rewardSlides = [
-  {
-    id: 'gift-cards',
-    title: 'Gift card redemption',
-    description: 'Select a gift card brand, choose a value, and we’ll show whether your current Coins balance meets the target.',
-  },
-  {
-    id: 'crypto',
-    title: 'Cryptocurrency',
-    description: 'Coming soon. Stay tuned for future payout options.',
-    variant: 'crypto',
-  },
+  { id: 'gift-cards' },
+  { id: 'crypto', variant: 'crypto' },
 ];
 
 function usd(value) {
@@ -43,6 +38,11 @@ function giftCardAmountLabel(option) {
 
 export default function Wallet() {
   const { user, setUser } = useAuth();
+  const { publicCopy } = useLanguage();
+  /* Participant-facing wording comes from the language library
+     (.i18n-work/panelist-*.json → constants/researchTranslations.js). */
+  const copy = publicCopy?.panelistUi?.wallet || {};
+  const commonCopy = publicCopy?.panelistUi?.common || {};
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -64,7 +64,7 @@ export default function Wallet() {
         setUser({ ...user, coinsBalance: response.data.wallet.balance, coins: response.data.wallet.balance });
       }
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Unable to load wallet.');
+      setError(caughtError.response?.data?.message || copy.loadError);
     } finally {
       setLoading(false);
     }
@@ -118,7 +118,12 @@ export default function Wallet() {
   const coinsPerUsd = Number(exchangeRate.coinsPerUsd || 1000);
   const giftCardMinimumRemaining = Math.max(0, giftCardRedemptionMinimum - availableCoins);
   const hasGiftCardRedemptionAccess = giftCardMinimumRemaining === 0;
-  const activeRewardSlide = rewardSlides[rewardSlideIndex] || rewardSlides[0];
+  const rewardSlideCopy = {
+    'gift-cards': { title: copy.giftCardRedemption, description: copy.giftCardRedemptionBody },
+    crypto: { title: copy.cryptocurrency, description: copy.cryptoBody },
+  };
+  const rewardSlidesWithCopy = rewardSlides.map((slide) => ({ ...slide, ...(rewardSlideCopy[slide.id] || {}) }));
+  const activeRewardSlide = rewardSlidesWithCopy[rewardSlideIndex] || rewardSlidesWithCopy[0];
 
   const shiftRewardSlide = (direction) => {
     setRewardSlideIndex((current) => (current + direction + rewardSlides.length) % rewardSlides.length);
@@ -157,7 +162,7 @@ export default function Wallet() {
     if (!hasGiftCardRedemptionAccess) {
       setGiftCardNotice({
         optionId: option.id,
-        message: `Need ${formatCoinNumber(giftCardMinimumRemaining)} more Coins to unlock gift card redemption.`,
+        message: interpolate(copy.needMoreCoins, { amount: formatCoinNumber(giftCardMinimumRemaining) }),
       });
       return;
     }
@@ -165,7 +170,11 @@ export default function Wallet() {
     if (!tier.unlocked) {
       setGiftCardNotice({
         optionId: option.id,
-        message: `Need ${formatCoinNumber(tier.remainingCoins)} more Coins to unlock the ${usd(tier.amountUsd)} ${option.name} gift card.`,
+        message: interpolate(copy.needMoreCoinsForCard, {
+          amount: formatCoinNumber(tier.remainingCoins),
+          value: usd(tier.amountUsd),
+          card: option.name,
+        }),
       });
       return;
     }
@@ -173,33 +182,36 @@ export default function Wallet() {
     setGiftCardNotice({
       optionId: option.id,
       kind: 'ready',
-      message: `${option.name} ${usd(tier.amountUsd)} is within your current Coins balance. Real fulfillment is not submitted here yet, so no Coins were deducted.`,
+      message: interpolate(copy.withinBalance, {
+        card: option.name,
+        value: usd(tier.amountUsd),
+      }),
     });
   };
 
   const orderColumns = [
-    { key: 'rewardType', header: 'Reward', render: (row) => titleCase(row.rewardType) },
-    { key: 'provider', header: 'Provider', render: (row) => titleCase(row.provider) },
+    { key: 'rewardType', header: copy.columnReward, render: (row) => titleCase(row.rewardType) },
+    { key: 'provider', header: copy.columnProvider, render: (row) => titleCase(row.provider) },
     { key: 'amountCoins', header: 'Coins', render: (row) => <CoinAmount value={row.amountCoins} /> },
-    { key: 'amountUSD', header: 'USD', render: (row) => usd(row.amountUSD) },
-    { key: 'status', header: 'Status', render: (row) => <StatusBadge status={transactionStatus(row.status)} /> },
-    { key: 'createdAt', header: 'Created', render: (row) => new Date(row.createdAt).toLocaleString() },
+    { key: 'amountUSD', header: copy.columnUsd, render: (row) => usd(row.amountUSD) },
+    { key: 'status', header: copy.columnStatus, render: (row) => <StatusBadge status={transactionStatus(row.status)} /> },
+    { key: 'createdAt', header: copy.columnCreated, render: (row) => new Date(row.createdAt).toLocaleString() },
   ];
 
   return (
     <section className="wallet-page">
       <section className="wallet-hero mb-6">
         <div className="wallet-hero-copy">
-          <p className="wallet-hero-kicker">Reward wallet</p>
-          <h1>Choose the reward you want next.</h1>
-          <p className="wallet-hero-intro">Browse available rewards, keep track of your Coins, and redeem whenever you reach a target.</p>
+          <p className="wallet-hero-kicker">{copy.rewardWallet}</p>
+          <h1>{copy.heroTitle}</h1>
+          <p className="wallet-hero-intro">{copy.heroIntro}</p>
           <div className="wallet-hero-actions">
-            <span>1,000 Coins = $1 USD</span>
-            <span>Minimum redemption: $10</span>
+            <span>{copy.exchangeRateValue}</span>
+            <span>{copy.minimumRedemption}</span>
           </div>
         </div>
-        <div className="wallet-reward-stage" aria-label="Reward options preview">
-          <button className="wallet-reward-nav is-left" type="button" onClick={() => shiftRewardSlide(-1)} aria-label="Previous reward option">
+        <div className="wallet-reward-stage" aria-label={copy.rewardOptionsPreview}>
+          <button className="wallet-reward-nav is-left" type="button" onClick={() => shiftRewardSlide(-1)} aria-label={copy.previousRewardOption}>
             <ChevronLeft size={18} />
           </button>
           <article className={`wallet-reward-slide ${activeRewardSlide.variant === 'crypto' ? 'is-crypto' : ''}`}>
@@ -209,17 +221,17 @@ export default function Wallet() {
             </div>
             <p>{activeRewardSlide.description}</p>
           </article>
-          <button className="wallet-reward-nav is-right" type="button" onClick={() => shiftRewardSlide(1)} aria-label="Next reward option">
+          <button className="wallet-reward-nav is-right" type="button" onClick={() => shiftRewardSlide(1)} aria-label={copy.nextRewardOption}>
             <ChevronRight size={18} />
           </button>
-          <div className="wallet-reward-dots" aria-label="Reward option slides">
-            {rewardSlides.map((slide, index) => (
+          <div className="wallet-reward-dots" aria-label={copy.rewardOptionSlides}>
+            {rewardSlidesWithCopy.map((slide, index) => (
               <button
                 key={slide.id}
                 className={index === rewardSlideIndex ? 'is-active' : ''}
                 type="button"
                 onClick={() => setRewardSlideIndex(index)}
-                aria-label={`Show ${slide.title}`}
+                aria-label={interpolate(copy.showSlide, { slide: slide.title })}
               />
             ))}
           </div>
@@ -234,9 +246,9 @@ export default function Wallet() {
               <div>
                 <h2>
                   <Gift size={18} className="text-amber-600" />
-                  Gift card catalog
+                  {copy.giftCardCatalog}
                 </h2>
-                <p>Pick a target amount and keep building toward it. Coins are not deducted until a real redemption request is submitted.</p>
+                <p>{copy.giftCardCatalogBody}</p>
               </div>
             </div>
 
@@ -244,16 +256,16 @@ export default function Wallet() {
               {giftCardOptions.map((option) => {
                 return (
                   <article key={option.id} className="gift-card-option">
-                    <button className="gift-card-summary" type="button" onClick={() => openGiftCardModal(option)} aria-label={`Open ${option.name} redemption options`}>
+                    <button className="gift-card-summary" type="button" onClick={() => openGiftCardModal(option)} aria-label={interpolate(copy.openCardOptions, { card: option.name })}>
                       <span className="gift-card-summary-image">
                         <img src={giftCardImageSources[option.image]} alt="" />
                       </span>
                       <span className="gift-card-summary-copy">
                         <strong>{option.name}</strong>
-                        <span>{option.region} · {giftCardAmountLabel(option)}</span>
+                        <span>{option.region === 'global' ? copy.regionGlobal : option.region} · {giftCardAmountLabel(option)}</span>
                       </span>
                       <span className="gift-card-summary-action">
-                        Open
+                        {commonCopy.open}
                         <ChevronRight size={16} aria-hidden="true" />
                       </span>
                     </button>
@@ -265,10 +277,10 @@ export default function Wallet() {
 
           <section>
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-950">Reward requests</h2>
-              <p className="text-sm text-slate-500">{data?.orders?.length || 0} requests</p>
+              <h2 className="text-lg font-bold text-slate-950">{copy.rewardRequests}</h2>
+              <p className="text-sm text-slate-500">{interpolate(copy.requestCount, { count: formatCoinNumber(data?.orders?.length || 0) })}</p>
             </div>
-            <DataTable columns={orderColumns} rows={data?.orders || []} loading={loading} emptyMessage="No reward requests yet." />
+            <DataTable columns={orderColumns} rows={data?.orders || []} loading={loading} emptyMessage={copy.noRewardRequests} />
           </section>
         </div>
 
@@ -291,11 +303,11 @@ export default function Wallet() {
             >
               <div className="gift-card-modal-head">
                 <div>
-                  <p>Gift card target</p>
+                  <p>{copy.giftCardTarget}</p>
                   <h2 id="gift-card-modal-title">{activeGiftCard.name}</h2>
-                  <span>{activeGiftCard.region} · {giftCardAmountLabel(activeGiftCard)}</span>
+                  <span>{activeGiftCard.region === 'global' ? copy.regionGlobal : activeGiftCard.region} · {giftCardAmountLabel(activeGiftCard)}</span>
                 </div>
-                <button type="button" onClick={closeGiftCardModal} aria-label="Close gift card dialog">
+                <button type="button" onClick={closeGiftCardModal} aria-label={copy.closeGiftCardDialog}>
                   <X size={18} />
                 </button>
               </div>
@@ -303,13 +315,13 @@ export default function Wallet() {
               <div className="gift-card-modal-body">
                 <div className="gift-card-image-shell is-modal">
                   <div>
-                    <img src={giftCardImageSources[activeGiftCard.image]} alt={`${activeGiftCard.name} gift card`} />
+                    <img src={giftCardImageSources[activeGiftCard.image]} alt={interpolate(copy.cardAlt, { card: activeGiftCard.name })} />
                   </div>
                 </div>
 
                 <div className="gift-card-controls">
                   <label>
-                    <span>Gift card value</span>
+                    <span>{copy.giftCardValue}</span>
                     <select className="field" value={amountUsd} onChange={(event) => selectGiftCardDenomination(activeGiftCard.id, event.target.value)}>
                       {amounts.map((denomination) => (
                         <option key={denomination} value={denomination}>{usd(denomination)} · {formatCoinNumber(giftCardTier(denomination).requiredCoins)} Coins</option>
@@ -321,12 +333,12 @@ export default function Wallet() {
                     <strong>{formatCoinNumber(tier.requiredCoins)} Coins</strong>
                   </div>
                   <button className="btn-primary gift-card-redeem-button" type="button" onClick={() => handleGiftCardRedeem(activeGiftCard)}>
-                    Redeem
+                    {copy.redeem}
                   </button>
                   {giftCardNotice?.optionId === activeGiftCard.id && (
                     <p className={`gift-card-redeem-caption ${giftCardNotice.kind === 'ready' ? 'is-ready' : ''}`}>{giftCardNotice.message}</p>
                   )}
-                  <p className="gift-card-modal-note">Gift card delivery details will be requested only when live redemption is enabled. This screen does not deduct Coins.</p>
+                  <p className="gift-card-modal-note">{copy.giftCardNote}</p>
                 </div>
               </div>
             </section>

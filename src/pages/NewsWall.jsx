@@ -6,20 +6,30 @@ import { useAuth } from '../components/AuthContext';
 import { useLanguage } from '../components/LanguageContext';
 import PageHeader from '../components/PageHeader';
 import { isAdminRole } from '../utils/roles';
+import { formatCoinNumber } from '../utils/formatters';
+import { interpolate } from '../utils/interpolate';
 
+/* The ids are request parameters (`country` / `category`) and must not change;
+   only the label is wording, so it is filled from the language library through
+   `withLabels()` wherever the copy is available. `regionUs` / `regionUk` stay
+   `US` / `UK` in Chinese. */
 const countries = [
-  { id: 'GLOBAL', label: 'Global' },
-  { id: 'US', label: 'US' },
-  { id: 'UK', label: 'UK' },
-  { id: 'CA', label: 'Canada' },
+  { id: 'GLOBAL', labelKey: 'regionGlobal' },
+  { id: 'US', labelKey: 'regionUs' },
+  { id: 'UK', labelKey: 'regionUk' },
+  { id: 'CA', labelKey: 'regionCanada' },
 ];
 
 const categories = [
-  { id: 'tech', label: 'Tech' },
-  { id: 'finance', label: 'Finance' },
-  { id: 'society', label: 'Society' },
-  { id: 'entertainment', label: 'Entertainment' },
+  { id: 'tech', labelKey: 'categoryTech' },
+  { id: 'finance', labelKey: 'categoryFinance' },
+  { id: 'society', labelKey: 'categorySociety' },
+  { id: 'entertainment', labelKey: 'categoryEntertainment' },
 ];
+
+function withLabels(items, labels) {
+  return items.map((item) => ({ ...item, label: labels[item.labelKey] }));
+}
 
 const categoryTones = {
   tech: { bg: 'rgba(180, 209, 213, .07)', border: 'rgba(180, 209, 213, .18)', text: '#b8cdd0', accent: '#8fb4b9' },
@@ -31,19 +41,20 @@ const categoryTones = {
 
 const NEWS_WALL_SCROLL_KEY = 'guanyisearch.news-wall-scroll-position';
 
-function categoryInfo(value) {
+function categoryInfo(value, labels) {
   const raw = String(value || '').toLowerCase();
-  const matched = categories.find((item) => item.id === raw || item.label.toLowerCase() === raw);
+  const matched = categories.find((item) => item.id === raw || String(labels[item.labelKey] || '').toLowerCase() === raw);
   const id = matched?.id || 'news';
   return {
     id,
-    label: matched?.label || (value ? String(value) : 'News'),
+    label: matched ? labels[matched.labelKey] : (value ? String(value) : labels.categoryFallback),
     tone: categoryTones[id] || categoryTones.news,
   };
 }
 
-function categoryStyle(value) {
-  const { tone } = categoryInfo(value);
+/* Called with the tone id already resolved by categoryInfo(). */
+function categoryStyle(id) {
+  const tone = categoryTones[String(id || '').toLowerCase()] || categoryTones.news;
   return {
     '--news-category-bg': tone.bg,
     '--news-category-border': tone.border,
@@ -52,8 +63,8 @@ function categoryStyle(value) {
   };
 }
 
-function CategoryPill({ category }) {
-  const info = categoryInfo(category);
+function CategoryPill({ category, copy }) {
+  const info = categoryInfo(category, copy);
   return (
     <span className="news-category-pill" style={categoryStyle(info.id)}>
       <span className="news-category-dot" aria-hidden="true" />
@@ -62,9 +73,10 @@ function CategoryPill({ category }) {
   );
 }
 
-function countryLabel(value) {
+function countryLabel(value, labels) {
   const key = String(value || 'US').toUpperCase();
-  return countries.find((item) => item.id === key)?.label || key;
+  const matched = countries.find((item) => item.id === key);
+  return (matched && labels[matched.labelKey]) || key;
 }
 
 function countryFlag(value) {
@@ -76,15 +88,15 @@ function countryFlag(value) {
   return '🌐';
 }
 
-function summaryFor(article) {
-  return article?.summary || article?.description || article?.content || 'Open the detail view to review this story.';
+function summaryFor(article, copy) {
+  return article?.summary || article?.description || article?.content || copy.summaryFallback;
 }
 
-function formatBriefDate(value) {
-  if (!value) return 'Today';
+function formatBriefDate(value, locale, todayLabel) {
+  if (!value) return todayLabel;
   const [year, month, day] = String(value).split('-').map(Number);
   if (!year || !month || !day) return value;
-  return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-US', {
+  return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString(locale, {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -92,7 +104,7 @@ function formatBriefDate(value) {
   });
 }
 
-function DailyBriefDescription({ brief, loading, error, country, showOperationalStatus }) {
+function DailyBriefDescription({ brief, loading, error, country, showOperationalStatus, copy, language }) {
   const briefCountry = brief?.country || country;
 
   return (
@@ -103,13 +115,13 @@ function DailyBriefDescription({ brief, loading, error, country, showOperational
             <Sparkles size={18} strokeWidth={1.9} />
           </span>
           <div className="min-w-0">
-            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">{brief?.isAiGenerated ? 'AI daily brief' : 'Daily brief'}</p>
-            <h2 className="truncate text-xl font-black text-slate-950">{brief?.title || 'Today’s briefing'}</h2>
+            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">{brief?.isAiGenerated ? copy.aiDailyBrief : copy.dailyBrief}</p>
+            <h2 className="truncate text-xl font-black text-slate-950">{brief?.title || copy.todayBriefing}</h2>
           </div>
         </div>
         <span className="rounded-full border border-cyan-200 bg-white px-3 py-1 text-xs font-bold text-cyan-800">
           <span className="mr-1.5" aria-hidden="true">{countryFlag(briefCountry)}</span>
-          {brief?.countryLabel || countryLabel(briefCountry)} · {formatBriefDate(brief?.briefDate)}
+          {brief?.countryLabel || countryLabel(briefCountry, copy)} · {formatBriefDate(brief?.briefDate, language, copy.dateToday)}
         </span>
       </div>
       <div className="px-5 py-4">
@@ -119,10 +131,10 @@ function DailyBriefDescription({ brief, loading, error, country, showOperational
             <div className="h-4 w-8/12 animate-pulse rounded-full bg-slate-100" />
           </div>
         ) : error && showOperationalStatus ? (
-          <p className="text-sm font-semibold leading-7 text-slate-500">Today’s editorial summary is temporarily unavailable. The latest stories are still available below.</p>
+          <p className="text-sm font-semibold leading-7 text-slate-500">{copy.briefUnavailable}</p>
         ) : (
           <p className="max-w-5xl text-sm leading-7 text-slate-600">
-            {brief?.summary || 'A focused selection of reporting and context from the stories currently available below.'}
+            {brief?.summary || copy.briefFallback}
           </p>
         )}
       </div>
@@ -171,7 +183,7 @@ function articleImage(article) {
   );
 }
 
-function NewsStoryCard({ article, onOpen }) {
+function NewsStoryCard({ article, onOpen, copy }) {
   return (
     <article className="card group flex h-full overflow-hidden">
       <Link className="flex h-full w-full flex-col text-left no-underline" to={`/news/${encodeURIComponent(article.id)}`} onClick={onOpen}>
@@ -180,15 +192,15 @@ function NewsStoryCard({ article, onOpen }) {
         </div>
         <div className="flex flex-1 flex-col p-4">
           <div className="flex min-w-0 items-center gap-2 text-xs font-bold text-slate-500">
-            <CategoryPill category={article.category} />
-            <span className="truncate">{article.sourceName || 'News source'}</span>
+            <CategoryPill category={article.category} copy={copy} />
+            <span className="truncate">{article.sourceName || copy.newsSource}</span>
           </div>
           <h2 className="mt-3 line-clamp-2 text-[1.05rem] font-black leading-snug text-slate-950 transition group-hover:text-cyan-800">
             {article.title}
           </h2>
-          <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-500">{summaryFor(article)}</p>
+          <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-500">{summaryFor(article, copy)}</p>
           <span className="mt-auto inline-flex items-center gap-1 pt-4 text-xs font-bold text-cyan-700 transition group-hover:text-cyan-900">
-            Read story <ArrowUpRight size={14} />
+            {copy.readStory} <ArrowUpRight size={14} />
           </span>
         </div>
       </Link>
@@ -254,28 +266,30 @@ function CompactSelect({ label, value, onChange, options, ariaLabel, optionLabel
   );
 }
 
-function NewsFilters({ country, category, isPublicView, subscribedCategories, loading, onCountryChange, onCategoryChange, onToggleSubscription }) {
+function NewsFilters({ country, category, isPublicView, subscribedCategories, loading, onCountryChange, onCategoryChange, onToggleSubscription, copy, common }) {
+  const regionOptions = withLabels(countries, copy);
+  const categoryOptions = withLabels(categories, copy);
   const { open: topicsOpen, setOpen: setTopicsOpen, openNow: openTopics, closeLater: closeTopics, cancelClose: cancelTopicsClose } = useDelayedPopover();
 
   return (
     <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
       <CompactSelect
-        label="Region"
+        label={copy.filterRegion}
         value={country}
         onChange={onCountryChange}
-        options={countries}
-        ariaLabel="Filter news by region"
+        options={regionOptions}
+        ariaLabel={copy.filterRegionAria}
         optionLabel={(item) => `${countryFlag(item.id)} ${item.label}`}
       />
       <CompactSelect
-        label="Content"
+        label={copy.filterContent}
         value={category}
         onChange={onCategoryChange}
-        options={categories}
-        ariaLabel="Filter news by content"
+        options={categoryOptions}
+        ariaLabel={copy.filterContentAria}
         optionLabel={(item) => item.label}
       />
-      {loading && <span className="text-xs font-bold text-slate-400" role="status">Updating…</span>}
+      {loading && <span className="text-xs font-bold text-slate-400" role="status">{common.updating}</span>}
       {!isPublicView && (
         <div
           className="group relative"
@@ -299,15 +313,15 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
               if (event.key === 'Escape') setTopicsOpen(false);
             }}
           >
-            <span className="text-[10px] font-black uppercase tracking-[0.12em] text-slate-500">Topics</span>
-            <span>{subscribedCategories.size ? `${subscribedCategories.size} saved` : 'All topics'}</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.12em] text-slate-500">{copy.topics}</span>
+            <span>{subscribedCategories.size ? interpolate(copy.savedCount, { count: formatCoinNumber(subscribedCategories.size) }) : copy.allTopics}</span>
             <ChevronDown className={`transition-transform ${topicsOpen ? 'rotate-180' : ''}`} size={15} />
           </button>
           {topicsOpen && (
-            <div className="absolute right-0 z-30 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl" role="menu" aria-label="News topics">
-              <p className="px-1 pb-2 text-xs font-bold leading-5 text-slate-500">Save the topics you want to follow.</p>
+            <div className="absolute right-0 z-30 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl" role="menu" aria-label={copy.newsTopicsAria}>
+              <p className="px-1 pb-2 text-xs font-bold leading-5 text-slate-500">{copy.saveTopicsHint}</p>
               <div className="grid gap-1">
-                {categories.map((item) => (
+                {categoryOptions.map((item) => (
                   <label key={item.id} className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
                     <input
                       className="h-4 w-4 accent-cyan-600"
@@ -329,8 +343,12 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
 
 export default function NewsWall() {
   const { user } = useAuth();
-  const { publicCopy } = useLanguage();
-  const copy = publicCopy.participant.news;
+  const { language, publicCopy } = useLanguage();
+  /* Participant-facing wording comes from the language library
+     (.i18n-work/panelist-*.json → constants/researchTranslations.js). */
+  const copy = publicCopy?.panelistUi?.news || {};
+  const commonCopy = publicCopy?.panelistUi?.common || {};
+  const participantCopy = publicCopy.participant.news;
   const [searchParams, setSearchParams] = useSearchParams();
   const isPublicView = !user;
   const isAdmin = isAdminRole(user?.role);
@@ -377,7 +395,7 @@ export default function NewsWall() {
       setNewsMeta(response.meta || null);
     } catch (caughtError) {
       if (requestId !== requestIdRef.current) return;
-      setError(caughtError.response?.data?.message || 'Unable to update this feed right now. Please try another region or try again shortly.');
+      setError(caughtError.response?.data?.message || copy.feedError);
     } finally {
       if (requestId === requestIdRef.current) setLoading(false);
     }
@@ -396,7 +414,7 @@ export default function NewsWall() {
     } catch {
       if (requestId !== briefRequestIdRef.current) return;
       setBrief(null);
-      setBriefError('Unable to load the daily brief.');
+      setBriefError(copy.briefError);
     } finally {
       if (requestId === briefRequestIdRef.current) setBriefLoading(false);
     }
@@ -454,14 +472,14 @@ export default function NewsWall() {
 
   const toggleSubscription = async (categoryId) => {
     if (isPublicView) {
-      setAuthPrompt('Create a free account or sign in to save topic subscriptions.');
+      setAuthPrompt(copy.authPromptBody);
       return;
     }
     const next = new Set(subscribedCategories);
     if (next.has(categoryId)) next.delete(categoryId);
     else next.add(categoryId);
     const optimistic = {
-      categories: categories.map((item) => ({
+      categories: withLabels(categories, copy).map((item) => ({
         ...item,
         subscribed: next.has(item.id),
         interactionCount: preferences?.categories?.find((preference) => preference.id === item.id)?.interactionCount || 0,
@@ -472,7 +490,7 @@ export default function NewsWall() {
       const response = await updateNewsPreferences([...next]);
       setPreferences(response.data || optimistic);
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Unable to update subscriptions.');
+      setError(caughtError.response?.data?.message || copy.subscriptionError);
       await loadPreferences();
     }
   };
@@ -503,6 +521,8 @@ export default function NewsWall() {
       onCountryChange={setCountry}
       onCategoryChange={setCategory}
       onToggleSubscription={toggleSubscription}
+      copy={copy}
+      common={commonCopy}
     />
   );
 
@@ -514,15 +534,15 @@ export default function NewsWall() {
           type="search"
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
-          placeholder={copy.searchPlaceholder}
-          aria-label={copy.searchAria}
+          placeholder={participantCopy.searchPlaceholder}
+          aria-label={participantCopy.searchAria}
         />
         {searchInput && (
-          <button className="news-search-clear" type="button" onClick={clearNewsSearch} aria-label={copy.clearSearch}>
+          <button className="news-search-clear" type="button" onClick={clearNewsSearch} aria-label={participantCopy.clearSearch}>
             <X size={14} />
           </button>
         )}
-        <button className="news-search-submit" type="submit">{copy.search}</button>
+        <button className="news-search-submit" type="submit">{participantCopy.search}</button>
       </form>
       {newsFilters}
     </div>
@@ -532,10 +552,10 @@ export default function NewsWall() {
     <>
       {!isPublicView && (
         <PageHeader
-          title={copy.title}
+          title={participantCopy.title}
           description={isAdmin && isLatestFallback
             ? 'No new stories are available for this region yet, so the latest verified signals remain visible.'
-            : copy.description}
+            : participantCopy.description}
           action={workspaceNewsActions}
           className="news-workspace-header"
         />
@@ -546,24 +566,24 @@ export default function NewsWall() {
       {searchQuery ? (
         <section className="card mb-5 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">Recent archive</p>
-            <h2 className="mt-1 text-xl font-black text-slate-950">Results from the past {newsMeta?.windowHours || 72} hours</h2>
-            <p className="mt-1 text-sm font-semibold text-slate-500">Searching saved original summaries, titles, sources, and topic labels for “{searchQuery}”.</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">{copy.recentArchive}</p>
+            <h2 className="mt-1 text-xl font-black text-slate-950">{interpolate(copy.resultsFromPast, { hours: formatCoinNumber(newsMeta?.windowHours || 72) })}</h2>
+            <p className="mt-1 text-sm font-semibold text-slate-500">{interpolate(copy.searchScope, { query: searchQuery })}</p>
           </div>
-          <button className="btn-secondary" type="button" onClick={clearNewsSearch}>Back to today</button>
+          <button className="btn-secondary" type="button" onClick={clearNewsSearch}>{copy.backToToday}</button>
         </section>
       ) : (
         <>
           {isAdmin && isLatestFallback && (
             <section className="card mb-5 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">Latest available</p>
-                <h2 className="mt-1 text-xl font-black text-slate-950">Showing the most recent verified stories</h2>
+                <p className="text-[10px] font-black uppercase tracking-[0.15em] text-cyan-800">{copy.latestAvailable}</p>
+                <h2 className="mt-1 text-xl font-black text-slate-950">{copy.showingRecent}</h2>
                 <p className="mt-1 text-sm font-semibold text-slate-500">Today’s feed has not published new stories for this region yet. These signals are from the past {newsMeta?.windowHours || 48} hours.</p>
               </div>
             </section>
           )}
-          <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} showOperationalStatus={isAdmin} />
+          <DailyBriefDescription brief={brief} loading={briefLoading} error={briefError} country={country} showOperationalStatus={isAdmin} copy={copy} language={language} />
         </>
       )}
 
@@ -572,10 +592,10 @@ export default function NewsWall() {
           Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[22rem] animate-pulse rounded-xl bg-slate-100" />)
         ) : !articles.length ? (
           <div className="card col-span-full flex min-h-48 items-center justify-center p-8 text-sm font-semibold text-slate-500">
-            {searchQuery ? `No stories match “${searchQuery}” in the past 72 hours.` : (isAdmin ? 'No recent stories are available for this region and topic yet.' : copy.noStories)}
+            {searchQuery ? interpolate(copy.noSearchMatches, { query: searchQuery }) : (isAdmin ? 'No recent stories are available for this region and topic yet.' : participantCopy.noStories)}
           </div>
         ) : (
-          articles.map((article) => <NewsStoryCard key={article.id} article={article} onOpen={rememberNewsPosition} />)
+          articles.map((article) => <NewsStoryCard key={article.id} article={article} onOpen={rememberNewsPosition} copy={copy} />)
         )}
       </section>
 
@@ -584,17 +604,17 @@ export default function NewsWall() {
           <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.14em] text-cyan-700">Save your feed</p>
-                <h2 id="news-auth-title" className="mt-2 text-2xl font-black text-slate-950">Sign in to continue</h2>
+                <p className="text-xs font-black uppercase tracking-[0.14em] text-cyan-700">{copy.saveYourFeed}</p>
+                <h2 id="news-auth-title" className="mt-2 text-2xl font-black text-slate-950">{copy.signInToContinue}</h2>
               </div>
-              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setAuthPrompt('')} aria-label="Close sign-in prompt">
+              <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setAuthPrompt('')} aria-label={copy.closeSignInPrompt}>
                 <X size={19} />
               </button>
             </div>
             <p className="mt-3 text-sm leading-6 text-slate-600">{authPrompt}</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <Link className="btn-primary" to="/register">Create account</Link>
-              <Link className="btn-secondary" to="/login">Sign in</Link>
+              <Link className="btn-primary" to="/register">{commonCopy.createAccount}</Link>
+              <Link className="btn-secondary" to="/login">{commonCopy.signIn}</Link>
             </div>
           </section>
         </div>
@@ -633,12 +653,12 @@ export default function NewsWall() {
       <section className="news-wall-public-hero bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:py-20">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">{copy.title}</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">{participantCopy.title}</p>
             <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-[-0.04em] sm:text-5xl">
-              {copy.heroTitle}
+              {participantCopy.heroTitle}
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
-              {copy.heroDescription}
+              {participantCopy.heroDescription}
             </p>
           </div>
           {workspaceNewsActions}
