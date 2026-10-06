@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { getCurrentUser, updateProfile } from '../api/realApi';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 import { isPanelistRole } from '../utils/roles';
 
-function displayValue(value, fallback = 'Not set') {
+function displayValue(value, fallback) {
   return value || fallback;
 }
 
@@ -21,6 +22,12 @@ function InfoPanel({ label, value }) {
 
 export default function Profile() {
   const { user, setUser } = useAuth();
+  const { publicCopy } = useLanguage();
+  /* Participant-facing wording comes from the language library
+     (.i18n-work/panelist-*.json → constants/researchTranslations.js). The
+     member branch below is not part of the participant surface and still
+     carries its own English. */
+  const copy = publicCopy?.panelistUi?.profile || {};
   const isPanelist = isPanelistRole(user?.role);
   const [displayName, setDisplayName] = useState(user?.displayName || user?.username || '');
   const [saving, setSaving] = useState(false);
@@ -42,7 +49,7 @@ export default function Profile() {
         setUser(currentUserResponse.data.user);
       } catch (caughtError) {
         if (isMounted) {
-          setError(caughtError.response?.data?.message || 'Unable to refresh profile.');
+          setError(caughtError.response?.data?.message || copy.refreshError);
         }
       }
     }
@@ -63,9 +70,9 @@ export default function Profile() {
     try {
       const response = await updateProfile({ displayName: displayName.trim() });
       setUser(response.data.user);
-      setMessage('Display name updated.');
+      setMessage(copy.saved);
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Unable to update display name.');
+      setError(caughtError.response?.data?.message || copy.updateError);
     } finally {
       setSaving(false);
     }
@@ -107,19 +114,19 @@ export default function Profile() {
   }
 
   const accountFields = [
-    ['Public Panelist ID', displayValue(user?.publicPanelistId || user?.memberId)],
-    ['Email', displayValue(user?.email)],
+    [copy.publicId, displayValue(user?.publicPanelistId || user?.memberId, copy.notSet)],
+    [copy.email, displayValue(user?.email, copy.notSet)],
   ];
 
   return (
     <>
-      <PageHeader title="Account" description="Your account identity and security settings." />
+      <PageHeader title={copy.title} description={copy.description} />
 
       <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
         <section className="card p-5">
           <div className="mb-5">
-            <h2 className="text-lg font-bold text-slate-950">Account Details</h2>
-            <p className="mt-1 text-sm text-slate-500">Your survey-matching information is kept private and used only to improve eligibility.</p>
+            <h2 className="text-lg font-bold text-slate-950">{copy.detailsTitle}</h2>
+            <p className="mt-1 text-sm text-slate-500">{copy.detailsBody}</p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -131,10 +138,10 @@ export default function Profile() {
 
         <aside className="space-y-4">
           <section className="card p-5">
-            <h2 className="text-lg font-bold text-slate-950">Display Name</h2>
-            <p className="mt-1 text-sm text-slate-500">This is the name shown in your workspace.</p>
+            <h2 className="text-lg font-bold text-slate-950">{copy.displayNameTitle}</h2>
+            <p className="mt-1 text-sm text-slate-500">{copy.displayNameBody}</p>
             <label className="mt-4 block">
-              <span className="mb-2 block text-sm font-semibold text-slate-700">Name</span>
+              <span className="mb-2 block text-sm font-semibold text-slate-700">{copy.nameLabel}</span>
               <input
                 className="field"
                 value={displayName}
@@ -144,7 +151,7 @@ export default function Profile() {
               />
             </label>
             <button className="btn-primary mt-4 w-full" type="button" onClick={handleSaveName} disabled={saving || !displayName.trim()}>
-              {saving ? 'Saving...' : 'Save name'}
+              {saving ? copy.saving : copy.saveName}
             </button>
             {message && <p className="mt-3 rounded-lg border border-cyan-200 bg-cyan-50 p-3 text-sm font-semibold text-cyan-800">{message}</p>}
             {error && <p className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
@@ -156,12 +163,12 @@ export default function Profile() {
                 <ShieldCheck size={21} />
               </span>
               <div>
-                <p className="text-sm font-bold text-slate-950">Account Security</p>
-                <p className="mt-1 text-sm text-slate-500">Use a secure email reset to change your password.</p>
+                <p className="text-sm font-bold text-slate-950">{copy.securityTitle}</p>
+                <p className="mt-1 text-sm text-slate-500">{copy.securityBody}</p>
               </div>
             </div>
             <Link className="btn-secondary mt-5 w-full" to="/forgot-password">
-              Reset password
+              {copy.resetPassword}
             </Link>
           </section>
         </aside>

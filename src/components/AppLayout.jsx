@@ -164,11 +164,11 @@ export default function AppLayout({ children }) {
                   {!isAdmin && <>
                     <button className="app-user-menu-item" type="button" onClick={goToProfile} role="menuitem">
                       <User size={15} />
-                      <span>View profile</span>
+                      <span>{workspaceCopy.profile}</span>
                     </button>
                     <button className="app-user-menu-item" type="button" onClick={goToProfile} role="menuitem">
                       <Settings size={15} />
-                      <span>Account settings</span>
+                      <span>{workspaceCopy.settings}</span>
                     </button>
                   </>}
                   {isPanelist && (
@@ -191,7 +191,7 @@ export default function AppLayout({ children }) {
                   )}
                   <button className="app-user-menu-item is-danger" type="button" onClick={handleLogout} role="menuitem">
                     <LogOut size={15} />
-                    <span>Log out</span>
+                    <span>{workspaceCopy.logout}</span>
                   </button>
                 </div>
               )}

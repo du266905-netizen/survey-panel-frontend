@@ -3,6 +3,7 @@ import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, T
 import { getDashboard } from '../api/realApi';
 import { useAsyncData } from '../hooks/useAsyncData';
 import { formatCoinNumber } from '../utils/formatters';
+import { useLanguage } from '../components/LanguageContext';
 
 const chartTooltipStyle = {
   backgroundColor: '#ffffff',
@@ -22,7 +23,7 @@ function recordDate(record) {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function buildTrend(records, dayCount) {
+function buildTrend(records, dayCount, locale) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const points = Array.from({ length: dayCount }, (_, index) => {
@@ -30,7 +31,9 @@ function buildTrend(records, dayCount) {
     date.setDate(today.getDate() - (dayCount - index - 1));
     return {
       key: dateKey(date),
-      day: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+      /* The axis is the only place the interface language shows through a
+         formatter, so it follows the selected language instead of en-US. */
+      day: date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
       completed: 0,
       coins: 0,
     };
@@ -51,9 +54,13 @@ function buildTrend(records, dayCount) {
 
 export default function ActivityDashboard() {
   const { data, loading } = useAsyncData(getDashboard, []);
+  const { language, publicCopy } = useLanguage();
+  /* Participant-facing wording comes from the language library
+     (.i18n-work/panelist-*.json → constants/researchTranslations.js). */
+  const copy = publicCopy?.panelistUi?.activity || {};
   const [trendRange, setTrendRange] = useState(7);
   const records = data?.records || [];
-  const trend = useMemo(() => buildTrend(records, trendRange), [records, trendRange]);
+  const trend = useMemo(() => buildTrend(records, trendRange, language), [records, trendRange, language]);
   const hasTrendActivity = trend.some((point) => point.completed > 0 || point.coins > 0);
 
   return (
@@ -61,15 +68,15 @@ export default function ActivityDashboard() {
       <section className="dashboard-trend-card">
         <div className="dashboard-trend-heading">
           <div>
-            <p className="dashboard-command-kicker">Your activity</p>
-            <h1>Participation trend</h1>
-            <p>Daily completed offers and approved Coins.</p>
+            <p className="dashboard-command-kicker">{copy.kicker}</p>
+            <h1>{copy.title}</h1>
+            <p>{copy.intro}</p>
           </div>
           <label>
-            <span>Period</span>
+            <span>{copy.periodLabel}</span>
             <select className="field" value={trendRange} onChange={(event) => setTrendRange(Number(event.target.value))}>
-              <option value={7}>Last 7 days</option>
-              <option value={30}>Last 30 days</option>
+              <option value={7}>{copy.last7}</option>
+              <option value={30}>{copy.last30}</option>
             </select>
           </label>
         </div>
@@ -80,8 +87,8 @@ export default function ActivityDashboard() {
             <>
               {!hasTrendActivity && (
                 <div className="dashboard-chart-empty">
-                  <p>Trend will appear after your first approved survey.</p>
-                  <span>No cleared activity in the selected period yet.</span>
+                  <p>{copy.emptyTitle}</p>
+                  <span>{copy.emptyBody}</span>
                 </div>
               )}
               <div className={hasTrendActivity ? 'h-full' : 'h-full dashboard-chart-muted'}>
@@ -94,11 +101,16 @@ export default function ActivityDashboard() {
                     <Tooltip
                       contentStyle={chartTooltipStyle}
                       labelStyle={{ color: '#24272c' }}
-                      formatter={(value, name) => [name === 'Coins' ? `${formatCoinNumber(value)} Coins` : value, name]}
+                      formatter={(value, name, item) => [
+                        item?.dataKey === 'coins' || name === copy.seriesCoins
+                          ? `${formatCoinNumber(value)} ${copy.seriesCoins}`
+                          : value,
+                        name,
+                      ]}
                     />
                     <Legend wrapperStyle={{ paddingTop: 14 }} />
-                    <Bar yAxisId="completed" dataKey="completed" name="Completed offers" fill="#e8e8e5" radius={[3, 3, 0, 0]} maxBarSize={28} />
-                    <Line yAxisId="coins" type="monotone" dataKey="coins" name="Coins" stroke="#24272c" strokeWidth={2.5} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
+                    <Bar yAxisId="completed" dataKey="completed" name={copy.seriesCompleted} fill="#e8e8e5" radius={[3, 3, 0, 0]} maxBarSize={28} />
+                    <Line yAxisId="coins" type="monotone" dataKey="coins" name={copy.seriesCoins} stroke="#24272c" strokeWidth={2.5} dot={trendRange === 7 ? { r: 3 } : false} activeDot={{ r: 5 }} />
                   </ComposedChart>
                 </ResponsiveContainer>
               </div>
