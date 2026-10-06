@@ -4,7 +4,7 @@ export const SESSION_INVALIDATED_EVENT = 'guanyi:session-invalidated';
 
 const defaultApiBaseUrl = () => {
   if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    return 'https://api.guanyi-media.com';
+    return 'https://api.guanyisearch.com';
   }
   return 'http://127.0.0.1:3001';
 };
