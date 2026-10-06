@@ -2,12 +2,32 @@ import { getCountryCallingCode } from 'libphonenumber-js/min';
 
 const ISO_COUNTRY_CODES = `AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW`.split(' ');
 
-const regionDisplayNames = typeof Intl !== 'undefined' && Intl.DisplayNames ? new Intl.DisplayNames(['en'], { type: 'region' }) : null;
+function regionDisplayNamesFor(locale) {
+  if (typeof Intl === 'undefined' || !Intl.DisplayNames) return null;
+  try {
+    return new Intl.DisplayNames([locale], { type: 'region' });
+  } catch {
+    return null;
+  }
+}
 
-export const countryOptions = ISO_COUNTRY_CODES.map((code) => ({
-  value: code,
-  label: regionDisplayNames?.of(code) || code,
-})).sort((left, right) => left.label.localeCompare(right.label));
+function buildCountryOptions(locale) {
+  const regionDisplayNames = regionDisplayNamesFor(locale);
+  return ISO_COUNTRY_CODES.map((code) => ({
+    value: code,
+    label: regionDisplayNames?.of(code) || code,
+  }));
+}
+
+/* English country names, kept for the admin and public surfaces that still render in English. */
+export const countryOptions = buildCountryOptions('en').sort((left, right) => left.label.localeCompare(right.label));
+
+/* Country names in the interface language, for the participant onboarding picker.
+   `value` stays the ISO code that gets submitted; only the label is localized. */
+export function countryOptionsFor(locale) {
+  const targetLocale = locale || 'en';
+  return buildCountryOptions(targetLocale).sort((left, right) => left.label.localeCompare(right.label, targetLocale));
+}
 
 export function countryFlag(countryCode) {
   const normalizedCode = String(countryCode || '').trim().toUpperCase();
@@ -116,3 +136,137 @@ export const householdIncomeOptions = [
 ].map(([value, label]) => ({ value, label }));
 
 export const employedStatusValues = new Set(['employed_full_time', 'employed_part_time', 'self_employed']);
+
+/* Display layer for the participant onboarding lists.
+ *
+ * Every option `value` above is the payload sent to the API (and the key the
+ * admin screens read), so the arrays stay exactly as they are. These tables
+ * only map a value to its `publicCopy.panelistUi.options` key, letting a caller
+ * that has the language library render the same ordered lists with translated
+ * labels via localizedPanelProfileOptions().
+ */
+const optionLabelKeys = {
+  language: {
+    en: 'languageEnglish',
+    zh_hans: 'languageChineseSimplified',
+    zh_hant: 'languageChineseTraditional',
+    es: 'languageSpanish',
+    fr: 'languageFrench',
+    ja: 'languageJapanese',
+    ko: 'languageKorean',
+    other: 'languageOther',
+  },
+  researchTopic: {
+    technology_and_digital_life: 'topicTechnologyAndDigitalLife',
+    everyday_products_and_shopping: 'topicEverydayProductsAndShopping',
+    media_and_culture: 'topicMediaAndCulture',
+    community_and_local_life: 'topicCommunityAndLocalLife',
+    education_and_work: 'topicEducationAndWork',
+    health_and_wellbeing: 'topicHealthAndWellbeing',
+    environment_and_sustainability: 'topicEnvironmentAndSustainability',
+    prefer_not_to_say: 'topicPreferNotToSay',
+  },
+  participationFormat: {
+    online_survey: 'formatOnlineSurvey',
+    online_interview_or_group: 'formatOnlineInterviewOrGroup',
+    in_person_activity: 'formatInPersonActivity',
+    product_or_service_testing: 'formatProductOrServiceTesting',
+    community_discussion: 'formatCommunityDiscussion',
+    not_sure_yet: 'formatNotSureYet',
+  },
+  gender: {
+    male: 'genderMale',
+    female: 'genderFemale',
+    non_binary: 'genderNonBinary',
+    prefer_not_to_say: 'genderPreferNotToSay',
+  },
+  education: {
+    less_than_high_school: 'educationLessThanHighSchool',
+    high_school_or_equivalent: 'educationHighSchoolOrEquivalent',
+    trade_or_vocational_qualification: 'educationTradeOrVocational',
+    some_college_no_degree: 'educationSomeCollegeNoDegree',
+    associate_or_short_cycle_degree: 'educationAssociateOrShortCycle',
+    bachelors_degree: 'educationBachelorsDegree',
+    masters_degree: 'educationMastersDegree',
+    professional_or_doctorate_degree: 'educationProfessionalOrDoctorate',
+    prefer_not_to_say: 'educationPreferNotToSay',
+  },
+  employment: {
+    employed_full_time: 'employmentEmployedFullTime',
+    employed_part_time: 'employmentEmployedPartTime',
+    self_employed: 'employmentSelfEmployed',
+    unemployed_looking: 'employmentUnemployedLooking',
+    student: 'employmentStudent',
+    retired: 'employmentRetired',
+    homemaker_or_caregiver: 'employmentHomemakerOrCaregiver',
+    unable_to_work: 'employmentUnableToWork',
+    prefer_not_to_say: 'employmentPreferNotToSay',
+  },
+  industry: {
+    technology_and_telecommunications: 'industryTechnologyAndTelecommunications',
+    healthcare_and_social_assistance: 'industryHealthcareAndSocialAssistance',
+    education: 'industryEducation',
+    retail_and_ecommerce: 'industryRetailAndEcommerce',
+    finance_insurance_and_real_estate: 'industryFinanceInsuranceAndRealEstate',
+    manufacturing_and_construction: 'industryManufacturingAndConstruction',
+    government_and_public_services: 'industryGovernmentAndPublicServices',
+    transportation_and_logistics: 'industryTransportationAndLogistics',
+    hospitality_food_and_leisure: 'industryHospitalityFoodAndLeisure',
+    professional_and_business_services: 'industryProfessionalAndBusinessServices',
+    other_industry: 'industryOther',
+    prefer_not_to_say: 'industryPreferNotToSay',
+  },
+  maritalStatus: {
+    never_married: 'maritalNeverMarried',
+    married_or_domestic_partnership: 'maritalMarriedOrDomesticPartnership',
+    separated: 'maritalSeparated',
+    divorced: 'maritalDivorced',
+    widowed: 'maritalWidowed',
+    prefer_not_to_say: 'maritalPreferNotToSay',
+  },
+  children: {
+    yes: 'childrenYes',
+    no: 'childrenNo',
+    prefer_not_to_say: 'childrenPreferNotToSay',
+  },
+  childrenAgeBand: {
+    under_6: 'childrenAgeUnder6',
+    '6_12': 'childrenAge6To12',
+    '13_17': 'childrenAge13To17',
+    '18_plus_at_home': 'childrenAge18PlusAtHome',
+    prefer_not_to_say: 'childrenAgePreferNotToSay',
+  },
+  householdIncome: {
+    under_25000: 'incomeUnder25000',
+    '25000_49999': 'income25000To49999',
+    '50000_74999': 'income50000To74999',
+    '75000_99999': 'income75000To99999',
+    '100000_149999': 'income100000To149999',
+    '150000_199999': 'income150000To199999',
+    '200000_plus': 'income200000Plus',
+    prefer_not_to_say: 'incomePreferNotToSay',
+  },
+};
+
+function withTranslatedLabels(options, labelKeys, optionsCopy) {
+  return options.map((option) => ({ ...option, label: optionsCopy[labelKeys[option.value]] }));
+}
+
+/* The same option lists, in the same order, with labels read from
+   `publicCopy.panelistUi.options`. The US/CA/GB admin-area lists are proper
+   nouns and stay in English, so they are not part of this display layer. */
+export function localizedPanelProfileOptions(optionsCopy = {}) {
+  return {
+    languageOptions: withTranslatedLabels(languageOptions, optionLabelKeys.language, optionsCopy),
+    researchTopicOptions: withTranslatedLabels(researchTopicOptions, optionLabelKeys.researchTopic, optionsCopy),
+    participationFormatOptions: withTranslatedLabels(participationFormatOptions, optionLabelKeys.participationFormat, optionsCopy),
+    genderOptions: withTranslatedLabels(genderOptions, optionLabelKeys.gender, optionsCopy),
+    educationOptions: withTranslatedLabels(educationOptions, optionLabelKeys.education, optionsCopy),
+    employmentOptions: withTranslatedLabels(employmentOptions, optionLabelKeys.employment, optionsCopy),
+    industryOptions: withTranslatedLabels(industryOptions, optionLabelKeys.industry, optionsCopy),
+    maritalStatusOptions: withTranslatedLabels(maritalStatusOptions, optionLabelKeys.maritalStatus, optionsCopy),
+    childrenOptions: withTranslatedLabels(childrenOptions, optionLabelKeys.children, optionsCopy),
+    childrenAgeBandOptions: withTranslatedLabels(childrenAgeBandOptions, optionLabelKeys.childrenAgeBand, optionsCopy),
+    householdIncomeOptions: withTranslatedLabels(householdIncomeOptions, optionLabelKeys.householdIncome, optionsCopy),
+  };
+}

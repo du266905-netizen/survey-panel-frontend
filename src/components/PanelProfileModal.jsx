@@ -3,29 +3,22 @@ import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { savePanelProfileProgress } from '../api/realApi';
 import Logo from './Logo';
+import { useLanguage } from './LanguageContext';
 import {
   adminAreasForCountry,
-  childrenAgeBandOptions,
-  childrenOptions,
-  countryOptions,
-  educationOptions,
+  countryOptionsFor,
   employedStatusValues,
-  employmentOptions,
-  genderOptions,
-  householdIncomeOptions,
-  industryOptions,
-  languageOptions,
-  maritalStatusOptions,
-  participationFormatOptions,
-  researchTopicOptions,
+  localizedPanelProfileOptions,
 } from '../constants/panelProfileOptions';
+import { interpolate } from '../utils/interpolate';
 
-const monthOptions = Array.from({ length: 12 }, (_, index) => ({ value: String(index + 1), label: new Date(Date.UTC(2026, index, 1)).toLocaleDateString('en-US', { month: 'long' }) }));
+function monthOptionsFor(locale) {
+  return Array.from({ length: 12 }, (_, index) => ({ value: String(index + 1), label: new Date(Date.UTC(2026, index, 1)).toLocaleDateString(locale, { month: 'long' }) }));
+}
 const dayOptions = Array.from({ length: 31 }, (_, index) => ({ value: String(index + 1), label: String(index + 1) }));
 const maxBirthYear = new Date().getUTCFullYear() - 18;
 const yearOptions = Array.from({ length: maxBirthYear - 1900 + 1 }, (_, index) => String(maxBirthYear - index));
 const featuredCountryCodes = ['US', 'CA', 'GB', 'CN', 'AU', 'IN'];
-const featuredCountryOptions = featuredCountryCodes.map((code) => countryOptions.find((option) => option.value === code)).filter(Boolean);
 
 function initialDraft(profile) {
   return {
@@ -50,42 +43,42 @@ function initialDraft(profile) {
   };
 }
 
-function questionSteps(draft) {
+function questionSteps(draft, copy, options) {
   const countryAdminAreas = adminAreasForCountry(draft.country);
   const steps = [
     { key: 'intro', kind: 'intro' },
-    { key: 'country', kind: 'select', title: 'Where do you currently live?', description: 'Choose your country or territory of residence.' },
-    { key: 'language', kind: 'options', title: 'Which language do you prefer for research invitations?', description: 'We use this to show activities and updates in a language you can use comfortably.', options: languageOptions },
-    { key: 'birthDate', kind: 'birthDate', title: 'What is your date of birth?', description: 'We use this only to determine your age group for matching.' },
-    { key: 'gender', kind: 'options', title: 'What is your gender?', description: 'Choose the option that best describes you.', options: genderOptions },
-    { key: 'educationLevel', kind: 'options', title: 'What is the highest level of education you have completed?', description: 'Select your completed highest level.', options: educationOptions },
-    { key: 'employmentStatus', kind: 'options', title: 'What is your current main employment status?', description: 'Choose the option that best describes your situation.', options: employmentOptions },
+    { key: 'country', kind: 'select', title: copy.stepCountryTitle, description: copy.stepCountryDescription },
+    { key: 'language', kind: 'options', title: copy.stepLanguageTitle, description: copy.stepLanguageDescription, options: options.languageOptions },
+    { key: 'birthDate', kind: 'birthDate', title: copy.stepBirthDateTitle, description: copy.stepBirthDateDescription },
+    { key: 'gender', kind: 'options', title: copy.stepGenderTitle, description: copy.stepGenderDescription, options: options.genderOptions },
+    { key: 'educationLevel', kind: 'options', title: copy.stepEducationTitle, description: copy.stepEducationDescription, options: options.educationOptions },
+    { key: 'employmentStatus', kind: 'options', title: copy.stepEmploymentTitle, description: copy.stepEmploymentDescription, options: options.employmentOptions },
   ];
 
   if (countryAdminAreas.length) {
-    steps.splice(2, 0, { key: 'adminAreaCode', kind: 'select', title: 'What state, province, or region do you live in?', description: 'Choose the area that best matches your current residence.' });
-    steps.splice(3, 0, { key: 'postalCode', kind: 'text', optional: true, title: 'What is your postal code?', description: 'Optional. It can help with location-based survey eligibility.' });
+    steps.splice(2, 0, { key: 'adminAreaCode', kind: 'select', title: copy.stepAdminAreaTitle, description: copy.stepAdminAreaDescription });
+    steps.splice(3, 0, { key: 'postalCode', kind: 'text', optional: true, title: copy.stepPostalCodeTitle, description: copy.stepPostalCodeDescription });
   } else {
-    steps.splice(2, 0, { key: 'cityOrRegion', kind: 'text', title: 'What city or region do you live in?', description: 'Enter your current city or region of residence.' });
+    steps.splice(2, 0, { key: 'cityOrRegion', kind: 'text', title: copy.stepCityTitle, description: copy.stepCityDescription });
   }
 
   if (employedStatusValues.has(draft.employmentStatus)) {
-    steps.push({ key: 'industry', kind: 'options', title: 'What industry do you work in?', description: 'Choose the industry that best matches your main work.', options: industryOptions });
+    steps.push({ key: 'industry', kind: 'options', title: copy.stepIndustryTitle, description: copy.stepIndustryDescription, options: options.industryOptions });
   }
 
-  steps.push({ key: 'maritalStatus', kind: 'options', title: 'What is your marital or partnership status?', description: 'Choose the option that best describes your current status.', options: maritalStatusOptions });
-  steps.push({ key: 'hasChildren', kind: 'options', title: 'Do you have children you or your partner care for?', description: 'This helps us match family and household research.', options: childrenOptions });
+  steps.push({ key: 'maritalStatus', kind: 'options', title: copy.stepMaritalStatusTitle, description: copy.stepMaritalStatusDescription, options: options.maritalStatusOptions });
+  steps.push({ key: 'hasChildren', kind: 'options', title: copy.stepHasChildrenTitle, description: copy.stepHasChildrenDescription, options: options.childrenOptions });
 
   if (draft.hasChildren === 'yes') {
-    steps.push({ key: 'childrenAgeBands', kind: 'multi', title: 'What age groups are your children?', description: 'Select every age group that applies.', options: childrenAgeBandOptions });
+    steps.push({ key: 'childrenAgeBands', kind: 'multi', title: copy.stepChildrenAgeBandsTitle, description: copy.stepChildrenAgeBandsDescription, options: options.childrenAgeBandOptions });
   }
 
   if (draft.country === 'US') {
-    steps.push({ key: 'householdIncomeUsd', kind: 'options', title: 'What is your approximate annual household income before tax?', description: 'Choose the range that best fits your household.', options: householdIncomeOptions });
+    steps.push({ key: 'householdIncomeUsd', kind: 'options', title: copy.stepHouseholdIncomeTitle, description: copy.stepHouseholdIncomeDescription, options: options.householdIncomeOptions });
   }
 
-  steps.push({ key: 'researchTopics', kind: 'multi', title: 'Which topics are you most interested in?', description: 'Select every topic you would be open to hearing about.', options: researchTopicOptions, exclusiveValues: ['prefer_not_to_say'] });
-  steps.push({ key: 'participationFormats', kind: 'multi', title: 'Which types of activities are you open to?', description: 'Select every format that could work for you. This does not guarantee an invitation.', options: participationFormatOptions, exclusiveValues: ['not_sure_yet'] });
+  steps.push({ key: 'researchTopics', kind: 'multi', title: copy.stepResearchTopicsTitle, description: copy.stepResearchTopicsDescription, options: options.researchTopicOptions, exclusiveValues: ['prefer_not_to_say'] });
+  steps.push({ key: 'participationFormats', kind: 'multi', title: copy.stepParticipationFormatsTitle, description: copy.stepParticipationFormatsDescription, options: options.participationFormatOptions, exclusiveValues: ['not_sure_yet'] });
 
   return steps;
 }
@@ -107,17 +100,17 @@ function QuestionTitle({ title }) {
   return <h1 id="panel-profile-title">{title}</h1>;
 }
 
-function CountryOptions({ value, onSelect, disabled }) {
+function CountryOptions({ value, onSelect, disabled, options, featuredOptions, copy }) {
   const [query, setQuery] = useState('');
   const normalizedQuery = query.trim().toLocaleLowerCase();
   const matches = normalizedQuery
-    ? countryOptions.filter((option) => option.label.toLocaleLowerCase().includes(normalizedQuery)).slice(0, 8)
+    ? options.filter((option) => option.label.toLocaleLowerCase().includes(normalizedQuery)).slice(0, 8)
     : [];
 
   return (
     <div className="profile-survey-country-picker">
       <div className="profile-survey-country-options">
-        {featuredCountryOptions.map((option) => (
+        {featuredOptions.map((option) => (
           <LargeOption
             key={option.value}
             label={option.label}
@@ -133,17 +126,17 @@ function CountryOptions({ value, onSelect, disabled }) {
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search all countries and territories"
+          placeholder={copy.searchPlaceholder}
           disabled={disabled}
         />
       </label>
       {normalizedQuery && (
-        <div className="profile-survey-country-results" role="listbox" aria-label="Country search results">
+        <div className="profile-survey-country-results" role="listbox" aria-label={copy.searchResultsLabel}>
           {matches.length ? matches.map((option) => (
             <button key={option.value} type="button" role="option" aria-selected={value === option.value} disabled={disabled} onClick={() => onSelect(option.value)}>
               {option.label}
             </button>
-          )) : <p>No country or territory found.</p>}
+          )) : <p>{copy.searchEmpty}</p>}
         </div>
       )}
     </div>
@@ -151,6 +144,12 @@ function CountryOptions({ value, onSelect, disabled }) {
 }
 
 export default function PanelProfileModal({ open, profile, rewardCoins, onClose, onProfileSaved, onCompleted, asPage = false }) {
+  const { language, publicCopy } = useLanguage();
+  const copy = publicCopy?.panelistUi?.onboarding || {};
+  const optionsCopy = publicCopy?.panelistUi?.options || {};
+  const options = useMemo(() => localizedPanelProfileOptions(optionsCopy), [optionsCopy]);
+  const countryList = useMemo(() => countryOptionsFor(language), [language]);
+  const featuredCountryList = useMemo(() => featuredCountryCodes.map((code) => countryList.find((option) => option.value === code)).filter(Boolean), [countryList]);
   const [draft, setDraft] = useState(() => initialDraft(profile));
   const [stepIndex, setStepIndex] = useState(0);
   const [saving, setSaving] = useState(false);
@@ -159,7 +158,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
   const [completedProfile, setCompletedProfile] = useState(null);
   const [awardedCoins, setAwardedCoins] = useState(0);
   const [optionsOpen, setOptionsOpen] = useState(false);
-  const steps = useMemo(() => questionSteps(draft), [draft]);
+  const steps = useMemo(() => questionSteps(draft, copy, options), [draft, copy, options]);
   const currentStep = steps[stepIndex] || steps[0];
   const questionCount = Math.max(steps.length - 1, 1);
   const progressValue = completed ? 100 : Math.max(0, Math.min(100, (Math.max(stepIndex, 0) / questionCount) * 100));
@@ -173,7 +172,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     setAwardedCoins(0);
     setError('');
     setOptionsOpen(false);
-    setStepIndex(profile?.isComplete ? 0 : Math.min(profile?.profileCurrentStep || 0, questionSteps(nextDraft).length - 1));
+    setStepIndex(profile?.isComplete ? 0 : Math.min(profile?.profileCurrentStep || 0, questionSteps(nextDraft, copy, options).length - 1));
   }, [open]);
 
   useEffect(() => {
@@ -194,7 +193,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     try {
       const response = await savePanelProfileProgress({ answers, currentStep: nextStepIndex });
       const nextDraft = initialDraft(response.data.profile);
-      const nextSteps = questionSteps(nextDraft);
+      const nextSteps = questionSteps(nextDraft, copy, options);
       setDraft(nextDraft);
       if (response.data.profile.isComplete) {
         setCompleted(true);
@@ -206,7 +205,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
         onProfileSaved?.(response.data);
       }
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'Your answer could not be saved. Please try again.');
+      setError(caughtError.response?.data?.message || copy.saveError);
     } finally {
       setSaving(false);
     }
@@ -274,30 +273,31 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
       return (
         <div className="profile-survey-success">
           <span className="profile-survey-success-icon"><ShieldCheck size={34} /></span>
-          <p className="profile-survey-eyebrow">Research profile complete</p>
-          <h2>{awardedCoins ? `${awardedCoins.toLocaleString()} Coins added` : 'Your profile is up to date'}</h2>
-          <p>{awardedCoins ? 'Your completion reward is now in your wallet. We will notify you when a suitable study is available.' : 'Thank you for keeping your research profile up to date.'}</p>
-          <button className="profile-survey-primary-action" type="button" onClick={continueAfterCompletion}>Return to your workspace <ChevronRight size={18} /></button>
+          <p className="profile-survey-eyebrow">{copy.completeEyebrow}</p>
+          <h2>{awardedCoins ? interpolate(copy.coinsAdded, { coins: awardedCoins.toLocaleString() }) : copy.profileUpToDate}</h2>
+          <p>{awardedCoins ? copy.completeRewardBody : copy.completeThanksBody}</p>
+          <button className="profile-survey-primary-action" type="button" onClick={continueAfterCompletion}>{copy.returnToWorkspace} <ChevronRight size={18} /></button>
         </div>
       );
     }
 
     if (currentStep.kind === 'intro') {
+      const rewardParts = copy.introReward.split('{coins}');
       return (
         <div className="profile-survey-intro">
           <span className="profile-survey-intro-coin"><Coins size={23} /></span>
-          <p className="profile-survey-eyebrow">Your research profile</p>
-          <h2>Help us match you with more relevant research.</h2>
-          <p>Answer a short set of introduction questions at your own pace. You can close this at any time and continue later.</p>
-          <div className="profile-survey-reward-note"><Coins size={16} /> Complete your profile to receive <strong>{rewardCoins.toLocaleString()} Coins</strong> once.</div>
-          <button className="profile-survey-primary-action" type="button" onClick={() => setStepIndex(1)}>Start profile <ChevronRight size={18} /></button>
-          <a href="/privacy" className="profile-survey-privacy-link"><CircleHelp size={15} /> How we use survey information</a>
+          <p className="profile-survey-eyebrow">{copy.introEyebrow}</p>
+          <h2>{copy.introTitle}</h2>
+          <p>{copy.introBody}</p>
+          <div className="profile-survey-reward-note"><Coins size={16} /> {rewardParts[0]}<strong>{rewardCoins.toLocaleString()}</strong>{rewardParts[1]}</div>
+          <button className="profile-survey-primary-action" type="button" onClick={() => setStepIndex(1)}>{copy.startProfile} <ChevronRight size={18} /></button>
+          <a href="/privacy" className="profile-survey-privacy-link"><CircleHelp size={15} /> {copy.privacyLinkLabel}</a>
         </div>
       );
     }
 
     if (currentStep.key === 'country') {
-      return <CountryOptions value={draft.country} onSelect={(value) => selectAnswer('country', value)} disabled={saving} />;
+      return <CountryOptions value={draft.country} onSelect={(value) => selectAnswer('country', value)} disabled={saving} options={countryList} featuredOptions={featuredCountryList} copy={copy} />;
     }
 
     if (currentStep.key === 'adminAreaCode') {
@@ -306,11 +306,11 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
         <form onSubmit={submitText} className="profile-survey-form">
           <FieldControl>
             <select value={draft.adminAreaCode} onChange={(event) => setDraft((current) => ({ ...current, adminAreaCode: event.target.value }))} autoFocus>
-              <option value="">Select state, province, or region</option>
+              <option value="">{copy.adminAreaPlaceholder}</option>
               {areas.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
             </select>
           </FieldControl>
-          <button className="profile-survey-primary-action" type="submit" disabled={saving || !draft.adminAreaCode.trim()}>Continue <ChevronRight size={18} /></button>
+          <button className="profile-survey-primary-action" type="submit" disabled={saving || !draft.adminAreaCode.trim()}>{copy.continue} <ChevronRight size={18} /></button>
         </form>
       );
     }
@@ -318,8 +318,8 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     if (currentStep.key === 'cityOrRegion') {
       return (
         <form onSubmit={submitText} className="profile-survey-form">
-          <FieldControl><input value={draft.cityOrRegion} onChange={(event) => setDraft((current) => ({ ...current, cityOrRegion: event.target.value }))} placeholder="City" autoFocus maxLength={120} /></FieldControl>
-          <button className="profile-survey-primary-action" type="submit" disabled={saving || !draft.cityOrRegion.trim()}>Continue <ChevronRight size={18} /></button>
+          <FieldControl><input value={draft.cityOrRegion} onChange={(event) => setDraft((current) => ({ ...current, cityOrRegion: event.target.value }))} placeholder={copy.cityPlaceholder} autoFocus maxLength={120} /></FieldControl>
+          <button className="profile-survey-primary-action" type="submit" disabled={saving || !draft.cityOrRegion.trim()}>{copy.continue} <ChevronRight size={18} /></button>
         </form>
       );
     }
@@ -327,9 +327,9 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
     if (currentStep.key === 'postalCode') {
       return (
         <form onSubmit={submitText} className="profile-survey-form">
-          <FieldControl><input value={draft.postalCode} onChange={(event) => setDraft((current) => ({ ...current, postalCode: event.target.value }))} placeholder="Postal code" autoFocus maxLength={24} /></FieldControl>
-          <button className="profile-survey-primary-action" type="submit" disabled={saving}>Continue <ChevronRight size={18} /></button>
-          <button className="profile-survey-skip-action" type="button" onClick={() => persist({ postalCode: null })} disabled={saving}>Skip for now</button>
+          <FieldControl><input value={draft.postalCode} onChange={(event) => setDraft((current) => ({ ...current, postalCode: event.target.value }))} placeholder={copy.postalCodePlaceholder} autoFocus maxLength={24} /></FieldControl>
+          <button className="profile-survey-primary-action" type="submit" disabled={saving}>{copy.continue} <ChevronRight size={18} /></button>
+          <button className="profile-survey-skip-action" type="button" onClick={() => persist({ postalCode: null })} disabled={saving}>{copy.skipForNow}</button>
         </form>
       );
     }
@@ -338,11 +338,11 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
       return (
         <form onSubmit={submitText} className="profile-survey-form">
           <div className="profile-survey-date-fields">
-            <FieldControl><select value={draft.birthMonth} onChange={(event) => setDraft((current) => ({ ...current, birthMonth: event.target.value }))} autoFocus><option value="">Month</option>{monthOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></FieldControl>
-            <FieldControl><select value={draft.birthDay} onChange={(event) => setDraft((current) => ({ ...current, birthDay: event.target.value }))}><option value="">Day</option>{dayOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></FieldControl>
-            <FieldControl><select value={draft.birthYear} onChange={(event) => setDraft((current) => ({ ...current, birthYear: event.target.value }))}><option value="">Year</option>{yearOptions.map((option) => <option key={option} value={option}>{option}</option>)}</select></FieldControl>
+            <FieldControl><select value={draft.birthMonth} onChange={(event) => setDraft((current) => ({ ...current, birthMonth: event.target.value }))} autoFocus><option value="">{copy.monthPlaceholder}</option>{monthOptionsFor(language).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></FieldControl>
+            <FieldControl><select value={draft.birthDay} onChange={(event) => setDraft((current) => ({ ...current, birthDay: event.target.value }))}><option value="">{copy.dayPlaceholder}</option>{dayOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></FieldControl>
+            <FieldControl><select value={draft.birthYear} onChange={(event) => setDraft((current) => ({ ...current, birthYear: event.target.value }))}><option value="">{copy.yearPlaceholder}</option>{yearOptions.map((option) => <option key={option} value={option}>{option}</option>)}</select></FieldControl>
           </div>
-          <button className="profile-survey-primary-action" type="submit" disabled={saving || !draft.birthYear || !draft.birthMonth || !draft.birthDay}>Continue <ChevronRight size={18} /></button>
+          <button className="profile-survey-primary-action" type="submit" disabled={saving || !draft.birthYear || !draft.birthMonth || !draft.birthDay}>{copy.continue} <ChevronRight size={18} /></button>
         </form>
       );
     }
@@ -354,7 +354,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
           <div className="profile-survey-options">
             {currentStep.options.map((option) => <LargeOption key={option.value} label={option.label} multi selected={selectedValues.includes(option.value)} disabled={saving} onClick={() => toggleMultiChoice(currentStep.key, option.value, currentStep.exclusiveValues)} />)}
           </div>
-          <button className="profile-survey-primary-action" type="submit" disabled={saving || !selectedValues.length}>Continue <ChevronRight size={18} /></button>
+          <button className="profile-survey-primary-action" type="submit" disabled={saving || !selectedValues.length}>{copy.continue} <ChevronRight size={18} /></button>
         </form>
       );
     }
@@ -372,7 +372,7 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
         <header className="profile-survey-topbar">
           <div className="profile-survey-brand"><Logo size="sm" /></div>
           <div className="profile-survey-actions">
-            <div className="profile-survey-header-progress" role="progressbar" aria-label="First survey progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progressValue)}>
+            <div className="profile-survey-header-progress" role="progressbar" aria-label={copy.progressAriaLabel} aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progressValue)}>
               <span style={{ width: `${progressValue}%` }} />
             </div>
             <div
@@ -380,13 +380,13 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
               onMouseEnter={() => setOptionsOpen(true)}
               onMouseLeave={() => setOptionsOpen(false)}
             >
-              <button className="profile-survey-options-trigger" type="button" onClick={() => setOptionsOpen((open) => !open)} aria-expanded={optionsOpen} aria-haspopup="menu" aria-label="Options">
+              <button className="profile-survey-options-trigger" type="button" onClick={() => setOptionsOpen((open) => !open)} aria-expanded={optionsOpen} aria-haspopup="menu" aria-label={copy.optionsAriaLabel}>
                 <Settings2 size={17} />
               </button>
               {optionsOpen && (
                 <div className="profile-survey-options-menu" role="menu">
-                  <a href="/privacy" role="menuitem"><CircleHelp size={15} /> Privacy</a>
-                  <button type="button" role="menuitem" onClick={onClose}><X size={15} /> Save and exit</button>
+                  <a href="/privacy" role="menuitem"><CircleHelp size={15} /> {publicCopy?.panelistUi?.common?.privacy}</a>
+                  <button type="button" role="menuitem" onClick={onClose}><X size={15} /> {copy.saveAndExit}</button>
                 </div>
               )}
             </div>
@@ -402,9 +402,9 @@ export default function PanelProfileModal({ open, profile, rewardCoins, onClose,
           )}
           {renderQuestion()}
           {error && <p className="profile-survey-error">{error}</p>}
-          {saving && <p className="profile-survey-saving"><LoaderCircle size={15} className="animate-spin" /> Saving your answer</p>}
+          {saving && <p className="profile-survey-saving"><LoaderCircle size={15} className="animate-spin" /> {copy.saving}</p>}
         </div>
-        {!completed && stepIndex > 0 && <button className="profile-survey-back" type="button" onClick={() => setStepIndex((current) => Math.max(0, current - 1))} disabled={saving}><ChevronLeft size={17} /> Back</button>}
+        {!completed && stepIndex > 0 && <button className="profile-survey-back" type="button" onClick={() => setStepIndex((current) => Math.max(0, current - 1))} disabled={saving}><ChevronLeft size={17} /> {copy.back}</button>}
       </section>
     </div>
   );
