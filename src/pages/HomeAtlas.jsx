@@ -266,63 +266,13 @@ export default function HomeAtlas() {
           </form>
         </div>
 
-        <div className="atlas-map" aria-label="Ways to explore GuanyiSearch">
-          <span className="atlas-orbit atlas-orbit--one" aria-hidden="true" />
-          <span className="atlas-orbit atlas-orbit--two" aria-hidden="true" />
-          <span className="atlas-signal atlas-signal--one" aria-hidden="true" />
-          <span className="atlas-signal atlas-signal--two" aria-hidden="true" />
-          <span className="atlas-signal atlas-signal--three" aria-hidden="true" />
-          <svg className="atlas-wires" viewBox="0 0 1200 650" preserveAspectRatio="none" aria-hidden="true">
-            <path className="atlas-wire atlas-wire--news" d="M 605 338 C 499 258 449 184 236 174" />
-            <path className="atlas-wire atlas-wire--survey" d="M 603 340 C 722 430 827 487 1004 506" />
-            <path className="atlas-wire atlas-wire--community" d="M 603 340 C 521 457 421 533 255 570" />
-            <path className="atlas-wire atlas-wire--business" d="M 605 338 C 714 257 818 180 1000 164" />
-          </svg>
+        {/* The constellation that used to live here — two orbit rings, three
+            signal dots, four connecting wires and the four AtlasNode cards —
+            is replaced by one photograph. The AtlasNode component itself is
+            kept further up this file, unused, because the animations are
+            wanted again for the report wall; see handoff §12. */}
+        <div className="atlas-map">
           <AtlasTypewriter prompts={copy.prompts} begin={copy.begin} />
-
-          <AtlasNode
-            name="news"
-            className="atlas-node--news"
-            to={withLanguage('/news', language)}
-            eyebrow={copy.nodes.news[0]}
-            title={copy.nodes.news[1]}
-            image={newsWallIllustration}
-            onActive={setActiveNode}
-            onInactive={() => setActiveNode('')}
-          />
-
-          <AtlasNode
-            name="survey"
-            className="atlas-node--survey"
-            to={withLanguage('/partners', language)}
-            eyebrow={copy.nodes.survey[0]}
-            title={copy.nodes.survey[1]}
-            image={surveyParticipationIllustration}
-            onActive={setActiveNode}
-            onInactive={() => setActiveNode('')}
-          />
-
-          <AtlasNode
-            name="community"
-            className="atlas-node--community"
-            to={null}
-            eyebrow={copy.nodes.community[0]}
-            title={copy.nodes.community[1]}
-            image={communityIllustration}
-            onActive={setActiveNode}
-            onInactive={() => setActiveNode('')}
-          />
-
-          <AtlasNode
-            name="business"
-            className="atlas-node--business"
-            to={withLanguage('/business', language)}
-            eyebrow={copy.nodes.business[0]}
-            title={copy.nodes.business[1]}
-            image={businessHandshake}
-            onActive={setActiveNode}
-            onInactive={() => setActiveNode('')}
-          />
         </div>
       </section>
 

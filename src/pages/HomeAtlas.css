@@ -763,3 +763,279 @@
 @media (max-width: 800px) {
   .atlas-contact-panel h2 { font-size: clamp(2.2rem, 8.5vw, 3.4rem); line-height: 1; }
 }
+
+/* ===========================================================================
+   Contact stage: the map is now one photograph
+   ---------------------------------------------------------------------------
+   The orbit rings, the signal dots, the four wires and the four AtlasNode
+   cards have been taken out of the markup (HomeAtlas.jsx). What is left of
+   that block is the typewriter, sitting on a photograph. The AtlasNode
+   component and its illustration imports deliberately STAY in the file,
+   unused, because those animations are wanted again for the report wall —
+   see handoff §12.
+   =========================================================================== */
+
+.atlas-map {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  place-items: center;
+  overflow: hidden;
+  border-radius: 2px;
+  background-color: #14161a;
+  background-image:
+    linear-gradient(0deg, rgba(12, 14, 17, .58) 0%, rgba(12, 14, 17, .28) 52%, rgba(12, 14, 17, .44) 100%),
+    url('../assets/home/contact-sunset.jpg');
+  background-position: center, center 54%;
+  background-repeat: no-repeat;
+  background-size: cover, cover;
+}
+
+/* the two decorative rings belonged to the constellation that is gone */
+.atlas-map::before,
+.atlas-map::after {
+  content: none;
+}
+
+/* White type on the photograph. The old ink greens (#77867b / #2a573e) sat on
+   a pale ground; on a dusk photograph they disappear. */
+.atlas-map-typewriter {
+  color: rgba(255, 255, 255, .74);
+  text-shadow: 0 1px 20px rgba(12, 14, 17, .5);
+}
+
+.atlas-map-typewriter span {
+  color: rgba(255, 255, 255, .74);
+}
+
+.atlas-map-typewriter strong {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.atlas-map-typewriter i {
+  background: #deef24;
+}
+
+@media (max-width: 900px) {
+  .atlas-map {
+    min-height: 360px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Full coverage.
+   `.atlas-stage` carries `padding: clamp(54px,5vw,82px) 5.5vw clamp(48px,4.5vw,72px)`,
+   so the map sat inside that padding and read as an inset picture frame with
+   white all round. Bleeding it back out by exactly the section's padding makes
+   the photograph fill its half edge to edge — section top, bottom and the
+   viewport's right edge — with `overflow: hidden` on the section doing the
+   clipping. Squared off, because a full-bleed band has no corners to round.
+   --------------------------------------------------------------------------- */
+
+.atlas-map {
+  align-self: stretch;
+  min-height: 0;
+  margin:
+    calc(-1 * clamp(54px, 5vw, 82px))
+    calc(-1 * 5.5vw)
+    calc(-1 * clamp(48px, 4.5vw, 72px))
+    0;
+  border-radius: 0;
+}
+
+@media (max-width: 1100px) {
+  .atlas-map {
+    margin: 0;
+    min-height: 420px;
+  }
+}
+
+/* ===========================================================================
+   Contact stage — full band, with a base layer under the form
+   ---------------------------------------------------------------------------
+   Chosen treatment: the photograph spans the whole section (the China Market
+   pattern), and the form sits on its own paper base so the fields stay as
+   readable as they were on plain paper. The map gives up its own photograph
+   and its bleed — there is one image for the band, not two.
+   =========================================================================== */
+
+#atlas-contact {
+  background-color: #14161a;
+  background-image:
+    linear-gradient(180deg, rgba(12, 14, 17, .34) 0%, rgba(12, 14, 17, .10) 46%, rgba(12, 14, 17, .32) 100%),
+    url('../assets/home/contact-sunset.jpg');
+  background-position: center, 62% 54%;
+  background-repeat: no-repeat;
+  background-size: cover, cover;
+}
+
+/* one image for the band: the map no longer carries its own, nor bleeds */
+#atlas-contact .atlas-map {
+  margin: 0;
+  min-height: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: none;
+}
+
+/* the base layer under the form */
+#atlas-contact .atlas-contact-panel {
+  padding: clamp(26px, 2.4vw, 38px);
+  border-radius: 2px;
+  background: rgba(251, 251, 248, .93);
+  box-shadow: 0 18px 44px rgba(12, 14, 17, .20);
+}
+
+/* the typewriter now sits straight on the photograph */
+#atlas-contact .atlas-map-typewriter {
+  color: rgba(255, 255, 255, .8);
+  text-shadow: 0 1px 22px rgba(12, 14, 17, .6);
+}
+
+@media (max-width: 1100px) {
+  #atlas-contact {
+    background-image:
+      linear-gradient(180deg, rgba(12, 14, 17, .34) 0%, rgba(12, 14, 17, .12) 46%, rgba(12, 14, 17, .34) 100%),
+      url('../assets/home/contact-sunset.jpg');
+    background-position: center, 58% 54%;
+  }
+
+  #atlas-contact .atlas-map {
+    min-height: 340px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Three fixes on the contact band.
+   --------------------------------------------------------------------------- */
+
+/* 1. The bolder phone field, and why.
+   `.atlas-contact-form label > span { font-weight: 820 }` is meant for the
+   small-caps label text. The phone field's controls sit inside a
+   `<span class="atlas-phone-input">` wrapper, which is also a `label > span`,
+   so the wrapper got 820 and the controls inherited it through `font: inherit`.
+   Every other field has its control as a direct child of the label, which is
+   why only this one looked bold. */
+.atlas-contact-form label > span.atlas-phone-input,
+.atlas-contact-form label > span.atlas-phone-input select,
+.atlas-contact-form label > span.atlas-phone-input input {
+  font-weight: 400;
+}
+
+/* 2. Crop the dead space above the form.
+   The panel was centred in a min-height row, which left a band of empty
+   photograph above it; it now starts at the top, the section's top padding is
+   reduced, and the photograph is positioned lower so less sky is in frame. */
+#atlas-contact {
+  min-height: max(620px, calc(100vh - 150px));
+  padding-top: clamp(36px, 3vw, 52px);
+  background-position: center, 62% 64%;
+}
+
+#atlas-contact .atlas-contact-panel {
+  align-self: start;
+}
+
+/* 3. The typewriter was reading small against a full-width band. */
+#atlas-contact .atlas-map-typewriter {
+  font-size: clamp(32px, 3.4vw, 56px);
+}
+
+@media (max-width: 1100px) {
+  #atlas-contact {
+    padding-top: 34px;
+    background-position: center, 58% 62%;
+  }
+
+  #atlas-contact .atlas-map-typewriter {
+    font-size: clamp(26px, 5.4vw, 38px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Three more adjustments on the contact band.
+   --------------------------------------------------------------------------- */
+
+/* 1. Left-anchor the typewriter.
+   It types from "Let's begin:" outward, so a centred origin makes the whole
+   line shove left and right with every character. Pinning the left edge keeps
+   the opening words still and lets only the prompt grow to the right. */
+#atlas-contact .atlas-map-typewriter {
+  left: 0;
+  justify-content: flex-start;
+  text-align: left;
+  transform: translateY(-50%);
+}
+
+/* 2. Give the dropdown chevron its own inset.
+   The native arrow is drawn hard against the border and its distance cannot be
+   set, so the control draws its own: appearance:none plus an inline SVG, 14px
+   in from the edge, with matching right padding so long values never run under
+   it. */
+#atlas-contact .atlas-contact-form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' fill='none' stroke='%232a2f35' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 11px 7px;
+  padding-right: 36px;
+}
+
+/* 3. No paper base under the form.
+   With the panel gone the copy sits straight on the photograph, so it has to
+   become light. The fields keep their white boxes — those are what make the
+   form read on a dark ground. */
+#atlas-contact .atlas-contact-panel {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#atlas-contact .atlas-contact-kicker {
+  color: rgba(255, 255, 255, .66) !important;
+}
+
+#atlas-contact .atlas-contact-panel h2 {
+  color: #ffffff !important;
+}
+
+#atlas-contact .atlas-contact-intro {
+  color: rgba(255, 255, 255, .80) !important;
+}
+
+#atlas-contact .atlas-contact-form label > span {
+  color: rgba(255, 255, 255, .70) !important;
+}
+
+#atlas-contact .atlas-contact-form label em {
+  color: rgba(255, 255, 255, .48) !important;
+}
+
+/* the submit was ink-on-ink over the silhouettes */
+#atlas-contact .atlas-contact-submit {
+  border-color: rgba(255, 255, 255, .22);
+}
+
+/* ---------------------------------------------------------------------------
+   Symmetry.
+   Pushing the panel to the top only moved the dead space from above to below
+   (measured: 62px above, 185px below). The gap was never the panel's position —
+   it was the section being forced taller than its content by
+   `min-height: max(720px, calc(100vh - 90px))`. Height is content-driven now
+   and the top and bottom paddings are equal, so there is nothing left over to
+   distribute. The panel goes back to centred, which is then a no-op.
+   --------------------------------------------------------------------------- */
+
+#atlas-contact {
+  min-height: 0;
+  padding-top: clamp(44px, 3.6vw, 60px);
+  padding-bottom: clamp(44px, 3.6vw, 60px);
+}
+
+#atlas-contact .atlas-contact-panel {
+  align-self: center;
+}
