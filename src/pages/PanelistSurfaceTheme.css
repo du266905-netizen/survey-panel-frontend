@@ -1,0 +1,414 @@
+/* ===========================================================================
+   Participant end — surface theme
+   ===========================================================================
+
+   WHY THIS FILE EXISTS
+   The participant end had no stylesheet of its own. It was dressed entirely by
+   the shared global sheets (index.css, WorkspaceSurfaceTheme.css,
+   authenticated-palette.css, future-app-surface.css) together with admin and
+   Business, so every change to it risked landing somewhere else.
+
+   THE SCOPE
+   Everything below is anchored to `.app-shell-panelist`, a class AppLayout adds
+   only for the panelist role — the convention `.app-shell-admin` already used.
+   Scoped that way broad selectors (`h1`, `.card`) are safe: they cannot reach
+   admin or Business even though all five sheets ship in one bundle.
+
+   Two participant components live OUTSIDE that shell and cannot be reached by
+   it. Both are marked in place:
+     - the referral launcher      (AppLayout:238 renders it after `.app-shell`)
+     - the profile questionnaire  (renders its own minimal header)
+
+   ORDER, AND WHY IT IS THIS ORDER
+   Read top to bottom as one pass: tokens, the shell that consumes them, type,
+   surfaces, actions, navigation, the two out-of-scope components, per-page
+   work.
+
+   A rule may only appear ONCE. This file previously grew by appending eight
+   times without a view of what was already in it: 71 rules over 62 selectors,
+   six selectors defined up to three times, and 44 rules carrying `!important`
+   because escalation had replaced ordering. Three of those self-inflicted
+   conflicts showed up in the UI as changes that "did not take" — the page
+   ground, the wallet reward panel, and the display type.
+
+   `!important` is kept only where it is load-bearing: to beat a declaration in
+   one of the five shared sheets. That is an external reason. Nowhere is it used
+   to beat a rule in this file.
+   =========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   1. Tokens
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist {
+  --ps-ink: #24272c;
+  --ps-body: #565a60;
+  --ps-mute: #7f848a;
+  --ps-faint: #a1a6ac;
+  --ps-hair: rgba(17, 17, 19, .12);
+  --ps-hair-2: rgba(17, 17, 19, .22);
+  --ps-box: rgba(17, 17, 19, .16);
+  --ps-lime: #deef24;
+  --ps-lime-deep: #c9db10;
+  /* sampled from the rendered public header, not approximated */
+  --ps-brand: #e7ede0;
+  /* --atlas-paper-deep, the tint the public video section sits on */
+  --ps-brand-deep: #f4f7f2;
+
+  /* `!important` here is external, not internal: authenticated-palette.css sets a
+     surface on `.app-shell` / `.app-main` and reaches for `!important` on some of
+     them (line 54), so a plain declaration ties on specificity and loses anyway.
+     This is the only reason `!important` appears in this file. */
+  background: var(--ps-brand-deep) !important;
+  color: var(--ps-ink);
+}
+
+/* ---------------------------------------------------------------------------
+   2. Shell
+   --------------------------------------------------------------------------- */
+
+/* the cream wash and its grain belonged to the old surface */
+.app-shell-panelist::before,
+.app-shell-panelist .app-shell-grain {
+  display: none;
+}
+
+.app-shell-panelist .app-topbar {
+  border-bottom: 1px solid rgba(23, 37, 31, .10);
+  background: var(--ps-brand);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.app-shell-panelist .app-topbar-context,
+.app-shell-panelist .app-topbar a,
+.app-shell-panelist .app-topbar button {
+  color: var(--ps-body);
+}
+
+.app-shell-panelist .app-topbar a:hover,
+.app-shell-panelist .app-topbar button:hover {
+  color: var(--ps-ink);
+}
+
+/* The referral launcher is position:fixed at bottom-left over a full-width
+   content column, so it passes across whatever is underneath. Reserving room
+   under the page keeps the last block from ending up behind it. */
+.app-shell-panelist .app-main,
+.app-shell-panelist .app-main.app-main-dashboard {
+  padding-bottom: 190px;
+  background: var(--ps-brand-deep) !important;
+}
+
+/* the thin corner rules belonged to the old editorial frame */
+.app-shell-panelist .app-main::before,
+.app-shell-panelist .app-main::after,
+.app-shell-panelist .dashboard-board::before,
+.app-shell-panelist .dashboard-board::after {
+  content: none;
+}
+
+/* ---------------------------------------------------------------------------
+   3. Type
+   Display level is serif at weight 400. The greeting, the wallet hero and the
+   reward-panel title are all serif, so the whole end follows rather than having
+   some titles black and some not. Weight stays 400 — this work started from a
+   complaint about type that was too heavy and too black. UI headings (h3/h4)
+   keep the sans.
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .app-main :is(h1, h2) {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--ps-ink);
+  letter-spacing: -.03em;
+}
+
+.app-shell-panelist .app-main :is(h3, h4) {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--ps-ink);
+}
+
+.app-shell-panelist .app-page-header h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -.03em;
+  color: var(--ps-ink);
+}
+
+.app-shell-panelist .app-page-header p {
+  color: var(--ps-mute);
+}
+
+/* ---------------------------------------------------------------------------
+   4. Surfaces
+   A hairline on white over the sage ground, instead of a cream tint plus a soft
+   shadow stack. The ground tint is what makes the hairline sufficient — on a
+   pure white page these cards would have no edge at all.
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .card,
+.app-shell-panelist .dashboard-balance-card,
+.app-shell-panelist .dashboard-trend-card,
+.app-shell-panelist .dashboard-path-panel,
+.app-shell-panelist .research-profile-task-card,
+.app-shell-panelist .research-opportunity-card,
+.app-shell-panelist .home-news-card {
+  border: 1px solid var(--ps-box);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------------------------
+   5. Actions
+   One solid accent per view. Secondary is a quiet outline; tertiary is plain ink.
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .btn-primary,
+.app-shell-panelist .research-opportunity-apply,
+.app-shell-panelist .gift-card-redeem-button,
+.app-shell-panelist .gift-card-summary-action {
+  border: 1px solid var(--ps-lime);
+  border-radius: 3px;
+  background: var(--ps-lime);
+  background-image: none;
+  color: #14161a;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.app-shell-panelist .btn-primary:hover,
+.app-shell-panelist .research-opportunity-apply:hover,
+.app-shell-panelist .gift-card-redeem-button:hover,
+.app-shell-panelist .gift-card-summary-action:hover {
+  border-color: var(--ps-lime-deep);
+  background: var(--ps-lime-deep);
+}
+
+.app-shell-panelist .dashboard-balance-action {
+  border: 1px solid var(--ps-hair-2);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--ps-ink);
+  font-weight: 500;
+}
+
+.app-shell-panelist .dashboard-balance-action:hover {
+  border-color: var(--ps-ink);
+}
+
+.app-shell-panelist .home-news-guide-link {
+  border: 0;
+  background: transparent;
+  color: var(--ps-ink);
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------------------------
+   6. Navigation
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .app-panelist-nav-link {
+  border-radius: 0;
+  color: var(--ps-body);
+}
+
+.app-shell-panelist .app-panelist-nav-link.is-active {
+  background: transparent;
+  box-shadow: inset 0 -2px 0 var(--ps-lime);
+  color: var(--ps-ink);
+  font-weight: 600;
+}
+
+.app-shell-panelist .home-footer {
+  background: #14161a;
+}
+
+/* ---------------------------------------------------------------------------
+   7. Participant components that live outside the shell
+   Neither can be reached by `.app-shell-panelist`. Both are still
+   participant-only, so addressing them by their own class is safe for the same
+   reason the shell scope is.
+   --------------------------------------------------------------------------- */
+
+/* the referral launcher — AppLayout:238 renders it after `.app-shell` closes */
+.referral-launcher {
+  border: 1px solid var(--ps-hair);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(12, 14, 17, .14);
+  /* Probed structure: the card holds a 161x112 copy block, a 119x164 photo and
+     the action button, and BOTH the photo and the button are absolutely
+     positioned, with `.referral-launcher::after` (index.css:1633) drawing the
+     card body. Re-flowing that into a slim bar means fighting three absolute
+     boxes; pinning the box to a smaller size let them spill out of it. Scaling
+     shrinks children, body and hit areas together and cannot break a layout it
+     does not touch — at the cost of only halving the covered area, which is
+     recorded as an open item rather than claimed as fixed. */
+  transform: scale(.68);
+  transform-origin: bottom left;
+}
+
+.referral-launcher-copy > span,
+.referral-launcher-copy > p {
+  color: var(--ps-mute);
+}
+
+.referral-launcher-copy > strong {
+  color: var(--ps-ink);
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+
+.referral-launcher-action {
+  border: 1px solid var(--ps-hair-2);
+  border-radius: 3px;
+  background: transparent;
+  background-image: none;
+  color: var(--ps-ink);
+  font-weight: 500;
+}
+
+.referral-launcher-action:hover {
+  border-color: var(--ps-ink);
+  background: transparent;
+  color: var(--ps-ink);
+}
+
+/* The profile questionnaire renders its own minimal header, outside the shell.
+   Requested: no border on the guided-action options. Only the resting border is
+   removed; the white fill and the soft shadow stay, because they are what gives
+   the row its shape against the tinted page. Selected becomes a lime inner ring
+   instead of a green border. */
+.profile-survey-country-options .profile-survey-option {
+  border: 0;
+}
+
+.profile-survey-country-options .profile-survey-option.is-selected {
+  border: 0;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 2px #deef24;
+}
+
+.profile-survey-country-options .profile-survey-option:hover {
+  border: 0;
+  background: #fafaf8;
+  box-shadow: 0 10px 24px rgba(12, 14, 17, .09);
+}
+
+/* ---------------------------------------------------------------------------
+   8. Dashboard
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .dashboard-welcome {
+  border-bottom: 1px solid rgba(23, 37, 31, .10);
+  background-color: var(--ps-brand-deep);
+  background-image:
+    linear-gradient(90deg,
+      rgba(255, 255, 255, .93) 0%,
+      rgba(255, 255, 255, .72) 38%,
+      rgba(255, 255, 255, .30) 66%,
+      rgba(255, 255, 255, .18) 100%),
+    url('../assets/home/panelist-hero.jpg');
+  background-repeat: no-repeat;
+  background-size: cover, cover;
+  background-position: center, 60% 56%;
+}
+
+/* the scrim is load-bearing: the mist carries mountain ridges and ships, and
+   without it the greeting goes crisp over one band and muddy over the next */
+.app-shell-panelist .dashboard-welcome-copy > p {
+  color: var(--ps-mute);
+}
+
+/* the hero copy is one block, so it takes one family */
+.app-shell-panelist .dashboard-welcome-copy > span,
+.app-shell-panelist .dashboard-welcome-prompt,
+.app-shell-panelist .dashboard-welcome-prompt > span,
+.app-shell-panelist .dashboard-welcome-prompt > strong {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+.app-shell-panelist .dashboard-welcome-prompt > span {
+  color: var(--ps-faint);
+}
+
+.app-shell-panelist .dashboard-welcome-prompt > strong {
+  color: var(--ps-ink);
+}
+
+.app-shell-panelist .dashboard-welcome-prompt > i {
+  background: var(--ps-lime);
+}
+
+/* ---------------------------------------------------------------------------
+   9. Activity, research, wallet
+   --------------------------------------------------------------------------- */
+
+.app-shell-panelist .dashboard-trend-heading,
+.app-shell-panelist .research-opportunity-card-heading {
+  color: var(--ps-ink);
+}
+
+.app-shell-panelist .research-opportunity-details,
+.app-shell-panelist .research-opportunity-requirements {
+  color: var(--ps-mute);
+}
+
+/* The reward carousel's tint lives on the SLIDE, not the stage:
+   `.wallet-reward-slide` carried `linear-gradient(135deg, #f7f4e8, …)`, so
+   neutralising `.wallet-reward-stage` changed nothing. */
+.app-shell-panelist .wallet-hero,
+.app-shell-panelist .wallet-showcase,
+.app-shell-panelist .wallet-reward-stage,
+.app-shell-panelist .gift-card-summary,
+.app-shell-panelist .gift-card-modal {
+  border: 1px solid var(--ps-box);
+  border-radius: 10px;
+  background: #ffffff;
+  background-image: none;
+  box-shadow: none;
+}
+
+/* The slide is a content-sized box wrapping the title. It takes the flat
+   ground and NO border — a border here draws a rectangle around the words,
+   which is exactly the defect this file used to ship. */
+.app-shell-panelist .wallet-reward-slide,
+.app-shell-panelist .wallet-reward-card-face {
+  border: 0;
+  background-image: none;
+  background-color: var(--ps-brand);
+}
+
+.app-shell-panelist .gift-card-option {
+  border: 1px solid var(--ps-hair);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.app-shell-panelist .wallet-reward-orbit,
+.app-shell-panelist .wallet-reward-dots {
+  border-color: var(--ps-hair);
+  color: var(--ps-mute);
+}
+
+.app-shell-panelist .wallet-hero-intro,
+.app-shell-panelist .wallet-hero-kicker,
+.app-shell-panelist .wallet-showcase-head,
+.app-shell-panelist .gift-card-summary-copy,
+.app-shell-panelist .gift-card-redeem-caption {
+  color: var(--ps-mute);
+}
+
+/* the wallet titles are not heading elements, so the h1/h2 rule misses them */
+.app-shell-panelist .wallet-hero-copy :is(h1, h2),
+.app-shell-panelist .wallet-showcase :is(h1, h2, h3) {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--ps-ink);
+}

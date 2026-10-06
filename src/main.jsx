@@ -14,6 +14,13 @@ import './pages/WorkspaceSurfaceTheme.css';
 import './styles/action-feedback.css';
 import './styles/authenticated-palette.css';
 import './styles/future-app-surface.css';
+/* Last on purpose. The participant end had no stylesheet of its own — it was
+   dressed entirely by the shared global sheets above, together with admin and
+   Business. Everything in this file is anchored to `.app-shell-panelist`, a
+   class AppLayout only adds for the panelist role (the same convention
+   `.app-shell-admin` already used), so loading it last lets it win at equal
+   specificity without reaching any other end. */
+import './pages/PanelistSurfaceTheme.css';
 
 window.history.scrollRestoration = 'manual';
 
