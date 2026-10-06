@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { getPanelProfile } from '../api/realApi';
 import PanelProfileModal from '../components/PanelProfileModal';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 import { isPanelistRole } from '../utils/roles';
 
 export default function PanelProfilePage() {
   const navigate = useNavigate();
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy?.panelistUi?.panelProfile || {};
   const { user, setUser } = useAuth();
   const [profile, setProfile] = useState(null);
   const [rewardCoins, setRewardCoins] = useState(1000);
@@ -31,7 +34,7 @@ export default function PanelProfilePage() {
         setRewardCoins(response.data.rewardCoins || 1000);
       })
       .catch((caughtError) => {
-        if (mounted) setError(caughtError.response?.data?.message || 'Unable to load your panel profile.');
+        if (mounted) setError(caughtError.response?.data?.message || copy.loadError);
       });
 
     return () => {
@@ -51,11 +54,11 @@ export default function PanelProfilePage() {
   };
 
   if (error) {
-    return <main className="profile-survey-page-status"><p>{error}</p><button type="button" onClick={() => navigate('/dashboard')}>Return to workspace</button></main>;
+    return <main className="profile-survey-page-status"><p>{error}</p><button type="button" onClick={() => navigate('/dashboard')}>{copy.returnToWorkspace}</button></main>;
   }
 
   if (!profile) {
-    return <main className="profile-survey-page-status"><LoaderCircle className="animate-spin" size={24} /><p>Loading your panel profile…</p></main>;
+    return <main className="profile-survey-page-status"><LoaderCircle className="animate-spin" size={24} /><p>{copy.loading}</p></main>;
   }
 
   return <PanelProfileModal open profile={profile} rewardCoins={rewardCoins} onClose={() => navigate('/dashboard')} onProfileSaved={handleProfileSaved} onCompleted={handleCompleted} asPage />;

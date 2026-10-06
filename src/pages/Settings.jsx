@@ -1,9 +1,12 @@
 import { Navigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 import { isAdminRole, isPanelistRole } from '../utils/roles';
 
 export default function Settings() {
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy?.panelistUi?.settings || {};
   const { user } = useAuth();
   const isAdmin = isAdminRole(user?.role);
   const isPanelist = isPanelistRole(user?.role);
@@ -17,8 +20,8 @@ export default function Settings() {
       {/* this page is routed for participants as well as staff, so the
             operations copy only shows to staff */}
       <PageHeader
-        title={isAdmin ? 'Operational Settings' : 'Account Settings'}
-        description={isAdmin ? 'Internal preferences for survey launching.' : 'Manage your account and notification preferences.'}
+        title={isAdmin ? 'Operational Settings' : copy.title}
+        description={isAdmin ? 'Internal preferences for survey launching.' : copy.description}
       />
       <div className="grid max-w-5xl gap-6 xl:grid-cols-2">
         {isAdmin && (
