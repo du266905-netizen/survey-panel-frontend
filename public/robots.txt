@@ -1,0 +1,42 @@
+User-agent: *
+Allow: /
+
+# Signed-in product surface: reachable, but nothing here belongs in search results.
+Disallow: /dashboard
+Disallow: /activity
+Disallow: /research
+Disallow: /wallet
+Disallow: /profile
+Disallow: /settings
+Disallow: /panel-profile
+Disallow: /records
+Disallow: /referrals
+Disallow: /partners
+Disallow: /survey/
+Disallow: /panel-profile
+
+# Internal and administrative surfaces.
+Disallow: /admin
+Disallow: /team
+Disallow: /workers
+Disallow: /orbit
+
+# Client workspace (behind sign-in) and its flows.
+Disallow: /business/workspace
+Disallow: /business/projects
+Disallow: /business/ai-brief
+Disallow: /business/audience-plan
+Disallow: /business/custom-questionnaire
+Disallow: /business/account
+Disallow: /business/delivery-preview
+Disallow: /business/s/
+
+# One-off flows and tokens.
+Disallow: /email/unsubscribe
+Disallow: /reset-password
+Disallow: /forgot-password
+Disallow: /business/reset-password
+Disallow: /business/forgot-password
+Disallow: /access
+
+Sitemap: https://www.guanyisearch.com/sitemap.xml
