@@ -14,8 +14,14 @@ export default function Settings() {
 
   return (
     <>
-      <PageHeader title="Operational Settings" description="Internal preferences for survey launching." />
+      {/* this page is routed for participants as well as staff, so the
+            operations copy only shows to staff */}
+      <PageHeader
+        title={isAdmin ? 'Operational Settings' : 'Account Settings'}
+        description={isAdmin ? 'Internal preferences for survey launching.' : 'Manage your account and notification preferences.'}
+      />
       <div className="grid max-w-5xl gap-6 xl:grid-cols-2">
+        {isAdmin && (
         <section className="card p-5">
           <h2 className="mb-4 text-lg font-bold text-slate-950">Launch Controls</h2>
           <div className="space-y-4">
@@ -35,6 +41,7 @@ export default function Settings() {
           </label>
           </div>
         </section>
+        )}
 
         {isAdmin && (
           <section className="card p-5">
