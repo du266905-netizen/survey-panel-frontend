@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import BusinessLanguagePicker from './BusinessLanguagePicker';
 import { useLanguage, withLanguage } from './LanguageContext';
+import { useBusinessAvatar } from '../utils/businessAvatar';
 import './BusinessRail.css';
 
 /* The one rail every authenticated business page renders.
@@ -29,6 +30,7 @@ import './BusinessRail.css';
  */
 
 export default function BusinessRail({ activeId, onSelect, className = '' }) {
+  const avatar = useBusinessAvatar();
   const { user, logout } = useAuth();
   const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
@@ -91,8 +93,13 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
 
       <div className="business-workspace-account">
         <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={rail.accountMenu || 'Account menu'} aria-expanded={accountMenuOpen}>
-          <UserRound size={20} />
-          <span>{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span>
+          {avatar
+            ? <img className="business-workspace-account-photo" src={avatar} alt="" />
+            : <UserRound size={20} />}
+          {/* the 17px initial badge is smaller than a favicon — a face in it
+              would be unreadable, so the picture takes the 44px circle and the
+              badge is dropped rather than shown next to it */}
+          {avatar ? null : <span className="business-workspace-account-initial">{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span>}
         </button>
         {accountMenuOpen && (
           <div>

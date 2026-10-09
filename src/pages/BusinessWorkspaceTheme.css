@@ -4378,3 +4378,97 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+
+/* ── the avatar: account page controls and the rail tile ─────────────────
+   Frontend only for now. The picture is cropped square and re-encoded in the
+   browser before it is stored, so what is drawn here is a 256px data URL —
+   see utils/businessAvatar.js for why and for what changes when the backend
+   grows a field. */
+.business-account-page .business-account-avatar {
+  overflow: hidden;
+  background: var(--rs-chip) !important;
+  color: var(--rs-ink) !important;
+}
+.business-account-page .business-account-avatar img,
+.business-workspace-account-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.business-account-page .business-account-person { position: relative; }
+.business-account-page .business-account-avatar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+  font-family: var(--font-sans);
+}
+.business-account-page .business-account-avatar-pick {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--rs-hair-2);
+  border-radius: 6px;
+  padding: 7px 13px;
+  color: var(--rs-ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color .18s ease;
+}
+.business-account-page .business-account-avatar-pick:hover { border-color: var(--rs-ink); }
+.business-account-page .business-account-avatar-pick input { display: none; }
+.business-account-page .business-account-avatar-actions button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: var(--rs-mute);
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.business-account-page .business-account-avatar-note {
+  margin: 10px 0 0;
+  color: var(--rs-mute);
+  font-size: 13px;
+}
+
+/* the rail tile: the letter was on a gradient, the picture is not */
+.business-workspace-account-avatar { overflow: hidden; padding: 0; }
+
+
+/* The rail's account button is a 44px circle holding a generic person icon,
+   with a 17px initial badge pinned to its corner. The picture goes in the
+   circle, not the badge — the badge is smaller than a favicon and a face in it
+   would be unreadable. With a picture the badge is dropped, because an initial
+   beside a face says the same thing twice.
+
+   `!important` and the explicit box because Business.css pins this button to a
+   grid with place-items:center, and a plain width:100% on the child resolved to
+   its intrinsic 4px instead of the 44px cell. */
+.business-workspace-account-photo {
+  display: block !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+.business-workspace-account-initial {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: grid;
+  width: 17px;
+  height: 17px;
+  place-items: center;
+  border: 2px solid #f1f4f0;
+  border-radius: 50%;
+  background: #285647;
+  color: #fffefa;
+  font-size: 8px;
+  font-weight: 900;
+}
