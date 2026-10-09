@@ -4843,7 +4843,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   text-transform: uppercase;
 }
 
-.business-onboarding-rail-note {
+.business-onboarding p.business-onboarding-rail-note {
   max-width: 310px;
   margin: clamp(22px, 3vw, 34px) 0 0;
   border-top: 1px solid rgba(20, 26, 23, .16);
@@ -4906,10 +4906,12 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   line-height: 1;
   padding: 0 22px;
   text-decoration: none;
+  transition: background-color .35s ease, border-color .35s ease, color .35s ease;
 }
 
-/* Hover and its timing come from the syringe block at the end of this file;
-   setting a background here would race the ink front. */
+/* Filled buttons darken to ink rather than tinting, so every action on both
+   surfaces answers the pointer the same way. */
+.business-onboarding-signin-button:hover { border-color: #141a17; background-color: #e8ede5; }
 .business-onboarding-signin-button:focus-visible { outline: 2px solid #141a17; outline-offset: 2px; }
 
 .business-onboarding-shell {
@@ -4930,12 +4932,6 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-onboarding .business-onboarding-options button {
   border-color: rgba(20, 26, 23, .16);
   background: #fff;
-}
-
-/* The cards are not actions: they keep the sage selection language and their
-   own gradual tint instead of the syringe. */
-.business-onboarding .business-onboarding-options button {
-  transition: background-color .35s ease, border-color .35s ease, color .35s ease;
 }
 
 .business-onboarding .business-onboarding-options button:hover,
@@ -4991,7 +4987,14 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   text-transform: uppercase;
 }
 
-.business-welcome-copy h2 { font-size: 22px; }
+/* Part 18: a dialog title is content, so it is reading type — the same face
+   the add-funds and custom-questionnaire dialog titles use. */
+.business-welcome-copy h2 {
+  font-family: var(--font-reading) !important;
+  font-size: 22px;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
+}
 .business-welcome-copy ul { font-size: 11px; }
 .business-welcome-copy > div > .business-button { font-size: 13px; }
 
@@ -5001,75 +5004,6 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-welcome-copy ul li { font-size: 14px !important; }
 .business-welcome-copy li::before { font-size: 9.5px; }
 .business-welcome-copy > div > .business-button { font-size: 14px; }
-
-/* =====================================================================
-   7. The syringe, rolled out from the public hero button.
-   `styles/action-feedback.css` gives the yellow hero button (and the auth
-   buttons) an ink front that sweeps in from the left — `inset 32rem` with
-   `1.25s cubic-bezier(.22,.72,.2,1)`, deliberately slow-to-fast — while its
-   background stays pinned so the sweep is the only change and the label flips
-   to white as the front passes it. That treatment only reached a handful of
-   buttons; this block puts it on every button of the research side and the
-   wizard.
-
-   Doubling the root class is this file's established way to outrank the
-   per-family hover rules further up. Two families opt out on purpose: the
-   wizard's option cards (their sage hover is the selection language) and the
-   language menu rows, which are list options rather than actions.
-   ===================================================================== */
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .business-workspace.business-workspace button:not(:disabled):not([role='option']):not(.business-onboarding-card),
-  .business-workspace.business-workspace a.business-button,
-  .business-onboarding.business-onboarding :where(.business-onboarding-chrome, .business-onboarding-rail, .business-onboarding-shell > footer) button:not(:disabled):not([role='option']):not(.business-onboarding-card),
-  .business-onboarding.business-onboarding .business-onboarding-signin-button,
-  .business-welcome-modal.business-welcome-modal button:not(:disabled) {
-    --syringe-fill: #181917;
-    --syringe-hover-ink: #fff;
-    --syringe-hover-border: #181917;
-    box-shadow: inset 0 0 0 0 var(--syringe-fill);
-    /* The hero button's own numbers, not the shared ones in action-feedback.css:
-       `cubic-bezier(.52,.02,.72,.28)` starts slow, so the front is still visible
-       on a 124px button instead of crossing it in 50ms, and the label waits
-       .5s before flipping, so it turns as the front passes it. */
-    transition: color .28s ease .5s, background-color .72s ease, border-color .72s ease, box-shadow 1.15s cubic-bezier(.52, .02, .72, .28);
-  }
-
-  /* The lime action keeps its own fill so the ink front is the only movement —
-     the same pin the hero button needs to stop its background snapping. */
-  .business-workspace.business-workspace .business-button:not(.business-button--dark),
-  .business-onboarding.business-onboarding .business-button:not(.business-button--dark) {
-    background-color: var(--rs-lime);
-  }
-
-  /* A dark fill cannot be darkened by an ink front, so it fills with light
-     instead — the treatment action-feedback.css already uses for the dark
-     auth buttons. */
-  .business-workspace.business-workspace .business-button--dark,
-  .business-onboarding.business-onboarding .business-button--dark {
-    --syringe-fill: #f8f9f6;
-    --syringe-hover-ink: #181917;
-    --syringe-hover-border: #d7ddd5;
-  }
-
-  .business-workspace.business-workspace button:not(:disabled):not([role='option']):not(.business-onboarding-card):hover,
-  .business-workspace.business-workspace a.business-button:hover,
-  .business-onboarding.business-onboarding :where(.business-onboarding-chrome, .business-onboarding-rail, .business-onboarding-shell > footer) button:not(:disabled):not([role='option']):not(.business-onboarding-card):hover,
-  .business-onboarding.business-onboarding .business-onboarding-signin-button:hover,
-  .business-welcome-modal.business-welcome-modal button:not(:disabled):hover {
-    border-color: var(--syringe-hover-border);
-    box-shadow: inset 32rem 0 0 0 var(--syringe-fill);
-    color: var(--syringe-hover-ink);
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .business-workspace.business-workspace button,
-  .business-onboarding.business-onboarding button,
-  .business-onboarding.business-onboarding .business-onboarding-signin-button,
-  .business-welcome-modal.business-welcome-modal button { transition-duration: 0ms; }
-}
 
 /* =====================================================================
    8. The custom-questionnaire intro modal: on the type scale, and with room
@@ -5102,7 +5036,10 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 
 .business-custom-request-page .business-custom-intro-copy h2 {
   margin-top: 13px !important;
+  font-family: var(--font-reading) !important;
   font-size: 22px !important;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
 }
 
 .business-custom-request-page .business-custom-intro-copy > span {
@@ -5115,13 +5052,15 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   margin-top: 20px !important;
 }
 
+/* The step list is content (Part 17 reads <li> in the serif face); only the
+   numbers are chrome. */
 .business-custom-request-page .business-custom-intro-copy ol li {
-  font-family: var(--font-sans) !important;
   font-size: 14px !important;
   line-height: 1.55 !important;
 }
 
 .business-custom-request-page .business-custom-intro-copy ol li b {
+  font-family: var(--font-sans) !important;
   font-size: 9.5px !important;
 }
 
