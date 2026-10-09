@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
 
 /**
  * Crop a chosen picture to a square before it becomes the avatar.
@@ -18,7 +19,22 @@ const MIN_BOX = 48; // stage pixels — below this the handles overlap
 /** How much of the largest possible square the box starts at. */
 const INITIAL_RATIO = 0.78;
 
+/* Wording comes from the language library (publicCopy.workspace.business
+   .avatarCrop); these are the fallbacks for a locale that has not been
+   translated yet, so the dialog never renders a raw key. */
+const FALLBACK_COPY = {
+  title: 'Crop a new profile picture',
+  hint: 'Drag the box to move it; drag a corner to resize.',
+  reset: 'Reset',
+  cancel: 'Cancel',
+  close: 'Close',
+  processing: 'Working…',
+  confirm: 'Use this picture',
+};
+
 export default function BusinessAvatarCropper({ src, onCancel, onConfirm, busy = false }) {
+  const { publicCopy } = useLanguage();
+  const text = { ...FALLBACK_COPY, ...(publicCopy?.workspace?.business?.avatarCrop || {}) };
   const stageRef = useRef(null);
   const imgRef = useRef(null);
   const dragRef = useRef(null);
@@ -133,15 +149,15 @@ export default function BusinessAvatarCropper({ src, onCancel, onConfirm, busy =
   };
 
   return (
-    <div className="business-avatar-crop" role="dialog" aria-modal="true" aria-label="裁剪新头像">
-      <button type="button" className="business-avatar-crop-scrim" aria-label="取消" onClick={onCancel} />
+    <div className="business-avatar-crop" role="dialog" aria-modal="true" aria-label={text.title}>
+      <button type="button" className="business-avatar-crop-scrim" aria-label={text.cancel} onClick={onCancel} />
       <section className="business-avatar-crop-panel">
         <header>
-          <strong>裁剪新头像</strong>
-          <button type="button" onClick={onCancel} aria-label="关闭"><X size={17} /></button>
+          <strong>{text.title}</strong>
+          <button type="button" onClick={onCancel} aria-label={text.close}><X size={17} /></button>
         </header>
 
-        <p className="business-avatar-crop-hint">拖动方框移动位置，拖四角缩放范围。</p>
+        <p className="business-avatar-crop-hint">{text.hint}</p>
         <div
           className="business-avatar-crop-stage"
           ref={stageRef}
@@ -175,11 +191,11 @@ export default function BusinessAvatarCropper({ src, onCancel, onConfirm, busy =
         </div>
 
         <footer>
-          <button type="button" className="is-quiet" onClick={resetBox} disabled={busy}>重置</button>
+          <button type="button" className="is-quiet" onClick={resetBox} disabled={busy}>{text.reset}</button>
           <span className="business-avatar-crop-spacer" />
-          <button type="button" onClick={onCancel} disabled={busy}>取消</button>
+          <button type="button" onClick={onCancel} disabled={busy}>{text.cancel}</button>
           <button type="button" className="is-primary" onClick={confirm} disabled={busy || !box}>
-            {busy ? '正在处理…' : '设为新头像'}
+            {busy ? text.processing : text.confirm}
           </button>
         </footer>
       </section>
