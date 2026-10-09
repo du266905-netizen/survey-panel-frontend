@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, BarChart3, BrainCircuit, Check, ClipboardList, FileText, LayoutDashboard, LoaderCircle, LogOut, UserRound, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, LoaderCircle, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject } from '../api/realApi';
-import { useAuth } from '../components/AuthContext';
-import NotificationBell from '../components/NotificationBell';
-import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import serviceImage from '../assets/business/custom-questionnaire-service.jpg';
+// The rail's own sheet must follow Business.css: the base sheet pins several
+// rail properties with !important, and only a later !important of equal
+// specificity wins. Same order as BusinessWorkspace.jsx.
 import './Business.css';
+import '../components/BusinessRail.css';
+import BusinessRail from '../components/BusinessRail';
+import './BusinessWorkspaceTheme.css';
 
 const initialRequest = {
   title: '', researchGoal: '', audienceDescription: '', countries: '', languages: '',
@@ -15,7 +18,6 @@ const initialRequest = {
 };
 
 export default function BusinessCustomQuestionnaireRequest() {
-  const { user, logout } = useAuth();
   const { language, publicCopy } = useLanguage();
   // Copy comes from the language library; this page used to keep its own
   // en/zh pair, so the other 16 languages fell back to English here.
@@ -29,10 +31,16 @@ export default function BusinessCustomQuestionnaireRequest() {
   const [showIntro, setShowIntro] = useState(() => !preparedRequest);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [accountOpen, setAccountOpen] = useState(false);
-  const displayName = String(user?.displayName || user?.email?.split('@')[0] || 'A').trim();
   const update = (event) => setRequest((current) => ({ ...current, [event.target.name]: event.target.value }));
   const goWorkspace = (view = '') => navigate(withLanguage(`/business/workspace${view ? `?view=${view}` : ''}`, language));
+  // The shared rail (components/BusinessRail) replaces this page's own icon
+  // strip — the third copy of that markup, and the one still on the old
+  // 74px strip. Every entry keeps the destination it had here.
+  const handleRailSelect = (id) => {
+    if (id === 'projects') return;
+    if (id === 'ai') { navigate(withLanguage('/business/ai-brief', language)); return; }
+    goWorkspace(id === 'home' ? '' : id);
+  };
   const goNext = () => { if (request.title.trim().length < 3 || request.researchGoal.trim().length < 20 || request.audienceDescription.trim().length < 10) { setError(copy.stepOneError || copy.error); return; } setError(''); setStep(2); };
 
   const submit = async (event) => {
@@ -56,17 +64,7 @@ export default function BusinessCustomQuestionnaireRequest() {
 
   return <main className="business-custom-request-page">
     <div className="business-custom-request-shell">
-      <aside className="business-workspace-rail" aria-label="Workspace navigation">
-        <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="guanyisearch" />
-        <button type="button" title={copy.back} aria-label={copy.back} onClick={() => goWorkspace()}><LayoutDashboard size={20} /></button>
-        <button type="button" title={copy.ai} aria-label={copy.ai} onClick={() => navigate(withLanguage('/business/ai-brief', language))}><BrainCircuit size={20} /></button>
-        <button type="button" title={copy.questionnaires} aria-label={copy.questionnaires} onClick={() => goWorkspace('questionnaires')}><ClipboardList size={20} /></button>
-        <button className="is-active" type="button" title={copy.projects} aria-label={copy.projects}><FileText size={20} /></button>
-        <button type="button" title={copy.results} aria-label={copy.results} onClick={() => goWorkspace('results')}><BarChart3 size={20} /></button>
-        <BusinessLanguagePicker />
-        <NotificationBell className="business-workspace-notification" />
-        <div className="business-workspace-account"><button type="button" onClick={() => setAccountOpen((current) => !current)} aria-label={copy.account} aria-expanded={accountOpen}><UserRound size={20} /><span>{displayName.charAt(0).toUpperCase()}</span></button>{accountOpen && <div><strong>{displayName}</strong><span>{user?.email}</span><button type="button" onClick={() => navigate(withLanguage('/business/account', language))}><UserRound size={15} /> {copy.account}</button><button type="button" onClick={() => { logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {copy.signOut}</button></div>}</div>
-      </aside>
+      <BusinessRail activeId="projects" onSelect={handleRailSelect} />
       <section className="business-custom-request-surface">
         <header><button type="button" onClick={() => goWorkspace()}><ArrowLeft size={16} /> {copy.back}</button><div><span>{copy.eyebrow}</span>{step === 1 ? <button type="button" className="business-button business-custom-request-next" onClick={goNext}>{copy.continue} <ArrowRight size={16} /></button> : <><button type="button" className="business-custom-request-quiet" onClick={() => { setError(''); setStep(1); }}>{copy.previous}</button><button className="business-button" type="submit" form="business-custom-questionnaire-form" disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : copy.submit} {!submitting && <ArrowRight size={16} />}</button></>}</div></header>
         <form id="business-custom-questionnaire-form" className="business-custom-request-form" onSubmit={submit}>
