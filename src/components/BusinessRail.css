@@ -329,3 +329,66 @@
     padding-left: 64px;
   }
 }
+
+/* =====================================================================
+   The rail's own look, on every page.
+
+   These are the workspace rail's computed values, measured on
+   /business/workspace (2026-10-10). Until now they lived in rules scoped to
+   `.business-workspace`, so the account and billing pages fell back to the
+   sheet's older defaults: a #f7faf6 ground instead of white, a currentColor
+   hairline, a 50x38 mark, 13px/450 entries and a black pill for the current
+   page. A shared component owns its look — nothing below depends on the page.
+   ===================================================================== */
+
+.business-rail { gap: 14px; }
+
+.business-rail.business-workspace-rail {
+  /* !important on purpose: the base sheet pins this border to a page variable
+     that is undefined outside the workspace, so it fell back to currentColor. */
+  border-right: 1px solid rgba(31, 73, 53, .13) !important;
+  background: #ffffff !important;
+  padding: 16px 13px !important;
+}
+
+.business-rail .business-workspace-rail-mark {
+  width: 78px;
+  height: 59px;
+  margin: 2px 0 22px;
+}
+
+.business-rail .business-workspace-navgroups { row-gap: 15px; }
+
+.business-rail .business-workspace-navgroup-title {
+  padding: 6px 10px;
+  color: #8d948d;
+  /* !important on purpose: the base sheet sets 13px on this element. */
+  font-size: 11px !important;
+  font-weight: 600;
+  letter-spacing: .12em !important;
+  text-transform: uppercase;
+}
+
+.business-rail .business-workspace-navitem {
+  min-height: 40px;
+  gap: 10px;
+  border-radius: 12px;
+  color: #141a17;
+  font: 500 13px var(--font-sans);
+  padding: 0 10px;
+}
+
+.business-rail .business-workspace-navitem > svg { color: #141a17; }
+
+/* The current page and the row under the cursor share one tint; the ink keeps
+   the label legible on it. */
+.business-rail .business-workspace-navitem:hover,
+.business-rail .business-workspace-navitem.is-active {
+  border-color: transparent;
+  background: #e8ede5 !important;
+  color: #141a17;
+  font-weight: 600;
+}
+
+.business-rail .business-workspace-navitem:hover > svg,
+.business-rail .business-workspace-navitem.is-active > svg { color: #141a17; }

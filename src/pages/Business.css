@@ -814,17 +814,3 @@
 @media (max-width: 760px) { .business-custom-request-surface > header > div > span { display: none; }.business-custom-request-surface > header > div { gap: 7px; }.business-custom-request-surface > header button.business-button { min-width: 0; padding: 0 10px; } }
 @media (max-width: 1100px) { .business-dashboard-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }.business-workflow-card { grid-template-columns: 1fr; } }
 @media (max-width: 650px) { .business-dashboard-stats { grid-template-columns: 1fr; }.business-workflow-card { border-radius: 17px; padding: 22px; }.business-workflow-card h2 { font-size: 28px; }.business-workflow-card ol { gap: 8px; }.business-workflow-card li:not(:last-child)::after { display: none; }.business-questionnaire-hub-list > article { align-items: flex-start; flex-direction: column; gap: 18px; padding: 20px; }.business-questionnaire-hub-list > article > div:last-child { justify-content: flex-start; }.business-questionnaire-hub-list h2 { white-space: normal; } }
-
-/* The account page links to the billing page beside the sign-out control. */
-.business-account-page .business-account-billing {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 0;
-  background: transparent;
-  color: #285647;
-  cursor: pointer;
-  font: 800 13px var(--font-sans);
-  padding: 4px 0;
-}
-.business-account-page .business-account-billing:hover { color: #141a17; }

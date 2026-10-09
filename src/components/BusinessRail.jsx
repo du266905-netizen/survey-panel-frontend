@@ -6,6 +6,7 @@ import {
   FileText,
   LayoutDashboard,
   LogOut,
+  Receipt,
   Sparkles,
   UserRound,
 } from 'lucide-react';
@@ -41,6 +42,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
   // in LanguageContext, so these strings are translated in every locale that
   // ships one and fall back to English otherwise.
   const rail = publicCopy?.workspace?.business?.rail || {};
+  const billingCopy = publicCopy?.workspace?.business?.billing || {};
   const navigationLabel = rail.navigation || 'Workspace navigation';
 
   const groups = [
@@ -56,6 +58,12 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
       { id: 'results', label: rail.results || 'Questionnaire results', icon: BarChart3 },
     ] },
   ];
+
+  const selectItem = (id) => {
+    if (id === 'personal') { navigate(withLanguage('/business/account', language)); return; }
+    if (id === 'billing') { navigate(withLanguage('/business/billing', language)); return; }
+    onSelect?.(id);
+  };
 
   const toggleGroup = (id) => setCollapsedGroups((current) => (
     current.includes(id) ? current.filter((value) => value !== id) : [...current, id]
@@ -78,7 +86,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
                 const ItemIcon = item.icon;
                 const isActive = activeId === item.id;
                 return (
-                  <button key={item.id} className={`business-workspace-navitem${isActive ? ' is-active' : ''}`} type="button" title={item.label} aria-current={isActive ? 'page' : undefined} onClick={() => onSelect(item.id)}>
+                  <button key={item.id} className={`business-workspace-navitem${isActive ? ' is-active' : ''}`} type="button" title={item.label} aria-current={isActive ? 'page' : undefined} onClick={() => selectItem(item.id)}>
                     <ItemIcon size={17} />
                     <span>{item.label}</span>
                   </button>
@@ -106,6 +114,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
             <strong>{user?.displayName || rail.clientAccount}</strong>
             <span>{user?.email}</span>
             <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {rail.account}</button>
+            <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/billing', language)); }}><Receipt size={15} /> {billingCopy.title || 'Invoices and billing'}</button>
             <button type="button" onClick={() => { setAccountMenuOpen(false); logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {rail.signOut}</button>
           </div>
         )}

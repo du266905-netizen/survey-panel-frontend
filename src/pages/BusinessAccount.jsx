@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Check, LoaderCircle, LogOut, Receipt, UserRound } from 'lucide-react';
+import { Check, LoaderCircle, LogOut, UserRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getBusinessWorkspace, updateProfile } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -116,7 +116,7 @@ export default function BusinessAccount() {
   };
 
   return <main className="business-account-page">
-    <BusinessRail onSelect={handleRailSelect} />
+    <BusinessRail activeId="personal" onSelect={handleRailSelect} />
     <div className="business-account-pane">
       <header>
         <button type="button" onClick={() => navigate(withLanguage('/business/workspace', language))}>
@@ -168,7 +168,6 @@ export default function BusinessAccount() {
           <button className="business-button" type="button" onClick={saveName} disabled={saving || !displayName.trim()}>
             {saving ? <LoaderCircle className="animate-spin" size={16} /> : ws.account.saveName}
           </button>
-          <button className="business-account-billing" type="button" onClick={() => navigate(withLanguage('/business/billing', language))}><Receipt size={16} /> {publicCopy?.workspace?.business?.billing?.title || 'Invoices and billing'}</button>
           <button className="business-account-signout" type="button" onClick={signOut}>
             <LogOut size={16} /> {ws.account.signOut}
           </button>

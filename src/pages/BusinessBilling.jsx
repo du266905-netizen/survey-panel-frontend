@@ -52,7 +52,7 @@ export default function BusinessBilling() {
   };
 
   return <main className="business-account-page">
-    <BusinessRail onSelect={handleRailSelect} />
+    <BusinessRail activeId="billing" onSelect={handleRailSelect} />
     <div className="business-account-pane">
       <header>
         <button type="button" onClick={() => navigate(withLanguage('/business/workspace', language))}>
