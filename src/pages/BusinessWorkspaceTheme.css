@@ -2844,7 +2844,7 @@ main.business-ai-brief-page {
 }
 
 .business-workspace .business-dashboard-intro {
-  font-size: 15px !important;
+  font-size: 14.5px !important;
 }
 
 .business-hero-cta {
@@ -3788,7 +3788,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 
 /* the four figures carry the same reading face, so the row reads as type */
 .business-workspace .business-dashboard-stats strong {
-  font: 400 clamp(36px, 3.6vw, 48px)/1 var(--font-reading) !important;
+  font: 400 clamp(40px, 4.2vw, 56px)/1 var(--font-reading) !important;
   font-optical-sizing: auto !important;
   font-variant-numeric: tabular-nums !important;
   letter-spacing: -.03em !important;
@@ -3885,25 +3885,26 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 
 /* ── step 1 · 44px — display and page titles ────────────────────────────── */
 .business-workspace .business-dashboard-header h1 {
-  font: 400 44px/1.06 var(--font-reading) !important;
+  font: 400 38px/1.08 var(--font-reading) !important;
   font-optical-sizing: auto !important;
   letter-spacing: -.028em !important;
 }
 .business-workspace .business-projects-head h1 {
-  font-size: 44px !important;
+  font-size: 38px !important;
   letter-spacing: -.028em !important;
 }
 
 /* ── step 2 · 48px — THE FIGURES. Deliberately the largest type on the page. */
 .business-workspace .business-dashboard-stats strong {
-  font-size: 48px !important;
-  letter-spacing: -.035em !important;
+  font-size: 56px !important;
+  line-height: .98 !important;
+  letter-spacing: -.038em !important;
 }
 
 /* ── step 3 · 30px — section titles. This is the step that was missing. ──── */
 .business-workspace .business-dashboard-statistics h2,
 .business-workspace .business-dashboard-recent h2 {
-  font-size: 30px !important;
+  font-size: 16px !important;
   font-weight: 400 !important;
   letter-spacing: -.024em !important;
   line-height: 1.1 !important;
@@ -3917,9 +3918,9 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-workspace .business-dashboard-actions > button:first-child strong,
 .business-workspace .business-dashboard-recent > div > button strong {
   font-family: var(--font-reading) !important;
-  font-size: 18px !important;
+  font-size: 14px !important;
   font-weight: 500 !important;
-  letter-spacing: -.018em !important;
+  letter-spacing: -.01em !important;
   color: var(--rs-ink) !important;
 }
 
@@ -3929,7 +3930,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-workspace .business-dashboard-statistics header p,
 .business-workspace .business-dashboard-recent header p {
   font-family: var(--font-reading) !important;
-  font-size: 15px !important;
+  font-size: 13px !important;
   font-weight: 400 !important;
   line-height: 1.55 !important;
   letter-spacing: 0 !important;
@@ -4089,7 +4090,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .delivery-preview-page h1,
 .delivery-customer-page h1 {
   font-family: var(--font-reading) !important;
-  font-size: 44px !important;
+  font-size: 38px !important;
   font-weight: 400 !important;
   font-optical-sizing: auto !important;
   letter-spacing: -.028em !important;
@@ -4165,7 +4166,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
    type; only the uppercase field labels stay on Inter */
 .business-account-page .business-account-settings h2 {
   font-family: var(--font-reading) !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-weight: 500 !important;
   letter-spacing: -.018em !important;
 }
@@ -4191,6 +4192,47 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 /* the helper line under it is reading type, not chrome */
 .business-account-page .business-account-settings > span {
   font-family: var(--font-reading) !important;
-  font-size: 15px !important;
+  font-size: 14.5px !important;
   line-height: 1.6 !important;
+}
+
+
+/* ── Part 17 · flip the default instead of naming every class ──────
+   Measured before this pass, scoped to each page root: 46% of the workspace,
+   25% of Account, 22% of the audience page and 7% of the AI brief were set in
+   the reading face. The cause was method, not values — every earlier pass named
+   classes page by page, and each page names them differently, so the residue
+   was never covered and never would be.
+
+   So the rule is inverted: whatever carries prose is reading type by default,
+   and only chrome is exempt. This reaches every page at once, including the
+   three that cannot be opened locally.
+
+   The page root is written twice on purpose. :is() collapses the argument list
+   to a single class, which is (0,1,0) — not enough to out-specify rules of the
+   form `.page .block p` that this has to beat. Repeating the root lifts each
+   line to (0,2,1); with !important, at the end of the file, that wins. */
+.business-workspace.business-workspace :is(p, li, dd, blockquote, td, figcaption),
+.business-account-page.business-account-page :is(p, li, dd, blockquote, td, figcaption),
+.business-custom-request-page.business-custom-request-page :is(p, li, dd, blockquote, td, figcaption),
+.business-ai-brief-page.business-ai-brief-page :is(p, li, dd, blockquote, td, figcaption),
+.business-results-page.business-results-page :is(p, li, dd, blockquote, td, figcaption),
+.business-builder.business-builder :is(p, li, dd, blockquote, td, figcaption),
+.business-builder-loading.business-builder-loading :is(p, li, dd, blockquote, td, figcaption),
+.delivery-preview-page.delivery-preview-page :is(p, li, dd, blockquote, td, figcaption),
+.delivery-customer-page.delivery-customer-page :is(p, li, dd, blockquote, td, figcaption) {
+  font-family: var(--font-reading) !important;
+}
+
+/* the chrome stays Inter: controls, term labels, badges, table heads */
+.business-workspace.business-workspace :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]),
+.business-account-page.business-account-page :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]),
+.business-custom-request-page.business-custom-request-page :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]),
+.business-ai-brief-page.business-ai-brief-page :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]),
+.business-results-page.business-results-page :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]),
+.business-builder.business-builder :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]),
+.business-builder-loading.business-builder-loading :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]),
+.delivery-preview-page.delivery-preview-page :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]),
+.delivery-customer-page.delivery-customer-page :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]) {
+  font-family: var(--font-sans) !important;
 }
