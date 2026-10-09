@@ -3909,24 +3909,27 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   line-height: 1.1 !important;
 }
 
-/* ── step 4 · 20px — content titles, now in the serif ────────────────────── */
+/* ── step 4 · 18px — content titles, in the serif ─────────────────────────
+   20px was tried first and read too large: these rows sit directly under a
+   30px section title, and a 20px row title competed with it instead of
+   stepping down from it. 18 keeps the step and lets the section own the level. */
 .business-workspace .business-dashboard-actions strong,
 .business-workspace .business-dashboard-actions > button:first-child strong,
 .business-workspace .business-dashboard-recent > div > button strong {
   font-family: var(--font-reading) !important;
-  font-size: 20px !important;
+  font-size: 18px !important;
   font-weight: 500 !important;
   letter-spacing: -.018em !important;
   color: var(--rs-ink) !important;
 }
 
-/* ── step 5 · 15.5px — body. Every descriptive sentence is serif. ────────── */
+/* ── step 5 · 15px — body. Every descriptive sentence is serif. ──────────── */
 .business-workspace .business-dashboard-actions small,
 .business-workspace .business-dashboard-actions > button:first-child small,
 .business-workspace .business-dashboard-statistics header p,
 .business-workspace .business-dashboard-recent header p {
   font-family: var(--font-reading) !important;
-  font-size: 15.5px !important;
+  font-size: 15px !important;
   font-weight: 400 !important;
   line-height: 1.55 !important;
   letter-spacing: 0 !important;
@@ -3990,7 +3993,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
    every one of them sat in the top bar or the rail — i.e. exactly the strip
    that should carry the homepage's colour and restraint. */
 .business-workspace .business-dashboard-intro {
-  font-size: 15.5px !important;
+  font-size: 15px !important;
 }
 .business-workspace .business-workspace-balance-label {
   font-family: var(--font-sans) !important;
@@ -4056,4 +4059,138 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 }
 .business-workspace .business-dashboard-actions > button > svg {
   color: var(--rs-ink) !important;
+}
+
+/* ── Part 14 · the sage has to actually appear somewhere ──────────────────
+   --rs-chip was a token with no visible use. It painted only
+   `.business-dashboard-actions .is-green`, which a later override sets to
+   transparent, and a disabled AI-composer button. Changing its value
+   therefore changed nothing on screen — which is why it could not be found.
+
+   It now carries the two surfaces where a tint reads as brand rather than as
+   decoration: the rail's current page (visible at rest) and the row under the
+   cursor. The rail's hover was a hard-coded neutral, #f6f6f5; that is what it
+   replaces, so the change is one token rather than a new colour. */
+.business-workspace .business-workspace-navitem:hover,
+.business-ai-brief-page .business-workspace-navitem:hover,
+.business-workspace .business-workspace-navitem.is-active,
+.business-ai-brief-page .business-workspace-navitem.is-active {
+  background: var(--rs-chip) !important;
+}
+
+/* ── Part 15 · carrying the scale onto the other pages ────────────────────
+   The scale stopped at the workspace because every Part 12 rule was scoped to
+   `.business-workspace` and named that page's own classes. These four page
+   families already share one head rule each — rewriting those is what carries
+   the scale across, rather than 41 new selectors per page. */
+
+.business-account-page h1,
+.business-custom-request-page h1,
+.delivery-preview-page h1,
+.delivery-customer-page h1 {
+  font-family: var(--font-reading) !important;
+  font-size: 44px !important;
+  font-weight: 400 !important;
+  font-optical-sizing: auto !important;
+  letter-spacing: -.028em !important;
+  line-height: 1.06 !important;
+}
+
+/* the paragraph under a page title is reading type, not UI type */
+.business-account-page .business-account-shell p,
+.business-custom-request-page .business-custom-request-surface p,
+.delivery-preview-page .delivery-customer-heading span,
+.delivery-customer-page .delivery-customer-heading span {
+  font-family: var(--font-reading) !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+/* the eyebrow is chrome: 11px, tracked, Inter */
+.business-account-page .business-eyebrow,
+.business-custom-request-page .business-eyebrow,
+.delivery-preview-page .business-eyebrow {
+  font-size: 11px !important;
+  letter-spacing: .16em !important;
+}
+
+/* ── the card border was touching its own text ────────────────────────────
+   Measured: `.business-custom-request-form` computed to `padding: 49px 0 36px`
+   — zero left and right — so the heading, the intro and the field boxes all
+   started 1px inside the 1px border. This is the third time this has been
+   fixed on this product (REWARD PATH rows, then the dashboard trend card);
+   the horizontal padding is the part that keeps being left out. */
+.business-custom-request-page .business-custom-request-form {
+  padding: 49px 40px 40px !important;
+}
+.business-custom-request-page .business-custom-request-shell {
+  padding-top: 8px !important;
+  padding-bottom: 28px !important;
+}
+
+/* ── Part 16 · the three page families that cannot be opened locally ──────
+   The builder and the results page both need a real questionnaire, and the
+   local mock serves none — the route renders "We could not load this
+   questionnaire." rather than a page. So this pass changes the FAMILY only,
+   never the size: a family swap cannot reflow a layout, whereas guessing a
+   size for a page nobody has looked at can. The sizes on these three still
+   need a visual pass against a real project. */
+.business-builder .business-builder-title,
+.business-ai-brief-page h1,
+.business-ai-brief-page h2,
+.business-results-page h1,
+.business-results-page h2,
+.business-builder-loading h1,
+.business-builder-loading h2 {
+  font-family: var(--font-reading) !important;
+  font-style: normal !important;
+}
+.business-builder .business-builder-title {
+  font-weight: 400 !important;
+}
+
+/* the eyebrow is chrome on every family, not only the four in Part 15 */
+.business-builder .business-eyebrow,
+.business-ai-brief-page .business-eyebrow,
+.business-results-page .business-eyebrow,
+.business-builder-loading .business-eyebrow {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+}
+
+/* the account page's own titles and values are content, so they are reading
+   type; only the uppercase field labels stay on Inter */
+.business-account-page .business-account-settings h2 {
+  font-family: var(--font-reading) !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  letter-spacing: -.018em !important;
+}
+.business-account-page .business-account-person strong,
+.business-account-page .business-account-grid strong {
+  font-family: var(--font-reading) !important;
+  font-weight: 500 !important;
+}
+
+/* The uppercase labels are chrome and must stay on Inter. The page-body
+   paragraph rule above was winning over them, which had turned "CLIENT
+   WORKSPACE" and "ACCOUNT SETTINGS" into 15px serif — the opposite of the
+   intent. Measured, not guessed: both rendered as serif before this rule. */
+.business-account-page .business-account-shell p.business-eyebrow,
+.business-account-page .business-account-settings > p:first-of-type {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+  color: var(--rs-faint) !important;
+}
+/* the helper line under it is reading type, not chrome */
+.business-account-page .business-account-settings > span {
+  font-family: var(--font-reading) !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
 }
