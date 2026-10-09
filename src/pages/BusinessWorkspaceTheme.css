@@ -3722,3 +3722,338 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   color: #14161a !important;
   font-weight: 500 !important;
 }
+
+/* ---------------------------------------------------------------------------
+   Part 11 — the display voice.
+
+   Everything on this side had been flattened onto one family (Inter). That is
+   what made the workspace read as a competent dashboard rather than a brand:
+   the page had no display typography at all.
+
+   The panelist side does the opposite, and it is the treatment the client
+   asked to match: a page title set large in Bodoni Moda, upright, with tight
+   tracking. An earlier pass had explicitly removed the serif from this header
+   because it "read as a template" — but what was removed was an *italic*
+   display serif split across two lines, not the upright treatment below.
+   So the fix is not to put that back; it is to use the panelist construction:
+   one sentence, upright, large, tight.
+
+   Roles stay separated: Bodoni Moda carries display (page titles, hero,
+   numerals), Source Serif 4 carries reading (intros, section titles), Inter
+   stays on UI chrome and eyebrows.
+   --------------------------------------------------------------------------- */
+
+/* the hero: one sentence of display type, not a greeting plus a name.
+   Set in Source Serif 4, not Bodoni Moda. The client's call: Bodoni was tried
+   before and does not carry a large heading — its contrast is too extreme to
+   read as impressive at this size. Source Serif 4 holds up better and is the
+   face already in use across the reading surfaces. */
+.business-workspace .business-dashboard-header h1 {
+  font: 400 clamp(38px, 4.4vw, 58px)/1.04 var(--font-reading) !important;
+  font-optical-sizing: auto !important;
+  letter-spacing: -.032em !important;
+}
+
+.business-workspace .business-dashboard-header h1 span,
+.business-workspace .business-dashboard-header h1 strong {
+  font-family: var(--font-reading) !important;
+  font-style: normal !important;
+}
+
+/* the hero sits on a dark photograph: typography only, never colour. Forcing
+   --rs-ink here turned the name and the intro into near-invisible dark type on
+   a dark image. The light palette for this block is set upstream; leave it. */
+.business-workspace .business-dashboard-header h1 span {
+  font-weight: 400 !important;
+}
+
+.business-workspace .business-dashboard-header h1 strong {
+  font-weight: 500 !important;
+}
+
+/* the line under it is reading type, not UI type */
+.business-workspace .business-dashboard-intro {
+  font-family: var(--font-reading) !important;
+  font-size: clamp(15px, 1.15vw, 17px) !important;
+  line-height: 1.62 !important;
+  letter-spacing: -.005em !important;
+}
+
+/* the eyebrow stays UI: small, uppercase, tracked */
+.business-workspace .business-dashboard-hero-line {
+  font: 600 10.5px var(--font-sans) !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+}
+
+/* the four figures carry the same reading face, so the row reads as type */
+.business-workspace .business-dashboard-stats strong {
+  font: 400 clamp(36px, 3.6vw, 48px)/1 var(--font-reading) !important;
+  font-optical-sizing: auto !important;
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: -.03em !important;
+  color: var(--rs-ink) !important;
+}
+
+/* section titles inside the lower grid: reading serif at weight 400.
+   Weight 400, not 600. The participant surface settled this already
+   (PanelistSurfaceTheme.css §3): display headings are serif at 400, and that
+   work "started from a complaint about type that was too heavy and too black".
+   Setting these at 600 reintroduced exactly that. Hierarchy here rests on size
+   and spacing, the way it does on the panelist side. */
+.business-workspace .business-dashboard-statistics h2,
+.business-workspace .business-dashboard-recent h2 {
+  font-family: var(--font-reading) !important;
+  font-weight: 400 !important;
+  font-size: 19px !important;
+  letter-spacing: -.022em !important;
+  color: var(--rs-ink) !important;
+}
+
+/* the same voice on the other tabs, so the side is coherent page to page */
+.business-workspace .business-projects-head h1 {
+  font: 400 clamp(34px, 3.6vw, 46px)/1.06 var(--font-reading) !important;
+  font-optical-sizing: auto !important;
+  letter-spacing: -.028em !important;
+  color: var(--rs-ink) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Part 12 — type scale, family split, brand temperature.
+
+   Measured before this pass (CDP audit of every rendered text element, 84 of
+   them, across Overview + Projects):
+
+     · 66 sans / 18 serif          — content was set in UI type
+     · 58 → 48 → 19 → then nine sizes crammed into 8–16.6px in half-pixel steps
+                                    — no middle tier, and noise at the bottom
+     · font-weight 600 used 28×     — everything shouted, so nothing led
+
+   Three fixes:
+
+     1. AN EIGHT-STEP SCALE. 44 / 48 / 30 / 20 / 15.5 / 13 / 11 / 9.5.
+        The missing step was 30: section titles sat at 19px with a 29px void
+        above them, which is why the page read as "huge or tiny" and nothing
+        in between.
+
+     2. CONTENT IN THE SERIF, CHROME IN THE SANS. Action-row titles, project
+        titles and every descriptive sentence move to Source Serif 4. Nav,
+        buttons, uppercase labels and status chips stay on Inter.
+
+     3. ONE ACCENT — THE FOUR FIGURES. They keep their 48px and become the
+        largest type on the page, because the client reads their own order off
+        them first. The hero steps DOWN to 44px so it stops competing; 600
+        collapses to 500 everywhere it was just emphasis.
+
+   Colour: this scope declares `--rs-*` as a deliberately neutral core ("no
+   green cast anywhere") and then bridges the later-imported palettes back onto
+   it. Re-pointing that core is therefore the entire re-skin — the file's own
+   comment says as much ("re-skins those rules at once instead of chasing every
+   selector"). The values below are the public homepage's green family, which
+   the rest of this file already used in hard-coded form in ~69 places.
+   --------------------------------------------------------------------------- */
+
+.business-workspace,
+.business-ai-brief-page,
+.business-builder,
+.business-builder-loading,
+.business-results-page,
+.business-account-page,
+.business-custom-request-page,
+.delivery-preview-page,
+.delivery-customer-page {
+  --rs-black: #141a17;
+  --rs-ink: #141a17;
+  --rs-body: #4a544d;
+  --rs-mute: #5f6862;
+  --rs-faint: #8d948d;
+  --rs-line: rgba(20, 26, 23, .11);
+  --rs-line-2: rgba(20, 26, 23, .22);
+  --rs-hair: rgba(20, 26, 23, .12);
+  --rs-hair-2: rgba(20, 26, 23, .22);
+  --rs-box: rgba(20, 26, 23, .16);
+  /* Surfaces stay neutral. The homepage's warm paper (#f9f8f3) was tried here
+     and rejected on sight — it reads as a tint rather than as ground, and the
+     research side needs a plain field for tables and figures. Only the sage
+     chip is taken from the homepage palette. */
+  --rs-ground: #f1f1ef;
+  --rs-sunken: #f5f5f3;
+  --rs-chip: #e8ede5;
+  --rs-shadow: 0 1px 2px rgba(20, 26, 23, .05), 0 8px 24px rgba(20, 26, 23, .06);
+  --rs-shadow-lift: 0 2px 6px rgba(20, 26, 23, .06), 0 20px 44px rgba(20, 26, 23, .10);
+}
+
+/* ── step 1 · 44px — display and page titles ────────────────────────────── */
+.business-workspace .business-dashboard-header h1 {
+  font: 400 44px/1.06 var(--font-reading) !important;
+  font-optical-sizing: auto !important;
+  letter-spacing: -.028em !important;
+}
+.business-workspace .business-projects-head h1 {
+  font-size: 44px !important;
+  letter-spacing: -.028em !important;
+}
+
+/* ── step 2 · 48px — THE FIGURES. Deliberately the largest type on the page. */
+.business-workspace .business-dashboard-stats strong {
+  font-size: 48px !important;
+  letter-spacing: -.035em !important;
+}
+
+/* ── step 3 · 30px — section titles. This is the step that was missing. ──── */
+.business-workspace .business-dashboard-statistics h2,
+.business-workspace .business-dashboard-recent h2 {
+  font-size: 30px !important;
+  font-weight: 400 !important;
+  letter-spacing: -.024em !important;
+  line-height: 1.1 !important;
+}
+
+/* ── step 4 · 20px — content titles, now in the serif ────────────────────── */
+.business-workspace .business-dashboard-actions strong,
+.business-workspace .business-dashboard-actions > button:first-child strong,
+.business-workspace .business-dashboard-recent > div > button strong {
+  font-family: var(--font-reading) !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  letter-spacing: -.018em !important;
+  color: var(--rs-ink) !important;
+}
+
+/* ── step 5 · 15.5px — body. Every descriptive sentence is serif. ────────── */
+.business-workspace .business-dashboard-actions small,
+.business-workspace .business-dashboard-actions > button:first-child small,
+.business-workspace .business-dashboard-statistics header p,
+.business-workspace .business-dashboard-recent header p {
+  font-family: var(--font-reading) !important;
+  font-size: 15.5px !important;
+  font-weight: 400 !important;
+  line-height: 1.55 !important;
+  letter-spacing: 0 !important;
+  color: var(--rs-mute) !important;
+}
+/* the response count under a project title is a caption, one step down */
+.business-workspace .business-dashboard-recent > div > button small {
+  font-family: var(--font-reading) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: var(--rs-mute) !important;
+}
+
+/* ── step 6 · 13px — chrome. Buttons and navigation. ─────────────────────── */
+.business-workspace .business-workspace-navitem,
+.business-workspace .business-dashboard-statistics header button,
+.business-workspace .business-dashboard-recent header button {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+.business-workspace .business-hero-cta {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+/* ── step 7 · 11px — labels: uppercase, tracked, Inter ───────────────────── */
+.business-workspace .business-dashboard-stats small,
+.business-workspace .business-dashboard-hero-line {
+  font-size: 11px !important;
+  letter-spacing: .14em !important;
+}
+.business-workspace .business-dashboard-stats small,
+.business-workspace .business-dashboard-hero-line {
+  font-family: var(--font-sans) !important;
+  font-weight: 600 !important;
+}
+
+/* ── step 8 · 9.5px — status chips ───────────────────────────────────────── */
+.business-workspace .business-status,
+.business-workspace .business-dashboard-recent .business-status {
+  font-family: var(--font-sans) !important;
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+}
+
+/* ── weight discipline: 600 only on labels and chips ──────────────────────
+   The audit found 550 and 560 in use — interpolated values that read as
+   arbitrary. Everything snaps to 400 / 500 / 600. */
+.business-workspace .business-dashboard-actions > button,
+.business-workspace .business-dashboard-recent > div > button,
+.business-workspace .business-projects-head {
+  font-weight: 400 !important;
+}
+
+/* ── step normalisation for the chrome the first pass missed ──────────────
+   A second audit (same method) still found ten elements off the scale, and
+   every one of them sat in the top bar or the rail — i.e. exactly the strip
+   that should carry the homepage's colour and restraint. */
+.business-workspace .business-dashboard-intro {
+  font-size: 15.5px !important;
+}
+.business-workspace .business-workspace-balance-label {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: .12em !important;
+}
+.business-workspace .business-workspace-balance-amount,
+.business-workspace .business-workspace-balance-figure,
+.business-workspace .business-workspace-balance-add,
+.business-workspace .business-workspace-balance button,
+.business-workspace .business-workspace-balance a {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+.business-workspace .business-workspace-navgroup-title {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+}
+.business-workspace kbd {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+}
+.business-workspace .business-workspace-account button span {
+  font-family: var(--font-sans) !important;
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+}
+
+/* ── Part 13 · the two quick-start rows read as an index, not as buttons ──
+   What was actually there (I described this wrongly at first — there is no
+   circular icon container any more; the 999px-radius rule further up is dead
+   code):
+       [icon in a 30px slot] --18px gap-- [title + description] ... [arrow]
+   Two things still make the row read as a button rather than as a line in an
+   index: the arrow is painted on every row at rest, and a 48px gutter pushes
+   the icon away from the label it belongs to. */
+.business-workspace .business-dashboard-actions > button {
+  grid-template-columns: 22px minmax(0, 1fr) 20px !important;
+  gap: 14px !important;
+}
+/* the arrow waits for the cursor instead of advertising itself on every row */
+.business-workspace .business-dashboard-actions > button > svg {
+  opacity: 0 !important;
+  transform: translateX(-6px);
+  transition: opacity .18s ease, transform .18s ease !important;
+}
+.business-workspace .business-dashboard-actions > button:hover > svg,
+.business-workspace .business-dashboard-actions > button:focus-visible > svg {
+  opacity: 1 !important;
+  transform: translateX(0);
+}
+/* the icon sits with the label: one step above the title's cap height, in ink */
+.business-workspace .business-dashboard-actions > button > span {
+  align-items: flex-start !important;
+  padding-top: 3px;
+}
+.business-workspace .business-dashboard-actions > button > svg {
+  color: var(--rs-ink) !important;
+}
