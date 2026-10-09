@@ -35,8 +35,10 @@ function CryptomusMark({ size = 13 }) {
 const CARD_MARKS = [
   { src: '/pay/visa.svg', alt: 'Visa' },
   { src: '/pay/mastercard.png', alt: 'Mastercard' },
-  { src: '/pay/amex.svg', alt: 'American Express' },
+  // UnionPay third, PayPal fourth, at the client's instruction.
+  { src: '/pay/unionpay.webp', alt: 'UnionPay' },
   { src: '/pay/paypal.svg', alt: 'PayPal' },
+  { src: '/pay/amex.svg', alt: 'American Express' },
 ];
 
 function CardMarks() {
@@ -188,10 +190,37 @@ export default function BusinessAddFundsModal({ open, onClose }) {
               <img src="/pay/paypal-monogram.png" alt="" />
             </span>
             <span className="business-funds-route-copy">
-              <strong>{ws.funds.paypalCard}</strong>
+              <strong>{ws.funds.paypal || 'PayPal'}</strong>
             </span>
             <span className="business-funds-route-go" aria-hidden="true">›</span>
           </a>
+          {/* PayPal and card used to share one row ("PayPal or credit card").
+              The client asked for them split, so each now has its own route. */}
+          <a href="#" data-method="card">
+            <span className="business-funds-route-mark" aria-hidden="true">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></svg>
+            </span>
+            <span className="business-funds-route-copy">
+              <strong>{ws.funds.card || 'Credit or debit card'}</strong>
+            </span>
+            <span className="business-funds-route-go" aria-hidden="true">›</span>
+          </a>
+          <button
+            type="button"
+            data-method="alipay"
+            onClick={() => startPayment('alipay')}
+            disabled={!valid || Boolean(submitting)}
+          >
+            <span className="business-funds-route-mark is-alipay" aria-hidden="true">
+              <img src="/pay/alipay.png" alt="" />
+            </span>
+            <span className="business-funds-route-copy">
+              <strong>{ws.funds.alipay}</strong>
+            </span>
+            <span className="business-funds-route-go" aria-hidden="true">
+              {submitting === 'alipay' ? '…' : '›'}
+            </span>
+          </button>
           {/* Crypto and Alipay are wired: each creates a recharge order and
               hands off to the provider cashier. Bank transfer and PayPal are
               still placeholders (no backend route yet). */}
@@ -209,22 +238,6 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </span>
             <span className="business-funds-route-go" aria-hidden="true">
               {submitting === 'crypto' ? '…' : '›'}
-            </span>
-          </button>
-          <button
-            type="button"
-            data-method="alipay"
-            onClick={() => startPayment('alipay')}
-            disabled={!valid || Boolean(submitting)}
-          >
-            <span className="business-funds-route-mark is-alipay" aria-hidden="true">
-              <img src="/pay/alipay.png" alt="" />
-            </span>
-            <span className="business-funds-route-copy">
-              <strong>{ws.funds.alipay}</strong>
-            </span>
-            <span className="business-funds-route-go" aria-hidden="true">
-              {submitting === 'alipay' ? '…' : '›'}
             </span>
           </button>
         </div>

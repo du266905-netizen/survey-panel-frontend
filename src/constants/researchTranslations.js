@@ -8914,6 +8914,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Dine oplysninger er beskyttet af 256-bit SSL-kryptering.',
       bankTransfer: 'Bankoverførsel',
       paypalCard: 'PayPal eller kreditkort',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Kryptovaluta',
       alipay: 'Alipay'
     },
@@ -8985,6 +8987,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Ihre Informationen sind durch 256-Bit-SSL-Verschlüsselung geschützt.',
       bankTransfer: 'Banküberweisung',
       paypalCard: 'PayPal oder Kreditkarte',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Kryptowährung',
       alipay: 'Alipay'
     },
@@ -9056,6 +9060,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Your information is protected by 256-bit SSL encryption.',
       bankTransfer: 'Bank transfer',
       paypalCard: 'PayPal or credit card',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Cryptocurrency',
       alipay: 'Alipay'
     },
@@ -9127,6 +9133,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Your information is protected by 256-bit SSL encryption.',
       bankTransfer: 'Bank transfer',
       paypalCard: 'PayPal or credit card',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Cryptocurrency',
       alipay: 'Alipay'
     },
@@ -9198,6 +9206,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Tu información está protegida con cifrado SSL de 256 bits.',
       bankTransfer: 'Transferencia bancaria',
       paypalCard: 'PayPal o tarjeta de crédito',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Criptomoneda',
       alipay: 'Alipay'
     },
@@ -9269,6 +9279,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Tietosi on suojattu 256-bittisellä SSL-salauksella.',
       bankTransfer: 'Pankkisiirto',
       paypalCard: 'PayPal tai luottokortti',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Kryptovaluutta',
       alipay: 'Alipay'
     },
@@ -9340,6 +9352,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Vos informations sont protégées par un chiffrement SSL 256 bits.',
       bankTransfer: 'Virement bancaire',
       paypalCard: 'PayPal ou carte bancaire',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Cryptomonnaie',
       alipay: 'Alipay'
     },
@@ -9411,6 +9425,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Le tue informazioni sono protette da crittografia SSL a 256 bit.',
       bankTransfer: 'Bonifico bancario',
       paypalCard: 'PayPal o carta di credito',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Criptovaluta',
       alipay: 'Alipay'
     },
@@ -9482,6 +9498,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'お客様の情報は 256 ビット SSL 暗号化で保護されています。',
       bankTransfer: '銀行振込',
       paypalCard: 'PayPal またはクレジットカード',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: '暗号資産',
       alipay: 'Alipay'
     },
@@ -9553,6 +9571,8 @@ export const workspaceStaticTranslations = {
       secureBody: '고객님의 정보는 256비트 SSL 암호화로 보호됩니다.',
       bankTransfer: '계좌 이체',
       paypalCard: 'PayPal 또는 신용카드',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: '암호화폐',
       alipay: 'Alipay'
     },
@@ -9624,6 +9644,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Je gegevens zijn beschermd met 256-bits SSL-versleuteling.',
       bankTransfer: 'Bankoverschrijving',
       paypalCard: 'PayPal of creditcard',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Cryptocurrency',
       alipay: 'Alipay'
     },
@@ -9695,6 +9717,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Informasjonen din er beskyttet med 256-bits SSL-kryptering.',
       bankTransfer: 'Bankoverføring',
       paypalCard: 'PayPal eller kredittkort',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Kryptovaluta',
       alipay: 'Alipay'
     },
@@ -9766,6 +9790,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'As suas informações estão protegidas por encriptação SSL de 256 bits.',
       bankTransfer: 'Transferência bancária',
       paypalCard: 'PayPal ou cartão de crédito',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Criptomoeda',
       alipay: 'Alipay'
     },
@@ -9837,6 +9863,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Ваши данные защищены 256-битным SSL-шифрованием.',
       bankTransfer: 'Банковский перевод',
       paypalCard: 'PayPal или банковская карта',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Криптовалюта',
       alipay: 'Alipay'
     },
@@ -9908,6 +9936,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Din information skyddas av 256-bitars SSL-kryptering.',
       bankTransfer: 'Banköverföring',
       paypalCard: 'PayPal eller kreditkort',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Kryptovaluta',
       alipay: 'Alipay'
     },
@@ -9979,6 +10009,8 @@ export const workspaceStaticTranslations = {
       secureBody: 'Bilgileriniz 256 bit SSL şifrelemesiyle korunur.',
       bankTransfer: 'Banka havalesi',
       paypalCard: 'PayPal veya kredi kartı',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: 'Kripto para',
       alipay: 'Alipay'
     },
@@ -10050,6 +10082,8 @@ export const workspaceStaticTranslations = {
       secureBody: '你的信息受 256 位 SSL 加密保护。',
       bankTransfer: '银行转账',
       paypalCard: 'PayPal 或信用卡',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: '加密货币',
       alipay: '支付宝'
     },
@@ -10121,6 +10155,8 @@ export const workspaceStaticTranslations = {
       secureBody: '你的資料受 256 位元 SSL 加密保護。',
       bankTransfer: '銀行轉帳',
       paypalCard: 'PayPal 或信用卡',
+      paypal: 'PayPal',
+      card: 'Credit or debit card',
       crypto: '加密貨幣',
       alipay: '支付寶'
     },
