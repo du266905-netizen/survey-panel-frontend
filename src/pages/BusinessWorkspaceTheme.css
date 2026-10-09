@@ -76,7 +76,7 @@
   color: var(--proto-muted);
 }
 
-.business-onboarding footer > button:first-child {
+.business-onboarding footer > button:not(.business-button) {
   color: var(--proto-soft);
 }
 
@@ -293,22 +293,30 @@
 /* (The rail's globe sizing and stroke weight moved to
    `src/components/BusinessRail.css`.) */
 
-/* Rail entries adopt the same card language as the panels below. */
+/* Rail entries adopt the same card language as the panels below. The custom
+   questionnaire page renders the same rail markup but was never added to these
+   selectors, so it kept the old green rail with a white active pill. */
 .business-workspace .business-workspace-rail > button,
-.business-workspace .business-workspace-rail > a {
+.business-workspace .business-workspace-rail > a,
+.business-custom-request-page .business-workspace-rail > button,
+.business-custom-request-page .business-workspace-rail > a {
   border-radius: 10px;
   color: #5f6862;
 }
 
 .business-workspace .business-workspace-rail > button:hover,
 .business-workspace .business-workspace-rail > a:hover,
-.business-workspace .business-workspace-rail > button:focus-visible {
+.business-workspace .business-workspace-rail > button:focus-visible,
+.business-custom-request-page .business-workspace-rail > button:hover,
+.business-custom-request-page .business-workspace-rail > a:hover,
+.business-custom-request-page .business-workspace-rail > button:focus-visible {
   border-color: var(--ap-line);
   background: #ffffff;
   color: #141a17;
 }
 
-.business-workspace .business-workspace-rail > button.is-active {
+.business-workspace .business-workspace-rail > button.is-active,
+.business-custom-request-page .business-workspace-rail > button.is-active {
   border-color: #141a17;
   background: #141a17;
   color: #ffffff;
@@ -859,7 +867,7 @@
 .business-onboarding h1 {
   max-width: 560px;
   font-family: var(--font-reading);
-  font-size: clamp(30px, 3.4vw, 42px);
+  font-size: 38px;
   font-weight: 600;
   letter-spacing: -.018em;
   line-height: 1.16;
@@ -867,19 +875,19 @@
 
 .business-onboarding .business-onboarding-options strong {
   font-family: var(--font-reading);
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -.01em;
   line-height: 1.25;
 }
 
 .business-onboarding .business-onboarding-options small {
-  font-size: 13.5px;
+  font-size: 13px;
   line-height: 1.6;
 }
 
 .business-onboarding-intro {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.65;
 }
 
@@ -2263,7 +2271,8 @@ main.business-ai-brief-page {
 }
 
 .business-workspace .business-workspace-rail,
-.business-ai-brief-page .business-workspace-rail {
+.business-ai-brief-page .business-workspace-rail,
+.business-custom-request-page .business-workspace-rail {
   border-right: 1px solid var(--rs-hair);
   background: #ffffff !important;
 }
@@ -4024,7 +4033,8 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   font-weight: 600 !important;
   letter-spacing: 0 !important;
 }
-.business-workspace .business-workspace-account button span {
+.business-workspace .business-workspace-account button span,
+.business-custom-request-page .business-workspace-account button span {
   font-family: var(--font-sans) !important;
   font-size: 9.5px !important;
   font-weight: 600 !important;
@@ -4671,3 +4681,483 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-avatar-crop-handle.is-ne { top: -10px; right: -10px; }
 .business-avatar-crop-handle.is-sw { bottom: -10px; left: -10px; }
 .business-avatar-crop-handle.is-se { bottom: -10px; right: -10px; }
+
+/* =====================================================================
+   5. Wizard as a split. The wizard is a fixed, full-screen surface, so the
+   two-column grid lives on the section itself and only the right column
+   scrolls. The left column carries the three questions the wizard asks —
+   the one the right column is currently on is the step marker.
+   ===================================================================== */
+
+.business-onboarding {
+  display: grid;
+  grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  background: #fff;
+  overflow: hidden;
+}
+
+/* the 7px ink bar belonged to the old full-width header */
+.business-onboarding::before { display: none; }
+
+.business-onboarding-rail {
+  display: flex;
+  grid-row: 1 / 3;
+  grid-column: 1;
+  min-width: 0;
+  flex-direction: column;
+  background: #e8ede5;
+  padding: clamp(26px, 3.2vw, 46px) clamp(24px, 3.4vw, 56px) clamp(24px, 3vw, 42px);
+}
+
+.business-onboarding-brand { display: flex; align-items: center; gap: 18px; }
+.business-onboarding-brand > img { flex: none; width: auto; height: 24px; }
+
+/* The globe reuses the workspace rail's treatment: globe alone on transparent
+   chrome, paper menu, ink for the current language. The base sheet renders this
+   control as a 44px grid tile with a visible language code. */
+.business-onboarding-brand .business-language-picker > button {
+  display: flex;
+  width: auto;
+  height: auto;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: #141a17;
+  padding: 6px;
+}
+
+.business-onboarding-brand .business-language-picker > button > span { display: none; }
+.business-onboarding-brand .business-language-picker > button > svg:first-child { width: 21px; height: 21px; }
+.business-onboarding-brand .business-language-picker > button > svg:last-child { width: 11px; height: 11px; }
+.business-onboarding-brand .business-language-picker > button svg { stroke-width: 1.75; }
+
+.business-onboarding-brand .business-language-picker > button:hover,
+.business-onboarding-brand .business-language-picker > button:focus-visible,
+.business-onboarding-brand .business-language-picker > button[aria-expanded='true'] {
+  border-color: rgba(20, 26, 23, .18);
+  background: #fff;
+  color: #141a17;
+}
+
+.business-onboarding-brand .business-language-picker-menu {
+  top: 0;
+  bottom: auto;
+  left: calc(100% + 10px);
+  transform: none;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 8px;
+  background: #fff;
+  color: #141a17;
+  box-shadow: 0 18px 40px rgba(20, 26, 23, .16);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.business-onboarding-brand .business-language-picker-menu > p {
+  border-bottom-color: rgba(20, 26, 23, .11);
+  color: #5f6862;
+  font-size: 11px;
+  letter-spacing: .13em;
+}
+
+.business-onboarding-brand .business-language-picker-menu > div > button {
+  color: #4a544d;
+  font-size: 13px;
+}
+
+.business-onboarding-brand .business-language-picker-menu > div > button:hover,
+.business-onboarding-brand .business-language-picker-menu > div > button:focus-visible {
+  background: #e8ede5;
+  color: #141a17;
+}
+
+.business-onboarding-brand .business-language-picker-menu > div > button.is-selected {
+  background: #141a17;
+  color: #fff;
+}
+.business-onboarding-rail-body { margin: auto 0; padding: clamp(24px, 4vw, 46px) 0; }
+
+.business-onboarding-rail-lead {
+  max-width: 330px;
+  margin: 0 0 clamp(18px, 2.4vw, 28px);
+  color: #141a17;
+  font-family: var(--font-reading);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -.016em;
+  line-height: 1.24;
+}
+
+.business-onboarding-rail-list {
+  display: grid;
+  gap: clamp(14px, 1.8vw, 22px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.business-onboarding-rail-list > li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 12px;
+  opacity: .5;
+  transition: opacity .18s ease;
+}
+
+.business-onboarding-rail-list > li.is-done { opacity: .78; }
+.business-onboarding-rail-list > li.is-current { opacity: 1; }
+.business-onboarding-rail-list > li.is-skipped { opacity: .32; }
+
+.business-onboarding-rail-index {
+  padding-top: 3px;
+  color: #6b756d;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.business-onboarding-rail-copy { display: grid; gap: 5px; }
+
+.business-onboarding-rail-copy > strong {
+  color: #141a17;
+  font-family: var(--font-reading);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -.012em;
+  line-height: 1.32;
+}
+
+.business-onboarding-rail-tag {
+  width: max-content;
+  border: 1px solid rgba(20, 26, 23, .2);
+  border-radius: 999px;
+  color: #4a544d;
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  padding: 2px 7px 1px;
+  text-transform: uppercase;
+}
+
+.business-onboarding-rail-note {
+  max-width: 310px;
+  margin: clamp(22px, 3vw, 34px) 0 0;
+  border-top: 1px solid rgba(20, 26, 23, .16);
+  color: #5f6862;
+  /* a <p> inside the workspace root is flipped to the reading serif */
+  font-family: var(--font-sans) !important;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.65;
+  padding-top: 15px;
+}
+
+.business-onboarding-chrome {
+  grid-row: 1;
+  grid-column: 2;
+  /* the same centred box as the shell, so the progress and the sign-in link
+     sit on the title's left and right edges instead of floating mid-column */
+  width: min(100%, 720px);
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  border-bottom: 0;
+  padding: clamp(24px, 3vw, 42px) clamp(26px, 4vw, 64px) 0;
+}
+
+/* Label plus a separate square-cornered outlined button, the way the reference
+   researcher sign-up frames it — not one rounded pill holding both. The
+   element step matters: `Business.css` styles `.business-onboarding-chrome > div`
+   as an 11px uppercase label for the progress, and this wrapper is also a
+   direct child div. */
+.business-onboarding-signin {
+  display: inline-flex;
+  align-items: center;
+}
+
+.business-onboarding-chrome > .business-onboarding-signin {
+  gap: 14px;
+  color: #5f6862;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.business-onboarding-signin-button {
+  display: inline-flex;
+  min-width: 104px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(20, 26, 23, .24);
+  border-radius: 3px;
+  background: #fff;
+  color: #141a17;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0 22px;
+  text-decoration: none;
+}
+
+/* Hover and its timing come from the syringe block at the end of this file;
+   setting a background here would race the ink front. */
+.business-onboarding-signin-button:focus-visible { outline: 2px solid #141a17; outline-offset: 2px; }
+
+.business-onboarding-shell {
+  display: flex;
+  grid-row: 2;
+  grid-column: 2;
+  width: min(100%, 720px);
+  flex-direction: column;
+  margin: 0 auto;
+  overflow-y: auto;
+  padding: clamp(28px, 4vw, 56px) clamp(26px, 4vw, 64px) clamp(44px, 5.4vw, 76px);
+}
+
+/* Back / Continue sit on the bottom edge of the column, not under the cards. */
+.business-onboarding footer { margin-top: auto; padding-top: clamp(24px, 3vw, 40px); }
+/* The cards sit on white here, so the selected state borrows the rail's sage
+   rather than a tint of its own. */
+.business-onboarding .business-onboarding-options button {
+  border-color: rgba(20, 26, 23, .16);
+  background: #fff;
+}
+
+/* The cards are not actions: they keep the sage selection language and their
+   own gradual tint instead of the syringe. */
+.business-onboarding .business-onboarding-options button {
+  transition: background-color .35s ease, border-color .35s ease, color .35s ease;
+}
+
+.business-onboarding .business-onboarding-options button:hover,
+.business-onboarding .business-onboarding-options button.is-selected {
+  border-color: #141a17;
+  background: #e8ede5;
+}
+
+@media (max-width: 900px) {
+  .business-onboarding {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    overflow: auto;
+  }
+
+  .business-onboarding-rail { grid-row: 1; grid-column: 1; padding: 24px 22px 26px; }
+  .business-onboarding-rail > img { height: 21px; }
+  .business-onboarding-rail-body { margin: 22px 0 0; padding: 0; }
+  /* the lead is framing; on a phone the numbered questions say it faster */
+  .business-onboarding-rail-lead { display: none; }
+  .business-onboarding-rail-list { gap: 15px; }
+  .business-onboarding-rail-note { margin-top: 22px; }
+  .business-onboarding-chrome { grid-row: 2; grid-column: 1; padding: 20px 22px 0; }
+  /* the pre-existing small-screen rule drops the progress to 9px */
+  .business-onboarding-chrome > div,
+  .business-onboarding-chrome strong { font-size: 11px; }
+  /* one line cannot hold both labels on a phone; the workspace header drops the
+     same word at this width, and the account label goes with it */
+  .business-onboarding-chrome > div > span { display: none; }
+  .business-onboarding-signin > span { display: none; }
+  .business-onboarding-shell { grid-row: 3; grid-column: 1; overflow: visible; padding: 22px 22px 36px; }
+}
+
+/* =====================================================================
+   6. Welcome modal. Two things were off: the card carried
+   `transform: translateY(-28px)`, which is exactly why it sat 28px above the
+   middle of the viewport, and five of its six text sizes were not on the
+   8-step scale (10.5 / 11.5 / 12 / 42).
+   ===================================================================== */
+
+.business-welcome-modal > section { transform: none; }
+
+/* The eyebrow is a label (uppercase, tracked, sans) but it is an unclassed
+   <p>, so the workspace's "content elements read in serif" rule caught it and
+   it rendered in the reading serif. `p.class` keeps the specificity level of
+   that rule and wins on source order. */
+.business-welcome-copy > p.business-welcome-eyebrow {
+  color: #5d8a6c;
+  font-family: var(--font-sans) !important;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.business-welcome-copy h2 { font-size: 22px; }
+.business-welcome-copy ul { font-size: 11px; }
+.business-welcome-copy > div > .business-button { font-size: 13px; }
+
+/* Part 18 puts dialog and panel titles on the 22px step (the add-funds dialog
+   title was moved there too); 30 and 44 exist on neither scale. */
+.business-welcome-copy > span,
+.business-welcome-copy ul li { font-size: 14px !important; }
+.business-welcome-copy li::before { font-size: 9.5px; }
+.business-welcome-copy > div > .business-button { font-size: 14px; }
+
+/* =====================================================================
+   7. The syringe, rolled out from the public hero button.
+   `styles/action-feedback.css` gives the yellow hero button (and the auth
+   buttons) an ink front that sweeps in from the left — `inset 32rem` with
+   `1.25s cubic-bezier(.22,.72,.2,1)`, deliberately slow-to-fast — while its
+   background stays pinned so the sweep is the only change and the label flips
+   to white as the front passes it. That treatment only reached a handful of
+   buttons; this block puts it on every button of the research side and the
+   wizard.
+
+   Doubling the root class is this file's established way to outrank the
+   per-family hover rules further up. Two families opt out on purpose: the
+   wizard's option cards (their sage hover is the selection language) and the
+   language menu rows, which are list options rather than actions.
+   ===================================================================== */
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .business-workspace.business-workspace button:not(:disabled):not([role='option']):not(.business-onboarding-card),
+  .business-workspace.business-workspace a.business-button,
+  .business-onboarding.business-onboarding :where(.business-onboarding-chrome, .business-onboarding-rail, .business-onboarding-shell > footer) button:not(:disabled):not([role='option']):not(.business-onboarding-card),
+  .business-onboarding.business-onboarding .business-onboarding-signin-button,
+  .business-welcome-modal.business-welcome-modal button:not(:disabled) {
+    --syringe-fill: #181917;
+    --syringe-hover-ink: #fff;
+    --syringe-hover-border: #181917;
+    box-shadow: inset 0 0 0 0 var(--syringe-fill);
+    /* The hero button's own numbers, not the shared ones in action-feedback.css:
+       `cubic-bezier(.52,.02,.72,.28)` starts slow, so the front is still visible
+       on a 124px button instead of crossing it in 50ms, and the label waits
+       .5s before flipping, so it turns as the front passes it. */
+    transition: color .28s ease .5s, background-color .72s ease, border-color .72s ease, box-shadow 1.15s cubic-bezier(.52, .02, .72, .28);
+  }
+
+  /* The lime action keeps its own fill so the ink front is the only movement —
+     the same pin the hero button needs to stop its background snapping. */
+  .business-workspace.business-workspace .business-button:not(.business-button--dark),
+  .business-onboarding.business-onboarding .business-button:not(.business-button--dark) {
+    background-color: var(--rs-lime);
+  }
+
+  /* A dark fill cannot be darkened by an ink front, so it fills with light
+     instead — the treatment action-feedback.css already uses for the dark
+     auth buttons. */
+  .business-workspace.business-workspace .business-button--dark,
+  .business-onboarding.business-onboarding .business-button--dark {
+    --syringe-fill: #f8f9f6;
+    --syringe-hover-ink: #181917;
+    --syringe-hover-border: #d7ddd5;
+  }
+
+  .business-workspace.business-workspace button:not(:disabled):not([role='option']):not(.business-onboarding-card):hover,
+  .business-workspace.business-workspace a.business-button:hover,
+  .business-onboarding.business-onboarding :where(.business-onboarding-chrome, .business-onboarding-rail, .business-onboarding-shell > footer) button:not(:disabled):not([role='option']):not(.business-onboarding-card):hover,
+  .business-onboarding.business-onboarding .business-onboarding-signin-button:hover,
+  .business-welcome-modal.business-welcome-modal button:not(:disabled):hover {
+    border-color: var(--syringe-hover-border);
+    box-shadow: inset 32rem 0 0 0 var(--syringe-fill);
+    color: var(--syringe-hover-ink);
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .business-workspace.business-workspace button,
+  .business-onboarding.business-onboarding button,
+  .business-onboarding.business-onboarding .business-onboarding-signin-button,
+  .business-welcome-modal.business-welcome-modal button { transition-duration: 0ms; }
+}
+
+/* =====================================================================
+   8. The custom-questionnaire intro modal: on the type scale, and with room
+   to breathe.
+   Measured before: eyebrow 10.5, heading 42, body 12, step text 10.5, step
+   indices 10 — five sizes and one of them on the ladder. The copy column is a
+   flex stack with no rhythm between its parts, and a 42px heading took three
+   lines inside a 460px card: that is what read as cramped.
+   ===================================================================== */
+
+.business-custom-request-page .business-custom-intro-copy {
+  padding: clamp(26px, 2.6vw, 38px) clamp(26px, 2.8vw, 40px);
+}
+
+/* The card was a fixed 460px with `overflow: hidden`, so the step list ran into
+   the buttons and the buttons were cut off — the actual cause of "cramped".
+   It now grows with its copy and only scrolls when the viewport is short. */
+.business-custom-request-page .business-custom-intro-modal > section {
+  height: auto;
+  max-height: min(620px, calc(100svh - 56px));
+}
+
+.business-custom-request-page .business-custom-intro-copy { overflow-y: auto; }
+
+/* a label, not content — and the workspace's serif flip had caught this <p> */
+.business-custom-request-page .business-custom-intro-copy > p {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy h2 {
+  margin-top: 13px !important;
+  font-size: 22px !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy > span {
+  margin-top: 14px !important;
+  font-size: 14px !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy ol {
+  gap: 10px !important;
+  margin-top: 20px !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy ol li {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy ol li b {
+  font-size: 9.5px !important;
+}
+
+.business-custom-request-page .business-custom-intro-copy > div {
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+/* The two rules that pin the rail's border use !important at class-only
+   specificity, and `--workspace-line` is not defined on this page, so the
+   border fell back to currentColor (a hard grey line). Same hairline as the
+   workspace rail, stated with the weight it takes to win. */
+main.business-custom-request-page .business-workspace-rail {
+  border-right: 1px solid var(--rs-hair) !important;
+}
+
+/* ── Part 21 · the remaining dialog text off the Part 18 scale ───────────
+   A scan of every modal, dialog, popover and language menu in the workspace
+   stylesheets found the sizes below. None of them was on the scale:
+
+     9 / 10 / 10.5 / 11.5 / 12 / 13.5 / 25 / 30 / 31 / 34 / 39 / 40 / 42 / 44
+
+   Labels land on 11, dialog titles on 22, controls and small print on 13,
+   prose on 14. The project modal, the brief dialog, the editor starter, the
+   sensitive-question modal and both language menus are each named once. */
+.business-project-modal form > label,
+.business-form-grid > label,
+.business-editor-starter-modal form > label,
+.business-brief-dialog dt,
+.business-brief-dialog section strong { font-size: 11px !important; }
+
+.business-brief-dialog-actions > button,
+.business-custom-intro-copy > div > button:last-child,
+.business-language-picker-menu > div > button,
+.business-workspace-rail .business-language-picker-menu > div > button { font-size: 13px !important; }
+
+.business-language-picker-menu > p,
+.business-workspace-rail .business-language-picker-menu > p { font-size: 11px !important; }
+

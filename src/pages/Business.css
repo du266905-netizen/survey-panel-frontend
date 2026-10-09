@@ -170,7 +170,7 @@
 .business-onboarding-options strong { color: #1c3b2a; font-size: 17px; font-weight: 800; letter-spacing: -.025em; }
 .business-onboarding-options small { color: #627268; font-size: 12px; font-weight: 540; line-height: 1.5; }
 .business-onboarding footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 25px; }
-.business-onboarding footer > button:first-child { border: 0; background: transparent; color: #426650; cursor: pointer; font: 800 12px var(--font-sans); padding: 0 12px; }
+.business-onboarding footer > button:not(.business-button) { border: 0; background: transparent; color: #426650; cursor: pointer; font: 800 13px var(--font-sans); padding: 0 12px; }
 @media (min-width: 680px) { .business-onboarding-options:has(button:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }.business-onboarding-options:has(button:nth-child(3)) button { min-height: 202px; } }
 @media (max-width: 679px) { .business-onboarding-options { grid-template-columns: 1fr; }.business-onboarding-options button { min-height: 0; }.business-onboarding-step { top: 24px; right: 24px; } }
 .business-projects { padding: clamp(34px, 4vw, 52px) clamp(22px, 5vw, 58px); }
@@ -301,7 +301,7 @@
 .business-onboarding .business-onboarding-options strong { color: #1e3b2b; font-size: 17px; line-height: 1.2; }
 .business-onboarding .business-onboarding-options small { color: #65746b; line-height: 1.55; }
 .business-onboarding footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 28px; }
-.business-onboarding footer > button:first-child { border: 0; background: transparent; color: #426650; cursor: pointer; font: 800 12px var(--font-sans); padding: 0 12px; }
+.business-onboarding footer > button:not(.business-button) { border: 0; background: transparent; color: #426650; cursor: pointer; font: 800 13px var(--font-sans); padding: 0 12px; }
 @media (max-width: 760px) {
   .business-onboarding-chrome { width: min(100% - 36px, 1240px); min-height: 70px; }
   .business-onboarding-chrome > img { width: auto; height: 18px; }

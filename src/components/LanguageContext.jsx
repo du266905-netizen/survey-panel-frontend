@@ -44,6 +44,10 @@ const englishCopy = {
         registerIntro: 'Keep your briefs, confirmed scope, and research progress in one considered place.',
         businessEyebrow: 'BUSINESS WORKSPACE', businessTitle: 'Create your research workspace.', businessIntro: 'Create, share, and manage questionnaires alongside your research projects.',
         contactName: 'Contact name', contactPlaceholder: 'Your name', emailCode: 'Email code', sendCode: 'Send verification code', sendingCode: 'Sending…', resendCode: 'Resend in {seconds}s', codePlaceholder: '6-digit code', passwordPlaceholder: 'At least 8 characters', businessTerms: 'Business Researcher Terms', createWorkspace: 'Create a workspace',
+        hasAccount: "Already have an account?",
+        signInLink: "Sign in",
+        setupTitle: "Your workspace starts with three questions.",
+        asideNote: "Creating a workspace is free. Research work begins only after you confirm a scope and quote.",
       },
       rail: { services: 'Research services', projects: 'Projects', results: 'Questionnaire results', accountMenu: 'Account menu', account: 'Account', signOut: 'Sign out', clientAccount: 'Client account', navigation: 'Workspace navigation',
         overview: 'Overview', research: 'Research', delivery: 'Delivery', home: 'Overview', ai: 'AI research guide', questionnaires: 'Questionnaire editor' },
@@ -382,6 +386,108 @@ const businessWorkspaceCopyByLanguage = {
   },
 };
 
+/* Copy for the client access page (sign in / create account). It merges over the
+   same base as the workspace map above, so a language only has to carry these
+   six keys instead of repeating the whole access block. */
+const businessAccessCopyByLanguage = {
+  'zh-CN': {
+    hasAccount: "已有账户？",
+    signInLink: "登录",
+    setupTitle: "工作区会先问你三件事。",
+    asideNote: "创建工作区免费。确认范围与报价后，研究才会开始。",
+  },
+  'zh-Hant': {
+    hasAccount: "已有帳戶？",
+    signInLink: "登入",
+    setupTitle: "工作區會先問你三件事。",
+    asideNote: "建立工作區免費。確認範圍與報價後，研究才會開始。",
+  },
+  de: {
+    hasAccount: "Sie haben bereits ein Konto?",
+    signInLink: "Anmelden",
+    setupTitle: "Ihr Workspace beginnt mit drei Fragen.",
+    asideNote: "Ein Workspace ist kostenlos. Die eigentliche Forschungsarbeit beginnt erst, wenn Sie Umfang und Angebot bestätigt haben.",
+  },
+  fr: {
+    hasAccount: "Vous avez déjà un compte ?",
+    signInLink: "Se connecter",
+    setupTitle: "Votre espace de travail commence par trois questions.",
+    asideNote: "La création d'un espace de travail est gratuite. Le travail de recherche ne commence qu'après validation du périmètre et du devis.",
+  },
+  nl: {
+    hasAccount: "Heb je al een account?",
+    signInLink: "Inloggen",
+    setupTitle: "Je workspace begint met drie vragen.",
+    asideNote: "Een workspace aanmaken is gratis. Het onderzoek zelf begint pas nadat je de scope en de prijsopgave hebt bevestigd.",
+  },
+  da: {
+    hasAccount: "Har du allerede en konto?",
+    signInLink: "Log ind",
+    setupTitle: "Dit workspace begynder med tre spørgsmål.",
+    asideNote: "Det er gratis at oprette et workspace. Selve undersøgelsen begynder først, når du har bekræftet scope og tilbud.",
+  },
+  es: {
+    hasAccount: "¿Ya tienes una cuenta?",
+    signInLink: "Iniciar sesión",
+    setupTitle: "Tu espacio de trabajo empieza con tres preguntas.",
+    asideNote: "Crear un espacio de trabajo es gratis. El trabajo de investigación solo comienza cuando confirmas el alcance y el presupuesto.",
+  },
+  fi: {
+    hasAccount: "Onko sinulla jo tili?",
+    signInLink: "Kirjaudu sisään",
+    setupTitle: "Työtilasi syntyy kolmesta kysymyksestä.",
+    asideNote: "Työtilan luominen on maksutonta. Varsinainen tutkimustyö alkaa vasta, kun olet vahvistanut laajuuden ja tarjouksen.",
+  },
+  it: {
+    hasAccount: "Hai già un account?",
+    signInLink: "Accedi",
+    setupTitle: "Il tuo workspace inizia con tre domande.",
+    asideNote: "Creare un workspace è gratuito. Il lavoro di ricerca inizia solo dopo la conferma di ambito e preventivo.",
+  },
+  ja: {
+    hasAccount: "すでにアカウントをお持ちですか？",
+    signInLink: "サインイン",
+    setupTitle: "ワークスペースは 3 つの質問から始まります。",
+    asideNote: "ワークスペースの作成は無料です。調査は、範囲と見積もりをご確認いただいた後に開始します。",
+  },
+  ko: {
+    hasAccount: "이미 계정이 있으신가요?",
+    signInLink: "로그인",
+    setupTitle: "워크스페이스는 세 가지 질문에서 시작됩니다.",
+    asideNote: "워크스페이스 생성은 무료입니다. 조사는 범위와 견적을 확인한 후에 시작됩니다.",
+  },
+  no: {
+    hasAccount: "Har du allerede en konto?",
+    signInLink: "Logg inn",
+    setupTitle: "Arbeidsområdet ditt begynner med tre spørsmål.",
+    asideNote: "Det er gratis å opprette et arbeidsområde. Selve undersøkelsen starter først når du har bekreftet omfang og tilbud.",
+  },
+  pt: {
+    hasAccount: "Já tem uma conta?",
+    signInLink: "Iniciar sessão",
+    setupTitle: "O seu espaço de trabalho começa com três perguntas.",
+    asideNote: "Criar um espaço de trabalho é gratuito. O trabalho de investigação só começa depois de confirmar o âmbito e o orçamento.",
+  },
+  ru: {
+    hasAccount: "Уже есть аккаунт?",
+    signInLink: "Войти",
+    setupTitle: "Рабочее пространство начинается с трёх вопросов.",
+    asideNote: "Создание рабочего пространства бесплатно. Само исследование начинается только после подтверждения объёма работ и сметы.",
+  },
+  sv: {
+    hasAccount: "Har du redan ett konto?",
+    signInLink: "Logga in",
+    setupTitle: "Din arbetsyta börjar med tre frågor.",
+    asideNote: "Det är gratis att skapa en arbetsyta. Själva undersökningen börjar först när du har bekräftat omfattning och offert.",
+  },
+  tr: {
+    hasAccount: "Zaten bir hesabınız var mı?",
+    signInLink: "Giriş yap",
+    setupTitle: "Çalışma alanınız üç soruyla başlar.",
+    asideNote: "Çalışma alanı oluşturmak ücretsizdir. Araştırma çalışması yalnızca kapsamı ve teklifi onayladıktan sonra başlar.",
+  },
+};
+
 export const languages = [
   { code: 'en-US', label: 'English (US)', shortLabel: 'EN-US' },
   { code: 'en-GB', label: 'English (UK)', shortLabel: 'EN-GB' },
@@ -514,7 +620,7 @@ export function LanguageProvider({ children }) {
           return {
             ...base,
             ...localized,
-            access: { ...base.access, ...(localized.access || {}) },
+            access: { ...base.access, ...(businessAccessCopyByLanguage[language] || {}), ...(localized.access || {}) },
             rail: { ...base.rail, ...(localized.rail || {}) },
             services: { ...base.services, ...(localized.services || {}) },
             results: { ...base.results, ...(localized.results || {}), detail: { ...base.results.detail, ...(localized.results?.detail || {}) } },
