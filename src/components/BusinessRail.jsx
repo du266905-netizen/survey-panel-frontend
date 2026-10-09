@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   LogOut,
   Receipt,
+  Wallet,
   Sparkles,
   UserRound,
 } from 'lucide-react';
@@ -43,6 +44,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
   // ships one and fall back to English otherwise.
   const rail = publicCopy?.workspace?.business?.rail || {};
   const billingCopy = publicCopy?.workspace?.business?.billing || {};
+  const budgetCopy = publicCopy?.workspace?.business?.budget || {};
   const navigationLabel = rail.navigation || 'Workspace navigation';
 
   const groups = [
@@ -115,6 +117,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
             <span>{user?.email}</span>
             <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {rail.account}</button>
             <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/billing', language)); }}><Receipt size={15} /> {billingCopy.title || 'Invoices and billing'}</button>
+            <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/budget', language)); }}><Wallet size={15} /> {budgetCopy.title || 'Account budget'}</button>
             <button type="button" onClick={() => { setAccountMenuOpen(false); logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {rail.signOut}</button>
           </div>
         )}

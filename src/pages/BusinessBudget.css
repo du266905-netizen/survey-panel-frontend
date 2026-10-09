@@ -1,0 +1,398 @@
+/* Account budget — the section's own content inside the account shell.
+ *
+ * Same look as the account and invoices sections: eyebrow, 38px reading title, a
+ * white surface at radius 10 with a hairline, ink for the current state and lime
+ * for the one action that moves work forward. Amounts are tabular so a column of
+ * them lines up.
+ *
+ * Type: Part 18 — 11 label / 13 UI / 14 body / 22 dialog title / 38 page.
+ */
+
+.business-budget-shell {
+  width: min(100% - 44px, 1120px);
+  margin: 0 auto;
+  padding: clamp(30px, 4vw, 58px) 0 clamp(48px, 6vw, 84px);
+}
+
+.business-budget-shell h1 {
+  margin: 8px 0 0;
+  font-family: var(--font-reading);
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+  line-height: 1.02;
+}
+
+/* The base sheet's eyebrow is 10px; Part 18 and the sibling pages use 11. */
+.business-budget-shell p.business-eyebrow { font-size: 11px; }
+
+.business-budget-shell p.business-budget-intro {
+  max-width: 66ch;
+  margin: 12px 0 0;
+  color: #5d6e64;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.business-budget-card {
+  margin-top: clamp(24px, 3.2vw, 34px);
+  border: 1px solid rgba(17, 17, 19, .16);
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+/* ---- the switch row ---- */
+
+.business-budget-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(16px, 2.4vw, 22px) clamp(18px, 3vw, 28px);
+  border-bottom: 1px solid rgba(17, 17, 19, .10);
+}
+
+.business-budget-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  color: #141a17;
+  font: 700 14px var(--font-sans);
+}
+
+.business-budget-switch input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+.business-budget-switch i {
+  position: relative;
+  display: block;
+  width: 42px;
+  height: 24px;
+  border: 1px solid rgba(17, 17, 19, .22);
+  border-radius: 999px;
+  background: #ececeb;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.business-budget-switch i::after {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(11, 11, 12, .18);
+  content: '';
+  transition: transform .2s ease;
+}
+
+.business-budget-switch input:checked + i { border-color: #141a17; background: #141a17; }
+
+.business-budget-switch input:checked + i::after { transform: translateX(18px); }
+
+.business-budget-switch input:focus-visible + i { outline: 2px solid #141a17; outline-offset: 2px; }
+
+.business-budget-shell .business-budget-create {
+  display: inline-flex;
+  width: max-content;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* ---- the table ---- */
+
+.business-budget-table { overflow-x: auto; }
+
+.business-budget-table table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 780px;
+}
+
+.business-budget-table th {
+  color: #637c6b;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  padding: 14px clamp(12px, 2vw, 20px);
+  border-bottom: 1px solid rgba(17, 17, 19, .10);
+}
+
+.business-budget-table td {
+  color: #141a17;
+  font-size: 14px;
+  padding: 16px clamp(12px, 2vw, 20px);
+  border-bottom: 1px solid rgba(17, 17, 19, .08);
+  vertical-align: middle;
+}
+
+.business-budget-table tbody tr:last-child td { border-bottom: 0; }
+
+.business-budget-table td.is-number { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.business-budget-table.is-muted { opacity: .5; }
+
+.business-budget-share { margin-left: 8px; color: #637c6b; font-size: 13px; }
+
+.business-budget-status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+
+.business-budget-status.is-active { background: #e8ede5; color: #141a17; }
+
+.business-budget-status.is-ended { background: #eeeeec; color: #6b7a71; }
+
+.business-budget-end {
+  border: 0;
+  background: transparent;
+  color: #8a3b32;
+  cursor: pointer;
+  font: 800 13px var(--font-sans);
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.business-budget-none { color: #a1a6ac; }
+
+/* ---- empty state: an icon, the line, and what will appear ---- */
+
+.business-budget-empty td { padding: clamp(20px, 3vw, 30px) clamp(12px, 2vw, 20px); }
+
+.business-budget-empty td > span {
+  display: inline-grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 13px;
+  align-items: start;
+  text-align: left;
+}
+
+.business-budget-empty-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(17, 17, 19, .14);
+  border-radius: 50%;
+  background: #f1f4f0;
+  color: #315f49;
+}
+
+.business-budget-empty strong { display: block; font-size: 14px; font-weight: 700; }
+
+.business-budget-empty small { display: block; margin-top: 6px; color: #5d6e64; font-size: 13px; font-weight: 500; }
+
+/* =====================================================================
+   The two dialogs.
+
+   `position: fixed` resolves against the nearest transformed ancestor, and the
+   route shell keeps a transform after its entry animation, so a plain `inset: 0`
+   overlay centres on the page instead of the screen (measured: 88px low on the
+   workspace welcome card). Anchoring to the top of the page and standing exactly
+   one viewport tall centres these on the screen the user is looking at.
+   ===================================================================== */
+
+.business-budget-modal {
+  position: fixed;
+  z-index: 150;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  height: 100svh;
+  place-items: center;
+  background: rgba(19, 42, 30, .28);
+  backdrop-filter: blur(6px) saturate(105%);
+  -webkit-backdrop-filter: blur(6px) saturate(105%);
+  padding: 28px;
+}
+
+.business-budget-modal > section {
+  width: min(100%, 760px);
+  max-height: calc(100svh - 56px);
+  overflow-y: auto;
+  border: 1px solid rgba(17, 17, 19, .16);
+  border-radius: 10px;
+  background: #ffffff;
+  padding: clamp(22px, 3vw, 32px);
+}
+
+.business-budget-modal h2 {
+  margin: 0;
+  color: #141a17;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.015em;
+}
+
+.business-budget-modal p { margin: 14px 0 0; color: #5d6e64; font-size: 14px; line-height: 1.6; }
+
+.business-budget-modal ul { display: grid; gap: 8px; margin: 12px 0 0; padding-left: 18px; }
+
+.business-budget-modal li { color: #141a17; font-size: 14px; line-height: 1.6; }
+
+.business-budget-modal-note {
+  border-radius: 8px;
+  background: #f5f5f3;
+  color: #637c6b !important;
+  font-size: 13px !important;
+  padding: 12px 14px;
+}
+
+.business-budget-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 22px;
+  border-top: 1px solid rgba(17, 17, 19, .10);
+  padding-top: 18px;
+}
+
+.business-budget-modal-actions > button:not(.business-button) {
+  border: 1px solid rgba(17, 17, 19, .18);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #285647;
+  cursor: pointer;
+  font: 800 13px var(--font-sans);
+  min-height: 40px;
+  padding: 0 18px;
+}
+
+.business-budget-modal-actions > button:not(.business-button):hover { border-color: #141a17; background: #f1f4f0; }
+
+.business-budget-modal .business-button { min-height: 40px; font-size: 13px; }
+
+/* ---- the create dialog's fields ---- */
+
+.business-budget-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.business-budget-field { display: grid; gap: 8px; }
+
+.business-budget-field > label,
+.business-budget-field-label {
+  color: #637c6b;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.business-budget-field input {
+  min-height: 40px;
+  border: 1px solid rgba(17, 17, 19, .18);
+  border-radius: 9px;
+  background: #ffffff;
+  color: #141a17;
+  font: 600 14px var(--font-sans);
+  padding: 0 12px;
+}
+
+.business-budget-field input:focus-visible { outline: 2px solid #141a17; outline-offset: 1px; }
+
+.business-budget-choices { display: grid; gap: 10px; }
+
+.business-budget-choices > label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #141a17;
+  font-size: 14px;
+}
+
+.business-budget-choices input[type='radio'] { accent-color: #141a17; width: 16px; height: 16px; }
+
+.business-budget-choices input[type='date'] { flex: 1; }
+
+.business-budget-choices input[type='date']:disabled { opacity: .45; }
+
+.business-budget-section {
+  margin: 24px 0 0 !important;
+  color: #141a17 !important;
+  font-size: 16px !important;
+  font-weight: 600;
+}
+
+/* ---- the per-member limit table ---- */
+
+.business-budget-members {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+}
+
+.business-budget-members th {
+  color: #637c6b;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(17, 17, 19, .10);
+}
+
+.business-budget-members td {
+  color: #141a17;
+  font-size: 14px;
+  padding: 12px;
+  border-bottom: 1px solid rgba(17, 17, 19, .08);
+  vertical-align: middle;
+}
+
+.business-budget-members input {
+  width: min(100%, 160px);
+  min-height: 38px;
+  border: 1px solid rgba(17, 17, 19, .18);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #141a17;
+  font: 600 14px var(--font-sans);
+  padding: 0 10px;
+}
+
+.business-budget-members td.is-number { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.business-budget-bar {
+  display: inline-block;
+  width: min(38%, 160px);
+  height: 6px;
+  margin: 0 8px 0 10px;
+  border-radius: 999px;
+  background: #ececeb;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.business-budget-bar > i { display: block; height: 100%; background: #141a17; }
+
+@media (max-width: 760px) {
+  .business-budget-pair { grid-template-columns: minmax(0, 1fr); }
+  .business-budget-head { align-items: flex-start; flex-direction: column; }
+  .business-budget-modal { padding: 16px; }
+  .business-budget-members { display: block; overflow-x: auto; }
+}
