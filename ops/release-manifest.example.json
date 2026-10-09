@@ -1,0 +1,53 @@
+{
+  "_说明": [
+    "对外发布清单模板。复制成 ops/release-manifest.json 后填写。",
+    "填完跑： node ops/gate-release.mjs ops/release-manifest.json",
+    "exit 0 = 可发（自动写入 ops/releases.log）； exit 1 = 不许发。",
+    "",
+    "硬规矩：author 与 auditor 必须是不同的主体；audit_verdict 必须是 approved。",
+    "作者不得自己批自己 —— 这一条由闸门强制，不靠自觉。"
+  ],
+
+  "release_id": "MMI-Integration-Guide-Rev1.0",
+  "recipient": "Market Mirror Insights Pvt. Ltd.",
+
+  "author": "填制作人（谁起草/修改的）",
+  "auditor": "填审计员（必须与 author 不同：另一人 / 另一模型 / 外部方）",
+  "audit_verdict": "rejected",
+
+  "audit_report": "对外暴露-对抗式审计.md",
+
+  "email_body": "mmi/给Asif-邮件正文.txt",
+  "email_states_revision": "1.0",
+
+  "attachments": [
+    {
+      "path": "outbound/MMI-Integration-Guide-Rev1.0/guanyisearch-Integration-Guide-Revision-1.0.pdf",
+      "sha256": "填实发附件的 SHA-256（shasum -a 256 文件）",
+      "revision": "1.0"
+    }
+  ],
+
+  "outward_documents": [
+    "guanyisearch-Integration-Guide.md"
+  ],
+
+  "internal_only": [
+    "对外发布流程.md",
+    "对外暴露-对抗式审计.md",
+    "API文档-实现差异核对表.md",
+    "mmi/给Asif-Integration-Guide-邮件.md"
+  ],
+
+  "cross_references": [
+    {
+      "in": "Project Brief - First Test Project.md",
+      "target": "guanyisearch-Integration-Guide.md",
+      "sections": [2, 5, 9]
+    }
+  ],
+
+  "also_forbidden": [
+    "本版特有、尚未实现但容易被误写的词（例如某能力上线前先放 'replay protection' 在这里）"
+  ]
+}
