@@ -42,7 +42,7 @@ export default function BusinessAccount() {
   };
 
   return <main className="business-account-page">
-    <header><img src="/guanyisearch-project-mark.png" alt="GuanyiSearch" /><button type="button" onClick={() => navigate('/business/workspace')}><ArrowLeft size={17} /> {ws.account.backToProjects}</button></header>
+    <header><img className="business-account-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" /><button type="button" onClick={() => navigate('/business/workspace')}><ArrowLeft size={17} /> {ws.account.backToProjects}</button></header>
     <section className="business-account-shell">
       <div><p className="business-eyebrow">{ws.account.eyebrow}</p><h1>{ws.account.title}</h1><p>{ws.account.intro}</p></div>
       <div className="business-account-grid">

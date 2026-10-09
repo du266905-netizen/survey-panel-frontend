@@ -4354,3 +4354,27 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
    came out at 10px. Labels are 11. */
 .business-custom-request-page header span,
 .business-custom-request-page header strong { font-size: 11px !important; }
+
+
+/* ── the account header and its person row ───────────────────────────────
+   Two fixes from client review of a screenshot.
+
+   1. The header carried the G mark. Business.css sizes that img to 47x37px,
+      which is the mark's own 1.31:1 shape — the wordmark is 6.59:1 and would
+      have been squashed to about 47x7 inside that box. So the box is released
+      and the wordmark is given a height instead of a width.
+   2. The person row was in the framed-surfaces list, so the avatar sat inside
+      a border. It reads as a header row rather than a card, so the frame and
+      its fill are gone; the padding stays so the rows below keep their line. */
+.business-account-page > header img.business-account-wordmark {
+  width: auto !important;
+  height: 20px !important;
+  object-fit: contain;
+}
+.business-account-page .business-account-person {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
