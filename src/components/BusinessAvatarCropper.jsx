@@ -15,6 +15,8 @@ import { X } from 'lucide-react';
  */
 
 const MIN_BOX = 48; // stage pixels — below this the handles overlap
+/** How much of the largest possible square the box starts at. */
+const INITIAL_RATIO = 0.78;
 
 export default function BusinessAvatarCropper({ src, onCancel, onConfirm, busy = false }) {
   const stageRef = useRef(null);
@@ -33,13 +35,19 @@ export default function BusinessAvatarCropper({ src, onCancel, onConfirm, busy =
     const i = img.getBoundingClientRect();
     const rect = { left: i.left - s.left, top: i.top - s.top, width: i.width, height: i.height };
     setImgRect(rect);
-    const side = Math.min(rect.width, rect.height);
+    // Start inside the picture rather than filling it. At full size a square
+    // source leaves the box with nowhere to go, and the tool reads as though it
+    // has nothing to do — which is exactly how it was described. 78% leaves
+    // room to move and to tighten in both directions from the first frame.
+    const max = Math.min(rect.width, rect.height);
+    const side = Math.max(MIN_BOX, Math.round(max * INITIAL_RATIO));
     setBox({
       left: rect.left + (rect.width - side) / 2,
       top: rect.top + (rect.height - side) / 2,
       size: side,
     });
-  }, []);
+  }, []); // INITIAL_RATIO is a module constant
+  const resetBox = () => measure();
 
   useEffect(() => {
     measure();
@@ -133,6 +141,7 @@ export default function BusinessAvatarCropper({ src, onCancel, onConfirm, busy =
           <button type="button" onClick={onCancel} aria-label="关闭"><X size={17} /></button>
         </header>
 
+        <p className="business-avatar-crop-hint">拖动方框移动位置，拖四角缩放范围。</p>
         <div
           className="business-avatar-crop-stage"
           ref={stageRef}
@@ -166,6 +175,8 @@ export default function BusinessAvatarCropper({ src, onCancel, onConfirm, busy =
         </div>
 
         <footer>
+          <button type="button" className="is-quiet" onClick={resetBox} disabled={busy}>重置</button>
+          <span className="business-avatar-crop-spacer" />
           <button type="button" onClick={onCancel} disabled={busy}>取消</button>
           <button type="button" className="is-primary" onClick={confirm} disabled={busy || !box}>
             {busy ? '正在处理…' : '设为新头像'}
