@@ -4499,12 +4499,19 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-avatar-crop-scrim {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border: 0;
   background: rgba(14, 18, 16, .62);
   cursor: default;
 }
+/* z-index, not just position. Both children are positioned, so paint order
+   decides — and with the scrim first in the DOM it covered the panel, dimming
+   the title and turning the lime button (#deef24) into the #54611f that a 62%
+   black overlay produces. Measured, not eyeballed: the arithmetic matches the
+   rendered pixel. */
 .business-avatar-crop-panel {
   position: relative;
+  z-index: 1;
   display: grid;
   width: min(100%, 560px);
   border-radius: 12px;
@@ -4538,6 +4545,11 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 }
 .business-avatar-crop-panel > header button:hover { background: var(--rs-chip); color: var(--rs-ink); }
 
+/* `overflow: hidden` is load-bearing. The aperture dims everything outside the
+   circle with a 9999px spread shadow, which without clipping escapes the stage
+   and paints over the panel's own header and footer — the title and both
+   buttons came out dim while their computed styles stayed correct, because a
+   shadow is paint, not a box, and elementFromPoint cannot see it. */
 .business-avatar-crop-stage {
   position: relative;
   display: grid;
@@ -4546,6 +4558,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   padding: 18px;
   background: #2b2f2d;
   touch-action: none;
+  overflow: hidden;
 }
 .business-avatar-crop-stage > img {
   display: block;
@@ -4590,11 +4603,28 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-avatar-crop-panel > footer button {
   border: 1px solid var(--rs-hair-2);
   border-radius: 6px;
-  background: transparent;
+  /* A solid surface, not `transparent`. Against the light footer a see-through
+     button with a hairline border reads as a label, which is exactly how the
+     two footer actions were being mistaken for text. */
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(14, 18, 16, .07);
   color: var(--rs-ink);
   cursor: pointer;
   font: 500 13px var(--font-sans);
   padding: 9px 16px;
+  transition: background .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+.business-avatar-crop-panel > footer button:hover:not(:disabled) {
+  border-color: var(--rs-ink);
+  background: var(--rs-chip);
+}
+.business-avatar-crop-panel > footer button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+.business-avatar-crop-panel > footer button:focus-visible {
+  outline: 2px solid var(--rs-ink);
+  outline-offset: 2px;
 }
 .business-avatar-crop-panel > footer button.is-primary {
   border-color: transparent;
@@ -4602,4 +4632,42 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   color: #14161a;
   font-weight: 600;
 }
+.business-avatar-crop-panel > footer button.is-primary:hover:not(:disabled) {
+  border-color: transparent;
+  background: #d3e51c;
+}
 .business-avatar-crop-panel > footer button:disabled { opacity: .55; cursor: default; }
+
+/* the cropper's hint line, its quiet reset, and bigger corner handles — the
+   first cut opened with the box filling the picture, which left nothing to
+   adjust and made the whole step read as pointless */
+.business-avatar-crop-hint {
+  margin: 0;
+  border-bottom: 1px solid var(--rs-hair);
+  padding: 11px 18px;
+  color: var(--rs-mute);
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.business-avatar-crop-spacer { flex: 1; }
+.business-avatar-crop-panel > footer button.is-quiet {
+  border-color: transparent;
+  /* stays deliberately low-key: no surface, just an underlined text action */
+  background: transparent;
+  box-shadow: none;
+  color: var(--rs-mute);
+  padding-left: 8px;
+  padding-right: 8px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.business-avatar-crop-panel > footer button.is-quiet:hover:not(:disabled) {
+  border-color: transparent;
+  background: transparent;
+  color: var(--rs-ink);
+}
+.business-avatar-crop-handle { width: 20px; height: 20px; }
+.business-avatar-crop-handle.is-nw { top: -10px; left: -10px; }
+.business-avatar-crop-handle.is-ne { top: -10px; right: -10px; }
+.business-avatar-crop-handle.is-sw { bottom: -10px; left: -10px; }
+.business-avatar-crop-handle.is-se { bottom: -10px; right: -10px; }
