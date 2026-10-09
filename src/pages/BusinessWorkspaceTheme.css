@@ -4922,11 +4922,26 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   flex-direction: column;
   margin: 0 auto;
   overflow-y: auto;
-  padding: clamp(28px, 4vw, 56px) clamp(26px, 4vw, 64px) clamp(44px, 5.4vw, 76px);
+  padding: clamp(28px, 4vw, 56px) clamp(26px, 4vw, 64px) clamp(24px, 3vw, 44px);
 }
 
-/* Back / Continue sit on the bottom edge of the column, not under the cards. */
-.business-onboarding footer { margin-top: auto; padding-top: clamp(24px, 3vw, 40px); }
+/* Back / Continue sit directly under the cards, not on the bottom edge of the
+   column. They carried 'margin-top: auto', which in a column as tall as its grid
+   row poured every spare pixel in above the button: at 1440x900 the gap between
+   the cards and Continue measured 439px, the button top fell at 955 in a 900px
+   viewport, and the page itself scrolled (1075px of content). The wizard is three
+   short questions, so it now fits the viewport instead of scrolling, and the two
+   auto margins centre the block — auto margins never clip an overflowing top the
+   way 'justify-content: center' does on a short viewport. */
+.business-onboarding { height: 100svh; min-height: 0; }
+/* The wizard is an opaque overlay on top of the dashboard, and the dashboard is
+   still mounted underneath it. Left in flow it kept contributing its own 1075px,
+   so the document stayed scrollable behind a page that looks static. Take it out
+   of flow while the wizard is up; React keeps its state either way. */
+.business-workspace:has(> .business-onboarding) > .business-workspace-body { display: none; }
+.business-onboarding-shell > :first-child { margin-top: auto; }
+.business-onboarding footer { margin-top: 30px; padding-top: 0; }
+.business-onboarding-shell > footer { margin-bottom: auto; }
 /* The cards sit on white here, so the selected state borrows the rail's sage
    rather than a tint of its own. */
 .business-onboarding .business-onboarding-options button {
@@ -4942,6 +4957,9 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 
 @media (max-width: 900px) {
   .business-onboarding {
+    /* a phone stacks rail/chrome/questions, so the page scrolls again */
+    height: auto;
+    min-height: 100svh;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
     overflow: auto;
@@ -4963,6 +4981,11 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   .business-onboarding-chrome > div > span { display: none; }
   .business-onboarding-signin > span { display: none; }
   .business-onboarding-shell { grid-row: 3; grid-column: 1; overflow: visible; padding: 22px 22px 36px; }
+  /* stacked panels scroll, so drop the desktop centring and let Continue follow
+     the cards again */
+  .business-onboarding-shell > :first-child { margin-top: 0; }
+  .business-onboarding footer { margin-top: 22px; }
+  .business-onboarding-shell > footer { margin-bottom: 0; }
 }
 
 /* =====================================================================
