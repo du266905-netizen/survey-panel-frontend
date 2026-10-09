@@ -1,0 +1,63 @@
+/* The account pages' shell: the app's own rail on the left, the page's own
+ * content on the right — the same architecture as /business/ai-brief, which is
+ * the model here. The rail is fixed and the pane makes room for it, so the page
+ * keeps its own header, its own title block and its own cards.
+ *
+ * Type and colour come from the page itself (Business.css) and the workspace
+ * theme, both of which still style .business-account-page.
+ */
+
+/* The rail's own sheet positions it for the workspace grid; here it is fixed, the
+   way the AI brief page does it. */
+.business-account-page .business-workspace-rail {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 248px;
+}
+
+.business-account-pane {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  padding-left: 248px;
+}
+
+/* Top bar: the way back and the bell, exactly the AI page's pair. */
+.business-account-pane > header {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(36, 56, 46, .14);
+  padding: 0 clamp(20px, 3.4vw, 42px);
+}
+
+.business-account-pane > header > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: #285647;
+  cursor: pointer;
+  font: 800 13px var(--font-sans);
+  padding: 8px 2px;
+}
+
+.business-account-pane > header > button:hover { color: #141a17; }
+
+/* The content column: the account page's own shell, pulled up under the bar. */
+.business-account-pane .business-account-shell,
+.business-account-pane .business-billing-shell {
+  width: min(100% - 44px, 1120px);
+  margin: 0 auto;
+  padding: clamp(30px, 4vw, 58px) 0 clamp(48px, 6vw, 84px);
+}
+
+@media (max-width: 800px) {
+  .business-account-page .business-workspace-rail { width: 64px; }
+  .business-account-pane { padding-left: 64px; }
+}

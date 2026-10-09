@@ -53,6 +53,7 @@ import BusinessAiBrief from './pages/BusinessAiBrief';
 import BusinessAudiencePlan from './pages/BusinessAudiencePlan';
 import BusinessCustomQuestionnaireRequest from './pages/BusinessCustomQuestionnaireRequest';
 import BusinessAccount from './pages/BusinessAccount';
+import BusinessBilling from './pages/BusinessBilling';
 import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
 import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
@@ -165,6 +166,7 @@ export default function App() {
         <Route path="/business/delivery-preview" element={<BusinessRoute><BusinessDeliveryPreview /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessQuestionnaireResults /></BusinessRoute>} />
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
+        <Route path="/business/billing" element={<BusinessRoute><BusinessBilling /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireBuilder /></BusinessRoute>} />
         <Route path="/business/s/:publicId" element={<PublicBusinessQuestionnaire />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

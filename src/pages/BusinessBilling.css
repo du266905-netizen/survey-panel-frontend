@@ -1,0 +1,144 @@
+/* Invoices and billing — the section's own content inside the account area.
+ *
+ * The area provides the bar, the section list and the white content block, so
+ * this sheet only carries what is specific to this section: the intro line, the
+ * tab pair, and the two empty rows. No balance, no top-up control, no card
+ * chrome of its own — the client asked for the section to stay a compact list.
+ *
+ * Type: Part 18 — 11 label / 13 UI / 14 body. The title comes from the area's
+ * .business-account-area-title (22). Nothing off-scale.
+ */
+
+/* The section keeps the account page's look: eyebrow, display title, then a
+   #fffefa card with a hairline. Only the tab pair and the empty rows are new. */
+.business-billing-shell { width: 100%; }
+
+/* The base sheet's eyebrow is 10px; Part 18 and the account page both use 11. */
+.business-billing-shell p.business-eyebrow { font-size: 11px; }
+
+.business-billing-shell h1 {
+  margin: 8px 0 0;
+  font-family: var(--font-reading);
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+  line-height: 1.02;
+}
+
+.business-billing-card {
+  border: 1px solid rgba(17, 17, 19, .16);
+  border-radius: 10px;
+  background: #ffffff;
+  margin-top: clamp(24px, 3.2vw, 34px);
+  overflow: hidden;
+}
+
+p.business-billing-intro {
+  max-width: 62ch;
+  margin: 10px 0 0;
+  color: #5d6e64;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.business-billing-tabs {
+  display: flex;
+  gap: clamp(18px, 3vw, 40px);
+  border-bottom: 1px solid rgba(36, 56, 46, .13);
+  padding: 0 clamp(20px, 3vw, 34px);
+}
+
+.business-billing-tabs > button {
+  position: relative;
+  border: 0;
+  background: transparent;
+  color: #6b7a71;
+  cursor: pointer;
+  font: 700 13px var(--font-sans);
+  padding: 20px 2px 16px;
+}
+
+.business-billing-tabs > button:hover { color: #141a17; }
+
+.business-billing-tabs > button.is-active { color: #141a17; font-weight: 800; }
+
+/* The active marker is ink, not the reference's blue: the research workspace
+   speaks in ink, sage and lime. */
+.business-billing-tabs > button.is-active::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: #141a17;
+  content: '';
+}
+
+.business-billing-panel { padding: clamp(22px, 3vw, 32px) clamp(20px, 3vw, 34px); }
+
+/* ---- one row per empty tab: icon, the sentence, and what will appear ---- */
+
+.business-billing-empty {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 13px;
+  align-items: start;
+}
+
+.business-billing-empty-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(36, 56, 46, .14);
+  border-radius: 50%;
+  background: #f1f4f0;
+  color: #315f49;
+}
+
+.business-billing-empty p {
+  margin: 2px 0 0;
+  color: #141a17;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.business-billing-empty small {
+  display: block;
+  max-width: 66ch;
+  margin-top: 6px;
+  color: #5d6e64;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ---- the month switcher, only on the statements tab ---- */
+
+.business-billing-month {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0 0 18px;
+}
+
+.business-billing-month > strong {
+  min-width: 11ch;
+  color: #141a17;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .01em;
+}
+
+.business-billing-month > button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgba(36, 56, 46, .18);
+  border-radius: 8px;
+  background: #fff;
+  color: #285647;
+  cursor: pointer;
+}
+
+.business-billing-month > button:hover { border-color: #141a17; background: #f1f4f0; }
