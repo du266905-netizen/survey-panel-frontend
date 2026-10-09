@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, ChevronDown, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Send, Sparkles, Trash2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Send, Sparkles, Trash2 } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
-import BusinessBalanceChip from '../components/BusinessBalanceChip';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
@@ -317,7 +316,10 @@ export default function BusinessAiBrief() {
         </aside>
       )}
       <section className="business-ai-brief-surface">
-        <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-tools">{!assistantOpen && <button className="business-ai-brief-panel-toggle" type="button" onClick={() => setAssistantOpen(true)} aria-label={text.showPanel}><PanelLeft size={17} /></button>}<div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button><details className="business-ai-project-history"><summary>{text.history} <ChevronDown size={14} /></summary><div><p>{text.progress}</p><strong>{title}</strong><span>{(typeof text.captured === 'function' ? text.captured(capturedCount, steps.length - 1) : '')}</span>{steps.filter((field) => brief[field]).map((field) => <p className="business-ai-history-field" key={field}><Check size={13} /><b>{textFields(text)[field]}</b><em>{brief[field]}</em></p>)}</div></details></div><BusinessBalanceChip />
+        <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-tools">{!assistantOpen && <button className="business-ai-brief-panel-toggle" type="button" onClick={() => setAssistantOpen(true)} aria-label={text.showPanel}><PanelLeft size={17} /></button>}{/* Balance and the per-project history dropdown were removed at the
+              client's request: the rail already lists past conversations, and the
+              balance belongs on the workspace, not in the brief header. */}
+          <div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button></div>
           <NotificationBell className="business-workspace-notification" /></div></header>
         <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={text.newBrief}>
           <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sparkles size={14} /></span>}{message.opening ? <h1>{message.content}<span className="business-ai-title-question">{text.questionMark}</span></h1> : <p>{message.content}</p>}</article>)}
