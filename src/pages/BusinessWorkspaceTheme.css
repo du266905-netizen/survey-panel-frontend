@@ -4472,3 +4472,134 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   font-size: 8px;
   font-weight: 900;
 }
+
+
+/* ── the avatar on the account page, and the cropper ──────────────────────
+   Business.css sizes the person row's circle at 46px, which is small for the
+   one page whose subject is the account holder. 84px, and the fallback icon
+   scales with it. */
+.business-account-page .business-account-avatar {
+  width: 84px !important;
+  height: 84px !important;
+}
+.business-account-page .business-account-avatar svg {
+  width: 34px;
+  height: 34px;
+}
+
+/* the cropper: a dark overlay, the picture, one square with four corners */
+.business-avatar-crop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.business-avatar-crop-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(14, 18, 16, .62);
+  cursor: default;
+}
+.business-avatar-crop-panel {
+  position: relative;
+  display: grid;
+  width: min(100%, 560px);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 28px 70px rgba(14, 18, 16, .34);
+  overflow: hidden;
+}
+.business-avatar-crop-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rs-hair);
+  padding: 15px 18px;
+}
+.business-avatar-crop-panel > header strong {
+  font-family: var(--font-reading);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--rs-ink);
+}
+.business-avatar-crop-panel > header button {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--rs-mute);
+  cursor: pointer;
+}
+.business-avatar-crop-panel > header button:hover { background: var(--rs-chip); color: var(--rs-ink); }
+
+.business-avatar-crop-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  padding: 18px;
+  background: #2b2f2d;
+  touch-action: none;
+}
+.business-avatar-crop-stage > img {
+  display: block;
+  max-width: 100%;
+  max-height: 52vh;
+  user-select: none;
+}
+/* the circle the square will become; it must not swallow pointer events or
+   the box underneath could never be dragged */
+.business-avatar-crop-aperture {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999px rgba(14, 18, 16, .5);
+  pointer-events: none;
+}
+.business-avatar-crop-box {
+  position: absolute;
+  border: 1.5px solid rgba(255, 255, 255, .92);
+  cursor: move;
+}
+.business-avatar-crop-handle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+}
+.business-avatar-crop-handle.is-nw { top: -8px; left: -8px; cursor: nwse-resize; }
+.business-avatar-crop-handle.is-ne { top: -8px; right: -8px; cursor: nesw-resize; }
+.business-avatar-crop-handle.is-sw { bottom: -8px; left: -8px; cursor: nesw-resize; }
+.business-avatar-crop-handle.is-se { bottom: -8px; right: -8px; cursor: nwse-resize; }
+
+.business-avatar-crop-panel > footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--rs-hair);
+  padding: 14px 18px;
+}
+.business-avatar-crop-panel > footer button {
+  border: 1px solid var(--rs-hair-2);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--rs-ink);
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  padding: 9px 16px;
+}
+.business-avatar-crop-panel > footer button.is-primary {
+  border-color: transparent;
+  background: var(--rs-lime);
+  color: #14161a;
+  font-weight: 600;
+}
+.business-avatar-crop-panel > footer button:disabled { opacity: .55; cursor: default; }

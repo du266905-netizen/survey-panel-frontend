@@ -5,8 +5,10 @@ import { getBusinessWorkspace, updateProfile } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import { useLanguage } from '../components/LanguageContext';
 import {
-  AvatarError, AVATAR_ACCEPT, clearBusinessAvatar, saveBusinessAvatar, useBusinessAvatar,
+  AvatarError, AVATAR_ACCEPT, clearBusinessAvatar, loadAvatarSource,
+  saveBusinessAvatarFromCrop, useBusinessAvatar, validateAvatarFile,
 } from '../utils/businessAvatar';
+import BusinessAvatarCropper from '../components/BusinessAvatarCropper';
 import './Business.css';
 
 export default function BusinessAccount() {
@@ -25,25 +27,49 @@ export default function BusinessAccount() {
   const avatar = useBusinessAvatar();
   const [avatarBusy, setAvatarBusy] = useState(false);
   const [avatarNote, setAvatarNote] = useState('');
+  // the object URL shown under the cropper; nothing is stored until it is confirmed
+  const [cropSrc, setCropSrc] = useState('');
 
   /* Choosing a picture never reaches a server yet — see utils/businessAvatar.js
      for what that means and for the one function to change when it does. */
-  const handleAvatarPick = async (event) => {
+  const avatarErrorText = (err) => {
+    const code = err instanceof AvatarError ? err.code : 'failed';
+    return {
+      type: '请选择 PNG、JPG 或 WebP 图片。',
+      'too-big': '图片太大，请换一张小于 12MB 的。',
+      unreadable: '这张图片读不出来，请换一张。',
+    }[code] || '头像没能保存，请重试。';
+  };
+
+  /* Picking a file no longer stores anything — it opens the cropper. The
+     picture is written only when the crop is confirmed, so cancelling leaves
+     the existing avatar exactly as it was. */
+  const handleAvatarPick = (event) => {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
     setAvatarNote('');
+    try {
+      validateAvatarFile(file);
+      setCropSrc(loadAvatarSource(file));
+    } catch (err) {
+      setAvatarNote(avatarErrorText(err));
+    }
+  };
+
+  const closeCropper = () => {
+    if (cropSrc) URL.revokeObjectURL(cropSrc);
+    setCropSrc('');
+  };
+
+  const handleCropConfirm = async (rect) => {
     setAvatarBusy(true);
     try {
-      await saveBusinessAvatar(file);
+      await saveBusinessAvatarFromCrop(cropSrc, rect);
       setAvatarNote('头像已更新。');
+      closeCropper();
     } catch (err) {
-      const code = err instanceof AvatarError ? err.code : 'failed';
-      setAvatarNote({
-        type: '请选择 PNG、JPG 或 WebP 图片。',
-        'too-big': '图片太大，请换一张小于 12MB 的。',
-        unreadable: '这张图片读不出来，请换一张。',
-      }[code] || '头像没能保存，请重试。');
+      setAvatarNote(avatarErrorText(err));
     } finally {
       setAvatarBusy(false);
     }
@@ -84,5 +110,13 @@ export default function BusinessAccount() {
         <aside className="business-account-settings"><p>{ws.account.settingsEyebrow}</p><h2>{ws.account.displayName}</h2><span>{ws.account.displayNameHelp}</span><label>{ws.account.nameLabel}<input value={displayName} onChange={(event) => setDisplayName(event.target.value)} maxLength={80} autoComplete="name" /></label>{message && <em className="is-success"><Check size={15} /> {message}</em>}{error && <em className="is-error">{error}</em>}<button className="business-button" type="button" onClick={saveName} disabled={saving || !displayName.trim()}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : ws.account.saveName}</button><button className="business-account-signout" type="button" onClick={signOut}><LogOut size={16} /> {ws.account.signOut}</button></aside>
       </div>
     </section>
+    {cropSrc ? (
+      <BusinessAvatarCropper
+        src={cropSrc}
+        busy={avatarBusy}
+        onCancel={closeCropper}
+        onConfirm={handleCropConfirm}
+      />
+    ) : null}
   </main>;
 }

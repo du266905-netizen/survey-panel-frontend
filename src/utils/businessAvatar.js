@@ -139,3 +139,50 @@ export async function saveBusinessAvatar(file) {
 export function useBusinessAvatar() {
   return useSyncExternalStore(subscribeBusinessAvatar, getBusinessAvatar, () => '');
 }
+
+/* ── the cropper's two ends ─────────────────────────────────────────────── */
+
+/** Validate a chosen file before anything is drawn. Throws AvatarError. */
+export function validateAvatarFile(file) {
+  if (!file) throw new AvatarError('empty');
+  if (!ACCEPTED.includes(file.type)) throw new AvatarError('type');
+  if (file.size > MAX_INPUT_BYTES) throw new AvatarError('too-big');
+}
+
+/** An object URL for the cropper to display. The caller revokes it. */
+export function loadAvatarSource(file) {
+  validateAvatarFile(file);
+  return URL.createObjectURL(file);
+}
+
+/**
+ * Draw the chosen square from the FULL-RESOLUTION source — not from the
+ * preview the cropper showed, or the avatar would carry the preview's
+ * resolution — then encode and store it.
+ *
+ * `rect` is in natural image pixels, as the cropper reports it.
+ */
+export async function saveBusinessAvatarFromCrop(url, rect) {
+  const image = await new Promise((resolve, reject) => {
+    const el = new Image();
+    el.onload = () => resolve(el);
+    el.onerror = () => reject(new AvatarError('unreadable'));
+    el.src = url;
+  });
+
+  const canvas = document.createElement('canvas');
+  canvas.width = AVATAR_PX;
+  canvas.height = AVATAR_PX;
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingQuality = 'high';
+  // flatten onto white: a transparent PNG would otherwise show the page through
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, AVATAR_PX, AVATAR_PX);
+  ctx.drawImage(image, rect.x, rect.y, rect.size, rect.size, 0, 0, AVATAR_PX, AVATAR_PX);
+
+  let out = canvas.toDataURL('image/webp', 0.86);
+  if (!out.startsWith('data:image/webp')) out = canvas.toDataURL('image/jpeg', 0.86);
+  if (!out || out === 'data:,') throw new AvatarError('unreadable');
+  persist(out);
+  return out;
+}
