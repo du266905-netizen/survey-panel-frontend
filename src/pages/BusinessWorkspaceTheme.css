@@ -4236,3 +4236,121 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .delivery-customer-page.delivery-customer-page :is(button, label, dt, kbd, th, input, select, textarea, nav, [class*="eyebrow"], [class*="status"], [class*="badge"], [class*="chip"], [class*="tag"]) {
   font-family: var(--font-sans) !important;
 }
+
+
+/* ── Part 18 · the scale, stated once, and the last off-scale sizes ───────
+   A scan of the workspace plus the add-funds dialog (63 text elements) found
+   six sizes that sat on no step, and two of them were mine: 14 / 14.5 / 15 are
+   three near-identical values, and the scale had nothing between 16 and 38, so
+   the dialog's own title had nowhere to go and stayed at 26px semibold sans.
+
+   The scale is now:
+
+     9.5  micro    status chips
+     11   label    uppercase eyebrows, field labels
+     13   UI       buttons, inputs, small print, table values
+     14   body     prose, row titles, row bodies
+     16   section  section headings inside a page
+     22   panel    dialog and panel titles
+     38   page     page titles
+     56   figure   the four figures — the only large thing on a page
+
+   Anything not on this list is a bug, not a judgement call. */
+
+/* the dialog title: it is content, so it is reading type, and it belongs on
+   the panel step rather than the 26px it had kept from before the scale. */
+.business-workspace .business-funds-head h2,
+.business-funds-modal .business-funds-head h2 {
+  font-family: var(--font-reading) !important;
+  font-size: 22px !important;
+  font-weight: 400 !important;
+  letter-spacing: -.02em !important;
+}
+.business-funds-modal .business-funds-head p {
+  font-family: var(--font-reading) !important;
+  font-size: 14px !important;
+}
+
+/* the dialog's remaining off-scale sizes */
+.business-funds-modal .business-funds-amount > label,
+.business-funds-modal .business-funds-amount > * { font-size: 13px !important; }
+.business-funds-modal .business-funds-min { font-size: 13px !important; }
+.business-funds-modal .business-funds-secure-copy small { font-size: 13px !important; }
+.business-funds-modal .business-funds-route-go { font-size: 14px !important; }
+.business-funds-modal .business-funds-route-copy strong { font-size: 14px !important; }
+.business-funds-modal .business-funds-route-copy small { font-size: 13px !important; }
+
+/* the last strays outside the dialog: 14.5 and 15 both collapse onto body */
+.business-workspace .business-dashboard-intro { font-size: 14px !important; }
+
+/* the amount field's currency prefix and its preset buttons were the last two
+   sizes off the scale (19px and 13.5px); both are UI, so both are 13. */
+.business-funds-modal .business-funds-amount :is(span, button, label, input) {
+  font-size: 13px !important;
+}
+
+
+/* ── Part 19 · the same scale on the pages Part 17 only reached by family ─
+   A scoped scan of Account, the audience page and the AI brief found sizes
+   from their own stylesheets that sit on no step: 8, 10, 10.5, 11.5, 12, 12.5,
+   13.5, 14.2, 14.5, 15, 16.5, 17, 18, 44. Part 12 fixed this page by page for
+   the workspace and none of it had reached here.
+
+   The Projects tab reports 84 elements including Bodoni at 92px and copy like
+   "Break the gap." — that is the public site's markup sitting in the same
+   document, not the workspace. It is out of scope here and was not used to
+   pick any of the values below.
+
+   Nothing here sets a family: Part 17 already decides those by element. This
+   only snaps the sizes onto the eight steps. */
+.business-account-page :is(dt, small, label, kbd),
+.business-custom-request-page :is(dt, small, label, kbd),
+.business-ai-brief-page :is(dt, small, label, kbd),
+.business-results-page :is(dt, small, label, kbd) { font-size: 11px !important; }
+
+.business-account-page :is(button, input, select, textarea),
+.business-custom-request-page :is(button, input, select, textarea),
+.business-ai-brief-page :is(button, input, select, textarea, nav *) { font-size: 13px !important; }
+
+.business-account-page p,
+.business-custom-request-page p,
+.business-ai-brief-page p { font-size: 14px !important; }
+
+.business-ai-brief-page :is(h2, h3) { font-size: 16px !important; }
+.business-ai-brief-page h1 { font-size: 38px !important; }
+
+
+/* ── Part 20 · the last eight, each named ────────────────────────────────
+   Every one of these was measured, not guessed. Two of them are corrections
+   of my own earlier passes rather than new styling. */
+/* Part 15 set these two to 15px and 14.5px before the scale existed; the body
+   step is 14. */
+.business-account-page .business-account-shell p { font-size: 14px !important; }
+.business-account-page .business-account-settings > span { font-size: 14px !important; }
+
+/* The audience page's eyebrow is a <p> inside the heading, so the
+   surface-paragraph rule had taken it: it rendered 15px serif instead of a
+   label. It is chrome — sans, 11px, tracked, uppercase. */
+.business-custom-request-page .business-custom-request-heading > p {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+  color: var(--rs-faint) !important;
+}
+
+/* AI brief and the shared top bar */
+.business-ai-brief-page strong { font-size: 14px !important; }
+.business-workspace .business-workspace-balance-label,
+.business-ai-brief-page .business-workspace-balance-label { font-size: 11px !important; }
+.business-workspace .business-workspace-balance-amount,
+.business-workspace .business-workspace-balance-add-label,
+.business-ai-brief-page .business-workspace-balance-amount,
+.business-ai-brief-page .business-workspace-balance-add-label { font-size: 13px !important; }
+.business-ai-brief-page .business-workspace-account button span { font-size: 9.5px !important; }
+
+/* the last one: the audience page's step label sits in header > div > span and
+   came out at 10px. Labels are 11. */
+.business-custom-request-page header span,
+.business-custom-request-page header strong { font-size: 11px !important; }
