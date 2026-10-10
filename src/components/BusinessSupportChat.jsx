@@ -32,28 +32,29 @@ const FALLBACK = {
   typing: 'Replying',
   placeholder: 'Type a message',
   attach: 'Attach a file',
+  attachNote: 'File attachments are not connected yet. Paste a link or describe the file and we will pick it up.',
   send: 'Send',
   suggestionsLabel: 'Suggested questions',
   suggestions: [
-    'I’ve got a payment problem',
-    'Other',
-    'Issues with my account',
-    'Project moderation',
-    'Deposit',
-    'KYC',
+    'How does a research project start?',
+    'What does a questionnaire cost?',
+    'How many responses will I get?',
+    'Who takes part in the research?',
+    'How are participants paid?',
+    'Something else',
   ],
   replies: {
-    payment: 'Thanks — open Billing and send us the invoice number, and we will trace the payment for you.',
-    account: 'Tell us which detail looks wrong and we will check the account record for you.',
-    moderation: 'Project moderation is handled by the research team. Share the project name and we will pick it up.',
-    deposit: 'Deposits are credited once the gateway confirms them. Send the reference and we will check it.',
-    kyc: 'For KYC, send the business name and we will tell you which document is still outstanding.',
+    start: 'A project starts with a research goal. Describe the decision you need to make and we will shape the brief with you.',
+    cost: 'Questionnaire work is quoted per project, based on length, audience and how hard the group is to reach. Nothing is charged before you accept a quote.',
+    responses: 'Feasible response volume depends on the audience and the market. Tell us who you need and we will confirm what is realistic.',
+    participants: 'Participants come from the GuanyiSearch panel and are screened against your criteria before they answer.',
+    incentive: 'Participants are paid for completed work; the incentive is agreed as part of the project scope.',
     fallback: 'Thanks — a researcher will pick this up. Meanwhile you can keep working; nothing here blocks your tasks.',
   },
 };
 
 /* Which canned reply a suggestion maps to; keeps wording and routing apart. */
-const SUGGESTION_REPLY = ['payment', 'fallback', 'account', 'moderation', 'deposit', 'kyc'];
+const SUGGESTION_REPLY = ['start', 'cost', 'responses', 'participants', 'incentive', 'fallback'];
 
 const pad2 = (value) => String(value).padStart(2, '0');
 
@@ -77,11 +78,35 @@ export default function BusinessSupportChat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [pending, setPending] = useState(false);
+  /* The attach button has no backend behind it yet. Rather than a dead control
+     that does nothing when clicked, it says so. */
+  const [attachNote, setAttachNote] = useState(false);
   const threadRef = useRef(null);
+  const panelRef = useRef(null);
   const replyTimer = useRef(null);
 
   /* Clear any half-finished reply when the panel unmounts. */
   useEffect(() => () => window.clearTimeout(replyTimer.current), []);
+
+  /* Closing mirrors opening: the panel collapses back down into the launcher
+     instead of vanishing. Reduced-motion users get the instant version. */
+  const closePanel = () => {
+    const node = panelRef.current;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    if (!node || reduce || typeof node.animate !== 'function') {
+      setOpen(false);
+      return;
+    }
+    const animation = node.animate(
+      [
+        { opacity: 1, transform: 'scaleY(1) translateY(0)' },
+        { opacity: 0, transform: 'scaleY(.12) translateY(10px)' },
+      ],
+      { duration: 260, easing: 'cubic-bezier(.6, 0, .75, .3)', fill: 'forwards' },
+    );
+    animation.onfinish = () => setOpen(false);
+    animation.oncancel = () => setOpen(false);
+  };
 
   /* One greeting, stamped when the panel is first opened. */
   useEffect(() => {
@@ -93,16 +118,17 @@ export default function BusinessSupportChat() {
   useEffect(() => {
     const node = threadRef.current;
     if (node) node.scrollTop = node.scrollHeight;
-  }, [messages, open]);
+  }, [messages, open, attachNote]);
 
   /* Escape closes the panel, matching the other overlays in the workspace. */
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (event) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape') closePanel();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const push = (from, text) => {
@@ -138,13 +164,13 @@ export default function BusinessSupportChat() {
   return (
     <>
       {open && (
-        <section className="business-support-chat" aria-label={copy.title}>
+        <section className="business-support-chat" ref={panelRef} aria-label={copy.title}>
           <header className="business-support-chat-head">
             <Logo size="sm" />
             <button
               type="button"
               className="business-support-chat-close"
-              onClick={() => setOpen(false)}
+              onClick={closePanel}
               aria-label={copy.close}
               title={copy.close}
             >
@@ -184,6 +210,10 @@ export default function BusinessSupportChat() {
             )}
           </div>
 
+          {attachNote && (
+            <p className="business-support-chat-note" role="status">{copy.attachNote}</p>
+          )}
+
           <form
             className="business-support-chat-composer"
             onSubmit={(event) => {
@@ -196,6 +226,7 @@ export default function BusinessSupportChat() {
               className="business-support-chat-attach"
               aria-label={copy.attach}
               title={copy.attach}
+              onClick={() => setAttachNote((current) => !current)}
             >
               <Paperclip size={18} strokeWidth={1.8} aria-hidden="true" />
             </button>

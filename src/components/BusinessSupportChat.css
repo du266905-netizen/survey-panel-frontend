@@ -144,7 +144,8 @@
   position: relative;
   border-radius: 13px;
   font-family: var(--font-sans);
-  font-size: 13px;
+  /* 14 = the workspace "body" step: this is prose, not a control */
+  font-size: 14px;
   line-height: 1.5;
   padding: 9px 12px;
   overflow-wrap: anywhere;
@@ -382,4 +383,17 @@
   .business-projects-list > article > div:last-child {
     padding-right: 0;
   }
+}
+
+/* the attach explanation: body-size prose, not a control */
+.business-support-chat-note {
+  flex: none;
+  margin: 0;
+  border-top: 1px solid var(--ap-line, rgba(20, 26, 23, .10));
+  background: var(--ap-ground, #f4f6f3);
+  color: var(--business-muted, #64746b);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 9px 14px;
 }
