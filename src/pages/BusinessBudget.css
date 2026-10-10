@@ -139,7 +139,13 @@
 
 .business-budget-table td.is-number { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-.business-budget-table.is-muted { opacity: .5; }
+/* The switch-off row: one quiet line, at data-row height so the card does not
+   jump when the switch is flipped. */
+.business-budget-off td {
+  color: #637c6b;
+  font-size: 14px;
+  padding: 22px clamp(12px, 2vw, 20px);
+}
 
 .business-budget-share { margin-left: 8px; color: #637c6b; font-size: 13px; }
 
@@ -175,11 +181,15 @@
 
 .business-budget-empty td { padding: clamp(20px, 3vw, 30px) clamp(12px, 2vw, 20px); }
 
-.business-budget-empty td > span {
-  display: inline-grid;
+/* Scoped to the wrapper on purpose: this used to be `td > span`, which matched
+   both the icon and the text span, so the text was laid out inside a 38px column
+   and "No budgets yet." wrapped one word per line. */
+.business-budget-empty-inner {
+  display: grid;
   grid-template-columns: 38px minmax(0, 1fr);
   gap: 13px;
   align-items: start;
+  max-width: 62ch;
   text-align: left;
 }
 

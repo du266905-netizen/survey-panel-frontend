@@ -32,7 +32,13 @@ const FALLBACK_COPY = {
   memberLimits: 'Budget limits', memberName: 'Name', memberEmail: 'Email', memberLimit: 'Budget limit',
 };
 
-const today = () => new Date().toISOString().slice(0, 10);
+/* Local calendar day, not the UTC one: toISOString() is a day behind for
+   everyone east of Greenwich in the morning (and west of it in the evening). */
+const today = () => {
+  const now = new Date();
+  const pad = (value) => String(value).padStart(2, '0');
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+};
 
 /* The frontend is complete; the store is not. `POST /api/business/budgets` does
    not exist yet, so budgets live in this component's state: the dialogs, the
@@ -74,10 +80,16 @@ export default function BusinessBudget() {
     navigate(withLanguage(`/business/workspace?view=${id}`, language));
   };
 
-  /* The switch asks before it turns budget control off: the dialog says what
-     stops working and reminds you that it is reversible. */
+  /* Turning budget control on is a request to budget something, so with no
+     budgets yet it opens the create dialog straight away; with budgets already
+     there it only flips the switch. Turning it off asks first: the dialog says
+     what stops working and reminds you that it is reversible. */
   const toggleEnabled = (next) => {
-    if (next) { setEnabled(true); return; }
+    if (next) {
+      setEnabled(true);
+      if (budgets.length === 0) setNewOpen(true);
+      return;
+    }
     setDisableOpen(true);
   };
 
@@ -93,6 +105,7 @@ export default function BusinessBudget() {
     event.preventDefault();
     const amount = Number(draft.amount);
     if (!draft.name.trim() || !Number.isFinite(amount) || amount <= 0) return;
+    setEnabled(true);
     setBudgets((current) => [...current, {
       id: `b-${current.length + 1}`,
       name: draft.name.trim(),
@@ -142,7 +155,7 @@ export default function BusinessBudget() {
             </button>
           </div>
 
-          <div className={`business-budget-table${enabled ? '' : ' is-muted'}`}>
+          <div className="business-budget-table">
             <table>
               <thead>
                 <tr>
@@ -156,14 +169,22 @@ export default function BusinessBudget() {
                 </tr>
               </thead>
               <tbody>
-                {budgets.length === 0 ? (
+                {/* Switch off: nothing is being applied, and the body says so
+                    instead of listing rows that are not in force. */}
+                {!enabled ? (
+                  <tr className="business-budget-off">
+                    <td colSpan={7}>{text.emptyOff || 'No budget items.'}</td>
+                  </tr>
+                ) : budgets.length === 0 ? (
                   <tr className="business-budget-empty">
                     <td colSpan={7}>
-                      <span className="business-budget-empty-icon" aria-hidden="true"><Wallet size={17} /></span>
-                      <span>
-                        <strong>{text.empty}</strong>
-                        <small>{text.emptyHint}</small>
-                      </span>
+                      <div className="business-budget-empty-inner">
+                        <span className="business-budget-empty-icon" aria-hidden="true"><Wallet size={17} /></span>
+                        <div>
+                          <strong>{text.empty}</strong>
+                          <small>{text.emptyHint}</small>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 ) : budgets.map((budget) => {

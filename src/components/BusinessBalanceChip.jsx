@@ -9,9 +9,11 @@ import { useLanguage } from './LanguageContext';
  * right. Clicking anywhere opens the add-funds dialog, which carries the amount
  * field and the payment routes.
  *
- * The amount is still a placeholder: the client balance endpoint does not exist
- * yet. When it lands, replace PLACEHOLDER_BALANCE with the fetched value and
- * drop the TODO — nothing else in this component needs to change. */
+ * The endpoint behind this figure is GET /api/business/account/balance, which the
+ * backend already serves (businessCryptoBalanceRoutes.js); Codex's 2026-10-10 audit
+ * corrected an earlier note here that claimed otherwise. PLACEHOLDER_BALANCE is only
+ * the first-paint value — the fetched amount replaces it, and a failed or missing
+ * response shows a dash rather than a misleading $0.00. */
 const PLACEHOLDER_BALANCE = { amount: '$0.00', currency: 'USD' };
 
 /* The backend returns `balance` already as a 2-decimal string plus a currency
