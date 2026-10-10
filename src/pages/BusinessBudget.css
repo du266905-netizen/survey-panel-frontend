@@ -34,6 +34,21 @@
   line-height: 1.6;
 }
 
+/* The "planning only" notice: a quiet pill under the intro, so nobody reads the
+   switch as a spending cap. */
+.business-budget-planning-note {
+  display: inline-flex;
+  align-items: center;
+  margin: 14px 0 0;
+  border: 1px solid rgba(17, 17, 19, .12);
+  border-radius: 999px;
+  background: #f8faf6;
+  color: #4b5f53;
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 8px 15px;
+}
+
 .business-budget-card {
   margin-top: clamp(24px, 3.2vw, 34px);
   border: 1px solid rgba(17, 17, 19, .16);
@@ -163,6 +178,23 @@
 .business-budget-status.is-active { background: #e8ede5; color: #141a17; }
 
 .business-budget-status.is-ended { background: #eeeeec; color: #6b7a71; }
+
+.business-budget-actions { display: inline-flex; align-items: center; gap: 10px; }
+
+.business-budget-actions > i { color: #c9cfcb; font-style: normal; }
+
+.business-budget-edit {
+  border: 0;
+  background: transparent;
+  color: #285647;
+  cursor: pointer;
+  font: 800 13px var(--font-sans);
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.business-budget-edit:hover { color: #141a17; }
 
 .business-budget-end {
   border: 0;

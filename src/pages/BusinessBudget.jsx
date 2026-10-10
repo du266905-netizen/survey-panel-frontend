@@ -18,7 +18,15 @@ const FALLBACK_COPY = {
   create: 'Create a budget',
   colName: 'Budget name', colStart: 'Start date', colEnd: 'End date',
   colAmount: 'Budget amount', colSpent: 'Spent', colStatus: 'Status', colActions: 'Actions',
-  empty: 'No budgets yet.', emptyHint: 'A budget appears here once you create one.', noEndDate: 'No end date',
+  empty: 'No budgets yet.', emptyOff: 'No budget items.',
+  emptyHint: 'A budget appears here once you create one.', noEndDate: 'No end date',
+  planningNote: 'Budgets are planning only for now: they do not limit spending yet.',
+  endTitle: 'End this budget now?', endIntro: 'If you end this budget now:',
+  endPoint1: 'Research already in progress is not affected.',
+  endPoint2: 'Your team can no longer use this budget.',
+  endNote: 'You can create a new budget or turn off the account budget at any time.',
+  endKeep: 'Keep the budget', endConfirm: 'End the budget',
+  edit: 'Edit', editBudget: 'Edit budget',
   statusActive: 'Active', statusEnded: 'Ended', save: 'Save budget', cancel: 'Cancel', end: 'End',
   disableTitle: 'Turn off the account budget?',
   disableIntro: 'If you turn off the account budget:',
@@ -57,6 +65,8 @@ export default function BusinessBudget() {
   const [budgets, setBudgets] = useState([]);
   const [newOpen, setNewOpen] = useState(false);
   const [disableOpen, setDisableOpen] = useState(false);
+  const [editing, setEditing] = useState(null);   // the budget being edited, or null when creating
+  const [endTarget, setEndTarget] = useState(null); // the budget awaiting "end this budget?"
   const [draft, setDraft] = useState({ name: '', amount: '', start: today(), end: '' });
   const [startMode, setStartMode] = useState('now');
   const [endMode, setEndMode] = useState('none');
@@ -93,8 +103,27 @@ export default function BusinessBudget() {
     setDisableOpen(true);
   };
 
+  const openCreate = () => {
+    setEditing(null);
+    setStartMode('now');
+    setEndMode('none');
+    setDraft({ name: '', amount: '', start: today(), end: '' });
+    setMemberLimit('');
+    setNewOpen(true);
+  };
+
+  const openEdit = (budget) => {
+    setEditing(budget);
+    setStartMode(budget.start ? 'date' : 'now');
+    setEndMode(budget.end ? 'date' : 'none');
+    setDraft({ name: budget.name, amount: String(budget.amount), start: budget.start || today(), end: budget.end || '' });
+    setMemberLimit('');
+    setNewOpen(true);
+  };
+
   const closeDraft = () => {
     setNewOpen(false);
+    setEditing(null);
     setDraft({ name: '', amount: '', start: today(), end: '' });
     setStartMode('now');
     setEndMode('none');
@@ -106,15 +135,15 @@ export default function BusinessBudget() {
     const amount = Number(draft.amount);
     if (!draft.name.trim() || !Number.isFinite(amount) || amount <= 0) return;
     setEnabled(true);
-    setBudgets((current) => [...current, {
-      id: `b-${current.length + 1}`,
+    const fields = {
       name: draft.name.trim(),
       start: startMode === 'date' ? draft.start : today(),
       end: endMode === 'date' ? draft.end : '',
       amount,
-      spent: 0,
-      status: 'active',
-    }]);
+    };
+    setBudgets((current) => (editing
+      ? current.map((budget) => (budget.id === editing.id ? { ...budget, ...fields } : budget))
+      : [...current, { id: `b-${current.length + 1}`, ...fields, spent: 0, status: 'active' }]));
     closeDraft();
   };
 
@@ -141,6 +170,9 @@ export default function BusinessBudget() {
           <p className="business-eyebrow">{ws.account?.eyebrow}</p>
           <h1>{text.title}</h1>
           <p className="business-budget-intro">{text.intro}</p>
+          {/* D-02 = B: budgets are plans in this version. Saying so here stops a
+              client reading the switch as a spending cap. */}
+          <p className="business-budget-planning-note">{text.planningNote}</p>
         </div>
 
         <div className="business-budget-card">
@@ -150,7 +182,7 @@ export default function BusinessBudget() {
               <input type="checkbox" checked={enabled} onChange={(event) => toggleEnabled(event.target.checked)} />
               <i aria-hidden="true" />
             </label>
-            <button className="business-button business-budget-create" type="button" onClick={() => setNewOpen(true)}>
+            <button className="business-button business-budget-create" type="button" onClick={openCreate}>
               <Plus size={15} /> {text.create}
             </button>
           </div>
@@ -202,9 +234,13 @@ export default function BusinessBudget() {
                         </span>
                       </td>
                       <td>
-                        {budget.status === 'active'
-                          ? <button type="button" className="business-budget-end" onClick={() => endBudget(budget.id)}>{text.end}</button>
-                          : <span className="business-budget-none">—</span>}
+                        {budget.status === 'active' ? (
+                          <span className="business-budget-actions">
+                            <button type="button" className="business-budget-edit" onClick={() => openEdit(budget)}>{text.edit}</button>
+                            <i aria-hidden="true">|</i>
+                            <button type="button" className="business-budget-end" onClick={() => setEndTarget(budget)}>{text.end}</button>
+                          </span>
+                        ) : <span className="business-budget-none">—</span>}
                       </td>
                     </tr>
                   );
@@ -236,10 +272,30 @@ export default function BusinessBudget() {
       </div>
     )}
 
+    {endTarget && (
+      <div className="business-budget-modal" role="dialog" aria-modal="true" aria-labelledby="budget-end-title">
+        <section>
+          <h2 id="budget-end-title">{text.endTitle}</h2>
+          <p>{text.endIntro}</p>
+          <ul>
+            <li>{text.endPoint1}</li>
+            <li>{text.endPoint2}</li>
+          </ul>
+          <p className="business-budget-modal-note">{text.endNote}</p>
+          <div className="business-budget-modal-actions">
+            <button type="button" onClick={() => setEndTarget(null)}>{text.endKeep}</button>
+            <button className="business-button" type="button" onClick={() => { endBudget(endTarget.id); setEndTarget(null); }}>
+              {text.endConfirm}
+            </button>
+          </div>
+        </section>
+      </div>
+    )}
+
     {newOpen && (
       <div className="business-budget-modal" role="dialog" aria-modal="true" aria-labelledby="budget-new-title">
         <section>
-          <h2 id="budget-new-title">{text.newBudget}</h2>
+          <h2 id="budget-new-title">{editing ? text.editBudget : text.newBudget}</h2>
           <form onSubmit={saveDraft}>
             <div className="business-budget-pair">
               <div className="business-budget-field">
