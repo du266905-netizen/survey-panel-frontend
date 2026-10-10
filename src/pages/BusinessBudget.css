@@ -406,17 +406,6 @@
   vertical-align: middle;
 }
 
-.business-budget-members input {
-  width: min(100%, 160px);
-  min-height: 38px;
-  border: 1px solid rgba(17, 17, 19, .18);
-  border-radius: 8px;
-  background: #ffffff;
-  color: #141a17;
-  font: 600 14px var(--font-sans);
-  padding: 0 10px;
-}
-
 .business-budget-members td.is-number { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .business-budget-bar {

@@ -70,7 +70,6 @@ export default function BusinessBudget() {
   const [draft, setDraft] = useState({ name: '', amount: '', start: today(), end: '' });
   const [startMode, setStartMode] = useState('now');
   const [endMode, setEndMode] = useState('none');
-  const [memberLimit, setMemberLimit] = useState('');
 
   const money = useMemo(
     () => new Intl.NumberFormat(language, { style: 'currency', currency: 'USD' }),
@@ -108,7 +107,6 @@ export default function BusinessBudget() {
     setStartMode('now');
     setEndMode('none');
     setDraft({ name: '', amount: '', start: today(), end: '' });
-    setMemberLimit('');
     setNewOpen(true);
   };
 
@@ -117,7 +115,6 @@ export default function BusinessBudget() {
     setStartMode(budget.start ? 'date' : 'now');
     setEndMode(budget.end ? 'date' : 'none');
     setDraft({ name: budget.name, amount: String(budget.amount), start: budget.start || today(), end: budget.end || '' });
-    setMemberLimit('');
     setNewOpen(true);
   };
 
@@ -127,7 +124,6 @@ export default function BusinessBudget() {
     setDraft({ name: '', amount: '', start: today(), end: '' });
     setStartMode('now');
     setEndMode('none');
-    setMemberLimit('');
   };
 
   const saveDraft = (event) => {
@@ -349,15 +345,15 @@ export default function BusinessBudget() {
               </div>
             </div>
 
-            {/* One row today: the workspace owner. Team seats arrive with the
-                endpoint; this table is the shape they will fill. */}
+            {/* One row today: the workspace owner. Per-member sub-limits are out of
+                scope for this version (D-04 = B) — the members themselves, with roles
+                that decide who may manage budgets, come with the team feature. */}
             <p className="business-budget-section">{text.memberLimits}</p>
             <table className="business-budget-members">
               <thead>
                 <tr>
                   <th scope="col">{text.memberName}</th>
                   <th scope="col">{text.memberEmail}</th>
-                  <th scope="col">{text.memberLimit}</th>
                   <th scope="col">{text.colSpent}</th>
                 </tr>
               </thead>
@@ -365,16 +361,6 @@ export default function BusinessBudget() {
                 <tr>
                   <td>{memberName}</td>
                   <td>{memberEmail}</td>
-                  <td>
-                    <input
-                      type="number"
-                      min="0"
-                      step="1"
-                      aria-label={text.memberLimit}
-                      value={memberLimit}
-                      onChange={(event) => setMemberLimit(event.target.value)}
-                    />
-                  </td>
                   <td className="is-number">
                     {money.format(0)}
                     <span className="business-budget-bar" aria-hidden="true"><i style={{ width: '0%' }} /></span>
