@@ -1,0 +1,385 @@
+/* Client-side help chat for the research side.
+ *
+ * Everything is scoped under `.business-support-chat*`, so nothing leaks into
+ * other pages. Colour, radius and shadow come from the tokens the workspace
+ * shell already declares (--ap-*, --business-*), which are set on
+ * `.business-workspace` / `.business-ai-brief-page`; the fallbacks below keep
+ * the panel legible on any other authenticated page.
+ *
+ * Sizes are on the workspace scale: 11 label / 13 UI / 14 body, +3 offsets for
+ * the compact bubbles. The rail is 248px, collapsing to 64px under 900px; the
+ * panel is bottom-right fixed and clears the rail on narrow screens.
+ */
+
+.business-support-chat-launcher {
+  position: fixed;
+  right: 21px;
+  bottom: 19px;
+  z-index: 140;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border: 0;
+  border-radius: 50%;
+  /* the reference sits on a very subtle pale disc, not flat white */
+  background: linear-gradient(180deg, #ffffff 0%, #f2f4f2 100%);
+  color: #101a15;
+  box-shadow: 0 1px 2px rgba(20, 26, 23, .06), 0 10px 26px rgba(20, 26, 23, .14);
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.business-support-chat-launcher:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(20, 26, 23, .10), 0 16px 34px rgba(20, 26, 23, .18);
+}
+
+.business-support-chat-launcher:active {
+  transform: translateY(0) scale(.97);
+}
+
+/* The glyph's own width/height attributes carry the measured 58%-of-disc
+   proportion; no size override here, or it would win over them. */
+
+.business-support-chat-launcher:focus-visible {
+  outline: 2px solid #2f6b4f;
+  outline-offset: 3px;
+}
+
+.business-support-chat {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  width: 382px;
+  max-width: calc(100vw - 36px);
+  height: min(660px, calc(100dvh - 36px));
+  overflow: hidden;
+  border: 1px solid var(--ap-line, rgba(20, 26, 23, .10));
+  border-radius: 16px;
+  background: var(--ap-card, #ffffff);
+  box-shadow: 0 2px 8px rgba(20, 26, 23, .07), 0 26px 60px rgba(20, 26, 23, .20);
+  /* Extends upward out of the launcher: the bottom edge stays anchored, the
+     panel grows in height rather than scaling from its centre. */
+  transform-origin: 50% 100%;
+  animation: business-support-chat-open .42s cubic-bezier(.16, .84, .24, 1) both;
+}
+
+@keyframes business-support-chat-open {
+  from { opacity: .35; transform: scaleY(.12) translateY(10px); }
+  60%  { opacity: 1;   transform: scaleY(1.015) translateY(0); }
+  to   { opacity: 1;   transform: scaleY(1) translateY(0); }
+}
+
+/* ── header ───────────────────────────────────────────────────────────── */
+
+.business-support-chat-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--ap-line, rgba(20, 26, 23, .10));
+  padding: 15px 16px;
+}
+
+.business-support-chat-head img {
+  /* the wordmark is a fixed-size asset; keep it off the text scale */
+  height: 22px;
+  width: auto;
+}
+
+.business-support-chat-close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--business-muted, #64746b);
+  cursor: pointer;
+}
+
+.business-support-chat-close:hover {
+  background: rgba(20, 26, 23, .05);
+  color: var(--business-ink, #17251f);
+}
+
+/* ── conversation ─────────────────────────────────────────────────────── */
+
+.business-support-chat-thread {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--ap-ground, #f4f6f3);
+}
+
+.business-support-chat-line {
+  display: flex;
+  max-width: 86%;
+  flex-direction: column;
+  gap: 4px;
+  /* each arriving line rises slightly, which reads as a reply landing */
+  animation: business-support-chat-line-in .3s cubic-bezier(.22, .9, .28, 1) both;
+}
+
+.business-support-chat-line.is-them {
+  align-self: flex-start;
+}
+
+.business-support-chat-line.is-me {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.business-support-chat-bubble {
+  position: relative;
+  border-radius: 13px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 9px 12px;
+  overflow-wrap: anywhere;
+}
+
+.business-support-chat-line.is-them .business-support-chat-bubble {
+  border: 1px solid var(--ap-line, rgba(20, 26, 23, .10));
+  border-bottom-left-radius: 3px;
+  background: #ffffff;
+  color: var(--business-ink, #17251f);
+}
+
+.business-support-chat-line.is-them .business-support-chat-bubble::after {
+  /* the little tail the reference shows under the first bot bubble */
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid #ffffff;
+  border-right: 7px solid transparent;
+}
+
+.business-support-chat-line.is-me .business-support-chat-bubble {
+  border-bottom-right-radius: 3px;
+  background: #12281f;
+  color: #ffffff;
+}
+
+.business-support-chat-time {
+  color: var(--business-muted, #64746b);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+/* Each arriving line rises slightly; bubbles fade up, the second bot line a
+   touch after the first, which reads as a reply landing rather than a jump. */
+@keyframes business-support-chat-line-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── the "someone is typing" indicator ────────────────────────────────── */
+
+.business-support-chat-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  border: 1px solid var(--ap-line, rgba(20, 26, 23, .10));
+  border-radius: 13px;
+  border-bottom-left-radius: 3px;
+  background: #ffffff;
+  padding: 12px 13px;
+  animation: business-support-chat-line-in .3s cubic-bezier(.22, .9, .28, 1) both;
+}
+
+.business-support-chat-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--business-muted, #64746b);
+  animation: business-support-chat-dot 1.1s ease-in-out infinite;
+}
+
+.business-support-chat-typing span:nth-child(2) { animation-delay: .16s; }
+.business-support-chat-typing span:nth-child(3) { animation-delay: .32s; }
+
+@keyframes business-support-chat-dot {
+  0%, 60%, 100% { opacity: .28; transform: translateY(0); }
+  30%           { opacity: 1;   transform: translateY(-3px); }
+}
+
+/* ── suggested replies ────────────────────────────────────────────────── */
+
+.business-support-chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: flex-end;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.business-support-chat-chip {
+  border: 1px solid rgba(31, 73, 53, .35);
+  border-radius: 999px;
+  background: transparent;
+  color: #1f4935;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1;
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+.business-support-chat-chip:hover {
+  border-color: #1f4935;
+  background: rgba(31, 73, 53, .07);
+}
+
+.business-support-chat-chip:focus-visible {
+  outline: 2px solid #2f6b4f;
+  outline-offset: 2px;
+}
+
+/* ── composer ─────────────────────────────────────────────────────────── */
+
+.business-support-chat-composer {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--ap-line, rgba(20, 26, 23, .10));
+  background: var(--ap-card, #ffffff);
+  padding: 12px 14px;
+}
+
+.business-support-chat-attach,
+.business-support-chat-send {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--business-muted, #64746b);
+  cursor: pointer;
+}
+
+.business-support-chat-attach:hover {
+  background: rgba(20, 26, 23, .05);
+  color: var(--business-ink, #17251f);
+}
+
+.business-support-chat-send {
+  background: #12281f;
+  color: #ffffff;
+}
+
+.business-support-chat-send:hover:not(:disabled) {
+  background: #1f4935;
+}
+
+.business-support-chat-send:disabled {
+  background: rgba(20, 26, 23, .10);
+  color: rgba(20, 26, 23, .35);
+  cursor: default;
+}
+
+.business-support-chat-input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  background: none;
+  color: var(--business-ink, #17251f);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 7px 2px;
+}
+
+.business-support-chat-input::placeholder {
+  color: var(--business-muted, #64746b);
+}
+
+.business-support-chat-input:focus {
+  outline: none;
+}
+
+/* ── narrow screens ───────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  /* the rail is 64px here; keep the launcher fully clear of it */
+  .business-support-chat-launcher {
+    right: 16px;
+    bottom: 16px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .business-support-chat {
+    right: 12px;
+    bottom: 12px;
+    width: calc(100vw - 24px);
+    height: min(610px, calc(100dvh - 24px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .business-support-chat-chip {
+    transition: none;
+  }
+
+  .business-support-chat,
+  .business-support-chat-line,
+  .business-support-chat-typing,
+  .business-support-chat-typing span {
+    animation: none;
+  }
+
+  .business-support-chat-launcher {
+    transition: none;
+  }
+}
+
+/* ── clear of the floating launcher ────────────────────────────────────────
+ * The launcher is a fixed 62px disc pinned to the bottom-right corner. Content
+ * that ends in that corner gets covered by it — the workspace hub's
+ * "All projects" link on the overview, and "View results" in the project lists.
+ * These rules give those elements a right inset so the disc has its own lane and
+ * never sits on top of a control. Scoped to the two known collision points
+ * rather than padding every page, so no other screen moves.
+ */
+
+/* the overview's "Recent projects" card */
+.business-dashboard-recent > header {
+  padding-right: 78px;
+}
+
+/* the project lists' action column */
+.business-questionnaire-hub-list > article > div:last-child,
+.business-projects-list > article > div:last-child {
+  padding-right: 78px;
+}
+
+@media (max-width: 900px) {
+  .business-dashboard-recent > header,
+  .business-questionnaire-hub-list > article > div:last-child,
+  .business-projects-list > article > div:last-child {
+    padding-right: 0;
+  }
+}

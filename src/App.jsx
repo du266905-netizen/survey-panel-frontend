@@ -44,6 +44,7 @@ import WorkerDetail from './pages/WorkerDetail';
 import WorkerMonitor from './pages/WorkerMonitor';
 import AgentPrecheck from './pages/AgentPrecheck';
 import SupportChatWidget from './components/SupportChatWidget';
+import BusinessSupportChat from './components/BusinessSupportChat';
 import { isAdminRole, isPanelistRole } from './utils/roles';
 import { isBusinessRole } from './utils/roles';
 import Business from './pages/Business';
@@ -337,6 +338,9 @@ export default function App() {
       </Routes>
       </PageMotion>
       {isPanelistRole(user?.role) && location.pathname !== '/' && <SupportChatWidget />}
+      {/* The research side's own help chat. Wording, sizes and colours follow
+          the client workspace rules; the participant widget above is unrelated. */}
+      {isBusinessRole(user?.role) && location.pathname !== '/' && <BusinessSupportChat />}
     </>
   );
 }
