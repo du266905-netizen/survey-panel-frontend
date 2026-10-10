@@ -120,7 +120,6 @@ const englishCopy = {
         memberLimits: "Budget limits",
         memberName: "Name",
         memberEmail: "Email",
-        memberLimit: "Budget limit",
       },
       rail: { personal: 'Personal settings', services: 'Research services', projects: 'Projects', results: 'Questionnaire results', accountMenu: 'Account menu', account: 'Account', signOut: 'Sign out', clientAccount: 'Client account', navigation: 'Workspace navigation',
         overview: 'Overview', research: 'Research', delivery: 'Delivery', home: 'Overview', ai: 'AI research guide', questionnaires: 'Questionnaire editor' },
@@ -965,7 +964,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "预算限制",
     memberName: "姓名",
     memberEmail: "电子邮件",
-    memberLimit: "预算限额",
   },
   'zh-Hant': {
     title: "帳戶預算",
@@ -1011,7 +1009,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "預算限制",
     memberName: "姓名",
     memberEmail: "電子郵件",
-    memberLimit: "預算限額",
   },
   de: {
     title: "Kontobudget",
@@ -1057,7 +1054,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Budgetlimits",
     memberName: "Name",
     memberEmail: "E-Mail",
-    memberLimit: "Budgetlimit",
   },
   fr: {
     title: "Budget du compte",
@@ -1103,7 +1099,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Limites budgétaires",
     memberName: "Nom",
     memberEmail: "E-mail",
-    memberLimit: "Limite budgétaire",
   },
   nl: {
     title: "Accountbudget",
@@ -1149,7 +1144,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Budgetlimieten",
     memberName: "Naam",
     memberEmail: "E-mail",
-    memberLimit: "Budgetlimiet",
   },
   da: {
     title: "Kontobudget",
@@ -1195,7 +1189,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Budgetgrænser",
     memberName: "Navn",
     memberEmail: "E-mail",
-    memberLimit: "Budgetgrænse",
   },
   es: {
     title: "Presupuesto de la cuenta",
@@ -1241,7 +1234,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Límites de presupuesto",
     memberName: "Nombre",
     memberEmail: "Correo electrónico",
-    memberLimit: "Límite de presupuesto",
   },
   fi: {
     title: "Tilin budjetti",
@@ -1287,7 +1279,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Budjettirajat",
     memberName: "Nimi",
     memberEmail: "Sähköposti",
-    memberLimit: "Budjettiraja",
   },
   it: {
     title: "Budget dell'account",
@@ -1333,7 +1324,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Limiti di budget",
     memberName: "Nome",
     memberEmail: "Email",
-    memberLimit: "Limite di budget",
   },
   ja: {
     title: "アカウント予算",
@@ -1379,7 +1369,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "予算制限",
     memberName: "名前",
     memberEmail: "メールアドレス",
-    memberLimit: "予算上限",
   },
   ko: {
     title: "계정 예산",
@@ -1425,7 +1414,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "예산 제한",
     memberName: "이름",
     memberEmail: "이메일",
-    memberLimit: "예산 한도",
   },
   no: {
     title: "Kontobudsjett",
@@ -1471,7 +1459,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Budsjettgrenser",
     memberName: "Navn",
     memberEmail: "E-post",
-    memberLimit: "Budsjettgrense",
   },
   pt: {
     title: "Orçamento da conta",
@@ -1517,7 +1504,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Limites de orçamento",
     memberName: "Nome",
     memberEmail: "E-mail",
-    memberLimit: "Limite de orçamento",
   },
   ru: {
     title: "Бюджет аккаунта",
@@ -1563,7 +1549,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Ограничения бюджета",
     memberName: "Имя",
     memberEmail: "Эл. почта",
-    memberLimit: "Ограничение бюджета",
   },
   sv: {
     title: "Kontobudget",
@@ -1609,7 +1594,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Budgetgränser",
     memberName: "Namn",
     memberEmail: "E-post",
-    memberLimit: "Budgetgräns",
   },
   tr: {
     title: "Hesap bütçesi",
@@ -1655,7 +1639,6 @@ const businessBudgetCopyByLanguage = {
     memberLimits: "Bütçe sınırları",
     memberName: "Ad",
     memberEmail: "E-posta",
-    memberLimit: "Bütçe sınırı",
   },
 };
 

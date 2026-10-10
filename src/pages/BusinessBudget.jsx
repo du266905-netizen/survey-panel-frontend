@@ -37,7 +37,7 @@ const FALLBACK_COPY = {
   disableConfirm: 'Turn off the account budget',
   newBudget: 'New budget',
   now: 'Now', anyEnd: 'None', pickDate: 'Choose a date',
-  memberLimits: 'Budget limits', memberName: 'Name', memberEmail: 'Email', memberLimit: 'Budget limit',
+  memberLimits: 'Budget limits', memberName: 'Name', memberEmail: 'Email',
 };
 
 /* Local calendar day, not the UTC one: toISOString() is a day behind for
