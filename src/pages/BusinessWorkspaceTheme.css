@@ -2556,6 +2556,10 @@ main.business-ai-brief-page {
      而且上面那句注释写的就是 "underlined only on hover" —— 这里补齐实现。 */
   text-decoration: none;
   text-underline-offset: 4px;
+  /* Business.css 用 `box-shadow: inset 0 0 0 1px` 给这个按钮画了一圈"细线框"。
+     那不是 border，所以只重置 border 是不够的——它会一直显示成文字外面的方框
+     （用户反复指出「查看结果」四周有线）。这里连阴影一起清掉。 */
+  box-shadow: none;
 }
 
 .business-workspace .business-dashboard-grid header > button:hover,
@@ -2565,6 +2569,7 @@ main.business-ai-brief-page {
   color: var(--rs-ink);
   text-decoration: underline;
   text-decoration-color: currentColor;
+  box-shadow: none;
 }
 
 /* --- figures: four numbers on the page, nothing between them -------------- */
