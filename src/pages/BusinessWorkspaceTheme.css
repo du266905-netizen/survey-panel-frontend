@@ -2407,6 +2407,26 @@ main.business-ai-brief-page {
   transform: none;
 }
 
+/* ── 帮助浮钮的内容通道 ─────────────────────────────────────────────────────
+ *
+ * 浮钮是 `position: fixed`、62px 圆盘、右 21px／底 19px，所以它稳定占据视口
+ * 右下角约 83×81 的一块。内容列在 1440px 时右缘约到 1354px，浮钮左缘 1357px——
+ * 只差 3px；**中间宽度（约 1100–1400px）就会压住最后一列的收尾元素**（列表的
+ * 箭头、行末操作、面板底部的按钮）。
+ *
+ * 这里给内容列留出通道，而不是逐处给选择器加 padding：那是我上一轮的做法，
+ * 结果漏掉了工具栏和卡片头部，同一个毛病又犯一次。给容器留位置，新元素自然
+ * 不会进入浮钮的地盘。
+ */
+@media (min-width: 761px) and (max-width: 1400px) {
+  .business-workspace .business-projects,
+  .business-workspace .business-dashboard-recent,
+  .business-workspace .business-questionnaire-hub-list,
+  .business-workspace .business-projects-list {
+    padding-bottom: 104px;
+  }
+}
+
 /* Part 2's `> button:first-child` carries one more pseudo-class than the plain
    `> button` reset above, so its ink fill and 138px height survive that reset.
    Undo them here, at the same specificity, later in the file. */
@@ -2532,8 +2552,9 @@ main.business-ai-brief-page {
   color: var(--rs-ink);
   font: 600 12.5px var(--font-sans);
   padding: 0;
-  text-decoration: underline;
-  text-decoration-color: var(--rs-hair-2);
+  /* 常显下划线会被读成"文字被框住"（相邻还有分隔线时尤其明显），
+     而且上面那句注释写的就是 "underlined only on hover" —— 这里补齐实现。 */
+  text-decoration: none;
   text-underline-offset: 4px;
 }
 
@@ -2542,7 +2563,8 @@ main.business-ai-brief-page {
   border-color: transparent;
   background: transparent;
   color: var(--rs-ink);
-  text-decoration-color: var(--rs-ink);
+  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 /* --- figures: four numbers on the page, nothing between them -------------- */
@@ -2685,8 +2707,15 @@ main.business-ai-brief-page {
   color: var(--rs-ink);
   font-weight: 500;
   padding: 0;
-  text-decoration: underline;
+  /* 见上方 header actions：下划线只在悬停出现，避免文字被当成"框起来"。 */
+  text-decoration: none;
   text-underline-offset: 4px;
+}
+
+.business-workspace .business-dashboard-empty > button:hover,
+.business-workspace .business-results-index-empty > button:hover {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 /* --- projects list: same treatment, rows on rules instead of floating cards */
@@ -2964,13 +2993,14 @@ main.business-ai-brief-page {
   color: var(--rs-ink);
   font: 500 13px var(--font-sans);
   padding: 0;
-  text-decoration: underline;
-  text-decoration-color: var(--rs-hair-2);
+  /* 下划线只在悬停出现（用户明确要求）：常显下划线在这里会被读成"文字被框住"。 */
+  text-decoration: none;
   text-underline-offset: 4px;
 }
 
 .business-workspace .business-project-open:hover {
-  text-decoration-color: var(--rs-ink);
+  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 /* --- results index: same treatment ---------------------------------------- */
@@ -3578,6 +3608,22 @@ main.business-builder .business-question-choices > div {
   border-radius: 0 !important;
 }
 
+/* 字段包装器不是容器块。
+ *
+ * 上面那条规则本意是"网格里的容器块用一条发丝线分隔"。但第二页的网格子元素是
+ * `<label>文字<input/></label>`（见 BusinessAudiencePlan 的 field()），于是每个字段
+ * 都被套上 `border: 1px` → `border-top`，**标签文字上下各压一条线**，紧贴着字，看着
+ * 就是个多余的框。第一页用的是 `.business-custom-request-fields`（不是这个网格），
+ * 所以只有第二页有这个问题——正是"第一页处理了、第二页没处理"的原因。
+ *
+ * 这里把字段包装器明确排除：分隔线只留给真正的容器块（如账号页的网格）。
+ */
+.business-custom-request-page .business-custom-request-grid > label,
+.business-account-page .business-account-grid > label {
+  border: 0 !important;
+  background: transparent !important;
+}
+
 /* --- fields --------------------------------------------------------------- */
 
 .business-custom-request-page textarea,
@@ -3589,6 +3635,42 @@ main.business-builder .business-question-choices > div {
   border-radius: 8px !important;
   background: #ffffff !important;
   color: var(--rs-ink) !important;
+}
+
+/* 招募范围这一页的字段：去掉输入框边框。
+ *
+ * 用户看图后要求"把边框去掉会不会好一点"。这一页是长表单，一层层 1px 方框会显得
+ * 很吵；改成**浅底 + 一条基线**承托输入区，聚焦时才出现边框——既安静，又保留了
+ * "这里是可输入的"和键盘可达性（`:focus-visible` 仍给清晰描边）。
+ *
+ * 只作用于 `.business-audience-plan-page`，不动其它页面的字段观感。
+ */
+.business-audience-plan-page .business-custom-request-fields input,
+.business-audience-plan-page .business-custom-request-fields textarea,
+.business-audience-plan-page .business-custom-request-fields select,
+.business-audience-plan-page .business-custom-request-grid input,
+.business-audience-plan-page .business-custom-request-grid textarea,
+.business-audience-plan-page .business-custom-request-grid select {
+  border: 0 !important;
+  border-bottom: 1px solid var(--rs-hair) !important;
+  border-radius: 0 !important;
+  background: var(--rs-sunken, #f6f7f5) !important;
+  box-shadow: none !important;
+}
+
+.business-audience-plan-page .business-custom-request-fields input:focus,
+.business-audience-plan-page .business-custom-request-fields textarea:focus,
+.business-audience-plan-page .business-custom-request-fields select:focus,
+.business-audience-plan-page .business-custom-request-grid input:focus,
+.business-audience-plan-page .business-custom-request-grid textarea:focus,
+.business-audience-plan-page .business-custom-request-grid select:focus,
+.business-audience-plan-page .business-custom-request-fields input:focus-visible,
+.business-audience-plan-page .business-custom-request-fields textarea:focus-visible,
+.business-audience-plan-page .business-custom-request-grid input:focus-visible,
+.business-audience-plan-page .business-custom-request-grid textarea:focus-visible {
+  border-bottom-color: var(--rs-ink) !important;
+  box-shadow: 0 0 0 3px rgba(20, 26, 23, .10) !important;
+  outline: 0 !important;
 }
 
 /* --- the one solid control per page --------------------------------------- */
