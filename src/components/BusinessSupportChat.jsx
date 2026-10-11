@@ -1,27 +1,46 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Paperclip, Send, X } from 'lucide-react';
 import Logo from './Logo';
 import { useLanguage } from './LanguageContext';
+import {
+  getChatFaq,
+  getChatThread,
+  markChatRead,
+  openChatStream,
+  sendChatMessage,
+  startChatThread,
+  submitChatRating,
+} from '../api/supportChatApi';
+import { formatOpeningEn, formatOpeningZh, nextSupportOpening, supportAvailability } from '../utils/supportHours';
 import './BusinessSupportChat.css';
 
-/* The client-side help chat, shaped after the Cryptomus reference the user
- * supplied: a circular launcher that opens a full-height panel whose header is
- * the GuanyiSearch wordmark, a scrolled conversation, suggested-reply chips, and
- * a composer.
+/* The client-side help chat.
+ *
+ * Two things meet here, and both are deliberate:
+ *  - the **shell** (launcher, panel, thread, chips, composer, typography,
+ *    colours, radii) is the existing template, unchanged. Every colour, radius
+ *    and shadow still comes from the tokens the workspace shell declares;
+ *  - the **content and flow** follow the three reference screens the user
+ *    supplied: an opening line that says a specialist can be brought in, a list
+ *    of common questions each ending in "resolved / need more help", and — when
+ *    nobody is on shift — an explicit offline notice with the time we return.
+ *
+ * Support hours are Monday–Saturday 10:00–22:00 China Standard Time; the rule
+ * lives in ../utils/supportHours.js and carries 16 boundary tests.
+ *
+ * The panel is wired to the real backend (/api/business/chat). When that backend
+ * is unreachable the panel **degrades quietly**: it keeps the fallback copy and
+ * never throws into the console, because a help panel that breaks the page is
+ * worse than one that answers slowly.
  *
  * Scope and non-goals:
  *  - the participant-side SupportChatWidget is NOT a reference here (the user
  *    called it ugly and irrelevant); nothing is shared with it beyond the
  *    language library;
- *  - there is no chat backend. Replies are static copy chosen from the same
- *    language keys, and nothing is persisted. Do not let this read as a live
- *    support channel.
- *
- * Every colour, radius and shadow comes from the tokens the workspace shell
- * already declares (--ap-*, --business-*), so the panel inherits the page theme
- * instead of inventing a second one. All copy lives in the language library
- * under publicCopy.business.chat; the fallback below only guarantees that the
- * panel is never blank if a key is missing.
+ *  - attachments are still not connected: the control says so rather than
+ *    pretending;
+ *  - all copy lives in the language library under publicCopy.business.chat; the
+ *    fallback below only guarantees the panel is never blank if a key is missing.
  */
 
 const FALLBACK = {
@@ -29,6 +48,7 @@ const FALLBACK = {
   close: 'Close chat',
   title: 'GuanyiSearch',
   greeting: 'Hi there. Got a question? I’m here to help.',
+  transferNote: 'If I can’t solve it, I’ll try to connect you with a support specialist.',
   typing: 'Replying',
   placeholder: 'Type a message',
   attach: 'Attach a file',
@@ -51,19 +71,62 @@ const FALLBACK = {
     incentive: 'Participants are paid for completed work; the incentive is agreed as part of the project scope.',
     fallback: 'Thanks — a researcher will pick this up. Meanwhile you can keep working; nothing here blocks your tasks.',
   },
+
+  /* ── the flow the three reference screens describe ───────────────────── */
+  backStart: 'Back to the start',
+  contact: 'Contact support',
+  seeFaq: 'See common questions',
+  faqIntro: 'I found some related articles in the help centre.',
+  faqNone: 'No help topics are published yet.',
+  faqLoading: 'Loading…',
+  resolved: 'Yes, my issue is resolved',
+  needMore: 'No, I need more help',
+  askFirst: 'Describe what you need help with and I’ll pass it to a specialist.',
+  offline: 'All support specialists are currently offline. Please try again during support hours.',
+  returnOn: 'They will be back on',
+  threadClosed: 'This conversation has been closed.',
+  rateAsk: 'How was this conversation?',
+  rateSent: 'Thanks — your rating was recorded.',
+  newThread: 'Start a new conversation',
+  waiting: 'Waiting for support.',
+  errorSend: 'That did not send. Please try again.',
+  errorBusy: 'Too many requests just now. Please try again in a few minutes.',
+  errorAlready: 'That message was already sent. Please edit it and try again.',
+  errorDenied: 'This account cannot use support chat.',
+  aiNote: 'Powered by generative AI. AI replies may contain errors — please check anything important.',
 };
 
 /* Which canned reply a suggestion maps to; keeps wording and routing apart. */
 const SUGGESTION_REPLY = ['start', 'cost', 'responses', 'participants', 'incentive', 'fallback'];
 
+/* The three screens, as one explicit state. An explicit state beats inferring
+   the screen from "how many messages are there" — that inference is what made
+   the first draft show the wrong chips at the wrong time. */
+const SCREEN = { welcome: 'welcome', faq: 'faq', handoff: 'handoff', thread: 'thread' };
+
 const pad2 = (value) => String(value).padStart(2, '0');
 
-function clockLabel(date) {
-  return `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
-}
+const clockLabel = (date) => {
+  const d = date instanceof Date ? date : new Date(date);
+  return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+};
+
+/* The backend speaks its own status vocabulary; the panel only needs to know
+   whether the conversation is still live. */
+const isClosed = (thread) => String(thread?.status || '').toUpperCase() === 'CLOSED';
 
 export default function BusinessSupportChat() {
-  const { publicCopy } = useLanguage();
+  const { publicCopy, language, activeLanguage } = useLanguage();
+  /* The help topics are stored per locale and the backend matches exactly, so the
+     UI language has to be mapped to a locale it actually serves. The seed ships
+     en-GB; anything else falls back to it rather than showing an empty list. */
+  const faqLocale = useMemo(() => {
+    const code = String(activeLanguage?.code || language || 'en-GB');
+    if (/^zh-(cn|hans)/i.test(code)) return 'zh-CN';
+    if (/^zh/i.test(code)) return 'zh-Hant';
+    if (/^en/i.test(code)) return code === 'en-US' ? 'en-US' : 'en-GB';
+    return code;
+  }, [activeLanguage?.code, language]);
   const copy = useMemo(() => {
     const provided = publicCopy?.business?.chat || {};
     return {
@@ -75,18 +138,49 @@ export default function BusinessSupportChat() {
   }, [publicCopy]);
 
   const [open, setOpen] = useState(false);
+  const [screen, setScreen] = useState(SCREEN.welcome);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [pending, setPending] = useState(false);
+  const [notice, setNotice] = useState('');
   /* The attach button has no backend behind it yet. Rather than a dead control
      that does nothing when clicked, it says so. */
   const [attachNote, setAttachNote] = useState(false);
+
+  /* ── backend state ───────────────────────────────────────────────────── */
+  const [faq, setFaq] = useState([]);
+  const [faqLoading, setFaqLoading] = useState(false);
+  const [openFaqId, setOpenFaqId] = useState(null);
+  const [thread, setThread] = useState(null);
+  const [ratingSent, setRatingSent] = useState(false);
+  const [now, setNow] = useState(() => new Date());
+
   const threadRef = useRef(null);
   const panelRef = useRef(null);
   const replyTimer = useRef(null);
+  const etagRef = useRef(null);
+  const triedFaqRef = useRef([]);
+  const threadKeyRef = useRef(null);
 
-  /* Clear any half-finished reply when the panel unmounts. */
   useEffect(() => () => window.clearTimeout(replyTimer.current), []);
+
+  /* Re-read the clock every minute so a panel left open crosses 10:00 / 22:00
+     by itself instead of showing a stale "we are online". */
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 60000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const availability = useMemo(() => supportAvailability(now), [now]);
+  const opening = useMemo(
+    () => (availability.online ? null : nextSupportOpening(now)),
+    [availability.online, now],
+  );
+  const openingLabel = useMemo(() => {
+    if (!opening) return '';
+    return /^zh/i.test(String(activeLanguage?.code || language || '')) ? formatOpeningZh(opening) : formatOpeningEn(opening);
+  }, [opening, activeLanguage?.code, language]);
+  const offlineLine = `${copy.offline} ${copy.returnOn} ${openingLabel}`.trim();
 
   /* Closing mirrors opening: the panel collapses back down into the launcher
      instead of vanishing. Reduced-motion users get the instant version. */
@@ -118,7 +212,7 @@ export default function BusinessSupportChat() {
   useEffect(() => {
     const node = threadRef.current;
     if (node) node.scrollTop = node.scrollHeight;
-  }, [messages, open, attachNote]);
+  }, [messages, open, attachNote, notice, faqLoading, openFaqId, screen, thread?.messages?.length]);
 
   /* Escape closes the panel, matching the other overlays in the workspace. */
   useEffect(() => {
@@ -131,35 +225,182 @@ export default function BusinessSupportChat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const push = (from, text) => {
+  const push = useCallback((from, text) => {
     setMessages((current) => [...current, { id: `${from}-${current.length}-${Date.now()}`, from, text, at: new Date() }]);
+  }, []);
+
+  /* ── backend calls — every one of them defensive ─────────────────────── */
+
+  const loadFaq = useCallback(async () => {
+    setFaqLoading(true);
+    try {
+      let items = await getChatFaq(faqLocale);
+      if (!items.length && faqLocale !== 'en-GB') items = await getChatFaq('en-GB');
+      setFaq(items);
+    } catch {
+      setFaq([]);
+    } finally {
+      setFaqLoading(false);
+    }
+  }, [faqLocale]);
+
+  const applyThread = useCallback((next, etag) => {
+    setThread(next);
+    if (etag !== undefined) etagRef.current = etag;
+    if (next?.id) setScreen(SCREEN.thread);
+  }, []);
+
+  const refreshThread = useCallback(async () => {
+    try {
+      const res = await getChatThread(etagRef.current);
+      if (res.unchanged) return;
+      applyThread(res.thread ?? null, res.etag ?? null);
+    } catch { /* the panel keeps working with what it has */ }
+  }, [applyThread]);
+
+  /* On open: load the help topics, and pick up a conversation that is already
+     running so a refresh does not look like a lost thread. */
+  useEffect(() => {
+    if (!open) return undefined;
+    let alive = true;
+    void (async () => {
+      void loadFaq();
+      try {
+        const res = await getChatThread(null);
+        if (alive && res.thread?.id) applyThread(res.thread, res.etag ?? null);
+      } catch { /* no backend / not entitled — the copy still stands */ }
+    })();
+    return () => { alive = false; };
+  }, [open, loadFaq, applyThread]);
+
+  /* Live updates while a conversation is open: SSE first, and a cheap ETag poll
+     as the safety net (an unchanged thread costs a 304). */
+  useEffect(() => {
+    if (!open || !thread?.id) return undefined;
+    const stream = openChatStream({
+      onMessage: (message) => {
+        if (!message?.id) return;
+        setThread((prev) => {
+          if (!prev) return prev;
+          if (prev.messages?.some((m) => m.id === message.id)) return prev;
+          return { ...prev, messages: [...(prev.messages || []), message] };
+        });
+      },
+    });
+    const poll = window.setInterval(() => { void refreshThread(); }, 15000);
+    return () => { window.clearInterval(poll); stream.close(); };
+  }, [open, thread?.id, refreshThread]);
+
+  /* Reading the thread clears the unread badge on the staff side of the same
+     conversation; failures here are housekeeping and can be ignored. */
+  useEffect(() => {
+    if (open && thread?.id) void markChatRead().catch(() => {});
+  }, [open, thread?.id, thread?.messages?.length]);
+
+  /* ── the flow ────────────────────────────────────────────────────────── */
+
+  const rememberTried = (faqId) => {
+    if (faqId && !triedFaqRef.current.includes(faqId)) {
+      triedFaqRef.current = [...triedFaqRef.current, faqId].slice(0, 20);
+    }
   };
 
-  /* There is no chat backend, so an answer is a canned line. Pausing on the
-     typing indicator keeps the interaction honest about that and gives the
-     panel the loading state the reference has. */
-  const scheduleReply = (text) => {
+  const toggleFaq = (item) => {
+    rememberTried(item.id);
+    setOpenFaqId((current) => (current === item.id ? null : item.id));
+  };
+
+  const sendError = (error) => {
+    const status = error?.response?.status;
+    if (status === 429) return copy.errorBusy;
+    if (status === 409) return copy.errorAlready;
+    if (status === 403) return copy.errorDenied;
+    return copy.errorSend;
+  };
+
+  const deliver = async (text) => {
+    const body = String(text || '').trim();
+    if (!body) return;
+    setNotice('');
     setPending(true);
-    window.clearTimeout(replyTimer.current);
-    replyTimer.current = window.setTimeout(() => {
-      push('them', text);
-      setPending(false);
-    }, 950);
-  };
-
-  const sendText = (raw) => {
-    const text = String(raw || '').trim();
-    if (!text) return;
-    push('me', text);
+    push('me', body);
     setInput('');
-    scheduleReply(copy.replies.fallback);
+    try {
+      if (!thread?.id) {
+        if (!threadKeyRef.current) threadKeyRef.current = `chat-thread:${Date.now()}:${body.slice(0, 24)}`;
+        const data = await startChatThread({
+          message: body,
+          triedFaqItemIds: triedFaqRef.current,
+          key: threadKeyRef.current,
+        });
+        threadKeyRef.current = null;
+        applyThread(data?.thread ?? null, undefined);
+      } else {
+        await sendChatMessage({ message: body });
+        await refreshThread();
+      }
+    } catch (error) {
+      if (error?.response?.status === 409) threadKeyRef.current = null;
+      /* Keep the customer's words on screen — silently losing them is the one
+         failure this panel must not have. */
+      setNotice(sendError(error));
+    } finally {
+      setPending(false);
+    }
   };
 
   const pickSuggestion = (label, index) => {
     push('me', label);
     const key = SUGGESTION_REPLY[index] || 'fallback';
-    scheduleReply(copy.replies[key] || copy.replies.fallback);
+    setPending(true);
+    window.clearTimeout(replyTimer.current);
+    replyTimer.current = window.setTimeout(() => {
+      push('them', copy.replies[key] || copy.replies.fallback);
+      setPending(false);
+    }, 950);
   };
+
+  const rate = async (score) => {
+    if (!thread?.id) return;
+    setPending(true);
+    try {
+      await submitChatRating({ score, threadId: thread.id });
+      setRatingSent(true);
+      push('them', copy.rateSent);
+    } catch {
+      setNotice(copy.errorSend);
+    } finally {
+      setPending(false);
+    }
+  };
+
+  const resetConversation = () => {
+    applyThread(null, null);
+    setRatingSent(false);
+    setOpenFaqId(null);
+    setMessages([]);
+    setScreen(SCREEN.welcome);
+  };
+
+  /* ── derived ─────────────────────────────────────────────────────────── */
+
+  const closed = isClosed(thread);
+  const inThread = Boolean(thread?.id) && !closed;
+  const needsRating = Boolean(closed && thread?.ratingRequestedAt && !ratingSent);
+
+  const threadMessages = useMemo(
+    () => (thread?.messages || []).map((m) => ({
+      id: m.id,
+      from: String(m.authorType).toUpperCase() === 'STAFF' ? 'them' : 'me',
+      text: m.body,
+      at: m.createdAt,
+    })),
+    [thread?.messages],
+  );
+
+  /* The composer shows only when sending is possible: a live conversation, or a
+     hand-off while somebody is on shift. */
+  const showComposer = !closed && (inThread || (screen === SCREEN.handoff && availability.online));
 
   return (
     <>
@@ -179,6 +420,7 @@ export default function BusinessSupportChat() {
           </header>
 
           <div className="business-support-chat-thread" ref={threadRef} role="log" aria-live="polite">
+            {/* Screen 1 — opening. */}
             {messages.map((message) => (
               <article key={message.id} className={`business-support-chat-line is-${message.from}`}>
                 <div className="business-support-chat-bubble">{message.text}</div>
@@ -186,18 +428,139 @@ export default function BusinessSupportChat() {
               </article>
             ))}
 
-            {messages.length <= 1 && !pending && (
+            {screen === SCREEN.welcome && (
+              <article className="business-support-chat-line is-them">
+                <div className="business-support-chat-bubble">{copy.transferNote}</div>
+              </article>
+            )}
+
+            {screen === SCREEN.welcome && !pending && (
               <div className="business-support-chat-suggestions" role="group" aria-label={copy.suggestionsLabel}>
-                {copy.suggestions.map((label, index) => (
-                  <button
-                    key={label}
-                    type="button"
-                    className="business-support-chat-chip"
-                    onClick={() => pickSuggestion(label, index)}
-                  >
-                    {label}
+                <button type="button" className="business-support-chat-chip" onClick={() => setScreen(SCREEN.faq)}>
+                  {copy.seeFaq}
+                </button>
+                <button type="button" className="business-support-chat-chip" onClick={() => setScreen(SCREEN.handoff)}>
+                  {copy.contact}
+                </button>
+              </div>
+            )}
+
+            {/* Screen 2 — the topics, each opening into its answer and the two
+                follow-up choices. */}
+            {screen === SCREEN.faq && (
+              <>
+                <article className="business-support-chat-line is-them">
+                  <div className="business-support-chat-bubble">
+                    {faqLoading ? copy.faqLoading : (faq.length ? copy.faqIntro : copy.faqNone)}
+                  </div>
+                </article>
+
+                {faq.length > 0 && (
+                  <div className="business-support-chat-suggestions" role="group" aria-label={copy.suggestionsLabel}>
+                    {faq.map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        className="business-support-chat-chip"
+                        aria-expanded={openFaqId === item.id}
+                        onClick={() => toggleFaq(item)}
+                      >
+                        {item.question}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {openFaqId && (() => {
+                  const item = faq.find((f) => f.id === openFaqId);
+                  if (!item) return null;
+                  return (
+                    <>
+                      <article className="business-support-chat-line is-them">
+                        <div className="business-support-chat-bubble">{item.answer}</div>
+                      </article>
+                      <div className="business-support-chat-suggestions" role="group" aria-label={copy.suggestionsLabel}>
+                        <button
+                          type="button"
+                          className="business-support-chat-chip"
+                          onClick={() => {
+                            setOpenFaqId(null);
+                            push('me', copy.resolved);
+                            push('them', copy.replies.fallback);
+                          }}
+                        >
+                          {copy.resolved}
+                        </button>
+                        <button
+                          type="button"
+                          className="business-support-chat-chip"
+                          onClick={() => { setOpenFaqId(null); setScreen(SCREEN.handoff); }}
+                        >
+                          {copy.needMore}
+                        </button>
+                      </div>
+                    </>
+                  );
+                })()}
+
+                <div className="business-support-chat-suggestions">
+                  <button type="button" className="business-support-chat-chip" onClick={() => setScreen(SCREEN.welcome)}>
+                    {copy.backStart}
                   </button>
-                ))}
+                </div>
+              </>
+            )}
+
+            {/* Screen 3 — hand-off: online asks for the words, offline says when
+                we are back. Only shown while no conversation exists yet, so an
+                open thread is never interrupted by it. */}
+            {screen === SCREEN.handoff && !inThread && (
+              <article className="business-support-chat-line is-them">
+                <div className="business-support-chat-bubble">
+                  {availability.online ? copy.askFirst : offlineLine}
+                </div>
+              </article>
+            )}
+
+            {threadMessages.map((message) => (
+              <article key={message.id} className={`business-support-chat-line is-${message.from}`}>
+                <div className="business-support-chat-bubble">{message.text}</div>
+                <time className="business-support-chat-time">{clockLabel(message.at)}</time>
+              </article>
+            ))}
+
+            {inThread && !threadMessages.length && (
+              <article className="business-support-chat-line is-them">
+                <div className="business-support-chat-bubble">{copy.waiting}</div>
+              </article>
+            )}
+
+            {closed && (
+              <article className="business-support-chat-line is-them">
+                <div className="business-support-chat-bubble">{copy.threadClosed}</div>
+              </article>
+            )}
+
+            {needsRating && (
+              <>
+                <article className="business-support-chat-line is-them">
+                  <div className="business-support-chat-bubble">{copy.rateAsk}</div>
+                </article>
+                <div className="business-support-chat-suggestions" role="group" aria-label={copy.rateAsk}>
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <button key={n} type="button" className="business-support-chat-chip" onClick={() => void rate(n)}>
+                      {n}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {closed && (
+              <div className="business-support-chat-suggestions">
+                <button type="button" className="business-support-chat-chip" onClick={resetConversation}>
+                  {copy.newThread}
+                </button>
               </div>
             )}
 
@@ -214,40 +577,48 @@ export default function BusinessSupportChat() {
             <p className="business-support-chat-note" role="status">{copy.attachNote}</p>
           )}
 
-          <form
-            className="business-support-chat-composer"
-            onSubmit={(event) => {
-              event.preventDefault();
-              sendText(input);
-            }}
-          >
-            <button
-              type="button"
-              className="business-support-chat-attach"
-              aria-label={copy.attach}
-              title={copy.attach}
-              onClick={() => setAttachNote((current) => !current)}
+          {notice && (
+            <p className="business-support-chat-note" role="status">{notice}</p>
+          )}
+
+          {showComposer ? (
+            <form
+              className="business-support-chat-composer"
+              onSubmit={(event) => {
+                event.preventDefault();
+                void deliver(input);
+              }}
             >
-              <Paperclip size={18} strokeWidth={1.8} aria-hidden="true" />
-            </button>
-            <input
-              type="text"
-              className="business-support-chat-input"
-              value={input}
-              placeholder={copy.placeholder}
-              aria-label={copy.placeholder}
-              onChange={(event) => setInput(event.target.value)}
-            />
-            <button
-              type="submit"
-              className="business-support-chat-send"
-              aria-label={copy.send}
-              title={copy.send}
-              disabled={!input.trim()}
-            >
-              <Send size={17} strokeWidth={1.8} aria-hidden="true" />
-            </button>
-          </form>
+              <button
+                type="button"
+                className="business-support-chat-attach"
+                aria-label={copy.attach}
+                title={copy.attach}
+                onClick={() => setAttachNote((current) => !current)}
+              >
+                <Paperclip size={18} strokeWidth={1.8} aria-hidden="true" />
+              </button>
+              <input
+                type="text"
+                className="business-support-chat-input"
+                value={input}
+                placeholder={screen === SCREEN.handoff && !inThread ? copy.askFirst : copy.placeholder}
+                aria-label={copy.placeholder}
+                onChange={(event) => setInput(event.target.value)}
+              />
+              <button
+                type="submit"
+                className="business-support-chat-send"
+                aria-label={copy.send}
+                title={copy.send}
+                disabled={!input.trim()}
+              >
+                <Send size={17} strokeWidth={1.8} aria-hidden="true" />
+              </button>
+            </form>
+          ) : (
+            <p className="business-support-chat-note">{!availability.online && !inThread && !closed ? offlineLine : copy.aiNote}</p>
+          )}
         </section>
       )}
 
