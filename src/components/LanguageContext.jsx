@@ -95,6 +95,7 @@ const englishCopy = {
         errorAlready: 'That message was already sent. Please edit it and try again.',
         errorDenied: 'This account cannot use support chat.',
         aiNote: 'Answers come from our help centre, and a specialist picks up anything it cannot settle.',
+        traceTitle: 'What the panel just tried',
 
         placeholder: "Type a message",
         attachNote: 'File attachments are not connected yet. Paste a link or describe the file and we will pick it up.',

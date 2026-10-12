@@ -3,6 +3,7 @@ import { Paperclip, Send, X } from 'lucide-react';
 import Logo from './Logo';
 import { useLanguage } from './LanguageContext';
 import {
+  chatRequestLog,
   getChatFaq,
   getChatThread,
   markChatRead,
@@ -106,6 +107,7 @@ const FALLBACK = {
   errorAlready: 'That message was already sent. Please edit it and try again.',
   errorDenied: 'This account cannot use support chat.',
   aiNote: 'Answers come from our help centre, and a specialist picks up anything it cannot settle.',
+  traceTitle: 'What the panel just tried',
 };
 
 /* Which canned reply a suggestion maps to; keeps wording and routing apart. */
@@ -656,6 +658,18 @@ export default function BusinessSupportChat() {
 
           {notice && (
             <p className="business-support-chat-note" role="status">{notice}</p>
+          )}
+
+          {/* 出了错才出现的请求台账：把方法/路径/状态摊开，一条反馈就能定位。 */}
+          {notice && chatRequestLog.some((r) => r.status == null || r.status >= 400) && (
+            <details className="business-support-chat-trace">
+              <summary>{copy.traceTitle}</summary>
+              <pre>{chatRequestLog
+                .filter((r) => r.status == null || r.status >= 400)
+                .slice(-8)
+                .map((r) => `${r.at} ${r.method} ${r.url} → ${r.status ?? 'no status'}${r.error ? ` (${String(r.error).slice(0, 60)})` : ''}${r.base ? ` [base ${r.base}]` : ''}`)
+                .join('\n')}</pre>
+            </details>
           )}
 
           {showComposer ? (

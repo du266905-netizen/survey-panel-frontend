@@ -409,3 +409,24 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* The failure ledger: only rendered when something failed, and small enough not
+   to push the conversation around. */
+.business-support-chat-trace {
+  flex: none;
+  border-top: 1px solid var(--ap-line, rgba(20, 26, 23, .10));
+  background: var(--ap-ground, #f4f6f3);
+  color: var(--business-muted, #64746b);
+  font-size: 11px;
+  padding: 8px 14px;
+}
+.business-support-chat-trace summary { cursor: pointer; font-weight: 600; }
+.business-support-chat-trace pre {
+  margin: 6px 0 0;
+  max-height: 120px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 11px;
+  line-height: 1.45;
+}

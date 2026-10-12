@@ -15,6 +15,39 @@ import { apiClient } from './client';
 
 const BASE = '/api/business/chat';
 
+/**
+ * 客服请求台账。
+ *
+ * 为什么要有它：一次 404 光看状态码没法定论 —— 是路径错了、方法错了、还是打到了
+ * 另一个源，全靠猜。把每条请求的**方法 / 路径 / 状态 / 响应片段**记下来，
+ * 面板上可以直接看到，用户一次反馈就能定位，不必来回点。
+ */
+export const chatRequestLog = [];
+const MAX_LOG = 40;
+export function recordChatRequest(entry) {
+  chatRequestLog.push({ at: new Date().toISOString().slice(11, 19), ...entry });
+  if (chatRequestLog.length > MAX_LOG) chatRequestLog.shift();
+  try { console.info('[chat]', entry.method, entry.url, '→', entry.status ?? entry.error); } catch { /* 忽略 */ }
+}
+
+/** 给每个 axios 调用套一层记录。 */
+async function traced(method, url, run) {
+  try {
+    const res = await run();
+    recordChatRequest({ method, url, status: res?.status });
+    return res;
+  } catch (error) {
+    recordChatRequest({
+      method,
+      url,
+      status: error?.response?.status ?? null,
+      error: error?.response?.data?.message || error?.message || 'unknown',
+      base: apiClient.defaults.baseURL,
+    });
+    throw error;
+  }
+}
+
 const newKey = (scope) => {
   const rand = (globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`);
   return `${scope}:${rand}`;
@@ -26,7 +59,7 @@ const authHeader = () => {
 };
 
 export const getChatFaq = async (locale = 'en-GB') => {
-  const { data } = await apiClient.get(`${BASE}/faq`, { params: { locale } });
+  const { data } = await traced('GET', `${BASE}/faq`, () => apiClient.get(`${BASE}/faq`, { params: { locale } }));
   return Array.isArray(data?.faq) ? data.faq : [];
 };
 
@@ -47,10 +80,10 @@ export const sendFaqFeedback = async (faqId, resolved) => {
 /** 取当前会话。etag 未变时后端回 304，这里统一转成 { unchanged: true }。 */
 export const getChatThread = async (etag) => {
   try {
-    const res = await apiClient.get(`${BASE}/thread`, {
+    const res = await traced('GET', `${BASE}/thread`, () => apiClient.get(`${BASE}/thread`, {
       headers: etag ? { 'If-None-Match': etag } : undefined,
       validateStatus: (s) => (s >= 200 && s < 300) || s === 304,
-    });
+    }));
     if (res.status === 304) return { unchanged: true };
     return { thread: res.data?.thread ?? null, etag: res.headers?.etag || null };
   } catch (error) {
@@ -61,21 +94,21 @@ export const getChatThread = async (etag) => {
 
 /** 创建会话并发出第一句话。message 变了必须换新 key（否则 409）。 */
 export const startChatThread = async ({ message, triedFaqItemIds = [], key }) => {
-  const { data } = await apiClient.post(
+  const { data } = await traced('POST', `${BASE}/thread`, () => apiClient.post(
     `${BASE}/thread`,
     { message, triedFaqItemIds },
     { headers: { 'X-Idempotency-Key': key || newKey('chat-thread') } },
-  );
+  ));
   return data;
 };
 
 /** 会话已存在时的后续消息。 */
 export const sendChatMessage = async ({ message, key }) => {
-  const { data } = await apiClient.post(
+  const { data } = await traced('POST', `${BASE}/thread/messages`, () => apiClient.post(
     `${BASE}/thread/messages`,
     { message },
     { headers: { 'X-Idempotency-Key': key || newKey('chat-message') } },
-  );
+  ));
   return data;
 };
 
