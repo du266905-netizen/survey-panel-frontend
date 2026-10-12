@@ -59,6 +59,7 @@ const FALLBACK = {
   placeholder: 'Type a message',
   attach: 'Attach a file',
   attachNote: 'File attachments are not connected yet. Paste a link or describe the file and we will pick it up.',
+  attachPending: 'Attachment ready to describe — uploads are not connected yet. The file is:',
   send: 'Send',
   suggestionsLabel: 'Suggested questions',
   suggestions: [
@@ -101,7 +102,7 @@ const FALLBACK = {
   errorBusy: 'Too many requests just now. Please try again in a few minutes.',
   errorAlready: 'That message was already sent. Please edit it and try again.',
   errorDenied: 'This account cannot use support chat.',
-  aiNote: 'Powered by generative AI. AI replies may contain errors — please check anything important.',
+  aiNote: 'Answers come from our help centre, and a specialist picks up anything it cannot settle.',
 };
 
 /* Which canned reply a suggestion maps to; keeps wording and routing apart. */
@@ -169,6 +170,7 @@ export default function BusinessSupportChat() {
   const etagRef = useRef(null);
   const triedFaqRef = useRef([]);
   const threadKeyRef = useRef(null);
+  const fileRef = useRef(null);
 
   useEffect(() => () => window.clearTimeout(replyTimer.current), []);
 
@@ -330,9 +332,22 @@ export default function BusinessSupportChat() {
     return copy.errorSend;
   };
 
+  const inputRef = useRef(null);
+
   const deliver = async (text) => {
-    const body = String(text || '').trim();
+    /* Read the live DOM value as well as the state: some input paths (IME
+       composition, autofill, drag-and-drop paste) do not fire the React change
+       event, and then the state stays empty — which used to leave the send
+       button disabled and made the panel look broken. */
+    const fromDom = inputRef.current ? inputRef.current.value : '';
+    const body = String(text || fromDom || '').trim();
     if (!body) return;
+    /* The failure that matters most: words typed but never sent. Put them back
+       and say so, instead of leaving the box empty. */
+    const restore = (value) => {
+      setInput(value);
+      if (inputRef.current) inputRef.current.value = value;
+    };
     setNotice('');
     setPending(true);
     push('me', body);
@@ -353,8 +368,9 @@ export default function BusinessSupportChat() {
       }
     } catch (error) {
       if (error?.response?.status === 409) threadKeyRef.current = null;
-      /* Keep the customer's words on screen — silently losing them is the one
-         failure this panel must not have. */
+      /* Keep the customer's words — silently losing them is the one failure this
+         panel must not have. */
+      restore(body);
       setNotice(sendError(error));
     } finally {
       setPending(false);
@@ -607,12 +623,32 @@ export default function BusinessSupportChat() {
                 className="business-support-chat-attach"
                 aria-label={copy.attach}
                 title={copy.attach}
-                onClick={() => setAttachNote((current) => !current)}
+                onClick={() => fileRef.current?.click()}
               >
                 <Paperclip size={18} strokeWidth={1.8} aria-hidden="true" />
               </button>
               <input
+                type="file"
+                ref={fileRef}
+                className="business-support-chat-file"
+                tabIndex={-1}
+                aria-hidden="true"
+                onChange={(event) => {
+                  const picked = event.target.files?.[0];
+                  event.target.value = '';
+                  if (!picked) return;
+                  /* There is no upload endpoint yet. Say what happened and keep
+                     the door open: the file NAME goes into the message so the
+                     specialist knows what to expect. */
+                  setAttachNote(true);
+                  const note = `${copy.attachPending} ${picked.name}`;
+                  setInput(note);
+                  if (inputRef.current) inputRef.current.value = note;
+                }}
+              />
+              <input
                 type="text"
+                ref={inputRef}
                 className="business-support-chat-input"
                 value={input}
                 placeholder={screen === SCREEN.handoff && !inThread
@@ -620,20 +656,25 @@ export default function BusinessSupportChat() {
                   : copy.placeholder}
                 aria-label={copy.placeholder}
                 onChange={(event) => setInput(event.target.value)}
+                onInput={(event) => setInput(event.target.value)}
               />
               <button
                 type="submit"
                 className="business-support-chat-send"
                 aria-label={copy.send}
                 title={copy.send}
-                disabled={!input.trim()}
+                disabled={pending}
               >
                 <Send size={17} strokeWidth={1.8} aria-hidden="true" />
               </button>
             </form>
-          ) : (
-            <p className="business-support-chat-note">{copy.aiNote}</p>
-          )}
+          ) : null}
+
+          {/* One footer, one place, always the same line. It used to live in two
+              mutually exclusive branches (a footer with a conversation, the
+              composer's else-branch without one), so the same sentence moved
+              around and read as if it appeared twice. */}
+          <p className="business-support-chat-note">{copy.aiNote}</p>
         </section>
       )}
 

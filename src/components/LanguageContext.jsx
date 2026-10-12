@@ -91,10 +91,11 @@ const englishCopy = {
         errorBusy: 'Too many requests just now. Please try again in a few minutes.',
         errorAlready: 'That message was already sent. Please edit it and try again.',
         errorDenied: 'This account cannot use support chat.',
-        aiNote: 'Powered by generative AI. AI replies may contain errors — please check anything important.',
+        aiNote: 'Answers come from our help centre, and a specialist picks up anything it cannot settle.',
 
         placeholder: "Type a message",
         attachNote: 'File attachments are not connected yet. Paste a link or describe the file and we will pick it up.',
+        attachPending: 'Attachment ready to describe — uploads are not connected yet. The file is:',
         attach: "Attach a file",
         send: "Send",
         suggestionsLabel: "Suggested questions",

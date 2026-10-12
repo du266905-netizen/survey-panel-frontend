@@ -397,3 +397,15 @@
   line-height: 1.45;
   padding: 9px 14px;
 }
+
+/* The file picker is driven by the paperclip button, so the input itself stays
+   out of the layout but must remain focusable/clickable for the browser. */
+.business-support-chat-file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
