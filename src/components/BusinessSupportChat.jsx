@@ -339,13 +339,18 @@ export default function BusinessSupportChat() {
   const sendError = (error) => {
     const status = error?.response?.status;
     const detail = error?.response?.data?.message || error?.response?.data?.error || '';
+    /* Which request failed matters as much as the status: a 404 on the wrong
+       URL and a 404 on the right URL are completely different problems, and the
+       first version of this message could not tell them apart. */
+    const cfg = error?.config || {};
+    const where = cfg.method && cfg.url ? ` — ${String(cfg.method).toUpperCase()} ${cfg.url}` : '';
     if (status === 429) return copy.errorBusy;
     if (status === 409) return copy.errorAlready;
     if (status === 403) return copy.errorDenied;
-    if (status === 400) return `${copy.errorRejected}${detail ? ` (${detail})` : ''}`;
+    if (status === 400) return `${copy.errorRejected}${detail ? ` (${detail})` : ''}${where}`;
     if (status === 401) return copy.errorExpired;
-    if (!status) return `${copy.errorNetwork}${error?.message ? ` (${String(error.message).slice(0, 60)})` : ''}`;
-    return `${copy.errorSend} (HTTP ${status}${detail ? `: ${String(detail).slice(0, 80)}` : ''})`;
+    if (!status) return `${copy.errorNetwork}${error?.message ? ` (${String(error.message).slice(0, 60)})` : ''}${where}`;
+    return `${copy.errorSend} (HTTP ${status}${detail ? `: ${String(detail).slice(0, 80)}` : ''})${where}`;
   };
 
   /* One automatic retry for the failures that are worth retrying: a dropped
