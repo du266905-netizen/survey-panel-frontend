@@ -99,6 +99,9 @@ const FALLBACK = {
   newThread: 'Start a new conversation',
   waiting: 'Waiting for support.',
   errorSend: 'That did not send. Please try again.',
+  errorRejected: 'The server rejected that message.',
+  errorNetwork: 'We could not reach support just now — please check your connection.',
+  errorExpired: 'Your session expired. Please sign in again.',
   errorBusy: 'Too many requests just now. Please try again in a few minutes.',
   errorAlready: 'That message was already sent. Please edit it and try again.',
   errorDenied: 'This account cannot use support chat.',
@@ -324,12 +327,33 @@ export default function BusinessSupportChat() {
     setOpenFaqId((current) => (current === item.id ? null : item.id));
   };
 
+  /**
+   * Say what actually went wrong.
+   *
+   * The first version collapsed everything that was not 429/409/403 into "that
+   * did not send", which hid the one thing needed to fix it. A network failure,
+   * a gateway error and a rejected body now read differently, and the HTTP
+   * status is shown for the cases that are still unknown — a support panel that
+   * cannot explain its own failure wastes the customer's time twice.
+   */
   const sendError = (error) => {
     const status = error?.response?.status;
+    const detail = error?.response?.data?.message || error?.response?.data?.error || '';
     if (status === 429) return copy.errorBusy;
     if (status === 409) return copy.errorAlready;
     if (status === 403) return copy.errorDenied;
-    return copy.errorSend;
+    if (status === 400) return `${copy.errorRejected}${detail ? ` (${detail})` : ''}`;
+    if (status === 401) return copy.errorExpired;
+    if (!status) return `${copy.errorNetwork}${error?.message ? ` (${String(error.message).slice(0, 60)})` : ''}`;
+    return `${copy.errorSend} (HTTP ${status}${detail ? `: ${String(detail).slice(0, 80)}` : ''})`;
+  };
+
+  /* One automatic retry for the failures that are worth retrying: a dropped
+     connection or a 5xx. The message stays in the box until it is delivered, so
+     a retry can never duplicate it. */
+  const isTransient = (error) => {
+    const status = error?.response?.status;
+    return !status || status >= 500;
   };
 
   const inputRef = useRef(null);
@@ -367,6 +391,25 @@ export default function BusinessSupportChat() {
         await refreshThread();
       }
     } catch (error) {
+      if (isTransient(error)) {
+        try {
+          if (!thread?.id) {
+            const data = await startChatThread({ message: body, triedFaqItemIds: triedFaqRef.current, key: threadKeyRef.current });
+            threadKeyRef.current = null;
+            applyThread(data?.thread ?? null, undefined);
+          } else {
+            await sendChatMessage({ message: body });
+            await refreshThread();
+          }
+          setNotice('');
+          return;
+        } catch (second) {
+          if (second?.response?.status === 409) threadKeyRef.current = null;
+          restore(body);
+          setNotice(sendError(second));
+          return;
+        }
+      }
       if (error?.response?.status === 409) threadKeyRef.current = null;
       /* Keep the customer's words — silently losing them is the one failure this
          panel must not have. */
