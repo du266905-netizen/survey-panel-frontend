@@ -11,7 +11,13 @@ import {
   startChatThread,
   submitChatRating,
 } from '../api/supportChatApi';
-import { formatOpeningEn, formatOpeningZh, nextSupportOpening, supportAvailability } from '../utils/supportHours';
+import {
+  formatOpeningEn,
+  formatOpeningZh,
+  nextSupportOpening,
+  supportAvailability,
+  supportHoursLabel,
+} from '../utils/supportHours';
 import './BusinessSupportChat.css';
 
 /* The client-side help chat.
@@ -83,7 +89,9 @@ const FALLBACK = {
   needMore: 'No, I need more help',
   askFirst: 'Describe what you need help with and I’ll pass it to a specialist.',
   offline: 'All support specialists are currently offline. Please try again during support hours.',
+  hoursAre: 'Our support hours are',
   returnOn: 'They will be back on',
+  leaveMessage: 'Leave a message and we will pick it up when we are back',
   threadClosed: 'This conversation has been closed.',
   rateAsk: 'How was this conversation?',
   rateSent: 'Thanks — your rating was recorded.',
@@ -180,7 +188,11 @@ export default function BusinessSupportChat() {
     if (!opening) return '';
     return /^zh/i.test(String(activeLanguage?.code || language || '')) ? formatOpeningZh(opening) : formatOpeningEn(opening);
   }, [opening, activeLanguage?.code, language]);
-  const offlineLine = `${copy.offline} ${copy.returnOn} ${openingLabel}`.trim();
+  /* Offline is said ONCE, as a message from the support side, and it names the
+     hours themselves ("10:00–22:00") before the date we return. The earlier
+     version split this across a footer and a bubble and replaced the composer —
+     which took the room away exactly when somebody might want to read or write. */
+  const offlineLine = `${copy.offline} ${copy.hoursAre} ${supportHoursLabel()}. ${copy.returnOn} ${openingLabel}`.trim();
 
   /* Closing mirrors opening: the panel collapses back down into the launcher
      instead of vanishing. Reduced-motion users get the instant version. */
@@ -398,9 +410,10 @@ export default function BusinessSupportChat() {
     [thread?.messages],
   );
 
-  /* The composer shows only when sending is possible: a live conversation, or a
-     hand-off while somebody is on shift. */
-  const showComposer = !closed && (inThread || (screen === SCREEN.handoff && availability.online));
+  /* The composer stays available whenever the conversation is not closed.
+     Hiding it off-shift used to remove the one thing a visitor might still want:
+     the chance to read the topics, or to leave the question for the morning. */
+  const showComposer = !closed;
 
   return (
     <>
@@ -602,7 +615,9 @@ export default function BusinessSupportChat() {
                 type="text"
                 className="business-support-chat-input"
                 value={input}
-                placeholder={screen === SCREEN.handoff && !inThread ? copy.askFirst : copy.placeholder}
+                placeholder={screen === SCREEN.handoff && !inThread
+                  ? (availability.online ? copy.askFirst : copy.leaveMessage)
+                  : copy.placeholder}
                 aria-label={copy.placeholder}
                 onChange={(event) => setInput(event.target.value)}
               />
@@ -617,7 +632,7 @@ export default function BusinessSupportChat() {
               </button>
             </form>
           ) : (
-            <p className="business-support-chat-note">{!availability.online && !inThread && !closed ? offlineLine : copy.aiNote}</p>
+            <p className="business-support-chat-note">{copy.aiNote}</p>
           )}
         </section>
       )}

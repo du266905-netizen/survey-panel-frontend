@@ -76,7 +76,12 @@ export function nextSupportOpening(now = new Date()) {
 const WEEKDAY_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const WEEKDAY_ZH = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 
-/** 形如 "Monday, October 12, 2026, 09:00 AM China Standard Time"（对齐参考设计）。 */
+/** 营业时段本身，形如 "09:00–22:00"。用户要的是钟点，不是时区全名。 */
+export function supportHoursLabel() {
+  return `${pad(SUPPORT_OPEN_HOUR)}:00\u2013${pad(SUPPORT_CLOSE_HOUR)}:00`;
+}
+
+/** 形如 "Monday, October 12, 2026, 09:00 AM"（去掉时区全名：太长，会把气泡撑成两行只留 "Time"）。 */
 export function formatOpeningEn(opening) {
   if (!opening) return '';
   const s = new Intl.DateTimeFormat('en-US', {
@@ -90,7 +95,7 @@ export function formatOpeningEn(opening) {
     hour12: true,
   }).format(opening);
   // en-US 会输出 "Monday, October 12, 2026 at 10:00 AM" —— 把 " at " 换成逗号。
-  return `${s.replace(' at ', ', ')} China Standard Time`;
+  return s.replace(' at ', ', ');
 }
 
 /** 中文版："10月12日（周一）10:00"。 */

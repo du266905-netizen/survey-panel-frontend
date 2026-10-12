@@ -9,6 +9,7 @@ import {
   formatOpeningEn,
   formatOpeningZh,
   partsInSupportTz,
+  supportHoursLabel,
 } from './supportHours.js';
 
 // 中国标准时间 = UTC+8。下面全部用 UTC 构造，避免依赖跑测试的机器时区。
@@ -81,12 +82,16 @@ test('营业中时，下一次开门是下一个工作日的 10:00（不是当�
   assert.deepEqual({ d: p.day, h: p.hour }, { d: 13, h: 10 });
 });
 
-test('文案：英文格式包含星期、日期与 China Standard Time', () => {
+test('文案：英文格式含星期、日期与钟点，且不含时区全名（太长会把气泡撑成两行）', () => {
   const text = formatOpeningEn(nextSupportOpening(cst(2026, 10, 11, 23, 0)));
   assert.match(text, /Monday/);
   assert.match(text, /October 12, 2026/);
   assert.match(text, /10:00\s*AM/);
-  assert.match(text, /China Standard Time$/);
+  assert.doesNotMatch(text, /China Standard Time/);
+});
+
+test('营业时段文案是 10:00–22:00（对用户只说钟点）', () => {
+  assert.equal(supportHoursLabel(), '10:00–22:00');
 });
 
 test('文案：中文格式包含月日与周一', () => {
