@@ -36,14 +36,30 @@ const note = (m) => { say(`  skip ${m}`); skip += 1; };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const PUBLIC_ROUTES = ['/', '/business/login'];
+/* 公开路由（无需登录）。2026-10-15 补全：公开页字阶统一后，这些页面都要被真路由
+   截图与控制台断言覆盖 —— 此前只验 '/' 与 '/business/login'，其它公开页改了没人管。 */
+const PUBLIC_ROUTES = [
+  '/',
+  '/login', '/register', '/join', '/access',
+  '/business/login', '/business/access', '/business/register',
+  '/forgot-password', '/reset-password', '/business/forgot-password', '/business/reset-password',
+  '/privacy', '/terms', '/business/terms',
+  '/how-it-works', '/our-approach', '/news', '/china-market-insights',
+  '/email/unsubscribe', '/business',
+];
 const AUTH_ROUTES = ['/business/workspace', '/business/account', '/business/billing', '/business/budget'];
 const VIEWPORTS = [{ w: 1440, h: 900, tag: '1440' }, { w: 390, h: 844, tag: '390' }];
+
+/* Chrome 155（2026-10-15 自动升级）之后，在本机沙箱里页面级 CDP 命令会挂住
+   （Page.enable / Page.navigate 永不返回，实测于 about:blank，与站点无关）。
+   加 --no-sandbox 即恢复。默认不开，用 GATE_NO_SANDBOX=1 显式开启：
+     GATE_NO_SANDBOX=1 bash ops/verify.sh */
+const CHROME_FLAGS = process.env.GATE_NO_SANDBOX === '1' ? ['--no-sandbox'] : [];
 
 const chrome = spawn(CHROME, [
   '--headless=new', `--remote-debugging-port=${PORT}`,
   '--user-data-dir=/tmp/g09-verify', '--no-first-run', '--no-default-browser-check',
-  '--disable-gpu', '--hide-scrollbars', '--window-size=1440,900', 'about:blank',
+  '--disable-gpu', '--hide-scrollbars', '--window-size=1440,900', ...CHROME_FLAGS, 'about:blank',
 ], { stdio: 'ignore' });
 
 const waitForTarget = async () => {

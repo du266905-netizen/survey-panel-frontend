@@ -16,6 +16,14 @@
  *   node ops/check-tokens.js                     # 以基线比对，exit 0/1
  *   node ops/check-tokens.js --update-baseline   # 重写基线（人为收紧时用）
  *   node ops/check-tokens.js --report            # 只打印，不判失败
+ *
+ * ⚠️ 已知盲区（2026-10-15 实测并记录）：本脚本只认字面 `font-size: NNpx`，
+ *    **看不见 rem / em / clamp()**。公开页（首页 HomeAtlas、Landing、各营销页）
+ *    整页建在 rem + clamp 上，所以在本次统一之前，本闸门对它们长期"报绿"——
+ *    那是假绿：1440px 下实测存在 92.16 / 63.36 / 54.72 / 43.2 / 30.24px 之类档外渲染值。
+ *    公开页已于 2026-10-15 统一（口径与证据见《交接文档》前端节 + 台账第十九部分）。
+ *    复核"真正画出来的字号"要按**渲染值**量：取 `getComputedStyle(el).fontSize`，
+ *    与 Part 18 档位比对（本轮用的是临时审计脚本，仅量公开路由、不判失败）。
  */
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';

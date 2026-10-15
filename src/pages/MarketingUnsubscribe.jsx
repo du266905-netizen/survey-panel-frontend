@@ -32,9 +32,9 @@ export default function MarketingUnsubscribe() {
         {state === 'loading' && <LoaderCircle className="mx-auto mb-5 animate-spin text-emerald-700" size={30} aria-hidden="true" />}
         {state === 'success' && <CheckCircle2 className="mx-auto mb-5 text-emerald-700" size={34} aria-hidden="true" />}
         {state === 'error' && <CircleAlert className="mx-auto mb-5 text-amber-700" size={34} aria-hidden="true" />}
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-700">GuanyiSearch</p>
-        <h1 className="mt-3 text-2xl font-semibold">{state === 'loading' ? 'Updating your email preferences' : state === 'success' ? 'You are unsubscribed' : 'Unsubscribe link unavailable'}</h1>
-        <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-slate-600">{state === 'loading' ? 'Please wait a moment.' : message}</p>
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-700">GuanyiSearch</p>
+        <h1 className="mt-3 text-[22px] font-semibold">{state === 'loading' ? 'Updating your email preferences' : state === 'success' ? 'You are unsubscribed' : 'Unsubscribe link unavailable'}</h1>
+        <p className="mx-auto mt-4 max-w-md text-[14px] leading-6 text-slate-600">{state === 'loading' ? 'Please wait a moment.' : message}</p>
         <Link className="mt-7 inline-flex rounded-full bg-[#183b2d] px-5 py-3 text-sm font-semibold text-white" to="/">Return to guanyi-media.com</Link>
       </section>
     </main>
