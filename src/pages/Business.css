@@ -822,3 +822,15 @@
 @media (max-width: 760px) { .business-custom-request-surface > header > div > span { display: none; }.business-custom-request-surface > header > div { gap: 7px; }.business-custom-request-surface > header button.business-button { min-width: 0; padding: 0 10px; } }
 @media (max-width: 1100px) { .business-dashboard-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }.business-workflow-card { grid-template-columns: 1fr; } }
 @media (max-width: 650px) { .business-dashboard-stats { grid-template-columns: 1fr; }.business-workflow-card { border-radius: 17px; padding: 22px; }.business-workflow-card h2 { font-size: 28px; }.business-workflow-card ol { gap: 8px; }.business-workflow-card li:not(:last-child)::after { display: none; }.business-questionnaire-hub-list > article { align-items: flex-start; flex-direction: column; gap: 18px; padding: 20px; }.business-questionnaire-hub-list > article > div:last-child { justify-content: flex-start; }.business-questionnaire-hub-list h2 { white-space: normal; } }
+
+/* ── 窄屏的登录介绍卡：照片在上、文案落在纸面（2026-10-16）─────────────────────
+   原来 ≤800px 时卡片是固定 310px 高、文案用半透明底压在照片上：人像被挡掉半张脸，
+   段落还压到照片上。改成上下两块，照片自己占一段高度，文案落在纸面上。 */
+@media (max-width: 800px) {
+  .business-login-intro { display: block; position: relative !important; top: auto; height: auto; min-height: 0; }
+  .business-login-intro::after { display: none; }
+  .business-login-intro > img { position: relative; inset: auto; width: 100%; height: 300px; min-height: 0; }
+  .business-login-intro--login > img, .business-login-intro--register > img { object-position: center 42%; }
+  .business-login-intro > div { max-width: none; background: #f7f7f3; box-shadow: none; backdrop-filter: none; padding: 26px 22px 28px; }
+  .business-login-intro h1 { max-width: none; font-size: 38px; }
+}
