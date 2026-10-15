@@ -1025,7 +1025,8 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-plum-cycle { position: absolute; z-index: 1; top: 7%; right: -4px; width: min(57%, 590px); opacity: .93; pointer-events: none; }
         .landing-plum-cycle:before { position: absolute; inset: 8% 3% 6% 9%; border-radius: 49% 44% 53% 45%; background: repeating-radial-gradient(ellipse at 58% 49%, rgba(219,215,205,.018) 0 1px, transparent 1px 7px); content: ''; opacity: .42; transform: rotate(-11deg); }
         .landing-plum-canvas { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 720 / 560; }
-        .landing-brand-content { margin-top: auto; max-width: 590px; }
+        /* 主题内容整体上移（用户 2026-10-16：右边图的主题内容往上移一下） */
+        .landing-brand-content { margin-top: auto; margin-bottom: clamp(24px, 7vh, 84px); max-width: 590px; }
         .landing-brand-content h1 { max-width: 620px; margin: 0; color: #f4f1e9; font-family: var(--font-serif); font-size: clamp(38px, 4.4vw, 56px); font-weight: 400; letter-spacing: -.045em; line-height: 1.02; text-shadow: 0 1px 10px rgba(0,0,0,.42); }
         .landing-brand-content > p { max-width: 525px; margin: 22px 0 0; color: rgba(244,241,233,.94); font-size: 16px; line-height: 1.75; text-shadow: 0 1px 12px rgba(0,0,0,.72); }
         .landing-brand-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; margin-top: 35px; }
