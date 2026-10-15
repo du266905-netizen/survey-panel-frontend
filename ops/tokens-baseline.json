@@ -3,11 +3,10 @@
   "src/components/SupportChatWidget.css": 10,
   "src/index.css": 79,
   "src/pages/ActivityDashboard.jsx": 3,
-  "src/pages/Business.css": 88,
+  "src/pages/Business.css": 87,
   "src/pages/BusinessDeliveryPreview.css": 2,
   "src/pages/BusinessQuestionnaire.css": 22,
   "src/pages/BusinessWorkspaceTheme.css": 33,
-  "src/pages/Landing.jsx": 1,
   "src/pages/PublicBusinessQuestionnaire.css": 6,
   "src/pages/WorkspaceSurfaceTheme.css": 38,
   "src/styles/future-app-surface.css": 3
