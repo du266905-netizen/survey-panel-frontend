@@ -1017,8 +1017,9 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-shell { position: relative; isolation: isolate; height: min(900px, 100svh); min-height: 720px; overflow: hidden; background: #102d20; }
         .landing-shell:before { position: absolute; z-index: -1; inset: 0; background: repeating-linear-gradient(116deg, rgba(255,255,255,.012) 0 1px, transparent 1px 11px), linear-gradient(120deg, rgba(255,255,255,.012), transparent 42%); content: ''; opacity: .46; pointer-events: none; }
         .landing-brand { position: relative; display: flex; width: 58%; height: 100%; min-height: 0; flex-direction: column; overflow: hidden; margin-left: 42%; background: #d9ddd6; color: white; padding: 34px clamp(28px, 6vw, 88px) 48px; }
-        /* 压暗一层，专为白色大字压在亮照片上时读得清（用户 2026-10-16：右侧大字发白、亮得吓人） */
-        .landing-brand:after { display: block; position: absolute; z-index: 1; inset: 0; background: linear-gradient(105deg, rgba(14,32,24,.62) 0%, rgba(14,32,24,.34) 46%, rgba(14,32,24,.06) 78%, transparent 100%); content: ''; pointer-events: none; }
+        /* 压暗层：字的实际位置在中间偏右、贴底，所以压在【底部 + 整体】而不是从左往右渐隐
+           （上一版从左往右，字底下正好渐隐到 0，等于没压 —— 用户 2026-10-16 指出） */
+        .landing-brand:after { display: block; position: absolute; z-index: 1; inset: 0; background: linear-gradient(0deg, rgba(10,24,17,.86) 0%, rgba(10,24,17,.62) 30%, rgba(10,24,17,.28) 58%, rgba(10,24,17,.06) 80%, transparent 100%); background-color: rgba(10,24,17,.18); content: ''; pointer-events: none; }
         .landing-brand-photo { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 49% 51%; filter: none; }
         .landing-brand-header, .landing-brand-content { position: relative; z-index: 2; }
         .landing-brand-header { display: flex; align-items: center; justify-content: space-between; text-shadow: 0 1px 13px rgba(0,0,0,.72); }
@@ -1029,7 +1030,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-plum-canvas { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 720 / 560; }
         .landing-brand-header { animation: landing-enter-soft .8s cubic-bezier(.2,.8,.2,1) both; }
         .landing-brand-content { margin-top: auto; max-width: 590px; }
-        .landing-brand-content h1 { max-width: 620px; margin: 0; color: #f4f1e9; font-family: var(--font-serif); font-size: clamp(38px, 4.4vw, 56px); font-weight: 820; letter-spacing: -.045em; line-height: .98; text-shadow: 0 2px 18px rgba(0,0,0,.72); }
+        .landing-brand-content h1 { max-width: 620px; margin: 0; color: #f4f1e9; font-family: var(--font-serif); font-size: clamp(38px, 4.4vw, 56px); font-weight: 400; letter-spacing: -.045em; line-height: 1.02; text-shadow: 0 1px 10px rgba(0,0,0,.42); }
         .landing-brand-content > p { max-width: 525px; margin: 22px 0 0; color: rgba(244,241,233,.94); font-size: 16px; line-height: 1.75; text-shadow: 0 1px 12px rgba(0,0,0,.72); }
         .landing-brand-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; margin-top: 35px; }
         .landing-brand-proof span { display: flex; min-height: 62px; align-items: center; gap: 8px; border-top: 1px solid rgba(255,255,255,.5); color: #fffdf7; font-size: 11px; font-weight: 700; line-height: 1.35; padding-top: 12px; text-shadow: 0 1px 10px rgba(0,0,0,.75); }
