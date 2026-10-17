@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowUpRight, CheckCircle2, Play } from 'lucide-react';
+import { ArrowUpRight, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import peopleImage from '../assets/community/community-research-collage-web.webp';
@@ -105,7 +105,7 @@ export default function CommunityHub() {
       <div className="community-hub-inner">
         <div className="community-hub-top">
           <div className="community-hub-intro">
-            <p className="community-hub-eyebrow">{research.eyebrow}</p>
+            <p className="community-hub-eyebrow"><span>01</span>{research.eyebrow}</p>
             <h2 id="community-hub-title">{research.title}</h2>
             <p className="community-hub-lede">{research.description}</p>
             <p className="community-hub-supporting">{research.supporting}</p>
@@ -145,17 +145,17 @@ export default function CommunityHub() {
         <div className="community-hub-resolve">
           <p className="community-hub-resolve-label">{research.clientProblemsLabel}</p>
           <h3>{research.clientProblemsTitle}</h3>
-          <ul>
-            {research.clientProblems.map((problem) => (
+          <ol>
+            {research.clientProblems.map((problem, index) => (
               <li key={problem.title}>
-                <CheckCircle2 size={17} strokeWidth={1.9} aria-hidden="true" />
+                <span className="community-hub-resolve-index">{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <strong>{problem.title}</strong>
                   <span>{problem.description}</span>
                 </div>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
 
         <div className="community-hub-foot">
