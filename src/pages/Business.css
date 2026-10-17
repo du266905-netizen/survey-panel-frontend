@@ -1,8 +1,7 @@
-/* 顶栏必须留在正常文档流里：.public-site-header 原先是 position: sticky，但在
-   .business-login-page 这个定高 flex 栏里 sticky 会被当成绝对定位、脱离文档流
-   （实测它落在 y=18 却把外壳顶到 y=96，整页凭空多出 78px）。研究端登录／注册页
-   不需要吸顶（整页本来就不滚），所以在这里改回 static。 */
-.business-login-page .public-site-header { position: static !important; }
+/* 顶栏浮在照片上：照片从页面顶端铺到底，顶栏用 absolute 压在上面，
+   于是顶栏那一条左边是白（表单栏）、右边是图。原来是 static（在流里），
+   照片只能从顶栏下面开始，右侧画面就少了 78px。 */
+.business-login-page .public-site-header { position: absolute !important; z-index: 20; top: 18px; right: 0; left: 0; margin: 0 auto; }
 
 .business-public-page, .join-choice-page, .business-access-page, .business-workspace { --business-ink: #17251f; --business-forest: #285647; --business-paper: #f7f7f3; --business-muted: #64746b; background: var(--business-paper); color: var(--business-ink); font-family: var(--font-reading); }
 .business-container { width: min(100% - 48px, 1180px); margin: 0 auto; }
@@ -225,15 +224,16 @@
    两页共用研究端注册页那张 researcher-registration-team.jpg。
    上面 143~214 行那套 .business-login-* 规则不动：≤800px 的纸面降级里还在用。
    以下按需覆盖（文件靠后 + 选择器等价或更高，同权重时后者胜）。 */
-/* 整块占满视口剩下的那一段：顶栏在正常流里占 78px（含它自己的 18px 上外边距），
-   所以这里写 calc(100svh - 78px)，两条栏目再由 flex 拉伸到这一层的高度。
-   实测：不写这行时外壳只有 627px（照片和表单都不满屏）。 */
-.business-login-page { display: flex; height: calc(100svh - 78px); min-height: 720px; flex-direction: column; overflow: hidden; padding: 0 !important; }
+/* 照片从视口最顶端开始铺，顶栏浮在它上面：上半条左边是白（表单栏）、右边是图。
+   所以整块按 100svh 定高，顶栏脱离文档流（absolute），表单栏用上内边距把顶栏让出来 ——
+   左边表单的落点不变，右边多出 96px 画面，压在照片上的文案不用再往下滑。 */
+.business-login-page { position: relative; display: flex; height: 100svh; min-height: 720px; flex-direction: column; overflow: hidden; padding: 0 !important; }
 /* 表单在左、照片在右 —— 与 .landing-shell 的 42% / 58% 一致：两条栏目按 flex 拉伸到
    .business-login-page 的高度。照片栏那条 position:sticky!important（203 行旧规则）会脱离
    文档流把外壳顶下去，所以 262 行单独把它改回 relative。 */
 .business-login-shell { display: flex; min-height: 0; flex: 1; overflow: hidden; }
-.business-login-form { display: flex; width: 42%; min-width: 480px; flex-direction: column; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; background: #fcfdfb; box-shadow: inset -1px 0 rgba(29, 42, 34, .14); padding: 30px clamp(28px, 4vw, 68px) 32px; }
+/* 顶栏脱离流后，表单栏的上留白已经包含顶栏；照片栏则从 0 铺到底。 */
+.business-login-form { display: flex; width: 42%; min-width: 480px; flex-direction: column; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; background: #fcfdfb; box-shadow: inset -1px 0 rgba(29, 42, 34, .14); padding: 108px clamp(28px, 4vw, 68px) 32px; }
 /* 表单左缩进 12px、上留白 30px：和参与端表单栏实测的落点一致（那边是栏留白 57.6px
    再叠一层 .landing-access-inner 的 12px 内边距）。 */
 /* 面板给到 440px：那句 "Create your research workspace." 在 380px 里会被挤成三行
@@ -278,9 +278,16 @@
 /* ≤1180px：参与端在这里也改成上下结构（表单在上、照片在下），研究端跟着走。
    .business-login-intro 显式 height:auto，是为了盖掉 208 行那句 height: calc(100svh - 78px)。 */
 @media (max-width: 1180px) {
-  .business-login-shell { display: grid; grid-template-columns: 1fr; }
+  /* 窄屏改成「表单在上、照片在下」的纵向堆叠：定高 + 绝对顶栏会把下面截掉，
+     所以这里回到正常流（顶栏回 static、整页高度自适应）。 */
+  .business-login-page { height: auto; min-height: 100svh; overflow: visible; }
+  .business-login-page .public-site-header { position: static !important; top: auto; margin: 18px auto 0; }
+  .business-login-shell { display: grid; grid-template-columns: 1fr; height: auto; }
   .business-login-form, .business-login-intro { width: auto; min-width: 0; }
   .business-login-form { overflow: visible; box-shadow: none; padding: 42px clamp(24px, 6vw, 68px) 12px; }
+  /* 桌面那条 `.business-login-page .business-login-intro { width: 58% }` 权重更高，
+     窄屏必须用同级选择器改回整宽，否则照片只剩一小条。 */
+  .business-login-page .business-login-intro { width: auto; height: auto; }
   .business-login-form .public-auth-panel { width: min(100%, 440px); margin: 0 auto; }
   .business-login-intro { position: static; display: block; height: auto; min-height: 680px; }
   .business-login-intro > div { max-width: 620px; margin: 0; padding: 0 clamp(24px, 6vw, 68px) 64px; }

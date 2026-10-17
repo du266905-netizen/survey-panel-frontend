@@ -51,8 +51,9 @@ export default function BusinessAccess() {
      联系页（/business/access）不在这次范围内，仍是原来的「左图右表单」。 */
   return authMode ? (
     <>
-      <PublicSiteHeader />
       <main className={`business-access-page business-login-page business-login-page--${authMode}`}>
+        {/* 顶栏放进 main 里，才能用 absolute 压在照片上（照片从页面顶端铺到底）。 */}
+        <PublicSiteHeader />
         <div className="business-login-shell">
           <section className="business-login-form" aria-label="Account access">
             <PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(withLanguage(nextMode === 'login' ? '/business/login' : '/business/register', language), { replace: true })} accountType="BUSINESS" />
