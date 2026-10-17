@@ -198,31 +198,8 @@ export default function HomeAtlas() {
         </div>
       </section>
 
-      <section className="atlas-evidence" aria-label={publicCopy.navigation.about}>
-        <div className="atlas-evidence-frame">
-          <div className="atlas-evidence-video">
-            <div style={{ position: 'relative', paddingTop: '56.25%' }}>
-              <iframe
-                src="https://player.mediadelivery.net/embed/763269/6a8340b7-c25b-4425-8ea0-96103d8312b5?autoplay=true&loop=false&muted=true&preload=true&responsive=true"
-                title={publicCopy.hero.eyebrow}
-                loading="lazy"
-                style={{ border: 0, position: 'absolute', top: 0, height: '100%', width: '100%' }}
-                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;"
-                allowFullScreen
-              />
-            </div>
-          </div>
-          <div className="atlas-evidence-copy">
-            <p>{copy.evidence}</p>
-            <p className="atlas-evidence-statement">{copy.evidenceStatement}</p>
-            <Link className="atlas-evidence-action" to={withLanguage('/our-approach', language)}>
-              {publicCopy.navigation.about}
-              <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
+      {/* 视频与那句「The world is never one-size-fits-all」并进 CommunityHub 的长页，
+          放在人物下面；这里不再单独出一段。 */}
       <CommunityHub />
       <HomeGlobalSection />
 

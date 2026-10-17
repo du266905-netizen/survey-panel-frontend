@@ -1,12 +1,18 @@
-import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowUpRight, CheckCircle2, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import peopleImage from '../assets/community/community-research-collage-web.webp';
+import videoPoster from '../assets/community/community-video-poster.jpg';
 
 /* 首页的「人物页」：原来是 9 秒一轮的轮播，切换时现拉 8.9MB 的原图，实测会卡；
    而且文案本来就长，一屏放不下。现在单独做成一屏装不完的上下长页：
    大字标题 → 多个入口 → 「我们能帮你厘清什么」三张卡 → 主行动。
    办公室那一段已抽到 components/CommunityNetworkSection.jsx，等用户决定放哪。 */
+
+/* 视频放在人物下面。注意：这个 mediadelivery 地址目前返回 404（provider 侧 asset 不可用），
+   页面上会显示播放器的 404 页。换一个能播的 embed 只改这一行。 */
+const VIDEO_EMBED_URL = 'https://player.mediadelivery.net/embed/763269/6a8340b7-c25b-4425-8ea0-96103d8312b5?autoplay=false&loop=false&muted=true&preload=true&responsive=true';
 
 const copy = {
   en: {
@@ -87,13 +93,16 @@ const copy = {
 };
 
 export default function CommunityHub() {
-  const { language } = useLanguage();
+  const { language, publicCopy } = useLanguage();
   const text = copy[language] || copy.en;
   const research = text.research;
+  /* 视频默认显示封面，点了才载入 embed —— 目前那个地址返回 404，
+     不点就不会把 404 播到页面上；换成能播的地址后直接可用。 */
+  const [videoOpen, setVideoOpen] = useState(false);
 
   return (
     <section className="community-hub" aria-labelledby="community-hub-title">
-      <div className="community-hub-panel">
+      <div className="community-hub-inner">
         <div className="community-hub-top">
           <div className="community-hub-intro">
             <p className="community-hub-eyebrow">{research.eyebrow}</p>
@@ -106,14 +115,32 @@ export default function CommunityHub() {
           </figure>
         </div>
 
-        <nav className="community-hub-entries" aria-label={text.entriesLabel}>
-          {text.entries.map((entry) => (
-            <Link key={entry.to} to={withLanguage(entry.to, language)}>
-              {entry.label}
+        {/* 原来单独一屏的「视频 + 证据」并到这里，放在人物下面，色调统一成淡鼠尾草绿。 */}
+        <div className="community-hub-video">
+          <figure className="community-hub-video-frame">
+            {videoOpen ? (
+              <iframe
+                src={VIDEO_EMBED_URL}
+                title={publicCopy.navigation.about}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;"
+                allowFullScreen
+              />
+            ) : (
+              <button className="community-hub-video-poster" type="button" onClick={() => setVideoOpen(true)} aria-label={publicCopy.navigation.about}>
+                <img src={videoPoster} alt="" loading="lazy" decoding="async" />
+                <span className="community-hub-video-play" aria-hidden="true"><Play size={22} strokeWidth={2} fill="currentColor" /></span>
+              </button>
+            )}
+          </figure>
+          <div className="community-hub-video-copy">
+            <p>{publicCopy.home.evidence}</p>
+            <p className="community-hub-video-statement">{publicCopy.home.evidenceStatement}</p>
+            <Link className="community-hub-video-action" to={withLanguage('/our-approach', language)}>
+              {publicCopy.navigation.about}
               <ArrowUpRight size={15} strokeWidth={1.8} aria-hidden="true" />
             </Link>
-          ))}
-        </nav>
+          </div>
+        </div>
 
         <div className="community-hub-resolve">
           <p className="community-hub-resolve-label">{research.clientProblemsLabel}</p>
