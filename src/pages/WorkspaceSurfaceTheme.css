@@ -957,58 +957,57 @@
    每段一张图 + 完整正文，图片只渲染一次，并换成压缩变体（61KB / 296KB）。
    字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
    =========================================================================== */
-.community-hub { background: #173f30; color: #fffdf8; padding: clamp(56px, 8vw, 112px) 0; }
-.community-hub-inner { display: grid; width: min(100% - 48px, 1200px); gap: clamp(56px, 7vw, 96px); margin: 0 auto; }
+/* ===========================================================================
+   首页「人物页」：上下长页（2026-10-17）
+   ---------------------------------------------------------------------------
+   原来是 9 秒一轮的轮播，切换那一下要从网络拉 8.9MB 的 PNG，实测会卡；
+   文案也一屏放不下。现在单独做成长页：大字标题 → 多个入口 → 三张问题卡 → 主行动。
+   办公室那段已抽到 components/CommunityNetworkSection.jsx，不再挂在这里。
+   字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
+   =========================================================================== */
+.community-hub { background: #fcfdfb; padding: clamp(32px, 4vw, 56px) clamp(16px, 3vw, 40px); }
+.community-hub-panel { width: min(100%, 1280px); margin: 0 auto; border-radius: 28px; background: #173f30; color: #fffdf8; padding: clamp(34px, 4.6vw, 72px); }
 
-.community-hub-block { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
-.community-hub-block.is-flipped .community-hub-copy { order: 2; }
-.community-hub-block.is-flipped .community-hub-media { order: 1; }
-
+.community-hub-top { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(28px, 4vw, 60px); align-items: end; }
 .community-hub-eyebrow { margin: 0; color: rgba(255, 253, 249, .62); font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
-.community-hub-copy h2 { max-width: 560px; margin: 14px 0 0; color: #fffdf8; font-family: var(--font-display); font-size: clamp(30px, 3.4vw, 46px); font-weight: 500; letter-spacing: -.032em; line-height: 1.05; }
-.community-hub-description { max-width: 560px; margin: 16px 0 0; color: rgba(255, 253, 249, .88); font-family: var(--font-reading); font-size: 16px; font-weight: 500; line-height: 1.65; }
-.community-hub-supporting { max-width: 540px; margin: 12px 0 0; color: rgba(255, 253, 249, .7); font-family: var(--font-sans); font-size: 14px; font-weight: 500; line-height: 1.6; }
+.community-hub-intro h2 { max-width: 640px; margin: 16px 0 0; color: #fffdf8; font-family: var(--font-display); font-size: clamp(38px, 5vw, 56px); font-weight: 500; letter-spacing: -.035em; line-height: 1.02; }
+.community-hub-lede { max-width: 560px; margin: 22px 0 0; color: rgba(255, 253, 249, .9); font-family: var(--font-reading); font-size: 16px; line-height: 1.65; }
+.community-hub-supporting { max-width: 540px; margin: 14px 0 0; color: rgba(255, 253, 249, .7); font-family: var(--font-sans); font-size: 14px; line-height: 1.6; }
+.community-hub-portrait { margin: 0; align-self: end; }
+.community-hub-portrait img { display: block; width: 100%; height: auto; }
 
-.community-hub-problems { max-width: 620px; margin-top: 26px; }
-.community-hub-problems-label { margin: 0 0 12px; color: rgba(255, 253, 249, .62); font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-/* 三张问题卡改成一列三行：三列在 640px 里每张只有 180px，标题和说明都在硬折行。 */
-.community-hub-problems ul { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; list-style: none; }
-.community-hub-problems li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 10px; border: 1px solid rgba(255, 253, 249, .16); background: rgba(255, 253, 249, .05); padding: 14px 16px 15px; }
-.community-hub-problems li svg { margin-top: 1px; color: #deef24; }
-.community-hub-problems li span { display: grid; gap: 5px; color: rgba(255, 253, 249, .72); font-family: var(--font-sans); font-size: 11px; line-height: 1.5; }
-.community-hub-problems li strong { color: #fffdf8; font-size: 13px; font-weight: 600; line-height: 1.35; }
+/* 入口：一行药丸，越往下越像「还可以去哪」。 */
+.community-hub-entries { display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(28px, 3.4vw, 44px); }
+.community-hub-entries a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 253, 249, .34); border-radius: 999px; color: #fffdf8; font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 11px 18px; text-decoration: none; transition: border-color .2s ease, background .2s ease, color .2s ease; }
+.community-hub-entries a:hover { border-color: #deef24; background: #deef24; color: #141a17; }
+.community-hub-entries a:focus-visible { outline: 3px solid #fffdf8; outline-offset: 3px; }
 
-.community-hub-detail { max-width: 520px; margin-top: 26px; border: 1px solid rgba(255, 253, 249, .5); background: rgba(255, 254, 250, .96); color: #26342b; padding: 22px 24px; }
-.community-hub-detail > p { margin: 0; color: #748076; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
-.community-hub-detail h3 { margin: 8px 0 0; color: #233329; font-family: var(--font-reading); font-size: 22px; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
-.community-hub-detail > span { display: block; margin-top: 10px; color: #5f6a61; font-family: var(--font-sans); font-size: 14px; line-height: 1.6; }
-.community-hub-detail ul { display: grid; gap: 8px; margin: 16px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(38, 52, 43, .16); list-style: none; }
-.community-hub-detail li { display: flex; align-items: center; gap: 8px; color: #33503f; font-family: var(--font-sans); font-size: 13px; font-weight: 600; line-height: 1.4; }
-.community-hub-detail li svg { flex: 0 0 auto; color: #2d6648; }
+.community-hub-resolve { margin-top: clamp(36px, 4.4vw, 64px); border-top: 1px solid rgba(255, 253, 249, .16); padding-top: clamp(28px, 3.4vw, 44px); }
+.community-hub-resolve-label { margin: 0; color: rgba(255, 253, 249, .58); font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.community-hub-resolve h3 { max-width: 640px; margin: 12px 0 0; color: #fffdf8; font-family: var(--font-display); font-size: clamp(28px, 3.2vw, 38px); font-weight: 500; letter-spacing: -.03em; line-height: 1.08; }
+.community-hub-resolve ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 26px 0 0; padding: 0; list-style: none; }
+.community-hub-resolve li { display: grid; grid-template-columns: 18px minmax(0, 1fr); align-content: start; gap: 11px; border-radius: 16px; background: #e3eedd; color: #1c3327; padding: 20px 20px 22px; }
+.community-hub-resolve li svg { margin-top: 2px; color: #2d6648; }
+.community-hub-resolve li strong { display: block; color: #17301f; font-family: var(--font-sans); font-size: 16px; font-weight: 600; letter-spacing: -.015em; line-height: 1.3; }
+.community-hub-resolve li span { display: block; margin-top: 8px; color: #3f5a4a; font-family: var(--font-sans); font-size: 13px; line-height: 1.55; }
 
-.community-hub-primary-action { display: inline-flex; min-height: 48px; align-items: center; gap: 10px; margin-top: 28px; border: 1px solid #deef24; border-radius: 3px; background: #deef24; color: #141a17; font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 0 22px; text-decoration: none; transition: background .25s ease, border-color .25s ease, color .25s ease; }
-.community-hub-primary-action:hover { border-color: #cddd18; background: #cddd18; color: #141a17; transform: none; }
+.community-hub-foot { display: flex; align-items: center; gap: 18px; margin-top: clamp(28px, 3.2vw, 40px); }
+.community-hub-primary-action { display: inline-flex; min-height: 50px; align-items: center; gap: 10px; border: 1px solid #deef24; border-radius: 3px; background: #deef24; color: #141a17; font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 0 24px; text-decoration: none; transition: background .25s ease, border-color .25s ease, color .25s ease; }
+.community-hub-primary-action:hover { border-color: #cddd18; background: #cddd18; color: #141a17; }
 .community-hub-primary-action:focus-visible { outline: 3px solid #fffdf8; outline-offset: 4px; }
 
-.community-hub-media { margin: 0; overflow: hidden; border: 1px solid rgba(255, 253, 249, .14); background: rgba(255, 253, 249, .04); aspect-ratio: 16 / 11; }
-.community-hub-media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-/* 第一段的插图带透明通道，contain 才不会把内容裁掉 */
-.community-hub-block--research .community-hub-media { aspect-ratio: 4000 / 3227; border: 0; background: transparent; }
-.community-hub-block--research .community-hub-media img { object-fit: contain; }
-
 @media (max-width: 980px) {
-  .community-hub { padding: 56px 0 64px; }
-  .community-hub-inner { width: min(100% - 40px, 1200px); gap: 56px; }
-  .community-hub-block { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .community-hub-block.is-flipped .community-hub-copy,
-  .community-hub-block.is-flipped .community-hub-media { order: initial; }
-  .community-hub-media { order: 2; }
-  .community-hub-copy h2 { font-size: 38px; }
-  .community-hub-problems ul { grid-template-columns: 1fr; }
-  .community-hub-primary-action { margin-top: 22px; }
+  .community-hub { padding: 20px 14px; }
+  .community-hub-panel { border-radius: 22px; padding: 32px 22px 36px; }
+  .community-hub-top { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .community-hub-intro h2 { font-size: 38px; }
+  .community-hub-portrait { max-width: 420px; }
+  .community-hub-entries a { font-size: 13px; padding: 10px 15px; }
+  .community-hub-resolve ul { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .community-hub-foot { margin-top: 26px; }
 }
 
-@media (prefers-reduced-motion: reduce) { .community-hub-primary-action { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .community-hub-entries a, .community-hub-primary-action { transition: none; } }
 
 /* Research and activities: a single real profile task until matching opportunities exist. */
 .research-activities-page { max-width: 1320px; }

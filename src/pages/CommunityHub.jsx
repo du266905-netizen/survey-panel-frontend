@@ -1,13 +1,14 @@
-import { ArrowUpRight, CheckCircle2, MapPin } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-/* 轮番版本每次切换都现拉 8.9MB / 4.7MB 的原图，实测明显卡顿。改成上下长页后两张图
-   一次性渲染（lazy 载入），并改用压过的变体：61KB / 296KB。原图保留在 assets 里。 */
-import communityCrossMarketOffice from '../assets/community/community-cross-market-office-web.jpg';
-import communityResearchCollage from '../assets/community/community-research-collage-web.webp';
-import { communityTranslations } from '../constants/homepageTranslations';
+import peopleImage from '../assets/community/community-research-collage-web.webp';
 
-const communityCopy = {
+/* 首页的「人物页」：原来是 9 秒一轮的轮播，切换时现拉 8.9MB 的原图，实测会卡；
+   而且文案本来就长，一屏放不下。现在单独做成一屏装不完的上下长页：
+   大字标题 → 多个入口 → 「我们能帮你厘清什么」三张卡 → 主行动。
+   办公室那一段已抽到 components/CommunityNetworkSection.jsx，等用户决定放哪。 */
+
+const copy = {
   en: {
     research: {
       eyebrow: 'Research for market-entry teams',
@@ -23,19 +24,15 @@ const communityCopy = {
       ],
       action: 'Discuss your market question',
     },
-    network: {
-      eyebrow: 'Local research, built around a real decision',
-      title: 'Make the next market move with local evidence.',
-      description: 'GuanyiSearch brings together local participants, research design and hands-on project support so teams can turn a market question into a focused study—not a generic data exercise.',
-      action: 'Discuss a market question',
-      detail: {
-        eyebrow: 'For market entry and growth',
-        title: 'What will make this offer work here?',
-        description: 'Assess demand, message and channel realities before committing launch spend. We help define what to test, who to hear from and how the result informs the next move.',
-        points: ['People selected for the decision at hand', 'Local context across message and channels', 'A focused route from brief to readout'],
-      },
-    },
-    controls: { label: 'Platform feature controls', previous: 'Show the previous platform feature', next: 'Show the next platform feature' },
+    entriesLabel: 'Ways into GuanyiSearch',
+    entries: [
+      { label: 'Research services', to: '/business' },
+      { label: 'How it works', to: '/how-it-works' },
+      { label: 'Our approach', to: '/our-approach' },
+      { label: 'China market insights', to: '/china-market-insights' },
+      { label: 'Community and partners', to: '/partners' },
+      { label: 'Talk to our team', to: '/business/access' },
+    ],
   },
   'zh-CN': {
     research: {
@@ -52,28 +49,24 @@ const communityCopy = {
       ],
       action: '讨论你的市场问题',
     },
-    network: {
-      eyebrow: '围绕真实决策构建的本地研究',
-      title: '用本地证据，做出下一步市场决策。',
-      description: 'GuanyiSearch 汇集本地参与者、研究设计与项目支持，帮助团队把市场问题转化为聚焦的研究项目，而不是泛泛的数据收集。',
-      action: '讨论一个市场问题',
-      detail: {
-        eyebrow: '面向市场进入与增长团队',
-        title: '怎样才能让这个产品在这里真正成立？',
-        description: '在投入上市预算前，评估需求、传播信息与渠道的真实情况。我们协助明确该测试什么、该听谁的意见，以及研究结果如何指导下一步。',
-        points: ['为当前决策匹配合适的人群', '理解信息与渠道背后的本地语境', '从需求梳理到结果回收的聚焦研究路径'],
-      },
-    },
-    controls: { label: '平台功能轮播控制', previous: '显示上一项平台功能', next: '显示下一项平台功能' },
+    entriesLabel: '进入 GuanyiSearch 的几种方式',
+    entries: [
+      { label: '研究服务', to: '/business' },
+      { label: '合作方式', to: '/how-it-works' },
+      { label: '我们的方法', to: '/our-approach' },
+      { label: '中国市场洞察', to: '/china-market-insights' },
+      { label: '社群与伙伴', to: '/partners' },
+      { label: '联系我们', to: '/business/access' },
+    ],
   },
   'zh-Hant': {
     research: {
       eyebrow: '面向市場進入團隊的研究',
-      title: '在上線前，釐清什麼需要改變。',
-      description: '當進入新市場意味著真實成本時，僅憑對需求、語言和渠道的假設並不夠。我們圍繞決定產品是否準備就緒的關鍵問題，設計聚焦的本地研究。',
-      supporting: 'GuanyiSearch 協助產品、成長和市場進入團隊，將當下的商業決策轉化為可直接使用的本地證據。',
-      clientProblemsLabel: 'GuanyiSearch 協助客戶釐清的問題',
-      clientProblemsTitle: '我們協助你釐清的問題',
+      title: '在上線前，明確什麼需要改變。',
+      description: '當進入新市場意味著真實成本時，僅憑對需求、語言和渠道的假設並不足夠。我們圍繞決定產品是否準備就緒的關鍵問題，設計聚焦的本地研究。',
+      supporting: 'GuanyiSearch 幫助產品、成長和市場進入團隊，將當下的商業決策轉化為可直接使用的本地證據。',
+      clientProblemsLabel: 'GuanyiSearch 幫助客戶釐清的問題',
+      clientProblemsTitle: '我們幫助你釐清的問題',
       clientProblems: [
         { title: '需求與價值主張是否匹配', description: '哪一種客戶需求最重要？怎樣讓產品在當地更具相關性？' },
         { title: '訊息與渠道是否匹配', description: '什麼樣的語言、創意與市場路徑，才能真正觸達目標人群？' },
@@ -81,107 +74,69 @@ const communityCopy = {
       ],
       action: '討論你的市場問題',
     },
-    network: {
-      eyebrow: '圍繞真實決策構建的本地研究',
-      title: '用本地證據，做出下一步市場決策。',
-      description: 'GuanyiSearch 匯集本地參與者、研究設計與專案支援，協助團隊把市場問題轉化為聚焦的研究專案，而不是泛泛的資料收集。',
-      action: '討論一個市場問題',
-      detail: {
-        eyebrow: '面向市場進入與成長團隊',
-        title: '怎樣才能讓這個產品在這裡真正成立？',
-        description: '在投入上市預算前，評估需求、傳播訊息與渠道的真實情況。我們協助明確該測試什麼、該聽誰的意見，以及研究結果如何指引下一步。',
-        points: ['為當前決策匹配合適的人群', '理解訊息與渠道背後的本地語境', '從需求梳理到結果回收的聚焦研究路徑'],
-      },
-    },
-    controls: { label: '平台功能輪播控制', previous: '顯示上一項平台功能', next: '顯示下一項平台功能' },
+    entriesLabel: '進入 GuanyiSearch 的幾種方式',
+    entries: [
+      { label: '研究服務', to: '/business' },
+      { label: '合作方式', to: '/how-it-works' },
+      { label: '我們的方法', to: '/our-approach' },
+      { label: '中國市場洞察', to: '/china-market-insights' },
+      { label: '社群與夥伴', to: '/partners' },
+      { label: '聯絡我們', to: '/business/access' },
+    ],
   },
 };
 
-// the remaining languages live in constants/homepageTranslations.js
-Object.assign(communityCopy, communityTranslations);
-
-function createPlatformFeatures(copy) {
-  return [
-    {
-      id: 'research-routes',
-      ...copy.research,
-      image: communityResearchCollage,
-      variant: 'research',
-      action: { type: 'link', label: copy.research.action, to: '/business' },
-    },
-    {
-      id: 'cross-market-network',
-      ...copy.network,
-      image: communityCrossMarketOffice,
-      action: { type: 'anchor', label: copy.network.action, to: '#atlas-contact' },
-    },
-  ];
-}
-
-function FeatureAction({ action, language }) {
-  if (action.type === 'anchor') {
-    return <a className="community-hub-primary-action" href={action.to}>{action.label}<ArrowUpRight size={19} strokeWidth={1.8} /></a>;
-  }
-
-  return <Link className="community-hub-primary-action" to={withLanguage(action.to, language)}>{action.label}<ArrowUpRight size={19} strokeWidth={1.8} /></Link>;
-}
-
 export default function CommunityHub() {
   const { language } = useLanguage();
-  const copy = communityCopy[language] || communityCopy.en;
-  const features = createPlatformFeatures(copy);
+  const text = copy[language] || copy.en;
+  const research = text.research;
 
-  /* 原来是 9 秒一轮的轮播：整块背景图、标题、右侧小卡同时换，长文案挤在一屏里。
-     现在拆成上下两段长页：每段一张图 + 完整正文，图片各渲染一次，不再切换。 */
   return (
-    <section className="community-hub" aria-label={copy.controls.label}>
-      <div className="community-hub-inner">
-        {features.map((feature, index) => (
-          <article
-            key={feature.id}
-            className={`community-hub-block community-hub-block--${feature.variant}${index % 2 === 1 ? ' is-flipped' : ''}`}
-          >
-            <div className="community-hub-copy">
-              <p className="community-hub-eyebrow">{feature.eyebrow}</p>
-              <h2 id={index === 0 ? 'community-hub-title' : undefined}>{feature.title}</h2>
-              <p className="community-hub-description">{feature.description}</p>
-              {feature.supporting && <p className="community-hub-supporting">{feature.supporting}</p>}
+    <section className="community-hub" aria-labelledby="community-hub-title">
+      <div className="community-hub-panel">
+        <div className="community-hub-top">
+          <div className="community-hub-intro">
+            <p className="community-hub-eyebrow">{research.eyebrow}</p>
+            <h2 id="community-hub-title">{research.title}</h2>
+            <p className="community-hub-lede">{research.description}</p>
+            <p className="community-hub-supporting">{research.supporting}</p>
+          </div>
+          <figure className="community-hub-portrait">
+            <img src={peopleImage} alt="" loading="lazy" decoding="async" />
+          </figure>
+        </div>
 
-              {feature.clientProblems && (
-                <div className="community-hub-problems" aria-label={feature.clientProblemsLabel}>
-                  <p className="community-hub-problems-label">{feature.clientProblemsTitle}</p>
-                  <ul>
-                    {feature.clientProblems.map((problem) => (
-                      <li key={problem.title}>
-                        <CheckCircle2 size={16} strokeWidth={1.9} aria-hidden="true" />
-                        <span><strong>{problem.title}</strong>{problem.description}</span>
-                      </li>
-                    ))}
-                  </ul>
+        <nav className="community-hub-entries" aria-label={text.entriesLabel}>
+          {text.entries.map((entry) => (
+            <Link key={entry.to} to={withLanguage(entry.to, language)}>
+              {entry.label}
+              <ArrowUpRight size={15} strokeWidth={1.8} aria-hidden="true" />
+            </Link>
+          ))}
+        </nav>
+
+        <div className="community-hub-resolve">
+          <p className="community-hub-resolve-label">{research.clientProblemsLabel}</p>
+          <h3>{research.clientProblemsTitle}</h3>
+          <ul>
+            {research.clientProblems.map((problem) => (
+              <li key={problem.title}>
+                <CheckCircle2 size={17} strokeWidth={1.9} aria-hidden="true" />
+                <div>
+                  <strong>{problem.title}</strong>
+                  <span>{problem.description}</span>
                 </div>
-              )}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-              {feature.detail && (
-                <div className="community-hub-detail">
-                  <p>{feature.detail.eyebrow}</p>
-                  <h3>{feature.detail.title}</h3>
-                  <span>{feature.detail.description}</span>
-                  <ul>
-                    {feature.detail.points.map((point) => (
-                      <li key={point}><MapPin size={13} strokeWidth={1.8} aria-hidden="true" />{point}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <FeatureAction action={feature.action} language={language} />
-            </div>
-
-            <figure className="community-hub-media">
-              <img src={feature.image} alt="" loading="lazy" decoding="async" />
-            </figure>
-          </article>
-        ))}
+        <div className="community-hub-foot">
+          <Link className="community-hub-primary-action" to={withLanguage('/business', language)}>
+            {research.action}
+            <ArrowUpRight size={19} strokeWidth={1.8} aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </section>
   );
