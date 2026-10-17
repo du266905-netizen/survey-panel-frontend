@@ -1,3 +1,9 @@
+/* 顶栏必须留在正常文档流里：.public-site-header 原先是 position: sticky，但在
+   .business-login-page 这个定高 flex 栏里 sticky 会被当成绝对定位、脱离文档流
+   （实测它落在 y=18 却把外壳顶到 y=96，整页凭空多出 78px）。研究端登录／注册页
+   不需要吸顶（整页本来就不滚），所以在这里改回 static。 */
+.business-login-page .public-site-header { position: static !important; }
+
 .business-public-page, .join-choice-page, .business-access-page, .business-workspace { --business-ink: #17251f; --business-forest: #285647; --business-paper: #f7f7f3; --business-muted: #64746b; background: var(--business-paper); color: var(--business-ink); font-family: var(--font-reading); }
 .business-container { width: min(100% - 48px, 1180px); margin: 0 auto; }
 .business-eyebrow { margin: 0; color: #52705f; font-size: 10px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
@@ -212,6 +218,79 @@
 .business-login-intro > div { max-width: min(390px, 82%); }
 .business-login-layout .business-access-panel { display: flex; min-height: calc(100svh - 78px); align-items: flex-start; padding: 0 clamp(42px, 7vw, 92px); }
 .business-login-layout .public-auth-panel { width: 100%; max-width: none; }
+
+/* ── 研究端登录／注册：改用参与端登录页的形式（用户 2026-10-17）──────────────────────────
+   参与端（/login、/register）是「顶部一条导航 → 左边表单（占 42%）→ 右边整幅满高照片，
+   标题文案压在照片左下」；研究端原来是「左图右表单、字压在图上」。这里把研究端换成前者，
+   两页共用研究端注册页那张 researcher-registration-team.jpg。
+   上面 143~214 行那套 .business-login-* 规则不动：≤800px 的纸面降级里还在用。
+   以下按需覆盖（文件靠后 + 选择器等价或更高，同权重时后者胜）。 */
+/* 整块占满视口剩下的那一段：顶栏在正常流里占 78px（含它自己的 18px 上外边距），
+   所以这里写 calc(100svh - 78px)，两条栏目再由 flex 拉伸到这一层的高度。
+   实测：不写这行时外壳只有 627px（照片和表单都不满屏）。 */
+.business-login-page { display: flex; height: calc(100svh - 78px); min-height: 720px; flex-direction: column; overflow: hidden; padding: 0 !important; }
+/* 表单在左、照片在右 —— 与 .landing-shell 的 42% / 58% 一致：两条栏目按 flex 拉伸到
+   .business-login-page 的高度。照片栏那条 position:sticky!important（203 行旧规则）会脱离
+   文档流把外壳顶下去，所以 262 行单独把它改回 relative。 */
+.business-login-shell { display: flex; min-height: 0; flex: 1; overflow: hidden; }
+.business-login-form { display: flex; width: 42%; min-width: 480px; flex-direction: column; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; background: #fcfdfb; box-shadow: inset -1px 0 rgba(29, 42, 34, .14); padding: 30px clamp(28px, 4vw, 68px) 32px; }
+/* 表单左缩进 12px、上留白 30px：和参与端表单栏实测的落点一致（那边是栏留白 57.6px
+   再叠一层 .landing-access-inner 的 12px 内边距）。 */
+/* 面板给到 440px：那句 "Create your research workspace." 在 380px 里会被挤成三行
+   （用户 2026-10-17：黑字大标语非得列成三行吗）。参与端文案短，仍是共享表里的 380px；
+   顺带一条好处 —— 两张页面的面板右边缘算下来都落在 x=510。 */
+.business-login-form .public-auth-panel { width: min(100%, 440px); max-width: none; margin-left: 12px; }
+/* 面板那一圈边框、投影和留白是给「左图右表单」那版用的；这里表单自己就是一整栏，去掉。 */
+.business-login-form .business-access-panel { display: block; min-height: 0; border: 0; background: transparent; box-shadow: none; padding: 0; }
+/* 表单里那行大标题：106 行把它换成了 --font-display / 39px / w560，这里改回参与端的衬线，
+   但字重不再跟参与端的 w820 —— 用户 2026-10-17 连着两次说「太重／太粗」，
+   参与端那个 820 本来就是被当成过剩的重量（见 316fc8c「the weight was 820, not the scale」）。 */
+.business-login-form .public-auth-content h2 { font-family: var(--font-serif); font-size: clamp(31px, 3.4vw, 42px); font-weight: 500; letter-spacing: -.028em; }
+/* 颜色按研究端用户页的令牌走（BusinessWorkspaceTheme.css「neutral core」）：纯中性灰阶，
+   没有绿味。原来这里是 #17251f 墨绿 + #52705f 灰绿，和研究端用户页是两套色。 */
+.business-login-form { --pa-ink: #24272c; --pa-body: #565a60; --pa-mute: #7f848a; --pa-faint: #a1a6ac; --pa-hair-2: rgba(17, 17, 19, .22); }
+.business-login-form .public-auth-consent { color: var(--pa-mute); }
+/* 三个条款链接不再各自 nowrap 挤成三列，跟着整句一行行读下来。 */
+.business-login-form .business-access-panel .public-auth-consent { display: block; }
+.business-login-form .business-access-panel .public-auth-consent a { white-space: normal; }
+.business-login-form .public-auth-secondary, .business-login-form .public-auth-secondary a { color: var(--pa-body); }
+.business-login-form .public-auth-secondary a:hover { color: var(--pa-ink); }
+
+/* 照片铺满整栏。这里必须盖掉 203 行那句 `.business-login-intro{position:sticky!important}`：
+   那是「左图右表单」旧版留下的，sticky 会让照片栏脱离文档流，把外壳整体顶下去一个顶栏的高度
+   （实测外壳被推到 y=96、整页多出 78px）。旧规则不动，只在本页作用域覆盖。 */
+.business-login-page .business-login-intro { position: relative !important; top: auto; align-self: stretch; height: auto; min-height: 0; display: flex; width: 58%; flex-direction: column; overflow: hidden; border: 0; background: #d9ddd6; margin: 0; padding: 0 !important; }
+.business-login-intro > img { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: none; }
+/* 压暗渐变：图上文案要白字（用户 2026-10-16 已定）。 */
+.business-login-intro::after { display: block; position: absolute; z-index: 1; inset: 0; background: linear-gradient(100deg, rgba(9, 22, 16, .74) 0%, rgba(9, 22, 16, .34) 46%, rgba(9, 22, 16, .06) 100%); content: ''; }
+/* 文案收在左下角，和 .landing-brand-content 同一套规则（含 ≤700px 的写法）。
+   贴底留 84px，是为了让 h1 的底边和参与端那条落在同一高度（实测两边都是 794px）。 */
+.business-login-intro > div { position: relative; z-index: 2; align-self: flex-start; max-width: 590px; margin-top: auto; margin-bottom: 84px; padding: 0 clamp(28px, 6vw, 88px); }
+/* 图上文案：字阶／字重／投影逐条对齐参与端 .landing-brand-content 实测值
+   （56px / w400 / 投影 .42 而非更重的 .72 —— 用户 2026-10-17：别那么亮那么粗）。
+   参与端那个 400 是 316fc8c 特意压下去的，同一套观感就照它来。 */
+.business-login-intro h1 { max-width: 620px; margin: 0; color: #f4f1e9; font-family: var(--font-serif); font-size: clamp(38px, 4.4vw, 56px); font-weight: 400; letter-spacing: -.045em; line-height: 1.02; text-shadow: 0 1px 10px rgba(0, 0, 0, .42); }
+/* 图上眉头那行也去掉「大写字距」装饰，跟表单里那行小字同一套简化；
+   压深色照片上保留 600 字重和一点字距，不然会糊。 */
+.business-login-intro > div > .business-eyebrow { margin: 0 0 8px; color: rgba(232, 230, 223, .68); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: none; }
+.business-login-intro > div > p:last-of-type { max-width: 525px; margin: 22px 0 0; color: rgba(244, 241, 233, .94); font-size: 16px; font-weight: 400; line-height: 1.75; text-shadow: 0 1px 12px rgba(0, 0, 0, .72); }
+
+/* ≤1180px：参与端在这里也改成上下结构（表单在上、照片在下），研究端跟着走。
+   .business-login-intro 显式 height:auto，是为了盖掉 208 行那句 height: calc(100svh - 78px)。 */
+@media (max-width: 1180px) {
+  .business-login-shell { display: grid; grid-template-columns: 1fr; }
+  .business-login-form, .business-login-intro { width: auto; min-width: 0; }
+  .business-login-form { overflow: visible; box-shadow: none; padding: 42px clamp(24px, 6vw, 68px) 12px; }
+  .business-login-form .public-auth-panel { width: min(100%, 440px); margin: 0 auto; }
+  .business-login-intro { position: static; display: block; height: auto; min-height: 680px; }
+  .business-login-intro > div { max-width: 620px; margin: 0; padding: 0 clamp(24px, 6vw, 68px) 64px; }
+}
+@media (max-width: 700px) {
+  .business-login-intro { min-height: 625px; }
+  .business-login-intro h1 { font-size: 38px; }
+  .business-login-intro > div > p:last-of-type { font-size: 14px; line-height: 1.65; }
+  .business-login-form { padding-top: 40px; }
+}
 
 /* Titles carry the editorial face; supporting project information remains practical. */
 .business-projects h1 { font-family: var(--font-display) !important; font-weight: 560; letter-spacing: -.052em; }
@@ -837,8 +916,9 @@
   .business-login-intro--login > img, .business-login-intro--register > img { object-position: center 42%; }
   .business-login-intro > div { max-width: none; background: #f7f7f3; box-shadow: none; backdrop-filter: none; padding: 26px 22px 28px; }
   .business-login-intro h1 { max-width: none; font-size: 38px; }
-  /* 窄屏是"照片在上、文案在纸面"，所以这里改回墨字（不要继承桌面那套白字） */
-  .business-login-intro > div > .business-eyebrow { color: #52705f; }
+  /* 窄屏是"照片在上、文案在纸面"，所以这里改回墨字（不要继承桌面那套白字）；
+     颜色改用研究端用户页那套中性灰，不再用绿味的 #52705f。 */
+  .business-login-intro > div > .business-eyebrow { color: #7f848a; }
   .business-login-intro h1 { color: #14271e; text-shadow: none; }
   .business-login-intro > div > p:last-child { color: #52675a; }
 }

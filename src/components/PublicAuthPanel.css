@@ -1,15 +1,53 @@
-.public-auth-panel { width: min(100%, 380px); }
-.public-auth-tabs { display: flex; width: 100%; height: 50px; border-bottom: 1px solid rgba(34,42,36,.18); }
-.public-auth-tabs button { position: relative; display: flex; flex: 1 1 50%; min-width: 0; height: 50px; align-items: center; justify-content: center; box-sizing: border-box; border: 0; background: transparent; color: #767c76; cursor: pointer; font-size: 13px; font-weight: 800; line-height: 1; text-align: center; padding: 0; }
+/* 登录／注册面板（参与端 /login /register 与研究端 /business/login /business/register 共用）。
+   颜色和字阶取研究端用户页那套令牌（BusinessWorkspaceTheme.css「neutral core」块 +
+   Cryptomus 式设计语言）：纯中性灰阶、没有绿味，强调色只留给主按钮。 */
+.public-auth-panel {
+  --pa-ink: #24272c;
+  --pa-body: #565a60;
+  --pa-mute: #7f848a;
+  --pa-faint: #a1a6ac;
+  --pa-hair: rgba(17, 17, 19, .12);
+  --pa-hair-2: rgba(17, 17, 19, .22);
+  --pa-lime: #deef24;
+  --pa-lime-deep: #c9db10;
+  width: min(100%, 380px);
+}
+.public-auth-tabs { display: flex; width: 100%; height: 50px; border-bottom: 1px solid var(--pa-hair); }
+.public-auth-tabs button { position: relative; display: flex; flex: 1 1 50%; min-width: 0; height: 50px; align-items: center; justify-content: center; box-sizing: border-box; border: 0; background: transparent; color: var(--pa-mute); cursor: pointer; font-size: 13px; font-weight: 600; line-height: 1; text-align: center; padding: 0; }
 .public-auth-tabs button:after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: transparent; content: ''; }
-.public-auth-tabs button.is-active { color: #171b18; }.public-auth-tabs button.is-active:after { background: #171b18; }
-.public-auth-content { padding-top: 31px; }.public-auth-eyebrow { margin: 0 0 8px; color: #637168; font-size: 11px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
-.public-auth-content h2 { margin: 0; color: #171b18; font-family: var(--font-serif); font-size: clamp(31px, 3.4vw, 42px); font-weight: 820; letter-spacing: -.035em; line-height: 1.06; }.public-auth-intro { margin: 12px 0 22px; color: #626b64; font-size: 14px; line-height: 1.65; }
-.public-auth-consent { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 17px; color: #68655d; font-size: 11px; line-height: 1.45; }.public-auth-consent input { width: 14px; height: 14px; margin: 1px 0 0; accent-color: #272724; }.public-auth-consent a, .public-auth-secondary a { color: #1a1a18; font-weight: 800; }
+.public-auth-tabs button.is-active { color: var(--pa-ink); font-weight: 700; }.public-auth-tabs button.is-active:after { background: var(--pa-ink); }
+.public-auth-content { padding-top: 31px; }
+/* 眉标只要一行小字，不要「大写字距排版」那层装饰（用户 2026-10-17：这些小字简约一点）。 */
+.public-auth-eyebrow { margin: 0 0 9px; color: var(--pa-mute); font-size: 11px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.public-auth-content h2 { margin: 0; color: var(--pa-ink); font-family: var(--font-serif); font-size: clamp(31px, 3.4vw, 42px); font-weight: 820; letter-spacing: -.035em; line-height: 1.06; }.public-auth-intro { margin: 12px 0 22px; color: var(--pa-body); font-size: 14px; line-height: 1.65; }
+/* 条款行：原来 11px / 行高 1.45 / 链接 800 粗，三个链接挤成三列像表格。
+   现在整句一行读下来，链接只靠颜色和一条淡下划线区分。 */
+.public-auth-consent { display: block; margin-bottom: 18px; color: var(--pa-mute); font-size: 11px; line-height: 1.65; }.public-auth-consent input { width: 14px; height: 14px; margin: 1px 0 0; accent-color: #272724; }
+.public-auth-consent a, .public-auth-secondary a { color: var(--pa-ink); font-weight: 500; text-decoration: underline; text-decoration-color: var(--pa-hair-2); text-underline-offset: 3px; }
+.public-auth-consent a:hover, .public-auth-secondary a:hover { text-decoration-color: var(--pa-ink); }
+/* 注册页没有说明那行时，条款行自己撑开和标题的距离。 */
+.public-auth-intro + .public-auth-consent { margin-top: 0; }
+.public-auth-content h2 + .public-auth-consent { margin-top: 18px; }
 .public-auth-google-disabled { display: flex; width: 100%; height: 44px; align-items: center; justify-content: center; gap: 10px; border: 1px solid rgba(34,42,36,.2); border-radius: 999px; background: rgba(255,255,255,.54); color: #626b64; cursor: not-allowed; font-size: 14px; font-weight: 700; }
-.public-auth-divider { display: flex; align-items: center; gap: 12px; color: #8a877e; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin: 23px 0; }.public-auth-divider:before, .public-auth-divider:after { height: 1px; flex: 1; background: rgba(34,33,30,.18); content: ''; }
-.public-auth-form { display: grid; gap: 15px; }.public-auth-form label > span:first-child { display: block; margin-bottom: 7px; color: #625f57; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }.public-auth-form label em { color: #8a877e; font-size: 9.5px; font-style: normal; }
+.public-auth-divider { display: flex; align-items: center; gap: 12px; color: var(--pa-faint); font-size: 11px; font-weight: 500; letter-spacing: 0; text-transform: none; margin: 23px 0; }.public-auth-divider:before, .public-auth-divider:after { height: 1px; flex: 1; background: var(--pa-hair); content: ''; }
+.public-auth-form { display: grid; gap: 15px; }
+/* 字段名：小字，不加字距、不大写，跟标签色一起回到中性灰。 */
+.public-auth-form label > span:first-child { display: block; margin-bottom: 7px; color: var(--pa-mute); font-size: 11px; font-weight: 500; letter-spacing: 0; text-transform: none; }.public-auth-form label em { color: var(--pa-faint); font-size: 9.5px; font-style: normal; }
 /* Google 到不了时，原位给一行可见说明（不再是空白槽）。字号按档位（label 档）。 */
 .public-auth-google-note { margin: 7px 0 0; color: #8a877e; font-size: 11px; line-height: 1.45; text-align: center; }
-.public-auth-input { display: flex !important; height: 48px; align-items: center; gap: 9px; border: 1px solid rgba(34,42,36,.22); border-radius: 13px; background: rgba(255,255,255,.64); color: #626b64; padding: 0 13px; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }.public-auth-input:focus-within { border-color: #405447; background: rgba(255,255,255,.88); box-shadow: 0 0 0 3px rgba(42,72,57,.08); }.public-auth-input input, .public-auth-input select { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: #1b1b19; font: inherit; font-size: 14px; font-weight: 600; }.public-auth-input input::placeholder { color: #99958b; font-weight: 500; }.public-auth-input button { border: 0; background: transparent; color: #68655d; cursor: pointer; padding: 4px; }
-.public-auth-secondary { margin-top: -4px; text-align: right; font-size: 13px; }.public-auth-submit, .public-auth-email-cta { display: flex; width: 100%; height: 49px; align-items: center; justify-content: center; gap: 8px; border: 1px solid #1b1b19; border-radius: 13px; background: #1b1b19; color: #f7f4ed; cursor: pointer; font-size: 14px; font-weight: 800; }.public-auth-submit:disabled, .public-auth-code:disabled { cursor: not-allowed; opacity: .55; }.public-auth-email-cta { background: transparent; color: #1b1b19; }.public-auth-back { display: inline-flex; width: max-content; align-items: center; gap: 4px; border: 0; background: transparent; color: #2d2d29; cursor: pointer; font-size: 13px; font-weight: 800; margin-bottom: 2px; padding: 0; }.public-auth-code { display: inline-flex; min-height: 34px; align-items: center; justify-self: start; border: 1px solid #1b1b19; border-radius: 999px; background: #1b1b19; color: #f7f4ed; cursor: pointer; font-size: 13px; font-weight: 800; letter-spacing: .01em; margin-top: -3px; padding: 0 13px; }.public-auth-register-form { gap: 13px; }.public-auth-register-form .cf-turnstile { max-width: 100%; }.public-auth-message { margin: 15px 0 0; border: 1px solid #f7caca; border-radius: 11px; background: #fff5f5; color: #bb3434; font-size: 13px; font-weight: 700; line-height: 1.45; padding: 10px 12px; }.public-auth-message.is-success { border-color: #a7e3d5; background: #edfffa; color: #08755f; }
+.public-auth-input { display: flex !important; height: 48px; align-items: center; gap: 9px; border: 1px solid var(--pa-hair-2); border-radius: 13px; background: rgba(255,255,255,.64); color: var(--pa-mute); padding: 0 13px; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }.public-auth-input:focus-within { border-color: var(--pa-ink); background: #fff; box-shadow: 0 0 0 3px rgba(17, 17, 19, .07); }.public-auth-input input, .public-auth-input select { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--pa-ink); font: inherit; font-size: 14px; font-weight: 500; }.public-auth-input input::placeholder { color: var(--pa-faint); font-weight: 400; }.public-auth-input button { border: 0; background: transparent; color: var(--pa-mute); cursor: pointer; padding: 4px; }
+.public-auth-secondary { margin-top: -4px; text-align: right; font-size: 13px; }
+/* 主按钮：研究端用户页那个唯一的强调色（lime 底 + 近黑字）。表单里只有它上色。 */
+.public-auth-submit, .public-auth-email-cta { display: flex; width: 100%; height: 49px; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 13px; background: var(--pa-lime); color: #14161a; cursor: pointer; font-size: 14px; font-weight: 600; letter-spacing: -.005em; transition: background .16s ease; }
+.public-auth-submit:hover:not(:disabled) { background: var(--pa-lime-deep); }
+.public-auth-submit:disabled, .public-auth-code:disabled { cursor: not-allowed; opacity: .55; }/* 次按钮（Continue with email）：同一条 inset 阴影既画静息描边、又当悬停注色。
+   action-feedback.css 在 @media 里给 `.public-auth-email-cta` 定了注射填充
+   （box-shadow: inset 0 0 0 0 → inset 32rem），单类权重压不过它，所以这里挂上
+   .public-auth-panel 提一级（媒体查询本身不加权重）。 */
+.public-auth-panel .public-auth-email-cta { background: transparent; color: var(--pa-ink); box-shadow: inset 0 0 0 1px var(--pa-hair-2); }
+.public-auth-panel .public-auth-email-cta:hover { box-shadow: inset 0 0 0 1px var(--pa-ink); }
+.public-auth-back { display: inline-flex; width: max-content; align-items: center; gap: 4px; border: 0; background: transparent; color: var(--pa-body); cursor: pointer; font-size: 13px; font-weight: 500; margin-bottom: 2px; padding: 0; }
+/* 发验证码这颗是「白底深字」的可点按钮（用户 2026-10-17：发送验证码框是白色的大哥）。
+   之前改成透明底 + 一圈淡描边，看着像个空输入框，按钮感全没了。 */
+.public-auth-code { display: inline-flex; min-height: 34px; align-items: center; justify-self: start; border: 1px solid var(--pa-hair-2); border-radius: 999px; background: #fff; color: var(--pa-ink); cursor: pointer; font-size: 13px; font-weight: 500; letter-spacing: 0; margin-top: -3px; padding: 0 13px; transition: background .16s ease, border-color .16s ease; }
+.public-auth-code:hover:not(:disabled) { border-color: var(--pa-ink); background: #fff; }.public-auth-register-form { gap: 13px; }.public-auth-register-form .cf-turnstile { max-width: 100%; }.public-auth-message { margin: 15px 0 0; border: 1px solid #f7caca; border-radius: 11px; background: #fff5f5; color: #bb3434; font-size: 13px; font-weight: 600; line-height: 1.45; padding: 10px 12px; }.public-auth-message.is-success { border-color: #a7e3d5; background: #edfffa; color: #08755f; }

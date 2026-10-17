@@ -964,11 +964,16 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
   return (
     <main className={`landing-page${authOnly ? ' landing-page--auth-only' : ''}`}>
       <style>{`
-        html:has(.landing-page--auth-only), body:has(.landing-page--auth-only), #root:has(.landing-page--auth-only) { background: #102d20 !important; }
+        /* 登录／注册页整页改成纸白，和研究端一致（用户 2026-10-17：导航栏左右两块深绿
+           换成研究端那种白）。那两块不是导航栏自己的底色，是 .landing-page 的深绿
+           #102d20 从这条浮起来、两侧留白的白条旁边透出来的；底色一换就没了。
+           其余公开页仍是深绿，不受影响。 */
+        html:has(.landing-page--auth-only), body:has(.landing-page--auth-only), #root:has(.landing-page--auth-only) { background: #fcfdfb !important; }
         .landing-page { background: #102d20; color: #eeeae2; min-width: 320px; font-family: var(--font-sans); }
-        .landing-page--auth-only { min-height: 100svh; background: #102d20; }
-        .landing-page--auth-only > .public-site-header { top: 0; margin-top: 0; }
-        .landing-page--auth-only .landing-shell { height: calc(100svh - 66px); min-height: 650px; }
+        .landing-page--auth-only { min-height: 100svh; background: #fcfdfb; }
+        /* 顶栏跟着回到默认的浮起位置（18px 上边距），外壳高度相应扣掉整条顶栏。 */
+        .landing-page--auth-only > .public-site-header { top: 18px; margin-top: 18px; }
+        .landing-page--auth-only .landing-shell { height: calc(100svh - 78px); min-height: 650px; }
         .landing-site-nav { position: sticky; z-index: 50; top: 0; border-bottom: 1px solid rgba(31,31,27,.15); background: rgba(249,247,241,.94); color: #1f2822; backdrop-filter: blur(18px); }
         .landing-site-nav-inner { display: flex; width: min(100% - 64px, 1380px); min-height: 78px; align-items: center; gap: clamp(24px, 4vw, 64px); margin: 0 auto; }
         .landing-site-nav-brand { display: inline-flex; flex: 0 0 auto; align-items: center; text-decoration: none; }
@@ -1043,39 +1048,11 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         .landing-access-nav .landing-nav-pill { border: 1px solid #252522; border-radius: 999px; color: #171714; padding: 9px 14px; }
         .landing-access-inner { display: flex; min-height: 0; flex: 1; flex-direction: column; align-items: center; justify-content: flex-start; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding: 12px 12px 56px; scroll-padding-top: 12px; scrollbar-width: thin; scrollbar-color: rgba(58,57,52,.32) transparent; }
         .public-auth-panel { width: min(100%, 380px); }
-        .public-auth-tabs { display: flex; width: 100%; height: 50px; border-bottom: 1px solid rgba(34,42,36,.18); }
-        .public-auth-tabs button { position: relative; display: flex; flex: 1 1 50%; min-width: 0; height: 50px; align-items: center; justify-content: center; box-sizing: border-box; border: 0; background: transparent; color: #767c76; cursor: pointer; font-size: 13px; font-weight: 800; line-height: 1; text-align: center; padding: 0; }
-        .public-auth-tabs button:after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: transparent; content: ''; }
-        .public-auth-tabs button.is-active { color: #171b18; }
-        .public-auth-tabs button.is-active:after { background: #171b18; }
-        .public-auth-content { padding-top: 31px; }
-        .public-auth-eyebrow { margin: 0 0 8px; color: #637168; font-size: 11px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
-        .public-auth-content h2 { margin: 0; color: #171b18; font-family: var(--font-serif); font-size: clamp(31px, 3.4vw, 42px); font-weight: 820; letter-spacing: -.035em; line-height: 1.06; }
-        .public-auth-intro { margin: 12px 0 22px; color: #626b64; font-size: 14px; line-height: 1.65; }
-        .public-auth-consent { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 17px; color: #68655d; font-size: 11px; line-height: 1.45; }
-        .public-auth-consent input { width: 14px; height: 14px; margin: 1px 0 0; accent-color: #272724; }
-        .public-auth-consent a, .public-auth-secondary a { color: #1a1a18; font-weight: 800; }
-        .public-auth-google-disabled { display: flex; width: 100%; height: 44px; align-items: center; justify-content: center; gap: 10px; border: 1px solid rgba(34,42,36,.2); border-radius: 999px; background: rgba(255,255,255,.54); color: #626b64; cursor: not-allowed; font-size: 14px; font-weight: 700; }
-        /* The shared panel hard-codes 10px on the mock Google "G" badge; land it on the 9.5 step for the public auth pages only. */
-        .landing-page .public-auth-google-disabled span { font-size: 9.5px; }
-        .public-auth-divider { display: flex; align-items: center; gap: 12px; color: #8a877e; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin: 23px 0; }
-        .public-auth-divider:before, .public-auth-divider:after { height: 1px; flex: 1; background: rgba(34,33,30,.18); content: ''; }
-        .public-auth-form { display: grid; gap: 15px; }
-        .public-auth-form label > span:first-child { display: block; margin-bottom: 7px; color: #625f57; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-        .public-auth-input { display: flex !important; height: 48px; align-items: center; gap: 9px; border: 1px solid rgba(34,42,36,.22); border-radius: 13px; background: rgba(255,255,255,.64); color: #626b64; padding: 0 13px; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
-        .public-auth-input:focus-within { border-color: #405447; background: rgba(255,255,255,.88); box-shadow: 0 0 0 3px rgba(42,72,57,.08); }
-        .public-auth-input input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: #1b1b19; font-size: 14px; font-weight: 600; }
-        .public-auth-input input::placeholder { color: #99958b; font-weight: 500; }
-        .public-auth-input button { border: 0; background: transparent; color: #68655d; cursor: pointer; padding: 4px; }
-        .public-auth-secondary { margin-top: -4px; text-align: right; font-size: 13px; }
-        .public-auth-submit, .public-auth-email-cta { display: flex; width: 100%; height: 49px; align-items: center; justify-content: center; gap: 8px; border: 1px solid #1b1b19; border-radius: 13px; background: #1b1b19; color: #f7f4ed; cursor: pointer; font-size: 14px; font-weight: 800; transition: color .72s ease, background .72s ease, border-color .72s ease, box-shadow 1.25s cubic-bezier(.22,.72,.2,1); }
-        .public-auth-submit:hover { border-color: #1b1b19; background: #1b1b19; transform: none; }
-        .public-auth-submit:disabled, .public-auth-code:disabled { cursor: not-allowed; opacity: .55; transform: none; }
-        .public-auth-email-cta { background: transparent; color: #1b1b19; }
-        .public-auth-email-cta:hover { border-color: #1b1b19; background: transparent; transform: none; }
-        .public-auth-back { display: inline-flex; width: max-content; align-items: center; gap: 4px; border: 0; background: transparent; color: #2d2d29; cursor: pointer; font-size: 13px; font-weight: 800; margin-bottom: 2px; padding: 0; }
-        .public-auth-code { display: inline-flex; min-height: 34px; align-items: center; justify-self: start; border: 1px solid #1b1b19; border-radius: 999px; background: #1b1b19; color: #f7f4ed; cursor: pointer; font-size: 13px; font-weight: 800; letter-spacing: .01em; margin-top: -3px; padding: 0 13px; transition: color .72s ease, background .72s ease, border-color .72s ease, box-shadow 1.25s cubic-bezier(.22,.72,.2,1); }
-        .public-auth-code:hover:not(:disabled) { border-color: #1b1b19; background: #1b1b19; transform: none; }
+        /* 参与端这层只留「过渡要慢」这一个差异。配色／字重／圆角一律归
+           PublicAuthPanel.css，不要在这里再写第二份，否则两边会再次分叉。 */
+        .public-auth-submit, .public-auth-email-cta, .public-auth-code { transition: color .72s ease, background .72s ease, border-color .72s ease, box-shadow 1.25s cubic-bezier(.22,.72,.2,1); }
+        .public-auth-submit:disabled, .public-auth-code:disabled,
+        .public-auth-submit:hover, .public-auth-email-cta:hover, .public-auth-code:hover:not(:disabled) { transform: none; }
         .public-auth-register-form { gap: 13px; }
         .public-auth-register-form .cf-turnstile { max-width: 100%; }
         .public-auth-message { margin: 15px 0 0; border: 1px solid #f7caca; border-radius: 11px; background: #fff5f5; color: #bb3434; font-size: 14px; font-weight: 700; line-height: 1.45; padding: 10px 12px; }

@@ -326,7 +326,9 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
       <div className="public-auth-content">
         <p className="public-auth-eyebrow">{isLogin ? copy.welcome : accountType === 'BUSINESS' ? businessCopy.businessEyebrow : copy.join}</p>
         <h2 id="public-auth-title">{isLogin ? copy.loginTitle : accountType === 'BUSINESS' ? businessCopy.businessTitle : copy.registerTitle}</h2>
-        <p className="public-auth-intro">{isLogin ? copy.loginIntro : accountType === 'BUSINESS' ? businessCopy.businessIntro : copy.registerIntro}</p>
+        {/* 说明那行只在登录页留（用户 2026-10-17：注册页那行小字没必要，
+            标题下面再叠一句等于把同一句话说两遍）。 */}
+        {isLogin && <p className="public-auth-intro">{copy.loginIntro}</p>}
 
         <p className="public-auth-consent">{isLogin ? copy.consentLogin : copy.consentRegister} <Link to={businessTermsPath} target="_blank" rel="noopener noreferrer">{termsLabel}</Link> {copy.and} <Link to={privacyPath} target="_blank" rel="noopener noreferrer">{copy.privacy}</Link>.</p>
 
