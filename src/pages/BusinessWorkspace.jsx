@@ -132,14 +132,6 @@ export default function BusinessWorkspace() {
   // in this file. They now come from the language library, keyed by language.
   const workspaceUiMap = copy.workspaceUi || {};
   const ui = workspaceUiMap[language] || workspaceUiMap['en-US'] || {};
-  /* The wizard asks three questions, so the wizard's own rail lists those
-     questions: the step marker is the question, not a number in a separate
-     scale. The third only applies to organisation accounts. */
-  const onboardingRail = [
-    { question: copy.onboarding.titles[0] },
-    { question: copy.onboarding.titles[1] },
-    { question: copy.onboarding.titles[2], tag: copy.onboarding.organisation[0] },
-  ];
   // Copy that used to be hardcoded English in this file now comes from the
   // language library, keyed by language.
   const workspaceStaticMap = copy.workspaceStatic || {};
@@ -475,6 +467,12 @@ export default function BusinessWorkspace() {
        next visit, when the stored flag is already set. */
   };
 
+  /* 问号单独拆出来：衬线体在大字号下那个钩很怪（自定义问卷页早就这么处理了，
+     见 .business-custom-request-question-mark）。这里对 ? 和 ？都生效。 */
+  const onboardingTitle = String(copy.onboarding?.titles?.[onboardingStep] || '');
+  const onboardingTitleText = onboardingTitle.replace(/[?？]\s*$/, '');
+  const onboardingTitleMark = /[?？]\s*$/.test(onboardingTitle) ? onboardingTitle.trim().slice(-1) : '';
+
   return (
     <main className="business-workspace">
       <div className="business-workspace-body business-workspace-body--rail">
@@ -731,67 +729,80 @@ export default function BusinessWorkspace() {
       {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.quote.eyebrow}</p><h2 id="business-quote-title">{projectsCopy.quote.title}</h2><p className="business-form-intro">{projectsCopy.quote.intro}</p><dl><div><dt>{projectsCopy.quote.project}</dt><dd>{quoteProject.title}</dd></div><div><dt>{projectsCopy.quote.quote}</dt><dd>{new Intl.NumberFormat(language, { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>{projectsCopy.quote.validUntil}</dt><dd>{new Intl.DateTimeFormat(language, { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>{projectsCopy.quote.scope}</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>{projectsCopy.quote.terms}</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">{projectsCopy.quote.declineQuestion}<textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder={projectsCopy.quote.declinePlaceholder} /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>{projectsCopy.quote.keepReviewing}</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.declineQuote}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>{projectsCopy.quote.decline}</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.accept} <Check size={16} /></button></>}</div></section></div>}
       {editorStarterOpen && <div className="business-project-modal business-editor-starter-modal" role="dialog" aria-modal="true" aria-labelledby="business-editor-starter-title"><form onSubmit={createEditorDraft}><button className="business-modal-close" type="button" onClick={() => setEditorStarterOpen(false)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{ui.editorStarterEyebrow}</p><h2 id="business-editor-starter-title">{ui.editorStarterTitle}</h2><p className="business-form-intro">{ui.editorStarterIntro}</p><label>{ui.editorStarterName}<input required minLength="3" value={editorStarter.title} onChange={(event) => setEditorStarter((current) => ({ ...current, title: event.target.value }))} placeholder={ui.editorStarterNamePlaceholder} /></label><label>{ui.editorStarterGoal}<textarea required minLength="20" value={editorStarter.researchGoal} onChange={(event) => setEditorStarter((current) => ({ ...current, researchGoal: event.target.value }))} placeholder={ui.editorStarterGoalPlaceholder} /></label><label>{ui.editorStarterAudience}<textarea required minLength="10" value={editorStarter.audienceDescription} onChange={(event) => setEditorStarter((current) => ({ ...current, audienceDescription: event.target.value }))} placeholder={ui.editorStarterAudiencePlaceholder} /></label><button className="business-button" type="submit" disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : ui.editorStarterSubmit} {!submitting && <ArrowRight size={16} />}</button></form></div>}
       {welcomeOpen && <div className="business-welcome-modal" role="dialog" aria-modal="true" aria-labelledby="business-welcome-title"><section><button className="business-welcome-close" type="button" onClick={closeWelcome} aria-label={ui.welcomeDismiss}><X size={18} /></button><div className="business-welcome-copy"><p className="business-welcome-eyebrow">{ui.welcomeEyebrow}</p><h2 id="business-welcome-title">{String(ui.welcomeHeading || '').replace('{name}', displayName)}</h2><span>{ui.welcomeBody}</span><ul><li>{ui.welcomePoint1}</li><li>{ui.welcomePoint2}</li><li>{ui.welcomePoint3}</li></ul><div><button className="business-button" type="button" onClick={closeWelcome}>{ui.welcomeStart} <ArrowRight size={16} /></button></div></div><figure><img src={welcomeMarketImage} alt="" /></figure></section></div>}
+      {/* 引导：压在模糊工作区上的大弹窗（用户 2026-10-17，参照 YouGov）。
+          背景是真工作区，答完这几问才关掉它并弹出欢迎弹窗。
+          版式：顶部通栏进度条 → 字标 + 01/03 → 大标题 → 说明 → 卡片（图标砖 + 选中勾）→ 页脚按钮。 */}
       {!loading && workspace.profile && !onboardingComplete && !welcomeOpen && (
-        <section className="business-onboarding" aria-labelledby="business-onboarding-title">
-          <aside className="business-onboarding-rail">
-            <div className="business-onboarding-brand">
-              <Logo size="md" variant="dark" />
-              <BusinessLanguagePicker />
+        <div className="business-onboarding" role="dialog" aria-modal="true" aria-labelledby="business-onboarding-title">
+          <section className="business-onboarding-dialog">
+            {/* 字标是品牌，独占顶部一条，不和序号/正文排在一起。 */}
+            <header className="business-onboarding-head">
+              <Logo size="lg" variant="dark" />
+            </header>
+            <div className="business-onboarding-meta">
+              <p className="business-onboarding-kicker">{ui.onboardingWorkspace}</p>
+              <span className="business-onboarding-count">
+                <strong>{String(onboardingStep + 1).padStart(2, '0')}</strong>
+                <em>/</em>
+                {String(onboarding.researchRole === 'ORGANIZATION' ? 3 : 2).padStart(2, '0')}
+              </span>
             </div>
-            <div className="business-onboarding-rail-body">
-              <p className="business-onboarding-rail-lead">{copy.access.setupTitle}</p>
-              <ol className="business-onboarding-rail-list">
-                {onboardingRail.map((step, index) => (
-                  <li key={step.question || index} className={index === onboardingStep ? 'is-current' : index < onboardingStep ? 'is-done' : index === 2 && onboarding.researchRole === 'INDEPENDENT' ? 'is-skipped' : ''}>
-                    <span className="business-onboarding-rail-index">{`0${index + 1}`}</span>
-                    <span className="business-onboarding-rail-copy">
-                      <strong>{step.question}</strong>
-                      {step.tag && <span className="business-onboarding-rail-tag">{step.tag}</span>}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-              <p className="business-onboarding-rail-note">{copy.access.asideNote}</p>
-            </div>
-          </aside>
-          <header className="business-onboarding-chrome">
-            <div>
-              <span>{ui.onboardingWorkspace}</span>
-              <strong>{copy.onboarding.step.replace('{current}', onboardingStep + 1).replace('{total}', onboarding.researchRole === 'ORGANIZATION' ? 3 : 2)}</strong>
-            </div>
-            <div className="business-onboarding-signin">
-              <span>{copy.access.hasAccount}</span>
-              <Link className="business-onboarding-signin-button" to={withLanguage('/business/login', language)}>{copy.access.signInLink}</Link>
-            </div>
-          </header>
-          <div className="business-onboarding-shell">
             <h1 id="business-onboarding-title">
-              {copy.onboarding.titles[onboardingStep]}
+              {onboardingTitleText}
+              {onboardingTitleMark && <i className="business-onboarding-question-mark">{onboardingTitleMark}</i>}
             </h1>
-            <p className="business-onboarding-intro">
-              {copy.onboarding.intros[onboardingStep]}
-            </p>
+            <p className="business-onboarding-intro">{copy.onboarding.intros[onboardingStep]}</p>
             {onboardingStep === 0 && <div className="business-onboarding-options business-onboarding-options--two">
-              <button type="button" className={onboarding.researchRole === 'INDEPENDENT' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'INDEPENDENT', organizationType: 'INDEPENDENT_RESEARCHER' }))}><UserRound size={23} /><strong>{copy.onboarding.individual[0]}</strong><small>{copy.onboarding.individual[1]}</small></button>
-              <button type="button" className={onboarding.researchRole === 'ORGANIZATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'ORGANIZATION', organizationType: current.organizationType === 'INDEPENDENT_RESEARCHER' ? '' : current.organizationType }))}><UsersRound size={23} /><strong>{copy.onboarding.organisation[0]}</strong><small>{copy.onboarding.organisation[1]}</small></button>
+              <button type="button" className={onboarding.researchRole === 'INDEPENDENT' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'INDEPENDENT', organizationType: 'INDEPENDENT_RESEARCHER' }))}>
+                <span className="business-onboarding-option-icon"><UserRound size={21} /></span>
+                <span className="business-onboarding-option-check" aria-hidden="true"><Check size={13} /></span>
+                <strong>{copy.onboarding.individual[0]}</strong>
+                <small>{copy.onboarding.individual[1]}</small>
+              </button>
+              <button type="button" className={onboarding.researchRole === 'ORGANIZATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchRole: 'ORGANIZATION', organizationType: current.organizationType === 'INDEPENDENT_RESEARCHER' ? '' : current.organizationType }))}>
+                <span className="business-onboarding-option-icon"><UsersRound size={21} /></span>
+                <span className="business-onboarding-option-check" aria-hidden="true"><Check size={13} /></span>
+                <strong>{copy.onboarding.organisation[0]}</strong>
+                <small>{copy.onboarding.organisation[1]}</small>
+              </button>
             </div>}
             {onboardingStep === 1 && <div className="business-onboarding-options business-onboarding-options--three">
-              <button type="button" className={onboarding.researchIntent === 'INDEPENDENT_RESEARCH' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'INDEPENDENT_RESEARCH' }))}><ClipboardList size={22} /><strong>{copy.onboarding.intents[0][0]}</strong><small>{copy.onboarding.intents[0][1]}</small></button>
-              <button type="button" className={onboarding.researchIntent === 'MARKET_EXPLORATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_EXPLORATION' }))}><Sparkles size={22} /><strong>{copy.onboarding.intents[1][0]}</strong><small>{copy.onboarding.intents[1][1]}</small></button>
-              <button type="button" className={onboarding.researchIntent === 'MARKET_DECISION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_DECISION' }))}><BarChart3 size={22} /><strong>{copy.onboarding.intents[2][0]}</strong><small>{copy.onboarding.intents[2][1]}</small></button>
+              <button type="button" className={onboarding.researchIntent === 'INDEPENDENT_RESEARCH' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'INDEPENDENT_RESEARCH' }))}>
+                <span className="business-onboarding-option-icon"><ClipboardList size={20} /></span>
+                <span className="business-onboarding-option-check" aria-hidden="true"><Check size={13} /></span>
+                <strong>{copy.onboarding.intents[0][0]}</strong>
+                <small>{copy.onboarding.intents[0][1]}</small>
+              </button>
+              <button type="button" className={onboarding.researchIntent === 'MARKET_EXPLORATION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_EXPLORATION' }))}>
+                <span className="business-onboarding-option-icon"><Sparkles size={20} /></span>
+                <span className="business-onboarding-option-check" aria-hidden="true"><Check size={13} /></span>
+                <strong>{copy.onboarding.intents[1][0]}</strong>
+                <small>{copy.onboarding.intents[1][1]}</small>
+              </button>
+              <button type="button" className={onboarding.researchIntent === 'MARKET_DECISION' ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, researchIntent: 'MARKET_DECISION' }))}>
+                <span className="business-onboarding-option-icon"><BarChart3 size={20} /></span>
+                <span className="business-onboarding-option-check" aria-hidden="true"><Check size={13} /></span>
+                <strong>{copy.onboarding.intents[2][0]}</strong>
+                <small>{copy.onboarding.intents[2][1]}</small>
+              </button>
             </div>}
             {onboardingStep === 2 && <div className="business-onboarding-options business-onboarding-options--three">
-              {organizationTypeOptions.map(({ value, icon: Icon }, index) => <button type="button" key={value} className={onboarding.organizationType === value ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, organizationType: value }))}><Icon size={22} /><strong>{copy.onboarding.organisationTypes[index][0]}</strong><small>{copy.onboarding.organisationTypes[index][1]}</small></button>)}
+              {organizationTypeOptions.map(({ value, icon: Icon }, index) => <button type="button" key={value} className={onboarding.organizationType === value ? 'is-selected' : ''} onClick={() => setOnboarding((current) => ({ ...current, organizationType: value }))}>
+                <span className="business-onboarding-option-icon"><Icon size={20} /></span>
+                <span className="business-onboarding-option-check" aria-hidden="true"><Check size={13} /></span>
+                <strong>{copy.onboarding.organisationTypes[index][0]}</strong>
+                <small>{copy.onboarding.organisationTypes[index][1]}</small>
+              </button>)}
             </div>}
-            <footer>
-              {onboardingStep > 0 && <button type="button" onClick={() => setOnboardingStep((current) => current - 1)}>{copy.onboarding.back}</button>}
-              <button className="business-button" type="button" disabled={(onboardingStep === 0 && !onboarding.researchRole) || (onboardingStep === 1 && !onboarding.researchIntent) || (onboardingStep === 2 && !onboarding.organizationType) || onboardingSaving} onClick={advanceOnboarding}>
+            <footer className="business-onboarding-actions">
+              {onboardingStep > 0 && <button className="business-onboarding-back" type="button" onClick={() => setOnboardingStep((current) => current - 1)}>{copy.onboarding.back}</button>}
+              <button className="business-onboarding-next" type="button" disabled={(onboardingStep === 0 && !onboarding.researchRole) || (onboardingStep === 1 && !onboarding.researchIntent) || (onboardingStep === 2 && !onboarding.organizationType) || onboardingSaving} onClick={advanceOnboarding}>
                 {onboardingSaving ? <LoaderCircle className="animate-spin" size={17} /> : onboardingStep === (onboarding.researchRole === 'ORGANIZATION' ? 2 : 1) ? copy.onboarding.enter : copy.onboarding.continue}
                 {!onboardingSaving && <ArrowRight size={17} />}
               </button>
             </footer>
-          </div>
-        </section>
+          </section>
+        </div>
       )}
     </main>
   );
