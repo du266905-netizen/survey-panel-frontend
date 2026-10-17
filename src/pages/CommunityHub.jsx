@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, MapPin } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-import communityCrossMarketOffice from '../assets/community/community-cross-market-office.jpg';
-import communityResearchCollage from '../assets/community/community-research-collage.png';
+/* 轮番版本每次切换都现拉 8.9MB / 4.7MB 的原图，实测明显卡顿。改成上下长页后两张图
+   一次性渲染（lazy 载入），并改用压过的变体：61KB / 296KB。原图保留在 assets 里。 */
+import communityCrossMarketOffice from '../assets/community/community-cross-market-office-web.jpg';
+import communityResearchCollage from '../assets/community/community-research-collage-web.webp';
 import { communityTranslations } from '../constants/homepageTranslations';
-
-const rotationDelay = 9000;
 
 const communityCopy = {
   en: {
@@ -130,80 +129,59 @@ function FeatureAction({ action, language }) {
 export default function CommunityHub() {
   const { language } = useLanguage();
   const copy = communityCopy[language] || communityCopy.en;
-  const platformFeatures = createPlatformFeatures(copy);
-  const [activeAreaIndex, setActiveAreaIndex] = useState(0);
-  const selectedArea = platformFeatures[activeAreaIndex];
+  const features = createPlatformFeatures(copy);
 
-  const selectArea = useCallback((index) => {
-    setActiveAreaIndex((index + platformFeatures.length) % platformFeatures.length);
-  }, []);
-
-  const goPrevious = useCallback(() => selectArea(activeAreaIndex - 1), [activeAreaIndex, selectArea]);
-  const goNext = useCallback(() => selectArea(activeAreaIndex + 1), [activeAreaIndex, selectArea]);
-
-  useEffect(() => {
-    const rotation = window.setTimeout(goNext, rotationDelay);
-    return () => window.clearTimeout(rotation);
-  }, [activeAreaIndex, goNext]);
-
+  /* 原来是 9 秒一轮的轮播：整块背景图、标题、右侧小卡同时换，长文案挤在一屏里。
+     现在拆成上下两段长页：每段一张图 + 完整正文，图片各渲染一次，不再切换。 */
   return (
-    <section className="community-hub" aria-labelledby="community-hub-title">
-      <div className={`community-hub-stage${selectedArea.variant ? ` community-hub-stage--${selectedArea.variant}` : ''}`}>
-        {selectedArea.variant !== 'research' && (
-          <div className="community-hub-stage-media" aria-hidden="true">
-            <img className="community-hub-stage-image is-active" src={selectedArea.image} alt="" loading="eager" decoding="async" />
-          </div>
-        )}
-        <div className="community-hub-stage-wash" aria-hidden="true" />
-        <div className="community-hub-corners" aria-hidden="true" />
+    <section className="community-hub" aria-label={copy.controls.label}>
+      <div className="community-hub-inner">
+        {features.map((feature, index) => (
+          <article
+            key={feature.id}
+            className={`community-hub-block community-hub-block--${feature.variant}${index % 2 === 1 ? ' is-flipped' : ''}`}
+          >
+            <div className="community-hub-copy">
+              <p className="community-hub-eyebrow">{feature.eyebrow}</p>
+              <h2 id={index === 0 ? 'community-hub-title' : undefined}>{feature.title}</h2>
+              <p className="community-hub-description">{feature.description}</p>
+              {feature.supporting && <p className="community-hub-supporting">{feature.supporting}</p>}
 
-        <header className="community-hub-intro">
-          <p>{selectedArea.eyebrow}</p>
-          <h1 id="community-hub-title">{selectedArea.title}</h1>
-          <span>{selectedArea.description}</span>
-          {selectedArea.supporting && <strong className="community-hub-supporting-copy">{selectedArea.supporting}</strong>}
-          {selectedArea.clientProblems && (
-            <div className="community-hub-client-problems" aria-label={selectedArea.clientProblemsLabel}>
-              <p>{selectedArea.clientProblemsTitle}</p>
-              <ul>
-                {selectedArea.clientProblems.map((problem) => (
-                  <li key={problem.title}>
-                    <CheckCircle2 size={15} strokeWidth={1.9} aria-hidden="true" />
-                    <span><strong>{problem.title}</strong>{problem.description}</span>
-                  </li>
-                ))}
-              </ul>
+              {feature.clientProblems && (
+                <div className="community-hub-problems" aria-label={feature.clientProblemsLabel}>
+                  <p className="community-hub-problems-label">{feature.clientProblemsTitle}</p>
+                  <ul>
+                    {feature.clientProblems.map((problem) => (
+                      <li key={problem.title}>
+                        <CheckCircle2 size={16} strokeWidth={1.9} aria-hidden="true" />
+                        <span><strong>{problem.title}</strong>{problem.description}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {feature.detail && (
+                <div className="community-hub-detail">
+                  <p>{feature.detail.eyebrow}</p>
+                  <h3>{feature.detail.title}</h3>
+                  <span>{feature.detail.description}</span>
+                  <ul>
+                    {feature.detail.points.map((point) => (
+                      <li key={point}><MapPin size={13} strokeWidth={1.8} aria-hidden="true" />{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <FeatureAction action={feature.action} language={language} />
             </div>
-          )}
-          <FeatureAction action={selectedArea.action} language={language} />
-        </header>
 
-        {selectedArea.variant === 'research' ? (
-          <div className="community-hub-research-visual" aria-hidden="true">
-            <div className="community-hub-research-photo-frame">
-              <img src={selectedArea.image} alt="" decoding="async" />
-            </div>
-          </div>
-        ) : (
-          <aside className="community-hub-detail" aria-live="polite">
-            <p>{selectedArea.detail.eyebrow}</p>
-            <h2>{selectedArea.detail.title}</h2>
-            <span>{selectedArea.detail.description}</span>
-            <ul>
-              {selectedArea.detail.points.map((point) => <li key={point}><MapPin size={13} strokeWidth={1.8} />{point}</li>)}
-            </ul>
-          </aside>
-        )}
-
-        <div className="community-hub-controls" aria-label={copy.controls.label}>
-          <button type="button" onClick={goPrevious} aria-label={copy.controls.previous}>
-            <ArrowLeft size={17} strokeWidth={1.8} />
-          </button>
-          <button type="button" onClick={goNext} aria-label={copy.controls.next}>
-            <ArrowRight size={17} strokeWidth={1.8} />
-          </button>
-        </div>
-
+            <figure className="community-hub-media">
+              <img src={feature.image} alt="" loading="lazy" decoding="async" />
+            </figure>
+          </article>
+        ))}
       </div>
     </section>
   );
