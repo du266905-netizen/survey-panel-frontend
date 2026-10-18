@@ -16,7 +16,7 @@
   --proto-faint: #8d948d;
   --proto-line: rgba(20, 26, 23, .11);
   --proto-line-2: rgba(20, 26, 23, .22);
-  --proto-accent: #deef24;
+  --proto-accent: var(--atlas-forest);
   --proto-paper: #fcfdfb;
   --proto-radius: 6px;
   min-height: 100vh;
@@ -232,7 +232,7 @@
 .video-hero-description { max-width: 52ch; margin: clamp(18px, 1.7vw, 24px) 0 0; color: #4d564f; font-family: var(--font-sans); font-size: 16px; font-weight: 400; line-height: 1.62; animation: video-hero-rise .85s .54s both cubic-bezier(.22,.72,.2,1); }
 .video-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: clamp(24px, 2.4vw, 34px); animation: video-hero-rise .85s .64s both cubic-bezier(.22,.72,.2,1); }
 .video-hero-supporting { max-width: 62ch; margin: clamp(13px, 1.2vw, 17px) 0 0; color: #5f6862; font-family: var(--font-sans); font-size: 14px; line-height: 1.72; animation: video-hero-rise .85s .6s both cubic-bezier(.22,.72,.2,1); }
-.video-hero-cta { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px; border: 1px solid #deef24; border-radius: 6px; background: #deef24; color: #17251f; font-family: var(--font-sans); font-size: 14px; font-weight: 500; text-decoration: none;
+.video-hero-cta { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px; border: 1px solid #141a17; border-radius: 0; background: #141a17; color: #fffdf8; font-family: var(--font-sans); font-size: 14px; font-weight: 500; text-decoration: none;
 }
 /* action-feedback.css also targets .atlas-primary-link and wins a tie, so this
    needs the extra class to take effect. Slow start, accelerating fill. */
@@ -245,9 +245,9 @@
   transition: color .22s ease, box-shadow .5s cubic-bezier(.4, 0, .2, 1);
 }
 .video-hero-actions .video-hero-cta:not(.video-hero-cta--outline):hover {
-  background: #deef24;
-  border-color: #deef24;
-  color: #fff;
+  background: #141a17;
+  border-color: #141a17;
+  color: #fffdf8;
   transition: color .28s ease .5s, box-shadow 1.15s cubic-bezier(.52, .02, .72, .28);
 }
 /* the outline button keeps its own slower sweep; without this it inherits the
@@ -304,7 +304,7 @@
   position: absolute;
   z-index: 1;
   inset: 24% -10% 0 -15%;
-  background: var(--proto-accent);
+  background: var(--atlas-forest);
   clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
 }
 .video-hero-cutout {
@@ -834,7 +834,7 @@
 }
 
 .atlas-map-typewriter i {
-  background: #deef24;
+  background: var(--atlas-forest);
 }
 
 @media (max-width: 900px) {
