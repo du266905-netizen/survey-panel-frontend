@@ -990,7 +990,8 @@
 .community-hub { background: #fcfdfb; padding: 0 clamp(10px, 2vw, 24px); }
 .community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 28px; background: #f4f7f2; padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
 
-.community-hub-statement { max-width: 1080px; margin: 0 auto; color: #141a17; font-family: var(--font-display); font-size: clamp(38px, 4.25vw, 64px); font-weight: 500; letter-spacing: -.048em; line-height: 1.03; text-align: center; text-wrap: balance; }
+.community-hub-statement { max-width: 1100px; margin: 0 auto; color: #141a17; font-family: var(--font-display); font-size: clamp(40px, 5.2vw, 72px); font-style: italic; font-weight: 500; letter-spacing: -.045em; line-height: 1; text-align: center; text-wrap: balance; }
+:lang(zh) .community-hub-statement { font-style: normal; }
 
 .community-hub-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: clamp(32px, 4vw, 64px); align-items: center; margin-top: clamp(30px, 4vw, 56px); }
 .community-hub-lede { max-width: 600px; margin: 0; color: #3f4a44; font-family: var(--font-reading); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.5; }
@@ -1002,9 +1003,15 @@
 .community-hub-text-action { display: inline-flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(20, 26, 23, .32); color: #141a17; font-family: var(--font-sans); font-size: 13px; font-weight: 600; padding-bottom: 3px; text-decoration: none; }
 .community-hub-text-action:hover { border-color: #141a17; }
 
-/* 人物：整块照片 + 18px 圆角（图已经是完整不透明的，没有裁切线）。 */
-.community-hub-portrait { width: 100%; margin: 0; }
-.community-hub-portrait img { display: block; width: 100%; height: auto; border-radius: 18px; }
+/* 人物：原始扣图不裁切、不分层，脸是连续的；
+   照片上沿两端各盖一块 18px 的底色做圆角，底角直接用 border-radius。 */
+.community-hub-portrait { position: relative; width: 100%; margin: 0; }
+.community-hub-portrait img { display: block; width: 100%; height: auto; border-radius: 0 0 18px 18px; }
+.community-hub-portrait::before,
+.community-hub-portrait::after { position: absolute; z-index: 2; top: 20.6%; width: 18px; height: 18px; content: ''; pointer-events: none; }
+.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #f4f7f2 18px); }
+.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #f4f7f2 18px); }
+
 
 @media (max-width: 980px) {
   .community-hub { padding: 0 10px; }

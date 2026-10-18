@@ -201,10 +201,10 @@ export default function HomeAtlas() {
 
       <CommunityHub />
 
-      {/* 影片放在地球页原来的位置；地球页回到独立的段落，跟在影片后面。 */}
-      <HomeFilmSection />
-
+      {/* 地球页紧跟人物段；影片放在最后，不再插在两者中间。 */}
       <HomeGlobalSection />
+
+      <HomeFilmSection />
 
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">
