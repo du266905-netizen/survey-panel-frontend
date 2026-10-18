@@ -4366,7 +4366,9 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 
    When an italic slot is authorised, record it here with its owner and date:
 
-     (none at present)
+       home statement   .community-hub-statement
+                        authorised 2026-10-18 by the owner ("大标题给我改成斜的"),
+                        Latin only; zh stays upright via :lang(zh)
 
    Two constraints that come with any italic slot:
      - CJK has no true italic. Chinese and traditional Chinese must keep
