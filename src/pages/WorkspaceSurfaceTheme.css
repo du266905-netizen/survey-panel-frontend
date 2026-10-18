@@ -988,7 +988,7 @@
      #fcfdfb   public paper      整页底色
      #f4f7f2   soft sage (A)     浅鼠尾草；与 paper 只差 8 阶，色块上几乎看不出边界，
                                  目前不入版面，留在库里备用（用户确认保留）
-     #e9efe2   sage deep (B)     当前人物面板的地面色：边界清楚、仍在绿色家族里
+     #f2e7d5   warm sand (W2)    当前人物面板的地面色（绿色退场后启用）
      #173f30   forest (F1)       深色方案的主候选：深色下扣图的照片边会自然消失，
                                  但整块变深后，面板里的地球页文字要整体反白
 
@@ -1002,7 +1002,7 @@
    字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
    =========================================================================== */
 .community-hub { background: #fcfdfb; padding: 0 clamp(10px, 2vw, 24px); }
-.community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 28px; background: #e9efe2; padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
+.community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 28px; background: #f2e7d5; padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
 
 .community-hub-statement { max-width: 1180px; margin: 0 auto; color: #141a17; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(40px, 5.6vw, 80px); font-weight: 500; letter-spacing: -.05em; line-height: 1.02; text-align: center; text-wrap: balance; }
 
@@ -1026,8 +1026,8 @@
 .community-hub-portrait img { display: block; width: 100%; height: auto; border-radius: 0 0 18px 18px; }
 .community-hub-portrait::before,
 .community-hub-portrait::after { position: absolute; z-index: 2; top: 20.6%; width: 18px; height: 18px; content: ''; pointer-events: none; }
-.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #e9efe2 18px); }
-.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #e9efe2 18px); }
+.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #f2e7d5 18px); }
+.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #f2e7d5 18px); }
 
 
 @media (max-width: 980px) {
