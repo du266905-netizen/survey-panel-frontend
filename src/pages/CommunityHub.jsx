@@ -17,48 +17,42 @@ const VIDEO_EMBED_URL = 'https://player.mediadelivery.net/embed/763269/6a8340b7-
 const copy = {
   en: {
     research: {
-      eyebrow: 'Local evidence, not a global template',
-      title: 'One global panel fits no market.',
-      description: 'A large panel can reach people almost anywhere. It cannot tell you which questions a market is actually answering. We design and run each study inside the market you are entering — locally recruited samples, the language people think in, and a method that holds up when your board asks how you know.',
-      supporting: 'Fieldwork across Greater China, Asia-Pacific, the Middle East, Europe and North America, with scientific sample design, mixed qualitative and quantitative methods, and documented research ethics.',
-      clientProblemsLabel: 'What a panel cannot give you',
-      clientProblemsTitle: 'Where the advantage comes from',
+      title: 'Another city, another answer.',
+      description: 'A panel can fill a few hundred completes in a day. It will not tell you that this word means something else there, or that people in that district do not buy this way.',
+      supporting: 'That part only happens on the ground: recruiting, interviewing, translating, and the notes a board will ask for.',
+      clientProblemsTitle: 'The extra steps we take',
       clientProblems: [
-        { title: 'A sample that matches the market', description: 'Quotas, screening and recruitment built for this population — not borrowed from a global template and relabelled.' },
-        { title: 'Language people actually use', description: 'Local moderators and meaning-checked translation, so a question lands the way you intended it.' },
-        { title: 'Evidence you can defend', description: 'Method, limits and provenance written down, so the finding survives the meeting where the budget is decided.' },
+        { title: 'A sample built here', description: 'Quotas, screening and recruiting redone for this city, not a global template with a new label.' },
+        { title: 'Asked in local words', description: 'Local moderators use the words people use. Translation checks meaning, not vocabulary.' },
+        { title: 'Notes you can hand over', description: 'Where the sample came from, what it cannot answer, and where the limits sit.' },
       ],
       action: 'Discuss your market question',
     },
   },
   'zh-CN': {
     research: {
-      eyebrow: '本地证据，不是全球模板',
-      title: '一个全球样本库，套不住任何一个市场。',
-      description: '大样本库几乎能触达任何地方的人，却无法告诉你这个市场真正在回答什么问题。我们在你要进入的市场内部设计与执行研究：当地招募的样本、人们真正使用的语言，以及经得起追问的方法。',
-      supporting: '研究覆盖大中华区、亚太、中东、欧洲与北美；科学抽样设计、定性与定量结合，研究伦理有据可查。',
-      clientProblemsLabel: '样本库给不了你的',
-      clientProblemsTitle: '优势从哪里来',
+      title: '换个城市，答案就变了。',
+      description: '样本库一天能收满几百份问卷。它不会告诉你：这个词在那边是另一个意思，或者这个区的人根本不这样买东西。',
+      supporting: '这部分只能在地上做：招募、访谈、翻译，还有董事会会追问的那些记录。',
+      clientProblemsTitle: '我们多做的那几步',
       clientProblems: [
-        { title: '与市场匹配的样本', description: '配额、甄别与招募都为这个人群单独设计，而不是套用全球模板再改个名字。' },
-        { title: '人们真正在用的语言', description: '本地主持人，加上经过语义校验的翻译，让一个问题被理解成你想问的意思。' },
-        { title: '经得起追问的证据', description: '方法、边界与来源都写清楚，结论才撑得住决定预算的那场会。' },
+        { title: '按这座城市配样本', description: '配额、甄别、招募都在这里重做一遍，不是把全球模板换个名字。' },
+        { title: '用当地的说法问', description: '本地主持人用当地人自己的说法；翻译校的是意思，不是词。' },
+        { title: '能交出去的记录', description: '样本从哪来、哪些答不了、边界在哪，都写下来。' },
       ],
       action: '讨论你的市场问题',
     },
   },
   'zh-Hant': {
     research: {
-      eyebrow: '本地證據，不是全球模板',
-      title: '一個全球樣本庫，套不住任何一個市場。',
-      description: '大樣本庫幾乎能觸達任何地方的人，卻無法告訴你這個市場真正在回答什麼問題。我們在你要進入的市場內部設計與執行研究：當地招募的樣本、人們真正使用的語言，以及經得起追問的方法。',
-      supporting: '研究覆蓋大中華區、亞太、中東、歐洲與北美；科學抽樣設計、定性與定量結合，研究倫理有據可查。',
-      clientProblemsLabel: '樣本庫給不了你的',
-      clientProblemsTitle: '優勢從哪裡來',
+      title: '換個城市，答案就變了。',
+      description: '樣本庫一天能收滿幾百份問卷。它不會告訴你：這個詞在那边是另一個意思，或者這個區的人根本不這樣買東西。',
+      supporting: '這部分只能在地上做：招募、訪談、翻譯，還有董事會會追問的那些記錄。',
+      clientProblemsTitle: '我們多做的那幾步',
       clientProblems: [
-        { title: '與市場匹配的樣本', description: '配額、甄別與招募都為這個人群單獨設計，而不是套用全球模板再改個名字。' },
-        { title: '人們真正在用的語言', description: '本地主持人，加上經過語意校驗的翻譯，讓一個問題被理解成你想問的意思。' },
-        { title: '經得起追問的證據', description: '方法、邊界與來源都寫清楚，結論才撐得住決定預算的那場會。' },
+        { title: '按這座城市配樣本', description: '配額、甄別、招募都在這裡重做一遍，不是把全球模板換個名字。' },
+        { title: '用當地的說法問', description: '本地主持人用當地人自己的說法；翻譯校的是意思，不是詞。' },
+        { title: '能交出去的記錄', description: '樣本從哪來、哪些答不了、邊界在哪，都寫下來。' },
       ],
       action: '討論你的市場問題',
     },
@@ -78,7 +72,6 @@ export default function CommunityHub() {
       <div className="community-hub-inner">
         <div className="community-hub-top">
           <div className="community-hub-intro">
-            <p className="community-hub-eyebrow"><span>01</span>{research.eyebrow}</p>
             <h2 id="community-hub-title">{research.title}</h2>
             <p className="community-hub-lede">{research.description}</p>
             <p className="community-hub-supporting">{research.supporting}</p>
@@ -116,12 +109,10 @@ export default function CommunityHub() {
         </div>
 
         <div className="community-hub-resolve">
-          <p className="community-hub-resolve-label">{research.clientProblemsLabel}</p>
           <h3>{research.clientProblemsTitle}</h3>
           <ol>
-            {research.clientProblems.map((problem, index) => (
+            {research.clientProblems.map((problem) => (
               <li key={problem.title}>
-                <span className="community-hub-resolve-index">{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <strong>{problem.title}</strong>
                   <span>{problem.description}</span>
