@@ -19,14 +19,16 @@ export default function CommunityHub() {
   const { language, publicCopy } = useLanguage();
   const text = copy[language] || copy.en;
 
-  /* 一句主张 + 一段说明 + 一张扣图，下面接地球页。
-     影片已经单列成段，放在原来地球页的位置（见 HomeFilmSection）。 */
+  /* 一句主张放在顶部（整段最有辨识度的一句），下面才是说明、人物和地球页。
+     人物图用两层同一张图：照片那层裁到照片自身的矩形并带圆角，
+     头那一层保持完整，所以她仍然是「探出照片上沿」的。 */
   return (
     <section className="community-hub" aria-labelledby="community-hub-title">
-      <div className="community-hub-inner">
+      <div className="community-hub-panel">
+        <h2 className="community-hub-statement" id="community-hub-title">{publicCopy.home.evidenceStatement}</h2>
+
         <div className="community-hub-top">
           <div className="community-hub-copy">
-            <h2 id="community-hub-title">{publicCopy.home.evidenceStatement}</h2>
             <p className="community-hub-lede">{publicCopy.home.evidence}</p>
             <div className="community-hub-actions">
               <Link className="community-hub-primary-action" to={withLanguage('/business', language)}>
@@ -41,7 +43,8 @@ export default function CommunityHub() {
           </div>
 
           <figure className="community-hub-portrait">
-            <img src={peopleImage} alt="" loading="lazy" decoding="async" />
+            <img className="community-hub-portrait-photo" src={peopleImage} alt="" loading="lazy" decoding="async" />
+            <img className="community-hub-portrait-head" src={peopleImage} alt="" aria-hidden="true" />
           </figure>
         </div>
 
