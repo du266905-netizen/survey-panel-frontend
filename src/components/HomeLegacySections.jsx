@@ -230,7 +230,7 @@ export function HomeGlobalSection() {
     <section className="home-global-section" aria-labelledby="home-global-title">
       <div className="home-continuation-container home-global-layout">
         <div className="home-global-visual"><div className="home-globe-frame"><GlobalGlobe /></div></div>
-        <div className="home-global-copy"><p className="home-section-label">{copy.label}</p><h2 id="home-global-title">{copy.title}</h2><p>{copy.body}</p></div>
+        <div className="home-global-copy"><h2 id="home-global-title">{copy.title}</h2><p>{copy.body}</p></div>
       </div>
     </section>
   );

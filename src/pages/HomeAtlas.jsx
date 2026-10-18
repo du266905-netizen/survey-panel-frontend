@@ -3,7 +3,8 @@ import { ArrowUpRight, LoaderCircle, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import CommunityHub from './CommunityHub';
-import HomeLegacySections, { HomeGlobalSection } from '../components/HomeLegacySections';
+import HomeFilmSection from '../components/HomeFilmSection';
+import HomeLegacySections from '../components/HomeLegacySections';
 import { useAuth } from '../components/AuthContext';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
@@ -198,10 +199,10 @@ export default function HomeAtlas() {
         </div>
       </section>
 
-      {/* 视频与那句「The world is never one-size-fits-all」并进 CommunityHub 的长页，
-          放在人物下面；这里不再单独出一段。 */}
       <CommunityHub />
-      <HomeGlobalSection />
+
+      {/* 影片单列成段，放在原来地球页的位置；地球页已经并进上面的长页。 */}
+      <HomeFilmSection />
 
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">
