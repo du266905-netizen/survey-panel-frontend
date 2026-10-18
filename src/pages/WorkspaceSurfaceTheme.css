@@ -981,6 +981,49 @@
    字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
    =========================================================================== */
 /* ===========================================================================
+   公开页配色 · 白 + 淡鼠尾草 + 橄榄（2026-10-18 定稿）
+   ---------------------------------------------------------------------------
+   基本色已定：白 + 淡鼠尾草。用户在界面上确认过——这组就是现在上线视频页的
+   地面色，和 Claude 的「纸色 + 淡鼠尾草」是同一路，靠字体把气质拉开。
+
+     地面     #fcfdfb   white      整页
+     色块     #f4f7f2   sage A     上下长文整块（发丝边框 8% 墨）
+     品牌色   #3f4a28   olive      正文按钮、页头 CTA、G 标
+     深色字   #141a17   ink        标题与正文
+     浅支撑   #e9efe2   sage B     需要一点边界的浅面、文档
+
+   色块用淡鼠尾草而不是黄/红/蓝/黑：这四种都试过并否掉——
+     黄（整块太亮，吃照片）、朱红/陶土（抢照片里的粉）、深蓝与黑（冷、且中文语境犯忌）、
+     沙/奶油（和页面只差几阶，读成纸）。
+   淡鼠尾草和页面同族但有 20 阶差，靠 1px 发丝边立边界，是这套系统里唯一
+   既不抢照片、又不「像纸」的做法。
+
+   G 标：橄榄单色，白底与浅底通用；不需要双态。
+   =========================================================================== */
+/* ===========================================================================
+   首页「人物页」：上下长页（2026-10-17）
+   ---------------------------------------------------------------------------
+   原来是 9 秒一轮的轮播，切换那一下要从网络拉 8.9MB 的 PNG，实测会卡；
+   文案也一屏放不下。现在单独做成长页：大字标题 → 多个入口 → 三张问题卡 → 主行动。
+   办公室那段已抽到 components/CommunityNetworkSection.jsx，不再挂在这里。
+   字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
+   =========================================================================== */
+/* ===========================================================================
+   首页「人物页」：淡鼠尾草绿的一整页（2026-10-17 第二版）
+   ---------------------------------------------------------------------------
+   第一版是深绿面板 + 大字，和 SurveyMonkey 那种页面并排一比反而显得单薄。
+   这一版改用它自己「视频段」的淡鼠尾草绿（--atlas-paper-deep #f4f7f2），
+   视频并进同一页放在人物下面，整段一个色调；中间那条分隔横线和入口药丸都去掉。
+   字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
+   =========================================================================== */
+/* ===========================================================================
+   首页「人物页」：极简，两个层级（2026-10-17 第三版）
+   ---------------------------------------------------------------------------
+   一句主张 + 一段说明 + 一个按钮，配一张圆角人物图和一条整宽视频。
+   文案直接搬视频段（publicCopy.home.evidenceStatement / evidence），不另写。
+   字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
+   =========================================================================== */
+/* ===========================================================================
    公开页配色 · 白 + 橄榄 + 明黄（2026-10-18 定稿）
    ---------------------------------------------------------------------------
    用户给的两组外部参考都是同一套结构：米白/白地面 + 深橄榄品牌色 + 暖调摄影。
@@ -1224,18 +1267,18 @@
    字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
    =========================================================================== */
 .community-hub { background: #fcfdfb; padding: 0 clamp(10px, 2vw, 24px); }
-.community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 26px; background: #ffcc33; box-shadow: inset 0 0 0 1px rgba(20, 26, 23, .1); padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
+.community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 26px; background: #f4f7f2; box-shadow: inset 0 0 0 1px rgba(20, 26, 23, .08); padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
 
-.community-hub-statement { max-width: 1180px; margin: 0 auto; color: #3f4a28; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(40px, 5.6vw, 80px); font-weight: 500; letter-spacing: -.05em; line-height: 1.02; text-align: center; text-wrap: balance; }
+.community-hub-statement { max-width: 1180px; margin: 0 auto; color: #141a17; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(40px, 5.6vw, 80px); font-weight: 500; letter-spacing: -.05em; line-height: 1.02; text-align: center; text-wrap: balance; }
 
 .community-hub-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: clamp(32px, 4vw, 64px); align-items: center; margin-top: clamp(30px, 4vw, 56px); }
-.community-hub-lede { max-width: 600px; margin: 0; color: #4a5232; font-family: var(--font-reading); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.5; }
+.community-hub-lede { max-width: 600px; margin: 0; color: #3f4a44; font-family: var(--font-reading); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.5; }
 
 .community-hub-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 30px; }
 .community-hub-primary-action { display: inline-flex; min-height: 50px; align-items: center; gap: 10px; border: 1px solid #3f4a28; border-radius: 3px; background: #3f4a28; color: #fffdf8; font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 0 24px; text-decoration: none; transition: background .2s ease, border-color .2s ease; }
 .community-hub-primary-action:hover { border-color: #56643a; background: #56643a; }
 .community-hub-primary-action:focus-visible { outline: 3px solid #141a17; outline-offset: 4px; }
-.community-hub-text-action { display: inline-flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(63, 74, 40, .45); color: #3f4a28; font-family: var(--font-sans); font-size: 13px; font-weight: 600; padding-bottom: 3px; text-decoration: none; }
+.community-hub-text-action { display: inline-flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(20, 26, 23, .3); color: #3f4a28; font-family: var(--font-sans); font-size: 13px; font-weight: 600; padding-bottom: 3px; text-decoration: none; }
 .community-hub-text-action:hover { border-color: #3f4a28; }
 
 /* 地球页也在同一块色里：一条细线分开，上下留白收紧。 */
@@ -1248,8 +1291,8 @@
 .community-hub-portrait img { display: block; width: 100%; height: auto; border-radius: 0 0 18px 18px; }
 .community-hub-portrait::before,
 .community-hub-portrait::after { position: absolute; z-index: 2; top: 20.6%; width: 18px; height: 18px; content: ''; pointer-events: none; }
-.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #ffcc33 18px); }
-.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #ffcc33 18px); }
+.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #f4f7f2 18px); }
+.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #f4f7f2 18px); }
 
 
 @media (max-width: 980px) {
