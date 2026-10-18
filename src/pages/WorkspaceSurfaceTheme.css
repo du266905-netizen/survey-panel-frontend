@@ -1044,24 +1044,22 @@
    字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
    =========================================================================== */
 .community-hub { background: #fcfdfb; padding: 0 clamp(10px, 2vw, 24px); }
-.community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 28px; background: #141a17; padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
+.community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 26px; background: linear-gradient(118deg, #f5faf3 0%, #eaf3e8 56%, #e1eddf 100%); box-shadow: inset 0 0 0 1px rgba(34, 78, 54, .1); padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
 
-.community-hub-statement { max-width: 1180px; margin: 0 auto; color: #fffdf8; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(40px, 5.6vw, 80px); font-weight: 500; letter-spacing: -.05em; line-height: 1.02; text-align: center; text-wrap: balance; }
+.community-hub-statement { max-width: 1180px; margin: 0 auto; color: #141a17; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(40px, 5.6vw, 80px); font-weight: 500; letter-spacing: -.05em; line-height: 1.02; text-align: center; text-wrap: balance; }
 
 .community-hub-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: clamp(32px, 4vw, 64px); align-items: center; margin-top: clamp(30px, 4vw, 56px); }
-.community-hub-lede { max-width: 600px; margin: 0; color: rgba(255, 253, 248, .8); font-family: var(--font-reading); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.5; }
+.community-hub-lede { max-width: 600px; margin: 0; color: #3f4a44; font-family: var(--font-reading); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.5; }
 
 .community-hub-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 30px; }
-.community-hub-primary-action { display: inline-flex; min-height: 50px; align-items: center; gap: 10px; border: 1px solid #fffdf8; border-radius: 3px; background: #fffdf8; color: #141a17; font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 0 24px; text-decoration: none; transition: background .2s ease, border-color .2s ease; }
-.community-hub-primary-action:hover { border-color: #f4f7f2; background: #f4f7f2; }
-.community-hub-primary-action:focus-visible { outline: 3px solid #fffdf8; outline-offset: 4px; }
-.community-hub-text-action { display: inline-flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(255, 253, 248, .42); color: #fffdf8; font-family: var(--font-sans); font-size: 13px; font-weight: 600; padding-bottom: 3px; text-decoration: none; }
-.community-hub-text-action:hover { border-color: #fffdf8; }
+.community-hub-primary-action { display: inline-flex; min-height: 50px; align-items: center; gap: 10px; border: 1px solid #141a17; border-radius: 3px; background: #141a17; color: #fffdf8; font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 0 24px; text-decoration: none; transition: background .2s ease, border-color .2s ease; }
+.community-hub-primary-action:hover { border-color: #2b332f; background: #2b332f; }
+.community-hub-primary-action:focus-visible { outline: 3px solid #141a17; outline-offset: 4px; }
+.community-hub-text-action { display: inline-flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(20, 26, 23, .34); color: #141a17; font-family: var(--font-sans); font-size: 13px; font-weight: 600; padding-bottom: 3px; text-decoration: none; }
+.community-hub-text-action:hover { border-color: #141a17; }
 
 /* 地球页也在同一块色里：一条细线分开，上下留白收紧。 */
-.community-hub .home-global-section { border-top: 1px solid rgba(255, 253, 248, .18); border-bottom: 0; margin-top: clamp(28px, 3.4vw, 44px); }
-.community-hub .home-global-copy h2 { color: #fffdf8; }
-.community-hub .home-global-copy > p:last-child { color: rgba(255, 253, 248, .74); }
+.community-hub .home-global-section { border-top: 1px solid rgba(20, 26, 23, .14); border-bottom: 0; margin-top: clamp(28px, 3.4vw, 44px); }
 .community-hub .home-global-layout { padding: clamp(26px, 3.2vw, 40px) 0 clamp(10px, 1.4vw, 18px); }
 
 /* 人物：原始扣图不裁切、不分层，脸是连续的；
@@ -1070,8 +1068,8 @@
 .community-hub-portrait img { display: block; width: 100%; height: auto; border-radius: 0 0 18px 18px; }
 .community-hub-portrait::before,
 .community-hub-portrait::after { position: absolute; z-index: 2; top: 20.6%; width: 18px; height: 18px; content: ''; pointer-events: none; }
-.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #141a17 18px); }
-.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #141a17 18px); }
+.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #f4f7f2 18px); }
+.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #f4f7f2 18px); }
 
 
 @media (max-width: 980px) {
