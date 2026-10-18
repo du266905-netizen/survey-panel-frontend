@@ -981,6 +981,56 @@
    字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
    =========================================================================== */
 /* ===========================================================================
+   公开页配色 · 按顺序推出（2026-10-18 修正后的方法）
+   ---------------------------------------------------------------------------
+   顺序是：G 标 → 第二色 → 由第二色推出第三色。色块是最后一步，不是起点。
+
+   1. 地面      #fcfdfb   white      整页底色
+   2. 标与字    #141a17   ink        黑 G + 正文 + 按钮文字
+   3. 第二色    #ffcc33   yellow     必须和黑 G 相处：黑是 0% 明度，黄是 85%，
+                                     中间不需要第三色调和；黄只用于「动作」——
+                                     页头 Join us、色块里的主按钮（约 2% 面积）
+   4. 第三色    #0d2340   navy       由黄推出：黄的互补深色里，只有深蓝既压得住
+                                     大面积长文，又不和照片的暖木、粉、青打架。
+                                     用于上下长文那一块的地面（约 30% 面积）
+
+   浅支撑色（不进主结构，用于浅面/卡片/hover）：
+     #f4f7f2   sage A
+     #e9efe2   sage B
+
+   被淘汰过的方案，记下来免得再走一遍：
+     · 黑块 —— 中文语境等于殡葬
+     · 深绿 / 深棕 —— 用户否
+     · 浅鼠尾草 / 沙 / 奶油 —— 都读成「纸」，因为和白页明度差不够
+     · 朱红 / 陶土 —— 暖，但和照片里的粉色抢，且陶土被读成牛皮纸
+     · 整块明黄 —— 荧光笔感，照片被吃掉；黄改为只占 2%
+
+   这个结构的对照组：汇丰 = 白 + 2% 红；我们 = 白 + 2% 黄 + 30% 深蓝（黄推出的）。
+   =========================================================================== */
+/* ===========================================================================
+   首页「人物页」：上下长页（2026-10-17）
+   ---------------------------------------------------------------------------
+   原来是 9 秒一轮的轮播，切换那一下要从网络拉 8.9MB 的 PNG，实测会卡；
+   文案也一屏放不下。现在单独做成长页：大字标题 → 多个入口 → 三张问题卡 → 主行动。
+   办公室那段已抽到 components/CommunityNetworkSection.jsx，不再挂在这里。
+   字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
+   =========================================================================== */
+/* ===========================================================================
+   首页「人物页」：淡鼠尾草绿的一整页（2026-10-17 第二版）
+   ---------------------------------------------------------------------------
+   第一版是深绿面板 + 大字，和 SurveyMonkey 那种页面并排一比反而显得单薄。
+   这一版改用它自己「视频段」的淡鼠尾草绿（--atlas-paper-deep #f4f7f2），
+   视频并进同一页放在人物下面，整段一个色调；中间那条分隔横线和入口药丸都去掉。
+   字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
+   =========================================================================== */
+/* ===========================================================================
+   首页「人物页」：极简，两个层级（2026-10-17 第三版）
+   ---------------------------------------------------------------------------
+   一句主张 + 一段说明 + 一个按钮，配一张圆角人物图和一条整宽视频。
+   文案直接搬视频段（publicCopy.home.evidenceStatement / evidence），不另写。
+   字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
+   =========================================================================== */
+/* ===========================================================================
    公开页配色 · 五色（2026-10-18）
    ---------------------------------------------------------------------------
    四色是用户确认过的，第五色是被问出来的：他要求「找一个好的」。
@@ -1090,22 +1140,24 @@
    字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
    =========================================================================== */
 .community-hub { background: #fcfdfb; padding: 0 clamp(10px, 2vw, 24px); }
-.community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 26px; background: #ffcc33; box-shadow: inset 0 0 0 1px rgba(20, 26, 23, .1); padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
+.community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 26px; background: #0d2340; box-shadow: inset 0 0 0 1px rgba(255, 253, 248, .14); padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
 
-.community-hub-statement { max-width: 1180px; margin: 0 auto; color: #141a17; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(40px, 5.6vw, 80px); font-weight: 500; letter-spacing: -.05em; line-height: 1.02; text-align: center; text-wrap: balance; }
+.community-hub-statement { max-width: 1180px; margin: 0 auto; color: #fffdf8; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(40px, 5.6vw, 80px); font-weight: 500; letter-spacing: -.05em; line-height: 1.02; text-align: center; text-wrap: balance; }
 
 .community-hub-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: clamp(32px, 4vw, 64px); align-items: center; margin-top: clamp(30px, 4vw, 56px); }
-.community-hub-lede { max-width: 600px; margin: 0; color: #3a3a2a; font-family: var(--font-reading); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.5; }
+.community-hub-lede { max-width: 600px; margin: 0; color: rgba(255, 253, 248, .82); font-family: var(--font-reading); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.5; }
 
 .community-hub-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 30px; }
-.community-hub-primary-action { display: inline-flex; min-height: 50px; align-items: center; gap: 10px; border: 1px solid #141a17; border-radius: 3px; background: #141a17; color: #fffdf8; font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 0 24px; text-decoration: none; transition: background .2s ease, border-color .2s ease; }
-.community-hub-primary-action:hover { border-color: #2b332f; background: #2b332f; }
-.community-hub-primary-action:focus-visible { outline: 3px solid #141a17; outline-offset: 4px; }
-.community-hub-text-action { display: inline-flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(20, 26, 23, .34); color: #141a17; font-family: var(--font-sans); font-size: 13px; font-weight: 600; padding-bottom: 3px; text-decoration: none; }
-.community-hub-text-action:hover { border-color: #141a17; }
+.community-hub-primary-action { display: inline-flex; min-height: 50px; align-items: center; gap: 10px; border: 1px solid #ffcc33; border-radius: 3px; background: #ffcc33; color: #141a17; font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 0 24px; text-decoration: none; transition: background .2s ease, border-color .2s ease; }
+.community-hub-primary-action:hover { border-color: #ffd961; background: #ffd961; }
+.community-hub-primary-action:focus-visible { outline: 3px solid #ffcc33; outline-offset: 4px; }
+.community-hub-text-action { display: inline-flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(255, 253, 248, .45); color: #fffdf8; font-family: var(--font-sans); font-size: 13px; font-weight: 600; padding-bottom: 3px; text-decoration: none; }
+.community-hub-text-action:hover { border-color: #fffdf8; }
 
 /* 地球页也在同一块色里：一条细线分开，上下留白收紧。 */
-.community-hub .home-global-section { border-top: 1px solid rgba(20, 26, 23, .16); border-bottom: 0; margin-top: clamp(28px, 3.4vw, 44px); }
+.community-hub .home-global-section { border-top: 1px solid rgba(255, 253, 248, .22); border-bottom: 0; margin-top: clamp(28px, 3.4vw, 44px); }
+.community-hub .home-global-copy h2 { color: #fffdf8; }
+.community-hub .home-global-copy > p:last-child { color: rgba(255, 253, 248, .78); }
 .community-hub .home-global-layout { padding: clamp(26px, 3.2vw, 40px) 0 clamp(10px, 1.4vw, 18px); }
 
 /* 人物：原始扣图不裁切、不分层，脸是连续的；
@@ -1114,8 +1166,8 @@
 .community-hub-portrait img { display: block; width: 100%; height: auto; border-radius: 0 0 18px 18px; }
 .community-hub-portrait::before,
 .community-hub-portrait::after { position: absolute; z-index: 2; top: 20.6%; width: 18px; height: 18px; content: ''; pointer-events: none; }
-.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #ffcc33 18px); }
-.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #ffcc33 18px); }
+.community-hub-portrait::before { left: 0; background: radial-gradient(circle at 100% 100%, transparent 17px, #0d2340 18px); }
+.community-hub-portrait::after { right: 0; background: radial-gradient(circle at 0 100%, transparent 17px, #0d2340 18px); }
 
 
 @media (max-width: 980px) {
