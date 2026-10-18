@@ -986,7 +986,7 @@
 /* 人物要「出框」：画框是一块带发丝的白色底板，顶边从她的头发后面穿过，
    所以她的人是压在框上的 —— 图本身在顶部 21% 是透明通道，正好露出头部。 */
 .community-hub-portrait { position: relative; align-self: end; margin: 0; max-width: 520px; justify-self: end; }
-.community-hub-portrait::before { position: absolute; z-index: 0; top: 21%; right: -14px; bottom: -14px; left: -14px; border: 1px solid rgba(20, 26, 23, .14); background: #fffdf8; box-shadow: 0 16px 38px rgba(20, 26, 23, .07); content: ''; }
+.community-hub-portrait img { position: relative; z-index: 1; display: block; width: 100%; height: auto; }
 .community-hub-portrait img { position: relative; z-index: 1; display: block; width: 100%; height: auto; }
 
 /* 视频：和人物同一页，放在下面；右边是原来那一小段证据文案。 */
