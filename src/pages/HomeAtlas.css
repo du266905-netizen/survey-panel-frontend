@@ -21,7 +21,8 @@
   --proto-radius: 6px;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  /* overflow-x: hidden 会把 sticky 导航变成「随容器滚走」，这里去掉；
+     横向溢出由各段自己的容器收口。 */
   background: var(--atlas-paper);
   color: var(--atlas-ink);
   font-family: var(--font-reading);
@@ -140,7 +141,7 @@
 .atlas-nav-search input::placeholder, .atlas-mobile-search input::placeholder { color: #87948c; }
 .atlas-sign-in { color: var(--atlas-ink); font-size: 13px; font-weight: 700; text-decoration: none; white-space: nowrap; }
 
-.atlas-register, .atlas-primary-link {
+.atlas-primary-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -157,7 +158,26 @@
   white-space: nowrap;
   transition: color .72s ease, background .72s ease, border-color .72s ease, box-shadow 1.25s cubic-bezier(.22,.72,.2,1);
 }
-.atlas-register:hover, .atlas-primary-link:hover { background: var(--atlas-forest); transform: none; }
+/* 首页页头的 Join us：黑色长方形（与站内主行动同一种形状语言） */
+.atlas-register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 17px;
+  border: 1px solid #141a17;
+  border-radius: 0;
+  color: #fffdf8;
+  background: #141a17;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+.atlas-register:hover { background: #2b332f; border-color: #2b332f; transform: none; }
+.atlas-primary-link:hover { background: var(--atlas-forest); transform: none; }
 .atlas-menu-button, .atlas-mobile-menu { display: none; }
 
 .video-hero-section { padding: 0; background: var(--atlas-paper); }
