@@ -205,7 +205,8 @@
   align-content: center;
   flex: 1 1 auto;
   width: 100%;
-  overflow: hidden;
+  /* 裁剪交给 .video-hero：这里若再裁一次，右侧色块和人物会在 1428px 处被切出白边。 */
+  overflow: visible;
   padding: clamp(46px, 4.6vw, 74px) clamp(30px, 4.4vw, 68px);
   background: var(--atlas-paper);
 }
@@ -298,7 +299,7 @@
 .video-hero-shape {
   position: absolute;
   z-index: 1;
-  inset: 24% -10% 0 -15%;
+  inset: 24% -200px 0 -15%;
   background: var(--atlas-forest);
   clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
 }
@@ -306,7 +307,8 @@
   position: relative;
   z-index: 2;
   display: block;
-  width: 134%;
+  /* 134% 会把最右边那位裁掉半个身子；112% 让五个人都完整，仍在右边缘留一点空气。 */
+  width: 112%;
   max-width: none;
   height: auto;
   margin-left: -8%;
