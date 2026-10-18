@@ -4,8 +4,8 @@ import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { HomeGlobalSection } from '../components/HomeLegacySections';
 /* 人物图用原始扣图：她的头露在照片上沿之外。不做任何裁剪、不分层，
    所以脸和照片之间是连续的，只有头部两侧会看到照片自身的边。 */
-/* 暖调分级版：青蓝被收回，和明黄跳底、和整页暖调同温（原图保留）。 */
-import peopleImage from '../assets/community/community-research-portrait-warm.webp';
+/* 原始素材，未做任何处理。 */
+import peopleImage from '../assets/community/community-research-collage-web.webp';
 
 /* 首页的「人物页」：一句主张 + 一段说明 + 大画面，没有别的层级。
    文案直接取视频那段（publicCopy.home.evidenceStatement / evidence），不另写。
