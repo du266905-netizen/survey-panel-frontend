@@ -4352,7 +4352,29 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
      38   page     page titles
      56   figure   the four figures — the only large thing on a page
 
-   Anything not on this list is a bug, not a judgement call. */
+   Anything not on this list is a bug, not a judgement call.
+
+   ── Part 18b · upright and italic ───────────────────────────────────────
+
+   Display serif ships in two postures, and the postures are not free:
+
+     upright   the default. Every heading above uses it.
+     italic    allowed by the system, but only with explicit authorisation for
+               a named slot. There is no standing italic heading, and adding one
+               without that authorisation is the same kind of bug as an
+               off-scale size.
+
+   When an italic slot is authorised, record it here with its owner and date:
+
+     (none at present)
+
+   Two constraints that come with any italic slot:
+     - CJK has no true italic. Chinese and traditional Chinese must keep
+       font-style: normal and be restyled upright, so an italic slot is an
+       English-only decision.
+     - One italic device per page. The hero already uses italic for its second
+       line, so a page that carries the hero must not italicise its largest
+       heading as well. */
 
 /* the dialog title: it is content, so it is reading type, and it belongs on
    the panel step rather than the 26px it had kept from before the scale. */
