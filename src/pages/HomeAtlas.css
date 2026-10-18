@@ -29,12 +29,7 @@
 }
 
 .home-atlas-frame {
-  position: fixed;
-  z-index: 15;
-  inset: 0;
-  box-sizing: border-box;
-  border: var(--atlas-frame-gutter) solid #16352a;
-  pointer-events: none;
+  display: none;
 }
 
 .atlas-navigation {
@@ -225,7 +220,7 @@
   text-align: left;
 }
 .video-hero-eyebrow { margin: 0; color: #345949; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .2em; line-height: 1.35; text-transform: uppercase; animation: video-hero-rise .8s .1s both cubic-bezier(.22,.72,.2,1); }
-.video-hero h1 { display: flex; max-width: 20ch; margin: clamp(18px, 1.7vw, 26px) 0 0; flex-direction: column; color: #141a17; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(44px, 6.4vw, 100px); font-weight: 500; letter-spacing: -.034em; line-height: 1.0; text-wrap: balance; }
+.video-hero h1 { display: flex; max-width: 20ch; margin: clamp(18px, 1.7vw, 26px) 0 0; flex-direction: column; color: #141a17; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(44px, 6.4vw, 100px); font-style: italic; font-weight: 500; letter-spacing: -.034em; line-height: 1.0; text-wrap: balance; }
 .video-hero h1 span { display: block; animation: video-hero-rise .95s both cubic-bezier(.22,.72,.2,1); }
 .video-hero h1 span:nth-child(1) { animation-delay: .18s; }
 .video-hero h1 span:nth-child(2) { margin-top: .06em; color: #7b827c; font-family: var(--font-serif); font-size: .74em; font-style: italic; font-weight: 400; letter-spacing: -.026em; animation-delay: .29s; }
