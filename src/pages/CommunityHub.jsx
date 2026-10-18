@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-import peopleImage from '../assets/community/community-research-collage-web.webp';
+/* 人物图垫了一层比页面略深的鼠尾草底，四面都能吃到 18px 圆角；
+   原来的透明版仍是 community-research-collage-web.webp（出框版留着备用）。 */
+import peopleImage from '../assets/community/community-research-portrait.jpg';
 import videoPoster from '../assets/community/community-video-poster.jpg';
 
 /* 首页的「人物页」：一句主张 + 一段说明 + 大画面，没有别的层级。
