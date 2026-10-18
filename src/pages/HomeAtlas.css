@@ -837,6 +837,12 @@
   background: var(--atlas-forest);
 }
 
+/* 矮屏（笔记本 13"、分屏）把 hero 收紧：否则 CTA 会被顶到折线以下。 */
+@media (max-height: 820px) {
+  .video-hero { padding-top: clamp(56px, 8vh, 88px); }
+  .video-hero-supporting { display: none; }
+}
+
 @media (max-width: 900px) {
   .atlas-map {
     min-height: 360px;
