@@ -190,7 +190,7 @@
   overflow: hidden;
   align-items: stretch;
   justify-content: center;
-  padding: clamp(88px, 6.6vw, 104px) var(--atlas-frame-gutter) var(--atlas-frame-gutter);
+  padding: clamp(120px, 9vw, 168px) var(--atlas-frame-gutter) clamp(24px, 3vw, 40px);
   background: var(--atlas-paper);
   color: #17251f;
 }
