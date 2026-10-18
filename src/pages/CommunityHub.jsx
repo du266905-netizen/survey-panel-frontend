@@ -1,8 +1,9 @@
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-/* 人物图是专门做的扣图：顶部 21% 是透明通道，她的头露在照片上沿之外。 */
-import peopleImage from '../assets/community/community-research-collage-web.webp';
+/* 人物图用完整版：透明通道已用周围的模糊色补上，所以照片是整块的，
+   不再有一道横线压在她的额头上；扣图原版仍保留在同一个目录。 */
+import peopleImage from '../assets/community/community-research-portrait.jpg';
 
 /* 首页的「人物页」：一句主张 + 一段说明 + 大画面，没有别的层级。
    文案直接取视频那段（publicCopy.home.evidenceStatement / evidence），不另写。
@@ -42,8 +43,7 @@ export default function CommunityHub() {
           </div>
 
           <figure className="community-hub-portrait">
-            <img className="community-hub-portrait-photo" src={peopleImage} alt="" loading="lazy" decoding="async" />
-            <img className="community-hub-portrait-head" src={peopleImage} alt="" aria-hidden="true" />
+            <img src={peopleImage} alt="" loading="lazy" decoding="async" />
           </figure>
         </div>
       </div>
