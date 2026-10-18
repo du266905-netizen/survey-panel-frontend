@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import CommunityHub from './CommunityHub';
 import HomeFilmSection from '../components/HomeFilmSection';
-import HomeLegacySections from '../components/HomeLegacySections';
+import HomeLegacySections, { HomeGlobalSection } from '../components/HomeLegacySections';
 import { useAuth } from '../components/AuthContext';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
@@ -201,8 +201,10 @@ export default function HomeAtlas() {
 
       <CommunityHub />
 
-      {/* 影片单列成段，放在原来地球页的位置；地球页已经并进上面的长页。 */}
+      {/* 影片放在地球页原来的位置；地球页回到独立的段落，跟在影片后面。 */}
       <HomeFilmSection />
+
+      <HomeGlobalSection />
 
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">

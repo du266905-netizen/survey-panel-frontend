@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 /* 人物图是专门做的扣图：顶部 21% 是透明通道，她的头露在照片上沿之外。 */
 import peopleImage from '../assets/community/community-research-collage-web.webp';
-import { HomeGlobalSection } from '../components/HomeLegacySections';
 
 /* 首页的「人物页」：一句主张 + 一段说明 + 大画面，没有别的层级。
    文案直接取视频那段（publicCopy.home.evidenceStatement / evidence），不另写。
@@ -47,8 +46,6 @@ export default function CommunityHub() {
             <img className="community-hub-portrait-head" src={peopleImage} alt="" aria-hidden="true" />
           </figure>
         </div>
-
-        <HomeGlobalSection />
       </div>
     </section>
   );
