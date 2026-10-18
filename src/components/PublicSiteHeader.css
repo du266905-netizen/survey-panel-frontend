@@ -102,21 +102,21 @@
 
 .public-site-header.is-hero-overlay {
   position: fixed;
-  top: var(--atlas-frame-gutter, 12px);
-  right: var(--atlas-frame-gutter, 12px);
-  left: var(--atlas-frame-gutter, 12px);
-  width: auto;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
   margin: 0;
   border: 0;
-  border-bottom: 1px solid rgba(20, 26, 23, .08);
+  border-bottom: 1px solid rgba(20, 26, 23, .07);
   border-radius: 0;
-  background: #e6ecdf;
+  background: #fff;
   color: #141a17;
   z-index: 70;
   box-shadow: none;
 }
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .public-site-header.is-hero-overlay { background: rgba(230, 236, 223, .82); backdrop-filter: blur(16px) saturate(140%); }
+  .public-site-header.is-hero-overlay { background: #fff; backdrop-filter: none; }
 }
 .public-site-header.is-hero-overlay .atlas-nav-trigger,
 .public-site-header.is-hero-overlay .atlas-nav-link,
@@ -143,12 +143,12 @@
 
 .public-site-header.is-hero-overlay.is-scrolled {
   position: fixed;
-  top: var(--atlas-frame-gutter, 12px);
-  border-bottom-color: var(--atlas-rule);
-  background: rgba(230, 236, 223, .96);
+  top: 0;
+  border-bottom-color: rgba(20, 26, 23, .07);
+  background: #fff;
   color: var(--atlas-ink);
-  box-shadow: 0 10px 30px rgba(22, 37, 29, .07);
-  backdrop-filter: blur(18px);
+  box-shadow: none;
+  backdrop-filter: none;
 }
 .public-site-header.is-hero-overlay.is-scrolled .atlas-nav-trigger,
 .public-site-header.is-hero-overlay.is-scrolled .atlas-nav-link,
@@ -197,8 +197,8 @@
 }
 
 @media (max-width: 800px) {
-  .public-site-header.is-hero-overlay { top: 10px; width: calc(100% - 24px); margin-top: 0; }
-  .public-site-header.is-hero-overlay.is-scrolled { top: 10px; width: calc(100% - 24px); }
+  .public-site-header.is-hero-overlay { top: 0; width: 100%; margin-top: 0; }
+  .public-site-header.is-hero-overlay.is-scrolled { top: 0; width: 100%; }
 }
 
 @media (max-width: 520px) { .atlas-register { display: none; } }
