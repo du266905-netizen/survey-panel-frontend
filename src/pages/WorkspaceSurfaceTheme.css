@@ -998,7 +998,7 @@
    字号只用 Part 18 档位（9.5/11/13/14/16/22/38/56）。
    =========================================================================== */
 /* hero 与长文块之间要有一段呼吸，块和影片之间也要收住。 */
-.community-hub { background: #fcfdfb; padding: clamp(56px, 7vw, 112px) clamp(10px, 2vw, 24px) clamp(40px, 5vw, 80px); }
+.community-hub { background: #fcfdfb; padding: clamp(56px, 7vw, 112px) clamp(10px, 2vw, 24px) 0; }
 .community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 26px; background: #e9efe2; box-shadow: inset 0 0 0 1px rgba(20, 26, 23, .08); padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
 
 .community-hub-statement { max-width: 1180px; margin: 0 auto; color: #141a17; font-style: italic; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(40px, 5.6vw, 80px); font-weight: 500; letter-spacing: -.05em; line-height: 1.02; text-align: center; text-wrap: balance; }
