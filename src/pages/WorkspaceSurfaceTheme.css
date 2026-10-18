@@ -990,8 +990,7 @@
 .community-hub { background: #fcfdfb; padding: 0 clamp(10px, 2vw, 24px); }
 .community-hub-panel { width: min(100%, 1360px); margin: 0 auto; border-radius: 28px; background: #f4f7f2; padding: clamp(40px, 5vw, 74px) clamp(22px, 4vw, 64px) clamp(20px, 2.4vw, 32px); }
 
-.community-hub-statement { max-width: 1100px; margin: 0 auto; color: #141a17; font-family: var(--font-display); font-size: clamp(40px, 5.2vw, 72px); font-style: italic; font-weight: 500; letter-spacing: -.045em; line-height: 1; text-align: center; text-wrap: balance; }
-:lang(zh) .community-hub-statement { font-style: normal; }
+.community-hub-statement { max-width: 1000px; margin: 0 auto; color: #141a17; font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif; font-size: clamp(38px, 4.25vw, 58px); font-weight: 500; letter-spacing: -.048em; line-height: 1.05; text-align: center; text-wrap: balance; }
 
 .community-hub-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: clamp(32px, 4vw, 64px); align-items: center; margin-top: clamp(30px, 4vw, 56px); }
 .community-hub-lede { max-width: 600px; margin: 0; color: #3f4a44; font-family: var(--font-reading); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.5; }
@@ -1002,6 +1001,10 @@
 .community-hub-primary-action:focus-visible { outline: 3px solid #141a17; outline-offset: 4px; }
 .community-hub-text-action { display: inline-flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(20, 26, 23, .32); color: #141a17; font-family: var(--font-sans); font-size: 13px; font-weight: 600; padding-bottom: 3px; text-decoration: none; }
 .community-hub-text-action:hover { border-color: #141a17; }
+
+/* 地球页也在同一块色里：一条细线分开，上下留白收紧。 */
+.community-hub .home-global-section { border-top: 1px solid rgba(20, 26, 23, .12); border-bottom: 0; margin-top: clamp(28px, 3.4vw, 44px); }
+.community-hub .home-global-layout { padding: clamp(26px, 3.2vw, 40px) 0 clamp(10px, 1.4vw, 18px); }
 
 /* 人物：原始扣图不裁切、不分层，脸是连续的；
    照片上沿两端各盖一块 18px 的底色做圆角，底角直接用 border-radius。 */

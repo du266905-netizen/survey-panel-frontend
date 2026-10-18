@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import { HomeGlobalSection } from '../components/HomeLegacySections';
 /* 人物图用原始扣图：她的头露在照片上沿之外。不做任何裁剪、不分层，
    所以脸和照片之间是连续的，只有头部两侧会看到照片自身的边。 */
 import peopleImage from '../assets/community/community-research-collage-web.webp';
@@ -46,6 +47,8 @@ export default function CommunityHub() {
             <img src={peopleImage} alt="" loading="lazy" decoding="async" />
           </figure>
         </div>
+
+        <HomeGlobalSection />
       </div>
     </section>
   );
