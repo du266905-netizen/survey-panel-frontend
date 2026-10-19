@@ -217,3 +217,18 @@
   border-color: #1E4437;
   background: #1E4437;
 }
+
+
+/* Nav action stays black; the green trial is rejected. */
+.atlas-navigation.public-site-header .atlas-register,
+.atlas-navigation.public-site-header .atlas-register:hover,
+.atlas-navigation.public-site-header .atlas-register:focus-visible {
+  border-color: #141413;
+  background: #141413;
+  color: #FAF7F0;
+  box-shadow: none;
+}
+.atlas-navigation.public-site-header .atlas-register:hover {
+  border-color: #2B2A28;
+  background: #2B2A28;
+}

@@ -1445,7 +1445,7 @@
   --atlas-quiet-ink: #6F6A5F;
   --atlas-forest: #141413;
   --atlas-sage: #C9D2B4;
-  --atlas-paper: #F4F7F2;
+  --atlas-paper: #FCFDFB;
   --atlas-paper-deep: #E4E0D6;
   --atlas-rule: #D5D0C4;
   --proto-ink: #141413;
@@ -1456,9 +1456,9 @@
   --proto-line-2: rgba(20, 20, 19, .22);
   --proto-accent: #141413;
   --proto-paper: #FCFAF6;
-  --continuation-paper: #F4F7F2;
+  --continuation-paper: #FCFDFB;
   --continuation-rule: #D5D0C4;
-  background: #F4F7F2;
+  background: #FCFDFB;
   color: #141413;
 }
 
@@ -1466,9 +1466,9 @@
 .home-atlas .atlas-navigation.public-site-header {
   --atlas-ink: #141413;
   --atlas-forest: #141413;
-  --atlas-paper: #F4F7F2;
+  --atlas-paper: #FCFDFB;
   --atlas-rule: #D5D0C4;
-  background: #F4F7F2;
+  background: #FCFDFB;
   border-color: #D5D0C4;
   color: #141413;
   box-shadow: 0 10px 22px rgba(20, 20, 19, .04);
@@ -1483,7 +1483,7 @@
 .home-atlas .atlas-nav-trigger:hover { color: #141413; text-decoration: underline; text-underline-offset: 4px; }
 .home-atlas .atlas-nav-menu {
   border-color: #D5D0C4;
-  background: #F4F7F2;
+  background: #FCFDFB;
   color: #141413;
 }
 .home-atlas .atlas-nav-menu-item:hover,
@@ -1502,7 +1502,7 @@
 }
 .home-atlas .atlas-mobile-menu {
   border-color: #D5D0C4;
-  background: #F4F7F2;
+  background: #FCFDFB;
 }
 .home-atlas .atlas-mobile-direct-link,
 .home-atlas .atlas-mobile-group a { color: #141413; }
@@ -1604,7 +1604,7 @@
 }
 
 /* Cards: one step deeper than the warm bone-grey page. */
-.home-atlas .home-rewards-section { background: #F4F7F2; }
+.home-atlas .home-rewards-section { background: #FCFDFB; }
 .home-atlas .home-reward-card {
   background: #FCFAF6;
   border-color: #D5D0C4;
@@ -1612,8 +1612,8 @@
 .home-atlas .home-reward-card:hover { background: #FFFFFF; }
 
 /* Paper sections and footer. */
-.home-atlas .home-film { background: #F4F7F2; }
-.home-atlas .home-manifesto { background: #F4F7F2; }
+.home-atlas .home-film { background: #FCFDFB; }
+.home-atlas .home-manifesto { background: #FCFDFB; }
 .home-atlas .home-manifesto-card--voices { background: #FFFFFF; }
 .home-atlas .home-manifesto-card--technology { background: #E4E0D6; }
 .home-atlas .home-manifesto-principle {
@@ -1682,7 +1682,7 @@
   font-family: "Spectral", var(--font-reading);
   font-weight: 400;
   font-style: normal;
-  font-size: clamp(38px, 5vw, 72px);
+  font-size: clamp(38px, 5.55vw, 80px);
   line-height: 1.05;
   letter-spacing: -.0234em;
 }
@@ -1996,7 +1996,7 @@
 .home-atlas .atlas-navigation.public-site-header {
   --atlas-ink: #141413;
   --atlas-forest: #285647;
-  --atlas-paper: #F4F7F2;
+  --atlas-paper: #FCFDFB;
   --atlas-rule: rgba(20, 20, 19, .06);
   top: 0;
   width: 100%;
@@ -2006,7 +2006,7 @@
   border: 0;
   border-bottom: 1px solid rgba(20, 20, 19, .055);
   border-radius: 0;
-  background: #F4F7F2;
+  background: #FCFDFB;
   box-shadow: none;
   backdrop-filter: none;
 }
@@ -2115,4 +2115,38 @@
   }
   #atlas-contact .atlas-contact-field--phone,
   #atlas-contact .atlas-contact-field--message { grid-column: auto; }
+}
+
+/* Final corrections: form-page paper tone, pale sage contact band, italic
+   display, black nav action. */
+.home-atlas .atlas-navigation.public-site-header {
+  background: #FCFDFB;
+  --atlas-paper: #FCFDFB;
+}
+.home-atlas .atlas-register,
+.home-atlas .atlas-register:hover {
+  border-color: #141413;
+  background: #141413;
+  color: #FAF7F0;
+  box-shadow: none;
+}
+.home-atlas .atlas-register:hover {
+  border-color: #2B2A28;
+  background: #2B2A28;
+}
+#atlas-contact {
+  background: linear-gradient(118deg, #F5FAF3 0%, #EAF3E8 56%, #E1EDDF 100%);
+}
+#atlas-contact .atlas-contact-form input,
+#atlas-contact .atlas-contact-form select,
+#atlas-contact .atlas-contact-form textarea {
+  background: #ffffff;
+}
+.home-atlas .video-hero h1,
+.home-atlas .video-hero h1 span:nth-child(1),
+.home-atlas .video-hero h1 span:nth-child(2) {
+  font-style: italic;
+}
+.home-atlas .video-hero h1 span:nth-child(2) {
+  font-size: .8em;
 }
