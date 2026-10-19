@@ -416,3 +416,29 @@
 .home-atlas .home-reward-panel p { color: #5A4B55; }
 .home-atlas .home-reward-panel > div > span { color: #6A5662; }
 .home-atlas .home-reward-card h3 { font-size: 22px; line-height: 1.05; }
+
+/* Card split: corresponding colour above the kicker, pale sage bone below. */
+.home-atlas .home-reward-card.home-reward-gift,
+.home-atlas .home-reward-card.home-reward-token,
+.home-atlas .home-reward-card.home-reward-panel {
+  background: #F4F7F2;
+  color: #171714;
+}
+.home-atlas .home-reward-card.home-reward-gift:hover,
+.home-atlas .home-reward-card.home-reward-token:hover,
+.home-atlas .home-reward-card.home-reward-panel:hover { background: #EEF2EA; }
+.home-atlas .home-reward-card { padding: 0; }
+.home-reward-art {
+  display: grid;
+  width: 100%;
+  height: 146px;
+  place-items: center;
+  padding: 12px 20px 6px;
+}
+.home-reward-copy { padding: 14px 20px 20px; background: #F4F7F2; }
+.home-reward-gift .home-reward-art { background: #F1ECE3; }
+.home-reward-token .home-reward-art { background: #AEBFA9; }
+.home-reward-panel .home-reward-art { background: #D8C1CE; }
+.home-atlas .home-reward-card h3 { color: #171714; }
+.home-atlas .home-reward-card p { color: #4F5B50; }
+.home-atlas .home-reward-card > div > span { color: #6F6A5F; }

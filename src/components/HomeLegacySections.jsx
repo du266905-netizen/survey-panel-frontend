@@ -270,9 +270,9 @@ export default function HomeLegacySections() {
             <p>{copy.rewardsBody}</p>
           </div>
           <div className="home-reward-grid">
-            <article className="home-reward-card home-reward-gift"><GiftSketch /><div><span>{copy.rewardCards[0][0]}</span><h3>{copy.rewardCards[0][1]}</h3><p>{copy.rewardCards[0][2]}</p></div></article>
-            <article className="home-reward-card home-reward-token"><TokenSketch /><div><span>{copy.rewardCards[1][0]}</span><h3>{copy.rewardCards[1][1]}</h3><p>{copy.rewardCards[1][2]}</p></div></article>
-            <article className="home-reward-card home-reward-panel"><CartSketch /><div><span>{copy.rewardCards[2][0]}</span><h3>{copy.rewardCards[2][1]}</h3><p>{copy.rewardCards[2][2]}</p></div></article>
+            <article className="home-reward-card home-reward-gift"><div className="home-reward-art"><GiftSketch /></div><div className="home-reward-copy"><span>{copy.rewardCards[0][0]}</span><h3>{copy.rewardCards[0][1]}</h3><p>{copy.rewardCards[0][2]}</p></div></article>
+            <article className="home-reward-card home-reward-token"><div className="home-reward-art"><TokenSketch /></div><div className="home-reward-copy"><span>{copy.rewardCards[1][0]}</span><h3>{copy.rewardCards[1][1]}</h3><p>{copy.rewardCards[1][2]}</p></div></article>
+            <article className="home-reward-card home-reward-panel"><div className="home-reward-art"><CartSketch /></div><div className="home-reward-copy"><span>{copy.rewardCards[2][0]}</span><h3>{copy.rewardCards[2][1]}</h3><p>{copy.rewardCards[2][2]}</p></div></article>
           </div>
         </div>
       </section>
