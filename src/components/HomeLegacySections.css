@@ -229,3 +229,69 @@
   color: #FAF9F5;
   outline: none;
 }
+
+/* Final CTA: heading above, the original typewriter copy below, then the two
+   homepage actions in Claude's white + dark button styles. */
+.home-community-cta-title {
+  max-width: 1000px;
+  margin: 0 auto;
+  color: #FAF9F5;
+  font-family: "Spectral", var(--font-reading);
+  font-size: clamp(40px, 4.5vw, 56px);
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.06;
+  text-align: center;
+  text-wrap: balance;
+}
+.home-community-cta .atlas-map-typewriter {
+  display: flex;
+  position: static;
+  width: auto;
+  max-width: 900px;
+  margin: 24px auto 0;
+  transform: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  color: #FAF9F5;
+  font-family: var(--font-sans);
+  font-size: clamp(16px, 2vw, 22px);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.4;
+  text-align: center;
+  text-shadow: none;
+}
+.home-community-cta .atlas-map-typewriter span { color: rgba(250, 249, 245, .55); white-space: normal; }
+.home-community-cta .atlas-map-typewriter strong { color: #FAF9F5; font-weight: 500; white-space: normal; }
+.home-community-cta .atlas-map-typewriter i { background: #FAF9F5; }
+.home-community-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+.home-community-cta-button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.home-community-cta-button.is-primary { border-color: #FAF9F5; background: #FAF9F5; color: #141413; }
+.home-community-cta-button.is-primary:hover,
+.home-community-cta-button.is-primary:focus-visible { border-color: #FAF9F5; background: transparent; color: #FAF9F5; outline: none; }
+.home-community-cta-button.is-secondary { border-color: rgba(250, 249, 245, .28); background: rgba(250, 249, 245, .10); color: #FAF9F5; }
+.home-community-cta-button.is-secondary:hover,
+.home-community-cta-button.is-secondary:focus-visible { border-color: rgba(250, 249, 245, .55); background: rgba(250, 249, 245, .18); color: #FAF9F5; outline: none; }

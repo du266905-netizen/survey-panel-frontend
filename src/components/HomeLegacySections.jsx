@@ -237,20 +237,22 @@ export function HomeGlobalSection() {
   );
 }
 
-function HomeCommunityCta({ navigation, language }) {
-  const prompts = [
-    'find out.',
-    'talk about your question.',
-    'start with what you need.',
-  ];
+function HomeCommunityCta({ copy, navigation, language }) {
   return (
-    <section className="home-community-cta" aria-label="Run research with us">
+    <section className="home-community-cta" aria-label="Join the community or run research with us">
       <div className="home-community-cta-inner">
-        <AtlasTypewriter begin="Let's" prompts={prompts} />
-        <Link className="home-community-cta-button" to={withLanguage('/business/access', language)}>
-          {navigation.runResearch}
-          <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
-        </Link>
+        <h2 className="home-community-cta-title">So, have you thought about what to do next?</h2>
+        <AtlasTypewriter begin={copy.begin} prompts={copy.prompts} />
+        <div className="home-community-cta-actions">
+          <Link className="home-community-cta-button is-primary" to={withLanguage('/join', language)}>
+            {navigation.meetCommunity}
+            <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
+          </Link>
+          <Link className="home-community-cta-button is-secondary" to={withLanguage('/business/access', language)}>
+            {navigation.runResearch}
+            <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </section>
   );
@@ -279,7 +281,7 @@ export default function HomeLegacySections() {
         </div>
       </section>
 
-      <HomeCommunityCta navigation={publicCopy.navigation} language={language} />
+      <HomeCommunityCta copy={copy} navigation={publicCopy.navigation} language={language} />
 
       <HomeFooter />
     </div>
