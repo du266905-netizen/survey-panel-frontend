@@ -1131,7 +1131,7 @@
 .home-atlas .video-hero-copy { width: min(100%, 1280px); }
 .home-atlas .video-hero h1 {
   max-width: 26ch;
-  font-size: clamp(56px, 8.4vw, 136px);
+  font-size: clamp(44px, 6.2vw, 96px);
 }
 .home-atlas .video-hero h1 span:nth-child(2) { font-size: .72em; }
 .home-atlas .video-hero-description {
@@ -1141,7 +1141,7 @@
 }
 .home-atlas .video-hero-supporting { display: none; }
 @media (max-width: 720px) {
-  .home-atlas .video-hero h1 { max-width: 100%; font-size: clamp(40px, 10.6vw, 54px); }
+  .home-atlas .video-hero h1 { max-width: 100%; font-size: clamp(36px, 9.4vw, 46px); }
   .home-atlas .video-hero-description { font-size: 16px; }
 }
 

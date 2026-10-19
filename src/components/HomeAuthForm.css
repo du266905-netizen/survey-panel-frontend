@@ -63,40 +63,44 @@
   content: '';
 }
 
-.home-auth-google {
+.home-auth-google-wrap {
   display: flex;
   width: 100%;
-  height: 50px;
-  align-items: center;
   justify-content: center;
-  gap: 10px;
-  border: 1px solid #141a17;
+}
+
+.home-auth-google-wrap > div { width: 100%; }
+
+/* The real Google GSI button uses its own iframe. When Google cannot load,
+   keep the existing auth fallback visually consistent with the black button. */
+.home-auth-form .public-auth-google-disabled {
+  width: 100%;
+  height: 50px;
+  border-color: #141a17;
   border-radius: 999px;
   background: #141a17;
   color: #fffdf8;
-  cursor: pointer;
-  font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 500;
+  opacity: 1;
 }
 
-.home-auth-google-mark {
-  display: grid;
-  width: 20px;
-  height: 20px;
-  place-items: center;
-  border-radius: 50%;
+.home-auth-form .public-auth-google-disabled > span:first-child {
+  border-color: #fff;
   background: #fff;
   color: #141a17;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 700;
 }
 
-.home-auth-google:hover { background: #2b332f; border-color: #2b332f; }
+.home-auth-error {
+  margin: 10px 0 0;
+  color: #5f6862;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
 
-.home-auth-email button:focus-visible,
-.home-auth-google:focus-visible {
+.home-auth-email button:focus-visible {
   outline: 2px solid #141a17;
   outline-offset: 3px;
 }

@@ -1,10 +1,28 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { googleLogin } from '../api/realApi';
+import { useAuth } from './AuthContext';
+import { GoogleButton } from './PublicAuthPanel';
 import './HomeAuthForm.css';
 
 export default function HomeAuthForm({ audience = 'participant' }) {
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
   const isResearch = audience === 'research';
+
+  const handleGoogleCredential = async (credential) => {
+    setError('');
+    try {
+      const response = await googleLogin({ credential });
+      setUser(response.data.user);
+      const role = String(response.data.user?.role || '').toUpperCase();
+      navigate(role === 'BUSINESS' ? '/business/workspace' : '/dashboard', { replace: true });
+    } catch (caughtError) {
+      setError(caughtError.response?.data?.message || 'Google sign-in failed. Please try again.');
+    }
+  };
 
   return (
     <div className="home-auth-form">
@@ -24,12 +42,20 @@ export default function HomeAuthForm({ audience = 'participant' }) {
       {!isResearch && (
         <>
           <div className="home-auth-or"><span>or</span></div>
-          <button className="home-auth-google" type="button">
-            <span className="home-auth-google-mark" aria-hidden="true">G</span>
-            Continue with Google
-          </button>
+          <div className="home-auth-google-wrap">
+            <GoogleButton
+              mode="login"
+              onCredential={handleGoogleCredential}
+              onError={setError}
+              language="en-US"
+              label="Continue with Google"
+              note="Google sign-in is unavailable on this network"
+            />
+          </div>
         </>
       )}
+
+      {error && <p className="home-auth-error" role="alert">{error}</p>}
 
       <p className="home-auth-terms">
         By signing in, you agree to the{' '}

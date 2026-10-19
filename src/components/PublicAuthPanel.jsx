@@ -74,7 +74,7 @@ function loadGoogleScript() {
   return googleScriptPromise;
 }
 
-function GoogleButton({ mode, onCredential, onError, language, label, note }) {
+export function GoogleButton({ mode, onCredential, onError, language, label, note }) {
   const containerRef = useRef(null);
   const handlersRef = useRef({ onCredential, onError });
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
