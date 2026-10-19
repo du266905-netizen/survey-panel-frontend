@@ -2188,3 +2188,12 @@
   --atlas-paper: #E7E1D7;
   --continuation-paper: #E7E1D7;
 }
+.home-atlas .home-rewards-section .home-reward-card h3 { font-size: 22px; line-height: 1.05; }
+.home-atlas .home-rewards-section .home-reward-card h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: -.032em;
+  line-height: 1.05;
+}
