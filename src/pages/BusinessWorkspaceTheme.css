@@ -4351,8 +4351,11 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
      22   panel    dialog and panel titles
      38   page     page titles
      56   figure   the four figures — the only large thing on a page
+     64   display  largest homepage title (Claude display XL)
 
-   Anything not on this list is a bug, not a judgement call.
+   The 64 step was authorised by the user on 2026-10-19 for the single largest
+   homepage title only; 38 / 56 remain the page / figure steps. Anything not
+   on this list is a bug, not a judgement call.
 
    ── Part 18b · upright and italic ───────────────────────────────────────
 
