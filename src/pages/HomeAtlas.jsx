@@ -212,9 +212,14 @@ export default function HomeAtlas() {
 
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">
+          <div className="atlas-contact-copy">
           <p className="atlas-contact-kicker">{copy.contactKicker}</p>
           <h2 id="atlas-contact-title">{copy.contactTitle}</h2>
           <p className="atlas-contact-intro">{copy.contactIntro}</p>
+          </div>
+
+          <div className="atlas-contact-form-card">
+          <AtlasTypewriter prompts={copy.prompts} begin={copy.begin} />
 
           <form className="atlas-contact-form" onSubmit={submitContactForm}>
             <label className="atlas-contact-field--name">
@@ -248,16 +253,9 @@ export default function HomeAtlas() {
             </button>
             {contactStatus && <p className={`atlas-contact-status ${contactStatus.startsWith('Thank') ? 'is-success' : 'is-error'}`} role="status">{contactStatus}</p>}
           </form>
+          </div>
         </div>
 
-        {/* The constellation that used to live here — two orbit rings, three
-            signal dots, four connecting wires and the four AtlasNode cards —
-            is replaced by one photograph. The AtlasNode component itself is
-            kept further up this file, unused, because the animations are
-            wanted again for the report wall; see handoff §12. */}
-        <div className="atlas-map">
-          <AtlasTypewriter prompts={copy.prompts} begin={copy.begin} />
-        </div>
       </section>
 
       <HomeLegacySections />

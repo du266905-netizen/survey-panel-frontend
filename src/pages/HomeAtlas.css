@@ -1749,3 +1749,167 @@
 #atlas-contact .atlas-contact-intro { color: var(--atlas-quiet-ink) !important; }
 #atlas-contact .atlas-contact-form label > span { color: var(--atlas-ink) !important; }
 #atlas-contact .atlas-contact-form label em { color: var(--atlas-quiet-ink) !important; }
+
+/* Horizontal contact card: one white frame, typewriter at the top, fields in
+   three columns. The right-hand expression card is gone. */
+#atlas-contact.atlas-stage {
+  display: block;
+}
+#atlas-contact .atlas-contact-panel {
+  width: min(100%, 1180px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(28px, 3vw, 46px);
+}
+#atlas-contact .atlas-contact-panel .atlas-map-typewriter {
+  position: static;
+  display: flex;
+  width: auto;
+  max-width: 100%;
+  margin: 22px 0 26px;
+  transform: none;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 6px 10px;
+  color: var(--atlas-ink);
+  font-size: clamp(24px, 2.2vw, 36px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  text-align: left;
+  text-shadow: none;
+}
+#atlas-contact .atlas-contact-panel .atlas-map-typewriter span,
+#atlas-contact .atlas-contact-panel .atlas-map-typewriter strong {
+  white-space: normal;
+}
+#atlas-contact .atlas-contact-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#atlas-contact .atlas-contact-field--phone,
+#atlas-contact .atlas-contact-field--message,
+#atlas-contact .atlas-contact-submit,
+#atlas-contact .atlas-contact-status {
+  grid-column: auto;
+}
+#atlas-contact .atlas-contact-field--message,
+#atlas-contact .atlas-contact-status {
+  grid-column: 1 / -1;
+}
+#atlas-contact .atlas-contact-submit {
+  grid-column: auto;
+  align-self: end;
+}
+@media (max-width: 900px) {
+  #atlas-contact .atlas-contact-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  #atlas-contact .atlas-contact-form { grid-template-columns: 1fr; }
+  #atlas-contact .atlas-contact-panel .atlas-map-typewriter { margin: 18px 0 22px; }
+}
+#atlas-contact .atlas-phone-input {
+  grid-template-columns: minmax(240px, .6fr) minmax(0, 1fr) !important;
+  max-width: none;
+}
+#atlas-contact .atlas-contact-submit {
+  grid-column: 2;
+  grid-row: 3;
+  align-self: end;
+}
+#atlas-contact .atlas-contact-field--message {
+  grid-row: 4;
+  grid-column: 1 / -1;
+}
+@media (max-width: 900px) {
+  #atlas-contact .atlas-contact-submit {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  #atlas-contact .atlas-contact-field--message {
+    grid-row: auto;
+  }
+}
+@media (max-width: 620px) {
+  #atlas-contact .atlas-phone-input {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Final contact layout: copy on the left, a separate form card on the right,
+   like the Claude webinar registration reference. The typewriter is the form
+   card heading; the form is two columns. */
+#atlas-contact .atlas-contact-panel {
+  display: grid;
+  grid-template-columns: minmax(0, .74fr) minmax(0, 1.26fr);
+  gap: clamp(30px, 4vw, 58px);
+  align-items: start;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#atlas-contact .atlas-contact-copy {
+  max-width: 480px;
+  padding-top: clamp(4px, 1vw, 14px);
+}
+#atlas-contact .atlas-contact-form-card {
+  padding: clamp(24px, 2.4vw, 36px);
+  border: 1px solid var(--proto-line);
+  border-radius: 12px;
+  background: #ffffff;
+}
+#atlas-contact .atlas-contact-form-card .atlas-map-typewriter {
+  position: static;
+  display: flex;
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 24px;
+  transform: none;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 6px 10px;
+  color: var(--atlas-ink);
+  font-size: clamp(24px, 2.15vw, 32px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  text-align: left;
+  text-shadow: none;
+}
+#atlas-contact .atlas-contact-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#atlas-contact .atlas-contact-field--phone,
+#atlas-contact .atlas-contact-field--message {
+  grid-column: 1 / -1;
+}
+#atlas-contact .atlas-contact-submit {
+  grid-column: 1;
+  grid-row: auto;
+  align-self: start;
+  margin-top: 2px;
+}
+#atlas-contact .atlas-phone-input {
+  grid-template-columns: minmax(240px, .6fr) minmax(0, 1fr) !important;
+}
+@media (max-width: 900px) {
+  #atlas-contact .atlas-contact-panel {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  #atlas-contact .atlas-contact-copy {
+    max-width: 620px;
+    padding-top: 0;
+  }
+}
+@media (max-width: 620px) {
+  #atlas-contact .atlas-contact-form {
+    grid-template-columns: 1fr;
+  }
+  #atlas-contact .atlas-contact-field--phone,
+  #atlas-contact .atlas-contact-field--message {
+    grid-column: auto;
+  }
+  #atlas-contact .atlas-phone-input {
+    grid-template-columns: 1fr !important;
+  }
+}
