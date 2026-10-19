@@ -27,7 +27,7 @@ export default function MarketingUnsubscribe() {
   }, [params]);
 
   return (
-    <main className="min-h-screen bg-[#f5f4ef] px-6 py-20 text-[#193b2e]">
+    <main className="marketing-unsubscribe-page min-h-screen px-6 py-20">
       <section className="mx-auto max-w-xl rounded-2xl border border-[#d9e1d8] bg-white p-8 text-center shadow-sm">
         {state === 'loading' && <LoaderCircle className="mx-auto mb-5 animate-spin text-emerald-700" size={30} aria-hidden="true" />}
         {state === 'success' && <CheckCircle2 className="mx-auto mb-5 text-emerald-700" size={34} aria-hidden="true" />}
