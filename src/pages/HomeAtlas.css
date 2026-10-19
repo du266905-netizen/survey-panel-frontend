@@ -2197,3 +2197,15 @@
   letter-spacing: -.032em;
   line-height: 1.05;
 }
+
+/* Homepage ground is Claude canvas, not greige. Greige stays only on the
+   first reward card. */
+.home-atlas,
+.home-atlas .atlas-navigation.public-site-header,
+#atlas-contact,
+.home-atlas .home-film,
+.home-atlas .home-rewards-section {
+  background: #FAF9F5;
+  --atlas-paper: #FAF9F5;
+  --continuation-paper: #FAF9F5;
+}
