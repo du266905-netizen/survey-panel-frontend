@@ -10,6 +10,7 @@
 .business-marketing-page .business-container { width: min(100% - 96px, 1280px); }
 
 .business-marketing-page .business-hero {
+  border-bottom: 0 !important;
   background: #FAF9F5 !important;
   padding: 96px 0 72px;
 }
