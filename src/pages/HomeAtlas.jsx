@@ -160,7 +160,6 @@ export default function HomeAtlas() {
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">
           <div className="atlas-contact-copy">
-          <p className="atlas-contact-kicker">{copy.contactKicker}</p>
           <h2 id="atlas-contact-title">{copy.contactTitle}</h2>
           <p className="atlas-contact-intro">{copy.contactIntro}</p>
           </div>

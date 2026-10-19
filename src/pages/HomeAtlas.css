@@ -1445,7 +1445,7 @@
   --atlas-quiet-ink: #6F6A5F;
   --atlas-forest: #141413;
   --atlas-sage: #C9D2B4;
-  --atlas-paper: #F7F7F5;
+  --atlas-paper: #F4F7F2;
   --atlas-paper-deep: #E4E0D6;
   --atlas-rule: #D5D0C4;
   --proto-ink: #141413;
@@ -1456,9 +1456,9 @@
   --proto-line-2: rgba(20, 20, 19, .22);
   --proto-accent: #141413;
   --proto-paper: #FCFAF6;
-  --continuation-paper: #F7F7F5;
+  --continuation-paper: #F4F7F2;
   --continuation-rule: #D5D0C4;
-  background: #F7F7F5;
+  background: #F4F7F2;
   color: #141413;
 }
 
@@ -1466,9 +1466,9 @@
 .home-atlas .atlas-navigation.public-site-header {
   --atlas-ink: #141413;
   --atlas-forest: #141413;
-  --atlas-paper: #F7F7F5;
+  --atlas-paper: #F4F7F2;
   --atlas-rule: #D5D0C4;
-  background: #F7F7F5;
+  background: #F4F7F2;
   border-color: #D5D0C4;
   color: #141413;
   box-shadow: 0 10px 22px rgba(20, 20, 19, .04);
@@ -1483,7 +1483,7 @@
 .home-atlas .atlas-nav-trigger:hover { color: #141413; text-decoration: underline; text-underline-offset: 4px; }
 .home-atlas .atlas-nav-menu {
   border-color: #D5D0C4;
-  background: #F7F7F5;
+  background: #F4F7F2;
   color: #141413;
 }
 .home-atlas .atlas-nav-menu-item:hover,
@@ -1502,7 +1502,7 @@
 }
 .home-atlas .atlas-mobile-menu {
   border-color: #D5D0C4;
-  background: #F7F7F5;
+  background: #F4F7F2;
 }
 .home-atlas .atlas-mobile-direct-link,
 .home-atlas .atlas-mobile-group a { color: #141413; }
@@ -1604,7 +1604,7 @@
 }
 
 /* Cards: one step deeper than the warm bone-grey page. */
-.home-atlas .home-rewards-section { background: #F7F7F5; }
+.home-atlas .home-rewards-section { background: #F4F7F2; }
 .home-atlas .home-reward-card {
   background: #FCFAF6;
   border-color: #D5D0C4;
@@ -1612,8 +1612,8 @@
 .home-atlas .home-reward-card:hover { background: #FFFFFF; }
 
 /* Paper sections and footer. */
-.home-atlas .home-film { background: #F7F7F5; }
-.home-atlas .home-manifesto { background: #F7F7F5; }
+.home-atlas .home-film { background: #F4F7F2; }
+.home-atlas .home-manifesto { background: #F4F7F2; }
 .home-atlas .home-manifesto-card--voices { background: #FFFFFF; }
 .home-atlas .home-manifesto-card--technology { background: #E4E0D6; }
 .home-atlas .home-manifesto-principle {
@@ -1995,8 +1995,8 @@
    visible bottom hairline remains. Join us uses the reference green. */
 .home-atlas .atlas-navigation.public-site-header {
   --atlas-ink: #141413;
-  --atlas-forest: #2A5647;
-  --atlas-paper: #F7F7F5;
+  --atlas-forest: #285647;
+  --atlas-paper: #F4F7F2;
   --atlas-rule: rgba(20, 20, 19, .06);
   top: 0;
   width: 100%;
@@ -2006,7 +2006,7 @@
   border: 0;
   border-bottom: 1px solid rgba(20, 20, 19, .055);
   border-radius: 0;
-  background: #F7F7F5;
+  background: #F4F7F2;
   box-shadow: none;
   backdrop-filter: none;
 }
@@ -2021,15 +2021,98 @@
   font-weight: 600;
 }
 .home-atlas .atlas-register {
-  border-color: #2A5647;
-  background: #2A5647;
+  border-color: #285647;
+  background: #285647;
   color: #FAF7F0;
 }
 .home-atlas .atlas-register:hover {
-  border-color: #1F4538;
-  background: #1F4538;
+  border-color: #1E4437;
+  background: #1E4437;
 }
 .home-atlas .atlas-register,
 .home-atlas .atlas-register:hover {
   box-shadow: none;
+}
+
+/* Contact correction: page/nav colors from the current card; heading and
+   description sit above the form, not inside it. Only the form is a white
+   card, and form labels/inputs use the 16px sans step. */
+.home-atlas .atlas-navigation.public-site-header {
+  --atlas-paper: #FCFDFB;
+  background: #FCFDFB;
+}
+#atlas-contact .atlas-contact-panel {
+  display: block;
+  width: min(100%, 960px);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#atlas-contact .atlas-contact-copy {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+#atlas-contact .atlas-contact-panel h2 {
+  max-width: 760px;
+  margin: 0 auto;
+  font-family: var(--font-reading);
+  font-size: clamp(28px, 2.5vw, 36px);
+  font-weight: 600;
+  letter-spacing: -.0139em;
+  line-height: 1.15;
+}
+#atlas-contact .atlas-contact-intro {
+  max-width: 640px;
+  margin: 10px auto 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+#atlas-contact .atlas-contact-form {
+  width: min(100%, 760px);
+  margin: 22px auto 0;
+  padding: clamp(22px, 2.4vw, 32px);
+  border: 1px solid var(--proto-line);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(20, 20, 19, .06);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 14px;
+  row-gap: 10px;
+}
+#atlas-contact .atlas-contact-form label > span {
+  color: var(--atlas-quiet-ink) !important;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+#atlas-contact .atlas-contact-form label em { font-size: 16px; }
+#atlas-contact .atlas-contact-form input,
+#atlas-contact .atlas-contact-form select,
+#atlas-contact .atlas-contact-form textarea {
+  font-size: 16px;
+}
+#atlas-contact .atlas-contact-submit {
+  font-size: 16px;
+  font-weight: 500;
+}
+#atlas-contact .atlas-contact-field--phone,
+#atlas-contact .atlas-contact-field--message {
+  grid-column: 1 / -1;
+}
+#atlas-contact .atlas-contact-submit { grid-column: 1; }
+@media (max-width: 760px) {
+  #atlas-contact .atlas-contact-form {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  #atlas-contact .atlas-contact-field--phone,
+  #atlas-contact .atlas-contact-field--message { grid-column: auto; }
 }
