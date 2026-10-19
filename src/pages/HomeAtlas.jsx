@@ -5,14 +5,13 @@ import { createSupportTicket } from '../api/supportApi';
 import CommunityHub from './CommunityHub';
 import HomeFilmSection from '../components/HomeFilmSection';
 import HomeLegacySections from '../components/HomeLegacySections';
-import { useAuth } from '../components/AuthContext';
-import { useLanguage, withLanguage } from '../components/LanguageContext';
+import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
+import HomeAuthForm from '../components/HomeAuthForm';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
-import heroCommunity from '../assets/home/hero-community.png';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import './HomeAtlas.css';
 
@@ -102,7 +101,6 @@ function AtlasTypewriter({ prompts, begin }) {
 
 
 export default function HomeAtlas() {
-  const { user } = useAuth();
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
   const [heroLead, ...heroRest] = publicCopy.hero.lines;
@@ -112,6 +110,8 @@ export default function HomeAtlas() {
   }, [language]);
   const localizedCountry = (country) => regionNames?.of(country.value) || country.label;
   const [activeNode, setActiveNode] = useState('');
+  const [audience, setAudience] = useState('participant');
+  const isResearch = audience === 'research';
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -177,23 +177,29 @@ export default function HomeAtlas() {
               <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
               <h1 id="video-hero-title">{heroLines.map((line) => <span key={line}>{line}</span>)}</h1>
               <p className="video-hero-description">{publicCopy.hero.description}</p>
-              <p className="video-hero-supporting">{publicCopy.hero.supporting}</p>
-              {/* two ways in, as the prototype has it: one entry for people who
-                  want to take part, one for teams commissioning research */}
-              <div className="video-hero-actions">
-                <Link className="atlas-primary-link video-hero-cta" to={withLanguage(user ? '/dashboard' : '/join', language)}>
+              {/* The two existing homepage buttons are now the account-mode
+                  switch: participant (email + Google) or research (email). */}
+              <div className="video-hero-actions" role="group" aria-label="Choose account type">
+                <button
+                  type="button"
+                  className={`video-hero-cta${isResearch ? ' video-hero-cta--outline' : ''}`}
+                  aria-pressed={!isResearch}
+                  onClick={() => setAudience('participant')}
+                >
                   {publicCopy.navigation.meetCommunity}
                   <ArrowUpRight size={19} strokeWidth={1.8} />
-                </Link>
-                <Link className="video-hero-cta video-hero-cta--outline" to={withLanguage('/business', language)}>
+                </button>
+                <button
+                  type="button"
+                  className={`video-hero-cta${isResearch ? '' : ' video-hero-cta--outline'}`}
+                  aria-pressed={isResearch}
+                  onClick={() => setAudience('research')}
+                >
                   {publicCopy.navigation.runResearch}
                   <ArrowUpRight size={19} strokeWidth={1.8} />
-                </Link>
+                </button>
               </div>
-            </div>
-            <div className="video-hero-media" aria-hidden="true">
-              <span className="video-hero-shape" />
-              <img className="video-hero-cutout" src={heroCommunity} alt="" />
+              <HomeAuthForm audience={audience} />
             </div>
           </div>
         </div>

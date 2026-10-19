@@ -1,0 +1,125 @@
+.home-auth-form {
+  width: min(100%, 430px);
+  margin: 30px auto 0;
+  text-align: left;
+}
+
+.home-auth-email {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.home-auth-email input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 52px;
+  border: 1px solid rgba(20, 26, 23, .22);
+  border-radius: 12px;
+  outline: none;
+  background: #fff;
+  color: #141a17;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding: 0 14px;
+}
+
+.home-auth-email input::placeholder { color: #8d948d; }
+.home-auth-email input:focus {
+  border-color: #141a17;
+  box-shadow: 0 0 0 3px rgba(20, 26, 23, .07);
+}
+
+.home-auth-email button {
+  flex: 0 0 124px;
+  height: 52px;
+  border: 1px solid #141a17;
+  border-radius: 12px;
+  background: #141a17;
+  color: #fffdf8;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.home-auth-email button:hover { background: #2b332f; border-color: #2b332f; }
+
+.home-auth-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 14px;
+  color: #8d948d;
+  font-family: var(--font-sans);
+  font-size: 11px;
+}
+
+.home-auth-or:before,
+.home-auth-or:after {
+  flex: 1;
+  height: 1px;
+  background: rgba(20, 26, 23, .11);
+  content: '';
+}
+
+.home-auth-google {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #141a17;
+  border-radius: 999px;
+  background: #141a17;
+  color: #fffdf8;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.home-auth-google-mark {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #141a17;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.home-auth-google:hover { background: #2b332f; border-color: #2b332f; }
+
+.home-auth-email button:focus-visible,
+.home-auth-google:focus-visible {
+  outline: 2px solid #141a17;
+  outline-offset: 3px;
+}
+
+.home-auth-terms {
+  margin: 18px 0 0;
+  color: #7f848a;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.home-auth-terms a {
+  color: #141a17;
+  text-decoration: underline;
+  text-decoration-color: rgba(20, 26, 23, .3);
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .home-auth-form { margin-top: 24px; }
+  .home-auth-email { gap: 6px; }
+  .home-auth-email input { font-size: 13px; padding: 0 11px; }
+  .home-auth-email button { flex-basis: 108px; font-size: 13px; }
+}

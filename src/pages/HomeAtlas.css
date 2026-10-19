@@ -1080,3 +1080,150 @@
 #atlas-contact .atlas-contact-panel {
   align-self: center;
 }
+
+/* ---------------------------------------------------------------------------
+   Homepage hero direction — text only, centred, no cut-out group and no colour
+   wedge. The big line takes the long-form slogan face (Songti); the old Bodoni
+   display face is demoted to the small eyebrow. Type scale itself is untouched;
+   that is a separate pass.
+   Everything is scoped to the homepage hero.
+   --------------------------------------------------------------------------- */
+.home-atlas .video-hero-content {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+  padding: clamp(40px, 6vw, 96px) clamp(24px, 6vw, 96px);
+}
+.home-atlas .video-hero-media { display: none; }
+.home-atlas .video-hero-copy {
+  align-items: center;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  text-align: center;
+}
+.home-atlas .video-hero-eyebrow {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: .16em;
+}
+.home-atlas .video-hero h1 {
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.home-atlas .video-hero h1 span:nth-child(1) {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -.028em;
+}
+.home-atlas .video-hero-description,
+.home-atlas .video-hero-supporting {
+  margin-left: auto;
+  margin-right: auto;
+}
+.home-atlas .video-hero-actions { justify-content: center; }
+
+/* Larger hero type; one description only (the extra supporting paragraph is
+   not part of the hero). Type scale itself is still untouched. */
+.home-atlas .video-hero-copy { width: min(100%, 1280px); }
+.home-atlas .video-hero h1 {
+  max-width: 26ch;
+  font-size: clamp(56px, 8.4vw, 136px);
+}
+.home-atlas .video-hero h1 span:nth-child(2) { font-size: .72em; }
+.home-atlas .video-hero-description {
+  max-width: 50ch;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.home-atlas .video-hero-supporting { display: none; }
+@media (max-width: 720px) {
+  .home-atlas .video-hero h1 { max-width: 100%; font-size: clamp(40px, 10.6vw, 54px); }
+  .home-atlas .video-hero-description { font-size: 16px; }
+}
+
+/* ---------------------------------------------------------------------------
+   Homepage sign-in hero: the two existing buttons are now the account-mode
+   switch. Participant = email + Google; research = email only. The hero is
+   pushed up so the form sits underneath the buttons instead of a separate
+   page or card. Everything is scoped to the homepage hero.
+   --------------------------------------------------------------------------- */
+.home-atlas .video-hero-content {
+  align-content: flex-start;
+  padding-top: clamp(22px, 2.8vh, 38px);
+  padding-bottom: clamp(48px, 6vh, 76px);
+}
+.home-atlas .video-hero-copy { justify-content: flex-start; }
+.home-atlas .video-hero-actions {
+  justify-content: center;
+  margin-top: clamp(20px, 2.2vw, 28px);
+}
+.home-atlas .video-hero-cta {
+  appearance: none;
+  cursor: pointer;
+}
+.home-atlas .video-hero-cta:focus-visible {
+  outline: 2px solid #141a17;
+  outline-offset: 3px;
+}
+.home-atlas .video-hero-auth {
+  width: min(100%, 430px);
+  margin: clamp(22px, 2.8vw, 34px) auto 0;
+}
+.home-atlas .video-hero-auth .public-auth-panel { width: 100%; }
+.home-atlas .video-hero-auth .public-auth-content { padding-top: 0; }
+.home-atlas .video-hero-auth .public-auth-consent { margin-top: 0; }
+.home-atlas .video-hero-auth .public-auth-divider { margin: 18px 0; }
+.home-atlas .video-hero-auth .public-auth-google-disabled {
+  height: 48px;
+  border-color: #141a17;
+  border-radius: 999px;
+  background: #141a17;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 1;
+}
+.home-atlas .video-hero-auth .public-auth-google-disabled > span:first-child {
+  border-color: #fff;
+  background: #fff;
+  color: #141a17;
+}
+.home-atlas .video-hero-auth .public-auth-submit,
+.home-atlas .video-hero-auth .public-auth-email-cta { border-radius: 999px; }
+@media (max-width: 720px) {
+  .home-atlas .video-hero-content { padding-top: 18px; padding-bottom: 48px; }
+  .home-atlas .video-hero-auth { margin-top: 20px; }
+}
+@media (max-width: 720px) {
+  .home-atlas .video-hero-actions {
+    width: 100%;
+    max-width: 430px;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+  .home-atlas .video-hero-actions .video-hero-cta {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 10px;
+    font-size: 13px;
+    gap: 6px;
+  }
+  .home-atlas .video-hero-actions .video-hero-cta svg { width: 14px; height: 14px; }
+}
+.home-atlas .video-hero-description {
+  max-width: min(100%, 44rem);
+  text-wrap: balance;
+}
+@media (max-width: 720px) {
+  .home-atlas .video-hero-actions .video-hero-cta {
+    padding: 0 6px;
+    font-size: 13px;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .home-atlas .video-hero-actions .video-hero-cta svg { width: 12px; height: 12px; }
+}
