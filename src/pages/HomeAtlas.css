@@ -1629,14 +1629,14 @@
    --------------------------------------------------------------------------- */
 .home-atlas .video-hero h1,
 .home-atlas .video-hero h1 span:nth-child(1) {
-  font-family: var(--font-reading);
+  font-family: "Spectral", var(--font-reading);
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -.03em;
   line-height: .98;
 }
 .home-atlas .video-hero h1 span:nth-child(2) {
-  font-family: var(--font-reading);
+  font-family: "Spectral", var(--font-reading);
   font-style: italic;
   font-weight: 400;
 }
@@ -1645,7 +1645,7 @@
 .home-atlas .home-rewards-heading h2,
 .home-atlas .home-global-copy h2,
 .home-atlas .atlas-contact-panel h2 {
-  font-family: var(--font-reading);
+  font-family: "Spectral", var(--font-reading);
   font-style: normal;
   font-weight: 600;
   letter-spacing: -.028em;
