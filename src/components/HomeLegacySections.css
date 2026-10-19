@@ -295,3 +295,30 @@
 .home-community-cta-button.is-secondary { border-color: rgba(250, 249, 245, .28); background: rgba(250, 249, 245, .10); color: #FAF9F5; }
 .home-community-cta-button.is-secondary:hover,
 .home-community-cta-button.is-secondary:focus-visible { border-color: rgba(250, 249, 245, .55); background: rgba(250, 249, 245, .18); color: #FAF9F5; outline: none; }
+
+/* Match the typewriter to the headline size; keep the headline on one line
+   at desktop and let it wrap on narrow screens. */
+.home-community-cta-inner { width: min(100%, 1320px); }
+.home-community-cta-title {
+  max-width: none;
+  font-size: clamp(40px, 4vw, 56px);
+  line-height: 1;
+  white-space: nowrap;
+}
+.home-community-cta .atlas-map-typewriter {
+  max-width: none;
+  margin-top: 20px;
+  flex-wrap: nowrap;
+  font-family: "Spectral", var(--font-reading);
+  font-size: clamp(40px, 4vw, 56px);
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+}
+@media (max-width: 900px) {
+  .home-community-cta-title,
+  .home-community-cta .atlas-map-typewriter {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+}
