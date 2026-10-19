@@ -1445,7 +1445,7 @@
   --atlas-quiet-ink: #6F6A5F;
   --atlas-forest: #141413;
   --atlas-sage: #C9D2B4;
-  --atlas-paper: #F8F6F2;
+  --atlas-paper: #F7F7F5;
   --atlas-paper-deep: #E4E0D6;
   --atlas-rule: #D5D0C4;
   --proto-ink: #141413;
@@ -1456,9 +1456,9 @@
   --proto-line-2: rgba(20, 20, 19, .22);
   --proto-accent: #141413;
   --proto-paper: #FCFAF6;
-  --continuation-paper: #F8F6F2;
+  --continuation-paper: #F7F7F5;
   --continuation-rule: #D5D0C4;
-  background: #F8F6F2;
+  background: #F7F7F5;
   color: #141413;
 }
 
@@ -1466,9 +1466,9 @@
 .home-atlas .atlas-navigation.public-site-header {
   --atlas-ink: #141413;
   --atlas-forest: #141413;
-  --atlas-paper: #F8F6F2;
+  --atlas-paper: #F7F7F5;
   --atlas-rule: #D5D0C4;
-  background: #F8F6F2;
+  background: #F7F7F5;
   border-color: #D5D0C4;
   color: #141413;
   box-shadow: 0 10px 22px rgba(20, 20, 19, .04);
@@ -1483,7 +1483,7 @@
 .home-atlas .atlas-nav-trigger:hover { color: #141413; text-decoration: underline; text-underline-offset: 4px; }
 .home-atlas .atlas-nav-menu {
   border-color: #D5D0C4;
-  background: #F8F6F2;
+  background: #F7F7F5;
   color: #141413;
 }
 .home-atlas .atlas-nav-menu-item:hover,
@@ -1502,7 +1502,7 @@
 }
 .home-atlas .atlas-mobile-menu {
   border-color: #D5D0C4;
-  background: #F8F6F2;
+  background: #F7F7F5;
 }
 .home-atlas .atlas-mobile-direct-link,
 .home-atlas .atlas-mobile-group a { color: #141413; }
@@ -1604,7 +1604,7 @@
 }
 
 /* Cards: one step deeper than the warm bone-grey page. */
-.home-atlas .home-rewards-section { background: #F8F6F2; }
+.home-atlas .home-rewards-section { background: #F7F7F5; }
 .home-atlas .home-reward-card {
   background: #FCFAF6;
   border-color: #D5D0C4;
@@ -1612,8 +1612,8 @@
 .home-atlas .home-reward-card:hover { background: #FFFFFF; }
 
 /* Paper sections and footer. */
-.home-atlas .home-film { background: #F8F6F2; }
-.home-atlas .home-manifesto { background: #F8F6F2; }
+.home-atlas .home-film { background: #F7F7F5; }
+.home-atlas .home-manifesto { background: #F7F7F5; }
 .home-atlas .home-manifesto-card--voices { background: #FFFFFF; }
 .home-atlas .home-manifesto-card--technology { background: #E4E0D6; }
 .home-atlas .home-manifesto-principle {
@@ -1988,4 +1988,44 @@
   #atlas-contact .atlas-contact-field--message {
     grid-column: auto;
   }
+}
+
+/* Navigation: full-width bar that sits on the page, like the reference.
+   The floating card, its border and its shadow are removed; only a barely
+   visible bottom hairline remains. Join us uses the reference green. */
+.home-atlas .atlas-navigation.public-site-header {
+  --atlas-ink: #141413;
+  --atlas-forest: #2A5647;
+  --atlas-paper: #F7F7F5;
+  --atlas-rule: rgba(20, 20, 19, .06);
+  top: 0;
+  width: 100%;
+  min-height: 76px;
+  margin: 0;
+  padding: 0 clamp(26px, 4.6vw, 64px);
+  border: 0;
+  border-bottom: 1px solid rgba(20, 20, 19, .055);
+  border-radius: 0;
+  background: #F7F7F5;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.home-atlas .atlas-nav-trigger,
+.home-atlas .atlas-nav-link {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 14px;
+}
+.home-atlas .atlas-sign-in {
+  font-size: 14px;
+  font-weight: 600;
+}
+.home-atlas .atlas-register {
+  border-color: #2A5647;
+  background: #2A5647;
+  color: #FAF7F0;
+}
+.home-atlas .atlas-register:hover {
+  border-color: #1F4538;
+  background: #1F4538;
 }
