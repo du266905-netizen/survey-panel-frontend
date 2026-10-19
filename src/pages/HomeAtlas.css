@@ -1606,10 +1606,10 @@
 /* Cards: one step deeper than the warm bone-grey page. */
 .home-atlas .home-rewards-section { background: #EDEAE2; }
 .home-atlas .home-reward-card {
-  background: #E4E0D6;
+  background: #F6F2E9;
   border-color: #D5D0C4;
 }
-.home-atlas .home-reward-card:hover { background: #DDD8CD; }
+.home-atlas .home-reward-card:hover { background: #FBF7EF; }
 
 /* Paper sections and footer. */
 .home-atlas .home-film { background: #EDEAE2; }
