@@ -1,0 +1,111 @@
+/* Public visual system — the homepage's rules, applied to public pages.
+   Ground: warm white #FAF9F5. Cards: white. Ink: #141413.
+   Type: Spectral 80/56/38, Bodoni 22, Inter 16/14/13/12/11/9.5.
+   Buttons: ink rectangles. No greige, no green, no decorative page gradients. */
+
+.public-site-layout {
+  --ps-paper: #FAF9F5;
+  --ps-white: #FFFFFF;
+  --ps-ink: #141413;
+  --ps-body: #4A4740;
+  --ps-muted: #6F6A5F;
+  --ps-faint: #8A8578;
+  --ps-rule: rgba(20, 20, 19, .10);
+  --ps-ivory: #F3ECDC;
+  --ps-lavender: #D8C1CE;
+  --ps-sage-bone: #F4F7F2;
+  --ps-sage: #AEBFA9;
+  min-height: 100vh;
+  background: var(--ps-paper);
+  color: var(--ps-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+.public-site-layout ::selection { background: var(--ps-ivory); color: var(--ps-ink); }
+
+.ps-container { width: min(100% - 96px, 1280px); margin-inline: auto; }
+
+.ps-display {
+  margin: 0;
+  color: var(--ps-ink);
+  font-family: "Spectral", var(--font-serif);
+  font-size: 56px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+}
+.ps-display em { font-style: italic; }
+.ps-section-title {
+  margin: 0;
+  color: var(--ps-ink);
+  font-family: "Spectral", var(--font-serif);
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.06;
+}
+.ps-card-title {
+  margin: 0;
+  color: var(--ps-ink);
+  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.032em;
+  line-height: 1.12;
+}
+.ps-kicker {
+  margin: 0;
+  color: var(--ps-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.ps-body { margin: 0; color: var(--ps-body); font-family: var(--font-sans); font-size: 16px; font-weight: 400; line-height: 1.7; }
+.ps-small { color: var(--ps-muted); font-size: 14px; line-height: 1.6; }
+
+.ps-button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid var(--ps-ink);
+  border-radius: 0;
+  background: var(--ps-ink);
+  color: #FFFDF8;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+  padding: 0 24px;
+  text-decoration: none;
+  transition: background .2s ease, border-color .2s ease;
+}
+.ps-button:hover { border-color: #2B2A28; background: #2B2A28; color: #FFFDF8; }
+.ps-button--outline { border-color: rgba(20, 20, 19, .22); background: transparent; color: var(--ps-ink); }
+.ps-button--outline:hover { border-color: var(--ps-ink); background: transparent; color: var(--ps-ink); }
+.ps-button--light { border-color: var(--ps-paper); background: var(--ps-paper); color: var(--ps-ink); }
+.ps-button--light:hover { border-color: #FFFFFF; background: #FFFFFF; color: var(--ps-ink); }
+
+.ps-card { border-radius: 22px; background: var(--ps-white); }
+.ps-cta { background: var(--ps-ink); color: var(--ps-paper); }
+.ps-cta .ps-display { color: var(--ps-paper); }
+.ps-cta .ps-body { color: rgba(250, 249, 245, .78); }
+
+/* The one divider: a black closing CTA field meeting the footer. */
+.public-site-layout > main.has-cta + .home-footer { border-top: 1px solid rgba(255, 255, 255, .16); }
+
+@media (max-width: 760px) {
+  .ps-display { font-size: 56px; line-height: 1.02; letter-spacing: -.03em; }
+  .ps-section-title { font-size: 38px; }
+  .ps-container { width: min(100% - 40px, 1280px); }
+  .ps-button { min-height: 48px; font-size: 16px; padding: 0 20px; }
+}

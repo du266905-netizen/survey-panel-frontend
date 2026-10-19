@@ -34,7 +34,7 @@ export default function PageMotion({ children }) {
         entry.target.classList.add('page-motion-visible');
         observer.unobserve(entry.target);
       });
-    }, { rootMargin: '0px 0px -8%', threshold: 0.08 });
+    }, { rootMargin: '0px 0px -8%', threshold: 0.01 });
 
     targets.forEach((element, index) => {
       element.classList.add('page-motion-reveal');

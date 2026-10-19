@@ -12,6 +12,7 @@ import { AuthProvider } from './components/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import { LanguageProvider } from './components/LanguageContext';
 import './index.css';
+import './styles/public-system.css';
 import './styles/paper-contrast-fixes.css';
 import './pages/WorkspaceSurfaceTheme.css';
 import './styles/action-feedback.css';

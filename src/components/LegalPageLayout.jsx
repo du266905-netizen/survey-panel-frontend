@@ -1,4 +1,5 @@
 import { useLanguage } from './LanguageContext';
+import './LegalPageLayout.css';
 
 const legalUi = {
   'zh-CN': { section: '第', sectionSuffix: '节', onPage: '本页内容' },

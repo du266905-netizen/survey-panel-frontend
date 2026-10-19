@@ -1,6 +1,7 @@
 import { ArrowRight, BadgeCheck, ShieldCheck, UserRoundCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import './HowItWorks.css';
 
 const howCopy = {
   'en-US': {
@@ -65,86 +66,7 @@ export default function HowItWorks() {
   const { language, publicCopy } = useLanguage();
   const copy = howCopy[language] || howFallbackCopy(publicCopy.home);
   return (
-    <main className="how-page">
-      <style>{`
-        .how-page { min-width: 320px; background: #171716; color: #efede7; font-family: var(--font-sans); }
-        .how-shell { overflow: hidden; background: radial-gradient(circle at 78% 8%, rgba(255,255,255,.035), transparent 24%), linear-gradient(180deg, #1a1a19 0%, #151514 72%, #121211 100%); }
-        .how-container { width: min(100% - 48px, 1240px); margin: 0 auto; }
-        .how-nav { display: flex; align-items: center; justify-content: space-between; gap: 26px; border-bottom: 1px solid rgba(244,241,232,.13); padding: 26px 0; }
-        .how-nav-brand { display: inline-flex; }
-        .how-nav-links { display: flex; align-items: center; justify-content: flex-end; gap: 22px; }
-        .how-nav-links a { color: rgba(239,237,231,.62); font-size: 13px; font-weight: 780; text-decoration: none; }
-        .how-nav-links a:hover, .how-nav-links a.is-active { color: #fff; }
-        .how-nav-links .how-nav-cta { border: 1px solid rgba(244,241,232,.23); border-radius: 999px; color: #fff; padding: 9px 14px; }
-        .how-hero { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(280px,.65fr); gap: clamp(38px, 9vw, 130px); align-items: end; min-height: 510px; padding: clamp(70px, 9vw, 132px) 0 clamp(76px, 8vw, 110px); }
-        .how-kicker { margin: 0; color: #beb5a5; font-size: 11px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
-        .how-hero h1 { max-width: 760px; margin: 17px 0 0; color: var(--color-paper); font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(53px, 6.4vw, 92px); font-weight: 600; letter-spacing: -.06em; line-height: .94; }
-        .how-hero > p { max-width: 420px; margin: 0 0 5px; color: rgba(236,233,226,.66); font-size: 16px; line-height: 1.86; }
-        .how-platform { border-top: 1px solid rgba(244,241,232,.15); background: #181817; padding: clamp(72px, 8vw, 120px) 0; }
-        .how-platform-head { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(42px, 9vw, 138px); align-items: start; }
-        .how-platform-head h2, .how-panelist-head h2 { max-width: 620px; margin: 15px 0 0; color: var(--color-paper); font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(38px, 4.7vw, 67px); font-weight: 600; letter-spacing: -.048em; line-height: 1.0; }
-        .how-platform-head > p, .how-panelist-head > p { max-width: 545px; margin: 8px 0 0; color: rgba(236,233,226,.66); font-size: 16px; line-height: 1.87; }
-        .how-photo-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 16px; margin-top: clamp(46px, 6vw, 82px); }
-        .how-photo { position: relative; min-height: 350px; overflow: hidden; border-radius: 22px; background: #222220; }
-        .how-photo.is-wide { grid-column: 1 / -1; min-height: 380px; }
-        .how-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
-        .how-photo:hover img { transform: scale(1.035); }
-        .how-photo:after { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(18,18,17,.86) 100%); content: ''; }
-        .how-photo-caption { position: absolute; z-index: 1; right: 22px; bottom: 22px; left: 22px; }
-        .how-photo-caption p { margin: 0; color: #cfc3a5; font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
-        .how-photo-caption strong { display: block; max-width: 580px; margin-top: 7px; color: #fff; font-size: 16px; line-height: 1.2; }
-        .how-standards { background: #1d1d1c; border-top: 1px solid rgba(244,241,232,.12); border-bottom: 1px solid rgba(244,241,232,.12); padding: clamp(76px, 8vw, 124px) 0; }
-        .how-standards-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: clamp(42px, 9vw, 130px); }
-        .how-standards-copy h2 { max-width: 515px; margin: 14px 0 0; color: var(--color-paper); font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(37px, 4.3vw, 61px); font-weight: 600; letter-spacing: -.045em; line-height: 1.03; }
-        .how-standards-copy > p { max-width: 465px; color: rgba(236,233,226,.66); font-size: 16px; line-height: 1.85; }
-        .how-standard-list { display: grid; border-top: 1px solid rgba(244,241,232,.2); }
-        .how-standard { display: grid; grid-template-columns: 48px 1fr; gap: 18px; border-bottom: 1px solid rgba(244,241,232,.2); padding: 25px 0; }
-        .how-standard-icon { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid rgba(244,241,232,.24); border-radius: 50%; color: #efede7; }
-        .how-standard h3 { margin: 1px 0 0; color: #fff; font-size: 16px; }
-        .how-standard p { max-width: 500px; margin: 8px 0 0; color: rgba(236,233,226,.63); font-size: 14px; line-height: 1.72; }
-        .how-panelists { background: #171716; padding: clamp(76px, 9vw, 132px) 0; }
-        .how-panelist-head { max-width: 680px; }
-        .how-panelist-head > p { margin-top: 18px; }
-        .how-steps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 54px; }
-        .how-step { min-height: 220px; border: 1px solid rgba(244,241,232,.14); border-radius: 19px; background: linear-gradient(145deg, #232321, #1c1c1b); padding: 25px; }
-        .how-step > span { color: #beb5a5; font-size: 11px; font-weight: 900; letter-spacing: .12em; }
-        .how-step h3 { margin: 49px 0 0; color: #fff; font-size: 16px; }
-        .how-step p { margin: 10px 0 0; color: rgba(236,233,226,.63); font-size: 14px; line-height: 1.72; }
-        .how-reward { position: relative; min-height: 405px; overflow: hidden; border-radius: 24px; background: #1d1d1c; margin-top: 70px; }
-        .how-reward img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .52; }
-        .how-reward:after { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,20,19,.94), rgba(20,20,19,.3)); content: ''; }
-        .how-reward-copy { position: relative; z-index: 1; max-width: 560px; padding: clamp(38px, 6vw, 78px); }
-        .how-reward-copy h2 { margin: 14px 0 0; color: #fff; font-family: var(--font-display); font-optical-sizing: auto; font-size: clamp(35px, 4.3vw, 58px); font-weight: 600; letter-spacing: -.045em; line-height: 1.02; }
-        .how-reward-copy > p { color: rgba(238,235,228,.69); font-size: 16px; line-height: 1.82; }
-        .how-reward-copy a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(244,241,232,.22); border-radius: 999px; background: #f3efe4; color: #111; font-size: 14px; font-weight: 850; text-decoration: none; padding: 13px 18px; }
-        .how-footer { border-top: 1px solid rgba(244,241,232,.12); padding: 30px 0; }
-        .how-footer-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-        .how-footer-row p { margin: 0; color: rgba(235,232,225,.48); font-size: 13px; }
-        .how-footer-row a { color: rgba(238,235,228,.64); font-size: 13px; font-weight: 800; text-decoration: none; }
-        @media (max-width: 760px) { .how-container { width: min(100% - 40px, 1240px); } .how-nav { align-items: flex-start; flex-direction: column; gap: 18px; } .how-nav-links { width: 100%; justify-content: flex-start; gap: 15px; } .how-nav-links a { font-size: 11px; } .how-nav-links .how-nav-cta { margin-left: auto; } .how-hero, .how-platform-head, .how-standards-grid { grid-template-columns: 1fr; gap: 28px; } .how-hero { min-height: 0; padding: 76px 0; } .how-hero h1 { font-size: 56px; } .how-hero > p { margin: 0; font-size: 14px; } .how-photo-grid { grid-template-columns: 1fr; } .how-photo, .how-photo.is-wide { grid-column: auto; min-height: 320px; } .how-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .how-step { min-height: 0; } .how-step h3 { margin-top: 26px; } .how-reward { min-height: 490px; margin-top: 46px; } .how-reward-copy { padding: 44px 28px; } .how-footer-row { align-items: flex-start; flex-direction: column; } }
-      `}</style>
-      <style>{`
-        .how-page { background: #f7f7f3; color: #17251f; }
-        .how-shell { background: radial-gradient(circle at 78% 8%, rgba(170,184,156,.13), transparent 24%), repeating-linear-gradient(0deg, transparent 0 7px, rgba(40,67,54,.012) 8px 9px), #f7f7f3; }
-        .how-kicker { color: #52705f; }
-        .how-hero h1, .how-platform-head h2, .how-panelist-head h2, .how-standards-copy h2 { color: #17251f; }
-        .how-hero > p, .how-platform-head > p, .how-panelist-head > p, .how-standards-copy > p, .how-standard p, .how-step p { color: #59675f; }
-        .how-platform { border-color: rgba(36,56,46,.16); background: #fbfbf8; }
-        .how-photo { background: #e4e8df; }
-        .how-standards { border-color: rgba(36,56,46,.16); background: #f0f3ee; }
-        .how-standard-list, .how-standard { border-color: rgba(36,56,46,.2); }
-        .how-standard-icon { border-color: rgba(40,86,71,.28); color: #285647; }
-        .how-standard h3 { color: #17251f; }
-        .how-panelists { background: #fbfbf8; }
-        .how-step { border-color: rgba(36,56,46,.16); background: #fffefd; }
-        .how-step > span { color: #557662; }
-        .how-step h3 { color: #17251f; }
-        .how-reward { background: #dfe8dc; }
-        .how-reward:after { background: linear-gradient(90deg, rgba(23,37,31,.9), rgba(23,37,31,.28)); }
-        .how-reward-copy h2 { color: #f7f7f3; }
-        .how-reward-copy > p { color: rgba(247,247,243,.82); }
-        .how-reward-copy a { border-color: #f7f7f3; background: #f7f7f3; color: #17251f; }
-      `}</style>
+    <main className="how-page has-cta">
 
       <section className="how-shell">
         <section className="how-container how-hero">

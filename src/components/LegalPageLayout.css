@@ -1,0 +1,284 @@
+/* Legal pages (privacy, terms, researcher terms) on the public visual system.
+   Warm-white ground, Spectral 56 hero, Bodoni 22 section titles, Inter 16 body.
+   No greige hero, no decorative rings, no section dividers. */
+
+.public-site-layout .legal-page {
+  min-height: 0;
+  overflow: visible;
+  background: transparent;
+  color: var(--ps-ink);
+}
+.public-site-layout .legal-page-grain { display: none; }
+
+.public-site-layout .legal-container { width: min(100% - 96px, 1280px); margin: 0 auto; }
+
+.public-site-layout .legal-hero {
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  padding: 96px 0 44px;
+}
+.public-site-layout .legal-hero::after { display: none; }
+
+.public-site-layout .legal-eyebrow {
+  margin: 0;
+  color: var(--ps-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.public-site-layout .legal-hero h1 {
+  max-width: 900px;
+  margin: 18px 0 0;
+  color: var(--ps-ink);
+  font-family: "Spectral", var(--font-serif);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+}
+.public-site-layout .legal-hero-copy {
+  max-width: 640px;
+  margin: 22px 0 0;
+  color: var(--ps-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.public-site-layout .legal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 26px;
+  color: var(--ps-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.public-site-layout .legal-layout {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  align-items: start;
+  gap: 64px;
+  padding: 8px 0 104px;
+}
+.public-site-layout .legal-toc {
+  position: sticky;
+  top: 96px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+.public-site-layout .legal-toc > p {
+  margin: 0;
+  color: var(--ps-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.public-site-layout .legal-toc nav { display: grid; gap: 2px; margin-top: 14px; }
+.public-site-layout .legal-toc a {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0;
+  color: var(--ps-body);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-decoration: none;
+  transition: color .18s ease, transform .18s ease;
+}
+.public-site-layout .legal-toc a span { color: var(--ps-faint); font-size: 9.5px; font-weight: 400; letter-spacing: .08em; }
+.public-site-layout .legal-toc a:hover { color: var(--ps-ink); transform: translateX(2px); }
+
+.public-site-layout .legal-document { min-width: 0; }
+.public-site-layout .legal-section {
+  scroll-margin-top: 96px;
+  border: 0;
+  padding: 0 0 44px;
+}
+.public-site-layout .legal-section:first-child { padding-top: 0; }
+.public-site-layout .legal-section-head {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.public-site-layout .legal-section-head > span {
+  display: block;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ps-faint);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  line-height: 1.4;
+  padding-top: 7px;
+}
+.public-site-layout .legal-section-head p {
+  margin: 0;
+  color: var(--ps-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.public-site-layout .legal-section-head h2 {
+  margin: 8px 0 0;
+  color: var(--ps-ink);
+  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.032em;
+  line-height: 1.15;
+}
+.public-site-layout .legal-section-content { max-width: 720px; margin: 18px 0 0 58px; }
+.public-site-layout .legal-section-content > p {
+  margin: 14px 0 0;
+  color: var(--ps-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+}
+.public-site-layout .legal-section-content > p:first-child { margin-top: 0; }
+.public-site-layout .legal-section-content a {
+  color: var(--ps-ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgba(20, 20, 19, .3);
+  text-underline-offset: 3px;
+}
+.public-site-layout .legal-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.public-site-layout .legal-list li {
+  position: relative;
+  color: var(--ps-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  padding-left: 18px;
+}
+.public-site-layout .legal-list li::before {
+  position: absolute;
+  top: .72em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ps-muted);
+  content: '';
+}
+
+.public-site-layout .legal-card-grid,
+.public-site-layout .legal-cookie-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.public-site-layout .legal-card-grid.is-three-up { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.public-site-layout .legal-card-grid article,
+.public-site-layout .legal-cookie-grid article {
+  border: 0;
+  border-radius: 22px;
+  background: var(--ps-white);
+  box-shadow: none;
+  padding: 22px;
+}
+.public-site-layout .legal-card-grid h3,
+.public-site-layout .legal-cookie-grid h3 {
+  margin: 0;
+  color: var(--ps-ink);
+  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.032em;
+  line-height: 1.15;
+}
+.public-site-layout .legal-card-grid p,
+.public-site-layout .legal-cookie-grid p {
+  margin: 10px 0 0;
+  color: var(--ps-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+.public-site-layout .legal-cookie-grid article > span {
+  color: var(--ps-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.public-site-layout .legal-cookie-grid h3 { margin-top: 8px; }
+
+.public-site-layout .legal-highlight {
+  border: 0;
+  border-radius: 22px;
+  background: var(--ps-ivory);
+  box-shadow: none;
+  padding: 24px;
+}
+.public-site-layout .legal-highlight span {
+  color: var(--ps-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.public-site-layout .legal-highlight strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--ps-ink);
+  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.032em;
+  line-height: 1.15;
+}
+.public-site-layout .legal-highlight p {
+  margin: 8px 0 0;
+  color: var(--ps-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+@media (max-width: 800px) {
+  .public-site-layout .legal-container { width: min(100% - 40px, 680px); }
+  .public-site-layout .legal-hero { padding: 64px 0 32px; }
+  .public-site-layout .legal-hero h1 { font-size: 56px; line-height: 1.02; letter-spacing: -.03em; }
+  .public-site-layout .legal-layout { grid-template-columns: 1fr; gap: 32px; padding-bottom: 72px; }
+  .public-site-layout .legal-toc { position: static; }
+  .public-site-layout .legal-toc nav { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
+  .public-site-layout .legal-toc a { padding: 6px 0; }
+  .public-site-layout .legal-section-head { grid-template-columns: 32px minmax(0, 1fr); gap: 12px; }
+  .public-site-layout .legal-section-content { margin-left: 0; }
+  .public-site-layout .legal-card-grid,
+  .public-site-layout .legal-cookie-grid,
+  .public-site-layout .legal-toc nav { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .public-site-layout .legal-hero h1 { font-size: 56px; }
+  .public-site-layout .legal-hero-copy { font-size: 16px; }
+  .public-site-layout .legal-meta { font-size: 9.5px; }
+  .public-site-layout .legal-card-grid.is-three-up { grid-template-columns: 1fr; }
+}
