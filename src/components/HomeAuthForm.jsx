@@ -25,7 +25,7 @@ export default function HomeAuthForm({ audience = 'participant' }) {
   };
 
   return (
-    <div className="home-auth-form is-google-outline">
+    <div className="home-auth-form">
       <form className="home-auth-email" onSubmit={(event) => event.preventDefault()}>
         <input
           type="email"
@@ -49,7 +49,8 @@ export default function HomeAuthForm({ audience = 'participant' }) {
               onError={setError}
               language="en-US"
               theme="outline"
-              label="Continue with Google"
+              variant="field"
+              label="Sign in with Google"
               note="Google sign-in is unavailable on this network"
             />
           </div>

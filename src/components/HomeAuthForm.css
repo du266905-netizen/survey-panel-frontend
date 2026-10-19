@@ -129,15 +129,58 @@
 }
 
 
-/* White/outline Google option for the homepage test. The real GSI button uses
-   theme="outline"; this styles the fallback to match when Google is blocked. */
-.home-auth-form.is-google-outline .public-auth-google-disabled {
-  border-color: rgba(20, 26, 23, .22);
+
+/* A Google field that matches the email input: 52px high, 12px radius,
+   1px hairline. The visible layer is a skin; the transparent layer below it is
+   the real Google GSI iframe, so the click still opens Google. */
+.home-auth-form .google-field {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgba(20, 26, 23, .22);
+  border-radius: 12px;
   background: #ffffff;
   color: #141a17;
+  cursor: pointer;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
-.home-auth-form.is-google-outline .public-auth-google-disabled > span:first-child {
-  border-color: rgba(20, 26, 23, .22);
-  background: #ffffff;
-  color: #141a17;
+.home-auth-form .google-field:hover { border-color: #141a17; }
+.home-auth-form .google-field:focus-within {
+  border-color: #141a17;
+  box-shadow: 0 0 0 3px rgba(20, 26, 23, .07);
 }
+.home-auth-form .google-field-visual {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+.home-auth-form .google-field-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+}
+.home-auth-form .google-field-hit > div {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+.home-auth-form .google-field-hit iframe {
+  width: 100% !important;
+  height: 100% !important;
+}
+.home-auth-form .google-field--fallback {
+  color: #626b64;
+  cursor: not-allowed;
+}
+.home-auth-form .google-field--fallback .google-glyph { opacity: .55; }
+.google-glyph { flex: none; width: 20px; height: 20px; }
