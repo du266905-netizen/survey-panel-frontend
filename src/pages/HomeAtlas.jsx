@@ -152,10 +152,10 @@ export default function HomeAtlas() {
         </div>
       </section>
 
-      <CommunityHub />
-
-      {/* 地球页并进人物面板（同一个色块）；影片排在整个序列最后。 */}
       <HomeFilmSection />
+
+      {/* 影片在前；人物/地球长文在后，周边保持白色。 */}
+      <CommunityHub />
 
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">

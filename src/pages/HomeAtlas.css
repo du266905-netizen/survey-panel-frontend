@@ -2162,7 +2162,7 @@
   background-image: none;
 }
 #atlas-contact .atlas-contact-form {
-  background: #F4F7F2;
+  background: #F5F4EC;
   border-color: rgba(20, 20, 19, .10);
   box-shadow: none;
 }
@@ -2171,3 +2171,8 @@
 #atlas-contact .atlas-contact-form textarea {
   background: #ffffff;
 }
+
+/* Section order / surfaces: film first, then the long-form block. The film
+   joins the homepage page tone; the long-form block keeps a white surround. */
+.home-atlas .home-film { background: #FAF9F5; }
+.home-atlas .community-hub { background: #FFFFFF; }
