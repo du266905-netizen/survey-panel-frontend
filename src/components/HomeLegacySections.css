@@ -138,10 +138,10 @@
 .home-social-links a:hover { border-color: #fff; background: #fff; color: #17231d; }
 .home-social-links svg { width: 17px; height: 17px; }
 
-.home-footer-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; align-content: start; }
+.home-footer-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 2.6vw, 40px); align-content: start; }
 .home-footer-nav section { display: grid; align-content: start; gap: 12px; }
-.home-footer-nav p { margin: 0 0 14px; color: rgba(255, 255, 255, 0.48); font-family: var(--font-sans); font-size: 16px; font-weight: 400; letter-spacing: 0; line-height: 1.45; text-transform: none; }
-.home-footer-nav a { color: rgba(255, 255, 255, 0.9); font-family: var(--font-sans); font-size: 22px; font-weight: 400; letter-spacing: -.015em; line-height: 1.35; text-decoration: none; }
+.home-footer-nav p { margin: 0 0 12px; color: rgba(255, 255, 255, 0.48); font-family: var(--font-sans); font-size: 14px; font-weight: 400; letter-spacing: 0; line-height: 1.45; text-transform: none; }
+.home-footer-nav a { color: rgba(255, 255, 255, 0.9); font-family: var(--font-sans); font-size: 16px; font-weight: 400; letter-spacing: -.01em; line-height: 1.4; text-decoration: none; }
 .home-footer-nav a:hover { color: #fff; }
 
 .home-footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(255, 255, 255, 0.14); padding: 20px 0 28px; }
