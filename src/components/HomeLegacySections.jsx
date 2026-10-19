@@ -6,6 +6,7 @@ import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import { footerIdentityTranslations, globalTranslations, navigationLabels } from '../constants/homepageTranslations';
 import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
+import AtlasTypewriter from './AtlasTypewriter';
 import './HomeLegacySections.css';
 
 function getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink) {
@@ -236,6 +237,25 @@ export function HomeGlobalSection() {
   );
 }
 
+function HomeCommunityCta({ copy, language }) {
+  const prompts = [
+    'what are you trying to understand?',
+    'who do you need to hear from?',
+    'what decision are you facing?',
+  ];
+  return (
+    <section className="home-community-cta" aria-label="Join the research community">
+      <div className="home-community-cta-inner">
+        <AtlasTypewriter begin="So," prompts={prompts} />
+        <Link className="home-community-cta-button" to={withLanguage('/join', language)}>
+          {copy.rewardsLabel}
+          <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 export default function HomeLegacySections() {
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
@@ -258,6 +278,8 @@ export default function HomeLegacySections() {
           </div>
         </div>
       </section>
+
+      <HomeCommunityCta copy={copy} language={language} />
 
       <HomeFooter />
     </div>

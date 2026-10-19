@@ -161,3 +161,71 @@
 @media (max-width: 900px) { .home-continuation-container { width: min(100% - 48px, 760px); } .home-manifesto-masthead, .home-manifesto-spread, .home-global-layout, .home-footer-main { grid-template-columns: 1fr; } .home-manifesto-mark { border-top: 1px solid var(--continuation-rule); border-left: 0; padding: 22px 0 0; } .home-global-copy { border-bottom: 1px solid var(--continuation-rule); border-left: 0; padding: 0 0 26px; } .home-global-visual { order: 2; } .home-rewards-heading { grid-template-columns: 1fr; gap: 10px; } .home-rewards-heading .home-section-label { grid-row: auto; margin-top: 0; } .home-reward-grid, .home-footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } .home-reward-panel { grid-column: 1 / -1; } }
 @media (max-width: 620px) { .home-continuation-container { width: min(100% - 36px, 560px); } .home-manifesto { padding: 56px 0; } .home-manifesto::after, .home-global-section::after, .home-rewards-section::after { inset: 13px; } .home-manifesto h1, .home-manifesto h2 { font-size: clamp(56px, 18vw, 82px); } .home-manifesto-deck { font-size: 22px; } .home-manifesto-mark { grid-template-columns: 82px minmax(0, 1fr); gap: 14px; } .home-continuation-sprout { width: 82px; } .home-manifesto-art { min-height: 360px; } .home-manifesto-card-grid, .home-reward-grid, .home-footer-nav { grid-template-columns: 1fr; } .home-manifesto-card-grid article { min-height: 0; } .home-global-layout { min-height: 0; padding: 58px 0; } .home-global-visual { min-height: 270px; } .home-globe-frame::after { transform: translateY(116px); } .home-globe-frame .landing-global-globe { width: min(86%, 300px); } .home-reward-panel { grid-column: auto; } .home-reward-card { min-height: 344px; } .home-footer-bottom { align-items: flex-start; flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .home-continuation *, .home-continuation *::before, .home-continuation *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+
+/* Dark community CTA after the three reward cards, using the extracted
+   typewriter and the reward-section button. */
+.home-community-cta {
+  background: #141413;
+  color: #FAF9F5;
+  padding: clamp(80px, 9vw, 132px) clamp(24px, 5vw, 64px);
+}
+.home-community-cta-inner {
+  width: min(100%, 1160px);
+  margin: 0 auto;
+  text-align: center;
+}
+.home-community-cta .atlas-map-typewriter {
+  position: static;
+  display: flex;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  transform: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 14px;
+  color: #FAF9F5;
+  font-family: "Spectral", var(--font-reading);
+  font-size: clamp(38px, 5vw, 80px);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  text-align: center;
+  text-shadow: none;
+}
+.home-community-cta .atlas-map-typewriter span {
+  color: rgba(250, 249, 245, .58);
+  white-space: normal;
+}
+.home-community-cta .atlas-map-typewriter strong {
+  color: #FAF9F5;
+  white-space: normal;
+}
+.home-community-cta .atlas-map-typewriter i {
+  background: #FAF9F5;
+}
+.home-community-cta-button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: clamp(24px, 3vw, 36px);
+  padding: 0 24px;
+  border: 1px solid #FAF9F5;
+  border-radius: 0;
+  background: #FAF9F5;
+  color: #141413;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+}
+.home-community-cta-button:hover,
+.home-community-cta-button:focus-visible {
+  background: transparent;
+  color: #FAF9F5;
+  outline: none;
+}
