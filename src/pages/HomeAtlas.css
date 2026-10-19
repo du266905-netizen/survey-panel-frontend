@@ -1610,9 +1610,6 @@
   border-color: #D5D0C4;
 }
 .home-atlas .home-reward-card:hover { background: #DDD8CD; }
-.home-atlas .home-reward-gift,
-.home-atlas .home-reward-token,
-.home-atlas .home-reward-panel { background: transparent; }
 
 /* Paper sections and footer. */
 .home-atlas .home-film { background: #EDEAE2; }
