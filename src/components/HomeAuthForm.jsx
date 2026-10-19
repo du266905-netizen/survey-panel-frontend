@@ -49,7 +49,6 @@ export default function HomeAuthForm({ audience = 'participant' }) {
               onError={setError}
               language="en-US"
               theme="outline"
-              width={400}
               label="Continue with Google"
               note="Google sign-in is unavailable on this network"
             />
