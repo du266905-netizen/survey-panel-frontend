@@ -1261,3 +1261,35 @@
 @media (max-width: 720px) {
   .home-atlas .home-auth-email button { font-size: 14px; }
 }
+
+/* ---------------------------------------------------------------------------
+   Accent trial: Plum #6B5878 on the homepage hero + long-form CTAs only.
+   White text on Plum is 6.38:1; on Deep Plum 8.99:1. The header stays Ink.
+   --------------------------------------------------------------------------- */
+.home-atlas .video-hero-actions .video-hero-cta:not(.video-hero-cta--outline) {
+  border-color: #6B5878;
+  background: #6B5878;
+  --syringe-fill: #5B3F63;
+}
+.home-atlas .video-hero-actions .video-hero-cta:not(.video-hero-cta--outline):hover {
+  border-color: #5B3F63;
+  background: #5B3F63;
+}
+.home-atlas .video-hero-actions .video-hero-cta--outline { --syringe-fill: #5B3F63; }
+.home-atlas .video-hero-actions .video-hero-cta--outline:hover { border-color: #5B3F63; }
+.home-atlas .home-auth-email button {
+  border-color: #6B5878;
+  background: #6B5878;
+}
+.home-atlas .home-auth-email button:hover {
+  border-color: #5B3F63;
+  background: #5B3F63;
+}
+.home-atlas .community-hub-primary-action {
+  border-color: #6B5878;
+  background: #6B5878;
+}
+.home-atlas .community-hub-primary-action:hover {
+  border-color: #5B3F63;
+  background: #5B3F63;
+}
