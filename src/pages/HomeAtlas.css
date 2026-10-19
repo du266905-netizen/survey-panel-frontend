@@ -2176,3 +2176,15 @@
    joins the homepage page tone; the long-form block keeps a white surround. */
 .home-atlas .home-film { background: #FAF9F5; }
 .home-atlas .community-hub { background: #FFFFFF; }
+
+/* Palette A: greige home ground; rewards cards carry greige / botanical /
+   warm lavender. Cards get smaller and softer. */
+.home-atlas,
+.home-atlas .atlas-navigation.public-site-header,
+#atlas-contact,
+.home-atlas .home-film,
+.home-atlas .home-rewards-section {
+  background: #E7E1D7;
+  --atlas-paper: #E7E1D7;
+  --continuation-paper: #E7E1D7;
+}

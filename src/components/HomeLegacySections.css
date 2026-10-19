@@ -353,3 +353,46 @@
   .home-reward-card { min-height: 228px; }
 }
 .home-reward-card h3 { font-size: 22px; }
+
+/* Palette A cards: one greige, one botanical, one warm lavender; smaller,
+   rounder, softer edges. */
+.home-reward-grid {
+  width: min(100%, 1020px);
+  gap: 16px;
+}
+.home-reward-card {
+  min-height: 236px;
+  padding: 20px;
+  border: 1px solid rgba(23, 23, 20, .08);
+  border-radius: 22px;
+  box-shadow: 0 10px 24px rgba(23, 23, 20, .05);
+}
+.home-reward-card:hover { box-shadow: 0 14px 30px rgba(23, 23, 20, .08); }
+.home-reward-sketch { max-width: 164px; height: 116px; }
+.home-reward-sketch svg { max-height: 116px; }
+.home-reward-gift { background: #F1ECE3; color: #171714; }
+.home-reward-token { background: #5F7258; color: #F8F5EE; }
+.home-reward-panel { background: #C7A6B8; color: #171714; }
+.home-reward-gift span, .home-reward-gift p { color: #6C665A; }
+.home-reward-token span { color: rgba(248, 245, 238, .66); }
+.home-reward-token h3 { color: #F8F5EE; }
+.home-reward-token p { color: rgba(248, 245, 238, .80); }
+.home-reward-panel span, .home-reward-panel p { color: #5A4B55; }
+.home-reward-panel h3 { color: #171714; }
+
+/* Beat the homepage card override: three cards, three palette-A fills. */
+.home-atlas .home-reward-card.home-reward-gift { background: #F1ECE3; color: #171714; }
+.home-atlas .home-reward-card.home-reward-token { background: #5F7258; color: #F8F5EE; }
+.home-atlas .home-reward-card.home-reward-panel { background: #C7A6B8; color: #171714; }
+.home-atlas .home-reward-card.home-reward-gift:hover { background: #EAE3D7; }
+.home-atlas .home-reward-card.home-reward-token:hover { background: #54664D; }
+.home-atlas .home-reward-card.home-reward-panel:hover { background: #BE97AB; }
+.home-atlas .home-reward-gift h3 { color: #171714; }
+.home-atlas .home-reward-token h3 { color: #F8F5EE; }
+.home-atlas .home-reward-panel h3 { color: #171714; }
+.home-atlas .home-reward-gift p { color: #6C665A; }
+.home-atlas .home-reward-token p { color: rgba(248, 245, 238, .84); }
+.home-atlas .home-reward-panel p { color: #5A4B55; }
+.home-atlas .home-reward-gift > div > span { color: #6C665A; }
+.home-atlas .home-reward-token > div > span { color: rgba(248, 245, 238, .74); }
+.home-atlas .home-reward-panel > div > span { color: #5A4B55; }
