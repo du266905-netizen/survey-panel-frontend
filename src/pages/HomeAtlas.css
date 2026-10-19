@@ -1691,3 +1691,61 @@
   font-weight: 400;
   font-style: normal;
 }
+
+/* ---------------------------------------------------------------------------
+   Homepage contact: drop the full-bleed photograph. The copy/form and the
+   typewriter expression become two solid white frames on the page, using the
+   existing form field style. No image remains in this section.
+   --------------------------------------------------------------------------- */
+#atlas-contact {
+  background-color: var(--proto-paper);
+  background-image: none;
+}
+#atlas-contact .atlas-contact-panel {
+  padding: clamp(26px, 2.4vw, 38px);
+  background: #ffffff;
+  border: 1px solid var(--proto-line);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(20, 20, 19, .06);
+}
+#atlas-contact .atlas-map {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  padding: clamp(24px, 3vw, 44px);
+  border: 1px solid var(--proto-line);
+  border-radius: 12px;
+  background: #ffffff;
+  background-image: none;
+}
+#atlas-contact .atlas-map-typewriter {
+  position: static;
+  transform: none;
+  width: auto;
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px 10px;
+  color: var(--atlas-ink);
+  font-size: clamp(26px, 2.4vw, 40px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  text-align: left;
+  text-shadow: none;
+}
+#atlas-contact .atlas-map-typewriter span {
+  color: var(--atlas-quiet-ink);
+  white-space: normal;
+}
+#atlas-contact .atlas-map-typewriter strong {
+  color: var(--atlas-ink);
+  white-space: normal;
+}
+#atlas-contact .atlas-map-typewriter i {
+  background: var(--atlas-ink);
+}
+#atlas-contact .atlas-contact-kicker { color: var(--atlas-forest) !important; }
+#atlas-contact .atlas-contact-panel h2 { color: var(--atlas-ink) !important; }
+#atlas-contact .atlas-contact-intro { color: var(--atlas-quiet-ink) !important; }
+#atlas-contact .atlas-contact-form label > span { color: var(--atlas-ink) !important; }
+#atlas-contact .atlas-contact-form label em { color: var(--atlas-quiet-ink) !important; }
