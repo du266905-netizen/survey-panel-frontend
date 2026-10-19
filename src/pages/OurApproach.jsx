@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { HumanManifesto } from '../components/HomeLegacySections';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import guanyiBrandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
+import conversationIllustration from '../assets/our-approach-conversation.jpg';
 import './OurApproach.css';
 
 const approachCopy = {
@@ -60,7 +61,19 @@ const approachCopy = {
 };
 
 function ResearchQuestion({ copy }) {
-  return <section className="approach-question" aria-labelledby="approach-question-title"><div className="approach-container"><header className="approach-question-heading"><p>{copy.label}</p><h1 id="approach-question-title">{copy.title}</h1></header><div className="approach-question-dialogue"><p>{copy.intro}</p><span>{copy.body}</span><strong><CheckCircle2 size={19} aria-hidden="true" />{copy.conclusion}</strong></div></div></section>;
+  return (
+    <section className="approach-question" aria-labelledby="approach-question-title">
+      <div className="approach-container approach-question-layout">
+        <div className="approach-question-copy">
+          <header className="approach-question-heading"><p>{copy.label}</p><h1 id="approach-question-title">{copy.title}</h1></header>
+          <div className="approach-question-dialogue"><p>{copy.intro}</p><span>{copy.body}</span><strong><CheckCircle2 size={19} aria-hidden="true" />{copy.conclusion}</strong></div>
+        </div>
+        <figure className="approach-question-art" aria-hidden="true">
+          <img src={conversationIllustration} alt="" decoding="async" />
+        </figure>
+      </div>
+    </section>
+  );
 }
 
 function ResearchNetwork({ copy, language }) {
