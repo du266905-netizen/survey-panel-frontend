@@ -140,7 +140,7 @@
 
 .home-footer-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 2.6vw, 40px); align-content: start; }
 .home-footer-nav section { display: grid; align-content: start; gap: 12px; }
-.home-footer-nav p { margin: 0 0 12px; color: rgba(255, 255, 255, 0.48); font-family: var(--font-sans); font-size: 14px; font-weight: 400; letter-spacing: 0; line-height: 1.45; text-transform: none; }
+.home-footer-nav p { margin: 0 0 12px; color: rgba(255, 255, 255, 0.48); font-family: var(--font-sans); font-size: 16px; font-weight: 400; letter-spacing: 0; line-height: 1.45; text-transform: none; }
 .home-footer-nav a { color: rgba(255, 255, 255, 0.9); font-family: var(--font-sans); font-size: 16px; font-weight: 400; letter-spacing: -.01em; line-height: 1.4; text-decoration: none; }
 .home-footer-nav a:hover { color: #fff; }
 
