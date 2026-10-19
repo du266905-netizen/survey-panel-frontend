@@ -1445,7 +1445,7 @@
   --atlas-quiet-ink: #6F6A5F;
   --atlas-forest: #141413;
   --atlas-sage: #C9D2B4;
-  --atlas-paper: #EDEAE2;
+  --atlas-paper: #F4F3EF;
   --atlas-paper-deep: #E4E0D6;
   --atlas-rule: #D5D0C4;
   --proto-ink: #141413;
@@ -1455,10 +1455,10 @@
   --proto-line: rgba(20, 20, 19, .12);
   --proto-line-2: rgba(20, 20, 19, .22);
   --proto-accent: #141413;
-  --proto-paper: #E4E0D6;
-  --continuation-paper: #EDEAE2;
+  --proto-paper: #FAF8F3;
+  --continuation-paper: #F4F3EF;
   --continuation-rule: #D5D0C4;
-  background: #EDEAE2;
+  background: #F4F3EF;
   color: #141413;
 }
 
@@ -1466,9 +1466,9 @@
 .home-atlas .atlas-navigation.public-site-header {
   --atlas-ink: #141413;
   --atlas-forest: #141413;
-  --atlas-paper: #EDEAE2;
+  --atlas-paper: #F4F3EF;
   --atlas-rule: #D5D0C4;
-  background: #EDEAE2;
+  background: #F4F3EF;
   border-color: #D5D0C4;
   color: #141413;
   box-shadow: 0 10px 22px rgba(20, 20, 19, .04);
@@ -1483,7 +1483,7 @@
 .home-atlas .atlas-nav-trigger:hover { color: #141413; text-decoration: underline; text-underline-offset: 4px; }
 .home-atlas .atlas-nav-menu {
   border-color: #D5D0C4;
-  background: #EDEAE2;
+  background: #F4F3EF;
   color: #141413;
 }
 .home-atlas .atlas-nav-menu-item:hover,
@@ -1502,7 +1502,7 @@
 }
 .home-atlas .atlas-mobile-menu {
   border-color: #D5D0C4;
-  background: #EDEAE2;
+  background: #F4F3EF;
 }
 .home-atlas .atlas-mobile-direct-link,
 .home-atlas .atlas-mobile-group a { color: #141413; }
@@ -1604,16 +1604,16 @@
 }
 
 /* Cards: one step deeper than the warm bone-grey page. */
-.home-atlas .home-rewards-section { background: #EDEAE2; }
+.home-atlas .home-rewards-section { background: #F4F3EF; }
 .home-atlas .home-reward-card {
-  background: #F6F2E9;
+  background: #FAF8F3;
   border-color: #D5D0C4;
 }
-.home-atlas .home-reward-card:hover { background: #FBF7EF; }
+.home-atlas .home-reward-card:hover { background: #FEFCF7; }
 
 /* Paper sections and footer. */
-.home-atlas .home-film { background: #EDEAE2; }
-.home-atlas .home-manifesto { background: #EDEAE2; }
+.home-atlas .home-film { background: #F4F3EF; }
+.home-atlas .home-manifesto { background: #F4F3EF; }
 .home-atlas .home-manifesto-card--voices { background: #FFFFFF; }
 .home-atlas .home-manifesto-card--technology { background: #E4E0D6; }
 .home-atlas .home-manifesto-principle {
