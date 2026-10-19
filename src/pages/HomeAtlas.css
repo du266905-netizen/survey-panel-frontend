@@ -1631,7 +1631,7 @@
 .home-atlas .video-hero h1 span:nth-child(1) {
   font-family: var(--font-reading);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -.03em;
   line-height: .98;
 }
@@ -1647,11 +1647,9 @@
 .home-atlas .atlas-contact-panel h2 {
   font-family: var(--font-reading);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -.028em;
 }
-.home-atlas .home-rewards-heading h2,
-.home-atlas .home-global-copy h2 { font-weight: 800; }
 .home-atlas .video-hero-eyebrow,
 .home-atlas .home-section-label,
 .home-atlas .home-reward-card > div > span,
@@ -1663,8 +1661,14 @@
 }
 .home-atlas .home-reward-card h3 {
   font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.005em;
+  line-height: 1.3;
+}
+.home-atlas .home-reward-card > div > span {
   font-size: 16px;
   font-weight: 500;
-  letter-spacing: -.01em;
+  letter-spacing: .08em;
   line-height: 1.3;
 }
