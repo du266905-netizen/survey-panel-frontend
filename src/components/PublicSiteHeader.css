@@ -202,3 +202,18 @@
 }
 
 @media (max-width: 520px) { .atlas-register { display: none; } }
+
+/* Public nav action: use the current colour card's action primary on every
+   public page, not only the homepage. */
+.atlas-navigation.public-site-header .atlas-register,
+.atlas-navigation.public-site-header .atlas-register:hover,
+.atlas-navigation.public-site-header .atlas-register:focus-visible {
+  border-color: #285647;
+  background: #285647;
+  color: #FAF7F0;
+  box-shadow: none;
+}
+.atlas-navigation.public-site-header .atlas-register:hover {
+  border-color: #1E4437;
+  background: #1E4437;
+}
