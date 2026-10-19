@@ -396,3 +396,23 @@
 .home-atlas .home-reward-gift > div > span { color: #6C665A; }
 .home-atlas .home-reward-token > div > span { color: rgba(248, 245, 238, .74); }
 .home-atlas .home-reward-panel > div > span { color: #5A4B55; }
+
+/* Card colours refined: pale sage for tokens, lighter warm lavender for
+   special tasks; card titles stay on the 22px step. */
+.home-atlas .home-reward-card.home-reward-token {
+  background: #AEBFA9;
+  color: #171714;
+}
+.home-atlas .home-reward-card.home-reward-token:hover { background: #A3B69D; }
+.home-atlas .home-reward-token h3 { color: #171714; }
+.home-atlas .home-reward-token p { color: #405046; }
+.home-atlas .home-reward-token > div > span { color: #4F5B50; }
+.home-atlas .home-reward-card.home-reward-panel {
+  background: #D8C1CE;
+  color: #171714;
+}
+.home-atlas .home-reward-card.home-reward-panel:hover { background: #CEB4C3; }
+.home-atlas .home-reward-panel h3 { color: #171714; }
+.home-atlas .home-reward-panel p { color: #5A4B55; }
+.home-atlas .home-reward-panel > div > span { color: #6A5662; }
+.home-atlas .home-reward-card h3 { font-size: 22px; line-height: 1.05; }
