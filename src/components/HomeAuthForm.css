@@ -127,3 +127,17 @@
   .home-auth-email input { font-size: 13px; padding: 0 11px; }
   .home-auth-email button { flex-basis: 108px; font-size: 13px; }
 }
+
+
+/* White/outline Google option for the homepage test. The real GSI button uses
+   theme="outline"; this styles the fallback to match when Google is blocked. */
+.home-auth-form.is-google-outline .public-auth-google-disabled {
+  border-color: rgba(20, 26, 23, .22);
+  background: #ffffff;
+  color: #141a17;
+}
+.home-auth-form.is-google-outline .public-auth-google-disabled > span:first-child {
+  border-color: rgba(20, 26, 23, .22);
+  background: #ffffff;
+  color: #141a17;
+}

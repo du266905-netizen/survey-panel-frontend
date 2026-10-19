@@ -74,7 +74,7 @@ function loadGoogleScript() {
   return googleScriptPromise;
 }
 
-export function GoogleButton({ mode, onCredential, onError, language, label, note }) {
+export function GoogleButton({ mode, onCredential, onError, language, label, note, theme = 'filled_black', width = 380 }) {
   const containerRef = useRef(null);
   const handlersRef = useRef({ onCredential, onError });
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -116,11 +116,11 @@ export function GoogleButton({ mode, onCredential, onError, language, label, not
         });
         window.google.accounts.id.renderButton(container, {
           type: 'standard',
-          theme: 'filled_black',
+          theme,
           size: 'large',
           text: mode === 'login' ? 'signin_with' : 'signup_with',
           shape: 'pill',
-          width: Math.min(container.clientWidth || 360, 380),
+          width: Math.min(container.clientWidth || 360, width),
           logo_alignment: 'left',
           locale: language === 'zh-CN' ? 'zh_CN' : language === 'zh-Hant' ? 'zh_TW' : language.split('-')[0],
         });
@@ -134,7 +134,7 @@ export function GoogleButton({ mode, onCredential, onError, language, label, not
       clearTimeout(bail);
       containerRef.current?.replaceChildren();
     };
-  }, [clientId, mode, language]);
+  }, [clientId, mode, language, theme, width]);
 
   /* 三种情况都显示"可见的一行"，不留空白槽：没配 client id、脚本失败、或 iframe 迟迟不来。 */
   if (!clientId || failed) {
