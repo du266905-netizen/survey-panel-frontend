@@ -322,3 +322,34 @@
     flex-wrap: wrap;
   }
 }
+
+/* Rewards: CTA now lives in the dark section; compress height and separate
+   the three cards into individual smaller tiles. */
+.home-rewards-section { padding: clamp(38px, 4.2vw, 58px) 0; }
+.home-rewards-heading { gap: 10px; padding-bottom: clamp(18px, 2vw, 26px); }
+.home-reward-grid {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  border: 0;
+}
+.home-reward-card {
+  min-height: 258px;
+  padding: 22px;
+  border: 1px solid var(--continuation-rule);
+  border-radius: 12px;
+  background: var(--continuation-paper);
+}
+.home-reward-card:hover { background: var(--atlas-paper-deep, #f4f7f2); }
+.home-reward-sketch { max-width: 190px; height: 146px; margin-top: 2px; }
+.home-reward-sketch svg { max-height: 146px; }
+.home-reward-card h3 { margin-top: 8px; font-size: 22px; }
+.home-reward-card p { margin-top: 10px; font-size: 14px; line-height: 1.6; }
+@media (max-width: 900px) {
+  .home-reward-grid { width: 100%; gap: 12px; }
+}
+@media (max-width: 620px) {
+  .home-reward-card { min-height: 228px; }
+}
+.home-reward-card h3 { font-size: 22px; }

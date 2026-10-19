@@ -268,10 +268,6 @@ export default function HomeLegacySections() {
           <div className="home-rewards-heading">
             <h2 id="home-rewards-title">{copy.rewardsTitle}</h2>
             <p>{copy.rewardsBody}</p>
-            <Link className="home-rewards-cta" to={withLanguage('/join', language)}>
-              {copy.rewardsLabel}
-              <ArrowUpRight size={16} strokeWidth={1.8} aria-hidden="true" />
-            </Link>
           </div>
           <div className="home-reward-grid">
             <article className="home-reward-card home-reward-gift"><GiftSketch /><div><span>{copy.rewardCards[0][0]}</span><h3>{copy.rewardCards[0][1]}</h3><p>{copy.rewardCards[0][2]}</p></div></article>
