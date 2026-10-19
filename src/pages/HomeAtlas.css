@@ -1080,3 +1080,52 @@
 #atlas-contact .atlas-contact-panel {
   align-self: center;
 }
+
+/* ---------------------------------------------------------------------------
+   Homepage colour study — Sage Bone page, normal-white cards, Ink actions.
+   Everything here is scoped to .home-atlas so no other page changes.
+   Sage A/B are the approved colours; forest green survives only in the
+   footer (a deep block), not as a contrast plate or a large field.
+   --------------------------------------------------------------------------- */
+.home-atlas {
+  --home-bone: #f4f7f2;
+  --home-section: #e9efe2;
+  --home-card: #ffffff;
+  --home-ink: #141a17;
+  --home-muted: #5f6862;
+  --home-hairline: rgba(20, 26, 23, .11);
+  --home-plate: #aebfa9;
+  background: var(--home-bone);
+  color: var(--home-ink);
+}
+
+/* Header: same bone as the page, flat hairline, no floating shadow. */
+.home-atlas .atlas-navigation.public-site-header {
+  background: var(--home-bone);
+  border-color: var(--home-hairline);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* First screen. */
+.home-atlas .video-hero-section,
+.home-atlas .video-hero,
+.home-atlas .video-hero-content {
+  background: var(--home-bone);
+}
+.home-atlas .video-hero-eyebrow { color: var(--home-muted); }
+.home-atlas .video-hero-shape { background: var(--home-plate); }
+
+/* Long-form block: panel stays Sage Linen B, the page around it is bone. */
+.home-atlas .community-hub { background: var(--home-bone); }
+
+/* Film: bone page, dark poster frame. */
+.home-atlas .home-film { background: var(--home-bone); }
+
+/* Rewards: bone page, normal-white cards. */
+.home-atlas .home-rewards-section { background: var(--home-bone); }
+.home-atlas .home-reward-card { background: var(--home-card); }
+.home-atlas .home-reward-card:hover { background: var(--home-bone); }
+
+/* Contact photo is a deep field; footer is the allowed forest deep block. */
