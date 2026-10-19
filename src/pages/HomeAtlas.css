@@ -1227,3 +1227,37 @@
   }
   .home-atlas .video-hero-actions .video-hero-cta svg { width: 12px; height: 12px; }
 }
+
+/* ---------------------------------------------------------------------------
+   Button type pass. Claude's UI sans is Styrene B (licensed); Inter is the
+   closest substitute we already ship. Keep the existing shapes and colours,
+   but move the type to Claude's button settings: medium 500, no tracking,
+   14px for nav, 16px for actions.
+   --------------------------------------------------------------------------- */
+.home-atlas .atlas-nav-trigger,
+.home-atlas .atlas-nav-link,
+.home-atlas .atlas-sign-in {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.home-atlas .atlas-register {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.home-atlas .video-hero-cta {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+.home-atlas .home-auth-email button,
+.home-atlas .home-auth-form .public-auth-google-disabled {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+@media (max-width: 720px) {
+  .home-atlas .home-auth-email button { font-size: 14px; }
+}
