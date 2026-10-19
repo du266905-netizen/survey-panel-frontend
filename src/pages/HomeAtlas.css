@@ -2259,3 +2259,15 @@
 @media (max-width: 700px) {
   #atlas-contact { margin-top: 56px; }
 }
+
+/* White extension above the contact form: extend the community field down,
+   then remove the transparent margin. */
+.home-atlas .community-hub { padding-bottom: clamp(72px, 8vw, 120px); }
+#atlas-contact { margin-top: 0; }
+@media (max-width: 700px) {
+  .home-atlas .community-hub { padding-bottom: 56px; }
+  #atlas-contact { margin-top: 0; }
+}
+
+/* Film section is tighter vertically; the frame keeps its 1200px size. */
+.home-atlas .home-film { padding: clamp(32px, 4vw, 56px) clamp(16px, 3vw, 40px); }

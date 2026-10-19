@@ -232,3 +232,40 @@
   border-color: #2B2A28;
   background: #2B2A28;
 }
+
+/* Navigation dropdowns match the language-globe panel: white surface, same
+   hairline/radius/shadow, and one 12px menu step. */
+.atlas-nav-menu {
+  width: 290px;
+  padding: 8px;
+  border: 1px solid var(--atlas-rule);
+  border-radius: 6px;
+  background: #fcfdfb;
+  box-shadow: 0 18px 40px rgba(20, 26, 23, .14);
+}
+.atlas-nav-menu-item {
+  gap: 2px;
+  padding: 9px 10px;
+  border-radius: 4px;
+}
+.atlas-nav-menu-item:hover,
+.atlas-nav-menu-item:focus-visible { background: #f1f5ef; }
+.atlas-nav-menu-item span,
+.atlas-nav-menu-item strong,
+.atlas-nav-menu-item small {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
+  text-transform: none;
+}
+.atlas-nav-menu-item span { color: #5a695f; }
+.atlas-nav-menu-item strong { color: #141413; font-weight: 600; }
+.atlas-nav-menu-item small { color: #5a695f; font-weight: 400; }
+.atlas-language-menu button { font-size: 12px; }
+
+/* Nudge the desktop link group left; keep mobile/menu layouts untouched. */
+@media (min-width: 1100px) {
+  .atlas-navigation.public-site-header .atlas-nav-links { transform: translateX(-38px); }
+}
