@@ -134,7 +134,6 @@ export default function HomeAtlas() {
                   onClick={() => setAudience('participant')}
                 >
                   {publicCopy.navigation.meetCommunity}
-                  <ArrowUpRight size={19} strokeWidth={1.8} />
                 </button>
                 <button
                   type="button"
@@ -143,7 +142,6 @@ export default function HomeAtlas() {
                   onClick={() => setAudience('research')}
                 >
                   {publicCopy.navigation.runResearch}
-                  <ArrowUpRight size={19} strokeWidth={1.8} />
                 </button>
               </div>
               <HomeAuthForm audience={audience} />

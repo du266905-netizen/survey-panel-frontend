@@ -2209,3 +2209,53 @@
   --atlas-paper: #FAF9F5;
   --continuation-paper: #FAF9F5;
 }
+
+/* Section rule: no divider between two same-colour fields. The only divider
+   is the final black field → footer boundary. */
+.home-atlas .home-rewards-section { border-top: 0; }
+.home-footer { border-top: 1px solid rgba(250, 249, 245, .22); }
+
+/* Selection controls are choices, not links: no arrows, no syringe fill. */
+.home-atlas .video-hero-actions .video-hero-cta {
+  gap: 0;
+  box-shadow: none;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.home-atlas .video-hero-actions .video-hero-cta:hover,
+.home-atlas .video-hero-actions .video-hero-cta:focus-visible {
+  box-shadow: none;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.home-atlas .video-hero-actions .video-hero-cta:not(.video-hero-cta--outline):hover {
+  border-color: #2B2A28;
+  background: #2B2A28;
+  color: #FAF7F0;
+}
+.home-atlas .video-hero-actions .video-hero-cta--outline {
+  background: transparent;
+  color: #141413;
+}
+.home-atlas .video-hero-actions .video-hero-cta--outline:hover {
+  border-color: #141413;
+  background: #F0EEE6;
+  color: #141413;
+}
+
+/* Continue is a rectangle; hover goes black. */
+.home-atlas .home-auth-email button {
+  border-radius: 0;
+}
+.home-atlas .home-auth-email button:hover {
+  border-color: #000000;
+  background: #000000;
+  color: #FFFFFF;
+}
+
+/* Larger film frame. */
+.home-film-frame { width: min(100%, 1200px); }
+
+/* Separate the long-form field from the contact form. */
+#atlas-contact { margin-top: clamp(72px, 8vw, 120px); }
+@media (max-width: 700px) {
+  #atlas-contact { margin-top: 56px; }
+}
