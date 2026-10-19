@@ -4,6 +4,7 @@ import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../api/realApi';
 import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import './RecoveryPublic.css';
 
 const resetCopy = {
   'zh-CN': { kicker: '安全重设', title: '设置只属于你的密码。', body: '你的账户、参与记录与奖励记录都保存在同一个地方。设置新密码后即可继续。', secure: '受保护的账户访问', back: '返回登录', newPassword: '新密码', heading: '保护你的账户安全。', intro: '为你的 GuanyiSearch 账户设置强密码。保存时会验证重设链接。', strength: '密码强度', strong: '强', good: '良好', fair: '一般', weak: '弱', characters: '至少 8 个字符', cases: '包含大写和小写字母', number: '包含数字或符号', confirm: '确认密码', confirmPlaceholder: '再次输入新密码', updated: '密码已更新。你可以使用新密码登录。', saving: '正在保存密码…', update: '更新密码', showPassword: '显示密码', hidePassword: '隐藏密码', errorLink: '重设链接无效或已过期。', errorMatch: '两次输入的密码不一致。', errorReset: '无法重设密码。' },
@@ -64,7 +65,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <main className="recovery-page">
+    <main className={`recovery-page${isBusiness ? '' : ' recovery-page--public'}`}>
       <section className="recovery-shell">
         <aside className="recovery-brand" aria-label="GuanyiSearch password reset">
           <Link className="recovery-logo" to={withLanguage('/', language)}>

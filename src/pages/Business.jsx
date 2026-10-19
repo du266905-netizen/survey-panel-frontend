@@ -7,6 +7,7 @@ import PublicSiteHeader from '../components/PublicSiteHeader';
 import { isBusinessRole } from '../utils/roles';
 import researchJourney from '../assets/business/research-journey.jpg';
 import './Business.css';
+import './BusinessMarketing.css';
 
 function businessFallbackCopy(home) {
   const footer = home.footer;
@@ -39,7 +40,7 @@ export default function Business() {
   if (isBusinessRole(user?.role)) return <Navigate to="/business/workspace" replace />;
 
   return (
-    <main className="business-public-page">
+    <main className="business-public-page business-marketing-page">
       <PublicSiteHeader />
       <section className="business-hero">
         <div className="business-container business-hero-layout">

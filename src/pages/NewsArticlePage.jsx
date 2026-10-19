@@ -8,6 +8,7 @@ import { useLanguage } from '../components/LanguageContext';
 import { interpolate } from '../utils/interpolate';
 import { toSafeHttpUrl } from '../utils/safeUrl';
 import './NewsArticlePage.css';
+import './NewsArticlePublic.css';
 
 const MAX_READING_SUMMARY_WORDS = 760;
 

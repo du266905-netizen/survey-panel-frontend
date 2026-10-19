@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { requestPasswordReset } from '../api/realApi';
 import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import './RecoveryPublic.css';
 
 const recoveryCopy = {
   'zh-CN': { recovery: '账户恢复', title: '回到你的研究旅程。', body: '我们会发送一封带有安全、限时链接的邮件，供你设置新密码。', secure: '安全的账户恢复', back: '返回登录', reset: '重设密码', heading: '找回你的账户。', intro: '输入与你账户关联的邮箱。若系统识别该地址，我们会立即发送重设说明。', email: '邮箱地址', sent: '若该邮箱有效，密码重设说明已发送。', sending: '正在发送安全链接…', send: '发送重设链接', remembered: '想起密码了？', signIn: '立即登录', error: '无法发送密码重设邮件。' },
@@ -39,7 +40,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <main className="recovery-page">
+    <main className={`recovery-page${isBusiness ? '' : ' recovery-page--public'}`}>
       <section className="recovery-shell">
         <aside className="recovery-brand" aria-label="GuanyiSearch account recovery">
           <Link className="recovery-logo" to={withLanguage('/', language)}>

@@ -1,0 +1,175 @@
+/* /business marketing page — public visual system.
+   Warm-white ground, Spectral 56 hero, Bodoni 22 cards, ink rectangular button.
+   Scoped away from the research workspace, which keeps its own Business.css look. */
+
+.business-public-page.business-marketing-page {
+  background: #FAF9F5 !important;
+  color: #141413;
+  font-family: var(--font-sans);
+}
+.business-marketing-page .business-container { width: min(100% - 96px, 1280px); }
+
+.business-marketing-page .business-hero {
+  background: #FAF9F5 !important;
+  padding: 96px 0 72px;
+}
+.business-marketing-page .business-hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 72px);
+}
+.business-marketing-page .business-eyebrow {
+  margin: 0;
+  color: #6F6A5F;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.business-marketing-page .business-hero h1 {
+  max-width: 760px;
+  margin: 18px 0 0;
+  color: #141413;
+  font-family: "Spectral", var(--font-serif);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+}
+.business-marketing-page .business-lede {
+  max-width: 520px;
+  margin: 22px 0 0;
+  color: #4A4740;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.business-marketing-page .business-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 32px; }
+.business-marketing-page .business-button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #141413;
+  border-radius: 0;
+  background: #141413;
+  color: #FFFDF8;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 24px;
+  text-decoration: none;
+  box-shadow: none;
+}
+.business-marketing-page .business-button:hover { border-color: #2B2A28; background: #2B2A28; color: #FFFDF8; }
+.business-marketing-page .business-text-link {
+  color: #141413;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgba(20, 20, 19, .3);
+  text-underline-offset: 3px;
+}
+.business-marketing-page .business-text-link:hover { text-decoration-color: #141413; }
+
+.business-marketing-page .business-hero-visual {
+  position: relative;
+  min-height: 440px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 22px;
+  background: #EDEBE4;
+}
+.business-marketing-page .business-hero-visual::before { display: none; }
+.business-marketing-page .business-hero-visual > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  object-fit: cover;
+  filter: saturate(.88) contrast(1.02);
+}
+.business-marketing-page .business-hero-visual-copy {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  gap: 8px;
+  background: linear-gradient(0deg, rgba(20, 20, 19, .74), rgba(20, 20, 19, .12) 74%, transparent);
+  color: #FAF9F5;
+  padding: 88px 26px 24px;
+}
+.business-marketing-page .business-hero-visual-copy p {
+  margin: 0;
+  color: rgba(250, 249, 245, .72);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.business-marketing-page .business-hero-visual-copy strong {
+  max-width: 360px;
+  color: #FAF9F5;
+  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.032em;
+  line-height: 1.15;
+}
+
+.business-marketing-page .business-section { border: 0 !important; padding: 72px 0 96px; }
+.business-marketing-page .business-section--soft { background: #FAF9F5 !important; border-top: 0 !important; box-shadow: none !important; }
+.business-marketing-page .business-service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+.business-marketing-page .business-service-grid article {
+  display: flex;
+  min-height: 260px;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 0;
+  border-radius: 22px;
+  background: #FFFFFF;
+  padding: 30px;
+}
+.business-marketing-page .business-service-grid svg { color: #141413; }
+.business-marketing-page .business-service-grid h3 {
+  margin: 26px 0 0;
+  color: #141413;
+  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.032em;
+  line-height: 1.15;
+}
+.business-marketing-page .business-service-grid p {
+  margin: 10px 0 0;
+  color: #4A4740;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+.business-marketing-page .business-service-grid .business-text-link { margin-top: auto; padding-top: 22px; }
+
+@media (max-width: 900px) {
+  .business-marketing-page .business-container { width: min(100% - 40px, 1280px); }
+  .business-marketing-page .business-hero { padding: 64px 0 48px; }
+  .business-marketing-page .business-hero-layout { grid-template-columns: 1fr; gap: 32px; }
+  .business-marketing-page .business-hero h1 { font-size: 56px; }
+  .business-marketing-page .business-hero-visual,
+  .business-marketing-page .business-hero-visual > img { min-height: 320px; }
+  .business-marketing-page .business-service-grid { grid-template-columns: 1fr; gap: 12px; }
+  .business-marketing-page .business-section { padding-bottom: 72px; }
+}

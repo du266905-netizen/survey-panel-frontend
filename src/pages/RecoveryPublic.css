@@ -1,0 +1,148 @@
+/* Public password recovery (/forgot-password, /reset-password).
+   The research-side /business/* recovery keeps the original dark treatment. */
+
+.recovery-page--public { background: #FAF9F5; color: #141413; }
+.recovery-page--public p,
+.recovery-page--public span,
+.recovery-page--public a,
+.recovery-page--public button,
+.recovery-page--public input,
+.recovery-page--public label { font-family: var(--font-sans); }
+.recovery-page--public h1,
+.recovery-page--public h2 { font-family: "Spectral", var(--font-serif); }
+.recovery-page--public::before,
+.recovery-page--public::after { display: none; }
+.recovery-page--public .recovery-shell { grid-template-columns: minmax(0, 1.02fr) minmax(440px, .98fr); }
+
+.recovery-page--public .recovery-brand {
+  background: #141413;
+  color: #FAF9F5;
+  padding: 64px clamp(32px, 5vw, 72px);
+}
+.recovery-page--public .recovery-brand::before { display: none; }
+.recovery-page--public .recovery-brand-copy h1 {
+  max-width: 560px;
+  margin: 16px 0 0;
+  color: #FAF9F5;
+  font-family: "Spectral", var(--font-serif);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+}
+.recovery-page--public .recovery-kicker {
+  margin: 0;
+  color: rgba(250, 249, 245, .6);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.recovery-page--public .recovery-brand-copy > p:last-child {
+  max-width: 480px;
+  margin: 22px 0 0;
+  color: rgba(250, 249, 245, .78);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.recovery-page--public .recovery-brand-note {
+  border-top: 1px solid rgba(250, 249, 245, .18);
+  color: rgba(250, 249, 245, .6);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.recovery-page--public .recovery-panel { background: #FAF9F5; }
+.recovery-page--public .recovery-panel::before { display: none; }
+.recovery-page--public .recovery-panel-inner { width: min(100%, 480px); }
+.recovery-page--public .recovery-return { color: #6F6A5F; font-family: var(--font-sans); font-size: 13px; font-weight: 500; }
+.recovery-page--public .recovery-return:hover { color: #141413; }
+
+.recovery-page--public .recovery-card {
+  border: 0;
+  border-radius: 22px;
+  background: #FFFFFF;
+  box-shadow: none;
+  padding: 40px;
+}
+.recovery-page--public .recovery-icon {
+  border: 0;
+  background: #F4F7F2;
+  color: #141413;
+}
+.recovery-page--public .recovery-card > .recovery-kicker { margin-top: 22px; color: #6F6A5F; }
+.recovery-page--public .recovery-card h2 {
+  margin: 10px 0 0;
+  color: #141413;
+  font-family: "Spectral", var(--font-serif);
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.06;
+}
+.recovery-page--public .recovery-intro { margin: 14px 0 0; color: #4A4740; font-family: var(--font-sans); font-size: 16px; line-height: 1.7; }
+.recovery-page--public .recovery-field-group > span:first-child {
+  color: #6F6A5F;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+}
+.recovery-page--public .recovery-input {
+  height: 50px;
+  border: 1px solid rgba(20, 20, 19, .18);
+  border-radius: 0;
+  background: #FFFFFF;
+  color: #141413;
+}
+.recovery-page--public .recovery-input:focus-within { border-color: #141413; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(20, 20, 19, .07); }
+.recovery-page--public .recovery-input input { color: #141413; font-size: 16px; font-weight: 400; }
+.recovery-page--public .recovery-input input::placeholder { color: #8A8578; }
+.recovery-page--public .recovery-password-toggle { color: #6F6A5F; }
+.recovery-page--public .recovery-password-toggle:hover { color: #141413; }
+
+.recovery-page--public .recovery-strength {
+  border: 0;
+  border-radius: 12px;
+  background: #F4F7F2;
+  padding: 13px;
+}
+.recovery-page--public .recovery-strength-head { color: #6F6A5F; font-size: 11px; font-weight: 500; }
+.recovery-page--public .recovery-strength-head strong { color: #141413; font-weight: 500; }
+.recovery-page--public .recovery-strength-meter span { background: rgba(20, 20, 19, .12); }
+.recovery-page--public .recovery-strength-meter span.is-passed { background: #141413; }
+.recovery-page--public .recovery-strength-list span { color: #8A8578; font-size: 9.5px; font-weight: 400; }
+.recovery-page--public .recovery-strength-list span.is-passed { color: #141413; }
+.recovery-page--public .recovery-strength-list svg { color: #8A8578; }
+.recovery-page--public .recovery-strength-list .is-passed svg { color: #141413; }
+
+.recovery-page--public .recovery-message { border-radius: 12px; font-size: 13px; font-weight: 400; line-height: 1.55; }
+.recovery-page--public .recovery-message.is-success { border-color: rgba(20, 20, 19, .12); background: #F4F7F2; color: #141413; }
+.recovery-page--public .recovery-message.is-error { border-color: rgba(157, 47, 40, .28); background: #FBEFEE; color: #9D2F28; }
+
+.recovery-page--public .recovery-submit {
+  min-height: 50px;
+  margin-top: 24px;
+  border: 1px solid #141413;
+  border-radius: 0;
+  background: #141413;
+  color: #FFFDF8;
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+.recovery-page--public .recovery-submit:hover { border-color: #2B2A28; background: #2B2A28; box-shadow: none; transform: none; }
+.recovery-page--public .recovery-spinner { border-color: rgba(255, 253, 248, .3); border-top-color: #FFFDF8; }
+.recovery-page--public .recovery-help { color: #6F6A5F; font-family: var(--font-sans); font-size: 13px; }
+.recovery-page--public .recovery-help a { color: #141413; font-weight: 500; text-decoration: underline; text-decoration-color: rgba(20, 20, 19, .3); text-underline-offset: 3px; }
+.recovery-page--public .recovery-help a:hover { color: #141413; }
+
+@media (max-width: 960px) {
+  .recovery-page--public .recovery-shell { grid-template-columns: 1fr; }
+  .recovery-page--public .recovery-brand { min-height: 300px; }
+  .recovery-page--public .recovery-brand-copy h1 { font-size: 56px; }
+  .recovery-page--public .recovery-card { padding: 32px 24px; }
+}

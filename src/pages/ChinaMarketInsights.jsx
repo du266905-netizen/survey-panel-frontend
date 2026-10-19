@@ -35,8 +35,8 @@ export default function ChinaMarketInsights() {
   const { language } = useLanguage();
 
   return (
-    <main className="china-market-page">
-      <PublicSiteHeader heroOverlay />
+    <main className="china-market-page has-cta">
+      <PublicSiteHeader />
       <section className="china-market-hero">
         <div className="china-market-container china-market-hero-layout">
           <div className="china-market-hero-copy">
