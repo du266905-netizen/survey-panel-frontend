@@ -1080,3 +1080,42 @@
 #atlas-contact .atlas-contact-panel {
   align-self: center;
 }
+
+/* ---------------------------------------------------------------------------
+   Homepage neutral Bone trial — #F5F4ED page ground. Same hierarchy as the
+   Warm Bone test: white cards, Ink actions, Sage Leaf hero plate, Sage Linen
+   long-form panel. Scoped to .home-atlas; no other page changes.
+   --------------------------------------------------------------------------- */
+.home-atlas {
+  --home-bone: #f5f4ed;
+  --home-card: #ffffff;
+  --home-ink: #141a17;
+  --home-muted: #5f6862;
+  --home-hairline: rgba(20, 26, 23, .11);
+  --home-plate: #aebfa9;
+  background: var(--home-bone);
+  color: var(--home-ink);
+}
+
+.home-atlas .atlas-navigation.public-site-header {
+  background: var(--home-bone);
+  border-color: var(--home-hairline);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.home-atlas .video-hero-section,
+.home-atlas .video-hero,
+.home-atlas .video-hero-content {
+  background: var(--home-bone);
+}
+.home-atlas .video-hero-eyebrow { color: var(--home-muted); }
+.home-atlas .video-hero-shape { background: var(--home-plate); }
+
+.home-atlas .community-hub { background: var(--home-bone); }
+.home-atlas .home-film { background: var(--home-bone); }
+
+.home-atlas .home-rewards-section { background: var(--home-bone); }
+.home-atlas .home-reward-card { background: var(--home-card); }
+.home-atlas .home-reward-card:hover { background: var(--home-bone); }
