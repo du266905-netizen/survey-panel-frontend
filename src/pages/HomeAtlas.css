@@ -1913,3 +1913,79 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Centred contact card: heading above, compact two-column form below. The
+   typewriter is extracted to src/components/AtlasTypewriter.jsx for later. */
+#atlas-contact .atlas-contact-panel {
+  display: block;
+  width: min(100%, 960px);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(26px, 2.6vw, 36px);
+  border: 1px solid var(--proto-line);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(20, 20, 19, .06);
+}
+#atlas-contact .atlas-contact-copy {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+#atlas-contact .atlas-contact-panel h2 {
+  max-width: 680px;
+  margin: 8px auto 0;
+  font-family: var(--font-reading);
+  font-size: clamp(28px, 2.5vw, 36px);
+  font-weight: 600;
+  letter-spacing: -.0139em;
+  line-height: 1.15;
+  color: var(--atlas-ink) !important;
+}
+#atlas-contact .atlas-contact-intro {
+  max-width: 600px;
+  margin: 10px auto 0;
+  color: var(--atlas-quiet-ink) !important;
+  font-size: 16px;
+  line-height: 1.5;
+}
+#atlas-contact .atlas-contact-kicker {
+  text-align: center;
+}
+#atlas-contact .atlas-contact-form {
+  width: min(100%, 760px);
+  margin: 20px auto 0;
+  column-gap: 14px;
+  row-gap: 10px;
+}
+#atlas-contact .atlas-contact-form label {
+  gap: 4px;
+}
+#atlas-contact .atlas-contact-form input,
+#atlas-contact .atlas-contact-form select {
+  min-height: 40px;
+}
+#atlas-contact .atlas-contact-form textarea {
+  min-height: 82px;
+}
+#atlas-contact .atlas-contact-submit {
+  min-height: 44px;
+  margin-top: 2px;
+}
+#atlas-contact .atlas-contact-field--phone,
+#atlas-contact .atlas-contact-field--message {
+  grid-column: 1 / -1;
+}
+#atlas-contact .atlas-contact-submit {
+  grid-column: 1;
+}
+@media (max-width: 760px) {
+  #atlas-contact .atlas-contact-form {
+    grid-template-columns: 1fr;
+  }
+  #atlas-contact .atlas-contact-field--phone,
+  #atlas-contact .atlas-contact-field--message {
+    grid-column: auto;
+  }
+}
