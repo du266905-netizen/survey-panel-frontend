@@ -1263,34 +1263,174 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Accent trial B: Burnt Sienna #773924 on the homepage hero + long-form CTAs.
-   White text on Sienna is 8.77:1; hover Deep Sienna #5E2C1B is 11.34:1.
-   The header stays Ink.
+   Claude palette trial — homepage only. White stays for forms, inputs and
+   cards; Ivory is the page, Clay is the single warm accent, Slate is the ink.
+   Clay buttons use Slate text (5.90:1); white on Clay (3.12:1) is not used.
    --------------------------------------------------------------------------- */
+.home-atlas {
+  --atlas-ink: #141413;
+  --atlas-quiet-ink: #6F6A5F;
+  --atlas-forest: #141413;
+  --atlas-sage: #CED6BF;
+  --atlas-paper: #F0EEE6;
+  --atlas-paper-deep: #E7EDDD;
+  --atlas-rule: #D8D2C4;
+  --proto-ink: #141413;
+  --proto-soft: #4A4740;
+  --proto-muted: #6F6A5F;
+  --proto-faint: #8A8578;
+  --proto-line: rgba(20, 20, 19, .12);
+  --proto-line-2: rgba(20, 20, 19, .22);
+  --proto-accent: #D97757;
+  --proto-paper: #FBFAF6;
+  --continuation-paper: #FBFAF6;
+  --continuation-rule: #D8D2C4;
+  background: #F0EEE6;
+  color: #141413;
+}
+
+/* Header: Paper, warm hairline, Slate links, Slate Join us. */
+.home-atlas .atlas-navigation.public-site-header {
+  --atlas-ink: #141413;
+  --atlas-forest: #141413;
+  --atlas-paper: #FBFAF6;
+  --atlas-rule: #D8D2C4;
+  background: #FBFAF6;
+  border-color: #D8D2C4;
+  color: #141413;
+  box-shadow: 0 10px 22px rgba(20, 20, 19, .045);
+}
+.home-atlas .atlas-nav-trigger,
+.home-atlas .atlas-nav-link,
+.home-atlas .atlas-sign-in,
+.home-atlas .atlas-language-trigger,
+.home-atlas .atlas-menu-button { color: #141413; }
+.home-atlas .atlas-nav-link:hover,
+.home-atlas .atlas-nav-link:focus-visible,
+.home-atlas .atlas-nav-trigger:hover { color: #A94E2F; }
+.home-atlas .atlas-nav-menu {
+  border-color: #D8D2C4;
+  background: #FBFAF6;
+  color: #141413;
+}
+.home-atlas .atlas-nav-menu-item:hover,
+.home-atlas .atlas-nav-menu-item:focus-visible { background: #F0EEE6; }
+.home-atlas .atlas-nav-menu-item span,
+.home-atlas .atlas-nav-menu-item small,
+.home-atlas .atlas-mobile-group > p { color: #6F6A5F; }
+.home-atlas .atlas-register {
+  border-color: #141413;
+  background: #141413;
+  color: #FBFAF6;
+}
+.home-atlas .atlas-register:hover {
+  border-color: #2B2A28;
+  background: #2B2A28;
+}
+.home-atlas .atlas-mobile-menu {
+  border-color: #D8D2C4;
+  background: #FBFAF6;
+}
+.home-atlas .atlas-mobile-direct-link,
+.home-atlas .atlas-mobile-group a { color: #141413; }
+
+/* Hero: Ivory ground, Slate type, warm secondary line. */
+.home-atlas .video-hero-eyebrow { color: #6F6A5F; }
+.home-atlas .video-hero h1 { color: #141413; }
+.home-atlas .video-hero h1 span:nth-child(2) { color: #8A8578; }
+.home-atlas .video-hero-description { color: #4A4740; }
+.home-atlas .video-hero-supporting { color: #6F6A5F; }
+
+/* The three CTAs: Clay fill, Slate label, Slate hairline to define the edge. */
 .home-atlas .video-hero-actions .video-hero-cta:not(.video-hero-cta--outline) {
-  border-color: #773924;
-  background: #773924;
-  --syringe-fill: #5E2C1B;
+  border-color: #141413;
+  background: #D97757;
+  color: #141413;
+  --syringe-fill: #C56645;
 }
 .home-atlas .video-hero-actions .video-hero-cta:not(.video-hero-cta--outline):hover {
-  border-color: #5E2C1B;
-  background: #5E2C1B;
+  border-color: #141413;
+  background: #C56645;
+  color: #141413;
 }
-.home-atlas .video-hero-actions .video-hero-cta--outline { --syringe-fill: #5E2C1B; }
-.home-atlas .video-hero-actions .video-hero-cta--outline:hover { border-color: #5E2C1B; }
+.home-atlas .video-hero-actions .video-hero-cta--outline {
+  border-color: #D8D2C4;
+  color: #141413;
+  --syringe-fill: #D97757;
+  --syringe-hover-ink: #141413;
+  --syringe-hover-border: #141413;
+}
+.home-atlas .video-hero-actions .video-hero-cta--outline:hover {
+  border-color: #141413;
+  color: #141413;
+}
 .home-atlas .home-auth-email button {
-  border-color: #773924;
-  background: #773924;
+  border-color: #141413;
+  background: #D97757;
+  color: #141413;
 }
 .home-atlas .home-auth-email button:hover {
-  border-color: #5E2C1B;
-  background: #5E2C1B;
+  border-color: #141413;
+  background: #C56645;
+  color: #141413;
 }
 .home-atlas .community-hub-primary-action {
-  border-color: #773924;
-  background: #773924;
+  border-color: #141413;
+  background: #D97757;
+  color: #141413;
 }
 .home-atlas .community-hub-primary-action:hover {
-  border-color: #5E2C1B;
-  background: #5E2C1B;
+  border-color: #141413;
+  background: #C56645;
+  color: #141413;
 }
+
+/* Forms and inputs stay white, with warm hairlines. */
+.home-atlas .home-auth-email input {
+  border-color: #D8D2C4;
+  background: #FFFFFF;
+  color: #141413;
+}
+.home-atlas .home-auth-email input::placeholder { color: #8A8578; }
+.home-atlas .home-auth-email input:focus {
+  border-color: #141413;
+  box-shadow: 0 0 0 3px rgba(20, 20, 19, .07);
+}
+.home-atlas .home-auth-or { color: #8A8578; }
+.home-atlas .home-auth-or:before,
+.home-atlas .home-auth-or:after { background: #D8D2C4; }
+.home-atlas .home-auth-terms { color: #6F6A5F; }
+.home-atlas .home-auth-terms a {
+  color: #141413;
+  text-decoration-color: rgba(20, 20, 19, .3);
+}
+.home-atlas .home-auth-form .google-field {
+  border-color: #D8D2C4;
+  background: #FFFFFF;
+  color: #141413;
+}
+.home-atlas .home-auth-form .google-field:hover,
+.home-atlas .home-auth-form .google-field:focus-within { border-color: #141413; }
+.home-atlas .home-auth-form .google-field:focus-within {
+  box-shadow: 0 0 0 3px rgba(20, 20, 19, .07);
+}
+
+/* Long-form panel: Matcha support, Slate ink, Clay CTA. */
+.home-atlas .community-hub-panel {
+  background: #CED6BF;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 19, .10);
+  color: #141413;
+}
+
+/* White stays for cards/forms; films, manifesto and rewards use Paper. */
+.home-atlas .home-film { background: #FBFAF6; }
+.home-atlas .home-manifesto {
+  background: radial-gradient(circle at 82% 15%, rgba(217, 119, 87, .06), transparent 24%), #FBFAF6;
+}
+.home-atlas .home-manifesto-card--voices { background: #FFFFFF; }
+.home-atlas .home-manifesto-card--technology { background: #F0EEE6; }
+.home-atlas .home-manifesto-principle {
+  background: #141413;
+  color: #FBFAF6;
+}
+.home-atlas .home-footer { background: #141413; }
