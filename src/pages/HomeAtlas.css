@@ -1654,7 +1654,7 @@
 .home-atlas .home-section-label,
 .home-atlas .home-reward-card > div > span,
 .home-atlas .home-manifesto-card span {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-style: normal;
   font-weight: 500;
   letter-spacing: .14em;

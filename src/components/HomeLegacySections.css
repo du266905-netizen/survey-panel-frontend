@@ -86,7 +86,7 @@
 .home-reward-card:hover { background: var(--atlas-paper-deep, #f4f7f2); box-shadow: none; transform: none; }
 .home-reward-gift, .home-reward-token, .home-reward-panel { background: var(--continuation-paper); }
 .home-reward-card span { color: var(--continuation-muted); font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
-.home-reward-card h3 { margin: 10px 0 0; color: var(--continuation-ink); font-family: var(--font-display); font-optical-sizing: auto; font-size: 22px; font-weight: 500; letter-spacing: -.032em; line-height: 1.04; }
+.home-reward-card h3 { margin: 10px 0 0; color: var(--continuation-ink); font-family: var(--font-display); font-optical-sizing: auto; font-size: 22px; font-weight: 600; letter-spacing: -.02em; line-height: 1.12; }
 .home-reward-card p { margin: 14px 0 0; color: var(--continuation-muted); font-family: var(--font-reading); font-size: 14px; line-height: 1.7; }
 .home-reward-sketch { display: grid; width: 100%; max-width: 232px; height: 196px; place-items: center; align-self: center; color: var(--continuation-ink); }
 .home-reward-sketch svg { display: block; width: 100%; max-height: 196px; overflow: visible; }
