@@ -2337,3 +2337,21 @@
   background: #FFFFFF;
   --atlas-paper: #FFFFFF;
 }
+
+/* Homepage ground is white; the long-form colour block keeps its warm band.
+   Only the final CTA → footer boundary is allowed a divider. */
+.home-atlas { background: #FFFFFF; }
+.home-atlas .video-hero-section,
+.home-atlas .home-film,
+.home-atlas .atlas-stage,
+.home-atlas .home-rewards-section { background: #FFFFFF; }
+.home-atlas .atlas-stage,
+.home-atlas .home-rewards-section,
+.home-atlas .home-global-section { border-top: 0; }
+.home-atlas .home-global-section { border-bottom: 0; }
+
+/* Page ground white; the hero's inner surface must follow the token, and the
+   long-form block has no internal divider line. */
+.home-atlas { --atlas-paper: #FFFFFF; }
+.home-atlas .video-hero { background: #FFFFFF; }
+.home-atlas .community-hub .home-global-section { border-top: 0; }
