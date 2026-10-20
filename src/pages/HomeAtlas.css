@@ -2306,3 +2306,12 @@
 .home-atlas .atlas-nav-menu-item span { color: #5A695F; }
 .home-atlas .atlas-nav-menu-item strong { color: #141413; font-weight: 600; }
 .home-atlas .atlas-nav-menu-item small { color: #5A695F; font-weight: 400; }
+
+/* Final type rule: all 22px card titles are Source Serif 4 600. */
+.home-atlas .home-rewards-section .home-reward-card .home-reward-copy h3 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.12;
+}
