@@ -5,7 +5,7 @@
 .atlas-navigation.public-site-header {
   --atlas-ink: #141413;
   --atlas-forest: #141413;
-  --atlas-paper: #FAF9F5;
+  --atlas-paper: #FFFFFF;
   --atlas-rule: rgba(20, 20, 19, .08);
   position: sticky;
   top: 0;
@@ -212,7 +212,7 @@
     gap: 22px;
     padding: 24px 5.5vw 29px;
     border-bottom: 1px solid rgba(20, 20, 19, .10);
-    background: #FAF9F5;
+    background: #FFFFFF;
     box-shadow: 0 20px 35px rgba(20, 20, 19, .08);
     clip-path: inset(0 0 100% 0);
     pointer-events: none;

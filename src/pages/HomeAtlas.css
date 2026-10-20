@@ -1293,9 +1293,9 @@
 .home-atlas .atlas-navigation.public-site-header {
   --atlas-ink: #141413;
   --atlas-forest: #141413;
-  --atlas-paper: #FBFAF6;
+  --atlas-paper: #FFFFFF;
   --atlas-rule: #D8D2C4;
-  background: #FBFAF6;
+  background: #FFFFFF;
   border-color: #D8D2C4;
   color: #141413;
   box-shadow: 0 10px 22px rgba(20, 20, 19, .045);
@@ -2325,3 +2325,9 @@
   font-size: 16px;
   font-weight: 500;
 }
+
+
+/* 2026-10-20: swap only the grounds, not the order.
+   Film sits on white; the long-form colour blocks sit on warm grey-white. */
+.home-atlas .home-film { background: #FFFFFF; }
+.home-atlas .community-hub { background: #FAF9F5; }
