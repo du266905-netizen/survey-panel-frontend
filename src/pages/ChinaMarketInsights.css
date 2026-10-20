@@ -29,7 +29,7 @@
 .china-market-route h2,
 .china-market-cta h2 {
   margin: 16px 0 0;
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-weight: 400;
   letter-spacing: -.03em;
   line-height: 1.02;
@@ -153,10 +153,10 @@
   border-radius: 0;
   background: transparent;
   color: #FAF9F5;
-  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -.032em;
+  font-weight: 600;
+  letter-spacing: -.02em;
   line-height: 1.15;
   padding: 0;
 }
@@ -218,10 +218,10 @@
 .china-market-route h3 {
   margin: 0;
   color: #FAF9F5;
-  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -.032em;
+  font-weight: 600;
+  letter-spacing: -.02em;
   line-height: 1.15;
 }
 .china-market-route li p { margin: 8px 0 0; color: rgba(250, 249, 245, .74); font-size: 16px; font-weight: 400; line-height: 1.65; }

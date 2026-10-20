@@ -65,7 +65,7 @@
   max-width: 780px;
   margin: 22px 0 0;
   color: #141413;
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 56px;
   font-weight: 400;
   letter-spacing: -.03em;

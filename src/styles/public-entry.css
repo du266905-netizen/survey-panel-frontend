@@ -15,7 +15,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 .landing-page--auth-only .landing-brand:before { display: none; }
 .landing-page--auth-only .landing-brand-content h1 {
   color: #FAF9F5;
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 56px;
   font-style: normal;
   font-weight: 400;
@@ -42,7 +42,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 }
 .landing-page--auth-only .public-auth-content h2 {
   color: #141413;
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 38px;
   font-weight: 600;
   letter-spacing: -.025em;
@@ -98,7 +98,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
   max-width: 900px;
   margin: 0 auto;
   color: #141413;
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 56px;
   font-weight: 400;
   letter-spacing: -.03em;
@@ -139,7 +139,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 .join-choice-page .join-choice-card h2 {
   margin-top: 10px;
   color: inherit;
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 38px;
   font-weight: 600;
   letter-spacing: -.025em;
@@ -192,7 +192,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 .marketing-unsubscribe-page svg { color: #141413; }
 .marketing-unsubscribe-page h1 {
   color: #141413;
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 38px;
   font-weight: 600;
   letter-spacing: -.025em;

@@ -33,7 +33,7 @@
   max-width: 900px;
   margin: 18px 0 0;
   color: var(--ps-ink);
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 56px;
   font-weight: 400;
   letter-spacing: -.03em;
@@ -66,7 +66,7 @@
   max-width: 620px;
   margin: 14px 0 0;
   color: var(--ps-ink);
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 38px;
   font-weight: 600;
   letter-spacing: -.025em;
@@ -175,10 +175,10 @@
 .public-site-layout .how-standard h3 {
   margin: 6px 0 0;
   color: var(--ps-ink);
-  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -.032em;
+  font-weight: 600;
+  letter-spacing: -.02em;
   line-height: 1.15;
 }
 .public-site-layout .how-standard p {
@@ -217,10 +217,10 @@
 .public-site-layout .how-step h3 {
   margin: 18px 0 0;
   color: var(--ps-ink);
-  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -.032em;
+  font-weight: 600;
+  letter-spacing: -.02em;
   line-height: 1.15;
 }
 .public-site-layout .how-step p {
@@ -261,7 +261,7 @@
 .public-site-layout .how-reward-copy h2 {
   margin: 16px 0 0;
   color: var(--ps-paper);
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 56px;
   font-weight: 400;
   letter-spacing: -.03em;

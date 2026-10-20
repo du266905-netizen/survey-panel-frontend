@@ -185,7 +185,7 @@
   justify-content: center;
   gap: 6px 14px;
   color: #FAF9F5;
-  font-family: "Spectral", var(--font-reading);
+  font-family: var(--font-reading);
   font-size: clamp(38px, 5vw, 80px);
   font-style: normal;
   font-weight: 400;
@@ -236,7 +236,7 @@
   max-width: 1000px;
   margin: 0 auto;
   color: #FAF9F5;
-  font-family: "Spectral", var(--font-reading);
+  font-family: var(--font-reading);
   font-size: clamp(40px, 4.5vw, 56px);
   font-weight: 400;
   letter-spacing: -.03em;
@@ -309,7 +309,7 @@
   max-width: none;
   margin-top: 20px;
   flex-wrap: nowrap;
-  font-family: "Spectral", var(--font-reading);
+  font-family: var(--font-reading);
   font-size: clamp(40px, 4vw, 56px);
   font-weight: 400;
   letter-spacing: -.03em;

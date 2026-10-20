@@ -1102,10 +1102,10 @@
   text-align: center;
 }
 .home-atlas .video-hero-eyebrow {
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-sans);
+  font-style: normal;
   font-weight: 500;
-  letter-spacing: .16em;
+  letter-spacing: .14em;
 }
 .home-atlas .video-hero h1 {
   align-items: center;
@@ -1629,23 +1629,23 @@
    --------------------------------------------------------------------------- */
 .home-atlas .video-hero h1,
 .home-atlas .video-hero h1 span:nth-child(1) {
-  font-family: "Spectral", var(--font-reading);
+  font-family: var(--font-reading);
   font-style: normal;
-  font-weight: 400;
-  letter-spacing: -.03em;
-  line-height: .98;
+  font-weight: 500;
+  letter-spacing: -.025em;
+  line-height: 1.02;
 }
 .home-atlas .video-hero h1 span:nth-child(2) {
-  font-family: "Spectral", var(--font-reading);
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--font-reading);
+  font-style: normal;
+  font-weight: 500;
 }
 .home-atlas .home-manifesto h1,
 .home-atlas .home-manifesto h2,
 .home-atlas .home-rewards-heading h2,
 .home-atlas .home-global-copy h2,
 .home-atlas .atlas-contact-panel h2 {
-  font-family: "Spectral", var(--font-reading);
+  font-family: var(--font-reading);
   font-style: normal;
   font-weight: 600;
   letter-spacing: -.028em;
@@ -1679,7 +1679,7 @@
    --------------------------------------------------------------------------- */
 .home-atlas .video-hero h1,
 .home-atlas .video-hero h1 span:nth-child(1) {
-  font-family: "Spectral", var(--font-reading);
+  font-family: var(--font-reading);
   font-weight: 400;
   font-style: normal;
   font-size: clamp(38px, 5.55vw, 80px);
@@ -1687,7 +1687,7 @@
   letter-spacing: -.0234em;
 }
 .home-atlas .video-hero h1 span:nth-child(2) {
-  font-family: "Spectral", var(--font-reading);
+  font-family: var(--font-reading);
   font-weight: 400;
   font-style: normal;
 }
@@ -2145,7 +2145,11 @@
 .home-atlas .video-hero h1,
 .home-atlas .video-hero h1 span:nth-child(1),
 .home-atlas .video-hero h1 span:nth-child(2) {
-  font-style: italic;
+  font-family: var(--font-reading);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -.025em;
+  line-height: 1.02;
 }
 .home-atlas .video-hero h1 span:nth-child(2) {
   font-size: .8em;

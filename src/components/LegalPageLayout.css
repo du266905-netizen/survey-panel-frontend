@@ -34,7 +34,7 @@
   max-width: 900px;
   margin: 18px 0 0;
   color: var(--ps-ink);
-  font-family: "Spectral", var(--font-serif);
+  font-family: var(--font-serif);
   font-size: 56px;
   font-weight: 400;
   letter-spacing: -.03em;
@@ -144,10 +144,10 @@
 .public-site-layout .legal-section-head h2 {
   margin: 8px 0 0;
   color: var(--ps-ink);
-  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -.032em;
+  font-weight: 600;
+  letter-spacing: -.02em;
   line-height: 1.15;
 }
 .public-site-layout .legal-section-content { max-width: 720px; margin: 18px 0 0 58px; }
@@ -203,10 +203,10 @@
 .public-site-layout .legal-cookie-grid h3 {
   margin: 0;
   color: var(--ps-ink);
-  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -.032em;
+  font-weight: 600;
+  letter-spacing: -.02em;
   line-height: 1.15;
 }
 .public-site-layout .legal-card-grid p,
@@ -247,10 +247,10 @@
   display: block;
   margin-top: 8px;
   color: var(--ps-ink);
-  font-family: "Bodoni Moda Variable", "Bodoni Moda", Didot, "Bodoni 72", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -.032em;
+  font-weight: 600;
+  letter-spacing: -.02em;
   line-height: 1.15;
 }
 .public-site-layout .legal-highlight p {
