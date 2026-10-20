@@ -2331,3 +2331,9 @@
    Film sits on white; the long-form colour blocks sit on warm grey-white. */
 .home-atlas .home-film { background: #FFFFFF; }
 .home-atlas .community-hub { background: #FAF9F5; }
+
+/* Final nav ground: pure white, overriding later home rules. */
+.home-atlas .atlas-navigation.public-site-header {
+  background: #FFFFFF;
+  --atlas-paper: #FFFFFF;
+}
