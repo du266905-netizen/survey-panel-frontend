@@ -11,9 +11,9 @@
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(174px, 1fr) auto minmax(318px, 1fr);
+  grid-template-columns: 174px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 24px;
+  gap: 28px;
   width: 100%;
   min-height: 76px;
   margin: 0;
@@ -34,7 +34,7 @@
 .public-site-header .atlas-brand-wordmark { display: block; width: 100%; height: auto; }
 
 .atlas-nav-links, .atlas-nav-actions { display: flex; align-items: center; }
-.atlas-nav-links { min-width: 0; justify-content: center; gap: 2px; }
+.atlas-nav-links { min-width: 0; justify-content: flex-start; gap: 2px; }
 .atlas-nav-group { position: relative; display: flex; align-items: center; }
 
 .atlas-nav-trigger, .atlas-menu-button { appearance: none; border: 0; color: var(--atlas-ink); background: transparent; cursor: pointer; }
@@ -45,8 +45,8 @@
   padding: 13px 12px;
   color: var(--atlas-ink);
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   letter-spacing: 0;
   line-height: 1.4;
   white-space: nowrap;
@@ -58,8 +58,8 @@
   padding: 13px 12px;
   color: var(--atlas-ink);
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   letter-spacing: 0;
   text-decoration: none;
   white-space: nowrap;
@@ -101,7 +101,7 @@
   text-transform: none;
 }
 .atlas-nav-menu-item span { color: #6F6A5F; }
-.atlas-nav-menu-item strong { color: #141413; font-weight: 600; }
+.atlas-nav-menu-item strong { color: #141413; font-size: 16px; font-weight: 500; }
 .atlas-nav-menu-item small { color: #6F6A5F; font-weight: 400; }
 
 .atlas-nav-actions { justify-content: flex-end; gap: 15px; }
@@ -157,14 +157,14 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 20px;
   border: 1px solid #141413;
-  border-radius: 0;
+  border-radius: 6px;
   color: #FAF7F0;
   background: #141413;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0;
   text-decoration: none;
@@ -268,7 +268,7 @@
 
 @media (max-width: 520px) { .atlas-register { display: none; } }
 
-/* Nudge the desktop link group left, matching the homepage. */
+/* Desktop link group sits next to the wordmark, not centred. */
 @media (min-width: 1100px) {
-  .atlas-navigation.public-site-header .atlas-nav-links { transform: translateX(-38px); }
+  .atlas-navigation.public-site-header .atlas-nav-links { transform: none; padding-left: 4px; }
 }

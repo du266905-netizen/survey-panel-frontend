@@ -1,0 +1,16 @@
+/* Public buttons: rectangles with softened corners (6px), not pills. */
+.atlas-register,
+.video-hero-cta,
+.home-auth-email button,
+.ps-button,
+.business-marketing-page .business-button,
+.join-choice-page .business-button,
+.landing-page--auth-only .public-auth-submit,
+.landing-page--auth-only .public-auth-email-cta,
+.public-site-layout .how-reward-copy a,
+.public-site-layout .approach-network-copy > a,
+.china-market-page .china-market-button,
+.marketing-unsubscribe-page a,
+.recovery-page--public .recovery-submit {
+  border-radius: 6px !important;
+}

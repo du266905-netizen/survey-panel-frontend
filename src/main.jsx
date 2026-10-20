@@ -15,6 +15,7 @@ import './styles/action-feedback.css';
 import './styles/authenticated-palette.css';
 import './styles/future-app-surface.css';
 import './styles/public-entry.css';
+import './styles/public-buttons.css';
 /* Last on purpose. The participant end had no stylesheet of its own — it was
    dressed entirely by the shared global sheets above, together with admin and
    Business. Everything in this file is anchored to `.app-shell-panelist`, a
