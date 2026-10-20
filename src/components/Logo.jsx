@@ -9,7 +9,7 @@ export default function Logo({ size = 'md', variant = 'dark', tone = 'ink', clas
 
   return (
     <img
-      src={isBrand ? '/guanyisearch-wordmark-brand.png' : '/guanyisearch-wordmark.png'}
+      src={isBrand ? '/guanyisearch-wordmark-sage.png' : '/guanyisearch-wordmark.png'}
       alt=""
       width={s.width}
       height={s.height}
