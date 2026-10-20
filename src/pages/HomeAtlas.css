@@ -1237,12 +1237,12 @@
 .home-atlas .atlas-nav-trigger,
 .home-atlas .atlas-nav-link,
 .home-atlas .atlas-sign-in {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0;
 }
 .home-atlas .atlas-register {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0;
 }
@@ -2314,4 +2314,14 @@
   font-weight: 600;
   letter-spacing: -.02em;
   line-height: 1.12;
+}
+
+
+/* Final nav type rule: 16px categories and Join us on the homepage too. */
+.home-atlas .atlas-nav-trigger,
+.home-atlas .atlas-nav-link,
+.home-atlas .atlas-sign-in,
+.home-atlas .atlas-register {
+  font-size: 16px;
+  font-weight: 500;
 }
