@@ -132,7 +132,7 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
   return (
     <header className={`atlas-navigation public-site-header${heroOverlay ? ' is-hero-overlay' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
       <Link className="atlas-brand" to={withLanguage('/', language)} aria-label="GuanyiSearch home" onClick={closeNavigation}>
-        <Logo size="md" variant="dark" className="atlas-brand-wordmark" />
+        <Logo size="md" variant="dark" tone="brand" className="atlas-brand-wordmark" />
       </Link>
 
       <nav className="atlas-nav-links" aria-label="Primary navigation">
