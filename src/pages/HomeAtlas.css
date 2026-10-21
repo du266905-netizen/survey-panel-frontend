@@ -2355,3 +2355,9 @@
 .home-atlas { --atlas-paper: #FFFFFF; }
 .home-atlas .video-hero { background: #FFFFFF; }
 .home-atlas .community-hub .home-global-section { border-top: 0; }
+
+/* No dividers inside the long-form colour block. */
+.home-atlas .community-hub .home-global-copy { border-left: 0; }
+@media (max-width: 900px) {
+  .home-atlas .community-hub .home-global-copy { border-bottom: 0; }
+}
