@@ -48,17 +48,19 @@
 }
 
 .about-portrait {
-  overflow: hidden;
-  border-radius: 10px;
+  position: relative;
   margin: 0;
-  background: #f5f5f3;
+  background: transparent;
 }
+/* The source is a full cut-out: the head sits above the photograph, so the
+   transparent top must stay transparent instead of showing a box behind it.
+   Only the photograph's own bottom corners are rounded, at the research
+   button's 3px. */
 .about-portrait img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  object-position: center 38%;
+  height: auto;
+  border-radius: 0 0 3px 3px;
 }
 
 @media (max-width: 900px) {
