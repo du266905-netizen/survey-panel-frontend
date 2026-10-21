@@ -252,3 +252,35 @@
 .public-auth-code,
 .public-auth-panel,
 .public-auth-tabs { border-radius: 0 !important; }
+
+/* ---- homepage hero controls --------------------------------------------- */
+
+/* The homepage keeps its own form markup, so it needs the same two rules the
+   shared sheets give every other public page: square fields, lime primary. */
+.home-atlas input,
+.home-atlas select,
+.home-atlas textarea,
+.home-atlas .google-field,
+.home-atlas .home-auth-email button { border-radius: 0 !important; }
+
+.home-atlas .video-hero-cta:not(.video-hero-cta--outline) {
+  border-color: var(--pub-lime) !important;
+  background: var(--pub-lime) !important;
+  color: #14161a !important;
+  box-shadow: none !important;
+}
+.home-atlas .video-hero-cta:not(.video-hero-cta--outline):hover {
+  border-color: var(--pub-lime-deep) !important;
+  background: var(--pub-lime-deep) !important;
+  color: #14161a !important;
+  box-shadow: none !important;
+}
+.home-atlas .home-auth-email button {
+  border-color: var(--pub-lime) !important;
+  background: var(--pub-lime) !important;
+  color: #14161a !important;
+}
+.home-atlas .home-auth-email button:hover {
+  border-color: var(--pub-lime-deep) !important;
+  background: var(--pub-lime-deep) !important;
+}
