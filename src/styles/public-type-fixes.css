@@ -12,3 +12,9 @@
 .home-manifesto-mark p { font-size: 14px !important; }
 .home-manifesto-principle span,
 .home-reward-card span { font-size: 12px !important; }
+.home-atlas .video-hero-eyebrow {
+  font-size: 12px !important;
+  letter-spacing: .14em !important;
+}
+.home-atlas .home-auth-or,
+.home-atlas .home-auth-terms { font-size: 14px !important; }
