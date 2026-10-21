@@ -64,10 +64,10 @@ export default function About() {
         <div className="about-hero-copy">
           <h1 id="about-title">{text.title}</h1>
           <p className="about-lead">{text.body}</p>
+          <figure className="about-portrait">
+            <img src={peopleImage} alt="" loading="lazy" decoding="async" />
+          </figure>
         </div>
-        <figure className="about-portrait">
-          <img src={peopleImage} alt="" loading="lazy" decoding="async" />
-        </figure>
       </section>
 
       <section className="about-story" aria-labelledby="about-story-title">

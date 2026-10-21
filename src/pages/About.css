@@ -8,14 +8,11 @@
 }
 
 .about-hero {
-  display: grid;
+  display: block;
   width: calc(100% - 80px);
   max-width: 1600px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
-  gap: 64px;
-  align-items: start;
   margin: 0 auto;
-  padding: 64px 0 56px;
+  padding: 64px 0 40px;
 }
 
 .about-eyebrow {
@@ -49,7 +46,8 @@
 
 .about-portrait {
   position: relative;
-  margin: 0;
+  width: min(100%, 680px);
+  margin: 48px 0 0;
   background: transparent;
 }
 /* The source is a full cut-out: the head sits above the photograph, so the
@@ -66,25 +64,23 @@
 @media (max-width: 900px) {
   .about-hero {
     width: calc(100% - 40px);
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-    padding: 40px 0 56px;
+    padding: 40px 0 32px;
   }
   .about-hero h1 { font-size: 38px; }
   .about-lead { margin-top: 20px; font-size: 16px; line-height: 1.65; }
+  .about-portrait { margin-top: 32px; }
+  .about-story { width: calc(100% - 40px); padding: 24px 0 56px; }
 }
 
 /* Second section: the China / partner story. Heading left, reading column
    right, one hairline between the two blocks. */
 .about-story {
-  display: grid;
+  display: block;
   width: calc(100% - 80px);
   max-width: 1600px;
-  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
-  gap: 64px;
-  border-top: 1px solid var(--pub-hair, rgba(17, 17, 19, .12));
   margin: 0 auto;
-  padding: 56px 0 80px;
+  /* same white ground as the hero: whitespace separates them, not a rule */
+  padding: 32px 0 80px;
 }
 
 .about-story h2 {
@@ -99,6 +95,7 @@
 
 .about-story-body {
   max-width: 680px;
+  margin-top: 24px;
   color: var(--pub-body, #565a60);
   font-family: var(--font-reading);
   font-size: 16px;
