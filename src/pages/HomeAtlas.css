@@ -2146,7 +2146,7 @@
 .home-atlas .video-hero h1 span:nth-child(1),
 .home-atlas .video-hero h1 span:nth-child(2) {
   font-family: var(--font-reading);
-  font-style: normal;
+  font-style: italic;
   font-weight: 500;
   letter-spacing: -.025em;
   line-height: 1.02;
