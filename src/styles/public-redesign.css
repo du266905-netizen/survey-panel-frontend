@@ -327,11 +327,11 @@
 }
 .home-atlas .video-hero h1 {
   align-items: flex-start !important;
-  max-width: 560px !important;
+  max-width: 100% !important;
   margin: 18px 0 0 !important;
   text-align: left !important;
   font-size: 56px !important;
-  line-height: 1.05 !important;
+  line-height: 1.06 !important;
   letter-spacing: -.03em !important;
 }
 /* The old hero used the Songti display face; the public system is Source Serif. */
@@ -341,13 +341,14 @@
   font-weight: 400 !important;
 }
 .home-atlas .video-hero h1 span:nth-child(2) {
-  margin-top: .06em !important;
+  margin-top: .04em !important;
   color: var(--pub-ink) !important;
   font-family: var(--font-reading) !important;
-  font-size: .68em !important;
+  font-size: 1em !important;
   font-style: normal !important;
   font-weight: 400 !important;
-  line-height: 1.06 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -.03em !important;
 }
 .home-atlas .video-hero-description {
   max-width: 520px !important;
