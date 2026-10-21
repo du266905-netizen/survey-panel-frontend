@@ -11,7 +11,10 @@ export const publicNavigation = [
   {
     id: 'about',
     label: 'About us',
-    to: '/about',
+    items: [
+      { to: '/about', title: 'About GuanyiSearch', note: 'Who we are' },
+      { to: '/our-approach', title: 'Our approach', note: 'People first, evidence second' },
+    ],
   },
   {
     id: 'solutions',
@@ -20,7 +23,6 @@ export const publicNavigation = [
       { to: '/business', title: 'Market research', note: 'Studies for product, brand and market entry' },
       { to: '/china-market-insights', title: 'China market insights', note: 'Local context and expression' },
       { to: '/how-it-works', title: 'How it works', note: 'The panel, the standard, the process' },
-      { to: '/our-approach', title: 'Our approach', note: 'People first, evidence second' },
     ],
   },
   {

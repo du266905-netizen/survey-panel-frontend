@@ -1,6 +1,7 @@
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlobalGlobe from './GlobalGlobe';
+import HomeRewardCards from './HomeRewardCards';
 import Logo from './Logo';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import { footerIdentityTranslations, globalTranslations, navigationLabels } from '../constants/homepageTranslations';
@@ -94,44 +95,6 @@ function ManifestoSprout() {
         <path className="home-sprout-line home-sprout-vein-left" d="M99 112 69 66" />
         <path className="home-sprout-line home-sprout-vein-right" d="m109 89 53-23" />
         <path className="home-sprout-line home-sprout-root" d="M104 169c-14-1-25 3-34 10M105 169c12 0 24 4 35 10" />
-      </svg>
-    </div>
-  );
-}
-
-function GiftSketch() {
-  return (
-    <div className="home-reward-sketch" aria-hidden="true">
-      <svg viewBox="0 0 220 190" fill="none">
-        <g className="home-gift-sparkles"><path d="M48 72v18M39 81h18M172 77v14M165 84h14" /><path d="m64 51 5 9 9 5-9 5-5 9-5-9-9-5 9-5 5-9Z" /></g>
-        <path className="home-gift-fill" d="M65 94h94v58H65z" />
-        <path className="home-sketch-line" d="M65 93h94v59H65zM111 94v58" />
-        <g className="home-gift-lid"><path className="home-gift-lid-fill" d="M57 79h110v19H57z" /><path className="home-sketch-line" d="M57 79h110v19H57zM111 79v19" /><path className="home-sketch-line" d="M109 79c-19-2-31-13-28-25 16-2 27 6 30 25Zm4 0c19-2 31-13 28-25-16-2-27 6-30 25Z" /></g>
-        <path className="home-sketch-line" d="M65 98h94M111 98v54" />
-        <path className="home-gift-shadow" d="M50 160c31 8 88 8 120 0" />
-      </svg>
-    </div>
-  );
-}
-
-function TokenSketch() {
-  return (
-    <div className="home-reward-sketch" aria-hidden="true">
-      <svg viewBox="0 0 220 190" fill="none">
-        <path className="home-token-orbit" d="M48 118c12-43 93-72 133-34 28 26-2 61-43 70" />
-        <g className="home-token-dot"><circle cx="166" cy="69" r="8" /></g>
-        <g className="home-token-coin"><ellipse className="home-token-fill" cx="111" cy="110" rx="43" ry="25" /><path className="home-sketch-line" d="M68 110v18c0 14 86 14 86 0v-18M68 110c0 14 86 14 86 0s-86-14-86 0Z" /><path className="home-sketch-line home-token-mark" d="M95 108h32M111 95v26" /></g>
-      </svg>
-    </div>
-  );
-}
-
-function CartSketch() {
-  return (
-    <div className="home-reward-sketch" aria-hidden="true">
-      <svg viewBox="0 0 220 190" fill="none">
-        <g className="home-cart-breeze"><path d="M14 76h31c9 0 15 4 19 11" /><path d="M8 97h39c9 0 15 4 19 11" /><path d="M19 118h28c9 0 15 4 19 11" /></g>
-        <g className="home-cart-motion"><circle className="home-cart-accent" cx="165" cy="61" r="25" /><path className="home-cart-line" d="M63 56h27c8 0 13 5 15 15l15 68c3 13 10 20 24 20h39c14 0 22-6 25-20l13-57H105" /><path className="home-cart-line" d="M108 139h76" /><path className="home-cart-line home-cart-handle" d="M42 56h21" /><g className="home-cart-wheel"><circle className="home-cart-line" cx="127" cy="177" r="13" /><path className="home-cart-spoke" d="M114 177h26M127 164v26" /></g><g className="home-cart-wheel home-cart-wheel-right"><circle className="home-cart-line" cx="181" cy="177" r="13" /><path className="home-cart-spoke" d="M168 177h26M181 164v26" /></g><path className="home-cart-ground" d="M83 187c36 5 90 5 126 0" /></g>
       </svg>
     </div>
   );
@@ -308,11 +271,7 @@ export default function HomeLegacySections() {
             <h2 id="home-rewards-title">{copy.rewardsTitle}</h2>
             <p>{copy.rewardsBody}</p>
           </div>
-          <div className="home-reward-grid">
-            <article className="home-reward-card home-reward-gift"><div className="home-reward-art"><GiftSketch /></div><div className="home-reward-copy"><span>{copy.rewardCards[0][0]}</span><h3>{copy.rewardCards[0][1]}</h3><p>{copy.rewardCards[0][2]}</p></div></article>
-            <article className="home-reward-card home-reward-token"><div className="home-reward-art"><TokenSketch /></div><div className="home-reward-copy"><span>{copy.rewardCards[1][0]}</span><h3>{copy.rewardCards[1][1]}</h3><p>{copy.rewardCards[1][2]}</p></div></article>
-            <article className="home-reward-card home-reward-panel"><div className="home-reward-art"><CartSketch /></div><div className="home-reward-copy"><span>{copy.rewardCards[2][0]}</span><h3>{copy.rewardCards[2][1]}</h3><p>{copy.rewardCards[2][2]}</p></div></article>
-          </div>
+          <HomeRewardCards cards={copy.rewardCards} />
         </div>
       </section>
 
