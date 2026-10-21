@@ -17,7 +17,7 @@
   margin: 0;
   color: #6F6A5F;
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .14em;
   line-height: 1.4;
@@ -163,7 +163,7 @@
 .china-market-capability-grid h3 span {
   color: rgba(250, 249, 245, .5);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .12em;
 }
@@ -214,7 +214,7 @@
 }
 .china-market-route ol { display: grid; gap: 28px; margin: 0; padding: 0; list-style: none; }
 .china-market-route li { display: grid; grid-template-columns: 40px 1fr; gap: 16px; border: 0; padding: 0; }
-.china-market-route li > span { color: rgba(250, 249, 245, .5); font-size: 11px; font-weight: 500; letter-spacing: .12em; padding-top: 4px; }
+.china-market-route li > span { color: rgba(250, 249, 245, .5); font-size: 14px; font-weight: 500; letter-spacing: .12em; padding-top: 4px; }
 .china-market-route h3 {
   margin: 0;
   color: #FAF9F5;

@@ -36,7 +36,7 @@
   margin: 0;
   color: var(--ps-muted);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .14em;
   line-height: 1.4;
@@ -203,4 +203,11 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .public-site-layout .approach-network-mark img { animation: none; opacity: 1; }
+}
+
+/* Step 1: remove the off-scale 86.4px manifesto heading. */
+.approach-page .home-manifesto h2 {
+  font-size: clamp(38px, 6vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -.025em;
 }

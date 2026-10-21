@@ -16,6 +16,7 @@ div#CybotCookiebotDialogPoweredByText,
   --font-marketing-serif: "Source Han Serif SC", "Noto Serif SC", "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
   --font-display: "Source Serif 4 Variable", "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-accent: var(--font-reading);
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-paper: #f7f7f3;
   --color-ivory: #fbfbf8;
   --color-muted-ivory: #abb2aa;
@@ -26,6 +27,8 @@ div#CybotCookiebotDialogPoweredByText,
   background: #f7f7f3;
   font-family: var(--font-sans);
 }
+
+code, pre, kbd, samp { font-family: var(--font-mono); }
 
 body {
   min-width: 320px;

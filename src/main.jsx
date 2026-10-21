@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import '@fontsource-variable/inter';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource-variable/source-serif-4';
 import App from './App';
 import { AuthProvider } from './components/AuthContext';
@@ -15,6 +17,8 @@ import './styles/action-feedback.css';
 import './styles/authenticated-palette.css';
 import './styles/future-app-surface.css';
 import './styles/public-entry.css';
+import './styles/public-reading.css';
+import './styles/public-no-mid-black.css';
 import './styles/public-buttons.css';
 /* Last on purpose. The participant end had no stylesheet of its own — it was
    dressed entirely by the shared global sheets above, together with admin and

@@ -24,7 +24,7 @@
   margin: 0;
   color: var(--ps-muted);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .14em;
   line-height: 1.4;
@@ -56,7 +56,7 @@
   margin-top: 26px;
   color: var(--ps-muted);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .14em;
   line-height: 1.4;
@@ -81,7 +81,7 @@
   margin: 0;
   color: var(--ps-muted);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .14em;
   line-height: 1.4;
@@ -94,7 +94,7 @@
   padding: 7px 0;
   color: var(--ps-body);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.45;
   text-decoration: none;
@@ -125,7 +125,7 @@
   background: transparent;
   color: var(--ps-faint);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .12em;
   line-height: 1.4;
@@ -135,7 +135,7 @@
   margin: 0;
   color: var(--ps-muted);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .14em;
   line-height: 1.4;
@@ -221,7 +221,7 @@
 .public-site-layout .legal-cookie-grid article > span {
   color: var(--ps-muted);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -238,7 +238,7 @@
 .public-site-layout .legal-highlight span {
   color: var(--ps-muted);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .14em;
   text-transform: uppercase;

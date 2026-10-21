@@ -1,0 +1,26 @@
+/* Long-form reading copy: Source Serif 4 16/1.7. UI stays Inter. */
+.public-site-layout .legal-hero-copy,
+.public-site-layout .legal-section-content > p,
+.public-site-layout .legal-list li,
+.public-site-layout .legal-cookie-grid p,
+.public-site-layout .legal-highlight p,
+.public-site-layout .news-reading-copy > p:not(.news-reading-section-label),
+.public-site-layout .approach-question-dialogue > span,
+.public-site-layout .approach-network-copy > span,
+.public-site-layout .approach-network-copy > em,
+.public-site-layout .how-hero > p,
+.public-site-layout .how-standards-copy > p,
+.public-site-layout .how-standard p,
+.public-site-layout .how-step p,
+.public-site-layout .how-reward-copy > p,
+.business-marketing-page .business-lede,
+.business-marketing-page .business-service-grid p,
+.china-market-context p:last-child,
+.china-market-route li p,
+.china-market-cta div > p:last-child,
+.china-market-capabilities p {
+  font-family: var(--font-serif) !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
