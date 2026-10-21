@@ -2359,13 +2359,3 @@
 @media (max-width: 900px) {
   .home-atlas .community-hub .home-global-copy { border-bottom: 0; }
 }
-
-/* Homepage page colours (2026-10-21): warm paper + #F4F7F2 bands. */
-.home-atlas { --atlas-paper: #FAF9F5; background: #FAF9F5; }
-.home-atlas .video-hero-section,
-.home-atlas .video-hero,
-.home-atlas .home-film,
-.home-atlas .atlas-stage { background: #FAF9F5; }
-.home-atlas .atlas-navigation.public-site-header { background: #FAF9F5; --atlas-paper: #FAF9F5; }
-.home-atlas .community-hub,
-.home-atlas .home-rewards-section { background: #F4F7F2; }
