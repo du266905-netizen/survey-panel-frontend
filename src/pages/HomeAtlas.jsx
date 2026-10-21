@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import CommunityHub from './CommunityHub';
 import HomeFilmSection from '../components/HomeFilmSection';
-import HomeLegacySections from '../components/HomeLegacySections';
+import { HomeFooter } from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import HomeAuthForm from '../components/HomeAuthForm';
@@ -146,13 +146,14 @@ export default function HomeAtlas() {
               </div>
               <HomeAuthForm audience={audience} />
             </div>
+            <div className="home-hero-media">
+              <HomeFilmSection />
+            </div>
           </div>
         </div>
       </section>
 
-      <HomeFilmSection />
-
-      {/* 影片在前；人物/地球长文在后，周边保持白色。 */}
+      {/* 人物/地球长文：保留内容，去掉整块彩色底，改为骨白 + 发丝线。 */}
       <CommunityHub />
 
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
@@ -198,7 +199,7 @@ export default function HomeAtlas() {
 
       </section>
 
-      <HomeLegacySections />
+      <HomeFooter />
     </main>
   );
 }

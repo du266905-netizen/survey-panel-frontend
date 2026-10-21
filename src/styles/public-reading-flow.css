@@ -17,8 +17,8 @@
 .china-market-capabilities,
 .china-market-context,
 .china-market-route {
-  padding-top: clamp(56px, 7vw, 88px);
-  padding-bottom: clamp(56px, 7vw, 88px);
+  padding-top: clamp(32px, 4vw, 48px);
+  padding-bottom: clamp(32px, 4vw, 48px);
 }
 
 /* One reading measure for copy; headings can run a little wider. */

@@ -284,3 +284,181 @@
   border-color: var(--pub-lime-deep) !important;
   background: var(--pub-lime-deep) !important;
 }
+
+/* ---- homepage: reading hero, film on the right --------------------------- */
+
+.home-atlas .video-hero-section {
+  display: block !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: #fff !important;
+}
+.home-atlas .video-hero {
+  display: block !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  background: #fff !important;
+}
+.home-atlas .video-hero-content {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px) !important;
+  gap: 64px !important;
+  align-items: center !important;
+  width: min(100% - 96px, 1120px) !important;
+  margin: 0 auto !important;
+  padding: 56px 0 40px !important;
+  text-align: left !important;
+  justify-items: stretch !important;
+}
+.home-atlas .video-hero-copy {
+  align-items: flex-start !important;
+  width: auto !important;
+  max-width: 560px !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+.home-atlas .video-hero-eyebrow {
+  color: var(--pub-mute) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: .14em !important;
+}
+.home-atlas .video-hero h1 {
+  align-items: flex-start !important;
+  max-width: 560px !important;
+  margin: 18px 0 0 !important;
+  text-align: left !important;
+  font-size: 56px !important;
+  line-height: 1.05 !important;
+  letter-spacing: -.03em !important;
+}
+/* The old hero used the Songti display face; the public system is Source Serif. */
+.home-atlas .video-hero h1 span:nth-child(1) {
+  font-family: var(--font-reading) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+}
+.home-atlas .video-hero h1 span:nth-child(2) {
+  margin-top: .08em !important;
+  color: var(--pub-body) !important;
+  font-family: var(--font-reading) !important;
+  font-size: .62em !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+}
+.home-atlas .video-hero-description {
+  max-width: 520px !important;
+  margin: 18px 0 0 !important;
+  color: var(--pub-body) !important;
+}
+.home-atlas .video-hero-actions { justify-content: flex-start !important; }
+
+.home-atlas .home-hero-media { min-width: 0; width: 100%; }
+.home-atlas .home-hero-media .home-film { padding: 0 !important; background: transparent !important; }
+.home-atlas .home-hero-media .home-film-frame {
+  width: 100% !important;
+  aspect-ratio: 4 / 3 !important;
+  border-radius: 0 !important;
+}
+.home-atlas .home-hero-media .home-film-play {
+  width: 56px;
+  height: 56px;
+  border-radius: 0;
+  background: rgba(20, 20, 19, .82);
+}
+.home-atlas .home-hero-media .home-film-poster:hover .home-film-play { transform: translate(-50%, -50%); }
+
+@media (max-width: 900px) {
+  .home-atlas .video-hero-content {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 32px !important;
+    width: calc(100% - 40px) !important;
+    padding: 32px 0 !important;
+  }
+  .home-atlas .video-hero h1 { font-size: 38px !important; }
+  .home-atlas .home-hero-media .home-film-frame { aspect-ratio: 16 / 9 !important; }
+}
+
+/* ---- homepage: sage-bone long-form, no coloured bands -------------------- */
+
+.home-atlas .community-hub { background: #fff !important; }
+.home-atlas .community-hub-panel {
+  background: #F4F7F2 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: var(--pub-ink) !important;
+}
+.home-atlas .community-hub-portrait,
+.home-atlas .community-hub-portrait img { border-radius: 0 !important; }
+
+/* Contact band: no photograph, one sage-bone form panel on white. */
+.home-atlas #atlas-contact,
+.home-atlas #atlas-contact .atlas-stage {
+  background: #fff !important;
+  background-image: none !important;
+  border-radius: 0 !important;
+}
+.home-atlas #atlas-contact { padding: 56px 0 !important; }
+.home-atlas #atlas-contact .atlas-contact-panel {
+  background: #F4F7F2 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.home-atlas #atlas-contact h2,
+.home-atlas #atlas-contact p,
+.home-atlas #atlas-contact label span { color: var(--pub-ink) !important; }
+
+/* ---- buttons on black fields -------------------------------------------- */
+
+/* Primary is white on black; the second action is the sunken #2B2B2B. */
+.business-marketing-page .business-cta .business-button {
+  border-color: #fff !important;
+  background: #fff !important;
+  color: #141413 !important;
+}
+.china-market-cta .china-market-button {
+  border-color: #fff !important;
+  background: #fff !important;
+  color: #141413 !important;
+}
+
+/* Homepage primaries on light surfaces, same lime as everywhere else. */
+.home-atlas .community-hub-primary-action,
+.home-atlas .atlas-contact-submit {
+  border: 1px solid var(--pub-lime) !important;
+  border-radius: 0 !important;
+  background: var(--pub-lime) !important;
+  color: #14161a !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+.home-atlas .community-hub-primary-action:hover,
+.home-atlas .atlas-contact-submit:hover {
+  border-color: var(--pub-lime-deep) !important;
+  background: var(--pub-lime-deep) !important;
+  color: #14161a !important;
+}
+
+/* ---- tighter page openings ---------------------------------------------- */
+
+/* The reading pages' own heroes still carried 96/72. The mock the owner
+   approved opens at 48/32 and lets the first section start at 56. */
+.public-site-layout .how-hero { padding: 48px 0 24px !important; }
+.china-market-hero { padding: 48px 0 32px !important; }
+.business-marketing-page .business-hero { padding: 48px 0 32px !important; }
+.public-site-layout .approach-question { padding: 56px 0 !important; }
+
+/* The rhythm sheet must beat each page's own section padding. */
+.public-site-layout .how-platform,
+.public-site-layout .how-panelists,
+.public-site-layout .how-standards,
+.public-site-layout .how-reward,
+.public-site-layout .approach-question,
+.public-site-layout .approach-network,
+.china-market-capabilities,
+.china-market-context,
+.china-market-route {
+  padding-top: clamp(32px, 4vw, 48px) !important;
+  padding-bottom: clamp(32px, 4vw, 48px) !important;
+}

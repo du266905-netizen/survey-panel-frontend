@@ -19,10 +19,11 @@
 
 .psn-bar {
   display: flex;
-  width: min(100% - 96px, 1120px);
+  width: 100%;
   height: 80px;
   align-items: center;
-  margin: 0 auto;
+  margin: 0;
+  padding: 0 40px;
   gap: 52px;
 }
 
@@ -245,7 +246,7 @@
 .psn-mobile-lang button.is-selected { border-color: #fff; color: #fff; }
 
 @media (max-width: 900px) {
-  .psn-bar { width: calc(100% - 40px); height: 64px; gap: 0; }
+  .psn-bar { width: 100%; height: 64px; gap: 0; padding: 0 20px; }
   .psn-brand img { height: 23px; }
   .psn-groups,
   .psn-lang,
