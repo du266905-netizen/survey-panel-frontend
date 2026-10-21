@@ -8,3 +8,7 @@
   font-size: 14px !important;
 }
 .home-section-label { font-size: 12px !important; }
+.home-manifesto-mark strong,
+.home-manifesto-mark p { font-size: 14px !important; }
+.home-manifesto-principle span,
+.home-reward-card span { font-size: 12px !important; }
