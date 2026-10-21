@@ -115,7 +115,7 @@ function DailyBriefDescription({ brief, loading, error, country, showOperational
             <Sparkles size={18} strokeWidth={1.9} />
           </span>
           <div className="min-w-0">
-            <p className="text-[11px] font-black uppercase tracking-[0.15em] text-cyan-800">{brief?.isAiGenerated ? copy.aiDailyBrief : copy.dailyBrief}</p>
+            <p className="text-xs font-black uppercase tracking-[0.15em] text-cyan-800">{brief?.isAiGenerated ? copy.aiDailyBrief : copy.dailyBrief}</p>
             <h2 className="truncate text-[16px] font-black text-slate-950">{brief?.title || copy.todayBriefing}</h2>
           </div>
         </div>
@@ -191,7 +191,7 @@ function NewsStoryCard({ article, onOpen, copy }) {
           {articleImage(article)}
         </div>
         <div className="flex flex-1 flex-col p-4">
-          <div className="flex min-w-0 items-center gap-2 text-[11px] font-bold text-slate-500">
+          <div className="flex min-w-0 items-center gap-2 text-sm font-bold text-slate-500">
             <CategoryPill category={article.category} copy={copy} />
             <span className="truncate">{article.sourceName || copy.newsSource}</span>
           </div>
@@ -199,7 +199,7 @@ function NewsStoryCard({ article, onOpen, copy }) {
             {article.title}
           </h2>
           <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-500">{summaryFor(article, copy)}</p>
-          <span className="mt-auto inline-flex items-center gap-1 pt-4 text-[13px] font-bold text-cyan-700 transition group-hover:text-cyan-900">
+          <span className="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-bold text-cyan-700 transition group-hover:text-cyan-900">
             {copy.readStory} <ArrowUpRight size={14} />
           </span>
         </div>
@@ -236,7 +236,7 @@ function CompactSelect({ label, value, onChange, options, ariaLabel, optionLabel
           if (event.key === 'Escape') setOpen(false);
         }}
       >
-        <span className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500">{label}</span>
+        <span className="text-xs font-black uppercase tracking-[0.12em] text-slate-500">{label}</span>
         <span className="min-w-0 flex-1 truncate text-sm font-bold text-slate-800">{optionLabel(selectedOption)}</span>
         <ChevronDown className={`shrink-0 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`} size={15} aria-hidden="true" />
       </button>
@@ -289,7 +289,7 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
         ariaLabel={copy.filterContentAria}
         optionLabel={(item) => item.label}
       />
-      {loading && <span className="text-[13px] font-bold text-slate-400" role="status">{common.updating}</span>}
+      {loading && <span className="text-sm font-bold text-slate-400" role="status">{common.updating}</span>}
       {!isPublicView && (
         <div
           className="group relative"
@@ -313,13 +313,13 @@ function NewsFilters({ country, category, isPublicView, subscribedCategories, lo
               if (event.key === 'Escape') setTopicsOpen(false);
             }}
           >
-            <span className="text-[11px] font-black uppercase tracking-[0.12em] text-slate-500">{copy.topics}</span>
+            <span className="text-xs font-black uppercase tracking-[0.12em] text-slate-500">{copy.topics}</span>
             <span>{subscribedCategories.size ? interpolate(copy.savedCount, { count: formatCoinNumber(subscribedCategories.size) }) : copy.allTopics}</span>
             <ChevronDown className={`transition-transform ${topicsOpen ? 'rotate-180' : ''}`} size={15} />
           </button>
           {topicsOpen && (
             <div className="absolute right-0 z-30 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl" role="menu" aria-label={copy.newsTopicsAria}>
-              <p className="px-1 pb-2 text-[11px] font-bold leading-5 text-slate-500">{copy.saveTopicsHint}</p>
+              <p className="px-1 pb-2 text-sm font-bold leading-5 text-slate-500">{copy.saveTopicsHint}</p>
               <div className="grid gap-1">
                 {categoryOptions.map((item) => (
                   <label key={item.id} className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
@@ -532,7 +532,7 @@ export default function NewsWall() {
         <Search size={16} aria-hidden="true" />
         <input
           type="search"
-          style={{ fontSize: 13 }}
+          style={{ fontSize: 14 }}
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
           placeholder={participantCopy.searchPlaceholder}
@@ -543,7 +543,7 @@ export default function NewsWall() {
             <X size={14} />
           </button>
         )}
-        <button className="news-search-submit" type="submit" style={{ fontSize: 13 }}>{participantCopy.search}</button>
+        <button className="news-search-submit" type="submit" style={{ fontSize: 14 }}>{participantCopy.search}</button>
       </form>
       {newsFilters}
     </div>
@@ -567,7 +567,7 @@ export default function NewsWall() {
       {searchQuery ? (
         <section className="card mb-5 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
           <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.15em] text-cyan-800">{copy.recentArchive}</p>
+            <p className="text-xs font-black uppercase tracking-[0.15em] text-cyan-800">{copy.recentArchive}</p>
             <h2 className="mt-1 text-[16px] font-black text-slate-950">{interpolate(copy.resultsFromPast, { hours: formatCoinNumber(newsMeta?.windowHours || 72) })}</h2>
             <p className="mt-1 text-sm font-semibold text-slate-500">{interpolate(copy.searchScope, { query: searchQuery })}</p>
           </div>
@@ -578,7 +578,7 @@ export default function NewsWall() {
           {isAdmin && isLatestFallback && (
             <section className="card mb-5 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
               <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.15em] text-cyan-800">{copy.latestAvailable}</p>
+                <p className="text-xs font-black uppercase tracking-[0.15em] text-cyan-800">{copy.latestAvailable}</p>
                 <h2 className="mt-1 text-[16px] font-black text-slate-950">{copy.showingRecent}</h2>
                 <p className="mt-1 text-sm font-semibold text-slate-500">Today’s feed has not published new stories for this region yet. These signals are from the past {newsMeta?.windowHours || 48} hours.</p>
               </div>
@@ -605,7 +605,7 @@ export default function NewsWall() {
           <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.14em] text-cyan-700">{copy.saveYourFeed}</p>
+                <p className="text-xs font-black uppercase tracking-[0.14em] text-cyan-700">{copy.saveYourFeed}</p>
                 <h2 id="news-auth-title" className="mt-2 text-[22px] font-black text-slate-950">{copy.signInToContinue}</h2>
               </div>
               <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" type="button" onClick={() => setAuthPrompt('')} aria-label={copy.closeSignInPrompt}>
@@ -659,7 +659,7 @@ export default function NewsWall() {
         .news-wall-public .news-search:focus-within { border-color: #141413; box-shadow: 0 0 0 3px rgba(20,20,19,.08); }
         .news-wall-public .news-search input { color: #141413; font-size: 14px; font-weight: 400; }
         .news-wall-public .news-search input::placeholder { color: #8A8578; }
-        .news-wall-public .news-search-submit { min-height: 32px; border: 1px solid #141413; border-radius: 0; background: #141413; color: #FFFDF8; font-size: 12px; font-weight: 500; padding: 0 12px; }
+        .news-wall-public .news-search-submit { min-height: 32px; border: 1px solid #141413; border-radius: 0; background: #141413; color: #FFFDF8; font-size: 14px; font-weight: 500; padding: 0 12px; }
         .news-wall-public .news-search-submit:hover { border-color: #2B2A28; background: #2B2A28; color: #FFFDF8; }
         .news-wall-public .news-search-clear { border-radius: 0; color: #6F6A5F; }
         .news-wall-public .news-search-clear:hover { background: rgba(20,20,19,.06); color: #141413; }
@@ -668,7 +668,7 @@ export default function NewsWall() {
       <section className="news-wall-public-hero bg-[radial-gradient(circle_at_30%_10%,rgba(34,211,238,.22),transparent_34%),linear-gradient(135deg,#061217,#0f172a)] text-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:py-20">
           <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.18em] text-cyan-200">{participantCopy.title}</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">{participantCopy.title}</p>
             <h1 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-[-0.04em] sm:text-5xl">
               {participantCopy.heroTitle}
             </h1>
