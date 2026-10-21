@@ -225,3 +225,11 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
   .join-choice-page .join-choice-card { min-height: 0; }
   .marketing-unsubscribe-page section { padding: 32px 24px; }
 }
+
+/* Step 1 (2026-10-21): public page ground is the existing warm white. */
+.public-site-layout,
+.china-market-page,
+.business-marketing-page,
+.recovery-page--public {
+  background: #FAF9F5;
+}
