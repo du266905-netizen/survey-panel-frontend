@@ -220,14 +220,14 @@
   text-align: center;
 }
 .approach-slogan h1 {
-  max-width: 960px;
+  max-width: 1120px;
   margin: 0 auto;
   color: #141413;
   font-family: var(--font-reading);
-  font-size: 56px;
+  font-size: 80px;
   font-weight: 400;
-  letter-spacing: -.03em;
-  line-height: 1.06;
+  letter-spacing: -.035em;
+  line-height: 1.02;
 }
 
 .approach-manifesto {
@@ -257,6 +257,6 @@
 
 @media (max-width: 900px) {
   .approach-slogan { padding: 56px 20px 4px; }
-  .approach-slogan h1 { font-size: 38px; }
+  .approach-slogan h1 { font-size: 56px; line-height: 1.05; }
   .approach-manifesto { width: calc(100% - 40px); padding: 40px 0 72px; }
 }
