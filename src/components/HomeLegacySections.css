@@ -123,7 +123,7 @@
 .home-footer-mark { width: clamp(72px, 7.6vw, 104px); height: auto; }
 .home-footer-wordmark { width: clamp(140px, 13vw, 176px); max-width: none; }
 
-.home-footer-about { width: 100%; max-width: 58ch; border-top: 1px solid rgba(255, 255, 255, 0.18); margin-top: 26px; padding-top: 24px; }
+.home-footer-about { width: 100%; max-width: 58ch; font-family: var(--font-reading); border-top: 1px solid rgba(255, 255, 255, 0.18); margin-top: 26px; padding-top: 24px; }
 .home-footer-about p { margin: 0; color: rgba(255, 255, 255, 0.62); font-size: 14px; font-weight: 400; line-height: 1.72; }
 .home-footer-about .home-footer-about-title { margin-bottom: 16px; color: #fff; font-size: 14px; font-weight: 900; letter-spacing: .01em; line-height: 1.3; }
 
