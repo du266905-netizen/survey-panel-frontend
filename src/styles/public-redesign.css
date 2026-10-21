@@ -341,12 +341,13 @@
   font-weight: 400 !important;
 }
 .home-atlas .video-hero h1 span:nth-child(2) {
-  margin-top: .08em !important;
-  color: var(--pub-body) !important;
+  margin-top: .06em !important;
+  color: var(--pub-ink) !important;
   font-family: var(--font-reading) !important;
-  font-size: .62em !important;
+  font-size: .68em !important;
   font-style: normal !important;
   font-weight: 400 !important;
+  line-height: 1.06 !important;
 }
 .home-atlas .video-hero-description {
   max-width: 520px !important;
