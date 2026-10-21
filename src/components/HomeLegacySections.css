@@ -477,6 +477,7 @@
   font-weight: 400;
   letter-spacing: -.02em;
   line-height: 1.1;
+  white-space: pre-line;
 }
 .home-global-band-copy {
   text-align: center;
