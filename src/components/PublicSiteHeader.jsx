@@ -80,7 +80,7 @@ export default function PublicSiteHeader() {
 
         <nav className="psn-groups" aria-label="Primary navigation">
           {publicNavigation.map((group) => {
-            const hasItems = group.items.length > 0;
+            const hasItems = (group.items || []).length > 0;
             const isOpen = openMenu === group.id;
             return (
               <div
@@ -89,7 +89,9 @@ export default function PublicSiteHeader() {
                 onMouseEnter={() => { if (!hasItems) return; clearTimer(); setOpenMenu(group.id); }}
                 onMouseLeave={() => { if (hasItems) scheduleClose(); }}
               >
-                {hasItems ? (
+                {group.to ? (
+                  <Link className="psn-trigger" to={withLanguage(group.to, language)} onClick={closeAll}>{group.label}</Link>
+                ) : hasItems ? (
                   <button
                     className={`psn-trigger${isOpen ? ' is-open' : ''}`}
                     type="button"
@@ -195,7 +197,12 @@ export default function PublicSiteHeader() {
         {publicNavigation.map((group) => (
           <div className="psn-mobile-group" key={group.id}>
             <p>{group.label}</p>
-            {group.items.length ? group.items.map((item) => (
+            {group.to ? (
+            <Link to={withLanguage(group.to, language)} onClick={closeAll}>
+              {group.label}
+              <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
+            </Link>
+          ) : (group.items || []).length ? group.items.map((item) => (
               <Link key={item.to} to={withLanguage(item.to, language)} onClick={closeAll}>
                 {item.title}
                 <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />

@@ -54,19 +54,19 @@ const languageLabel = { 'zh-CN': '语言', 'zh-Hant': '語言', ja: '言語', ko
 const footerIdentity = {
   'en-US': {
     title: 'About GuanyiSearch',
-    description: 'A consumer-insight collaboration network for decisions across markets. We connect participants, research initiators, and organisations around business, culture, everyday life, and public-interest questions—turning consented, thoughtfully screened local feedback into clearer decisions across regions.',
+    description: 'We are a cross-regional insight and research company, building an open, interconnected and sustainable research community. We connect participants, research commissioners and organisations across business, culture, everyday life and public questions, turning real voices into clear judgements — for better decisions, and for a better world.',
   },
   'en-GB': {
     title: 'About GuanyiSearch',
-    description: 'A consumer-insight collaboration network for decisions across markets. We connect participants, research initiators, and organisations around business, culture, everyday life, and public-interest questions—turning consented, thoughtfully screened local feedback into clearer decisions across regions.',
+    description: 'We are a cross-regional insight and research company, building an open, interconnected and sustainable research community. We connect participants, research commissioners and organisations across business, culture, everyday life and public questions, turning real voices into clear judgements — for better decisions, and for a better world.',
   },
   'zh-CN': {
     title: '关于 GuanyiSearch',
-    description: '我们是一个服务于跨区域经营决策的消费者洞察协作网络。我们连接参与者、研究发起人与组织，围绕商业、文化、日常生活与公共议题，将经过许可、审慎筛选的本地反馈转化为更清晰的跨区域判断。',
+    description: '我们是一家跨区域的信息洞察研究公司，致力于打造开放、共生、可持续的生态社区。我们连接参与者、研究发起人与组织，围绕商业、文化、日常生活与公共议题，让真实的声音转化为清晰的判断——为更好的决策，也为更好的世界。',
   },
   'zh-Hant': {
     title: '關於 GuanyiSearch',
-    description: '我們是一個服務跨區域經營決策的消費者洞察協作網絡。我們連結參與者、研究發起人與組織，圍繞商業、文化、日常生活與公共議題，將經過許可、審慎篩選的在地回饋轉化為更清晰的跨區域判斷。',
+    description: '我們是一家跨區域的資訊洞察研究公司，致力於打造開放、共生、可持續的生態社區。我們連結參與者、研究發起人與組織，圍繞商業、文化、日常生活與公共議題，讓真實的聲音轉化為清晰的判斷——為更好的決策，也為更好的世界。',
   },
 };
 

@@ -16,6 +16,7 @@ import ActivityDashboard from './pages/ActivityDashboard';
 import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
+import About from './pages/About';
 import HowItWorks from './pages/HowItWorks';
 import HomeAtlas from './pages/HomeAtlas';
 import Landing from './pages/Landing';
@@ -180,6 +181,7 @@ export default function App() {
         <Route path="/terms" element={<PublicPage><Terms /></PublicPage>} />
         <Route path="/email/unsubscribe" element={<MarketingUnsubscribe />} />
         <Route path="/business/terms" element={<PublicPage><BusinessResearcherTerms /></PublicPage>} />
+        <Route path="/about" element={<PublicPage><About /></PublicPage>} />
         <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
         <Route path="/our-approach" element={<PublicPage><OurApproach /></PublicPage>} />
         <Route path="/news" element={<NewsRoute />} />
