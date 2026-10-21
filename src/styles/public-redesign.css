@@ -302,7 +302,7 @@
 }
 .home-atlas .video-hero-content {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 480px) !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 600px) !important;
   gap: 64px !important;
   align-items: center !important;
   width: min(100% - 96px, 1120px) !important;
@@ -358,7 +358,7 @@
 .home-atlas .home-hero-media .home-film { padding: 0 !important; background: transparent !important; }
 .home-atlas .home-hero-media .home-film-frame {
   width: 100% !important;
-  aspect-ratio: 4 / 3 !important;
+  aspect-ratio: 16 / 9 !important;
   border-radius: 0 !important;
 }
 .home-atlas .home-hero-media .home-film-play {
@@ -386,11 +386,11 @@
 .home-atlas .community-hub-panel {
   background: #F4F7F2 !important;
   box-shadow: none !important;
-  border-radius: 0 !important;
+  border-radius: 12px !important;
   color: var(--pub-ink) !important;
 }
 .home-atlas .community-hub-portrait,
-.home-atlas .community-hub-portrait img { border-radius: 0 !important; }
+.home-atlas .community-hub-portrait img { border-radius: 10px !important; }
 
 /* Contact band: no photograph, one sage-bone form panel on white. */
 .home-atlas #atlas-contact,
@@ -402,7 +402,7 @@
 .home-atlas #atlas-contact { padding: 56px 0 !important; }
 .home-atlas #atlas-contact .atlas-contact-panel {
   background: #F4F7F2 !important;
-  border-radius: 0 !important;
+  border-radius: 12px !important;
   box-shadow: none !important;
 }
 .home-atlas #atlas-contact h2,
