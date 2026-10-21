@@ -3,7 +3,7 @@
 .china-market-page,
 .business-marketing-page {
   --reading-measure: 720px;
-  --reading-rule: rgba(20, 20, 19, .14);
+  --reading-rule: #E7E1D7;
 }
 
 /* Section rhythm */
@@ -188,4 +188,46 @@
 .public-site-layout .approach-page .home-manifesto-principle span,
 .public-site-layout .approach-page .home-manifesto-mark strong {
   display: none !important;
+}
+
+/* Claude-like skeleton: centred chapter heads, one content column, no side notes. */
+.public-site-layout .how-panelist-head {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+.public-site-layout .how-panelist-head h2 { text-align: center; }
+.public-site-layout .how-panelist-head > p { text-align: left; margin-left: auto; margin-right: auto; }
+.public-site-layout .approach-page .home-manifesto-masthead {
+  grid-template-columns: 1fr !important;
+  text-align: center;
+}
+.public-site-layout .approach-page .home-manifesto-mark { display: none !important; }
+.public-site-layout .approach-page .home-manifesto h2 { text-align: center; }
+.public-site-layout .approach-page .home-manifesto-deck { margin-left: auto; margin-right: auto; }
+.china-market-route-layout { grid-template-columns: 1fr !important; gap: 32px !important; }
+.china-market-route-layout > div:first-child { max-width: 760px; margin: 0 auto; text-align: center; }
+.china-market-route-layout > div:first-child p:last-child { text-align: left; margin-left: auto; margin-right: auto; }
+
+/* Comfort: smaller buttons; mid-page actions become light outline, not black blocks. */
+.public-site-layout .how-reward a,
+.china-market-button,
+.business-marketing-page .business-button {
+  min-height: 42px !important;
+  padding: 0 16px !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+}
+.public-site-layout .approach-network a,
+.china-market-hero .china-market-button,
+.business-marketing-page .business-hero .business-button {
+  border: 1px solid #141413 !important;
+  background: transparent !important;
+  color: #141413 !important;
+}
+.public-site-layout .approach-network a:hover,
+.china-market-hero .china-market-button:hover,
+.business-marketing-page .business-hero .business-button:hover {
+  background: #141413 !important;
+  color: #FAF9F5 !important;
 }
