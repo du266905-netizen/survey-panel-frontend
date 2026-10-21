@@ -14,9 +14,9 @@ const slogans = {
 };
 
 const sloganNotes = {
-  'zh-CN': '所以我们从每一个具体的人开始。',
-  'zh-Hant': '所以我們從每一個具體的人開始。',
-  en: 'So we begin with the person behind every answer.',
+  'zh-CN': '真实的声音，值得被认真听见。',
+  'zh-Hant': '真實的聲音，值得被認真聽見。',
+  en: 'Real voices deserve to be heard.',
 };
 
 export default function OurApproach() {
