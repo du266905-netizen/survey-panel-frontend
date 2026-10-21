@@ -2,8 +2,8 @@
 .public-site-layout,
 .china-market-page,
 .business-marketing-page {
-  --reading-measure: 720px;
-  --reading-rule: #E7E1D7;
+  --reading-measure: 680px;
+  --reading-rule: var(--pub-hair, rgba(17,17,19,.12));
 }
 
 /* Section rhythm */
@@ -17,8 +17,8 @@
 .china-market-capabilities,
 .china-market-context,
 .china-market-route {
-  padding-top: clamp(72px, 9vw, 112px);
-  padding-bottom: clamp(72px, 9vw, 112px);
+  padding-top: clamp(56px, 7vw, 88px);
+  padding-bottom: clamp(56px, 7vw, 88px);
 }
 
 /* One reading measure for copy; headings can run a little wider. */
@@ -49,7 +49,7 @@
   max-width: 66ch;
   font-family: var(--font-serif) !important;
   font-size: 16px;
-  line-height: 1.75;
+  line-height: 1.65;
 }
 
 /* Headings sit closer to their copy. */
@@ -147,7 +147,7 @@
 .public-site-layout .approach-network,
 .public-site-layout .approach-page .home-manifesto,
 .china-market-context {
-  background: #FAF9F5 !important;
+  background: #FFFFFF !important;
 }
 
 /* Heading positions vary by chapter: one centred pause per page. */
@@ -211,25 +211,35 @@
 
 /* Comfort: smaller buttons; mid-page actions become light outline, not black blocks. */
 .public-site-layout .how-reward a,
+.public-site-layout .approach-network a,
 .china-market-button,
 .business-marketing-page .business-button {
-  min-height: 42px !important;
-  padding: 0 16px !important;
-  border-radius: 4px !important;
-  font-size: 14px !important;
+  min-height: 46px !important;
+  padding: 0 22px !important;
+  border: 1px solid #DEEF24 !important;
+  border-radius: 0 !important;
+  background: #DEEF24 !important;
+  color: #14161A !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
 }
-.public-site-layout .approach-network a,
-.china-market-hero .china-market-button,
-.business-marketing-page .business-hero .business-button {
-  border: 1px solid #141413 !important;
-  background: transparent !important;
+.public-site-layout .how-reward a:hover,
+.public-site-layout .approach-network a:hover,
+.china-market-button:hover,
+.business-marketing-page .business-button:hover {
+  border-color: #C9DB10 !important;
+  background: #C9DB10 !important;
+  color: #14161A !important;
+}
+/* on the black closing field the buttons invert again */
+.public-site-layout .how-reward a {
+  border-color: #FFFFFF !important;
+  background: #FFFFFF !important;
   color: #141413 !important;
 }
-.public-site-layout .approach-network a:hover,
-.china-market-hero .china-market-button:hover,
-.business-marketing-page .business-hero .business-button:hover {
-  background: #141413 !important;
-  color: #FAF9F5 !important;
+.public-site-layout .how-reward a:hover {
+  border-color: #F5F5F3 !important;
+  background: #F5F5F3 !important;
 }
 
 /* Hairlines stay light on every reading row. */
@@ -237,5 +247,21 @@
 .public-site-layout .how-step,
 .public-site-layout .home-manifesto-card-grid article,
 .china-market-capability-grid article {
-  border-top-color: #E7E1D7 !important;
+  border-top-color: rgba(17,17,19,.12) !important;
+}
+
+/* Reading-page section titles are serif 400, the research-end weight. */
+.public-site-layout .how-hero h1,
+.public-site-layout .how-platform-head h2,
+.public-site-layout .how-panelist-head h2,
+.public-site-layout .how-standards-copy h2,
+.public-site-layout .how-reward-copy h2,
+.public-site-layout .approach-hero h1,
+.public-site-layout .approach-question-copy h2,
+.public-site-layout .approach-network-copy h2,
+.china-market-hero h1,
+.china-market-section-heading h2,
+.china-market-route h2,
+.china-market-context h2 {
+  font-weight: 400 !important;
 }

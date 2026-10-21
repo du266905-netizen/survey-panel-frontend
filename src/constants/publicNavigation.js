@@ -1,0 +1,41 @@
+/* Public navigation — content only, one place to edit.
+
+   The four top-level groups are fixed by the owner (2026-10-22):
+   About us / Solutions / Industries / Support. Which pages sit under them is
+   still being decided, so treat every item below as a temporary placement.
+   `items: []` renders the label without a panel (Industries has no pages yet).
+
+   English is the source language for now; the labels move into the language
+   library in a later pass. */
+export const publicNavigation = [
+  {
+    id: 'about',
+    label: 'About us',
+    items: [
+      { to: '/how-it-works', title: 'How it works', note: 'The panel, the standard, the process' },
+      { to: '/our-approach', title: 'Our approach', note: 'People first, evidence second' },
+    ],
+  },
+  {
+    id: 'solutions',
+    label: 'Solutions',
+    items: [
+      { to: '/business', title: 'Market research', note: 'Studies for product, brand and market entry' },
+      { to: '/china-market-insights', title: 'China market insights', note: 'Local context and expression' },
+    ],
+  },
+  {
+    id: 'industries',
+    label: 'Industries',
+    items: [],
+  },
+  {
+    id: 'support',
+    label: 'Support',
+    items: [
+      { to: '/news', title: 'News Wall', note: 'A daily brief on the market' },
+      { to: '/privacy', title: 'Privacy', note: 'How we handle your information' },
+      { to: '/terms', title: 'Terms', note: 'Participation terms' },
+    ],
+  },
+];

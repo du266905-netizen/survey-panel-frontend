@@ -3,15 +3,15 @@
    Scoped away from the research workspace, which keeps its own Business.css look. */
 
 .business-public-page.business-marketing-page {
-  background: #FAF9F5 !important;
+  background: #FFFFFF !important;
   color: #141413;
   font-family: var(--font-sans);
 }
-.business-marketing-page .business-container { width: min(100% - 96px, 1280px); }
+.business-marketing-page .business-container { width: min(100% - 96px, 1120px); }
 
 .business-marketing-page .business-hero {
   border-bottom: 0 !important;
-  background: #FAF9F5 !important;
+  background: #FFFFFF !important;
   padding: 96px 0 72px;
 }
 .business-marketing-page .business-hero-layout {
@@ -22,7 +22,7 @@
 }
 .business-marketing-page .business-eyebrow {
   margin: 0;
-  color: #6F6A5F;
+  color: #7F848A;
   font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 500;
@@ -43,7 +43,7 @@
 .business-marketing-page .business-lede {
   max-width: 520px;
   margin: 22px 0 0;
-  color: #4A4740;
+  color: #565A60;
   font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 400;
@@ -83,7 +83,7 @@
   min-height: 440px;
   overflow: hidden;
   border: 0;
-  border-radius: 22px;
+  border-radius: 0;
   background: #EDEBE4;
 }
 .business-marketing-page .business-hero-visual::before { display: none; }
@@ -103,7 +103,7 @@
   display: grid;
   gap: 8px;
   background: linear-gradient(0deg, rgba(20, 20, 19, .74), rgba(20, 20, 19, .12) 74%, transparent);
-  color: #FAF9F5;
+  color: #FFFFFF;
   padding: 88px 26px 24px;
 }
 .business-marketing-page .business-hero-visual-copy p {
@@ -118,7 +118,7 @@
 }
 .business-marketing-page .business-hero-visual-copy strong {
   max-width: 360px;
-  color: #FAF9F5;
+  color: #FFFFFF;
   font-family: var(--font-serif);
   font-size: 22px;
   font-weight: 600;
@@ -127,7 +127,7 @@
 }
 
 .business-marketing-page .business-section { border: 0 !important; padding: 72px 0 96px; }
-.business-marketing-page .business-section--soft { background: #FAF9F5 !important; border-top: 0 !important; box-shadow: none !important; }
+.business-marketing-page .business-section--soft { background: #FFFFFF !important; border-top: 0 !important; box-shadow: none !important; }
 .business-marketing-page .business-service-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -140,7 +140,7 @@
   flex-direction: column;
   align-items: flex-start;
   border: 0;
-  border-radius: 22px;
+  border-radius: 0;
   background: #FFFFFF;
   padding: 30px;
 }
@@ -156,7 +156,7 @@
 }
 .business-marketing-page .business-service-grid p {
   margin: 10px 0 0;
-  color: #4A4740;
+  color: #565A60;
   font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 400;
@@ -165,7 +165,7 @@
 .business-marketing-page .business-service-grid .business-text-link { margin-top: auto; padding-top: 22px; }
 
 @media (max-width: 900px) {
-  .business-marketing-page .business-container { width: min(100% - 40px, 1280px); }
+  .business-marketing-page .business-container { width: min(100% - 40px, 1120px); }
   .business-marketing-page .business-hero { padding: 64px 0 48px; }
   .business-marketing-page .business-hero-layout { grid-template-columns: 1fr; gap: 32px; }
   .business-marketing-page .business-hero h1 { font-size: 56px; }

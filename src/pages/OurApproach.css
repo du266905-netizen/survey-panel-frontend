@@ -3,12 +3,12 @@
    Spectral 56/38, Bodoni 22, Inter 16. No green gradient, no rings, no borders. */
 
 .public-site-layout .approach-page { background: transparent; }
-.public-site-layout .approach-container { width: min(100% - 96px, 1280px); margin: 0 auto; }
+.public-site-layout .approach-container { width: min(100% - 96px, 1120px); margin: 0 auto; }
 
 .public-site-layout .approach-question {
   overflow: visible;
-  padding: 96px 0;
-  background: #F3ECDC; /* approved 2026-10-19: this page only */
+  padding: 72px 0;
+  background: #FFFFFF;
 }
 .public-site-layout .approach-question-layout {
   display: grid;
@@ -19,7 +19,7 @@
 .public-site-layout .approach-question-copy { min-width: 0; }
 .public-site-layout .approach-question-art {
   overflow: hidden;
-  border-radius: 22px;
+  border-radius: 0;
   background: transparent;
   margin: 0;
 }

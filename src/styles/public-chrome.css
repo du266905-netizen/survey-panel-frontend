@@ -1,6 +1,6 @@
 /* One public chrome: warm paper header, ink footer, 16/500 nav. */
 .public-site-header {
-  background: #FAF9F5 !important;
+  background: #FFFFFF !important;
   border-bottom: 1px solid rgba(20, 20, 19, .08) !important;
 }
 .public-site-header .atlas-nav-links a,

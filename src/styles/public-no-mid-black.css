@@ -1,6 +1,6 @@
 /* Black is allowed only at the page end. These two mid-page fields move to warm paper. */
 .public-site-layout .approach-network {
-  background: #FAF9F5 !important;
+  background: #FFFFFF !important;
   color: #141413 !important;
 }
 .public-site-layout .approach-network h2,
@@ -12,17 +12,17 @@
 .public-site-layout .approach-network li {
   color: #141413 !important;
 }
-.public-site-layout .approach-network-copy > p { color: #6F6A5F !important; }
+.public-site-layout .approach-network-copy > p { color: #7F848A !important; }
 .public-site-layout .approach-network a,
 .public-site-layout .approach-network button {
-  background: #141413 !important;
-  border-color: #141413 !important;
-  color: #FAF9F5 !important;
+  background: #DEEF24 !important;
+  border-color: #DEEF24 !important;
+  color: #14161A !important;
 }
 
 .china-market-capabilities,
 .china-market-route {
-  background: #FAF9F5 !important;
+  background: #FFFFFF !important;
   color: #141413 !important;
 }
 .china-market-capabilities h2,
@@ -39,9 +39,9 @@
   color: #141413 !important;
 }
 .china-market-capabilities .china-market-kicker,
-.china-market-route .china-market-kicker { color: #6F6A5F !important; }
+.china-market-route .china-market-kicker { color: #7F848A !important; }
 .china-market-capability-grid article {
   background: #FFFFFF !important;
-  border-color: #E7E1D7 !important;
+  border-color: rgba(17,17,19,.12) !important;
 }
-.china-market-route li > span { color: #6F6A5F !important; }
+.china-market-route li > span { color: #7F848A !important; }

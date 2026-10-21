@@ -2,9 +2,9 @@
    Scoped so the research-side login (BusinessAccess) keeps its own styling.
    White form panel, warm-white ground, Spectral 38 headings, ink rectangular buttons. */
 
-.landing-page--auth-only { overflow-x: clip; background: #FAF9F5; color: #141413; }
-body:has(.landing-page--auth-only) { background: #FAF9F5; }
-.landing-page--auth-only .landing-shell { background: #FAF9F5; }
+.landing-page--auth-only { overflow-x: clip; background: #FFFFFF; color: #141413; }
+body:has(.landing-page--auth-only) { background: #FFFFFF; }
+.landing-page--auth-only .landing-shell { background: #FFFFFF; }
 .landing-page--auth-only .landing-shell:before { display: none; }
 .landing-page--auth-only .landing-access {
   background: #FFFFFF;
@@ -14,7 +14,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 .landing-page--auth-only .landing-brand { background: #141413; }
 .landing-page--auth-only .landing-brand:before { display: none; }
 .landing-page--auth-only .landing-brand-content h1 {
-  color: #FAF9F5;
+  color: #FFFFFF;
   font-family: var(--font-serif);
   font-size: 56px;
   font-style: normal;
@@ -32,9 +32,9 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 
 .landing-page--auth-only .public-auth-panel {
   --pa-ink: #141413;
-  --pa-body: #4A4740;
-  --pa-mute: #6F6A5F;
-  --pa-faint: #8A8578;
+  --pa-body: #565A60;
+  --pa-mute: #7F848A;
+  --pa-faint: #A1A6AC;
   --pa-hair: rgba(20, 20, 19, .10);
   --pa-hair-2: rgba(20, 20, 19, .18);
   --pa-lime: #141413;
@@ -44,7 +44,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
   color: #141413;
   font-family: var(--font-serif);
   font-size: 38px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -.025em;
   line-height: 1.06;
 }
@@ -79,17 +79,17 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
   border: 1px solid rgba(20, 20, 19, .18);
   border-radius: 0;
   background: #FFFFFF;
-  color: #4A4740;
+  color: #565A60;
   font-size: 16px;
   font-weight: 500;
 }
-.landing-page--auth-only .public-auth-divider { font-size: 14px; color: #8A8578; }
-.landing-page--auth-only .public-auth-consent { color: #6F6A5F; font-size: 14px; }
+.landing-page--auth-only .public-auth-divider { font-size: 14px; color: #A1A6AC; }
+.landing-page--auth-only .public-auth-consent { color: #7F848A; font-size: 14px; }
 .landing-page--auth-only .public-auth-secondary { font-size: 14px; }
 
 /* Audience choice: participant card white, research card ink; both 22px cards. */
-.join-choice-page { background: #FAF9F5; color: #141413; }
-.join-choice-page .business-container { width: min(100% - 96px, 1280px); }
+.join-choice-page { background: #FFFFFF; color: #141413; }
+.join-choice-page .business-container { width: min(100% - 96px, 1120px); }
 .join-choice-page .join-choice-hero {
   padding: 96px 0 64px;
   background: transparent;
@@ -106,7 +106,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 }
 .join-choice-page .business-lede {
   max-width: 640px;
-  color: #4A4740;
+  color: #565A60;
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.7;
@@ -115,21 +115,21 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 .join-choice-page .join-choice-card {
   min-height: 380px;
   border: 0;
-  border-radius: 22px;
+  border-radius: 0;
   box-shadow: none;
   padding: clamp(28px, 4vw, 42px);
 }
 .join-choice-page .join-choice-card--participant { background: #FFFFFF; color: #141413; }
-.join-choice-page .join-choice-card--business { background: #141413; color: #FAF9F5; }
+.join-choice-page .join-choice-card--business { background: #141413; color: #FFFFFF; }
 .join-choice-page .join-choice-icon {
   border: 0;
-  background: #F4F7F2;
+  background: #F5F5F3;
   color: #141413;
 }
-.join-choice-page .join-choice-card--business .join-choice-icon { background: rgba(250, 249, 245, .08); color: #FAF9F5; }
+.join-choice-page .join-choice-card--business .join-choice-icon { background: rgba(250, 249, 245, .08); color: #FFFFFF; }
 .join-choice-page .join-choice-card > p:first-of-type {
   margin-top: 24px;
-  color: #6F6A5F;
+  color: #7F848A;
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 500;
@@ -141,12 +141,12 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
   color: inherit;
   font-family: var(--font-serif);
   font-size: 38px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -.025em;
   line-height: 1.06;
 }
 .join-choice-page .join-choice-card > p:not(:first-of-type) {
-  color: #4A4740;
+  color: #565A60;
   font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 400;
@@ -154,13 +154,13 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 }
 .join-choice-page .join-choice-card--business > p:not(:first-of-type) { color: rgba(250, 249, 245, .78); }
 .join-choice-page .join-choice-card li {
-  color: #4A4740;
+  color: #565A60;
   font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 400;
 }
 .join-choice-page .join-choice-card--business li { color: rgba(250, 249, 245, .8); }
-.join-choice-page .join-choice-card li:before { background: #6F6A5F; }
+.join-choice-page .join-choice-card li:before { background: #7F848A; }
 .join-choice-page .join-choice-card--business li:before { background: rgba(250, 249, 245, .6); }
 .join-choice-page .business-button {
   min-height: 50px;
@@ -175,11 +175,11 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
   box-shadow: none;
 }
 .join-choice-page .business-button:hover { border-color: #2B2A28; background: #2B2A28; color: #FFFDF8; }
-.join-choice-page .join-choice-card--business .business-button { border-color: #FAF9F5; background: #FAF9F5; color: #141413; }
+.join-choice-page .join-choice-card--business .business-button { border-color: #FFFFFF; background: #FFFFFF; color: #141413; }
 .join-choice-page .join-choice-card--business .business-button:hover { border-color: #FFFFFF; background: #FFFFFF; color: #141413; }
 .join-choice-page .join-choice-note {
   margin-top: 32px;
-  color: #6F6A5F;
+  color: #7F848A;
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 400;
@@ -187,19 +187,19 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 }
 
 /* Email unsubscribe: one white card on warm white. */
-.marketing-unsubscribe-page { background: #FAF9F5; color: #141413; font-family: var(--font-sans); }
-.marketing-unsubscribe-page section { border: 0; border-radius: 22px; background: #FFFFFF; box-shadow: none !important; padding: 44px; }
+.marketing-unsubscribe-page { background: #FFFFFF; color: #141413; font-family: var(--font-sans); }
+.marketing-unsubscribe-page section { border: 0; border-radius: 0; background: #FFFFFF; box-shadow: none !important; padding: 44px; }
 .marketing-unsubscribe-page svg { color: #141413; }
 .marketing-unsubscribe-page h1 {
   color: #141413;
   font-family: var(--font-serif);
   font-size: 38px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -.025em;
   line-height: 1.06;
 }
-.marketing-unsubscribe-page p { color: #4A4740; font-size: 16px; line-height: 1.7; }
-.marketing-unsubscribe-page p:first-of-type { color: #6F6A5F; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.marketing-unsubscribe-page p { color: #565A60; font-size: 16px; line-height: 1.7; }
+.marketing-unsubscribe-page p:first-of-type { color: #7F848A; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
 .marketing-unsubscribe-page a {
   min-height: 50px;
   border: 1px solid #141413;
@@ -214,7 +214,7 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 
 @media (max-width: 900px) {
   .landing-page--auth-only .landing-brand-content h1 { font-size: 56px; }
-  .join-choice-page .business-container { width: min(100% - 40px, 1280px); }
+  .join-choice-page .business-container { width: min(100% - 40px, 1120px); }
   .join-choice-page .join-choice-hero { padding: 64px 0 40px; }
   .join-choice-page .join-choice-hero h1 { font-size: 56px; }
   .join-choice-page .join-choice-card h2 { font-size: 38px; }
@@ -231,5 +231,5 @@ body:has(.landing-page--auth-only) { background: #FAF9F5; }
 .china-market-page,
 .business-marketing-page,
 .recovery-page--public {
-  background: #FAF9F5;
+  background: #FFFFFF;
 }

@@ -1,19 +1,18 @@
-/* Public visual system — the homepage's rules, applied to public pages.
-   Ground: warm white #FAF9F5. Cards: white. Ink: #141413.
-   Type: Spectral 80/56/38, Bodoni 22, Inter 16/14/13/12/11/9.5.
-   Buttons: ink rectangles. No greige, no green, no decorative page gradients. */
+/* Public visual system — 2026-10-22.
+   White ground, one black, research-end greys. Type: serif 56/38/22/16,
+   Inter 14/13/12/11/9.5. Buttons: lime primary, sharp corners. */
 
 .public-site-layout {
-  --ps-paper: #FAF9F5;
+  --ps-paper: #FFFFFF;
   --ps-white: #FFFFFF;
   --ps-ink: #141413;
-  --ps-body: #4A4740;
-  --ps-muted: #6F6A5F;
-  --ps-faint: #8A8578;
-  --ps-rule: rgba(20, 20, 19, .10);
-  --ps-ivory: #F3ECDC;
+  --ps-body: #565A60;
+  --ps-muted: #7F848A;
+  --ps-faint: #A1A6AC;
+  --ps-rule: rgba(17, 17, 19, .12);
+  --ps-ivory: #EEEEEC;
   --ps-lavender: #D8C1CE;
-  --ps-sage-bone: #F4F7F2;
+  --ps-sage-bone: #F5F5F3;
   --ps-sage: #AEBFA9;
   min-height: 100vh;
   background: var(--ps-paper);
@@ -25,7 +24,7 @@
 }
 .public-site-layout ::selection { background: var(--ps-ivory); color: var(--ps-ink); }
 
-.ps-container { width: min(100% - 96px, 1280px); margin-inline: auto; }
+.ps-container { width: min(100% - 96px, 1120px); margin-inline: auto; }
 
 .ps-display {
   margin: 0;
@@ -43,69 +42,72 @@
   color: var(--ps-ink);
   font-family: var(--font-serif);
   font-size: 38px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -.025em;
-  line-height: 1.06;
+  line-height: 1.08;
 }
 .ps-card-title {
   margin: 0;
   color: var(--ps-ink);
   font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -.02em;
-  line-height: 1.12;
+  line-height: 1.2;
 }
 .ps-kicker {
   margin: 0;
   color: var(--ps-muted);
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: .14em;
   line-height: 1.4;
   text-transform: uppercase;
 }
-.ps-body { margin: 0; color: var(--ps-body); font-family: var(--font-sans); font-size: 16px; font-weight: 400; line-height: 1.7; }
+.ps-body { margin: 0; color: var(--ps-body); font-family: var(--font-sans); font-size: 16px; font-weight: 400; line-height: 1.6; }
 .ps-small { color: var(--ps-muted); font-size: 14px; line-height: 1.6; }
 
 .ps-button {
   display: inline-flex;
-  min-height: 50px;
+  min-height: 46px;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  border: 1px solid var(--ps-ink);
+  border: 1px solid #DEEF24;
   border-radius: 0;
-  background: var(--ps-ink);
-  color: #FFFDF8;
+  background: #DEEF24;
+  color: #14161A;
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0;
+  letter-spacing: -.005em;
   line-height: 1;
-  padding: 0 24px;
+  padding: 0 22px;
   text-decoration: none;
-  transition: background .2s ease, border-color .2s ease;
+  transition: background .14s ease, border-color .14s ease;
 }
-.ps-button:hover { border-color: #2B2A28; background: #2B2A28; color: #FFFDF8; }
-.ps-button--outline { border-color: rgba(20, 20, 19, .22); background: transparent; color: var(--ps-ink); }
-.ps-button--outline:hover { border-color: var(--ps-ink); background: transparent; color: var(--ps-ink); }
-.ps-button--light { border-color: var(--ps-paper); background: var(--ps-paper); color: var(--ps-ink); }
-.ps-button--light:hover { border-color: #FFFFFF; background: #FFFFFF; color: var(--ps-ink); }
+.ps-button:hover { border-color: #C9DB10; background: #C9DB10; color: #14161A; }
+.ps-button--outline { border-color: rgba(17, 17, 19, .22); background: #FFFFFF; color: var(--ps-ink); }
+.ps-button--outline:hover { border-color: var(--ps-ink); background: #FFFFFF; color: var(--ps-ink); }
+/* for black fields: white fill, or the sunken fill */
+.ps-button--light { border-color: #FFFFFF; background: #FFFFFF; color: #141413; }
+.ps-button--light:hover { border-color: #F5F5F3; background: #F5F5F3; color: #141413; }
+.ps-button--sunken { border-color: rgba(255, 255, 255, .22); background: #2B2B2B; color: #FFFFFF; }
+.ps-button--sunken:hover { border-color: rgba(255, 255, 255, .22); background: #363636; color: #FFFFFF; }
 
-.ps-card { border-radius: 22px; background: var(--ps-white); }
+.ps-card { border-radius: 0; background: var(--ps-white); }
 .ps-cta { background: var(--ps-ink); color: var(--ps-paper); }
 .ps-cta .ps-display { color: var(--ps-paper); }
-.ps-cta .ps-body { color: rgba(250, 249, 245, .78); }
+.ps-cta .ps-body { color: rgba(255, 255, 255, .72); }
 
 /* The one divider: a black closing CTA field meeting the footer. */
 .public-site-layout > main.has-cta + .home-footer { border-top: 1px solid rgba(255, 255, 255, .16); }
 
 @media (max-width: 760px) {
-  .ps-display { font-size: 56px; line-height: 1.02; letter-spacing: -.03em; }
+  .ps-display { font-size: 38px; line-height: 1.06; letter-spacing: -.025em; }
   .ps-section-title { font-size: 38px; }
-  .ps-container { width: min(100% - 40px, 1280px); }
-  .ps-button { min-height: 48px; font-size: 16px; padding: 0 20px; }
+  .ps-container { width: min(100% - 40px, 1120px); }
+  .ps-button { min-height: 44px; font-size: 13px; padding: 0 18px; }
 }

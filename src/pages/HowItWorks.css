@@ -9,7 +9,7 @@
   font-family: var(--font-sans);
 }
 .public-site-layout .how-shell { overflow: visible; background: transparent; }
-.public-site-layout .how-container { width: min(100% - 96px, 1280px); margin: 0 auto; }
+.public-site-layout .how-container { width: min(100% - 96px, 1120px); margin: 0 auto; }
 
 .public-site-layout .how-hero {
   display: grid;
@@ -94,7 +94,7 @@
   position: relative;
   min-height: 340px;
   overflow: hidden;
-  border-radius: 22px;
+  border-radius: 0;
   background: #EDEBE4;
 }
 .public-site-layout .how-photo.is-wide { grid-column: 1 / -1; min-height: 360px; }
@@ -122,7 +122,7 @@
 }
 .public-site-layout .how-photo-caption p {
   margin: 0;
-  color: #F3ECDC;
+  color: #EEEEEC;
   font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 500;
@@ -158,7 +158,7 @@
   grid-template-columns: 40px minmax(0, 1fr);
   gap: 18px;
   border: 0;
-  border-radius: 22px;
+  border-radius: 0;
   background: #FFFFFF;
   padding: 24px;
 }
@@ -202,7 +202,7 @@
 .public-site-layout .how-step {
   min-height: 0;
   border: 0;
-  border-radius: 22px;
+  border-radius: 0;
   background: #FFFFFF;
   padding: 28px;
 }
@@ -255,7 +255,7 @@
   position: relative;
   z-index: 1;
   max-width: 760px;
-  padding: 72px max(24px, calc((100vw - 1280px) / 2));
+  padding: 72px max(24px, calc((100vw - 1120px) / 2));
 }
 .public-site-layout .how-reward-copy .how-kicker { color: rgba(250, 249, 245, .6); }
 .public-site-layout .how-reward-copy h2 {
@@ -297,7 +297,7 @@
 .public-site-layout .how-reward-copy a:hover { background: #FFFFFF; border-color: #FFFFFF; }
 
 @media (max-width: 960px) {
-  .public-site-layout .how-container { width: min(100% - 40px, 1280px); }
+  .public-site-layout .how-container { width: min(100% - 40px, 1120px); }
   .public-site-layout .how-hero { grid-template-columns: 1fr; gap: 24px; padding: 64px 0 48px; }
   .public-site-layout .how-hero h1 { font-size: 56px; line-height: 1.02; letter-spacing: -.03em; }
   .public-site-layout .how-platform-head,

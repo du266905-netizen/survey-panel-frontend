@@ -70,7 +70,7 @@
 }
 .recovery-page--public .recovery-icon {
   border: 0;
-  background: #F4F7F2;
+  background: #F5F5F3;
   color: #141413;
 }
 .recovery-page--public .recovery-card > .recovery-kicker { margin-top: 22px; color: #6F6A5F; }
@@ -107,7 +107,7 @@
 .recovery-page--public .recovery-strength {
   border: 0;
   border-radius: 12px;
-  background: #F4F7F2;
+  background: #F5F5F3;
   padding: 13px;
 }
 .recovery-page--public .recovery-strength-head { color: #6F6A5F; font-size: 14px; font-weight: 500; }
@@ -120,7 +120,7 @@
 .recovery-page--public .recovery-strength-list .is-passed svg { color: #141413; }
 
 .recovery-page--public .recovery-message { border-radius: 12px; font-size: 14px; font-weight: 400; line-height: 1.55; }
-.recovery-page--public .recovery-message.is-success { border-color: rgba(20, 20, 19, .12); background: #F4F7F2; color: #141413; }
+.recovery-page--public .recovery-message.is-success { border-color: rgba(20, 20, 19, .12); background: #F5F5F3; color: #141413; }
 .recovery-page--public .recovery-message.is-error { border-color: rgba(157, 47, 40, .28); background: #FBEFEE; color: #9D2F28; }
 
 .recovery-page--public .recovery-submit {

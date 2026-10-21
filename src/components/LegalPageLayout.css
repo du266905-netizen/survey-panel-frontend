@@ -10,7 +10,7 @@
 }
 .public-site-layout .legal-page-grain { display: none; }
 
-.public-site-layout .legal-container { width: min(100% - 96px, 1280px); margin: 0 auto; }
+.public-site-layout .legal-container { width: min(100% - 96px, 1120px); margin: 0 auto; }
 
 .public-site-layout .legal-hero {
   overflow: visible;
@@ -194,7 +194,7 @@
 .public-site-layout .legal-card-grid article,
 .public-site-layout .legal-cookie-grid article {
   border: 0;
-  border-radius: 22px;
+  border-radius: 0;
   background: var(--ps-white);
   box-shadow: none;
   padding: 22px;
@@ -230,7 +230,7 @@
 
 .public-site-layout .legal-highlight {
   border: 0;
-  border-radius: 22px;
+  border-radius: 0;
   background: var(--ps-ivory);
   box-shadow: none;
   padding: 24px;

@@ -23,6 +23,9 @@ import './styles/public-type-fixes.css';
 import './styles/public-reading-flow.css';
 import './styles/public-chrome.css';
 import './styles/public-buttons.css';
+/* 2026-10-22 public rebuild: white ground, research palette, black nav.
+   Last among the public sheets so it can re-point tokens and radius. */
+import './styles/public-redesign.css';
 /* Last on purpose. The participant end had no stylesheet of its own — it was
    dressed entirely by the shared global sheets above, together with admin and
    Business. Everything in this file is anchored to `.app-shell-panelist`, a

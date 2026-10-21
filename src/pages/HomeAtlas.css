@@ -1674,15 +1674,16 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Only the largest title follows Claude's display step: 64px / 400. Every
-   other heading, statement, label, body and footer size stays ours.
+   The largest public title sits on the 56 step (2026-10-22). It used to climb
+   to 80 — the only 80 on the public site — and the owner found it
+   uncomfortable. 3.9vw reaches 56 at 1440 and falls back to 38 on a phone.
    --------------------------------------------------------------------------- */
 .home-atlas .video-hero h1,
 .home-atlas .video-hero h1 span:nth-child(1) {
   font-family: var(--font-reading);
   font-weight: 400;
   font-style: normal;
-  font-size: clamp(38px, 5.55vw, 80px);
+  font-size: clamp(38px, 3.9vw, 56px);
   line-height: 1.05;
   letter-spacing: -.0234em;
 }

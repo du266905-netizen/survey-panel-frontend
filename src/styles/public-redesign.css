@@ -1,0 +1,254 @@
+/* Public pages — the 2026-10-22 visual base.
+   Loaded after every other public sheet so it can re-point the palette without
+   chasing each page. Rules here are surfaces, tokens and shared primitives;
+   per-page layout stays in the page's own stylesheet.
+
+   Source of truth for the values: the research workspace (`--rs-*` in
+   BusinessWorkspaceTheme.css) plus the measured white of its page ground.
+   White page, black chrome, two surfaces only. */
+
+:root {
+  --pub-white: #ffffff;
+  --pub-black: #141413;
+  --pub-ink: #141413;
+  --pub-body: #565a60;
+  --pub-mute: #7f848a;
+  --pub-faint: #a1a6ac;
+  --pub-hair: rgba(17, 17, 19, .12);
+  --pub-hair-2: rgba(17, 17, 19, .22);
+  --pub-sunken: #f5f5f3;
+  --pub-chip: #eeeeec;
+  --pub-lime: #deef24;
+  --pub-lime-deep: #c9db10;
+  /* the second button on a black surface, sampled from the owner's reference */
+  --pub-sunken-dark: #2b2b2b;
+  --pub-rule-dark: rgba(255, 255, 255, .22);
+  --pub-container: 1120px;
+  --pub-reading: 680px;
+}
+
+/* ---- page ground -------------------------------------------------------- */
+
+.public-site-layout,
+.home-atlas {
+  background: var(--pub-white);
+}
+
+/* The homepage carries its own token family; re-point the paper so every
+   section that reads `--atlas-paper` turns white instead of warm cream. */
+.home-atlas {
+  --atlas-paper: var(--pub-white);
+  --atlas-paper-deep: var(--pub-sunken);
+  --atlas-rule: var(--pub-hair);
+}
+
+/* ---- buttons ------------------------------------------------------------ */
+
+/* `public-buttons.css` softens every public control to 6px. The owner asked
+   for sharp corners on images and buttons; this is the override. */
+.atlas-register,
+.video-hero-cta,
+.home-auth-email button,
+.ps-button,
+.business-marketing-page .business-button,
+.join-choice-page .business-button,
+.landing-page--auth-only .public-auth-submit,
+.landing-page--auth-only .public-auth-email-cta,
+.public-site-layout .how-reward-copy a,
+.public-site-layout .approach-network-copy > a,
+.china-market-page .china-market-button,
+.marketing-unsubscribe-page a,
+.recovery-page--public .recovery-submit {
+  border-radius: 0 !important;
+}
+
+/* The only button style for a black surface: sunken fill, hairline, white
+   label. Used by the page-end CTA and the footer once those batches land. */
+.ps-btn-sunken {
+  display: inline-flex;
+  height: 46px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--pub-rule-dark);
+  border-radius: 0;
+  background: var(--pub-sunken-dark);
+  color: #fff;
+  cursor: pointer;
+  font: 500 13px/1 var(--font-sans);
+  letter-spacing: -.005em;
+  padding: 0 22px;
+  text-decoration: none;
+  transition: background .14s ease;
+}
+.ps-btn-sunken:hover { background: #363636; }
+
+/* ---- reading rhythm ----------------------------------------------------- */
+
+/* Applied per page in the reading batch; the tokens are here so pages stop
+   inventing their own measure. */
+.ps-reading {
+  width: min(100%, var(--pub-reading));
+  font-family: var(--font-reading);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* ---- one black, sharp images -------------------------------------------- */
+
+/* Images are square on every public page. Wrappers that carried a 22px radius
+   were zeroed in their own sheets; this catches the <img> itself and any
+   figure that still clips to a corner. */
+.public-site-layout img,
+.home-atlas img,
+.china-market-page img,
+.business-marketing-page img,
+.business-public-page img,
+.join-choice-page img,
+.business-access-page img,
+.marketing-unsubscribe-page img {
+  border-radius: 0 !important;
+}
+
+/* ---- entry and access pages --------------------------------------------- */
+
+/* The white-page primary is the research-end lime control. These selectors are
+   the entry pages' own button classes; the marketing page's `.business-button`
+   is handled in `public-reading-flow.css`. */
+.public-auth-submit,
+.public-auth-email-cta,
+.landing-page--auth-only .public-auth-submit,
+.landing-page--auth-only .public-auth-email-cta,
+.business-access-page .business-button,
+.join-choice-page .business-button,
+.recovery-page--public .recovery-submit,
+.marketing-unsubscribe-page .ps-button {
+  border: 1px solid var(--pub-lime) !important;
+  border-radius: 0 !important;
+  background: var(--pub-lime) !important;
+  color: #14161a !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  min-height: 46px !important;
+}
+.public-auth-submit:hover,
+.public-auth-email-cta:hover,
+.business-access-page .business-button:hover,
+.join-choice-page .business-button:hover,
+.recovery-page--public .recovery-submit:hover {
+  border-color: var(--pub-lime-deep) !important;
+  background: var(--pub-lime-deep) !important;
+  color: #14161a !important;
+}
+
+/* Inputs and select fields follow the same square rule. */
+.public-site-layout input,
+.public-site-layout select,
+.public-site-layout textarea,
+.business-access-page input,
+.business-access-page select,
+.business-access-page textarea,
+.join-choice-page input,
+.join-choice-page select {
+  border-radius: 0;
+}
+
+/* ---- footer ------------------------------------------------------------- */
+
+.home-footer { background: var(--pub-black) !important; }
+
+/* ---- news wall (Tailwind utilities, public view only) -------------------- */
+
+/* The news wall is built from utility classes; these overrides stop it from
+   keeping its own cyan/pill language inside the public shell. */
+.public-site-layout .card {
+  border-radius: 0 !important;
+  border-color: var(--pub-hair) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+.public-site-layout .btn-primary {
+  border: 1px solid var(--pub-lime) !important;
+  border-radius: 0 !important;
+  background: var(--pub-lime) !important;
+  color: #14161a !important;
+  font-weight: 500 !important;
+}
+.public-site-layout .btn-primary:hover {
+  border-color: var(--pub-lime-deep) !important;
+  background: var(--pub-lime-deep) !important;
+}
+.public-site-layout .btn-secondary {
+  border: 1px solid var(--pub-hair-2) !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  color: var(--pub-ink) !important;
+}
+.public-site-layout [class*="bg-cyan-50"] { background: #fff !important; }
+.public-site-layout [class*="text-cyan-"] { color: var(--pub-ink) !important; }
+.public-site-layout [class*="accent-cyan"] { accent-color: var(--pub-ink); }
+.public-site-layout [class*="rounded-2xl"],
+.public-site-layout [class*="rounded-xl"],
+.public-site-layout [class*="rounded-lg"],
+.public-site-layout [class*="rounded-full"],
+.public-site-layout [class*="rounded-md"] { border-radius: 0 !important; }
+.public-site-layout input[type="search"] { border-radius: 0 !important; }
+
+/* ---- reading-page layout fixes ------------------------------------------ */
+
+/* The two-column section head squeezed a 38px serif statement into a 230px
+   column at the new 1120 container. Stack it: heading, then copy. */
+.public-site-layout .how-platform-head {
+  grid-template-columns: 1fr !important;
+  gap: 24px !important;
+}
+.public-site-layout .how-platform-head > p { max-width: 680px; margin-top: 0; }
+
+/* Row titles are reading type, not UI bold. */
+.public-site-layout .how-standard h3,
+.public-site-layout .how-step h3 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.02em;
+}
+
+/* Form controls: square on every public surface, including the business and
+   participant entry pages, whose own sheets still carried 8–10px corners. */
+.public-site-layout input,
+.public-site-layout select,
+.public-site-layout textarea,
+.business-public-page input,
+.business-public-page select,
+.business-public-page textarea,
+.business-access-page input,
+.business-access-page select,
+.business-access-page textarea,
+.join-choice-page input,
+.join-choice-page select,
+.join-choice-page textarea,
+.landing-page input,
+.landing-page select,
+.landing-page textarea,
+.recovery-page input,
+.recovery-page select,
+.recovery-page textarea {
+  border-radius: 0 !important;
+}
+
+/* The unsubscribe landing has no public chrome; its one action is still the
+   white-page primary. */
+.marketing-unsubscribe-page a {
+  border: 1px solid var(--pub-lime) !important;
+  border-radius: 0 !important;
+  background: var(--pub-lime) !important;
+  color: #14161a !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+/* Auth field wrappers draw the visible frame; the input inside is already
+   square. Zero the wrapper too, and the send-code button. */
+.public-auth-input,
+.public-auth-code,
+.public-auth-panel,
+.public-auth-tabs { border-radius: 0 !important; }

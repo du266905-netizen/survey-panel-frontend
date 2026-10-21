@@ -1,216 +1,154 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import { navigationLabels } from '../constants/homepageTranslations';
 import { isBusinessRole } from '../utils/roles';
 import Logo from './Logo';
-import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
+import { useLanguage, withLanguage } from './LanguageContext';
+import { publicNavigation } from '../constants/publicNavigation';
 import './PublicSiteHeader.css';
 
-const navigation = [
-  {
-    id: 'services',
-    label: 'Research services',
-    items: [
-      { to: '/business', serviceWorkspace: true },
-    ],
-  },
-  {
-    id: 'participate',
-    label: 'Take part',
-    items: [
-      { to: '/partners', eyebrow: 'Participation', title: 'Available surveys' },
-      { to: '/wallet', eyebrow: 'Recognition', title: 'Rewards' },
-      { to: '/news', eyebrow: 'Daily brief', title: 'News Wall' },
-    ],
-  },
-  {
-    id: 'about',
-    label: 'About us',
-    items: [
-      { to: '/how-it-works', eyebrow: 'The panel', title: 'How it works' },
-      { to: '/our-approach', eyebrow: 'People first', title: 'Our approach' },
-    ],
-  },
-];
+const CLOSE_DELAY = 160;
 
-const itemCopyKey = {
-  '/how-it-works': 'how',
-  '/our-approach': 'approach',
-  '/partners': 'surveys',
-  '/news': 'news',
-  '/wallet': 'rewards',
-  '/privacy': 'privacy',
-  '/terms': 'terms',
-};
+/* One black bar for every public page.
 
-const researchServicesLabel = {
-  en: 'Research services',
-  'en-GB': 'Research services',
-  'zh-CN': '研究服务',
-  'zh-Hant': '研究服務',
-};
-
-const chinaMarketLabel = {
-  'zh-CN': '中国市场洞察能力',
-  'zh-Hant': '中國市場洞察能力',
-};
-
-const researchWorkspaceCopy = {
-  'zh-CN': { label: '市场研究', title: '市场研究服务' },
-  'zh-Hant': { label: '市場研究', title: '市場研究服務' },
-  default: { label: 'Market research', title: 'Market research services' },
-};
-
-// every other language gets its names from constants/homepageTranslations —
-// this must run after both const declarations above
-Object.entries(navigationLabels).forEach(([code, entry]) => {
-  chinaMarketLabel[code] = entry.capability;
-  researchWorkspaceCopy[code] = { label: entry.research, title: entry.services };
-});
-
-export default function PublicSiteHeader({ heroOverlay = false }) {
+   2026-10-22 the owner scrapped the old `atlas-*` header and asked for this
+   one: black ground, the wordmark on the left, the four groups sitting next to
+   it (about / solutions / industries / support), the real globe, English only
+   for now. The four group names and their temporary pages live in
+   `constants/publicNavigation.js`; the bar itself carries no page copy. */
+export default function PublicSiteHeader() {
   const { user } = useAuth();
-  const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
-  const [activeMenu, setActiveMenu] = useState(null);
+  const { language, languages, navigateToLanguage } = useLanguage();
+  const { pathname } = useLocation();
+  const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const menuCloseTimer = useRef(null);
-  const marketCapabilityLabel = chinaMarketLabel[language] || 'China market insights capability';
-  const workspaceCopy = researchWorkspaceCopy[language] || researchWorkspaceCopy.default;
-  const servicesLabel = workspaceCopy.label || researchServicesLabel[language] || 'Research services';
-  const navigationLabel = (group) => {
-    if (group.id === 'services') return servicesLabel;
-    if (group.id === 'participate') return publicCopy.navigation.takePart;
-    return publicCopy.navigation.about;
+  const closeTimer = useRef(null);
+
+  const clearTimer = () => {
+    if (closeTimer.current === null) return;
+    window.clearTimeout(closeTimer.current);
+    closeTimer.current = null;
   };
-  const navigationItemLabel = (item) => item.copyKey
-    ? publicCopy.home.footer[item.copyKey]
-    : publicCopy.navigation.items[itemCopyKey[item.to]] || item.title;
-  const navigationItemContent = (item) => item.serviceWorkspace
-    ? workspaceCopy
-    : { eyebrow: item.eyebrow, title: navigationItemLabel(item) };
-
-  const clearMenuCloseTimer = () => {
-    if (menuCloseTimer.current === null) return;
-    window.clearTimeout(menuCloseTimer.current);
-    menuCloseTimer.current = null;
+  const closeAll = () => {
+    clearTimer();
+    setOpenMenu(null);
   };
-  const closeMenus = () => {
-    clearMenuCloseTimer();
-    setActiveMenu(null);
-  };
-  const scheduleMenuClose = () => {
-    clearMenuCloseTimer();
-    menuCloseTimer.current = window.setTimeout(() => {
-      menuCloseTimer.current = null;
-      setActiveMenu(null);
-    }, 180);
-  };
-
-  useEffect(() => {
-    if (!heroOverlay) return undefined;
-
-    const updateScrolledState = () => setIsScrolled(window.scrollY > 24);
-    updateScrolledState();
-    window.addEventListener('scroll', updateScrolledState, { passive: true });
-    return () => window.removeEventListener('scroll', updateScrolledState);
-  }, [heroOverlay]);
-
-  useEffect(() => () => clearMenuCloseTimer(), []);
-
-  const closeNavigation = () => {
-    closeMenus();
-    setMobileOpen(false);
+  const scheduleClose = () => {
+    clearTimer();
+    closeTimer.current = window.setTimeout(() => {
+      closeTimer.current = null;
+      setOpenMenu(null);
+    }, CLOSE_DELAY);
   };
   const selectLanguage = (code) => {
-    closeMenus();
+    closeAll();
     navigateToLanguage(code);
   };
-  return (
-    <header className={`atlas-navigation public-site-header${heroOverlay ? ' is-hero-overlay' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
-      <Link className="atlas-brand" to={withLanguage('/', language)} aria-label="GuanyiSearch home" onClick={closeNavigation}>
-        <Logo size="md" variant="dark" tone="brand" className="atlas-brand-wordmark" />
-      </Link>
 
-      <nav className="atlas-nav-links" aria-label="Primary navigation">
-        {navigation.map((group) => (
-          <Fragment key={group.id}>
-            <div
-              className="atlas-nav-group"
-              onMouseEnter={() => {
-                clearMenuCloseTimer();
-                setActiveMenu(group.label);
-              }}
-              onMouseLeave={scheduleMenuClose}
-              onBlur={(event) => {
-                if (!event.currentTarget.contains(event.relatedTarget)) closeMenus();
+  useEffect(() => () => clearTimer(), []);
+  useEffect(() => {
+    closeAll();
+    setMobileOpen(false);
+  }, [pathname]);
+  useEffect(() => {
+    if (!mobileOpen) return undefined;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previous; };
+  }, [mobileOpen]);
+  useEffect(() => {
+    const onKey = (event) => {
+      if (event.key !== 'Escape') return;
+      closeAll();
+      setMobileOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const workspaceHref = user ? withLanguage(isBusinessRole(user.role) ? '/business/workspace' : '/dashboard', language) : withLanguage('/join', language);
+  const ctaLabel = user ? 'Workspace' : 'Join us';
+
+  return (
+    <header className="psn">
+      <div className="psn-bar">
+        <Link className="psn-brand" to={withLanguage('/', language)} aria-label="GuanyiSearch home" onClick={closeAll}>
+          <Logo size="md" variant="light" />
+        </Link>
+
+        <nav className="psn-groups" aria-label="Primary navigation">
+          {publicNavigation.map((group) => {
+            const hasItems = group.items.length > 0;
+            const isOpen = openMenu === group.id;
+            return (
+              <div
+                className="psn-group"
+                key={group.id}
+                onMouseEnter={() => { if (!hasItems) return; clearTimer(); setOpenMenu(group.id); }}
+                onMouseLeave={() => { if (hasItems) scheduleClose(); }}
+              >
+                {hasItems ? (
+                  <button
+                    className={`psn-trigger${isOpen ? ' is-open' : ''}`}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`psn-panel-${group.id}`}
+                    onClick={() => {
+                      clearTimer();
+                      setOpenMenu((current) => (current === group.id ? null : group.id));
+                    }}
+                  >
+                    {group.label}
+                    <ChevronDown aria-hidden="true" size={14} strokeWidth={1.9} />
+                  </button>
+                ) : (
+                  <span className="psn-trigger is-static">{group.label}</span>
+                )}
+
+                {hasItems && (
+                  <div id={`psn-panel-${group.id}`} className={`psn-panel${isOpen ? ' is-open' : ''}`}>
+                    <div className="psn-panel-inner">
+                      <p className="psn-panel-label">{group.label}</p>
+                      {group.items.map((item) => (
+                        <Link className="psn-item" to={withLanguage(item.to, language)} key={item.to} onClick={closeAll}>
+                          <span>
+                            <strong>{item.title}</strong>
+                            <small>{item.note}</small>
+                          </span>
+                          <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </nav>
+
+        <div className="psn-actions">
+          <div
+            className="psn-lang"
+            onMouseEnter={() => { clearTimer(); setOpenMenu('language'); }}
+            onMouseLeave={scheduleClose}
+          >
+            <button
+              className="psn-lang-trigger"
+              type="button"
+              aria-label="Choose language"
+              aria-expanded={openMenu === 'language'}
+              aria-haspopup="listbox"
+              onClick={() => {
+                clearTimer();
+                setOpenMenu((current) => (current === 'language' ? null : 'language'));
               }}
             >
-              <button
-                className="atlas-nav-trigger"
-                type="button"
-                aria-expanded={activeMenu === group.label}
-                onClick={() => {
-                  clearMenuCloseTimer();
-                  setActiveMenu((current) => (current === group.label ? null : group.label));
-                }}
-              >
-                {navigationLabel(group)}
-                <ChevronDown aria-hidden="true" size={15} strokeWidth={1.8} />
-              </button>
-              <div
-                className={`atlas-nav-menu ${activeMenu === group.label ? 'is-open' : ''}`}
-                onMouseEnter={clearMenuCloseTimer}
-                onMouseLeave={scheduleMenuClose}
-              >
-                {group.items.map((item) => {
-                  const content = navigationItemContent(item);
-                  return (
-                    <Link className="atlas-nav-menu-item" to={withLanguage(item.to, language)} key={`${item.to}-${content.title}`} onClick={closeNavigation}>
-                      {content.eyebrow && <span>{content.eyebrow}</span>}
-                      <strong>{content.title}</strong>
-                      {content.description && <small>{content.description}</small>}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </Fragment>
-        ))}
-        <Link className="atlas-nav-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>{marketCapabilityLabel}</Link>
-      </nav>
-
-      <div className="atlas-nav-actions">
-        <div
-          className="atlas-language-group"
-          onMouseEnter={() => {
-            clearMenuCloseTimer();
-            setActiveMenu('language');
-          }}
-          onMouseLeave={scheduleMenuClose}
-          onBlur={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) closeMenus();
-          }}
-        >
-          <button
-            className="atlas-language-trigger"
-            type="button"
-            aria-label="Choose language"
-            aria-expanded={activeMenu === 'language'}
-            aria-haspopup="listbox"
-            onClick={() => {
-              clearMenuCloseTimer();
-              setActiveMenu((current) => (current === 'language' ? null : 'language'));
-            }}
-          >
-            <LanguageGlobe aria-hidden="true" size={21} strokeWidth={1.75} />
-            <ChevronDown aria-hidden="true" size={14} strokeWidth={1.8} />
-          </button>
-          <div className={`atlas-language-menu ${activeMenu === 'language' ? 'is-open' : ''}`} role="listbox" aria-label="Choose language">
-            <div>
+              <LanguageGlobe aria-hidden="true" size={19} strokeWidth={1.7} />
+              <ChevronDown aria-hidden="true" size={12} strokeWidth={1.9} />
+            </button>
+            <div className={`psn-lang-menu${openMenu === 'language' ? ' is-open' : ''}`} role="listbox" aria-label="Choose language">
               {languages.map((item) => (
                 <button
                   key={item.code}
@@ -225,47 +163,53 @@ export default function PublicSiteHeader({ heroOverlay = false }) {
               ))}
             </div>
           </div>
+
+          {!user && <Link className="psn-signin" to={withLanguage('/access', language)}>{'Sign in'}</Link>}
+          <Link className="psn-cta" to={workspaceHref}>
+            {ctaLabel}
+            <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.8} />
+          </Link>
+          <button
+            className="psn-burger"
+            type="button"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((open) => !open)}
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
-        {!user && <Link className="atlas-sign-in" to={withLanguage('/access', language)}>{publicCopy.navigation.signIn}</Link>}
-        <Link className="atlas-register" to={withLanguage(user ? (isBusinessRole(user.role) ? '/business/workspace' : '/dashboard') : '/join', language)}>
-          {user ? publicCopy.navigation.workspace : publicCopy.navigation.join}
-          <ArrowUpRight size={17} strokeWidth={1.8} />
-        </Link>
-        <button
-          className={`atlas-menu-button ${mobileOpen ? 'is-open' : ''}`}
-          type="button"
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-controls="atlas-mobile-menu"
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((open) => !open)}
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
       </div>
 
-      <div id="atlas-mobile-menu" className={`atlas-mobile-menu ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''}>
-        <div className="atlas-mobile-direct-links">
-          <Link className="atlas-mobile-direct-link" to={withLanguage('/china-market-insights', language)} onClick={closeNavigation}>{marketCapabilityLabel} <ArrowUpRight size={16} strokeWidth={1.8} /></Link>
-        </div>
-        <div className="atlas-mobile-language">
-          <p><LanguageGlobe size={16} strokeWidth={1.75} /> Language</p>
+      <div className={`psn-mobile${mobileOpen ? ' is-open' : ''}`}>
+        {publicNavigation.map((group) => (
+          <div className="psn-mobile-group" key={group.id}>
+            <p>{group.label}</p>
+            {group.items.length ? group.items.map((item) => (
+              <Link key={item.to} to={withLanguage(item.to, language)} onClick={closeAll}>
+                {item.title}
+                <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
+              </Link>
+            )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}
+          </div>
+        ))}
+        <div className="psn-mobile-lang">
+          <p>Language</p>
           <div role="listbox" aria-label="Choose language">
             {languages.map((item) => (
-              <button key={item.code} type="button" role="option" aria-selected={language === item.code} className={language === item.code ? 'is-selected' : ''} onClick={() => selectLanguage(item.code)}>
+              <button
+                key={item.code}
+                type="button"
+                role="option"
+                aria-selected={language === item.code}
+                className={language === item.code ? 'is-selected' : ''}
+                onClick={() => selectLanguage(item.code)}
+              >
                 {item.label}
               </button>
             ))}
           </div>
         </div>
-        {navigation.map((group) => (
-          <div className="atlas-mobile-group" key={group.id}>
-            <p>{navigationLabel(group)}</p>
-            {group.items.map((item) => {
-              const content = navigationItemContent(item);
-              return <Link to={withLanguage(item.to, language)} key={`${item.to}-${content.title}`} onClick={closeNavigation}>{content.title}<ArrowUpRight size={16} strokeWidth={1.8} /></Link>;
-            })}
-          </div>
-        ))}
       </div>
     </header>
   );
