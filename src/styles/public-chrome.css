@@ -11,3 +11,4 @@
 .home-footer {
   background: #141413 !important;
 }
+.home-footer { border-top: 1px solid rgba(250, 249, 245, .16); }
