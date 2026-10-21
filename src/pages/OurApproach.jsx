@@ -19,7 +19,7 @@ export default function OurApproach() {
   const slogan = slogans[language] || slogans.en;
   const paragraph = [copy.deck, copy.lede, copy.voicesBody, copy.technologyBody, copy.principleBody]
     .filter(Boolean)
-    .join(' ');
+    .join(language.startsWith('zh') ? '' : ' ');
 
   return (
     <main className="home-continuation approach-page">
