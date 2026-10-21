@@ -55,7 +55,7 @@
 .home-choice-title {
   max-width: 560px;
   width: 100%;
-  padding-left: 24px;
+  padding-left: 40px;
   margin: 0;
   color: #141413;
   font-family: var(--font-reading);
@@ -67,7 +67,7 @@
 .home-choice-note {
   max-width: 560px;
   width: 100%;
-  padding-left: 24px;
+  padding-left: 40px;
   margin: 14px 0 24px;
   color: #565a60;
   font-family: var(--font-reading);
@@ -83,7 +83,7 @@
   border: 1px solid rgba(20, 20, 19, .14);
   border-radius: 16px;
   background: #fff;
-  padding: 24px;
+  padding: 40px;
   box-shadow: none;
 }
 .home-choice-entry .home-entry-actions {
