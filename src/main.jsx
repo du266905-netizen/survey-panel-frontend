@@ -21,6 +21,7 @@ import './styles/public-reading.css';
 import './styles/public-no-mid-black.css';
 import './styles/public-type-fixes.css';
 import './styles/public-reading-flow.css';
+import './styles/public-chrome.css';
 import './styles/public-buttons.css';
 /* Last on purpose. The participant end had no stylesheet of its own — it was
    dressed entirely by the shared global sheets above, together with admin and
