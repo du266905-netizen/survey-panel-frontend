@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
 import HomeEntry from './HomeEntry';
+import { useLanguage } from './LanguageContext';
 import poster from '../assets/home/participant-portrait-poster.jpg';
 import './HomeChoiceSection.css';
 
@@ -8,8 +9,25 @@ import './HomeChoiceSection.css';
    chooser on the right. The poster is a still from the participant film; the
    embed code will replace it when it arrives. */
 
+const copy = {
+  'zh-CN': {
+    title: '让每一次判断都有事实依据。',
+    note: '准备好加入我们了吗？共同打造开放、共生、可持续的研究生态。',
+  },
+  'zh-Hant': {
+    title: '讓每一次判斷都有事實依據。',
+    note: '準備好加入我們了嗎？共同打造開放、共生、可持續的研究生態。',
+  },
+  en: {
+    title: 'Let every judgement rest on evidence.',
+    note: 'Ready to join us? Together we build an open, interconnected and sustainable research ecosystem.',
+  },
+};
+
 export default function HomeChoiceSection() {
   const [audience, setAudience] = useState('participant');
+  const { language } = useLanguage();
+  const text = copy[language] || copy.en;
 
   return (
     <section className="home-choice" aria-label="Join as a participant or run research">
@@ -22,7 +40,9 @@ export default function HomeChoiceSection() {
         </figure>
 
         <div className="home-choice-entry">
+          <h2 className="home-choice-title">{text.title}</h2>
           <HomeEntry audience={audience} onAudienceChange={setAudience} />
+          <p className="home-choice-note">{text.note}</p>
         </div>
       </div>
     </section>

@@ -7,16 +7,17 @@
   display: grid;
   width: calc(100% - 80px);
   max-width: 1120px;
-  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  grid-template-columns: 340px minmax(0, 1fr);
   gap: clamp(40px, 5vw, 80px);
-  align-items: center;
+  align-items: start;
   margin: 0 auto;
 }
 
 .home-choice-film {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 9 / 16;
+  width: 100%;
+  aspect-ratio: 4 / 5;
   border-radius: 18px;
   margin: 0;
   background: #141413;
@@ -26,6 +27,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 40%;
 }
 .home-choice-play {
   position: absolute;
@@ -46,9 +48,30 @@
 .home-choice-play:hover { transform: translate(-50%, -50%) scale(1.06); }
 .home-choice-play:focus-visible { outline: 2px solid #deef24; outline-offset: 3px; }
 
+.home-choice-entry { display: block; }
+.home-choice-title {
+  max-width: 560px;
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: 1.15;
+}
+.home-choice-note {
+  max-width: 560px;
+  margin: 28px 0 0;
+  color: #565a60;
+  font-family: var(--font-reading);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
 /* The entry component keeps its own band styles; inside the grid it becomes
-   a plain column. */
+   a plain column under the title. */
 .home-choice-entry .home-entry {
+  margin: 0;
   border-top: 0;
   background: transparent;
   padding: 0;
@@ -66,5 +89,7 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
   }
-  .home-choice-film { width: min(100%, 420px); margin: 0 auto; }
+  .home-choice-film { width: min(100%, 340px); margin: 0 auto; }
+  .home-choice-entry .home-entry { margin: 24px 0 0; }
+  .home-choice-note { margin-top: 24px; }
 }
