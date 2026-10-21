@@ -302,10 +302,11 @@
 }
 .home-atlas .video-hero-content {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 600px) !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 720px) !important;
   gap: 64px !important;
   align-items: center !important;
-  width: min(100% - 96px, 1120px) !important;
+  width: calc(100% - 80px) !important;
+  max-width: 1600px !important;
   margin: 0 auto !important;
   padding: 56px 0 40px !important;
   text-align: left !important;
@@ -359,7 +360,8 @@
 .home-atlas .home-hero-media .home-film-frame {
   width: 100% !important;
   aspect-ratio: 16 / 9 !important;
-  border-radius: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
 }
 .home-atlas .home-hero-media .home-film-play {
   width: 56px;
@@ -369,6 +371,12 @@
 }
 .home-atlas .home-hero-media .home-film-poster:hover .home-film-play { transform: translate(-50%, -50%); }
 
+@media (max-width: 1200px) {
+  .home-atlas .video-hero-content {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 540px) !important;
+    gap: 48px !important;
+  }
+}
 @media (max-width: 900px) {
   .home-atlas .video-hero-content {
     grid-template-columns: minmax(0, 1fr) !important;
@@ -401,7 +409,8 @@
 }
 .home-atlas #atlas-contact { padding: 56px 0 !important; }
 .home-atlas #atlas-contact .atlas-contact-panel {
-  background: #F4F7F2 !important;
+  border: 1px solid var(--pub-hair) !important;
+  background: #fff !important;
   border-radius: 12px !important;
   box-shadow: none !important;
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import CommunityHub from './CommunityHub';
 import HomeFilmSection from '../components/HomeFilmSection';
-import { HomeFooter } from '../components/HomeLegacySections';
+import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import HomeAuthForm from '../components/HomeAuthForm';
@@ -199,7 +199,7 @@ export default function HomeAtlas() {
 
       </section>
 
-      <HomeFooter />
+      <HomeLegacySections />
     </main>
   );
 }
