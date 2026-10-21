@@ -181,6 +181,16 @@ export default function PublicSiteHeader() {
         </div>
       </div>
 
+      {/* Utility strip under the bar: one dark rule with the two service links
+          on the right. It is not a second navigation — the five groups stay in
+          the black bar above. */}
+      <div className="psn-strip">
+        <div className="psn-strip-inner">
+          <Link className="psn-strip-link" to={withLanguage('/business/access', language)}>Contact sales</Link>
+          <Link className="psn-strip-link" to={withLanguage('/how-it-works', language)}>Help centre</Link>
+        </div>
+      </div>
+
       <div className={`psn-mobile${mobileOpen ? ' is-open' : ''}`}>
         {publicNavigation.map((group) => (
           <div className="psn-mobile-group" key={group.id}>

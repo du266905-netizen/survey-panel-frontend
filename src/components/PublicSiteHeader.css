@@ -20,7 +20,7 @@
 .psn-bar {
   display: flex;
   width: 100%;
-  height: 80px;
+  height: 64px;
   align-items: center;
   margin: 0;
   padding: 0 40px;
@@ -28,7 +28,7 @@
 }
 
 .psn-brand { display: inline-flex; flex: none; align-items: center; text-decoration: none; }
-.psn-brand img { display: block; width: auto; height: 28px; }
+.psn-brand img { display: block; width: auto; height: 24px; }
 
 /* ---- the four groups ---------------------------------------------------- */
 
@@ -38,7 +38,7 @@
 .psn-trigger {
   position: relative;
   display: inline-flex;
-  height: 80px;
+  height: 64px;
   align-items: center;
   gap: 6px;
   border: 0;
@@ -69,7 +69,7 @@
 .psn-panel {
   position: absolute;
   z-index: 2;
-  top: 100%;
+  top: calc(100% + 36px);
   left: -20px;
   width: 380px;
   visibility: hidden;
@@ -254,4 +254,37 @@
   .psn-burger { display: grid; }
   .psn-actions { gap: 10px; }
   .psn-cta { height: 38px; font-size: 12px; padding: 0 13px; }
+}
+
+/* ---- utility strip ------------------------------------------------------ */
+
+.psn-strip {
+  height: 36px;
+  background: #2b2b2b;
+}
+.psn-strip-inner {
+  display: flex;
+  width: calc(100% - 80px);
+  max-width: 1600px;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 26px;
+  margin: 0 auto;
+}
+.psn-strip-link {
+  color: rgba(255, 255, 255, .74);
+  font: 500 12px/1 var(--font-sans);
+  letter-spacing: .01em;
+  text-decoration: none;
+  transition: color .14s ease;
+}
+.psn-strip-link:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.psn-strip-link:focus-visible { outline: 2px solid var(--pub-lime, #deef24); outline-offset: 3px; }
+
+@media (max-width: 900px) {
+  .psn-strip { height: 32px; }
+  .psn-strip-inner { width: calc(100% - 40px); gap: 18px; }
+  .psn-strip-link { font-size: 11px; }
+  .psn-mobile { top: 96px; }
 }

@@ -30,6 +30,15 @@ export const publicNavigation = [
     items: [],
   },
   {
+    id: 'participants',
+    label: 'Participants',
+    items: [
+      { to: '/join', title: 'Join as a participant', note: 'Take part in thoughtful, paid research' },
+      { to: '/partners', title: 'Available surveys', note: 'Find a study that fits your profile' },
+      { to: '/wallet', title: 'Rewards', note: 'Coins, gift cards and redemptions' },
+    ],
+  },
+  {
     id: 'support',
     label: 'Support',
     items: [

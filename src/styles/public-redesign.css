@@ -239,7 +239,7 @@
    white-page primary. */
 .marketing-unsubscribe-page a {
   border: 1px solid var(--pub-lime) !important;
-  border-radius: 0 !important;
+  border-radius: 3px !important;
   background: var(--pub-lime) !important;
   color: #14161a !important;
   font-size: 13px !important;
@@ -434,7 +434,7 @@
 .home-atlas .community-hub-primary-action,
 .home-atlas .atlas-contact-submit {
   border: 1px solid var(--pub-lime) !important;
-  border-radius: 0 !important;
+  border-radius: 3px !important;
   background: var(--pub-lime) !important;
   color: #14161a !important;
   font-size: 13px !important;
