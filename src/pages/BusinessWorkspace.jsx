@@ -177,6 +177,7 @@ export default function BusinessWorkspace() {
   const [onboardingStep, setOnboardingStep] = useState(0);
   const [onboarding, setOnboarding] = useState({ researchRole: '', researchIntent: '', organizationType: '' });
   const [onboardingSaving, setOnboardingSaving] = useState(false);
+  const [onboardingError, setOnboardingError] = useState('');
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   const [welcomeOpen, setWelcomeOpen] = useState(false);
   const [greetingIsReturning, setGreetingIsReturning] = useState(false);
@@ -196,6 +197,27 @@ export default function BusinessWorkspace() {
   const planningCount = workspace.projects.filter((project) => ['SUBMITTED_FOR_REVIEW', 'QUOTE_REQUIRED', 'QUOTE_SENT', 'CLIENT_ACCEPTED'].includes(project.status)).length;
   const recentProjects = [...workspace.projects].sort((first, second) => new Date(second.updatedAt || 0) - new Date(first.updatedAt || 0)).slice(0, 3);
   const displayName = String(user?.displayName || user?.email?.split('@')[0] || (ui.displayNameFallback)).trim();
+  // True exactly when the wizard below renders. The welcome card can also be up
+  // on its own, after the wizard closes.
+  const wizardOpen = !loading && Boolean(workspace.profile) && !onboardingComplete && !welcomeOpen;
+
+  /* Both overlays are full-screen, but the document behind them stays
+     scrollable: wheel over the (short) dialog chains to the page, and Space /
+     PageDown scroll it regardless. That is what let the dashboard slide up
+     under the wizard. Lock the document for as long as either overlay is up. */
+  useEffect(() => {
+    if (!wizardOpen && !welcomeOpen) return undefined;
+    const { body } = document;
+    const previousOverflow = body.style.overflow;
+    const previousPadding = body.style.paddingRight;
+    const scrollbar = window.innerWidth - document.documentElement.clientWidth;
+    body.style.overflow = 'hidden';
+    if (scrollbar > 0) body.style.paddingRight = `${scrollbar}px`;
+    return () => {
+      body.style.overflow = previousOverflow;
+      body.style.paddingRight = previousPadding;
+    };
+  }, [wizardOpen, welcomeOpen]);
 
   useEffect(() => {
     const requestedView = new URLSearchParams(location.search).get('view');
@@ -322,8 +344,19 @@ export default function BusinessWorkspace() {
   const saveOnboarding = async () => {
     if (!onboarding.researchRole || !onboarding.researchIntent || (onboarding.researchRole === 'ORGANIZATION' && !onboarding.organizationType) || onboardingSaving) return;
     setOnboardingSaving(true);
+    setOnboardingError('');
     try {
-      const response = await completeBusinessResearchOnboarding(onboarding);
+      /* The API takes `organizationType` only for an organisation; for an
+         individual it derives INDEPENDENT_RESEARCHER itself. Sending the
+         sentinel `INDEPENDENT_RESEARCHER` in the body was rejected by the
+         route's enum with a 400, so every "individual" signup was unable to
+         finish onboarding. Keep the local state (the org step needs it), just
+         do not put it on the wire. */
+      const response = await completeBusinessResearchOnboarding({
+        researchRole: onboarding.researchRole,
+        researchIntent: onboarding.researchIntent,
+        ...(onboarding.researchRole === 'ORGANIZATION' ? { organizationType: onboarding.organizationType } : {}),
+      });
       setWorkspace((current) => ({ ...current, profile: response.data.profile }));
       storeOnboarding(user, onboarding);
       setOnboardingComplete(true);
@@ -336,7 +369,9 @@ export default function BusinessWorkspace() {
         setWelcomeOpen(!hasSeenWorkspaceWelcome(user));
         setMessage(feedbackCopy.preferencesSaved);
       } else {
-        setMessage(feedbackCopy.savePreferencesError);
+        /* Inside the dialog: the page-level banner sits behind the dimmed
+           overlay, so a failure used to look like a button that does nothing. */
+        setOnboardingError(feedbackCopy.savePreferencesError);
       }
     } finally {
       setOnboardingSaving(false);
@@ -344,6 +379,7 @@ export default function BusinessWorkspace() {
   };
 
   const advanceOnboarding = () => {
+    setOnboardingError('');
     if (onboardingStep === 0 && onboarding.researchRole) {
       setOnboardingStep(1);
       return;
@@ -794,6 +830,7 @@ export default function BusinessWorkspace() {
                 <small>{copy.onboarding.organisationTypes[index][1]}</small>
               </button>)}
             </div>}
+            {onboardingError && <p className="business-onboarding-error" role="alert">{onboardingError}</p>}
             <footer className="business-onboarding-actions">
               {onboardingStep > 0 && <button className="business-onboarding-back" type="button" onClick={() => setOnboardingStep((current) => current - 1)}>{copy.onboarding.back}</button>}
               <button className="business-onboarding-next" type="button" disabled={(onboardingStep === 0 && !onboarding.researchRole) || (onboardingStep === 1 && !onboarding.researchIntent) || (onboardingStep === 2 && !onboarding.organizationType) || onboardingSaving} onClick={advanceOnboarding}>

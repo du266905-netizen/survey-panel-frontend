@@ -5262,7 +5262,10 @@ main.business-custom-request-page .business-workspace-rail {
 
 .business-onboarding {
   position: fixed;
-  z-index: 140;
+  /* Above the help chat (launcher 140, panel 150): the launcher is mounted by
+     App outside this route, so at an equal 140 it painted on top and stayed
+     clickable through the scrim. 200 is above every other surface in the app. */
+  z-index: 200;
   inset: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -5273,6 +5276,8 @@ main.business-custom-request-page .business-workspace-rail {
   height: 100svh;
   min-height: 0;
   overflow: auto;
+  /* Wheel / touch over the dialog must not chain to the document behind it. */
+  overscroll-behavior: contain;
   background: rgba(20, 22, 26, .5);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -5362,6 +5367,9 @@ main.business-custom-request-page .business-workspace-rail {
 .business-onboarding .business-onboarding-dialog .business-onboarding-option-check { display: grid; width: 18px; height: 18px; grid-row: 1 / 3; grid-column: 3; place-items: center; color: #141a17; opacity: 0; transition: opacity .16s ease; }
 .business-onboarding .business-onboarding-dialog .business-onboarding-options button.is-selected .business-onboarding-option-check { opacity: 1; }
 
+/* A failed save used to surface only in the page banner behind the scrim, which
+   read as "the button does nothing". This one lives in the dialog. */
+.business-onboarding .business-onboarding-error { margin: 18px 0 0; color: #9b4b40; font-family: var(--font-sans); font-size: 13px; font-weight: 500; line-height: 1.5; }
 .business-onboarding .business-onboarding-dialog .business-onboarding-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 26px; padding-top: 0; }
 .business-onboarding .business-onboarding-dialog .business-onboarding-actions > .business-onboarding-back { border: 0; background: transparent; color: #5f6862; cursor: pointer; font-family: var(--font-sans); font-size: 13px; font-weight: 500; padding: 12px 14px; }
 .business-onboarding .business-onboarding-dialog .business-onboarding-actions > .business-onboarding-back:hover { color: #141a17; }

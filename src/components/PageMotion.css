@@ -1,9 +1,21 @@
+/* `backwards`, never `both`: with `both` the final `translateY(0)` frame stays
+   applied for the life of the route, and a non-none transform makes this element
+   the containing block for every `position: fixed` descendant. Every overlay
+   rendered inside a route (onboarding wizard, welcome modal, avatar cropper)
+   then anchors to the document instead of the viewport — it scrolls away with
+   the page, and fixed chrome painted outside it (the help chat button) stays
+   clickable on top. Measured at 1338x734 on the wizard markup: after scrolling
+   400px, a `fixed; inset: 0; height: 100svh` overlay reported top -400 /
+   bottom 191 instead of 0 / 591.
+   After the entrance the base style has no transform, so `fixed` is fixed again.
+   `backwards` still applies the pre-start frame, which is all the entrance needs. */
 .page-motion-shell {
   min-width: 0;
-  animation: page-motion-enter 420ms cubic-bezier(.2, .75, .25, 1) both;
+  animation: page-motion-enter 420ms cubic-bezier(.2, .75, .25, 1) backwards;
 }
 
-/* A transformed ancestor captures fixed descendants. Keep the home shell untransformed so its navigation remains attached to the viewport. */
+/* Kept so the home shell never flickers through the entrance; it is no longer
+   the only thing standing between the homepage nav and a transformed ancestor. */
 .page-motion-shell--home { animation: none; }
 
 .page-motion-reveal {
