@@ -3,11 +3,10 @@ import { ArrowUpRight, LoaderCircle, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
 import CommunityHub from './CommunityHub';
-import HomeFilmSection from '../components/HomeFilmSection';
 import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
-import HomeEntry from '../components/HomeEntry';
+import HomeHero from '../components/HomeHero';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
@@ -57,7 +56,6 @@ export default function HomeAtlas() {
   }, [language]);
   const localizedCountry = (country) => regionNames?.of(country.value) || country.label;
   const [activeNode, setActiveNode] = useState('');
-  const [audience, setAudience] = useState('participant');
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -116,25 +114,8 @@ export default function HomeAtlas() {
       <div className="home-atlas-frame" aria-hidden="true" />
       <PublicSiteHeader />
 
-      <section className="video-hero-section" aria-labelledby="video-hero-title">
-        <div className="video-hero">
-          <div className="video-hero-content">
-            <div className="video-hero-head">
-              <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
-              <h1 id="video-hero-title">{heroLines.map((line) => <span key={line}>{line}</span>)}</h1>
-            </div>
-            <div className="video-hero-foot">
-              <p className="video-hero-description">{publicCopy.hero.description}</p>
-              <div className="home-hero-media">
-                <HomeFilmSection />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Account switch + sign-in form, extracted from the hero. */}
-      <HomeEntry audience={audience} onAudienceChange={setAudience} />
+      {/* Photograph hero: statement bottom-left, one white action to its right. */}
+      <HomeHero lead={heroLines[0]} rest={heroLines[1]} body={publicCopy.hero.description} />
 
       {/* 人物/地球长文：保留内容，去掉整块彩色底，改为骨白 + 发丝线。 */}
       <CommunityHub />
