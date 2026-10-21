@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
+import HomeChoiceSection from '../components/HomeChoiceSection';
 import HomeHero from '../components/HomeHero';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
@@ -54,6 +55,8 @@ export default function HomeAtlas() {
 
       {/* Photograph hero: statement bottom-left, one white action to its right. */}
       <HomeHero lead={heroLines[0]} rest={heroLines[1]} body={publicCopy.hero.description} />
+
+      <HomeChoiceSection />
 
       <HomeLegacySections />
     </main>
