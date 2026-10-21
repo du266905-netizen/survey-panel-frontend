@@ -231,3 +231,11 @@
   background: #141413 !important;
   color: #FAF9F5 !important;
 }
+
+/* Hairlines stay light on every reading row. */
+.public-site-layout .how-standard,
+.public-site-layout .how-step,
+.public-site-layout .home-manifesto-card-grid article,
+.china-market-capability-grid article {
+  border-top-color: #E7E1D7 !important;
+}
