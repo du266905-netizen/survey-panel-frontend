@@ -7,7 +7,7 @@ import HomeFilmSection from '../components/HomeFilmSection';
 import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
-import HomeAuthForm from '../components/HomeAuthForm';
+import HomeEntry from '../components/HomeEntry';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
@@ -58,7 +58,6 @@ export default function HomeAtlas() {
   const localizedCountry = (country) => regionNames?.of(country.value) || country.label;
   const [activeNode, setActiveNode] = useState('');
   const [audience, setAudience] = useState('participant');
-  const isResearch = audience === 'research';
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -124,27 +123,6 @@ export default function HomeAtlas() {
               <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
               <h1 id="video-hero-title">{heroLines.map((line) => <span key={line}>{line}</span>)}</h1>
               <p className="video-hero-description">{publicCopy.hero.description}</p>
-              {/* The two existing homepage buttons are now the account-mode
-                  switch: participant (email + Google) or research (email). */}
-              <div className="video-hero-actions" role="group" aria-label="Choose account type">
-                <button
-                  type="button"
-                  className={`video-hero-cta${isResearch ? ' video-hero-cta--outline' : ''}`}
-                  aria-pressed={!isResearch}
-                  onClick={() => setAudience('participant')}
-                >
-                  {publicCopy.navigation.meetCommunity}
-                </button>
-                <button
-                  type="button"
-                  className={`video-hero-cta${isResearch ? '' : ' video-hero-cta--outline'}`}
-                  aria-pressed={isResearch}
-                  onClick={() => setAudience('research')}
-                >
-                  {publicCopy.navigation.runResearch}
-                </button>
-              </div>
-              <HomeAuthForm audience={audience} />
             </div>
             <div className="home-hero-media">
               <HomeFilmSection />
@@ -152,6 +130,9 @@ export default function HomeAtlas() {
           </div>
         </div>
       </section>
+
+      {/* Account switch + sign-in form, extracted from the hero. */}
+      <HomeEntry audience={audience} onAudienceChange={setAudience} />
 
       {/* 人物/地球长文：保留内容，去掉整块彩色底，改为骨白 + 发丝线。 */}
       <CommunityHub />
