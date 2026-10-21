@@ -119,13 +119,15 @@ export default function HomeAtlas() {
       <section className="video-hero-section" aria-labelledby="video-hero-title">
         <div className="video-hero">
           <div className="video-hero-content">
-            <div className="video-hero-copy">
+            <div className="video-hero-head">
               <p className="video-hero-eyebrow">{publicCopy.hero.eyebrow}</p>
               <h1 id="video-hero-title">{heroLines.map((line) => <span key={line}>{line}</span>)}</h1>
-              <p className="video-hero-description">{publicCopy.hero.description}</p>
             </div>
-            <div className="home-hero-media">
-              <HomeFilmSection />
+            <div className="video-hero-foot">
+              <p className="video-hero-description">{publicCopy.hero.description}</p>
+              <div className="home-hero-media">
+                <HomeFilmSection />
+              </div>
             </div>
           </div>
         </div>

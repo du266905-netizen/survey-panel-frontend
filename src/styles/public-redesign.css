@@ -301,16 +301,12 @@
   background: #fff !important;
 }
 .home-atlas .video-hero-content {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 760px) !important;
-  gap: 56px !important;
-  align-items: center !important;
+  display: block !important;
   width: calc(100% - 80px) !important;
   max-width: 1600px !important;
   margin: 0 auto !important;
   padding: 56px 0 40px !important;
   text-align: left !important;
-  justify-items: stretch !important;
 }
 .home-atlas .video-hero-copy {
   align-items: flex-start !important;
@@ -484,3 +480,18 @@
 }
 .home-atlas .home-auth-email input { min-height: 52px !important; }
 .home-atlas .home-auth-email button { min-height: 52px !important; font-size: 16px !important; padding: 0 24px !important; }
+
+/* Statement row, then description + film row: the statement spans the page,
+   the film keeps the right column underneath. */
+.home-atlas .video-hero-head { width: 100% !important; max-width: 1180px !important; margin: 0 !important; }
+.home-atlas .video-hero-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 760px);
+  gap: 64px;
+  align-items: start;
+  margin-top: 40px;
+}
+.home-atlas .video-hero-description { max-width: 560px !important; }
+@media (max-width: 900px) {
+  .home-atlas .video-hero-foot { grid-template-columns: minmax(0, 1fr); gap: 28px; margin-top: 28px; }
+}
