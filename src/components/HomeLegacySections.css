@@ -447,13 +447,13 @@
 .home-global-band {
   background: #2b2b2b;
   color: #fff;
-  padding: clamp(64px, 7vw, 96px) 0;
+  padding: clamp(40px, 4.2vw, 64px) 0;
 }
 .home-global-band-inner {
   display: grid;
   width: min(100% - 80px, 1120px);
-  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
-  gap: clamp(40px, 5vw, 72px);
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 56px);
   align-items: center;
   margin: 0 auto;
 }

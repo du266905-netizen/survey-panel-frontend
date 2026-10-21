@@ -237,17 +237,40 @@ export function HomeGlobalSection() {
   );
 }
 
+const globalBandCopy = {
+  'en-US': {
+    label: 'Global perspective',
+    title: 'Cross-regional consumption. Shared insight, shared growth.',
+    body: 'Consumer behaviour, brands and culture move across borders. We connect research networks across Greater China, Asia-Pacific, the Middle East, Europe and North America—helping teams connect cross-regional opportunity with local action, and turn shared consumer signals into practical next steps for entry, collaboration and sustained growth.',
+  },
+  'en-GB': {
+    label: 'Global perspective',
+    title: 'Cross-regional consumption. Shared insight, shared growth.',
+    body: 'Consumer behaviour, brands and culture move across borders. We connect research networks across Greater China, Asia-Pacific, the Middle East, Europe and North America—helping teams connect cross-regional opportunity with local action, and turn shared consumer signals into practical next steps for entry, collaboration and sustained growth.',
+  },
+  'zh-CN': {
+    label: '全球视野',
+    title: '跨区域消费。共享洞察，共享增长。',
+    body: '消费行为、品牌与文化跨越国界。我们连接大中华区、亚太、中东、欧洲与北美的研究网络，帮助团队把跨区域机会与本地行动连接起来，将共享的消费信号转化为进入市场、协作与持续增长的务实下一步。',
+  },
+  'zh-Hant': {
+    label: '全球視野',
+    title: '跨區域消費。共享洞察，共享增長。',
+    body: '消費行為、品牌與文化跨越國界。我們連結大中華區、亞太、中東、歐洲與北美的研究網絡，幫助團隊把跨區域機會與本地行動連結起來，將共享的消費訊號轉化為進入市場、協作與持續增長的務實下一步。',
+  },
+};
+
 export function HomeGlobalBand() {
-  const { publicCopy } = useLanguage();
-  const copy = publicCopy.home;
+  const { language } = useLanguage();
+  const copy = globalBandCopy[language] || globalBandCopy['en-US'];
   return (
     <section className="home-global-band" aria-labelledby="home-global-band-title">
       <div className="home-global-band-inner">
         <div className="home-global-band-visual" aria-hidden="true"><GlobalGlobe tone="dark" /></div>
         <div className="home-global-band-copy">
-          <p className="home-global-band-label">{copy.globalLabel}</p>
-          <h2 id="home-global-band-title">{copy.globalTitle}</h2>
-          <p>{copy.globalBody}</p>
+          <p className="home-global-band-label">{copy.label}</p>
+          <h2 id="home-global-band-title">{copy.title}</h2>
+          <p>{copy.body}</p>
         </div>
       </div>
     </section>
@@ -294,9 +317,9 @@ export default function HomeLegacySections() {
         </div>
       </section>
 
-      <HomeCommunityCta copy={copy} navigation={publicCopy.navigation} language={language} />
-
       <HomeGlobalBand />
+
+      <HomeCommunityCta copy={copy} navigation={publicCopy.navigation} language={language} />
 
       <HomeFooter />
     </div>
