@@ -48,7 +48,7 @@
 .home-choice-play:hover { transform: translate(-50%, -50%) scale(1.06); }
 .home-choice-play:focus-visible { outline: 2px solid #deef24; outline-offset: 3px; }
 
-.home-choice-entry { display: block; }
+.home-choice-entry { display: block; max-width: 560px; }
 .home-choice-title {
   max-width: 560px;
   margin: 0;
@@ -61,12 +61,41 @@
 }
 .home-choice-note {
   max-width: 560px;
-  margin: 28px 0 0;
+  margin: 14px 0 24px;
   color: #565a60;
   font-family: var(--font-reading);
   font-size: 16px;
   line-height: 1.6;
 }
+
+/* The chooser and the sign-in options live in one card, like a normal
+   account entry — not as loose controls floating on the page. */
+.home-choice-card {
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 20px;
+  background: #fff;
+  padding: 24px;
+  box-shadow: 0 1px 2px rgba(20, 20, 19, .04);
+}
+.home-choice-entry .home-entry-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+}
+.home-choice-entry .video-hero-cta {
+  width: 100%;
+  min-height: 44px;
+  justify-content: center;
+  padding: 0 12px;
+  font-size: 13px;
+}
+.home-choice-entry .home-entry-form { margin-top: 18px; }
+.home-choice-entry .home-auth-form { width: 100%; margin: 0; }
+.home-choice-entry .home-auth-email { flex-direction: column; gap: 10px; }
+.home-choice-entry .home-auth-email input { height: 46px; }
+.home-choice-entry .home-auth-email button { width: 100%; height: 46px; flex: none; }
+.home-choice-entry .home-auth-or { margin: 14px 0; }
+.home-choice-entry .home-auth-terms { margin: 14px 0 0; font-size: 11px; }
 
 /* The entry component keeps its own band styles; inside the grid it becomes
    a plain column under the title. */
@@ -94,5 +123,6 @@
   }
   .home-choice-film { width: min(100%, 300px); margin: 0 auto; }
   .home-choice-entry .home-entry { margin: 24px 0 0; }
-  .home-choice-note { margin-top: 24px; }
+  .home-choice-note { margin: 12px 0 20px; }
+  .home-choice-card { padding: 18px; }
 }

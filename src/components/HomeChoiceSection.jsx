@@ -41,8 +41,10 @@ export default function HomeChoiceSection() {
 
         <div className="home-choice-entry">
           <h2 className="home-choice-title">{text.title}</h2>
-          <HomeEntry audience={audience} onAudienceChange={setAudience} />
           <p className="home-choice-note">{text.note}</p>
+          <div className="home-choice-card">
+            <HomeEntry audience={audience} onAudienceChange={setAudience} />
+          </div>
         </div>
       </div>
     </section>

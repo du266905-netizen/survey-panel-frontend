@@ -26,22 +26,8 @@ export default function HomeAuthForm({ audience = 'participant' }) {
 
   return (
     <div className="home-auth-form">
-      <form className="home-auth-email" onSubmit={(event) => event.preventDefault()}>
-        <input
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Enter email"
-          aria-label="Email address"
-          autoComplete="email"
-          required
-        />
-        <button type="submit">Continue</button>
-      </form>
-
       {!isResearch && (
         <>
-          <div className="home-auth-or"><span>or</span></div>
           <div className="home-auth-google-wrap">
             <GoogleButton
               mode="login"
@@ -54,8 +40,22 @@ export default function HomeAuthForm({ audience = 'participant' }) {
               note="Google sign-in is unavailable on this network"
             />
           </div>
+          <div className="home-auth-or"><span>or</span></div>
         </>
       )}
+
+      <form className="home-auth-email" onSubmit={(event) => event.preventDefault()}>
+        <input
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          placeholder="Enter email"
+          aria-label="Email address"
+          autoComplete="email"
+          required
+        />
+        <button type="submit">Continue</button>
+      </form>
 
       {error && <p className="home-auth-error" role="alert">{error}</p>}
 
