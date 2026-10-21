@@ -34,9 +34,9 @@ export const publicNavigation = [
     id: 'participants',
     label: 'Participants',
     items: [
-      { to: '/join', title: 'Join as a participant', note: 'Take part in thoughtful, paid research' },
+      { to: '/register', title: 'Join as a participant', note: 'Take part in thoughtful, paid research' },
       { to: '/partners', title: 'Available surveys', note: 'Find a study that fits your profile' },
-      { to: '/wallet', title: 'Rewards', note: 'Coins, gift cards and redemptions' },
+      { to: '/rewards', title: 'Rewards', note: 'Coins, gift cards and redemptions' },
     ],
   },
   {

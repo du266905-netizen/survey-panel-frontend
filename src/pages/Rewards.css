@@ -1,0 +1,38 @@
+.rewards-page { background: #fff; color: #141413; }
+.rewards-hero {
+  width: calc(100% - 80px);
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 64px 0 8px;
+}
+.rewards-hero h1 {
+  max-width: 860px;
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.06;
+}
+.rewards-hero p {
+  max-width: 680px;
+  margin: 24px 0 0;
+  color: #565a60;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  line-height: 1.6;
+}
+.rewards-cards {
+  width: calc(100% - 80px);
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 0 80px;
+}
+.rewards-cards .home-reward-grid { margin-top: 0; }
+@media (max-width: 900px) {
+  .rewards-hero, .rewards-cards { width: calc(100% - 40px); }
+  .rewards-hero { padding-top: 40px; }
+  .rewards-hero h1 { font-size: 38px; }
+  .rewards-hero p { font-size: 16px; }
+}
