@@ -11,7 +11,7 @@
   width: calc(100% - 80px);
   max-width: 1120px;
   grid-template-columns: 480px minmax(0, 1fr);
-  gap: clamp(40px, 4vw, 64px);
+  gap: clamp(64px, 7vw, 96px);
   align-items: center;
   margin: 0 auto;
 }
@@ -51,9 +51,10 @@
 .home-choice-play:hover { transform: translate(-50%, -50%) scale(1.06); }
 .home-choice-play:focus-visible { outline: 2px solid #deef24; outline-offset: 3px; }
 
-.home-choice-entry { display: block; max-width: 560px; }
+.home-choice-entry { display: block; max-width: none; }
 .home-choice-title {
   max-width: 560px;
+  width: 100%;
   margin: 0;
   color: #141413;
   font-family: var(--font-reading);
@@ -64,6 +65,7 @@
 }
 .home-choice-note {
   max-width: 560px;
+  width: 100%;
   margin: 14px 0 24px;
   color: #565a60;
   font-family: var(--font-reading);
@@ -74,11 +76,13 @@
 /* The chooser and the sign-in options live in one card, like a normal
    account entry — not as loose controls floating on the page. */
 .home-choice-card {
+  width: 100%;
+  max-width: 560px;
   border: 1px solid rgba(20, 20, 19, .14);
-  border-radius: 20px;
+  border-radius: 16px;
   background: #fff;
   padding: 24px;
-  box-shadow: 0 1px 2px rgba(20, 20, 19, .04);
+  box-shadow: none;
 }
 .home-choice-entry .home-entry-actions {
   display: grid;
@@ -93,6 +97,22 @@
   border-radius: 3px;
   padding: 0 20px;
   font-size: 14px;
+  transition: none;
+}
+/* Selected is black, the other is a quiet outline; no hover repaint. */
+.home-atlas .home-choice-entry .video-hero-cta:not(.video-hero-cta--outline),
+.home-atlas .home-choice-entry .video-hero-cta:not(.video-hero-cta--outline):hover {
+  border-color: #141413 !important;
+  background: #141413 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.home-atlas .home-choice-entry .video-hero-cta--outline,
+.home-atlas .home-choice-entry .video-hero-cta--outline:hover {
+  border-color: rgba(20, 20, 19, .22) !important;
+  background: #fff !important;
+  color: #141413 !important;
+  box-shadow: none !important;
 }
 .home-choice-entry .home-entry-form { margin-top: 18px; }
 .home-choice-entry .home-auth-form { width: 100%; margin: 0; }
