@@ -1337,7 +1337,7 @@
 /* Hero: Ivory ground, Slate type, warm secondary line. */
 .home-atlas .video-hero-eyebrow { color: #6F6A5F; }
 .home-atlas .video-hero h1 { color: #141413; }
-.home-atlas .video-hero h1 span:nth-child(2) { color: #8A8578; }
+.home-atlas .video-hero h1 span:nth-child(2) { color: #6F6F6F; }
 .home-atlas .video-hero-description { color: #4A4740; }
 .home-atlas .video-hero-supporting { color: #6F6A5F; }
 
@@ -1510,7 +1510,7 @@
 /* Hero type on the warm bone-grey page. */
 .home-atlas .video-hero-eyebrow { color: #6F6A5F; }
 .home-atlas .video-hero h1 { color: #141413; }
-.home-atlas .video-hero h1 span:nth-child(2) { color: #8A8578; }
+.home-atlas .video-hero h1 span:nth-child(2) { color: #6F6F6F; }
 .home-atlas .video-hero-description { color: #4A4740; }
 .home-atlas .video-hero-supporting { color: #6F6A5F; }
 
