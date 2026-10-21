@@ -36,3 +36,16 @@
   .rewards-hero h1 { font-size: 38px; }
   .rewards-hero p { font-size: 16px; }
 }
+
+/* Same treatment as the homepage: white card body, coloured illustrations,
+   dark type. Without this the token card inherits light text on white. */
+.rewards-page .home-reward-card,
+.rewards-page .home-reward-card.home-reward-gift,
+.rewards-page .home-reward-card.home-reward-token,
+.rewards-page .home-reward-card.home-reward-panel {
+  background: #fff;
+  color: #141413;
+}
+.rewards-page .home-reward-card h3 { color: #141413; }
+.rewards-page .home-reward-card p { color: #565a60; }
+.rewards-page .home-reward-card > div > span { color: #7f848a; }
