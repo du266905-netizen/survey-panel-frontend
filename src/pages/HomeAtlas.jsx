@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { ArrowUpRight, LoaderCircle, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createSupportTicket } from '../api/supportApi';
-import CommunityHub from './CommunityHub';
 import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
@@ -118,8 +117,6 @@ export default function HomeAtlas() {
       <HomeHero lead={heroLines[0]} rest={heroLines[1]} body={publicCopy.hero.description} />
 
       {/* 人物/地球长文：保留内容，去掉整块彩色底，改为骨白 + 发丝线。 */}
-      <CommunityHub />
-
       <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
         <div className="atlas-contact-panel">
           <div className="atlas-contact-copy">

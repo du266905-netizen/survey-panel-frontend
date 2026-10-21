@@ -237,6 +237,23 @@ export function HomeGlobalSection() {
   );
 }
 
+export function HomeGlobalBand() {
+  const { publicCopy } = useLanguage();
+  const copy = publicCopy.home;
+  return (
+    <section className="home-global-band" aria-labelledby="home-global-band-title">
+      <div className="home-global-band-inner">
+        <div className="home-global-band-visual" aria-hidden="true"><GlobalGlobe tone="dark" /></div>
+        <div className="home-global-band-copy">
+          <p className="home-global-band-label">{copy.globalLabel}</p>
+          <h2 id="home-global-band-title">{copy.globalTitle}</h2>
+          <p>{copy.globalBody}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HomeCommunityCta({ copy, navigation, language }) {
   return (
     <section className="home-community-cta" aria-label="Join the community or run research with us">
@@ -278,6 +295,8 @@ export default function HomeLegacySections() {
       </section>
 
       <HomeCommunityCta copy={copy} navigation={publicCopy.navigation} language={language} />
+
+      <HomeGlobalBand />
 
       <HomeFooter />
     </div>

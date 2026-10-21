@@ -412,6 +412,12 @@
   border-radius: 12px !important;
   box-shadow: none !important;
 }
+.home-atlas #atlas-contact .atlas-contact-form {
+  border: 1px solid var(--pub-hair) !important;
+  background: #fff !important;
+  border-radius: 12px !important;
+  padding: 18px !important;
+}
 .home-atlas #atlas-contact h2,
 .home-atlas #atlas-contact p,
 .home-atlas #atlas-contact label span { color: var(--pub-ink) !important; }

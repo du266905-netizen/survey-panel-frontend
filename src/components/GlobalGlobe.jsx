@@ -56,7 +56,7 @@ const regionalConnections = [
   ['germany', 'switzerland'], ['germany', 'poland'], ['germany', 'sweden'], ['germany', 'france'], ['france', 'united-kingdom'], ['france', 'united-states'],
 ].map(([from, to]) => ({ type: 'LineString', coordinates: [markersById.get(from).coordinates, markersById.get(to).coordinates] }));
 
-export default function GlobalGlobe() {
+export default function GlobalGlobe({ tone = 'light' }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -74,6 +74,35 @@ export default function GlobalGlobe() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let dragStart = { x: 0, y: 0, rotation: [-18, -19] };
     let rotation = [-18, -19];
+    const palette = tone === 'dark' ? {
+      sphere: '#2b2b2b',
+      graticule: 'rgba(255, 255, 255, 0.14)',
+      landFill: 'rgba(255, 255, 255, 0.06)',
+      landStroke: 'rgba(255, 255, 255, 0.34)',
+      dot: '#ffffff',
+      connection: 'rgba(222, 239, 36, 0.34)',
+      markerHalo: 'rgba(222, 239, 36, 0.22)',
+      marker: '#deef24',
+      markerStroke: '#2b2b2b',
+      falloff0: 'rgba(43, 43, 43, 0)',
+      falloff1: 'rgba(43, 43, 43, 0)',
+      falloff2: 'rgba(0, 0, 0, 0.28)',
+      outline: 'rgba(255, 255, 255, 0.26)',
+    } : {
+      sphere: '#e6e3da',
+      graticule: 'rgba(45, 45, 40, 0.28)',
+      landFill: 'rgba(47, 49, 44, 0.1)',
+      landStroke: 'rgba(39, 40, 36, 0.54)',
+      dot: '#2c2d29',
+      connection: 'rgba(27, 58, 44, 0.48)',
+      markerHalo: 'rgba(183, 122, 54, 0.2)',
+      marker: '#1b3a2c',
+      markerStroke: '#f4efe2',
+      falloff0: 'rgba(255, 255, 252, 0)',
+      falloff1: 'rgba(249, 247, 241, 0)',
+      falloff2: 'rgba(45, 45, 40, 0.12)',
+      outline: 'rgba(41, 42, 38, 0.66)',
+    };
 
     const draw = () => {
       if (!size) return;
@@ -95,22 +124,22 @@ export default function GlobalGlobe() {
       path(sphere);
       context.clip();
 
-      context.fillStyle = '#e6e3da';
+      context.fillStyle = palette.sphere;
       context.fillRect(0, 0, size, size);
 
       context.beginPath();
       path(graticule);
       context.setLineDash([1, 5.2]);
-      context.strokeStyle = 'rgba(45, 45, 40, 0.28)';
+      context.strokeStyle = palette.graticule;
       context.lineWidth = 0.48;
       context.stroke();
       context.setLineDash([]);
 
       context.beginPath();
       path(land);
-      context.fillStyle = 'rgba(47, 49, 44, 0.1)';
+      context.fillStyle = palette.landFill;
       context.fill();
-      context.strokeStyle = 'rgba(39, 40, 36, 0.54)';
+      context.strokeStyle = palette.landStroke;
       context.lineWidth = 0.42;
       context.stroke();
 
@@ -124,7 +153,7 @@ export default function GlobalGlobe() {
       const right = center + radius;
       const top = center - radius;
       const bottom = center + radius;
-      context.fillStyle = '#2c2d29';
+      context.fillStyle = palette.dot;
       for (let row = 0, y = top; y <= bottom; row += 1, y += dotStep) {
         const offset = row % 2 ? dotStep * 0.5 : 0;
         for (let x = left + offset; x <= right; x += dotStep) {
@@ -153,7 +182,7 @@ export default function GlobalGlobe() {
         return projected;
       };
 
-      context.strokeStyle = 'rgba(27, 58, 44, 0.48)';
+      context.strokeStyle = palette.connection;
       context.lineWidth = clamp(radius * 0.005, 0.58, 0.86);
       regionalConnections.forEach((connection) => {
         context.beginPath();
@@ -169,29 +198,29 @@ export default function GlobalGlobe() {
 
         context.beginPath();
         context.arc(x, y, markerRadius * 1.95, 0, Math.PI * 2);
-        context.fillStyle = 'rgba(183, 122, 54, 0.2)';
+        context.fillStyle = palette.markerHalo;
         context.fill();
 
         context.beginPath();
         context.arc(x, y, markerRadius, 0, Math.PI * 2);
-        context.fillStyle = '#1b3a2c';
+        context.fillStyle = palette.marker;
         context.fill();
-        context.strokeStyle = '#f4efe2';
+        context.strokeStyle = palette.markerStroke;
         context.lineWidth = 1.15;
         context.stroke();
       });
 
       const paperFalloff = context.createRadialGradient(center - radius * 0.26, center - radius * 0.28, radius * 0.08, center, center, radius * 1.04);
-      paperFalloff.addColorStop(0, 'rgba(255, 255, 252, 0)');
-      paperFalloff.addColorStop(0.72, 'rgba(249, 247, 241, 0)');
-      paperFalloff.addColorStop(1, 'rgba(45, 45, 40, 0.12)');
+      paperFalloff.addColorStop(0, palette.falloff0);
+      paperFalloff.addColorStop(0.72, palette.falloff1);
+      paperFalloff.addColorStop(1, palette.falloff2);
       context.fillStyle = paperFalloff;
       context.fillRect(0, 0, size, size);
       context.restore();
 
       context.beginPath();
       path(sphere);
-      context.strokeStyle = 'rgba(41, 42, 38, 0.66)';
+      context.strokeStyle = palette.outline;
       context.lineWidth = 0.8;
       context.stroke();
     };
@@ -277,7 +306,7 @@ export default function GlobalGlobe() {
       canvas.removeEventListener('pointerup', pointerUp);
       canvas.removeEventListener('pointercancel', pointerUp);
     };
-  }, []);
+  }, [tone]);
 
   return (
     <div className="landing-global-globe">
