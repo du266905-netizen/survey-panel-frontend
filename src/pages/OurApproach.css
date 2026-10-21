@@ -211,3 +211,52 @@
   line-height: 1.05;
   letter-spacing: -.025em;
 }
+
+/* Our approach, reading version: slogan above the film, then one manifesto
+   column — painting (no frames, no caption), title, one paragraph. */
+.approach-slogan {
+  background: #fcfdfb;
+  padding: clamp(72px, 8vw, 120px) 24px 8px;
+  text-align: center;
+}
+.approach-slogan h1 {
+  max-width: 960px;
+  margin: 0 auto;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.06;
+}
+
+.approach-manifesto {
+  width: min(100% - 48px, 680px);
+  margin: 0 auto;
+  padding: 64px 0 clamp(80px, 9vw, 128px);
+}
+.approach-manifesto-figure { margin: 0 0 40px; }
+.approach-manifesto-figure img { display: block; width: 100%; height: auto; }
+.approach-manifesto h2 {
+  margin: 0 0 20px;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  text-align: center;
+}
+.approach-manifesto p {
+  margin: 0;
+  color: #565a60;
+  font-family: var(--font-reading);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .approach-slogan { padding: 56px 20px 4px; }
+  .approach-slogan h1 { font-size: 38px; }
+  .approach-manifesto { width: calc(100% - 40px); padding: 40px 0 72px; }
+}
