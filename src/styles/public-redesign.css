@@ -302,9 +302,9 @@
 }
 .home-atlas .video-hero-content {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 720px) !important;
-  gap: 64px !important;
-  align-items: center !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 760px) !important;
+  gap: 56px !important;
+  align-items: start !important;
   width: calc(100% - 80px) !important;
   max-width: 1600px !important;
   margin: 0 auto !important;
@@ -360,7 +360,7 @@
 .home-atlas .home-hero-media .home-film { padding: 0 !important; background: transparent !important; }
 .home-atlas .home-hero-media .home-film-frame {
   width: 100% !important;
-  aspect-ratio: 16 / 9 !important;
+  aspect-ratio: 16 / 10 !important;
   border-radius: 12px !important;
   overflow: hidden !important;
 }
@@ -472,3 +472,14 @@
   padding-top: clamp(32px, 4vw, 48px) !important;
   padding-bottom: clamp(32px, 4vw, 48px) !important;
 }
+
+/* Hero controls: the reference is a generous button, not a 13px chip. */
+.home-atlas .video-hero-cta {
+  min-height: 54px !important;
+  border-radius: 0 !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  padding: 0 26px !important;
+}
+.home-atlas .home-auth-email input { min-height: 52px !important; }
+.home-atlas .home-auth-email button { min-height: 52px !important; font-size: 15px !important; padding: 0 24px !important; }
