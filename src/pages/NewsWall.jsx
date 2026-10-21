@@ -631,7 +631,7 @@ export default function NewsWall() {
         .news-wall-public { background: transparent; color: #141413; font-family: var(--font-sans); }
         .news-wall-public-hero { border: 0; background: transparent !important; color: #141413 !important; padding: 96px 0 40px; }
         .news-wall-public-hero > div { padding-top: 0 !important; padding-bottom: 0 !important; }
-        .news-wall-public-hero > div > div > p:first-child { color: #6F6A5F !important; font-size: 11px !important; font-weight: 500 !important; letter-spacing: .14em !important; }
+        .news-wall-public-hero > div > div > p:first-child { color: #6F6A5F !important; font-size: 12px !important; font-weight: 500 !important; letter-spacing: .14em !important; }
         .news-wall-public-hero > div > div > h1 { max-width: 900px; color: #141413 !important; font-family: var(--font-serif) !important; font-size: 56px !important; font-weight: 400 !important; letter-spacing: -.03em !important; line-height: 1.02 !important; }
         .news-wall-public-hero > div > div > p:last-child { max-width: 640px; color: #4A4740 !important; font-family: var(--font-sans) !important; font-size: 16px !important; line-height: 1.7 !important; }
         .news-wall-public-body { max-width: 1280px; padding-top: 0 !important; padding-bottom: 96px !important; }
