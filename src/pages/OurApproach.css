@@ -233,7 +233,7 @@
 .approach-manifesto {
   width: min(100% - 48px, 680px);
   margin: 0 auto;
-  padding: 64px 0 clamp(80px, 9vw, 128px);
+  padding: 40px 0 clamp(80px, 9vw, 128px);
 }
 .approach-manifesto-figure { margin: 0 0 40px; }
 .approach-manifesto-figure img { display: block; width: 100%; height: auto; }
@@ -241,7 +241,7 @@
   margin: 0 0 20px;
   color: #141413;
   font-family: var(--font-reading);
-  font-size: 38px;
+  font-size: 56px;
   font-weight: 400;
   letter-spacing: -.02em;
   line-height: 1.15;
@@ -251,12 +251,23 @@
   margin: 0;
   color: #565a60;
   font-family: var(--font-reading);
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 22px;
+  line-height: 1.6;
 }
 
 @media (max-width: 900px) {
   .approach-slogan { padding: 56px 20px 4px; }
   .approach-slogan h1 { font-size: 56px; line-height: 1.05; }
+  .approach-manifesto h2 { font-size: 38px; }
+  .approach-manifesto p { font-size: 16px; line-height: 1.7; }
   .approach-manifesto { width: calc(100% - 40px); padding: 40px 0 72px; }
+}
+
+.approach-slogan-note {
+  max-width: 680px;
+  margin: 24px auto 0;
+  color: #565a60;
+  font-family: var(--font-reading);
+  font-size: 16px;
+  line-height: 1.6;
 }

@@ -13,10 +13,17 @@ const slogans = {
   en: 'Your opinions shape the world.',
 };
 
+const sloganNotes = {
+  'zh-CN': '所以我们从每一个具体的人开始。',
+  'zh-Hant': '所以我們從每一個具體的人開始。',
+  en: 'So we begin with the person behind every answer.',
+};
+
 export default function OurApproach() {
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.approach;
   const slogan = slogans[language] || slogans.en;
+  const sloganNote = sloganNotes[language] || sloganNotes.en;
   const paragraph = [copy.deck, copy.lede, copy.voicesBody, copy.technologyBody, copy.principleBody]
     .filter(Boolean)
     .join(language.startsWith('zh') ? '' : ' ');
@@ -25,14 +32,12 @@ export default function OurApproach() {
     <main className="home-continuation approach-page">
       <section className="approach-slogan" aria-labelledby="approach-slogan-title">
         <h1 id="approach-slogan-title">{slogan}</h1>
+        <p className="approach-slogan-note">{sloganNote}</p>
       </section>
 
       <HomeFilmSection />
 
       <section className="approach-manifesto" aria-labelledby="approach-manifesto-title">
-        <figure className="approach-manifesto-figure">
-          <img src="/human-manifesto/shoreline-painting.jpg" alt={copy.imageAlt} loading="lazy" decoding="async" />
-        </figure>
         <h2 id="approach-manifesto-title">{copy.title}</h2>
         <p>{paragraph}</p>
       </section>
