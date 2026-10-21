@@ -61,8 +61,10 @@ export default function About() {
   return (
     <main className="about-page">
       <section className="about-hero" aria-labelledby="about-title">
-        <h1 id="about-title">{text.title}</h1>
-        <p className="about-lead">{text.body}</p>
+        <div className="about-hero-copy">
+          <h1 id="about-title">{text.title}</h1>
+          <p className="about-lead">{text.body}</p>
+        </div>
         <figure className="about-portrait">
           <img src={peopleImage} alt="" loading="lazy" decoding="async" />
         </figure>
