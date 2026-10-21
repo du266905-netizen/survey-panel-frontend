@@ -452,7 +452,8 @@
 .home-global-band-inner {
   display: grid;
   width: min(100% - 80px, 1120px);
-  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 360px) minmax(0, 500px);
+  justify-content: center;
   gap: clamp(32px, 4vw, 56px);
   align-items: center;
   margin: 0 auto;
@@ -468,7 +469,7 @@
   text-transform: uppercase;
 }
 .home-global-band h2 {
-  margin: 0;
+  margin: 0 auto;
   max-width: 520px;
   color: #fff;
   font-family: var(--font-reading);
@@ -477,9 +478,12 @@
   letter-spacing: -.02em;
   line-height: 1.1;
 }
+.home-global-band-copy {
+  text-align: center;
+}
 .home-global-band-copy > p:last-child {
   max-width: 520px;
-  margin: 20px 0 0;
+  margin: 20px auto 0;
   color: rgba(255, 255, 255, .72);
   font-family: var(--font-reading);
   font-size: 16px;

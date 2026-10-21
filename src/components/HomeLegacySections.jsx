@@ -268,7 +268,6 @@ export function HomeGlobalBand() {
       <div className="home-global-band-inner">
         <div className="home-global-band-visual" aria-hidden="true"><GlobalGlobe tone="dark" /></div>
         <div className="home-global-band-copy">
-          <p className="home-global-band-label">{copy.label}</p>
           <h2 id="home-global-band-title">{copy.title}</h2>
           <p>{copy.body}</p>
         </div>
