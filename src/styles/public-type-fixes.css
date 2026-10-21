@@ -1,0 +1,10 @@
+/* Step 1 type fixes: remaining 11/13 on public header/footer. */
+.atlas-nav-menu-item span,
+.atlas-nav-menu-item small,
+.atlas-mobile-group > p,
+.atlas-sign-in,
+.home-footer-bottom p,
+.home-footer-bottom a {
+  font-size: 14px !important;
+}
+.home-section-label { font-size: 12px !important; }
