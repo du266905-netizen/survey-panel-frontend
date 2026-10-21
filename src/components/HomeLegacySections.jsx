@@ -1,7 +1,6 @@
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlobalGlobe from './GlobalGlobe';
-import HomeRewardCards from './HomeRewardCards';
 import Logo from './Logo';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import { footerIdentityTranslations, globalTranslations, navigationLabels } from '../constants/homepageTranslations';
@@ -265,16 +264,6 @@ export default function HomeLegacySections() {
   const copy = publicCopy.home;
   return (
     <div className="home-continuation">
-      <section className="home-rewards-section" aria-labelledby="home-rewards-title">
-        <div className="home-continuation-container home-rewards-layout">
-          <div className="home-rewards-heading">
-            <h2 id="home-rewards-title">{copy.rewardsTitle}</h2>
-            <p>{copy.rewardsBody}</p>
-          </div>
-          <HomeRewardCards cards={copy.rewardCards} />
-        </div>
-      </section>
-
       <HomeGlobalBand />
 
       <HomeCommunityCta copy={copy} navigation={publicCopy.navigation} language={language} />

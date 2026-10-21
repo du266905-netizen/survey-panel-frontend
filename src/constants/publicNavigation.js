@@ -37,6 +37,7 @@ export const publicNavigation = [
       { to: '/register', title: 'Join as a participant', note: 'Take part in thoughtful, paid research' },
       { to: '/partners', title: 'Available surveys', note: 'Find a study that fits your profile' },
       { to: '/rewards', title: 'Rewards', note: 'Coins, gift cards and redemptions' },
+      { to: '/contact', title: 'Contact us', note: 'Talk to the research team' },
     ],
   },
   {

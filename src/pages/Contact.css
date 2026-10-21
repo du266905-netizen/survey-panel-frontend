@@ -1,0 +1,74 @@
+.contact-page { background: #fff; color: #141413; }
+.contact-hero {
+  width: calc(100% - 80px);
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 64px 0 8px;
+}
+.contact-hero h1 {
+  max-width: 860px;
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.06;
+}
+.contact-hero p {
+  max-width: 680px;
+  margin: 24px 0 0;
+  color: #565a60;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+/* The form component was built for the homepage band; on a page it becomes
+   one white panel under the heading. The section id carries the homepage's
+   photo background, so these have to outrank it. */
+.contact-page #atlas-contact {
+  display: block !important;
+  min-height: 0 !important;
+  padding: 24px 0 80px !important;
+  background: #fff !important;
+  background-image: none !important;
+}
+.contact-page #atlas-contact::after { display: none !important; }
+.contact-page #atlas-contact .atlas-contact-panel {
+  width: min(100% - 80px, 760px) !important;
+  max-width: none !important;
+  margin: 0 auto !important;
+  border: 1px solid var(--pub-hair, rgba(17, 17, 19, .12)) !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  padding: 24px !important;
+}
+.contact-page #atlas-contact .atlas-contact-form {
+  background: #fff !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .contact-hero { width: calc(100% - 40px); padding-top: 40px; }
+  .contact-hero h1 { font-size: 38px; }
+  .contact-hero p { font-size: 16px; }
+  .contact-page #atlas-contact .atlas-contact-panel { width: calc(100% - 40px) !important; padding: 16px !important; }
+}
+
+/* The homepage form is drawn for its dark band, where the fields lose their
+   border; on a white page they need the outline back. */
+.contact-page #atlas-contact .atlas-contact-form input,
+.contact-page #atlas-contact .atlas-contact-form select,
+.contact-page #atlas-contact .atlas-contact-form textarea {
+  border: 1px solid rgba(17, 17, 19, .18) !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+  color: #141413 !important;
+}
+.contact-page #atlas-contact .atlas-contact-form input:focus,
+.contact-page #atlas-contact .atlas-contact-form select:focus,
+.contact-page #atlas-contact .atlas-contact-form textarea:focus {
+  border-color: #141413 !important;
+}

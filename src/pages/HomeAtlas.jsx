@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import HomeContactSection from '../components/HomeContactSection';
 import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
@@ -55,8 +54,6 @@ export default function HomeAtlas() {
 
       {/* Photograph hero: statement bottom-left, one white action to its right. */}
       <HomeHero lead={heroLines[0]} rest={heroLines[1]} body={publicCopy.hero.description} />
-
-      <HomeContactSection />
 
       <HomeLegacySections />
     </main>

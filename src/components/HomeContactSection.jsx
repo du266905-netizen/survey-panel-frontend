@@ -9,7 +9,7 @@ import { createSupportTicket } from '../api/supportApi';
 import { useLanguage } from './LanguageContext';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 
-export default function HomeContactSection() {
+export default function HomeContactSection({ hideHeading = false }) {
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
   const regionNames = useMemo(() => {
@@ -73,10 +73,12 @@ export default function HomeContactSection() {
   return (
     <section id="atlas-contact" className="atlas-stage" aria-labelledby="atlas-contact-title">
       <div className="atlas-contact-panel">
-        <div className="atlas-contact-copy">
-          <h2 id="atlas-contact-title">{copy.contactTitle}</h2>
-          <p className="atlas-contact-intro">{copy.contactIntro}</p>
-        </div>
+        {!hideHeading && (
+          <div className="atlas-contact-copy">
+            <h2 id="atlas-contact-title">{copy.contactTitle}</h2>
+            <p className="atlas-contact-intro">{copy.contactIntro}</p>
+          </div>
+        )}
 
         <form className="atlas-contact-form" onSubmit={submitContactForm}>
           <label className="atlas-contact-field--name">
