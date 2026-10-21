@@ -2327,36 +2327,34 @@
 }
 
 
-/* 2026-10-20: swap only the grounds, not the order.
-   Film sits on white; the long-form colour blocks sit on warm grey-white. */
-.home-atlas .home-film { background: #FFFFFF; }
-.home-atlas .community-hub { background: #FAF9F5; }
+/* ---------------------------------------------------------------------------
+   Home grounds, final (2026-10-21).
+   One authoritative block, opaque colours — no stacked per-section overrides.
+   Hero / film / form / atlas / nav: white.
+   Long-form Community + rewards: warm grey-white #FAF9F5.
+   CTA + footer stay ink #141413.
+   Same-colour fields carry no divider; only CTA → footer keeps its hairline.
+   --------------------------------------------------------------------------- */
+.home-atlas { background: #FFFFFF; --atlas-paper: #FFFFFF; }
 
-/* Final nav ground: pure white, overriding later home rules. */
+.home-atlas .video-hero-section,
+.home-atlas .video-hero,
+.home-atlas .home-film,
+.home-atlas .atlas-stage { background: #FFFFFF; }
+
+.home-atlas .community-hub,
+.home-atlas .home-rewards-section { background: #FAF9F5; }
+
 .home-atlas .atlas-navigation.public-site-header {
   background: #FFFFFF;
   --atlas-paper: #FFFFFF;
 }
 
-/* Homepage ground is white; the long-form colour block keeps its warm band.
-   Only the final CTA → footer boundary is allowed a divider. */
-.home-atlas { background: #FFFFFF; }
-.home-atlas .video-hero-section,
-.home-atlas .home-film,
-.home-atlas .atlas-stage,
-.home-atlas .home-rewards-section { background: #FFFFFF; }
 .home-atlas .atlas-stage,
 .home-atlas .home-rewards-section,
 .home-atlas .home-global-section { border-top: 0; }
 .home-atlas .home-global-section { border-bottom: 0; }
-
-/* Page ground white; the hero's inner surface must follow the token, and the
-   long-form block has no internal divider line. */
-.home-atlas { --atlas-paper: #FFFFFF; }
-.home-atlas .video-hero { background: #FFFFFF; }
 .home-atlas .community-hub .home-global-section { border-top: 0; }
-
-/* No dividers inside the long-form colour block. */
 .home-atlas .community-hub .home-global-copy { border-left: 0; }
 @media (max-width: 900px) {
   .home-atlas .community-hub .home-global-copy { border-bottom: 0; }
