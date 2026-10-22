@@ -170,3 +170,7 @@
   .home-choice-note { margin: 12px 0 20px; }
   .home-choice-card { padding: 18px; }
 }
+
+/* The title and subtitle carry deliberate line breaks. */
+.home-choice-title,
+.home-choice-note { white-space: pre-line; }
