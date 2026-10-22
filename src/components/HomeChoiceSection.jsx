@@ -11,16 +11,16 @@ import './HomeChoiceSection.css';
 
 const copy = {
   'zh-CN': {
-    title: '让每一次判断都有事实依据。',
-    note: '准备好加入我们了吗？共同打造开放、共生、可持续的研究生态。',
+    title: '让每一次判断\n都有事实依据。',
+    note: '准备好加入我们了吗？\n共同打造开放、共生、可持续的研究生态。',
   },
   'zh-Hant': {
-    title: '讓每一次判斷都有事實依據。',
-    note: '準備好加入我們了嗎？共同打造開放、共生、可持續的研究生態。',
+    title: '讓每一次判斷\n都有事實依據。',
+    note: '準備好加入我們了嗎？\n共同打造開放、共生、可持續的研究生態。',
   },
   en: {
-    title: 'Let every judgement rest on evidence.',
-    note: 'Ready to join us? Together we build an open, interconnected and sustainable research ecosystem.',
+    title: 'Let every judgement\nrest on evidence.',
+    note: 'Ready to join us?\nTogether we build an open, interconnected and sustainable research ecosystem.',
   },
 };
 
