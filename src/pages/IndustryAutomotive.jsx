@@ -74,13 +74,13 @@ const stages = [
   },
 ];
 
-/* 方法一栏：一个术语配一句白话，术语本身买家都认识，不认识的是它到底怎么执行。 */
+/* 方法一栏：每条给一个判断和它的边界，不写词典释义。 */
 const methods = [
-  ['CATI', 'Telephone interviews run to a script, with answers captured live and quotas controlled by city or segment.'],
-  ['In-depth interviews', 'One-to-one conversations of 30 to 60 minutes, for the reason behind a number rather than the number itself.'],
-  ['Concept and A/B testing', 'Two or three executions shown to comparable groups, so the difference measured is the idea, not the audience.'],
-  ['Dealer and trade audits', 'The network itself — coverage, stock, pricing and training take-up, checked by telephone census or in person.'],
-  ['B2B panels', 'Pre-recruited decision-makers in fleets, procurement and IT, screened by company size, sector and role.'],
+  ['CATI', 'Reaches a named list at scale — dealer principals, fleet managers — with quotas enforced city by city so regions stay comparable. Slow to set up, fast once live.'],
+  ['In-depth interviews', 'Forty-five minutes with the person who owns the decision. Ten of these explain a survey; a hundred of them do not scale.'],
+  ['Concept and A/B testing', 'Two cells, one variable. If you cannot name the single thing that differs, it is not a test — it is an opinion with a sample size.'],
+  ['Dealer and trade audits', 'What the network actually does, not what it reports: price executed, stock held, training used, checked outlet by outlet.'],
+  ['B2B panels', 'Decision-makers screened by company size, sector and role. Incidence is low, so the sample gets planned before the questionnaire does.'],
 ];
 
 export default function IndustryAutomotive() {
@@ -137,15 +137,15 @@ export default function IndustryAutomotive() {
       <section className="ind-section ind-section--methods">
         <div className="ind-container">
           <p className="ind-kicker">Methods</p>
-          <p className="ind-methods-lead">What each method actually involves.</p>
-          <dl className="ind-methods">
+          <p className="ind-methods-lead">What each method buys you, and where it stops.</p>
+          <div className="ind-methods">
             {methods.map(([term, meaning]) => (
-              <div key={term}>
-                <dt>{term}</dt>
-                <dd>{meaning}</dd>
-              </div>
+              <article key={term}>
+                <h3>{term}</h3>
+                <p>{meaning}</p>
+              </article>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
