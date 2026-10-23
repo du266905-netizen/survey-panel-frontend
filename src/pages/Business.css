@@ -929,3 +929,222 @@
   .business-login-intro h1 { color: #14271e; text-shadow: none; }
   .business-login-intro > div > p:last-child { color: #52675a; }
 }
+
+/* ── /business/access（联系页）并进公开页新壳 · 2026-10-24 ────────────────────
+   这页原本是唯一没有 `PublicSiteHeader` 的公开页：一行「← Back」、绿玻璃卡片、
+   26px 圆角、投影、文字压在照片上。现在和其它公开页同一套：黑导航、白页底、
+   1120 版心、直角、无阴影。左栏是标题与说明，照片落在标题下面；右栏是表单。
+   文字离开照片，是因为绿编辑图上的半透明卡在 1120 版心里只剩噪音。 */
+.business-access-page.business-contact-page {
+  min-height: 100svh;
+  background: #fff;
+  padding: 0;
+  font-family: var(--font-sans);
+}
+
+.business-access-page.business-contact-page .business-contact-shell {
+  width: min(100% - 96px, var(--pub-container));
+  margin: 0 auto;
+  padding: 72px 0 96px;
+}
+
+.business-access-page.business-contact-page .business-contact-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 72px;
+  align-items: start;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.business-access-page.business-contact-page .business-contact-intro {
+  position: static;
+  grid-column: 1;
+  grid-row: 1;
+  padding: 0;
+  color: var(--pub-ink);
+}
+
+.business-access-page.business-contact-page .business-contact-intro .business-eyebrow {
+  margin: 0;
+  color: var(--pub-mute);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.business-access-page.business-contact-page .business-contact-intro h1 {
+  max-width: 460px;
+  margin: 16px 0 0;
+  color: var(--pub-ink);
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4vw, 56px);
+  font-weight: 400;
+  letter-spacing: -.0234em;
+  line-height: 1.05;
+}
+
+.business-access-page.business-contact-page .business-contact-lede {
+  max-width: 420px;
+  margin: 18px 0 0;
+  color: var(--pub-body);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -.005em;
+  line-height: 1.65;
+}
+
+.business-access-page.business-contact-page .business-contact-figure {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 40px 0 0;
+  background: var(--pub-sunken);
+}
+
+.business-access-page.business-contact-page .business-contact-figure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 表单：白纸上一圈发丝线，没有投影，四角是直角。 */
+.business-access-page.business-contact-page .business-contact-form {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+  gap: 16px;
+  min-height: 0;
+  border: 1px solid var(--pub-hair);
+  background: #fff;
+  box-shadow: none;
+  padding: 40px;
+}
+
+.business-access-page.business-contact-page .business-contact-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--pub-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.business-access-page.business-contact-page .business-contact-form label em {
+  color: var(--pub-mute);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.business-access-page.business-contact-page .business-contact-form textarea,
+.business-access-page.business-contact-page .business-contact-form input,
+.business-access-page.business-contact-page .business-contact-form select {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--pub-hair);
+  border-radius: 0;
+  outline: 0;
+  background: #fff;
+  color: var(--pub-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 14px;
+}
+
+.business-access-page.business-contact-page .business-contact-form textarea {
+  min-height: 132px;
+  padding: 12px 14px;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.business-access-page.business-contact-page .business-contact-form textarea:focus,
+.business-access-page.business-contact-page .business-contact-form input:focus,
+.business-access-page.business-contact-page .business-contact-form select:focus {
+  border-color: var(--pub-ink);
+  box-shadow: none;
+}
+
+.business-access-page.business-contact-page .business-contact-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+
+.business-access-page.business-contact-page .business-contact-phone-field {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+/* 电话一项：国家码下拉与号码并排时，「United States (+1)」在 444px 的字段里
+   会被截成「United St」，所以这一项上下排，两边都完整。 */
+.business-access-page.business-contact-page .business-phone-input {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.business-access-page.business-contact-page .business-contact-message {
+  border: 1px solid var(--pub-hair);
+  background: var(--pub-sunken);
+  color: var(--pub-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  padding: 12px 14px;
+}
+
+.business-access-page.business-contact-page .business-contact-form > .business-button {
+  justify-self: stretch;
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
+  justify-content: center;
+  margin: 8px 0 0;
+}
+
+@media (max-width: 900px) {
+  .business-access-page.business-contact-page .business-contact-shell {
+    width: min(100% - 48px, var(--pub-container));
+    padding: 40px 0 64px;
+  }
+  .business-access-page.business-contact-page .business-contact-columns {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+  .business-access-page.business-contact-page .business-contact-intro,
+  .business-access-page.business-contact-page .business-contact-figure,
+  .business-access-page.business-contact-page .business-contact-form {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .business-access-page.business-contact-page .business-contact-intro h1 {
+    font-size: clamp(34px, 9vw, 44px);
+  }
+  .business-access-page.business-contact-page .business-contact-figure {
+    margin-top: 8px;
+  }
+  .business-access-page.business-contact-page .business-contact-form {
+    padding: 24px;
+  }
+  .business-access-page.business-contact-page .business-contact-grid {
+    grid-template-columns: 1fr;
+  }
+  .business-access-page.business-contact-page .business-contact-figure img {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* 标签里的「Optional」原来在 grid 里被挤成独立一行（标签字与 em 各占一格），
+   包一层 span 让它们回到同一行。 */
+.business-access-page.business-contact-page .business-contact-phone-label { display: block; }
