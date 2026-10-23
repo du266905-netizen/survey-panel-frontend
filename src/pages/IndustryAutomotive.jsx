@@ -100,7 +100,7 @@ const copy = {
       ['B2B panels', 'Decision-makers screened by company size, sector and role. Incidence is low, so the sample gets planned before the questionnaire does.'],
     ],
     ctaTitle: 'Tell us the decision you have to defend.',
-    ctaBody: 'We will come back with a design, a sample frame and a cost.',
+    ctaBody: 'You get an answer you can use — the finding, the evidence, and what to do next.',
     ctaPrimary: 'Talk to the research team',
     ctaSecondary: 'Join us',
   },
@@ -108,7 +108,7 @@ const copy = {
   'zh-CN': {
     kicker: '行业',
     title: '汽车与交通',
-    lead: '面向整车厂、进口商与经销集团的概念、定价、上市与渠道研究。',
+    lead: '面向整车厂、进口商与经销商集团的概念、定价、上市与渠道研究。',
     introKicker: '我们怎么做',
     intro: [
       '一个车型项目在市场上给出答案之前，往往已经投入数年。我们要做的，是用团队敢拿去拍板的证据，把这个间隔缩短。',
@@ -192,7 +192,7 @@ const copy = {
       ['企业决策者样本', '按公司规模、行业、职位筛出的决策者。合格率低，所以先定样本，再写问卷。'],
     ],
     ctaTitle: '告诉我们，你要拿去拍板的那个决定。',
-    ctaBody: '我们回你一份设计、一份样本框，和一个报价。',
+    ctaBody: '你会拿到一份能直接用的答卷——结论、依据，以及下一步怎么走。',
     ctaPrimary: '联系研究团队',
     ctaSecondary: '加入我们',
   },
@@ -200,7 +200,7 @@ const copy = {
   'zh-Hant': {
     kicker: '產業',
     title: '汽車與交通',
-    lead: '面向車廠、進口商與經銷集團的概念、定價、上市與渠道研究。',
+    lead: '面向車廠、進口商與經銷商集團的概念、定價、上市與渠道研究。',
     introKicker: '我們怎麼做',
     intro: [
       '一個車型專案在市場上給出答案之前，往往已經投入數年。我們要做的，是用團隊敢拿去拍板的證據，把這個間隔縮短。',
@@ -284,7 +284,7 @@ const copy = {
       ['企業決策者樣本', '按公司規模、行業、職位篩出的決策者。合格率低，所以先定樣本，再寫問卷。'],
     ],
     ctaTitle: '告訴我們，你要拿去拍板的那個決定。',
-    ctaBody: '我們回你一份設計、一份樣本框，和一個報價。',
+    ctaBody: '你會拿到一份能直接用的答卷——結論、依據，以及下一步怎麼走。',
     ctaPrimary: '聯絡研究團隊',
     ctaSecondary: '加入我們',
   },
