@@ -65,6 +65,7 @@ import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
 import ChinaMarketInsights from './pages/ChinaMarketInsights';
+import IndustryAutomotive from './pages/IndustryAutomotive';
 import MarketingUnsubscribe from './pages/MarketingUnsubscribe';
 
 function ProtectedRoute({ children }) {
@@ -188,6 +189,7 @@ export default function App() {
         <Route path="/contact" element={<PublicPage><Contact /></PublicPage>} />
         <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
         <Route path="/our-approach" element={<PublicPage><OurApproach /></PublicPage>} />
+        <Route path="/industries/automotive" element={<PublicPage><IndustryAutomotive /></PublicPage>} />
         <Route path="/news" element={<NewsRoute />} />
         <Route path="/news/:articleId" element={<NewsArticleRoute />} />
         <Route path="/partners" element={<SurveyWallRoute />} />

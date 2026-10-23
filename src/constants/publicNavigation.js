@@ -3,7 +3,8 @@
    The four top-level groups are fixed by the owner (2026-10-22):
    About us / Solutions / Industries / Support. Which pages sit under them is
    still being decided, so treat every item below as a temporary placement.
-   `items: []` renders the label without a panel (Industries has no pages yet).
+   `items: []` renders the label without a panel. Industries opened on
+   2026-10-24 with automotive; the other sectors are still unclassified.
 
    English is the source language for now; the labels move into the language
    library in a later pass. */
@@ -28,7 +29,9 @@ export const publicNavigation = [
   {
     id: 'industries',
     label: 'Industries',
-    items: [],
+    items: [
+      { to: '/industries/automotive', title: 'Automotive & mobility', note: 'Dealers, buyers, charging' },
+    ],
   },
   {
     id: 'participants',
