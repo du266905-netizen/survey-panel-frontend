@@ -16,7 +16,7 @@ const copy = {
   'en-US': {
     kicker: 'Industries',
     title: 'Automotive & transportation',
-    lead: 'Concept, pricing, launch and channel studies for vehicle makers, importers and dealer groups.',
+    lead: 'Concept, pricing, launch and channel studies for car and two-wheeler makers, importers and dealer groups.',
     introKicker: 'How we work',
     intro: [
       'A vehicle programme commits years before the market answers. Our work is to shorten that gap with evidence a team can defend.',
@@ -87,6 +87,11 @@ const copy = {
             body: 'Readiness, range anxiety and charging access by market — with private buyers and fleet total-cost decisions kept apart.',
             methods: 'Online and CATI · owners, considerers, fleet managers',
           },
+          {
+            title: 'Two-wheelers and micromobility',
+            body: 'Scooters and motorcycles moving electric — rider economics, charging and battery-swap expectations, and the dealer network that has to service them.',
+            methods: 'Online and CATI · riders, dealers, fleet operators',
+          },
         ],
       },
     ],
@@ -108,7 +113,7 @@ const copy = {
   'zh-CN': {
     kicker: '行业',
     title: '汽车与交通',
-    lead: '面向整车厂、进口商与经销商集团的概念、定价、上市与渠道研究。',
+    lead: '面向汽车与两轮车整车厂、进口商与经销商集团的概念、定价、上市与渠道研究。',
     introKicker: '我们怎么做',
     intro: [
       '一个车型项目在市场上给出答案之前，往往已经投入数年。我们要做的，是用团队敢拿去拍板的证据，把这个间隔缩短。',
@@ -179,6 +184,11 @@ const copy = {
             body: '分市场看准备度、续航焦虑与充电条件——把私人买家和算总持有成本的车队分开看。',
             methods: '线上与电话访问 · 车主、考虑者、车队管理者',
           },
+          {
+            title: '两轮车与微出行',
+            body: '踏板车与摩托车的电动化——骑手的经济账、充电与换电预期，以及必须把它们修好的经销网络。',
+            methods: '线上与电话访问 · 骑手、经销商、车队运营方',
+          },
         ],
       },
     ],
@@ -200,7 +210,7 @@ const copy = {
   'zh-Hant': {
     kicker: '產業',
     title: '汽車與交通',
-    lead: '面向車廠、進口商與經銷商集團的概念、定價、上市與渠道研究。',
+    lead: '面向汽車與兩輪車車廠、進口商與經銷商集團的概念、定價、上市與渠道研究。',
     introKicker: '我們怎麼做',
     intro: [
       '一個車型專案在市場上給出答案之前，往往已經投入數年。我們要做的，是用團隊敢拿去拍板的證據，把這個間隔縮短。',
@@ -270,6 +280,11 @@ const copy = {
             title: '電動車採用與充電',
             body: '分市場看準備度、續航焦慮與充電條件——把私人買家和算總持有成本的車隊分開看。',
             methods: '線上與電話訪問 · 車主、考慮者、車隊管理者',
+          },
+          {
+            title: '兩輪車與微出行',
+            body: '踏板車與摩托車的電動化——騎手的經濟帳、充電與換電預期，以及必須把它們修好的經銷網絡。',
+            methods: '線上與電話訪問 · 騎手、經銷商、車隊營運方',
           },
         ],
       },

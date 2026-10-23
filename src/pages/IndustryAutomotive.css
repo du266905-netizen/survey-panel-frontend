@@ -205,7 +205,7 @@
 .industry-page .ind-kicker--center { text-align: center; }
 
 .industry-page .ind-methods-lead {
-  max-width: 820px;
+  max-width: 1080px;
   margin: 16px auto 0;
   color: var(--pub-ink);
   font-family: var(--font-serif);
