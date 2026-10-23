@@ -198,26 +198,47 @@
   line-height: 1.5;
 }
 
-/* ---- methods ------------------------------------------------------------ */
+/* ---- methods -------------------------------------------------------------
+   A glossary, not a row of chips: the term on the left, what it actually
+   involves on the right. The labels alone told a buyer nothing. */
 
-.industry-page .ind-methods {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 24px 0 0;
-  padding: 0;
-  list-style: none;
+.industry-page .ind-methods-lead {
+  max-width: 620px;
+  margin: 12px 0 0;
+  color: var(--pub-body);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.6;
 }
 
-.industry-page .ind-methods li {
-  border: 1px solid var(--pub-hair);
-  background: #fff;
+.industry-page .ind-methods {
+  margin: 24px 0 0;
+  border-top: 1px solid var(--pub-hair);
+}
+
+.industry-page .ind-methods > div {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 40px;
+  border-bottom: 1px solid var(--pub-hair);
+  padding: 18px 0;
+}
+
+.industry-page .ind-methods dt {
   color: var(--pub-ink);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 1;
-  padding: 12px 14px;
+  line-height: 1.5;
+}
+
+.industry-page .ind-methods dd {
+  max-width: 620px;
+  margin: 0;
+  color: var(--pub-body);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 /* ---- closing CTA: the only black on the page ---------------------------- */
@@ -281,6 +302,7 @@
   .industry-page .ind-stage { grid-template-columns: 1fr; gap: 18px; padding: 24px 0; }
   .industry-page .ind-stage-frame { max-width: none; }
   .industry-page .ind-stage-cards { grid-template-columns: 1fr; gap: 22px; }
+  .industry-page .ind-methods > div { grid-template-columns: 1fr; gap: 6px; padding: 16px 0; }
   .industry-page .ind-cta { padding: 44px 0; }
   .industry-page .ind-cta-button { width: 100%; justify-content: center; }
 }
