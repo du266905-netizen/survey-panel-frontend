@@ -1,8 +1,12 @@
-/* Industry page — Automotive & mobility (2026-10-24).
+/* Industry page — Automotive & transportation (2026-10-24).
 
-   Same public system as the rest of the site: white ground, 1120 container,
-   Source Serif headings, Inter UI, hairlines instead of cards, sharp corners,
-   lime only on the one action. Black appears once, at the page-end CTA. */
+   Order on the page: full-bleed photograph → how we work (reading block) →
+   four stages → methods → closing CTA. The reading block is what separates the
+   picture from the categories; without it the page jumps from a car to a list.
+
+   Type is deliberately a step smaller than the first draft: 48 for the page
+   title, 22 for the stage and the standfirst, 16 for reading, 14 for card copy.
+   Hairlines instead of cards, one black band at the very end. */
 
 .industry-page {
   background: var(--pub-white);
@@ -13,17 +17,6 @@
 .industry-page .ind-container {
   width: min(100% - 96px, var(--pub-container));
   margin: 0 auto;
-}
-
-/* ---- opening ------------------------------------------------------------ */
-
-.industry-page .ind-hero { padding: 72px 0 40px; }
-
-.industry-page .ind-hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
-  align-items: end;
-  gap: 64px;
 }
 
 .industry-page .ind-kicker {
@@ -37,19 +30,79 @@
   text-transform: uppercase;
 }
 
-.industry-page .ind-hero h1 {
-  max-width: 640px;
-  margin: 18px 0 0;
-  color: var(--pub-ink);
-  font-family: var(--font-serif);
-  font-size: clamp(40px, 4.6vw, 56px);
-  font-weight: 400;
-  letter-spacing: -.0234em;
-  line-height: 1.04;
+/* ---- hero ---------------------------------------------------------------
+   The header is 64 + 36 = 100 tall at this breakpoint. Subtracting the wrong
+   number left a sliver of white under the photograph. */
+
+.industry-page .ind-hero {
+  position: relative;
+  height: calc(100svh - 100px);
+  min-height: 460px;
+  overflow: hidden;
+  background: var(--pub-black);
 }
 
-.industry-page .ind-lede {
-  max-width: 460px;
+.industry-page .ind-hero > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% center;
+}
+
+.industry-page .ind-hero::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .20) 0%, rgba(0, 0, 0, 0) 36%, rgba(0, 0, 0, .58) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+.industry-page .ind-hero-copy {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 860px;
+  padding: 0 40px 40px;
+}
+
+.industry-page .ind-kicker--light { color: rgba(255, 255, 255, .72); }
+
+.industry-page .ind-hero h1 {
+  max-width: 720px;
+  margin: 12px 0 0;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 3.4vw, 48px);
+  font-weight: 400;
+  letter-spacing: -.0234em;
+  line-height: 1.05;
+}
+
+.industry-page .ind-hero-lead {
+  max-width: 520px;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, .84);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -.005em;
+  line-height: 1.6;
+}
+
+/* ---- how we work: the reading block between the picture and the list ---- */
+
+.industry-page .ind-intro { padding: 72px 0 8px; }
+
+.industry-page .ind-reading {
+  width: min(100%, var(--pub-reading));
+  margin-top: 22px;
+}
+
+.industry-page .ind-reading p {
   margin: 0;
   color: var(--pub-body);
   font-family: var(--font-serif);
@@ -59,99 +112,43 @@
   line-height: 1.65;
 }
 
-/* ---- the one wide frame ------------------------------------------------- */
+.industry-page .ind-reading p + p { margin-top: 18px; }
 
-.industry-page .ind-media { padding-bottom: 8px; }
-
-.industry-page .ind-figure { margin: 0; }
-
-.industry-page .ind-figure img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  object-position: center;
-}
-
-.industry-page .ind-figure figcaption {
-  margin-top: 10px;
-  color: var(--pub-mute);
-  font-family: var(--font-sans);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.industry-page .ind-figure--placeholder {
-  display: flex;
-  aspect-ratio: 16 / 9;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 1px solid var(--pub-hair);
-  background: var(--pub-sunken);
-  text-align: center;
-}
-
-.industry-page .ind-figure--placeholder span {
+.industry-page .ind-reading .ind-standfirst {
   color: var(--pub-ink);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: .01em;
+  font-size: 22px;
+  letter-spacing: -.02em;
+  line-height: 1.42;
 }
 
-.industry-page .ind-figure--placeholder em {
-  color: var(--pub-mute);
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-style: normal;
-  line-height: 1.5;
-}
+.industry-page .ind-reading .ind-standfirst + p { margin-top: 24px; }
 
-/* ---- sections ----------------------------------------------------------- */
+/* ---- four stages -------------------------------------------------------- */
 
-.industry-page .ind-section { padding: 64px 0; }
+.industry-page .ind-section { padding: 56px 0; }
 
-.industry-page .ind-section h2 {
-  max-width: 760px;
-  margin: 14px 0 0;
-  color: var(--pub-ink);
-  font-family: var(--font-serif);
-  font-size: clamp(28px, 3.2vw, 38px);
-  font-weight: 400;
-  letter-spacing: -.025em;
-  line-height: 1.08;
-}
-
-.industry-page .ind-section--split { border-top: 1px solid var(--pub-hair); }
-
-/* four stages: the label on the left, the studies on the right */
-
-.industry-page .ind-stages { margin-top: 40px; }
+.industry-page .ind-stages { margin-top: 32px; }
 
 .industry-page .ind-stage {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
-  gap: 40px;
+  gap: 48px;
   border-top: 1px solid var(--pub-hair);
   padding: 28px 0;
 }
 
-.industry-page .ind-stage-head h3 {
+.industry-page .ind-stage-head h2 {
   margin: 0;
   color: var(--pub-ink);
   font-family: var(--font-serif);
   font-size: 22px;
   font-weight: 400;
   letter-spacing: -.02em;
-  line-height: 1.2;
+  line-height: 1.22;
 }
 
-/* the stage number sits on the same line as the name, so the stage and the
-   first card share a baseline */
 .industry-page .ind-stage-n {
-  margin-right: 12px;
+  margin-right: 10px;
   color: var(--pub-faint);
   font-family: var(--font-sans);
   font-size: 11px;
@@ -160,72 +157,45 @@
   vertical-align: 2px;
 }
 
+.industry-page .ind-stage-frame {
+  max-width: 230px;
+  margin: 10px 0 0;
+  color: var(--pub-mute);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
 .industry-page .ind-stage-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px 40px;
 }
 
-.industry-page .ind-stage-cards h4 {
+.industry-page .ind-stage-cards h3 {
   margin: 0;
   color: var(--pub-ink);
   font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 400;
-  letter-spacing: -.02em;
-  line-height: 1.2;
-}
-
-.industry-page .ind-stage-cards .ind-proof {
-  margin: 8px 0 0;
-  color: var(--pub-mute);
-  font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 1.5;
+  letter-spacing: -.01em;
+  line-height: 1.35;
 }
 
-/* ---- copy slots (waiting for approved copy) -----------------------------
-   Dashed, muted, deliberately unfinished: nothing on this page may read as
-   finished marketing copy until the owner approves the words. */
-.industry-page .ind-slot {
-  margin: 0;
-  border: 1px dashed var(--pub-hair-2);
-  color: var(--pub-faint);
-  font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .12em;
-  line-height: 1.5;
-  padding: 12px 14px;
-  text-transform: uppercase;
-}
-
-/* ---- evidence ----------------------------------------------------------- */
-
-.industry-page .ind-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px;
-  margin: 36px 0 0;
-}
-
-.industry-page .ind-stats dt {
-  color: var(--pub-ink);
-  font-family: var(--font-serif);
-  font-size: clamp(34px, 3.4vw, 44px);
-  font-weight: 400;
-  letter-spacing: -.03em;
-  line-height: 1;
-}
-
-.industry-page .ind-stats dd {
-  max-width: 300px;
+.industry-page .ind-stage-cards p {
   margin: 10px 0 0;
   color: var(--pub-body);
   font-family: var(--font-sans);
   font-size: 14px;
   line-height: 1.6;
+}
+
+.industry-page .ind-stage-cards .ind-proof {
+  margin-top: 12px;
+  color: var(--pub-mute);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 /* ---- methods ------------------------------------------------------------ */
@@ -234,7 +204,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 32px 0 0;
+  margin: 24px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -250,99 +220,67 @@
   padding: 12px 14px;
 }
 
+/* ---- closing CTA: the only black on the page ---------------------------- */
+
+.industry-page .ind-cta {
+  background: var(--pub-black);
+  color: #fff;
+  padding: 64px 0;
+}
+
+.industry-page .ind-cta h2 {
+  max-width: 620px;
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: 1.15;
+}
+
+.industry-page .ind-cta p {
+  max-width: 460px;
+  margin: 12px 0 24px;
+  color: rgba(255, 255, 255, .72);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.industry-page .ind-cta-button {
+  display: inline-flex;
+  height: 46px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 0;
+  background: #fff;
+  color: var(--pub-black);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -.005em;
+  padding: 0 22px;
+  text-decoration: none;
+  transition: background .14s ease;
+}
+
+.industry-page .ind-cta-button:hover { background: var(--pub-sunken); }
+
 /* ---- narrow ------------------------------------------------------------- */
 
 @media (max-width: 900px) {
   .industry-page .ind-container { width: min(100% - 48px, var(--pub-container)); }
-  .industry-page .ind-hero { padding: 40px 0 28px; }
-  .industry-page .ind-hero-grid { grid-template-columns: 1fr; gap: 20px; align-items: start; }
-  .industry-page .ind-hero h1 { font-size: clamp(34px, 9vw, 44px); }
+  .industry-page .ind-hero { height: calc(100svh - 96px); min-height: 420px; }
+  .industry-page .ind-hero > img { object-position: 64% center; }
+  .industry-page .ind-hero-copy { padding: 0 20px 28px; }
+  .industry-page .ind-hero h1 { font-size: clamp(30px, 8.4vw, 38px); }
+  .industry-page .ind-intro { padding: 40px 0 0; }
+  .industry-page .ind-reading .ind-standfirst { font-size: 16px; }
   .industry-page .ind-section { padding: 40px 0; }
-  .industry-page .ind-stage { grid-template-columns: 1fr; gap: 18px; padding: 22px 0; }
+  .industry-page .ind-stage { grid-template-columns: 1fr; gap: 18px; padding: 24px 0; }
+  .industry-page .ind-stage-frame { max-width: none; }
   .industry-page .ind-stage-cards { grid-template-columns: 1fr; gap: 22px; }
-  .industry-page .ind-stages { margin-top: 28px; }
-  .industry-page .ind-stats { grid-template-columns: 1fr; gap: 24px; margin-top: 28px; }
-  .industry-page .ind-stats > div { border-top: 1px solid var(--pub-hair); padding-top: 18px; }
-  .industry-page .ind-stats dd { max-width: none; }
-  .industry-page .ind-cta { padding: 48px 0; }
+  .industry-page .ind-cta { padding: 44px 0; }
   .industry-page .ind-cta-button { width: 100%; justify-content: center; }
 }
-
-/* Where the figures come from — one muted line, no badge, no icon. */
-.industry-page .ind-note {
-  max-width: 640px;
-  margin: 32px 0 0;
-  color: var(--pub-mute);
-  font-family: var(--font-sans);
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-/* ---- full-bleed hero, same treatment as the homepage --------------------
-   The photograph fills the screen under the black bar; the headline sits at
-   the lower left in white. A soft floor gradient keeps the type legible on
-   the road without reading as a design element. */
-
-.industry-page .ind-hero-bleed {
-  position: relative;
-  height: calc(100svh - 104px);
-  min-height: 520px;
-  overflow: hidden;
-  background: var(--pub-black);
-}
-
-.industry-page .ind-hero-bleed > img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 58% center;
-}
-
-.industry-page .ind-hero-bleed::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, .22) 0%, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, .58) 100%);
-  content: '';
-  pointer-events: none;
-}
-
-.industry-page .ind-hero-bleed-copy {
-  position: absolute;
-  z-index: 1;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  max-width: 900px;
-  padding: 0 40px 44px;
-}
-
-.industry-page .ind-kicker--on-image { color: rgba(255, 255, 255, .72); }
-
-.industry-page .ind-hero-bleed h1 {
-  max-width: 720px;
-  margin: 14px 0 0;
-  color: #fff;
-  font-family: var(--font-serif);
-  font-size: clamp(38px, 4.6vw, 56px);
-  font-weight: 400;
-  letter-spacing: -.0234em;
-  line-height: 1.04;
-}
-
-.industry-page .ind-slot--on-image {
-  display: inline-block;
-  margin-top: 22px;
-  border-color: rgba(255, 255, 255, .40);
-  color: rgba(255, 255, 255, .78);
-}
-
-@media (max-width: 900px) {
-  .industry-page .ind-hero-bleed { height: calc(100svh - 96px); min-height: 460px; }
-  .industry-page .ind-hero-bleed > img { object-position: 64% center; }
-  .industry-page .ind-hero-bleed-copy { padding: 0 20px 28px; }
-}
-
-/* Wrapped stage names hang under the name, not under the number. */
-.industry-page .ind-stage-head h3 { padding-left: 32px; text-indent: -32px; }

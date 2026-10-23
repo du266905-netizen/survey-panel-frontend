@@ -30,7 +30,7 @@ export const publicNavigation = [
     id: 'industries',
     label: 'Industries',
     items: [
-      { to: '/industries/automotive', title: 'Automotive & mobility', note: 'Dealers, buyers, charging' },
+      { to: '/industries/automotive', title: 'Automotive & transportation', note: 'Vehicles, dealers, buyers' },
     ],
   },
   {
