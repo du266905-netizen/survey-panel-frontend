@@ -202,13 +202,17 @@
    Five cards, not five labels. Each one carries a judgement and its limit;
    the term alone told a buyer nothing. */
 
+.industry-page .ind-kicker--center { text-align: center; }
+
 .industry-page .ind-methods-lead {
-  max-width: 620px;
-  margin: 12px 0 0;
-  color: var(--pub-body);
+  max-width: 720px;
+  margin: 14px auto 0;
+  color: var(--pub-ink);
   font-family: var(--font-serif);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 22px;
+  letter-spacing: -.02em;
+  line-height: 1.42;
+  text-align: center;
 }
 
 .industry-page .ind-methods {
@@ -265,7 +269,7 @@
 
 .industry-page .ind-cta p {
   max-width: 460px;
-  margin: 12px 0 24px;
+  margin: 12px 0 0;
   color: rgba(255, 255, 255, .72);
   font-family: var(--font-sans);
   font-size: 14px;
@@ -291,6 +295,23 @@
 
 .industry-page .ind-cta-button:hover { background: var(--pub-sunken); }
 
+/* Second action on black: the sunken fill from the public system, not a
+   second white button competing with the first. */
+.industry-page .ind-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.industry-page .ind-cta-button--quiet {
+  border: 1px solid var(--pub-rule-dark);
+  background: var(--pub-sunken-dark);
+  color: #fff;
+}
+
+.industry-page .ind-cta-button--quiet:hover { background: #363636; }
+
 /* ---- narrow ------------------------------------------------------------- */
 
 @media (max-width: 900px) {
@@ -307,5 +328,7 @@
   .industry-page .ind-stage-cards { grid-template-columns: 1fr; gap: 22px; }
   .industry-page .ind-methods { grid-template-columns: 1fr; }
   .industry-page .ind-cta { padding: 44px 0; }
+  .industry-page .ind-methods-lead { font-size: 16px; }
+  .industry-page .ind-cta-actions { flex-direction: column; }
   .industry-page .ind-cta-button { width: 100%; justify-content: center; }
 }

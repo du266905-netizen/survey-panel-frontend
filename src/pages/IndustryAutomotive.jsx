@@ -136,7 +136,7 @@ export default function IndustryAutomotive() {
 
       <section className="ind-section ind-section--methods">
         <div className="ind-container">
-          <p className="ind-kicker">Methods</p>
+          <p className="ind-kicker ind-kicker--center">Methods</p>
           <p className="ind-methods-lead">What each method buys you, and where it stops.</p>
           <div className="ind-methods">
             {methods.map(([term, meaning]) => (
@@ -153,7 +153,10 @@ export default function IndustryAutomotive() {
         <div className="ind-container">
           <h2>Tell us the decision you have to defend.</h2>
           <p>We will come back with a design, a sample frame and a cost.</p>
-          <Link className="ind-cta-button" to="/business/access">Talk to the research team</Link>
+          <div className="ind-cta-actions">
+            <Link className="ind-cta-button" to="/business/access">Talk to the research team</Link>
+            <Link className="ind-cta-button ind-cta-button--quiet" to="/join">Join us</Link>
+          </div>
         </div>
       </section>
     </main>
