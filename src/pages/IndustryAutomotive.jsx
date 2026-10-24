@@ -75,6 +75,11 @@ const copy = {
             body: 'The path from first search to test drive, and where consideration drops before the visit.',
             methods: 'Online survey · recent buyers and considerers',
           },
+          {
+            title: 'Two-wheeler networks',
+            body: 'Scooter and motorcycle channels do not work like car showrooms: multi-brand dealers, parts availability and service quality decide the next purchase more often than the showroom does. We map coverage, stock and service standards outlet by outlet.',
+            methods: 'CATI and field visits · dealers, service points',
+          },
         ],
       },
       {
@@ -172,6 +177,11 @@ const copy = {
             body: '从第一次搜索到试驾的路径，以及到店之前意向在哪一步流失。',
             methods: '线上问卷 · 近期买家与考虑者',
           },
+          {
+            title: '两轮车渠道',
+            body: '踏板车与摩托车的渠道，和汽车展厅不是一回事：多品牌经销、配件可得性与服务质量，往往比展厅本身更能决定下一次购买。我们逐个网点摸覆盖、库存与服务标准。',
+            methods: '电话访问与实地走访 · 经销商、服务点',
+          },
         ],
       },
       {
@@ -268,6 +278,11 @@ const copy = {
             title: '從線上到展廳',
             body: '從第一次搜尋到試駕的路徑，以及到店之前意願在哪一步流失。',
             methods: '線上問卷 · 近期買家與考慮者',
+          },
+          {
+            title: '兩輪車渠道',
+            body: '踏板車與摩托車的渠道，和汽車展廳不是一回事：多品牌經銷、配件可得性與服務品質，往往比展廳本身更能決定下一次購買。我們逐個網點摸覆蓋、庫存與服務標準。',
+            methods: '電話訪問與實地走訪 · 經銷商、服務點',
           },
         ],
       },
