@@ -21,7 +21,7 @@ export default function HomeHero({ lead = '', rest = '', body = '' }) {
           <strong>{lead}{rest ? <><br />{rest}</> : null}</strong>{' '}
           <span>{body}</span>
         </p>
-        <Link className="home-hero-cta" to={withLanguage('/our-approach', language)}>Learn more</Link>
+        <Link className="home-hero-cta" to={withLanguage('/about', language)}>Learn more</Link>
       </div>
     </section>
   );

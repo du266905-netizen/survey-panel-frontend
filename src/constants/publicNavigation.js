@@ -10,12 +10,11 @@
    library in a later pass. */
 export const publicNavigation = [
   {
+    /* One page now, so the label is the link: no panel, no chevron. */
     id: 'about',
     label: 'About us',
-    items: [
-      { to: '/about', title: 'About GuanyiSearch', note: 'Who we are' },
-      { to: '/our-approach', title: 'Our approach', note: 'People first, evidence second' },
-    ],
+    to: '/about',
+    items: [],
   },
   {
     id: 'solutions',

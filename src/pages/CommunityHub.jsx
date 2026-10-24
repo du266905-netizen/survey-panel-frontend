@@ -37,7 +37,7 @@ export default function CommunityHub() {
                 {text.action}
                 <ArrowUpRight size={18} strokeWidth={1.8} aria-hidden="true" />
               </Link>
-              <Link className="community-hub-text-action" to={withLanguage('/our-approach', language)}>
+              <Link className="community-hub-text-action" to={withLanguage('/about', language)}>
                 {publicCopy.navigation.about}
                 <ArrowUpRight size={15} strokeWidth={1.8} aria-hidden="true" />
               </Link>

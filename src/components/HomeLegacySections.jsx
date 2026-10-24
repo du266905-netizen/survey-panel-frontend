@@ -36,7 +36,6 @@ function getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, res
     label: copy.about,
     links: [
       { label: copy.how, to: '/how-it-works' },
-      { label: copy.approach, to: '/our-approach' },
       { label: copy.privacy, to: '/privacy' },
       { label: copy.terms, to: '/terms' },
     ],

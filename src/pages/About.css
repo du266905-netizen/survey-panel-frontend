@@ -1,142 +1,161 @@
-/* About GuanyiSearch — reading page.
-   Title 56 serif, one lead paragraph at 22/1.6 on a 720 measure, the portrait
-   from the homepage's long-form block on the right. White ground, no cards. */
+/* About GuanyiSearch — 2026-10-25.
 
-.about-page {
-  background: #fff;
-  color: var(--pub-ink, #141413);
+   The film runs full bleed at the top. Below it: the page title on the left
+   with the two paragraphs on the right, then the China story across the full
+   width. Both large headings run at 38 on the same left edge. */
+
+.about-page { color: var(--pub-ink); }
+
+/* ---- full-bleed film ---------------------------------------------------- */
+
+.about-page .ab-film { width: 100%; }
+
+.about-page .ab-film .home-film { background: transparent; padding: 0; }
+
+.about-page .ab-film .home-film-frame {
+  width: 100%;
+  height: calc(100svh - 100px);
+  min-height: 480px;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: #141a17;
 }
 
-.about-hero {
+/* ---- document block ----------------------------------------------------- */
+
+.about-page .ab-doc,
+.about-page .ab-story {
+  width: min(100% - 96px, var(--pub-container));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.about-page .ab-doc {
+  padding: 88px 0 0;
+}
+
+/* Two equal columns, same structure on both sides: one eyebrow, one paragraph. */
+.about-page .ab-two {
   display: grid;
-  width: calc(100% - 80px);
-  max-width: 1120px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
-  gap: 64px;
-  align-items: start;
-  margin: 0 auto;
-  padding: 64px 0 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 88px;
+  margin-top: 56px;
 }
 
-.about-eyebrow {
-  margin: 0;
-  color: var(--pub-mute, #7f848a);
-  font: 500 11px/1.3 var(--font-sans);
-  letter-spacing: .14em;
-  text-transform: uppercase;
+/* The theme line sits centred, directly above the two columns. */
+.about-page .ab-head {
+  padding: 0 0 8px;
+  text-align: center;
 }
 
-.about-hero h1 {
-  margin: 18px 0 0;
-  color: var(--pub-ink, #141413);
-  font-family: var(--font-reading);
-  font-size: 56px;
+.about-page .ab-theme {
+  max-width: 900px;
+  margin: 18px auto 0;
+  font-family: var(--font-serif);
+  font-size: clamp(30px, 3.4vw, 48px);
   font-weight: 400;
-  letter-spacing: -.03em;
+  letter-spacing: -.028em;
   line-height: 1.06;
 }
 
-.about-lead {
-  max-width: 860px;
-  margin: 30px 0 0;
-  color: var(--pub-body, #565a60);
-  font-family: var(--font-reading);
-  font-size: 22px;
-  font-weight: 400;
-  letter-spacing: -.01em;
-  line-height: 1.6;
+
+
+.about-page .ab-eyebrow {
+  margin: 0 0 16px;
+  color: var(--pub-mute);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
-.about-portrait {
-  position: relative;
-  width: 100%;
+.about-page .ab-body {
   margin: 0;
-  background: transparent;
-}
-/* The source is a full cut-out: the head sits above the photograph, so the
-   transparent top must stay transparent instead of showing a box behind it.
-   Only the photograph's own bottom corners are rounded, at the research
-   button's 3px. */
-/* Full cut-out, no card and no crop: the head must sit above the photograph.
-   Only the photograph's own bottom corners take the 3px radius. */
-.about-portrait img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 0 0 3px 3px;
+  color: var(--pub-ink);
+  font-family: var(--font-serif);
+  font-size: clamp(17px, 1.35vw, 19px);
+  letter-spacing: -.006em;
+  line-height: 1.7;
 }
 
-@media (max-width: 900px) {
-  .about-hero {
-    width: calc(100% - 40px);
-    grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    padding: 40px 0 32px;
-  }
-  .about-hero h1 { font-size: 38px; }
-  .about-lead { margin-top: 20px; font-size: 16px; line-height: 1.65; }
-  .about-portrait { margin-top: 0; }
-  .about-story { width: calc(100% - 40px); padding: 24px 0 56px; }
-  .about-points { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 24px; }
+/* ---- the China story ---------------------------------------------------- */
+
+.about-page .ab-story {
+  margin-top: 96px;
+  padding-bottom: 112px;
 }
 
-/* Second section: the China / partner story. Heading left, reading column
-   right, one hairline between the two blocks. */
-.about-story {
-  display: block;
-  width: calc(100% - 80px);
-  max-width: 1120px;
-  margin: 0 auto;
-  /* same white ground as the hero: whitespace separates them, not a rule */
-  padding: 40px 0 80px;
-}
-
-.about-story h2 {
-  margin: 0;
-  color: var(--pub-ink, #141413);
-  font-family: var(--font-reading);
+.about-page .ab-section-title {
+  margin: 0 0 32px;
+  font-family: var(--font-serif);
   font-size: 38px;
   font-weight: 400;
   letter-spacing: -.025em;
-  line-height: 1.08;
+  line-height: 1.12;
 }
 
-.about-points {
+.about-page .ab-points {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 32px;
-  margin-top: 32px;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.about-point span {
-  display: block;
-  color: var(--pub-mute, #7f848a);
-  font: 500 11px/1.3 var(--font-sans);
+.about-page .ab-points li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: 10px;
+  row-gap: 8px;
+}
+
+.about-page .ab-points li > span {
+  color: var(--pub-faint);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
   letter-spacing: .14em;
+  line-height: 1.5;
+  padding-top: 2px;
 }
-.about-point h3 {
-  margin: 10px 0 0;
-  color: var(--pub-ink, #141413);
-  font-family: var(--font-reading);
-  font-size: 22px;
-  font-weight: 400;
-  letter-spacing: -.02em;
-  line-height: 1.2;
-}
-.about-point p {
-  margin: 12px 0 0;
-  color: var(--pub-body, #565a60);
-  font-family: var(--font-reading);
+
+.about-page .ab-points h3 {
+  margin: 0;
+  font-family: var(--font-sans);
   font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  line-height: 1.35;
+}
+
+.about-page .ab-points p {
+  grid-column: 2;
+  margin: 0;
+  color: var(--pub-body);
+  font-family: var(--font-sans);
+  font-size: 14px;
   line-height: 1.65;
 }
 
 @media (max-width: 900px) {
-  .about-story {
-    width: calc(100% - 40px);
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
-    padding: 40px 0 56px;
+  .about-page .ab-doc,
+  .about-page .ab-story { width: min(100% - 48px, var(--pub-container)); }
+
+  .about-page .ab-film .home-film-frame { height: calc(100svh - 96px); min-height: 380px; }
+
+  .about-page .ab-doc {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 48px;
   }
-  .about-story h2 { font-size: 38px; }
+
+  .about-page .ab-right { gap: 32px; }
+  .about-page .ab-body { font-size: 16px; }
+  .about-page .ab-story { margin-top: 56px; padding-bottom: 72px; }
+  .about-page .ab-two { grid-template-columns: 1fr; gap: 32px; margin-top: 32px; }
+  .about-page .ab-section-title { font-size: clamp(26px, 7vw, 32px); margin-bottom: 28px; }
+  .about-page .ab-points { grid-template-columns: 1fr; gap: 28px; }
 }

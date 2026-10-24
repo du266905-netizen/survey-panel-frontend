@@ -24,7 +24,6 @@ import HomeAtlas from './pages/HomeAtlas';
 import Landing from './pages/Landing';
 import NewsWall from './pages/NewsWall';
 import NewsArticlePage from './pages/NewsArticlePage';
-import OurApproach from './pages/OurApproach';
 import PanelProfilePage from './pages/PanelProfilePage';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
@@ -197,7 +196,7 @@ export default function App() {
         <Route path="/rewards" element={<PublicPage><Rewards /></PublicPage>} />
         <Route path="/contact" element={<PublicPage><Contact /></PublicPage>} />
         <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
-        <Route path="/our-approach" element={<PublicPage><OurApproach /></PublicPage>} />
+        <Route path="/our-approach" element={<Navigate to="/about" replace />} />
         <Route path="/industries/automotive" element={<PublicPage><IndustryAutomotive /></PublicPage>} />
         <Route path="/industries/travel" element={<PublicPage><IndustryTravel /></PublicPage>} />
         <Route path="/industries/consumer" element={<PublicPage><IndustryConsumer /></PublicPage>} />
