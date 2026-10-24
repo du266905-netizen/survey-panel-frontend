@@ -114,7 +114,10 @@ export default function PublicSiteHeader() {
                     <div className="psn-panel-inner">
                       <p className="psn-panel-label">{group.label}</p>
                       {/* More than five entries flow into a second column, five rows each. */}
-                      <div className={`psn-items${group.items.length > 5 ? ' psn-items--two' : ''}`}>
+                      <div
+                        className={`psn-items${group.items.length > 5 ? ' psn-items--two' : ''}`}
+                        style={group.items.length > 5 ? { gridTemplateRows: `repeat(${Math.ceil(group.items.length / 2)}, auto)` } : undefined}
+                      >
                         {group.items.map((item) => (
                           <Link className="psn-item" to={withLanguage(item.to, language)} key={item.to} onClick={closeAll}>
                             <span>

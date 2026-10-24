@@ -100,7 +100,7 @@
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(5, auto);
+  /* rows are set inline from the item count: eight items sit four and four */
   column-gap: 36px;
 }
 
