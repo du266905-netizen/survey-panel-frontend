@@ -472,3 +472,21 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--media > img { object-position: 54% 40%; }
 }
+
+/* E-commerce hero: the payment moment, used here for the shopper page. */
+.industry-page .ind-hero--ecommerce > img { object-position: 50% 100%; }
+
+.industry-page .ind-hero--ecommerce::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, .55) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, .80) 0%, rgba(0, 0, 0, .45) 34%, rgba(0, 0, 0, 0) 62%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--ecommerce > img { object-position: 34% center; }
+}

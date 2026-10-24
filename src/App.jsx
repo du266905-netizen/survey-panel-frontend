@@ -74,6 +74,7 @@ import IndustrySocial from './pages/IndustrySocial';
 import IndustryIndustrial from './pages/IndustryIndustrial';
 import IndustryTech from './pages/IndustryTech';
 import IndustryMedia from './pages/IndustryMedia';
+import IndustryEcommerce from './pages/IndustryEcommerce';
 import MarketingUnsubscribe from './pages/MarketingUnsubscribe';
 
 function ProtectedRoute({ children }) {
@@ -206,6 +207,7 @@ export default function App() {
         <Route path="/industries/industrial" element={<PublicPage><IndustryIndustrial /></PublicPage>} />
         <Route path="/industries/tech" element={<PublicPage><IndustryTech /></PublicPage>} />
         <Route path="/industries/media" element={<PublicPage><IndustryMedia /></PublicPage>} />
+        <Route path="/industries/ecommerce" element={<PublicPage><IndustryEcommerce /></PublicPage>} />
         <Route path="/news" element={<NewsRoute />} />
         <Route path="/news/:articleId" element={<NewsArticleRoute />} />
         <Route path="/partners" element={<SurveyWallRoute />} />
