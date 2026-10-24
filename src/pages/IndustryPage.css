@@ -348,3 +348,25 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--luxury > img { object-position: 42% center; }
 }
+
+/* Consumer hero: the aisle runs to the right, the shelving stays under the
+   headline on desktop; the narrow crop keeps the aisle floor behind the text
+   rather than the bright packaging on the left. */
+.industry-page .ind-hero--consumer > img { object-position: 50% 100%; }
+
+/* This frame is product-dense on the left, so the headline needs a scrim of
+   its own on that side; the aisle and the shopper stay untouched. */
+.industry-page .ind-hero--consumer::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, .55) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, .80) 0%, rgba(0, 0, 0, .45) 34%, rgba(0, 0, 0, 0) 62%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--consumer > img { object-position: 55% center; }
+}
