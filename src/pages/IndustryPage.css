@@ -490,3 +490,11 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--ecommerce > img { object-position: 34% center; }
 }
+
+/* Travel hero: the hotel room at dusk, kept from the luxury page. The left
+   third is curtain shadow, which is where the type sits. */
+.industry-page .ind-hero--travel > img { object-position: 58% center; }
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--travel > img { object-position: 42% center; }
+}

@@ -30,9 +30,9 @@ export const publicNavigation = [
     id: 'industries',
     label: 'Industries',
     items: [
-      { to: '/industries/automotive', title: 'Automotive & transportation', note: 'Vehicles, dealers, buyers' },
-      { to: '/industries/luxury', title: 'Luxury & lifestyle', note: 'Affluent buyers, brands, travel' },
-      { to: '/industries/consumer', title: 'Consumer & retail', note: 'Category, shelf, basket' },
+      { to: '/industries/automotive', title: 'Automotive', note: 'Vehicles, dealers, buyers' },
+      { to: '/industries/travel', title: 'Travel & transportation', note: 'Destinations, booking, stay' },
+      { to: '/industries/consumer', title: 'Retail & FMCG', note: 'Category, pack, shelf' },
       { to: '/industries/healthcare', title: 'Healthcare & life sciences', note: 'Patients, clinicians, access' },
       { to: '/industries/finance', title: 'Financial services & wealth', note: 'Trust, pricing, retention' },
       { to: '/industries/social', title: 'Social & education', note: 'Access, delivery, evidence' },

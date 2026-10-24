@@ -66,7 +66,7 @@ import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
 import ChinaMarketInsights from './pages/ChinaMarketInsights';
 import IndustryAutomotive from './pages/IndustryAutomotive';
-import IndustryLuxury from './pages/IndustryLuxury';
+import IndustryTravel from './pages/IndustryTravel';
 import IndustryConsumer from './pages/IndustryConsumer';
 import IndustryHealthcare from './pages/IndustryHealthcare';
 import IndustryFinance from './pages/IndustryFinance';
@@ -199,7 +199,7 @@ export default function App() {
         <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
         <Route path="/our-approach" element={<PublicPage><OurApproach /></PublicPage>} />
         <Route path="/industries/automotive" element={<PublicPage><IndustryAutomotive /></PublicPage>} />
-        <Route path="/industries/luxury" element={<PublicPage><IndustryLuxury /></PublicPage>} />
+        <Route path="/industries/travel" element={<PublicPage><IndustryTravel /></PublicPage>} />
         <Route path="/industries/consumer" element={<PublicPage><IndustryConsumer /></PublicPage>} />
         <Route path="/industries/healthcare" element={<PublicPage><IndustryHealthcare /></PublicPage>} />
         <Route path="/industries/finance" element={<PublicPage><IndustryFinance /></PublicPage>} />

@@ -15,7 +15,7 @@ import './IndustryPage.css';
 const copy = {
   'en-US': {
     kicker: 'Industries',
-    title: 'Automotive & transportation',
+    title: 'Automotive',
     lead: 'Research for car and two-wheeler manufacturers, importers and dealer groups: concept, pricing, launch and channel studies.',
     introKicker: 'How we work',
     intro: [
@@ -117,7 +117,7 @@ const copy = {
 
   'zh-CN': {
     kicker: '行业',
-    title: '汽车与交通',
+    title: '汽车',
     lead: '面向汽车与两轮车整车厂、进口商与经销商集团，提供概念、定价、上市与渠道研究。',
     introKicker: '我们如何做',
     intro: [
@@ -219,7 +219,7 @@ const copy = {
 
   'zh-Hant': {
     kicker: '產業',
-    title: '汽車與交通',
+    title: '汽車',
     lead: '面向汽車與兩輪車車廠、進口商與經銷商集團，提供概念、定價、上市與渠道研究。',
     introKicker: '我們如何做',
     intro: [
