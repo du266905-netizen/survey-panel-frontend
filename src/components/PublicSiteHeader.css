@@ -70,7 +70,9 @@
   position: absolute;
   z-index: 2;
   top: calc(100% + 36px);
-  left: -20px;
+  /* The panel hangs centred under its own trigger, so the nav word sits
+     directly above the panel rather than over its left corner. */
+  left: 50%;
   width: 380px;
   visibility: hidden;
   border: 1px solid var(--pub-hair, rgba(17, 17, 19, .12));
@@ -78,10 +80,10 @@
   box-shadow: 0 24px 48px rgba(17, 17, 19, .10);
   color: var(--pub-ink, #24272c);
   opacity: 0;
-  transform: translateY(-4px);
+  transform: translate(-50%, -4px);
   transition: opacity .14s ease, transform .14s ease, visibility .14s;
 }
-.psn-panel.is-open { visibility: visible; opacity: 1; transform: none; }
+.psn-panel.is-open { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
 
 .psn-panel-inner { padding: 26px 26px 20px; }
 .psn-panel-label {
