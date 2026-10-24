@@ -7,9 +7,8 @@ import './IndustryAutomotive.css';
 
    结构：满屏图 → 一段"我们怎么做"的阅读块（过渡）→ 四个阶段 → 方法 → 页末 CTA。
 
-   文案口径（2026-10-24 定）：只用陈述句。不写比喻、反问、对仗、俏皮话，
-   不写"不是 A，而是 B"这类聪明句式；每一条只交代做什么、产出什么、什么时候用。
-   不写无法核实的数字（交付周期、样本库规模、国家数量一律不出现）。
+   文案口径：只用陈述句，不写比喻、反问、对仗；每张卡一到两句，只写范围与产出，
+   执行细节留给方法一栏。不写无法核实的数字（交付周期、样本库规模、国家数量）。
 
    语言：en-US 为源语言，zh-CN / zh-Hant 在本文件内维护，其余语言回落英文。 */
 
@@ -34,12 +33,12 @@ const copy = {
         cards: [
           {
             title: 'Feature validation',
-            body: 'Interior layout, HMI and driver-assistance features are tested with owners and considerers before tooling. Monadic and paired comparisons are run against a defined price context, so the result measures preference within a stated price.',
+            body: 'Interior layout, HMI and driver-assistance features are tested with owners and considerers before tooling, within a defined price context.',
             methods: 'Concept and A/B testing · owners and considerers',
           },
           {
             title: 'Pricing and configuration',
-            body: 'Price sensitivity and trade-off models establish what each feature is worth and which configuration supports the intended price. Results are reported as a price range with the assumptions stated.',
+            body: 'Price sensitivity and trade-off models establish what each feature is worth and which configuration supports the intended price.',
             methods: 'Willingness-to-pay and conjoint models · CATI',
           },
         ],
@@ -51,12 +50,12 @@ const copy = {
         cards: [
           {
             title: 'Pre-launch message testing',
-            body: 'We test which proposition is understood, believed and remembered by the buyers the launch depends on, before the campaign is produced.',
+            body: 'Which proposition is understood, believed and remembered by the buyers the launch depends on, tested before the campaign is produced.',
             methods: 'Online survey and CATI · target buyers',
           },
           {
             title: 'Campaign and asset pre-testing',
-            body: 'Creative, dealer promotions and digital assets are tested for recall and purchase intent before media is committed.',
+            body: 'Creative, dealer promotions and digital assets tested for recall and purchase intent before media is committed.',
             methods: 'Concept and A/B testing · media assets',
           },
         ],
@@ -68,7 +67,7 @@ const copy = {
         cards: [
           {
             title: 'Dealer and channel performance',
-            body: 'Satisfaction, standards and training take-up across the network, and the points at which a sale is lost at the counter.',
+            body: 'Satisfaction, standards and training take-up across the network, and where a sale is lost at the counter.',
             methods: 'CATI · dealer and distributor interviews',
           },
           {
@@ -78,7 +77,7 @@ const copy = {
           },
           {
             title: 'Two-wheeler networks',
-            body: 'Scooter and motorcycle channels differ from car retail: multi-brand dealers, parts availability and service standards all affect the next purchase. Coverage, stock and service standards are checked outlet by outlet.',
+            body: 'Coverage, parts availability and service standards in scooter and motorcycle channels, checked outlet by outlet.',
             methods: 'CATI and field visits · dealers, service points',
           },
         ],
@@ -90,12 +89,12 @@ const copy = {
         cards: [
           {
             title: 'Cars: adoption and charging',
-            body: 'Private buyers assess range, charging access and price; fleets assess total cost of ownership. Readiness and barriers are reported by market, with the two buyer types kept separate.',
+            body: 'Private buyers on range, charging access and price; fleets on total cost of ownership. Reported by market.',
             methods: 'Online and CATI · owners, considerers, fleet managers',
           },
           {
             title: 'Two-wheelers: electrification and the network',
-            body: 'For scooters and motorcycles the economics differ: purchase price against running cost, charging at home versus battery swapping at a dealer, and a service network able to maintain the products sold.',
+            body: 'Purchase price against running cost, home charging versus battery swapping, and service coverage for the products sold.',
             methods: 'Online and CATI · riders, dealers, fleet operators',
           },
         ],
@@ -104,11 +103,11 @@ const copy = {
     methodsKicker: 'Methods',
     methodsLead: 'What each method produces, and when we use it.',
     methods: [
-      ['CATI', 'Structured telephone interviews run to a script, with quotas controlled by city, dealer type or buyer segment. It reaches a named list such as dealer principals or fleet managers at volume, and returns comparable numbers by region.'],
-      ['In-depth interviews', 'One-to-one interviews of 45 to 60 minutes with people a questionnaire cannot reach: dealer principals, fleet managers, senior marketers. They explain how a decision is actually made, and the output is verbatim evidence and hypotheses rather than percentages.'],
-      ['Concept and A/B testing', 'Two or more executions are tested on comparable samples with one variable changed at a time. The output shows which version to take forward and the size of the difference, before tooling or media spend.'],
-      ['Dealer and trade audits', 'The network as it operates: coverage, stock, price execution and training take-up, checked outlet by outlet by telephone census or in person. The output identifies where head office assumptions and counter practice diverge.'],
-      ['B2B panels', 'Pre-recruited decision-makers in fleets, procurement and IT, screened by company size, sector and role. For low-incidence audiences the fieldwork plan is settled before the questionnaire is written.'],
+      ['CATI', 'Scripted telephone interviews with quotas by city, dealer type or buyer segment. Reaches named lists at volume and returns comparable numbers by region.'],
+      ['In-depth interviews', '45 to 60 minute one-to-one interviews with dealer principals, fleet managers and senior marketers. The output is verbatim evidence, not percentages.'],
+      ['Concept and A/B testing', 'Two or more executions tested on comparable samples, one variable at a time. Shows which version to take forward, before tooling or media spend.'],
+      ['Dealer and trade audits', 'Coverage, stock, price execution and training take-up, checked outlet by outlet by telephone census or in person.'],
+      ['B2B panels', 'Pre-recruited fleet, procurement and IT decision-makers, screened by company size, sector and role.'],
     ],
     ctaTitle: 'Tell us the decision this research has to support.',
     ctaBody: 'You receive the findings, the evidence behind them, and the recommended next step.',
@@ -136,12 +135,12 @@ const copy = {
         cards: [
           {
             title: '功能验证',
-            body: '在开模之前，用车主与潜在买家测试内饰布局、车机交互与驾驶辅助功能。单组测试与配对比较在明确的价格语境下进行，衡量的是特定价格条件下的偏好。',
+            body: '在开模之前，用车主与潜在买家测试内饰布局、车机交互与驾驶辅助功能，并在明确的价格条件下进行。',
             methods: '概念与 A/B 测试 · 车主与考虑者',
           },
           {
             title: '定价与配置',
-            body: '价格敏感度与权衡模型确定每项配置值多少、哪种配置组合支撑得住目标价格。结果以价格区间呈现，并写明所依据的假设。',
+            body: '价格敏感度与权衡模型确定每项配置值多少、哪种配置组合支撑得住目标价格。',
             methods: '支付意愿与联合分析模型 · 电话访问',
           },
         ],
@@ -153,12 +152,12 @@ const copy = {
         cards: [
           {
             title: '上市信息测试',
-            body: '在广告制作之前，测试上市所依赖的那批买家是否理解、相信并记住了哪个主张。',
+            body: '测试上市所依赖的买家是否理解、相信并记住某个主张，在广告制作之前完成。',
             methods: '线上问卷与电话访问 · 目标买家',
           },
           {
             title: '广告与素材前测',
-            body: '在媒介投放之前，测试创意、经销商促销物料与数字素材的记忆度与购买意向。',
+            body: '在媒介投放之前，测试创意、促销物料与数字素材的记忆度与购买意向。',
             methods: '概念与 A/B 测试 · 媒介素材',
           },
         ],
@@ -170,7 +169,7 @@ const copy = {
         cards: [
           {
             title: '经销商与渠道效能',
-            body: '整个网络的满意度、标准执行与培训落地情况，以及一笔生意丢在柜台的哪一步。',
+            body: '整个网络的满意度、标准执行与培训落地，以及一笔生意丢在柜台的哪一步。',
             methods: '电话访问 · 经销商与分销商访谈',
           },
           {
@@ -180,7 +179,7 @@ const copy = {
           },
           {
             title: '两轮车渠道',
-            body: '踏板车与摩托车的渠道与汽车零售不同：多品牌经销、配件可得性与服务标准都会影响下一次购买。我们按网点逐个核对覆盖、库存与服务标准。',
+            body: '两轮车渠道的覆盖、配件可得性与服务标准，按网点逐个核对。',
             methods: '电话访问与实地走访 · 经销商、服务点',
           },
         ],
@@ -192,12 +191,12 @@ const copy = {
         cards: [
           {
             title: '汽车：采用与充电',
-            body: '私人买家评估续航、充电条件与价格；车队评估总持有成本。按市场报告准备度与阻力，两类买家分开呈现。',
+            body: '私人买家看续航、充电条件与价格；车队看总持有成本。按市场分别报告。',
             methods: '线上与电话访问 · 车主、考虑者、车队管理者',
           },
           {
             title: '两轮车：电动化与网络',
-            body: '踏板车与摩托车的账不同：购车价对使用成本、在家充电还是在门店换电，以及一个能维护所售产品的服务网络。',
+            body: '购车价对使用成本、在家充电还是门店换电，以及所售产品的服务覆盖。',
             methods: '线上与电话访问 · 骑手、经销商、车队运营方',
           },
         ],
@@ -206,11 +205,11 @@ const copy = {
     methodsKicker: '方法',
     methodsLead: '每种方法产出什么，什么情况下用它。',
     methods: [
-      ['电话访问（CATI）', '按脚本执行的电话访问，配额按城市、门店类型或买家群体控制。它能按名单大规模触达经销商老板、车队管理者这类人，产出的是各地可比的数字。'],
-      ['深度访谈', '与问卷够不到的人做 45–60 分钟的一对一访谈：经销商老板、车队管理者、资深市场负责人。他们讲清一个决定实际是怎么做出来的，产出是原话证据和假设，不是百分比。'],
-      ['概念与 A/B 测试', '把两个或多个方案放在可比样本上测试，每次只变一个变量。产出是哪一版值得推进、差距有多大；测试在开模或投放之前完成。'],
-      ['经销商与渠道普查', '看渠道实际怎么运转：覆盖、库存、价格执行与培训落地，按网点逐个核对，用电话普查或实地走访。产出是指出总部的假设与柜台的实际在哪里不一致。'],
-      ['企业决策者样本', '预先招募的车队、采购与 IT 决策者，按公司规模、行业和职位筛选。合格率低的人群，执行方案要在写问卷之前定下来。'],
+      ['电话访问（CATI）', '按脚本执行的电话访问，配额按城市、门店类型或买家群体控制；适合名单制、大批量，产出各地可比的数字。'],
+      ['深度访谈', '与问卷够不到的人做 45–60 分钟一对一访谈：经销商老板、车队管理者、资深市场负责人。产出是原话证据。'],
+      ['概念与 A/B 测试', '把两个或多个方案放在可比样本上测试，每次只变一个变量，在开模或投放之前给出结论。'],
+      ['经销商与渠道普查', '覆盖、库存、价格执行与培训落地，按网点逐个核对，用电话普查或实地走访。'],
+      ['企业决策者样本', '预先招募的车队、采购与 IT 决策者，按公司规模、行业和职位筛选。'],
     ],
     ctaTitle: '告诉我们，这项研究要支撑的那个决定。',
     ctaBody: '你会拿到结论、支撑结论的证据，以及建议的下一步。',
@@ -238,12 +237,12 @@ const copy = {
         cards: [
           {
             title: '功能驗證',
-            body: '在開模之前，用車主與潛在買家測試內飾佈局、車機互動與駕駛輔助功能。單組測試與配對比較在明確的價格語境下進行，衡量的是特定價格條件下的偏好。',
+            body: '在開模之前，用車主與潛在買家測試內飾佈局、車機互動與駕駛輔助功能，並在明確的價格條件下進行。',
             methods: '概念與 A/B 測試 · 車主與考慮者',
           },
           {
             title: '定價與配置',
-            body: '價格敏感度與權衡模型確定每項配置值多少、哪種配置組合支撐得住目標價格。結果以價格區間呈現，並寫明所依據的假設。',
+            body: '價格敏感度與權衡模型確定每項配置值多少、哪種配置組合支撐得住目標價格。',
             methods: '支付意願與聯合分析模型 · 電話訪問',
           },
         ],
@@ -255,12 +254,12 @@ const copy = {
         cards: [
           {
             title: '上市訊息測試',
-            body: '在廣告製作之前，測試上市所依賴的那批買家是否理解、相信並記住了哪個主張。',
+            body: '測試上市所依賴的買家是否理解、相信並記住某個主張，在廣告製作之前完成。',
             methods: '線上問卷與電話訪問 · 目標買家',
           },
           {
             title: '廣告與素材前測',
-            body: '在媒介投放之前，測試創意、經銷商促銷物料與數位素材的記憶度與購買意願。',
+            body: '在媒介投放之前，測試創意、促銷物料與數位素材的記憶度與購買意願。',
             methods: '概念與 A/B 測試 · 媒介素材',
           },
         ],
@@ -272,7 +271,7 @@ const copy = {
         cards: [
           {
             title: '經銷商與渠道效能',
-            body: '整個網絡的滿意度、標準執行與培訓落地情況，以及一筆生意丟在櫃台的哪一步。',
+            body: '整個網絡的滿意度、標準執行與培訓落地，以及一筆生意丟在櫃台的哪一步。',
             methods: '電話訪問 · 經銷商與分銷商訪談',
           },
           {
@@ -282,7 +281,7 @@ const copy = {
           },
           {
             title: '兩輪車渠道',
-            body: '踏板車與摩托車的渠道與汽車零售不同：多品牌經銷、配件可得性與服務標準都會影響下一次購買。我們按網點逐個核對覆蓋、庫存與服務標準。',
+            body: '兩輪車渠道的覆蓋、配件可得性與服務標準，按網點逐個核對。',
             methods: '電話訪問與實地走訪 · 經銷商、服務點',
           },
         ],
@@ -294,12 +293,12 @@ const copy = {
         cards: [
           {
             title: '汽車：採用與充電',
-            body: '私人買家評估續航、充電條件與價格；車隊評估總持有成本。按市場報告準備度與阻力，兩類買家分開呈現。',
+            body: '私人買家看續航、充電條件與價格；車隊看總持有成本。按市場分別報告。',
             methods: '線上與電話訪問 · 車主、考慮者、車隊管理者',
           },
           {
             title: '兩輪車：電動化與網絡',
-            body: '踏板車與摩托車的帳不同：購車價對使用成本、在家充電還是在門店換電，以及一個能維護所售產品的服務網絡。',
+            body: '購車價對使用成本、在家充電還是門店換電，以及所售產品的服務覆蓋。',
             methods: '線上與電話訪問 · 騎手、經銷商、車隊營運方',
           },
         ],
@@ -308,11 +307,11 @@ const copy = {
     methodsKicker: '方法',
     methodsLead: '每種方法產出什麼，什麼情況下用它。',
     methods: [
-      ['電話訪問（CATI）', '按腳本執行的電話訪問，配額按城市、門店類型或買家群體控制。它能按名單大規模觸達經銷商老闆、車隊管理者這類人，產出的是各地可比的數字。'],
-      ['深度訪談', '與問卷夠不到的人做 45–60 分鐘的一對一訪談：經銷商老闆、車隊管理者、資深市場負責人。他們講清一個決定實際是怎麼做出來的，產出是原話證據和假設，不是百分比。'],
-      ['概念與 A/B 測試', '把兩個或多個方案放在可比樣本上測試，每次只變一個變數。產出是哪一版值得推進、差距有多大；測試在開模或投放之前完成。'],
-      ['經銷商與渠道普查', '看渠道實際怎麼運轉：覆蓋、庫存、價格執行與培訓落地，按網點逐個核對，用電話普查或實地走訪。產出是指出總部的假設與櫃台的實際在哪裡不一致。'],
-      ['企業決策者樣本', '預先招募的車隊、採購與 IT 決策者，按公司規模、行業和職位篩選。合格率低的人群，執行方案要在寫問卷之前定下來。'],
+      ['電話訪問（CATI）', '按腳本執行的電話訪問，配額按城市、門店類型或買家群體控制；適合名單制、大批量，產出各地可比的數字。'],
+      ['深度訪談', '與問卷夠不到的人做 45–60 分鐘一對一訪談：經銷商老闆、車隊管理者、資深市場負責人。產出是原話證據。'],
+      ['概念與 A/B 測試', '把兩個或多個方案放在可比樣本上測試，每次只變一個變數，在開模或投放之前給出結論。'],
+      ['經銷商與渠道普查', '覆蓋、庫存、價格執行與培訓落地，按網點逐個核對，用電話普查或實地走訪。'],
+      ['企業決策者樣本', '預先招募的車隊、採購與 IT 決策者，按公司規模、行業和職位篩選。'],
     ],
     ctaTitle: '告訴我們，這項研究要支撐的那個決定。',
     ctaBody: '你會拿到結論、支撐結論的證據，以及建議的下一步。',
