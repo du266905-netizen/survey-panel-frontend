@@ -455,3 +455,20 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--tech > img { object-position: 50% 52%; }
 }
+
+/* Media hero: two heads in the dark, the screen out of focus. The seat backs
+   already carry the type; the scrim only deepens the floor. */
+.industry-page .ind-hero--media > img { object-position: 52% 78%; }
+
+.industry-page .ind-hero--media::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, .34) 72%, rgba(0, 0, 0, .74) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--media > img { object-position: 54% 40%; }
+}

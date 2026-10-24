@@ -38,6 +38,7 @@ export const publicNavigation = [
       { to: '/industries/social', title: 'Social & education', note: 'Access, delivery, evidence' },
       { to: '/industries/industrial', title: 'Industrial & building products', note: 'Dealers, specification, projects' },
       { to: '/industries/tech', title: 'Technology & digital', note: 'Roadmap, pricing, retention' },
+      { to: '/industries/media', title: 'Media & entertainment', note: 'Audience, content, advertising' },
     ],
   },
   {
