@@ -31,6 +31,7 @@ export const publicNavigation = [
     label: 'Industries',
     items: [
       { to: '/industries/automotive', title: 'Automotive & transportation', note: 'Vehicles, dealers, buyers' },
+      { to: '/industries/luxury', title: 'Luxury & lifestyle', note: 'Affluent buyers, brands, travel' },
     ],
   },
   {

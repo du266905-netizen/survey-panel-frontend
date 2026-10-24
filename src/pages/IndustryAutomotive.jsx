@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import roadImage from '../assets/industries/automotive-road.jpg';
-import './IndustryAutomotive.css';
+import './IndustryPage.css';
 
 /* 行业页——汽车与交通。2026-10-24。
 

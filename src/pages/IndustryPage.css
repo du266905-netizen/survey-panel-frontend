@@ -339,3 +339,12 @@
 
 /* The wide card keeps a reading measure, not the full 1120 line length. */
 .industry-page .ind-stage-cards article:nth-child(3):last-child p { max-width: 720px; }
+
+/* Luxury hero: the curtain shadow sits behind the headline on desktop; on
+   narrow screens the frame is pushed left so the dark fabric stays under the
+   text instead of the tiled balcony. */
+.industry-page .ind-hero--luxury > img { object-position: 58% center; }
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--luxury > img { object-position: 42% center; }
+}

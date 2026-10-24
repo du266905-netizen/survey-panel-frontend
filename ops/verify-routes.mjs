@@ -44,7 +44,7 @@ const PUBLIC_ROUTES = [
   '/business/login', '/business/access', '/business/register',
   '/forgot-password', '/reset-password', '/business/forgot-password', '/business/reset-password',
   '/privacy', '/terms', '/business/terms',
-  '/about', '/rewards', '/contact', '/how-it-works', '/our-approach', '/industries/automotive', '/news', '/china-market-insights',
+  '/about', '/rewards', '/contact', '/how-it-works', '/our-approach', '/industries/automotive', '/industries/luxury', '/news', '/china-market-insights',
   '/email/unsubscribe', '/business',
 ];
 const AUTH_ROUTES = ['/business/workspace', '/business/account', '/business/billing', '/business/budget'];
