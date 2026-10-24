@@ -5,24 +5,25 @@ import './IndustryAutomotive.css';
 
 /* 行业页——汽车与交通。2026-10-24。
 
-   结构：满屏图 → 一段"我们怎么想"的阅读块（过渡）→ 四个阶段 → 方法 → 页末 CTA。
-   文案按专业调研的写法：先写这个阶段要支撑什么决定，再写研究怎么做；
-   不写形容词，不写无法核实的数字（交付周期、样本库规模、国家数量一律不出现）。
+   结构：满屏图 → 一段"我们怎么做"的阅读块（过渡）→ 四个阶段 → 方法 → 页末 CTA。
 
-   语言：en-US 为源语言，zh-CN / zh-Hant 跟站内其它页一样在本文件内维护；
-   其余语言回落到英文，等语言库那一批再挪。 */
+   文案口径（2026-10-24 定）：只用陈述句。不写比喻、反问、对仗、俏皮话，
+   不写"不是 A，而是 B"这类聪明句式；每一条只交代做什么、产出什么、什么时候用。
+   不写无法核实的数字（交付周期、样本库规模、国家数量一律不出现）。
+
+   语言：en-US 为源语言，zh-CN / zh-Hant 在本文件内维护，其余语言回落英文。 */
 
 const copy = {
   'en-US': {
     kicker: 'Industries',
     title: 'Automotive & transportation',
-    lead: 'Concept, pricing, launch and channel studies for car and two-wheeler makers, importers and dealer groups.',
+    lead: 'Research for car and two-wheeler manufacturers, importers and dealer groups: concept, pricing, launch and channel studies.',
     introKicker: 'How we work',
     intro: [
-      'A vehicle programme commits years before the market answers. Our work is to shorten that gap with evidence a team can defend.',
-      'Category, powertrain and channel have fragmented at once: more nameplates, more price points, and a purchase that begins online and ends with a dealer who may not have the car. A single tracker no longer covers it.',
-      'Each study is built around the decision it has to support — which features earn their cost, how a price corridor holds, whether the network can sell what marketing promises, and what makes a buyer choose electric. Design, sample and reporting follow from that question, not from a preferred method.',
-      'What comes back is meant to be used: cross-tabs with weights stated, verbatims that explain the numbers, and a clear line between what the data supports and what it does not.',
+      'A vehicle programme commits investment years before market response is known. Our work is to reduce that uncertainty with evidence that can be presented to a board.',
+      'Category, powertrain and channel have fragmented at the same time. There are more nameplates and more price points, and the purchase often begins online and completes at a dealer that does not hold the model in stock. A single tracker no longer covers the category.',
+      'Each study is designed around the decision it has to support: which features justify their cost, what price range is sustainable, whether the network can deliver what the launch promises, and what conditions would make a buyer choose electric. Design, sample and reporting are set by that question.',
+      'Deliverables are built to be used: cross-tabs with weights stated, verbatims that explain the numbers, and a clear separation between what the data supports and what it does not.',
     ],
     stagesKicker: 'What we study',
     stages: [
@@ -33,12 +34,12 @@ const copy = {
         cards: [
           {
             title: 'Feature validation',
-            body: 'Interior layout, HMI and driver-assistance features tested with owners and considerers before tooling — monadic and paired comparisons, run in the price context that makes a preference mean something.',
+            body: 'Interior layout, HMI and driver-assistance features are tested with owners and considerers before tooling. Monadic and paired comparisons are run against a defined price context, so the result measures preference within a stated price.',
             methods: 'Concept and A/B testing · owners and considerers',
           },
           {
             title: 'Pricing and configuration',
-            body: 'Price sensitivity and trade-off models that show what each feature is worth and which package carries the price — reported as a corridor, not a single number.',
+            body: 'Price sensitivity and trade-off models establish what each feature is worth and which configuration supports the intended price. Results are reported as a price range with the assumptions stated.',
             methods: 'Willingness-to-pay and conjoint models · CATI',
           },
         ],
@@ -46,16 +47,16 @@ const copy = {
       {
         n: '02',
         name: 'Launch and communication',
-        frame: 'Whether the claim lands before the media spend commits.',
+        frame: 'Whether the message is understood before media spend is committed.',
         cards: [
           {
             title: 'Pre-launch message testing',
-            body: 'Which proposition is understood, believed and remembered by the buyers the launch depends on — tested before the campaign, not after.',
+            body: 'We test which proposition is understood, believed and remembered by the buyers the launch depends on, before the campaign is produced.',
             methods: 'Online survey and CATI · target buyers',
           },
           {
             title: 'Campaign and asset pre-testing',
-            body: 'Creative, dealer promotions and digital assets tested for recall and intent before media is committed.',
+            body: 'Creative, dealer promotions and digital assets are tested for recall and purchase intent before media is committed.',
             methods: 'Concept and A/B testing · media assets',
           },
         ],
@@ -63,21 +64,21 @@ const copy = {
       {
         n: '03',
         name: 'In market and channel',
-        frame: 'Whether the network can sell, hand over and keep the buyer.',
+        frame: 'Whether the network can sell, deliver and retain the buyer.',
         cards: [
           {
             title: 'Dealer and channel performance',
-            body: 'Satisfaction, standards and training take-up across the network, and the points where a sale is lost at the counter.',
+            body: 'Satisfaction, standards and training take-up across the network, and the points at which a sale is lost at the counter.',
             methods: 'CATI · dealer and distributor interviews',
           },
           {
             title: 'Online to forecourt',
-            body: 'The path from first search to test drive, and where consideration drops before the visit.',
+            body: 'The path from first search to test drive, and where consideration is lost before the visit.',
             methods: 'Online survey · recent buyers and considerers',
           },
           {
             title: 'Two-wheeler networks',
-            body: 'Scooter and motorcycle channels do not work like car showrooms: multi-brand dealers, parts availability and service quality decide the next purchase more often than the showroom does. We map coverage, stock and service standards outlet by outlet.',
+            body: 'Scooter and motorcycle channels differ from car retail: multi-brand dealers, parts availability and service standards all affect the next purchase. Coverage, stock and service standards are checked outlet by outlet.',
             methods: 'CATI and field visits · dealers, service points',
           },
         ],
@@ -85,32 +86,32 @@ const copy = {
       {
         n: '04',
         name: 'Electrification',
-        frame: 'Cars and two-wheelers meet different barriers. We study each on its own terms.',
+        frame: 'Cars and two-wheelers face different barriers, and are studied separately.',
         cards: [
           {
             title: 'Cars: adoption and charging',
-            body: 'Private buyers weigh range, charging access and price; fleets weigh total cost of ownership. Readiness and barriers read by market, with the two buyer types kept apart.',
+            body: 'Private buyers assess range, charging access and price; fleets assess total cost of ownership. Readiness and barriers are reported by market, with the two buyer types kept separate.',
             methods: 'Online and CATI · owners, considerers, fleet managers',
           },
           {
             title: 'Two-wheelers: electrification and the network',
-            body: 'Scooters and motorcycles run a different calculation: purchase price against running cost, charging at home or swapping at a dealer, and a service network that has to be able to fix what it sells.',
+            body: 'For scooters and motorcycles the economics differ: purchase price against running cost, charging at home versus battery swapping at a dealer, and a service network able to maintain the products sold.',
             methods: 'Online and CATI · riders, dealers, fleet operators',
           },
         ],
       },
     ],
     methodsKicker: 'Methods',
-    methodsLead: 'What each method buys you, and where it stops.',
+    methodsLead: 'What each method produces, and when we use it.',
     methods: [
-      ['CATI', 'Reaches a named list at scale — dealer principals, fleet managers — with quotas enforced city by city so regions stay comparable. Slow to set up, fast once live.'],
-      ['In-depth interviews', 'Forty-five minutes with the person who owns the decision. Ten of these explain a survey; a hundred of them do not scale.'],
-      ['Concept and A/B testing', 'Two cells, one variable. If you cannot name the single thing that differs, it is not a test — it is an opinion with a sample size.'],
-      ['Dealer and trade audits', 'What the network actually does, not what it reports: price executed, stock held, training used, checked outlet by outlet.'],
-      ['B2B panels', 'Decision-makers screened by company size, sector and role. Incidence is low, so the sample gets planned before the questionnaire does.'],
+      ['CATI', 'Structured telephone interviews run to a script, with quotas controlled by city, dealer type or buyer segment. It reaches a named list such as dealer principals or fleet managers at volume, and returns comparable numbers by region.'],
+      ['In-depth interviews', 'One-to-one interviews of 45 to 60 minutes with people a questionnaire cannot reach: dealer principals, fleet managers, senior marketers. They explain how a decision is actually made, and the output is verbatim evidence and hypotheses rather than percentages.'],
+      ['Concept and A/B testing', 'Two or more executions are tested on comparable samples with one variable changed at a time. The output shows which version to take forward and the size of the difference, before tooling or media spend.'],
+      ['Dealer and trade audits', 'The network as it operates: coverage, stock, price execution and training take-up, checked outlet by outlet by telephone census or in person. The output identifies where head office assumptions and counter practice diverge.'],
+      ['B2B panels', 'Pre-recruited decision-makers in fleets, procurement and IT, screened by company size, sector and role. For low-incidence audiences the fieldwork plan is settled before the questionnaire is written.'],
     ],
-    ctaTitle: 'Tell us the decision you have to defend.',
-    ctaBody: 'You get an answer you can use — the finding, the evidence, and what to do next.',
+    ctaTitle: 'Tell us the decision this research has to support.',
+    ctaBody: 'You receive the findings, the evidence behind them, and the recommended next step.',
     ctaPrimary: 'Talk to the research team',
     ctaSecondary: 'Join us',
   },
@@ -118,13 +119,13 @@ const copy = {
   'zh-CN': {
     kicker: '行业',
     title: '汽车与交通',
-    lead: '面向汽车与两轮车整车厂、进口商与经销商集团的概念、定价、上市与渠道研究。',
+    lead: '面向汽车与两轮车整车厂、进口商与经销商集团，提供概念、定价、上市与渠道研究。',
     introKicker: '我们怎么做',
     intro: [
-      '一个车型项目在市场上给出答案之前，往往已经投入数年。我们要做的，是用团队敢拿去拍板的证据，把这个间隔缩短。',
-      '品类、动力形式和渠道同时碎片化：车系更多、价格带更多，购买从线上开始，最后却落在一个可能没有现车的经销商手里。一份追踪研究覆盖不了这些。',
-      '每一项研究都围绕它要支撑的那个决定来设计——哪些配置值这个成本、价格区间能不能站住、渠道能不能卖出营销承诺的东西、什么让人愿意选择电动。设计、样本与报告都跟着问题走，不跟着我们惯用的方法走。',
-      '交付的东西是要用的：标明权重的交叉表、能解释数字的原话，以及一条清楚的界线——数据支持什么，不支持什么。',
+      '一个车型项目在了解市场反应之前，就已经投入数年。我们的工作是用可以拿到会上陈述的证据，降低这段时间的不确定性。',
+      '品类、动力形式与渠道同时碎片化：车系更多、价格带更多，购买往往从线上开始，最后完成于一家没有现车的经销商。一份追踪研究已经覆盖不了整个品类。',
+      '每项研究都围绕它要支撑的决定来设计：哪些配置能证明自己的成本、什么价格区间站得住、渠道能不能交付上市承诺、什么条件下买家会选择电动。设计、样本与报告由这个问题决定。',
+      '交付物以可用为标准：标明权重的交叉表、能解释数字的原话，并明确区分数据支持与不支持的结论。',
     ],
     stagesKicker: '我们研究什么',
     stages: [
@@ -135,12 +136,12 @@ const copy = {
         cards: [
           {
             title: '功能验证',
-            body: '在开模之前，把内饰布局、车机交互和驾驶辅助功能摆到车主与潜在买家面前——单组测试与配对比较，并放进真实的价格语境，偏好才有意义。',
+            body: '在开模之前，用车主与潜在买家测试内饰布局、车机交互与驾驶辅助功能。单组测试与配对比较在明确的价格语境下进行，衡量的是特定价格条件下的偏好。',
             methods: '概念与 A/B 测试 · 车主与考虑者',
           },
           {
             title: '定价与配置',
-            body: '价格敏感度与权衡模型，算出每项配置值多少、哪个配置组合撑得起这个价——给的是一个价格区间，不是一个数字。',
+            body: '价格敏感度与权衡模型确定每项配置值多少、哪种配置组合支撑得住目标价格。结果以价格区间呈现，并写明所依据的假设。',
             methods: '支付意愿与联合分析模型 · 电话访问',
           },
         ],
@@ -148,16 +149,16 @@ const copy = {
       {
         n: '02',
         name: '上市与传播',
-        frame: '在媒介预算花出去之前，这句话到底立不立得住。',
+        frame: '在媒介预算花出去之前，信息是否被理解。',
         cards: [
           {
             title: '上市信息测试',
-            body: '上市要依赖的那批买家，究竟听懂、相信并记住了哪个说法——在投放之前测，不是之后。',
+            body: '在广告制作之前，测试上市所依赖的那批买家是否理解、相信并记住了哪个主张。',
             methods: '线上问卷与电话访问 · 目标买家',
           },
           {
             title: '广告与素材前测',
-            body: '创意、经销商促销物料和数字素材，在投放前测记忆度与购买意向。',
+            body: '在媒介投放之前，测试创意、经销商促销物料与数字素材的记忆度与购买意向。',
             methods: '概念与 A/B 测试 · 媒介素材',
           },
         ],
@@ -165,11 +166,11 @@ const copy = {
       {
         n: '03',
         name: '在售与渠道',
-        frame: '渠道能不能卖出去、交得出去、留得住人。',
+        frame: '渠道能不能卖出去、交付出去、留得住买家。',
         cards: [
           {
             title: '经销商与渠道效能',
-            body: '整个网络的满意度、标准执行与培训落地情况，以及一笔生意丢在柜台前的哪一步。',
+            body: '整个网络的满意度、标准执行与培训落地情况，以及一笔生意丢在柜台的哪一步。',
             methods: '电话访问 · 经销商与分销商访谈',
           },
           {
@@ -179,7 +180,7 @@ const copy = {
           },
           {
             title: '两轮车渠道',
-            body: '踏板车与摩托车的渠道，和汽车展厅不是一回事：多品牌经销、配件可得性与服务质量，往往比展厅本身更能决定下一次购买。我们逐个网点摸覆盖、库存与服务标准。',
+            body: '踏板车与摩托车的渠道与汽车零售不同：多品牌经销、配件可得性与服务标准都会影响下一次购买。我们按网点逐个核对覆盖、库存与服务标准。',
             methods: '电话访问与实地走访 · 经销商、服务点',
           },
         ],
@@ -187,32 +188,32 @@ const copy = {
       {
         n: '04',
         name: '电动化',
-        frame: '汽车和两轮车的阻力不是一回事，我们分开看。',
+        frame: '汽车和两轮车面对的阻力不同，分开研究。',
         cards: [
           {
             title: '汽车：采用与充电',
-            body: '私人买家算的是续航、充电条件和车价；车队算的是总持有成本。分市场看准备度与阻力，两类买家分开读。',
+            body: '私人买家评估续航、充电条件与价格；车队评估总持有成本。按市场报告准备度与阻力，两类买家分开呈现。',
             methods: '线上与电话访问 · 车主、考虑者、车队管理者',
           },
           {
             title: '两轮车：电动化与网络',
-            body: '踏板车和摩托车是另一笔账：购车价对使用成本、在家充电还是在门店换电，以及一个必须修得了自己卖出去的车的服务网络。',
+            body: '踏板车与摩托车的账不同：购车价对使用成本、在家充电还是在门店换电，以及一个能维护所售产品的服务网络。',
             methods: '线上与电话访问 · 骑手、经销商、车队运营方',
           },
         ],
       },
     ],
     methodsKicker: '方法',
-    methodsLead: '每种方法能换来什么，以及它到哪儿为止。',
+    methodsLead: '每种方法产出什么，什么情况下用它。',
     methods: [
-      ['电话访问（CATI）', '能按名单大规模触达——经销商老板、车队管理者——并按城市控制配额，让各地可比。搭建慢，跑起来快。'],
-      ['深度访谈', '跟真正拍板的人聊四十五分钟。十来个能解释一份问卷，一百个就撑不住。'],
-      ['概念与 A/B 测试', '两组，只变一个变量。说不出差在哪一项，那就不是测试，只是一个有样本量的意见。'],
-      ['经销商与渠道普查', '看渠道实际怎么做，而不是它汇报怎么做：价格执行、库存、培训有没有用，一个点一个点核。'],
-      ['企业决策者样本', '按公司规模、行业、职位筛出的决策者。合格率低，所以先定样本，再写问卷。'],
+      ['电话访问（CATI）', '按脚本执行的电话访问，配额按城市、门店类型或买家群体控制。它能按名单大规模触达经销商老板、车队管理者这类人，产出的是各地可比的数字。'],
+      ['深度访谈', '与问卷够不到的人做 45–60 分钟的一对一访谈：经销商老板、车队管理者、资深市场负责人。他们讲清一个决定实际是怎么做出来的，产出是原话证据和假设，不是百分比。'],
+      ['概念与 A/B 测试', '把两个或多个方案放在可比样本上测试，每次只变一个变量。产出是哪一版值得推进、差距有多大；测试在开模或投放之前完成。'],
+      ['经销商与渠道普查', '看渠道实际怎么运转：覆盖、库存、价格执行与培训落地，按网点逐个核对，用电话普查或实地走访。产出是指出总部的假设与柜台的实际在哪里不一致。'],
+      ['企业决策者样本', '预先招募的车队、采购与 IT 决策者，按公司规模、行业和职位筛选。合格率低的人群，执行方案要在写问卷之前定下来。'],
     ],
-    ctaTitle: '告诉我们，你要拿去拍板的那个决定。',
-    ctaBody: '你会拿到一份能直接用的答卷——结论、依据，以及下一步怎么走。',
+    ctaTitle: '告诉我们，这项研究要支撑的那个决定。',
+    ctaBody: '你会拿到结论、支撑结论的证据，以及建议的下一步。',
     ctaPrimary: '联系研究团队',
     ctaSecondary: '加入我们',
   },
@@ -220,13 +221,13 @@ const copy = {
   'zh-Hant': {
     kicker: '產業',
     title: '汽車與交通',
-    lead: '面向汽車與兩輪車車廠、進口商與經銷商集團的概念、定價、上市與渠道研究。',
+    lead: '面向汽車與兩輪車車廠、進口商與經銷商集團，提供概念、定價、上市與渠道研究。',
     introKicker: '我們怎麼做',
     intro: [
-      '一個車型專案在市場上給出答案之前，往往已經投入數年。我們要做的，是用團隊敢拿去拍板的證據，把這個間隔縮短。',
-      '品類、動力形式和渠道同時碎片化：車系更多、價格帶更多，購買從線上開始，最後卻落在一個可能沒有現車的經銷商手裡。一份追蹤研究覆蓋不了這些。',
-      '每一項研究都圍繞它要支撐的那個決定來設計——哪些配置值這個成本、價格區間能不能站住、渠道能不能賣出營銷承諾的東西、什麼讓人願意選擇電動。設計、樣本與報告都跟著問題走，不跟著我們慣用的方法走。',
-      '交付的東西是要用的：標明權重的交叉表、能解釋數字的話，以及一條清楚的界線——資料支持什麼，不支持什麼。',
+      '一個車型專案在了解市場反應之前，就已經投入數年。我們的工作是用可以拿到會上陳述的證據，降低這段時間的不確定性。',
+      '品類、動力形式與渠道同時碎片化：車系更多、價格帶更多，購買往往從線上開始，最後完成於一家沒有現車的經銷商。一份追蹤研究已經覆蓋不了整個品類。',
+      '每項研究都圍繞它要支撐的決定來設計：哪些配置能證明自己的成本、什麼價格區間站得住、渠道能不能交付上市承諾、什麼條件下買家會選擇電動。設計、樣本與報告由這個問題決定。',
+      '交付物以可用為標準：標明權重的交叉表、能解釋數字的話，並明確區分資料支持與不支持的結論。',
     ],
     stagesKicker: '我們研究什麼',
     stages: [
@@ -237,12 +238,12 @@ const copy = {
         cards: [
           {
             title: '功能驗證',
-            body: '在開模之前，把內飾佈局、車機互動和駕駛輔助功能擺到車主與潛在買家面前——單組測試與配對比較，並放進真實的價格語境，偏好才有意義。',
+            body: '在開模之前，用車主與潛在買家測試內飾佈局、車機互動與駕駛輔助功能。單組測試與配對比較在明確的價格語境下進行，衡量的是特定價格條件下的偏好。',
             methods: '概念與 A/B 測試 · 車主與考慮者',
           },
           {
             title: '定價與配置',
-            body: '價格敏感度與權衡模型，算出每項配置值多少、哪個配置組合撐得起這個價——給的是一個價格區間，不是一個數字。',
+            body: '價格敏感度與權衡模型確定每項配置值多少、哪種配置組合支撐得住目標價格。結果以價格區間呈現，並寫明所依據的假設。',
             methods: '支付意願與聯合分析模型 · 電話訪問',
           },
         ],
@@ -250,16 +251,16 @@ const copy = {
       {
         n: '02',
         name: '上市與傳播',
-        frame: '在媒介預算花出去之前，這句話到底立不立得住。',
+        frame: '在媒介預算花出去之前，訊息是否被理解。',
         cards: [
           {
             title: '上市訊息測試',
-            body: '上市要依賴的那批買家，究竟聽懂、相信並記住了哪個說法——在投放之前測，不是之後。',
+            body: '在廣告製作之前，測試上市所依賴的那批買家是否理解、相信並記住了哪個主張。',
             methods: '線上問卷與電話訪問 · 目標買家',
           },
           {
             title: '廣告與素材前測',
-            body: '創意、經銷商促銷物料和數位素材，在投放前測記憶度與購買意願。',
+            body: '在媒介投放之前，測試創意、經銷商促銷物料與數位素材的記憶度與購買意願。',
             methods: '概念與 A/B 測試 · 媒介素材',
           },
         ],
@@ -267,11 +268,11 @@ const copy = {
       {
         n: '03',
         name: '在售與渠道',
-        frame: '渠道能不能賣出去、交得出去、留得住人。',
+        frame: '渠道能不能賣出去、交付出去、留得住買家。',
         cards: [
           {
             title: '經銷商與渠道效能',
-            body: '整個網絡的滿意度、標準執行與培訓落地情況，以及一筆生意丟在櫃台前的哪一步。',
+            body: '整個網絡的滿意度、標準執行與培訓落地情況，以及一筆生意丟在櫃台的哪一步。',
             methods: '電話訪問 · 經銷商與分銷商訪談',
           },
           {
@@ -281,7 +282,7 @@ const copy = {
           },
           {
             title: '兩輪車渠道',
-            body: '踏板車與摩托車的渠道，和汽車展廳不是一回事：多品牌經銷、配件可得性與服務品質，往往比展廳本身更能決定下一次購買。我們逐個網點摸覆蓋、庫存與服務標準。',
+            body: '踏板車與摩托車的渠道與汽車零售不同：多品牌經銷、配件可得性與服務標準都會影響下一次購買。我們按網點逐個核對覆蓋、庫存與服務標準。',
             methods: '電話訪問與實地走訪 · 經銷商、服務點',
           },
         ],
@@ -289,32 +290,32 @@ const copy = {
       {
         n: '04',
         name: '電動化',
-        frame: '汽車和兩輪車的阻力不是一回事，我們分開看。',
+        frame: '汽車和兩輪車面對的阻力不同，分開研究。',
         cards: [
           {
             title: '汽車：採用與充電',
-            body: '私人買家算的是續航、充電條件和車價；車隊算的是總持有成本。分市場看準備度與阻力，兩類買家分開讀。',
+            body: '私人買家評估續航、充電條件與價格；車隊評估總持有成本。按市場報告準備度與阻力，兩類買家分開呈現。',
             methods: '線上與電話訪問 · 車主、考慮者、車隊管理者',
           },
           {
             title: '兩輪車：電動化與網絡',
-            body: '踏板車和摩托車是另一筆帳：購車價對使用成本、在家充電還是在門店換電，以及一個必須修得了自己賣出去的車的服務網絡。',
+            body: '踏板車與摩托車的帳不同：購車價對使用成本、在家充電還是在門店換電，以及一個能維護所售產品的服務網絡。',
             methods: '線上與電話訪問 · 騎手、經銷商、車隊營運方',
           },
         ],
       },
     ],
     methodsKicker: '方法',
-    methodsLead: '每種方法能換來什麼，以及它到哪兒為止。',
+    methodsLead: '每種方法產出什麼，什麼情況下用它。',
     methods: [
-      ['電話訪問（CATI）', '能按名單大規模觸達——經銷商老闆、車隊管理者——並按城市控制配額，讓各地可比。搭建慢，跑起來快。'],
-      ['深度訪談', '跟真正拍板的人聊四十五分鐘。十來個能解釋一份問卷，一百個就撐不住。'],
-      ['概念與 A/B 測試', '兩組，只變一個變數。說不出差在哪一項，那就不是測試，只是一個有樣本量的意見。'],
-      ['經銷商與渠道普查', '看渠道實際怎麼做，而不是它匯報怎麼做：價格執行、庫存、培訓有沒有用，一個點一個點核。'],
-      ['企業決策者樣本', '按公司規模、行業、職位篩出的決策者。合格率低，所以先定樣本，再寫問卷。'],
+      ['電話訪問（CATI）', '按腳本執行的電話訪問，配額按城市、門店類型或買家群體控制。它能按名單大規模觸達經銷商老闆、車隊管理者這類人，產出的是各地可比的數字。'],
+      ['深度訪談', '與問卷夠不到的人做 45–60 分鐘的一對一訪談：經銷商老闆、車隊管理者、資深市場負責人。他們講清一個決定實際是怎麼做出來的，產出是原話證據和假設，不是百分比。'],
+      ['概念與 A/B 測試', '把兩個或多個方案放在可比樣本上測試，每次只變一個變數。產出是哪一版值得推進、差距有多大；測試在開模或投放之前完成。'],
+      ['經銷商與渠道普查', '看渠道實際怎麼運轉：覆蓋、庫存、價格執行與培訓落地，按網點逐個核對，用電話普查或實地走訪。產出是指出總部的假設與櫃台的實際在哪裡不一致。'],
+      ['企業決策者樣本', '預先招募的車隊、採購與 IT 決策者，按公司規模、行業和職位篩選。合格率低的人群，執行方案要在寫問卷之前定下來。'],
     ],
-    ctaTitle: '告訴我們，你要拿去拍板的那個決定。',
-    ctaBody: '你會拿到一份能直接用的答卷——結論、依據，以及下一步怎麼走。',
+    ctaTitle: '告訴我們，這項研究要支撐的那個決定。',
+    ctaBody: '你會拿到結論、支撐結論的證據，以及建議的下一步。',
     ctaPrimary: '聯絡研究團隊',
     ctaSecondary: '加入我們',
   },
