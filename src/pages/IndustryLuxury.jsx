@@ -82,8 +82,8 @@ const copy = {
         cards: [
           {
             title: 'Retail and service experience',
-            body: 'Assess the store, the service and the after-sales contact, and where the experience falls short of the price.',
-            methods: 'In-depth interviews · outlet checks',
+            body: 'Assess the purchase experience, the service and the after-sales contact, and where the experience falls short of the price.',
+            methods: 'In-depth interviews · customer survey',
           },
           {
             title: 'Trip decisions and destination',
@@ -183,8 +183,8 @@ const copy = {
         cards: [
           {
             title: '零售与服务体验',
-            body: '评估门店、服务与售后接触，以及体验在哪个环节配不上这个价格。',
-            methods: '深度访谈 · 门店走访',
+            body: '评估购买体验、服务与售后接触，以及体验在哪个环节配不上这个价格。',
+            methods: '深度访谈 · 客户问卷',
           },
           {
             title: '旅行决策与目的地',
@@ -284,8 +284,8 @@ const copy = {
         cards: [
           {
             title: '零售與服務體驗',
-            body: '評估門店、服務與售後接觸，以及體驗在哪個環節配不上這個價格。',
-            methods: '深度訪談 · 門店走訪',
+            body: '評估購買體驗、服務與售後接觸，以及體驗在哪個環節配不上這個價格。',
+            methods: '深度訪談 · 客戶問卷',
           },
           {
             title: '旅行決策與目的地',

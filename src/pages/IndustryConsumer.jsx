@@ -47,14 +47,14 @@ const copy = {
         frame: 'What the shopper sees, and what the shelf says.',
         cards: [
           {
-            title: 'Shelf and display',
-            body: 'Test facings, layout and signage in a real shelf context, and record what the shopper notices first.',
-            methods: 'Store checks · in-context tests',
+            title: 'Pack and shelf visibility',
+            body: 'Test pack designs against competing packs in a controlled shelf layout, and record what the shopper finds first.',
+            methods: 'Central location tests · pack stimuli',
           },
           {
             title: 'Promotion and price response',
             body: 'Measure the response to price and promotion, and how much of the lift remains afterwards.',
-            methods: 'Store checks · online survey',
+            methods: 'Online survey · price tests',
           },
         ],
       },
@@ -96,7 +96,7 @@ const copy = {
     methodsKicker: 'Methods',
     methodsLead: 'What each method is, and when we use it.',
     methods: [
-      ['Store checks and display audits', 'Visits to a defined store sample, recording display, facings, price and stock against the plan.'],
+      ['Consumer face-to-face (CAPI)', 'Structured interviews at a central location or on the street, for shoppers who are difficult to reach online.'],
       ['Product and pack tests', 'Tests of the product, the pack and the price, run at a central location or in the home.'],
       ['Online survey', 'Survey of target shoppers, with quotas set by channel, city or category spend. Used where the sample is large and turnaround matters.'],
       ['CATI', 'Scripted telephone interviews, with quotas set by city, channel or customer type. Used where the list is defined.'],
@@ -143,14 +143,14 @@ const copy = {
         frame: '购物者看到什么，货架说了什么。',
         cards: [
           {
-            title: '货架与陈列',
-            body: '在真实货架语境里测试排面、布局与标识，并记录购物者第一眼看的是什么。',
-            methods: '门店走访 · 场景测试',
+            title: '包装与货架可见性',
+            body: '在受控的货架布局里，把包装与竞品放在一起测试，记录购物者第一眼找到的是哪个。',
+            methods: '中心地点测试 · 包装素材',
           },
           {
             title: '促销与价格反应',
             body: '测量对价格与促销的反应，以及促销结束后还留下多少。',
-            methods: '门店走访 · 线上问卷',
+            methods: '线上问卷 · 价格测试',
           },
         ],
       },
@@ -192,7 +192,7 @@ const copy = {
     methodsKicker: '方法',
     methodsLead: '每种方法是什么，什么情况下用它。',
     methods: [
-      ['门店走访与陈列核查', '按设定的门店样本实地走访，记录陈列、排面、价格与库存是否按计划执行。'],
+      ['消费者面访（CAPI）', '在中心地点或街头进行的面对面结构访问，用于线上难以触达的购物者。'],
       ['产品与包装测试', '在中心地点或消费者家中，测试产品、包装与价格。'],
       ['线上问卷', '面向目标购物者的在线问卷，配额按渠道、城市或品类消费设定。用于样本量大、回收节奏紧的项目。'],
       ['电话访问（CATI）', '按脚本执行电话访问，配额按城市、渠道或客户类型设定。用于名单明确的项目。'],
@@ -239,14 +239,14 @@ const copy = {
         frame: '購物者看到什麼，貨架說了什麼。',
         cards: [
           {
-            title: '貨架與陳列',
-            body: '在真實貨架語境裡測試排面、佈局與標識，並記錄購物者第一眼看的是什麼。',
-            methods: '門店走訪 · 場景測試',
+            title: '包裝與貨架可見性',
+            body: '在受控的貨架佈局裡，把包裝與競品放在一起測試，記錄購物者第一眼找到的是哪個。',
+            methods: '中心地點測試 · 包裝素材',
           },
           {
             title: '促銷與價格反應',
             body: '測量對價格與促銷的反應，以及促銷結束後還留下多少。',
-            methods: '門店走訪 · 線上問卷',
+            methods: '線上問卷 · 價格測試',
           },
         ],
       },
@@ -288,7 +288,7 @@ const copy = {
     methodsKicker: '方法',
     methodsLead: '每種方法是什麼，什麼情況下用它。',
     methods: [
-      ['門店走訪與陳列核查', '按設定的門店樣本實地走訪，記錄陳列、排面、價格與庫存是否按計畫執行。'],
+      ['消費者面訪（CAPI）', '在中心地點或街頭進行的面對面結構訪問，用於線上難以觸達的購物者。'],
       ['產品與包裝測試', '在中心地點或消費者家中，測試產品、包裝與價格。'],
       ['線上問卷', '面向目標購物者的線上問卷，配額按渠道、城市或品類消費設定。用於樣本量大、回收節奏緊的專案。'],
       ['電話訪問（CATI）', '按腳本執行電話訪問，配額按城市、渠道或客戶類型設定。用於名單明確的專案。'],
