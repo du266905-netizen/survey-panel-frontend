@@ -33,6 +33,7 @@ export const publicNavigation = [
       { to: '/industries/automotive', title: 'Automotive & transportation', note: 'Vehicles, dealers, buyers' },
       { to: '/industries/luxury', title: 'Luxury & lifestyle', note: 'Affluent buyers, brands, travel' },
       { to: '/industries/consumer', title: 'Consumer & retail', note: 'Category, shelf, basket' },
+      { to: '/industries/healthcare', title: 'Healthcare & life sciences', note: 'Patients, clinicians, access' },
     ],
   },
   {

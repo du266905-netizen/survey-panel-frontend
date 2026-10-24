@@ -370,3 +370,20 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--consumer > img { object-position: 34% center; }
 }
+
+/* Healthcare hero: a bright corridor, so the floor gradient carries the
+   headline; the frame stays neutral and nobody's face is in it. */
+.industry-page .ind-hero--healthcare > img { object-position: 50% 58%; }
+
+.industry-page .ind-hero--healthcare::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 28%, rgba(0, 0, 0, .34) 62%, rgba(0, 0, 0, .74) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--healthcare > img { object-position: 58% 55%; }
+}
