@@ -70,6 +70,7 @@ import IndustryLuxury from './pages/IndustryLuxury';
 import IndustryConsumer from './pages/IndustryConsumer';
 import IndustryHealthcare from './pages/IndustryHealthcare';
 import IndustryFinance from './pages/IndustryFinance';
+import IndustrySocial from './pages/IndustrySocial';
 import MarketingUnsubscribe from './pages/MarketingUnsubscribe';
 
 function ProtectedRoute({ children }) {
@@ -198,6 +199,7 @@ export default function App() {
         <Route path="/industries/consumer" element={<PublicPage><IndustryConsumer /></PublicPage>} />
         <Route path="/industries/healthcare" element={<PublicPage><IndustryHealthcare /></PublicPage>} />
         <Route path="/industries/finance" element={<PublicPage><IndustryFinance /></PublicPage>} />
+        <Route path="/industries/social" element={<PublicPage><IndustrySocial /></PublicPage>} />
         <Route path="/news" element={<NewsRoute />} />
         <Route path="/news/:articleId" element={<NewsArticleRoute />} />
         <Route path="/partners" element={<SurveyWallRoute />} />

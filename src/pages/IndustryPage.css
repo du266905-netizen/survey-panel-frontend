@@ -404,3 +404,20 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--finance > img { object-position: 46% 40%; }
 }
+
+/* Social & education hero: a tall reading room. The framing keeps the distant
+   figure and the glass wall, and the shelving on the left carries the type. */
+.industry-page .ind-hero--social > img { object-position: 50% 50%; }
+
+.industry-page .ind-hero--social::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, .34) 70%, rgba(0, 0, 0, .74) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--social > img { object-position: 52% 46%; }
+}

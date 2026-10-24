@@ -110,18 +110,21 @@ export default function PublicSiteHeader() {
                 )}
 
                 {hasItems && (
-                  <div id={`psn-panel-${group.id}`} className={`psn-panel${isOpen ? ' is-open' : ''}`}>
+                  <div id={`psn-panel-${group.id}`} className={`psn-panel${isOpen ? ' is-open' : ''}${group.items.length > 5 ? ' is-wide' : ''}`}>
                     <div className="psn-panel-inner">
                       <p className="psn-panel-label">{group.label}</p>
-                      {group.items.map((item) => (
-                        <Link className="psn-item" to={withLanguage(item.to, language)} key={item.to} onClick={closeAll}>
-                          <span>
-                            <strong>{item.title}</strong>
-                            <small>{item.note}</small>
-                          </span>
-                          <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
-                        </Link>
-                      ))}
+                      {/* More than five entries flow into a second column, five rows each. */}
+                      <div className={`psn-items${group.items.length > 5 ? ' psn-items--two' : ''}`}>
+                        {group.items.map((item) => (
+                          <Link className="psn-item" to={withLanguage(item.to, language)} key={item.to} onClick={closeAll}>
+                            <span>
+                              <strong>{item.title}</strong>
+                              <small>{item.note}</small>
+                            </span>
+                            <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}

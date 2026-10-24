@@ -92,6 +92,16 @@
   text-transform: uppercase;
 }
 
+.psn-panel.is-wide { width: 760px; }
+
+.psn-items--two {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(5, auto);
+  column-gap: 36px;
+}
+
 .psn-item {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 16px;
