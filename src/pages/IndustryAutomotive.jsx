@@ -85,16 +85,16 @@ const copy = {
       {
         n: '04',
         name: 'Electrification',
-        frame: 'What opens and what blocks the move to electric.',
+        frame: 'Cars and two-wheelers meet different barriers. We study each on its own terms.',
         cards: [
           {
-            title: 'EV adoption and charging',
-            body: 'Readiness, range anxiety and charging access by market — with private buyers and fleet total-cost decisions kept apart.',
+            title: 'Cars: adoption and charging',
+            body: 'Private buyers weigh range, charging access and price; fleets weigh total cost of ownership. Readiness and barriers read by market, with the two buyer types kept apart.',
             methods: 'Online and CATI · owners, considerers, fleet managers',
           },
           {
-            title: 'Two-wheelers and micromobility',
-            body: 'Scooters and motorcycles moving electric — rider economics, charging and battery-swap expectations, and the dealer network that has to service them.',
+            title: 'Two-wheelers: electrification and the network',
+            body: 'Scooters and motorcycles run a different calculation: purchase price against running cost, charging at home or swapping at a dealer, and a service network that has to be able to fix what it sells.',
             methods: 'Online and CATI · riders, dealers, fleet operators',
           },
         ],
@@ -187,16 +187,16 @@ const copy = {
       {
         n: '04',
         name: '电动化',
-        frame: '是什么让人愿意换电，又是什么拦住了他。',
+        frame: '汽车和两轮车的阻力不是一回事，我们分开看。',
         cards: [
           {
-            title: '电动车采用与充电',
-            body: '分市场看准备度、续航焦虑与充电条件——把私人买家和算总持有成本的车队分开看。',
+            title: '汽车：采用与充电',
+            body: '私人买家算的是续航、充电条件和车价；车队算的是总持有成本。分市场看准备度与阻力，两类买家分开读。',
             methods: '线上与电话访问 · 车主、考虑者、车队管理者',
           },
           {
-            title: '两轮车与微出行',
-            body: '踏板车与摩托车的电动化——骑手的经济账、充电与换电预期，以及必须把它们修好的经销网络。',
+            title: '两轮车：电动化与网络',
+            body: '踏板车和摩托车是另一笔账：购车价对使用成本、在家充电还是在门店换电，以及一个必须修得了自己卖出去的车的服务网络。',
             methods: '线上与电话访问 · 骑手、经销商、车队运营方',
           },
         ],
@@ -289,16 +289,16 @@ const copy = {
       {
         n: '04',
         name: '電動化',
-        frame: '是什麼讓人願意換電，又是什麼攔住了他。',
+        frame: '汽車和兩輪車的阻力不是一回事，我們分開看。',
         cards: [
           {
-            title: '電動車採用與充電',
-            body: '分市場看準備度、續航焦慮與充電條件——把私人買家和算總持有成本的車隊分開看。',
+            title: '汽車：採用與充電',
+            body: '私人買家算的是續航、充電條件和車價；車隊算的是總持有成本。分市場看準備度與阻力，兩類買家分開讀。',
             methods: '線上與電話訪問 · 車主、考慮者、車隊管理者',
           },
           {
-            title: '兩輪車與微出行',
-            body: '踏板車與摩托車的電動化——騎手的經濟帳、充電與換電預期，以及必須把它們修好的經銷網絡。',
+            title: '兩輪車：電動化與網絡',
+            body: '踏板車和摩托車是另一筆帳：購車價對使用成本、在家充電還是在門店換電，以及一個必須修得了自己賣出去的車的服務網絡。',
             methods: '線上與電話訪問 · 騎手、經銷商、車隊營運方',
           },
         ],
