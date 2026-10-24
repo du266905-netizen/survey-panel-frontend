@@ -387,3 +387,20 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--healthcare > img { object-position: 58% 55%; }
 }
+
+/* Finance hero: towers shot from street level. The lower corner is a dark
+   facade already, so the scrim stays light and only lifts the type. */
+.industry-page .ind-hero--finance > img { object-position: 50% 42%; }
+
+.industry-page .ind-hero--finance::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, .38) 74%, rgba(0, 0, 0, .70) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--finance > img { object-position: 46% 40%; }
+}

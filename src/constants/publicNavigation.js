@@ -34,6 +34,7 @@ export const publicNavigation = [
       { to: '/industries/luxury', title: 'Luxury & lifestyle', note: 'Affluent buyers, brands, travel' },
       { to: '/industries/consumer', title: 'Consumer & retail', note: 'Category, shelf, basket' },
       { to: '/industries/healthcare', title: 'Healthcare & life sciences', note: 'Patients, clinicians, access' },
+      { to: '/industries/finance', title: 'Financial services & wealth', note: 'Trust, pricing, retention' },
     ],
   },
   {
