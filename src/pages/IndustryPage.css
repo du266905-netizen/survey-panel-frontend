@@ -421,3 +421,20 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--social > img { object-position: 52% 46%; }
 }
+
+/* Industrial hero: an unfinished floor. The concrete and the ceiling pipes
+   carry the scrim; the headline sits over the shaded slab, not the windows. */
+.industry-page .ind-hero--industrial > img { object-position: 42% 58%; }
+
+.industry-page .ind-hero--industrial::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, .34) 68%, rgba(0, 0, 0, .72) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--industrial > img { object-position: 44% 56%; }
+}
