@@ -12,8 +12,8 @@ import './IndustryPage.css';
 const copy = {
   'en-US': {
     kicker: 'Industries',
-    title: 'Technology',
-    lead: 'Research for software, platform and device companies: what the roadmap should hold, what it should cost, and why users leave.',
+    title: 'Technology & digital',
+    lead: 'Research for software, platform, internet and device companies: what the roadmap should hold, how it should be priced, and why users leave.',
     introKicker: 'How we work',
     intro: [
       'A technology product is decided before it ships: which features make the roadmap, which tier carries the price, and what the first weeks of use have to prove.',
@@ -108,8 +108,8 @@ const copy = {
 
   'zh-CN': {
     kicker: '行业',
-    title: '科技',
-    lead: '面向软件、平台与设备厂商：路线图放什么、如何定价与打包、用户为何流失。',
+    title: '科技与数字',
+    lead: '面向软件、平台、互联网与设备厂商：路线图放什么、如何定价与打包、用户为何流失。',
     introKicker: '我们怎么做',
     intro: [
       '科技产品在发布之前就已经被决定：哪些功能进路线图、哪一档承载价格、头几周的使用要证明什么。',
@@ -204,8 +204,8 @@ const copy = {
 
   'zh-Hant': {
     kicker: '產業',
-    title: '科技',
-    lead: '面向軟體、平台與設備廠商：路線圖放什麼、如何定價與打包、用戶為何流失。',
+    title: '科技與數位',
+    lead: '面向軟體、平台、網際網路與設備廠商：路線圖放什麼、如何定價與打包、用戶為何流失。',
     introKicker: '我們怎麼做',
     intro: [
       '科技產品在發布之前就已經被決定：哪些功能進路線圖、哪一檔承載價格、頭幾週的使用要證明什麼。',
