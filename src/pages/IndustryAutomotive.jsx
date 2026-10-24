@@ -63,7 +63,7 @@ const copy = {
       {
         n: '03',
         name: 'In market and channel',
-        frame: 'Whether the network can sell, deliver and retain the buyer.',
+        frame: 'Whether the network can complete the sale, deliver the vehicle and keep the buyer.',
         cards: [
           {
             title: 'Dealer and channel performance',
@@ -89,12 +89,12 @@ const copy = {
         cards: [
           {
             title: 'Cars: adoption and charging',
-            body: 'Private buyers on range, charging access and price; fleets on total cost of ownership. Reported by market.',
+            body: 'Private buyers weigh range, charging access and price; fleets weigh total cost of ownership. Results are reported by market.',
             methods: 'Online and CATI · owners, considerers, fleet managers',
           },
           {
             title: 'Two-wheelers: electrification and the network',
-            body: 'Purchase price against running cost, home charging versus battery swapping, and service coverage for the products sold.',
+            body: 'We examine the trade-off between purchase price and running cost, the choice between home charging and battery swapping, and service coverage for the products sold.',
             methods: 'Online and CATI · riders, dealers, fleet operators',
           },
         ],
@@ -103,11 +103,11 @@ const copy = {
     methodsKicker: 'Methods',
     methodsLead: 'What each method produces, and when we use it.',
     methods: [
-      ['CATI', 'Scripted telephone interviews with quotas by city, dealer type or buyer segment. Reaches named lists at volume and returns comparable numbers by region.'],
-      ['In-depth interviews', '45 to 60 minute one-to-one interviews with dealer principals, fleet managers and senior marketers. The output is verbatim evidence, not percentages.'],
-      ['Concept and A/B testing', 'Two or more executions tested on comparable samples, one variable at a time. Shows which version to take forward, before tooling or media spend.'],
-      ['Dealer and trade audits', 'Coverage, stock, price execution and training take-up, checked outlet by outlet by telephone census or in person.'],
-      ['B2B panels', 'Pre-recruited fleet, procurement and IT decision-makers, screened by company size, sector and role.'],
+      ['CATI', 'Scripted telephone interviews, with quotas set by city, dealer type or buyer segment. They reach a named list at volume and return comparable numbers by region.'],
+      ['In-depth interviews', 'One-to-one interviews of 45 to 60 minutes with groups a questionnaire covers poorly: dealer principals, fleet managers, senior marketers. The output is what they said, and the reading we build on it.'],
+      ['Concept and A/B testing', 'Two or more executions tested on comparable samples, with one variable changed at a time, before tooling or media spend.'],
+      ['Dealer and trade audits', 'Outlet-level checks of coverage, stock, price execution and training take-up, carried out by telephone census or in person.'],
+      ['B2B panels', 'The sample is recruited in advance: fleet, procurement and IT decision-makers, screened by company size, sector and role.'],
     ],
     ctaTitle: 'Tell us the decision this research has to support.',
     ctaBody: 'You receive the findings, the evidence behind them, and the recommended next step.',
@@ -165,7 +165,7 @@ const copy = {
       {
         n: '03',
         name: '在售与渠道',
-        frame: '渠道能不能卖出去、交付出去、留得住买家。',
+        frame: '渠道能否完成销售、交付车辆并留住买家。',
         cards: [
           {
             title: '经销商与渠道效能',
@@ -191,12 +191,12 @@ const copy = {
         cards: [
           {
             title: '汽车：采用与充电',
-            body: '私人买家看续航、充电条件与价格；车队看总持有成本。按市场分别报告。',
+            body: '私人买家关注续航、充电条件与价格；车队关注总持有成本。结果按市场分别报告。',
             methods: '线上与电话访问 · 车主、考虑者、车队管理者',
           },
           {
             title: '两轮车：电动化与网络',
-            body: '购车价对使用成本、在家充电还是门店换电，以及所售产品的服务覆盖。',
+            body: '比较购车价与使用成本的取舍、在家充电与门店换电的选择，以及所售产品的服务覆盖。',
             methods: '线上与电话访问 · 骑手、经销商、车队运营方',
           },
         ],
@@ -205,11 +205,11 @@ const copy = {
     methodsKicker: '方法',
     methodsLead: '每种方法产出什么，什么情况下用它。',
     methods: [
-      ['电话访问（CATI）', '按脚本执行的电话访问，配额按城市、门店类型或买家群体控制；适合名单制、大批量，产出各地可比的数字。'],
-      ['深度访谈', '与问卷够不到的人做 45–60 分钟一对一访谈：经销商老板、车队管理者、资深市场负责人。产出是原话证据。'],
-      ['概念与 A/B 测试', '把两个或多个方案放在可比样本上测试，每次只变一个变量，在开模或投放之前给出结论。'],
-      ['经销商与渠道普查', '覆盖、库存、价格执行与培训落地，按网点逐个核对，用电话普查或实地走访。'],
-      ['企业决策者样本', '预先招募的车队、采购与 IT 决策者，按公司规模、行业和职位筛选。'],
+      ['电话访问（CATI）', '按脚本执行电话访问，配额按城市、门店类型或买家群体设定。这种方式能按名单大规模触达，并产出各地可比的数字。'],
+      ['深度访谈', '对经销商老板、车队管理者、资深市场负责人等问卷覆盖不足的人群，进行 45–60 分钟的一对一访谈。产出是受访者的原话，以及据此形成的判断。'],
+      ['概念与 A/B 测试', '把两个或多个方案放在可比样本上测试，每次只改变一个变量，在开模或投放之前给出结论。'],
+      ['经销商与渠道普查', '按网点逐个核对覆盖、库存、价格执行与培训落地情况，方式为电话普查或实地走访。'],
+      ['企业决策者样本', '样本预先招募：车队、采购与 IT 决策者，按公司规模、行业和职位筛选。'],
     ],
     ctaTitle: '告诉我们，这项研究要支撑的那个决定。',
     ctaBody: '你会拿到结论、支撑结论的证据，以及建议的下一步。',
@@ -267,7 +267,7 @@ const copy = {
       {
         n: '03',
         name: '在售與渠道',
-        frame: '渠道能不能賣出去、交付出去、留得住買家。',
+        frame: '渠道能否完成銷售、交付車輛並留住買家。',
         cards: [
           {
             title: '經銷商與渠道效能',
@@ -293,12 +293,12 @@ const copy = {
         cards: [
           {
             title: '汽車：採用與充電',
-            body: '私人買家看續航、充電條件與價格；車隊看總持有成本。按市場分別報告。',
+            body: '私人買家關注續航、充電條件與價格；車隊關注總持有成本。結果按市場分別報告。',
             methods: '線上與電話訪問 · 車主、考慮者、車隊管理者',
           },
           {
             title: '兩輪車：電動化與網絡',
-            body: '購車價對使用成本、在家充電還是門店換電，以及所售產品的服務覆蓋。',
+            body: '比較購車價與使用成本的取捨、在家充電與門店換電的選擇，以及所售產品的服務覆蓋。',
             methods: '線上與電話訪問 · 騎手、經銷商、車隊營運方',
           },
         ],
@@ -307,11 +307,11 @@ const copy = {
     methodsKicker: '方法',
     methodsLead: '每種方法產出什麼，什麼情況下用它。',
     methods: [
-      ['電話訪問（CATI）', '按腳本執行的電話訪問，配額按城市、門店類型或買家群體控制；適合名單制、大批量，產出各地可比的數字。'],
-      ['深度訪談', '與問卷夠不到的人做 45–60 分鐘一對一訪談：經銷商老闆、車隊管理者、資深市場負責人。產出是原話證據。'],
-      ['概念與 A/B 測試', '把兩個或多個方案放在可比樣本上測試，每次只變一個變數，在開模或投放之前給出結論。'],
-      ['經銷商與渠道普查', '覆蓋、庫存、價格執行與培訓落地，按網點逐個核對，用電話普查或實地走訪。'],
-      ['企業決策者樣本', '預先招募的車隊、採購與 IT 決策者，按公司規模、行業和職位篩選。'],
+      ['電話訪問（CATI）', '按腳本執行電話訪問，配額按城市、門店類型或買家群體設定。這種方式能按名單大規模觸達，並產出各地可比的數字。'],
+      ['深度訪談', '對經銷商老闆、車隊管理者、資深市場負責人等問卷覆蓋不足的人群，進行 45–60 分鐘的一對一訪談。產出是受訪者的原話，以及據此形成的判斷。'],
+      ['概念與 A/B 測試', '把兩個或多個方案放在可比樣本上測試，每次只改變一個變數，在開模或投放之前給出結論。'],
+      ['經銷商與渠道普查', '按網點逐個核對覆蓋、庫存、價格執行與培訓落地情況，方式為電話普查或實地走訪。'],
+      ['企業決策者樣本', '樣本預先招募：車隊、採購與 IT 決策者，按公司規模、行業和職位篩選。'],
     ],
     ctaTitle: '告訴我們，這項研究要支撐的那個決定。',
     ctaBody: '你會拿到結論、支撐結論的證據，以及建議的下一步。',
