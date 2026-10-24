@@ -438,3 +438,20 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--industrial > img { object-position: 44% 56%; }
 }
+
+/* Technology hero: hands on the keyboard, shot from above. The dark desk and
+   the black hardware give the type its contrast. */
+.industry-page .ind-hero--tech > img { object-position: 46% 55%; }
+
+.industry-page .ind-hero--tech::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 36%, rgba(0, 0, 0, .32) 70%, rgba(0, 0, 0, .72) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .industry-page .ind-hero--tech > img { object-position: 50% 52%; }
+}

@@ -37,6 +37,7 @@ export const publicNavigation = [
       { to: '/industries/finance', title: 'Financial services & wealth', note: 'Trust, pricing, retention' },
       { to: '/industries/social', title: 'Social & education', note: 'Access, delivery, evidence' },
       { to: '/industries/industrial', title: 'Industrial & building products', note: 'Dealers, specification, projects' },
+      { to: '/industries/tech', title: 'Technology', note: 'Roadmap, pricing, retention' },
     ],
   },
   {
