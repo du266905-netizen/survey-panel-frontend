@@ -5067,6 +5067,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "Einzelhandel und FMCG",
+      "lead": "Forschung für Händler und für Lebensmittel-, Getränke- und Haushaltsmarken: wie sich die Kategorie verändert, was die Verpackung leisten muss und was am Regal geschieht.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Einzelhandel und Schnelldreher treffen sich im selben Gang: Die Marke entscheidet Verpackung und Preis, der Händler entscheidet Fläche und Position.",
+        "Wir untersuchen Kategorie, Verpackung und Regal getrennt, weil jedes von einem anderen Team und zu einem anderen Zeitplan entschieden wird.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll: welche Verpackung auf den Markt kommt, welchen Preis das Regal trägt und wie die Marke ihren Platz hält. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kategorie und Nachfrage",
+          "frame": "Woher die Nachfrage kommt und was sie ersetzt.",
+          "cards": [
+            {
+              "title": "Kategoriepotenzial",
+              "body": "Die Kategorie und benachbarte Kategorien beziffern und klären, woher die Nachfrage kommt und was sie ersetzt.",
+              "methods": "Online-Befragung · CATI"
+            },
+            {
+              "title": "Preisstufen und Verpackung",
+              "body": "Preisstufen und Verpackungsformate vor der Listungsverhandlung testen.",
+              "methods": "Verpackungstests · Preistests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Verpackung und Preis",
+          "frame": "Was die Verpackung leisten muss und ob der Preis hält.",
+          "cards": [
+            {
+              "title": "Verpackungstest",
+              "body": "Verpackungsdesign und Aussagen auf der Packung mit den Shoppern testen, die sie finden müssen.",
+              "methods": "Central-Location-Tests · Verpackungsstimuli"
+            },
+            {
+              "title": "Preis und Promotion",
+              "body": "Preispunkte und Promotionsmechaniken gegen das testen, was Shopper zu zahlen bereit sind.",
+              "methods": "Preistests · Online-Befragung"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Regal und Laden",
+          "frame": "Wie das Produkt im Gang gesehen wird.",
+          "cards": [
+            {
+              "title": "Regalsichtbarkeit",
+              "body": "Facings, Blockbildung und Regalaufbau in einem kontrollierten Regal testen und festhalten, was Shopper zuerst finden.",
+              "methods": "Central-Location-Tests"
+            },
+            {
+              "title": "Einkaufserlebnis",
+              "body": "Den Ladenbesuch untersuchen: wie der Shopper durch den Gang geht und was den Kauf unterbricht.",
+              "methods": "Tiefeninterviews · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Marke und Wiederkauf",
+          "frame": "Ob die Marke hält und ob der Käufer zurückkommt.",
+          "cards": [
+            {
+              "title": "Markengesundheit",
+              "body": "Bekanntheit, Erwägung und Weiterempfehlung gegen die tatsächlich verglichenen Marken tracken.",
+              "methods": "Online-Tracking · feste Messgrößen"
+            },
+            {
+              "title": "Wiederkauf und Abwanderung",
+              "body": "Wiederkäufe und die Gründe, warum ein Käufer aufhört, verfolgen.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "Central-Location-Tests",
+          "Verpackungs- und Regaltests an einem zentralen Ort, mit Regalaufbauten für die Kategorie."
+        ],
+        [
+          "Produkt- und Verpackungstests",
+          "Produkt- und Verpackungstests, an einem zentralen Ort oder zu Hause."
+        ],
+        [
+          "Consumer Face-to-Face (CAPI)",
+          "Strukturierte Interviews an einem zentralen Ort oder im Laden, für Shopper, die online schwer erreichbar sind."
+        ],
+        [
+          "Online-Befragung",
+          "Befragung von Shoppern mit Quoten nach Kanal, Stadt und Kategorieausgaben."
+        ],
+        [
+          "CATI",
+          "Standardisierte Telefoninterviews mit Quoten nach Stadt, Kanal oder Kundentyp."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "Distribution et FMCG",
+      "lead": "Études pour les distributeurs et pour les marques alimentaires, boissons et produits ménagers : comment la catégorie évolue, ce que le pack doit faire et ce qui se passe en rayon.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "Distribution et produits de grande consommation se rencontrent dans le même rayon : la marque décide du pack et du prix, le distributeur décide de l'espace et de la position.",
+        "Nous étudions la catégorie, le pack et le rayon séparément, car chacun est décidé par une équipe différente et selon un calendrier différent.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer : quel pack lancer, quel prix le rayon peut porter et comment la marque tient sa place. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Catégorie et demande",
+          "frame": "D'où vient la demande, et ce qu'elle remplace.",
+          "cards": [
+            {
+              "title": "Opportunité de catégorie",
+              "body": "Dimensionner la catégorie et les catégories adjacentes, et établir d'où vient la demande et ce qu'elle remplace.",
+              "methods": "Enquête en ligne · CATI"
+            },
+            {
+              "title": "Niveaux de prix et pack",
+              "body": "Tester les niveaux de prix et les formats de pack avant la négociation de référencement.",
+              "methods": "Tests de pack · tests de prix"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Pack et prix",
+          "frame": "Ce que le pack doit faire, et si le prix tient.",
+          "cards": [
+            {
+              "title": "Test de pack",
+              "body": "Tester le design du pack et les allégations avec les shoppers qui doivent le trouver.",
+              "methods": "Tests en lieu central · stimuli de pack"
+            },
+            {
+              "title": "Prix et promotion",
+              "body": "Tester les points de prix et les mécaniques promotionnelles face à ce que les shoppers sont prêts à payer.",
+              "methods": "Tests de prix · enquête en ligne"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Rayon et magasin",
+          "frame": "Comment le produit est vu dans le rayon.",
+          "cards": [
+            {
+              "title": "Visibilité en rayon",
+              "body": "Tester les facings, le bloc-marque et l'agencement dans un rayon contrôlé, et noter ce que les shoppers trouvent en premier.",
+              "methods": "Tests en lieu central"
+            },
+            {
+              "title": "Expérience en magasin",
+              "body": "Étudier la visite en magasin : comment le shopper circule dans le rayon et ce qui interrompt l'achat.",
+              "methods": "Entretiens approfondis · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Marque et réachat",
+          "frame": "Si la marque tient, et si l'acheteur revient.",
+          "cards": [
+            {
+              "title": "Santé de marque",
+              "body": "Suivre notoriété, considération et recommandation face aux marques réellement comparées.",
+              "methods": "Tracking en ligne · mesures fixes"
+            },
+            {
+              "title": "Réachat et attrition",
+              "body": "Suivre le réachat et les raisons pour lesquelles un acheteur s'arrête.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Tests en lieu central",
+          "Tests de pack et de rayon menés en lieu central, avec des agencements construits pour la catégorie."
+        ],
+        [
+          "Tests produit et pack",
+          "Tests produit et pack, en lieu central ou à domicile."
+        ],
+        [
+          "Face-à-face consommateur (CAPI)",
+          "Entretiens structurés en lieu central ou en magasin, pour les shoppers difficiles à joindre en ligne."
+        ],
+        [
+          "Enquête en ligne",
+          "Enquête auprès de shoppers, avec quotas par canal, ville et dépense de catégorie."
+        ],
+        [
+          "CATI",
+          "Entretiens téléphoniques scriptés, avec quotas par ville, canal ou type de client."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "Retail en FMCG",
+      "lead": "Onderzoek voor retailers en voor food-, drank- en huishoudmerken: hoe de categorie verandert, wat de verpakking moet doen en wat er in het schap gebeurt.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Retail en fastmoving ontmoeten elkaar in hetzelfde gangpad: het merk bepaalt de verpakking en de prijs, de retailer bepaalt de ruimte en de positie.",
+        "We onderzoeken categorie, verpakking en schap apart, omdat elk door een ander team en volgens een andere planning wordt besloten.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen: welke verpakking te lanceren, welke prijs het schap draagt en hoe het merk zijn plek houdt. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Categorie en vraag",
+          "frame": "Waar de vraag vandaan komt en wat zij vervangt.",
+          "cards": [
+            {
+              "title": "Categoriekans",
+              "body": "De categorie en aangrenzende categorieën kwantificeren en vaststellen waar de vraag vandaan komt en wat zij vervangt.",
+              "methods": "Online-enquête · CATI"
+            },
+            {
+              "title": "Prijsniveaus en verpakking",
+              "body": "Prijsniveaus en verpakkingsformaten testen vóór de listingonderhandeling.",
+              "methods": "Verpakkingstests · prijstests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Verpakking en prijs",
+          "frame": "Wat de verpakking moet doen en of de prijs houdt.",
+          "cards": [
+            {
+              "title": "Verpakkingstest",
+              "body": "Verpakkingsontwerp en claims op de verpakking testen met de shoppers die het moeten vinden.",
+              "methods": "Central-locationtests · verpakkingsstimuli"
+            },
+            {
+              "title": "Prijs en promotie",
+              "body": "Prijs punten en promotiemechanieken testen tegen wat shoppers willen betalen.",
+              "methods": "Prijs tests · online-enquête"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Schap en winkel",
+          "frame": "Hoe het product in het gangpad wordt gezien.",
+          "cards": [
+            {
+              "title": "Zichtbaarheid in het schap",
+              "body": "Facings, blokvorming en schapindeling testen in een gecontroleerd schap en vastleggen wat shoppers het eerst vinden.",
+              "methods": "Central-locationtests"
+            },
+            {
+              "title": "Winkelervaring",
+              "body": "Het winkelbezoek onderzoeken: hoe de shopper door het gangpad beweegt en wat de aankoop onderbreekt.",
+              "methods": "Diepte-interviews · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Merk en herhaalaankoop",
+          "frame": "Of het merk houdt en of de koper terugkomt.",
+          "cards": [
+            {
+              "title": "Merkgezondheid",
+              "body": "Bekendheid, overweging en aanbeveling volgen tegen de merken die daadwerkelijk worden vergeleken.",
+              "methods": "Online tracking · vaste maten"
+            },
+            {
+              "title": "Herhaalaankoop en uitstroom",
+              "body": "Herhaalaankopen volgen en de redenen waarom een koper stopt.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "Central-locationtests",
+          "Verpakkings- en schaptests op een centrale locatie, met schapopstellingen voor de categorie."
+        ],
+        [
+          "Product- en verpakkingstests",
+          "Product- en verpakkingstests, op een centrale locatie of thuis."
+        ],
+        [
+          "Consumer face-to-face (CAPI)",
+          "Gestructureerde interviews op een centrale locatie of in de winkel, voor shoppers die online moeilijk bereikbaar zijn."
+        ],
+        [
+          "Online-enquête",
+          "Enquête onder shoppers, met quota naar kanaal, stad en categoriebesteding."
+        ],
+        [
+          "CATI",
+          "Gescripte telefonische interviews, met quota naar stad, kanaal of klanttype."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "Detail og FMCG",
+      "lead": "Research for detailhandlere og for fødevare-, drikkevare- og husholdningsmærker: hvordan kategorien ændrer sig, hvad pakken skal gøre, og hvad der sker på hylden.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "Detail og dagligvarer mødes i samme gang: mærket beslutter pakken og prisen, detailhandleren beslutter pladsen og placeringen.",
+        "Vi undersøger kategori, pakke og hylde hver for sig, fordi hver besluttes af et andet team og efter en anden tidsplan.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte: hvilken pakke der skal lanceres, hvilken pris hylden bærer, og hvordan mærket holder sin plads. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kategori og efterspørgsel",
+          "frame": "Hvor efterspørgslen kommer fra, og hvad den erstatter.",
+          "cards": [
+            {
+              "title": "Kategorimulighed",
+              "body": "Størrelsesbestem kategorien og nabokategorierne, og fastslå, hvor efterspørgslen kommer fra, og hvad den erstatter.",
+              "methods": "Onlineundersøgelse · CATI"
+            },
+            {
+              "title": "Prisniveauer og pakke",
+              "body": "Test prisniveauer og pakkeformater før forhandlingen om listing.",
+              "methods": "Pakketests · pristests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Pakke og pris",
+          "frame": "Hvad pakken skal gøre, og om prisen holder.",
+          "cards": [
+            {
+              "title": "Pakketest",
+              "body": "Test pakkedesign og påstande på pakken med de shoppere, der skal finde den.",
+              "methods": "Central location tests · pakkestimuli"
+            },
+            {
+              "title": "Pris og promotion",
+              "body": "Test prispunkter og promotionsmekanikker mod det, shoppere vil betale.",
+              "methods": "Pristests · onlineundersøgelse"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Hylde og butik",
+          "frame": "Hvordan produktet ses i gangen.",
+          "cards": [
+            {
+              "title": "Synlighed på hylden",
+              "body": "Test facings, blokdannelse og hylde layout i en kontrolleret hylde, og notér, hvad shoppere finder først.",
+              "methods": "Central location tests"
+            },
+            {
+              "title": "Butiksoplevelse",
+              "body": "Undersøg butiksbesøget: hvordan shopperen bevæger sig gennem gangen, og hvad der afbryder købet.",
+              "methods": "Dybdeinterviews · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Mærke og genkøb",
+          "frame": "Om mærket holder, og om køberen vender tilbage.",
+          "cards": [
+            {
+              "title": "Mærkesundhed",
+              "body": "Følg kendskab, overvejelse og anbefaling mod de mærker, der faktisk sammenlignes.",
+              "methods": "Online tracking · faste mål"
+            },
+            {
+              "title": "Genkøb og frafald",
+              "body": "Følg genkøb og årsagerne til, at en køber stopper.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "Central location tests",
+          "Pakke- og hyldetests på en central lokalitet, med hyldeopstillinger bygget til kategorien."
+        ],
+        [
+          "Produkt- og pakketests",
+          "Produkt- og pakketests, på en central lokalitet eller i hjemmet."
+        ],
+        [
+          "Consumer face-to-face (CAPI)",
+          "Strukturerede interviews på en central lokalitet eller i butik, for shoppere der er svære at nå online."
+        ],
+        [
+          "Onlineundersøgelse",
+          "Undersøgelse blandt shoppere med kvoter efter kanal, by og kategoriforbrug."
+        ],
+        [
+          "CATI",
+          "Scriptede telefoninterviews med kvoter efter by, kanal eller kundetype."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Retail y gran consumo",
+      "lead": "Investigación para minoristas y para marcas de alimentación, bebidas y hogar: cómo cambia la categoría, qué debe hacer el envase y qué ocurre en el lineal.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "Retail y gran consumo se encuentran en el mismo pasillo: la marca decide el envase y el precio, el minorista decide el espacio y la posición.",
+        "Estudiamos categoría, envase y lineal por separado, porque cada uno lo decide un equipo distinto y con un calendario distinto.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener: qué envase lanzar, qué precio soporta el lineal y cómo la marca mantiene su lugar. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Categoría y demanda",
+          "frame": "De dónde viene la demanda y qué sustituye.",
+          "cards": [
+            {
+              "title": "Oportunidad de categoría",
+              "body": "Dimensionar la categoría y las adyacentes, y establecer de dónde viene la demanda y qué sustituye.",
+              "methods": "Encuesta online · CATI"
+            },
+            {
+              "title": "Niveles de precio y envase",
+              "body": "Probar niveles de precio y formatos de envase antes de la negociación del listado.",
+              "methods": "Pruebas de envase · pruebas de precio"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Envase y precio",
+          "frame": "Qué debe hacer el envase y si el precio se sostiene.",
+          "cards": [
+            {
+              "title": "Prueba de envase",
+              "body": "Probar el diseño del envase y las alegaciones con los compradores que tienen que encontrarlo.",
+              "methods": "Pruebas en ubicación central · estímulos de envase"
+            },
+            {
+              "title": "Precio y promoción",
+              "body": "Probar puntos de precio y mecánicas promocionales frente a lo que los compradores pagarán.",
+              "methods": "Pruebas de precio · encuesta online"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Lineal y tienda",
+          "frame": "Cómo se ve el producto en el pasillo.",
+          "cards": [
+            {
+              "title": "Visibilidad en el lineal",
+              "body": "Probar facings, bloqueo y disposición del lineal en un lineal controlado, y registrar qué encuentran primero los compradores.",
+              "methods": "Pruebas en ubicación central"
+            },
+            {
+              "title": "Experiencia en tienda",
+              "body": "Estudiar la visita a la tienda: cómo se mueve el comprador por el pasillo y qué interrumpe la compra.",
+              "methods": "Entrevistas en profundidad · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Marca y recompra",
+          "frame": "Si la marca aguanta y si el comprador vuelve.",
+          "cards": [
+            {
+              "title": "Salud de marca",
+              "body": "Seguir notoriedad, consideración y recomendación frente a las marcas realmente comparadas.",
+              "methods": "Tracking online · medidas fijas"
+            },
+            {
+              "title": "Recompra y abandono",
+              "body": "Seguir la recompra y los motivos por los que un comprador deja de comprar.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Pruebas en ubicación central",
+          "Pruebas de envase y lineal en una ubicación central, con lineales construidos para la categoría."
+        ],
+        [
+          "Pruebas de producto y envase",
+          "Pruebas de producto y envase, en ubicación central o en el hogar."
+        ],
+        [
+          "Consumidor cara a cara (CAPI)",
+          "Entrevistas estructuradas en ubicación central o en tienda, para compradores difíciles de alcanzar online."
+        ],
+        [
+          "Encuesta online",
+          "Encuesta a compradores, con cuotas por canal, ciudad y gasto en la categoría."
+        ],
+        [
+          "CATI",
+          "Entrevistas telefónicas guionizadas, con cuotas por ciudad, canal o tipo de cliente."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Vähittäiskauppa ja FMCG",
+      "lead": "Tutkimusta vähittäiskauppiaille ja elintarvike-, juoma- ja kotitalousbrändeille: miten kategoria muuttuu, mitä pakkauksen on tehtävä ja mitä hyllyssä tapahtuu.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Vähittäiskauppa ja nopeasti liikkuvat tuotteet kohtaavat samassa käytävässä: brändi päättää pakkauksen ja hinnan, kauppias tilan ja sijoittelun.",
+        "Tutkimme kategoriaa, pakkausta ja hyllyä erikseen, koska jokaisesta päättää eri tiimi ja eri aikataululla.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava: mikä pakkaus lanseerataan, minkä hinnan hylly kantaa ja miten brändi pitää paikkansa. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kategoria ja kysyntä",
+          "frame": "Mistä kysyntä tulee ja mitä se korvaa.",
+          "cards": [
+            {
+              "title": "Kategoriamahdollisuus",
+              "body": "Mitoita kategoria ja lähikategoriat ja selvitä, mistä kysyntä tulee ja mitä se korvaa.",
+              "methods": "Verkkokysely · CATI"
+            },
+            {
+              "title": "Hintaportaat ja pakkaus",
+              "body": "Testaa hintaportaat ja pakkausformaatit ennen listausneuvottelua.",
+              "methods": "Pakkaustestit · hintatestit"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Pakkaus ja hinta",
+          "frame": "Mitä pakkauksen on tehtävä ja pitääkö hinta.",
+          "cards": [
+            {
+              "title": "Pakkaustesti",
+              "body": "Testaa pakkausdesign ja pakkauksen väitteet ostajilla, joiden on löydettävä se.",
+              "methods": "Central location -testit · pakkausärsykkeet"
+            },
+            {
+              "title": "Hinta ja promootio",
+              "body": "Testaa hintapisteet ja promootiomekaniikat sitä vastaan, mitä ostajat maksavat.",
+              "methods": "Hintatestit · verkkokysely"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Hylly ja myymälä",
+          "frame": "Miten tuote nähdään käytävässä.",
+          "cards": [
+            {
+              "title": "Näkyvyys hyllyssä",
+              "body": "Testaa facings, blokkaus ja hyllyasettelu kontrolloidussa hyllyssä ja kirjaa, mitä ostajat löytävät ensin.",
+              "methods": "Central location -testit"
+            },
+            {
+              "title": "Myymäläkokemus",
+              "body": "Tutki myymäläkäyntiä: miten ostaja liikkuu käytävässä ja mikä keskeyttää oston.",
+              "methods": "Syvähaastattelut · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Brändi ja uusintaosto",
+          "frame": "Pitääkö brändi ja palaako ostaja.",
+          "cards": [
+            {
+              "title": "Brändin terveys",
+              "body": "Seuraa tunnettuutta, harkintaa ja suosittelua niitä brändejä vastaan, joita todella verrataan.",
+              "methods": "Verkkotracking · kiinteät mittarit"
+            },
+            {
+              "title": "Uusintaosto ja menetys",
+              "body": "Seuraa uusintaostoja ja syitä, miksi ostaja lopettaa.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "Central location -testit",
+          "Pakkaus- ja hyllytestit keskitetyssä tilassa, kategorialle rakennetuin hyllyin."
+        ],
+        [
+          "Tuote- ja pakkaustestit",
+          "Tuote- ja pakkaustestit keskitetyssä tilassa tai kotona."
+        ],
+        [
+          "Consumer face-to-face (CAPI)",
+          "Jäsennellyt haastattelut keskitetyssä tilassa tai myymälässä ostajille, joita on vaikea tavoittaa verkossa."
+        ],
+        [
+          "Verkkokysely",
+          "Kysely ostajille, kiintiöt kanavan, kaupungin ja kategoriakulutuksen mukaan."
+        ],
+        [
+          "CATI",
+          "Käsikirjoitetut puhelinhaastattelut, kiintiöt kaupungin, kanavan tai asiakastyypin mukaan."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "Retail e largo consumo",
+      "lead": "Ricerche per retailer e per marchi food, beverage e casa: come cambia la categoria, cosa deve fare il pack e cosa accade sullo scaffale.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "Retail e largo consumo si incontrano nello stesso corridoio: il marchio decide pack e prezzo, il retailer decide spazio e posizione.",
+        "Studiamo categoria, pack e scaffale separatamente, perché ciascuno è deciso da un team diverso e con tempi diversi.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere: quale pack lanciare, quale prezzo lo scaffale sostiene e come il marchio mantiene il suo posto. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Categoria e domanda",
+          "frame": "Da dove viene la domanda e cosa sostituisce.",
+          "cards": [
+            {
+              "title": "Opportunità di categoria",
+              "body": "Dimensionare la categoria e quelle adiacenti, e stabilire da dove viene la domanda e cosa sostituisce.",
+              "methods": "Indagine online · CATI"
+            },
+            {
+              "title": "Fasce di prezzo e pack",
+              "body": "Testare fasce di prezzo e formati di pack prima della negoziazione di listing.",
+              "methods": "Test di pack · test di prezzo"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Pack e prezzo",
+          "frame": "Cosa deve fare il pack e se il prezzo tiene.",
+          "cards": [
+            {
+              "title": "Test di pack",
+              "body": "Testare design del pack e claim con gli shopper che devono trovarlo.",
+              "methods": "Test in location centrale · stimoli di pack"
+            },
+            {
+              "title": "Prezzo e promozione",
+              "body": "Testare punti di prezzo e meccaniche promozionali rispetto a quanto gli shopper sono disposti a pagare.",
+              "methods": "Test di prezzo · indagine online"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Scaffale e punto vendita",
+          "frame": "Come il prodotto viene visto nel corridoio.",
+          "cards": [
+            {
+              "title": "Visibilità a scaffale",
+              "body": "Testare facings, blocking e layout in uno scaffale controllato, e registrare cosa trovano prima gli shopper.",
+              "methods": "Test in location centrale"
+            },
+            {
+              "title": "Esperienza in store",
+              "body": "Studiare la visita: come lo shopper si muove nel corridoio e cosa interrompe l'acquisto.",
+              "methods": "Interviste in profondità · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Marchio e riacquisto",
+          "frame": "Se il marchio tiene e se l'acquirente torna.",
+          "cards": [
+            {
+              "title": "Salute del marchio",
+              "body": "Monitorare notorietà, considerazione e raccomandazione rispetto ai marchi realmente confrontati.",
+              "methods": "Tracking online · misure fisse"
+            },
+            {
+              "title": "Riacquisto e abbandono",
+              "body": "Monitorare il riacquisto e i motivi per cui un acquirente smette.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Test in location centrale",
+          "Test di pack e scaffale in location centrale, con espositori costruiti per la categoria."
+        ],
+        [
+          "Test di prodotto e pack",
+          "Test di prodotto e pack, in location centrale o a casa."
+        ],
+        [
+          "Consumatore face-to-face (CAPI)",
+          "Interviste strutturate in location centrale o in store, per shopper difficili da raggiungere online."
+        ],
+        [
+          "Indagine online",
+          "Indagine su shopper, con quote per canale, città e spesa di categoria."
+        ],
+        [
+          "CATI",
+          "Interviste telefoniche scriptate, con quote per città, canale o tipo di cliente."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "小売と日用品",
+      "lead": "小売事業者と、食品・飲料・家庭用品ブランド向けの調査：カテゴリーがどう変わり、パッケージが何を担い、棚で何が起きるか。",
+      "introKicker": "進め方",
+      "intro": [
+        "小売と日用品は同じ売り場で出会います。ブランドがパッケージと価格を、小売が場所と位置を決めます。",
+        "カテゴリー、パッケージ、棚を分けて調べます。それぞれ別のチームが、別の時間軸で決めるからです。",
+        "各調査は、それが支えるべき意思決定を中心に設計します。どのパッケージを出すのか、棚がどの価格を支えるのか、ブランドがどう地位を保つのか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "カテゴリーと需要",
+          "frame": "需要がどこから来て、何を置き換えるのか。",
+          "cards": [
+            {
+              "title": "カテゴリー機会",
+              "body": "カテゴリーと隣接カテゴリーの規模を測り、需要がどこから来て何を置き換えるのかを明らかにします。",
+              "methods": "オンライン調査 · CATI"
+            },
+            {
+              "title": "価格帯とパッケージ",
+              "body": "取引条件の交渉前に、価格帯とパッケージ形態をテストします。",
+              "methods": "パッケージテスト · 価格テスト"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "パッケージと価格",
+          "frame": "パッケージが何をすべきか、価格が持つか。",
+          "cards": [
+            {
+              "title": "パッケージテスト",
+              "body": "見つけなければならない買い物客とともに、パッケージデザインと表示をテストします。",
+              "methods": "セントラルロケーション調査 · パッケージ刺激"
+            },
+            {
+              "title": "価格と販促",
+              "body": "買い物客が支払う額に対して、価格帯と販促の仕組みをテストします。",
+              "methods": "価格テスト · オンライン調査"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "棚と店頭",
+          "frame": "売り場で商品がどう見えるか。",
+          "cards": [
+            {
+              "title": "棚での見え方",
+              "body": "管理された棚でフェイシング、ブロッキング、棚割りをテストし、買い物客が最初に見つけるものを記録します。",
+              "methods": "セントラルロケーション調査"
+            },
+            {
+              "title": "店頭体験",
+              "body": "来店を調べます。買い物客が売り場をどう動き、何が購入を中断させるか。",
+              "methods": "デプスインタビュー · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "ブランドと再購入",
+          "frame": "ブランドが持つか、買い手が戻るか。",
+          "cards": [
+            {
+              "title": "ブランドの健全性",
+              "body": "実際に比較されるブランドに対して、認知・検討・推奨を追跡します。",
+              "methods": "オンライントラッキング · 固定指標"
+            },
+            {
+              "title": "再購入と離脱",
+              "body": "再購入と、買い手がやめる理由を追跡します。",
+              "methods": "トラッキング · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "セントラルロケーション調査",
+          "カテゴリー向けに棚を組んだセントラルロケーションで、パッケージと棚のテストを行います。"
+        ],
+        [
+          "製品・パッケージテスト",
+          "製品とパッケージのテスト。セントラルロケーションまたは自宅で実施します。"
+        ],
+        [
+          "消費者対面調査（CAPI）",
+          "セントラルロケーションまたは店頭での構造化インタビュー。オンラインで届きにくい買い物客向けです。"
+        ],
+        [
+          "オンライン調査",
+          "買い物客調査。チャネル、都市、カテゴリー支出で割り付けます。"
+        ],
+        [
+          "CATI",
+          "スクリプトに沿った電話調査。都市、チャネル、顧客タイプで割り付けます。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "유통과 생활용품",
+      "lead": "유통 사업자와 식품·음료·가정용품 브랜드를 위한 조사: 카테고리가 어떻게 변하는지, 패키지가 무엇을 해야 하는지, 매대에서 무슨 일이 일어나는지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "유통과 생활용품은 같은 통로에서 만납니다. 브랜드는 패키지와 가격을, 유통은 진열 공간과 위치를 결정합니다.",
+        "카테고리, 패키지, 매대를 따로 조사합니다. 각각 다른 팀이 다른 일정으로 결정하기 때문입니다.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다. 어떤 패키지를 출시할지, 매대가 어떤 가격을 감당할지, 브랜드가 어떻게 자리를 지킬지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "카테고리와 수요",
+          "frame": "수요가 어디서 오고 무엇을 대체하는가.",
+          "cards": [
+            {
+              "title": "카테고리 기회",
+              "body": "카테고리와 인접 카테고리의 규모를 측정하고 수요가 어디서 오며 무엇을 대체하는지 밝힙니다.",
+              "methods": "온라인 조사 · CATI"
+            },
+            {
+              "title": "가격대와 패키지",
+              "body": "입점 협상 전에 가격대와 패키지 형태를 테스트합니다.",
+              "methods": "패키지 테스트 · 가격 테스트"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "패키지와 가격",
+          "frame": "패키지가 무엇을 해야 하는지, 가격이 버티는지.",
+          "cards": [
+            {
+              "title": "패키지 테스트",
+              "body": "찾아야 하는 구매자와 함께 패키지 디자인과 표시 문구를 테스트합니다.",
+              "methods": "센트럴 로케이션 테스트 · 패키지 자극물"
+            },
+            {
+              "title": "가격과 프로모션",
+              "body": "구매자가 지불할 금액에 맞춰 가격대와 프로모션 방식을 테스트합니다.",
+              "methods": "가격 테스트 · 온라인 조사"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "매대와 매장",
+          "frame": "통로에서 상품이 어떻게 보이는가.",
+          "cards": [
+            {
+              "title": "매대 가시성",
+              "body": "통제된 매대에서 페이싱, 블로킹, 진열을 테스트하고 구매자가 무엇을 먼저 찾는지 기록합니다.",
+              "methods": "센트럴 로케이션 테스트"
+            },
+            {
+              "title": "매장 경험",
+              "body": "매장 방문을 조사합니다. 구매자가 통로를 어떻게 이동하고 무엇이 구매를 끊는지.",
+              "methods": "심층 인터뷰 · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "브랜드와 재구매",
+          "frame": "브랜드가 버티는지, 구매자가 돌아오는지.",
+          "cards": [
+            {
+              "title": "브랜드 건강도",
+              "body": "실제로 비교되는 브랜드를 기준으로 인지, 고려, 추천을 추적합니다.",
+              "methods": "온라인 트래킹 · 고정 지표"
+            },
+            {
+              "title": "재구매와 이탈",
+              "body": "재구매와 구매자가 그만두는 이유를 추적합니다.",
+              "methods": "트래킹 · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "센트럴 로케이션 테스트",
+          "카테고리에 맞춰 매대를 구성한 센트럴 로케이션에서 패키지와 매대 테스트를 진행합니다."
+        ],
+        [
+          "제품·패키지 테스트",
+          "제품과 패키지 테스트. 센트럴 로케이션 또는 가정에서 진행합니다."
+        ],
+        [
+          "소비자 대면 조사(CAPI)",
+          "센트럴 로케이션이나 매장에서의 구조화 인터뷰. 온라인으로 닿기 어려운 구매자 대상입니다."
+        ],
+        [
+          "온라인 조사",
+          "구매자 조사. 채널, 도시, 카테고리 지출로 할당합니다."
+        ],
+        [
+          "CATI",
+          "스크립트 기반 전화 조사. 도시, 채널, 고객 유형으로 할당합니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "Handel og dagligvarer",
+      "lead": "Forskning for handelsaktører og for mat-, drikke- og husholdningsmerker: hvordan kategorien endrer seg, hva emballasjen må gjøre, og hva som skjer i hyllen.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "Handel og dagligvarer møtes i samme gang: merket bestemmer emballasjen og prisen, handelsaktøren bestemmer plassen og posisjonen.",
+        "Vi undersøker kategori, emballasje og hylle hver for seg, fordi hver av dem besluttes av et annet team og etter en annen tidsplan.",
+        "Hver studie designes rundt beslutningen den skal støtte: hvilken emballasje som skal lanseres, hvilken pris hyllen tåler, og hvordan merket holder plassen sin. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kategori og etterspørsel",
+          "frame": "Hvor etterspørselen kommer fra, og hva den erstatter.",
+          "cards": [
+            {
+              "title": "Kategorimulighet",
+              "body": "Dimensjoner kategorien og nabokategoriene, og fastslå hvor etterspørselen kommer fra og hva den erstatter.",
+              "methods": "Nettundersøkelse · CATI"
+            },
+            {
+              "title": "Prisnivåer og emballasje",
+              "body": "Test prisnivåer og emballasjeformater før forhandlingen om listing.",
+              "methods": "Emballasjetester · pristester"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Emballasje og pris",
+          "frame": "Hva emballasjen må gjøre, og om prisen holder.",
+          "cards": [
+            {
+              "title": "Emballasjetest",
+              "body": "Test emballasjedesign og påstander med kjøperne som må finne den.",
+              "methods": "Central location-tester · emballasjestimuli"
+            },
+            {
+              "title": "Pris og kampanje",
+              "body": "Test prispunkter og kampanjemekanikker mot det kjøperne vil betale.",
+              "methods": "Pristester · nettundersøkelse"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Hylle og butikk",
+          "frame": "Hvordan produktet ses i gangen.",
+          "cards": [
+            {
+              "title": "Synlighet i hyllen",
+              "body": "Test facings, blokkering og hylleoppsett i en kontrollert hylle, og registrer hva kjøperne finner først.",
+              "methods": "Central location-tester"
+            },
+            {
+              "title": "Butikkopplevelse",
+              "body": "Undersøk butikkbesøket: hvordan kjøperen beveger seg gjennom gangen, og hva som avbryter kjøpet.",
+              "methods": "Dybdeintervjuer · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Merke og gjenkjøp",
+          "frame": "Om merket holder, og om kjøperen kommer tilbake.",
+          "cards": [
+            {
+              "title": "Merkehelse",
+              "body": "Følg kjennskap, vurdering og anbefaling mot merkene som faktisk sammenlignes.",
+              "methods": "Nettracking · faste mål"
+            },
+            {
+              "title": "Gjenkjøp og frafall",
+              "body": "Følg gjenkjøp og årsakene til at en kjøper slutter.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "Central location-tester",
+          "Emballasje- og hylletester på et sentralt sted, med hylleoppsett bygget for kategorien."
+        ],
+        [
+          "Produkt- og emballasjetester",
+          "Produkt- og emballasjetester, på et sentralt sted eller hjemme."
+        ],
+        [
+          "Forbruker ansikt til ansikt (CAPI)",
+          "Strukturerte intervjuer på et sentralt sted eller i butikk, for kjøpere som er vanskelige å nå på nett."
+        ],
+        [
+          "Nettundersøkelse",
+          "Undersøkelse blant kjøpere, med kvoter etter kanal, by og kategoriforbruk."
+        ],
+        [
+          "CATI",
+          "Skriptede telefonintervjuer, med kvoter etter by, kanal eller kundetype."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Retalho e grande consumo",
+      "lead": "Investigação para retalhistas e para marcas de alimentação, bebidas e casa: como a categoria está a mudar, o que a embalagem tem de fazer e o que acontece na prateleira.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "Retalho e grande consumo encontram-se no mesmo corredor: a marca decide a embalagem e o preço, o retalhista decide o espaço e a posição.",
+        "Estudamos categoria, embalagem e prateleira em separado, porque cada uma é decidida por uma equipa diferente e num calendário diferente.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar: que embalagem lançar, que preço a prateleira suporta e como a marca mantém o seu lugar. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Categoria e procura",
+          "frame": "De onde vem a procura e o que substitui.",
+          "cards": [
+            {
+              "title": "Oportunidade de categoria",
+              "body": "Dimensionar a categoria e as adjacentes, e estabelecer de onde vem a procura e o que substitui.",
+              "methods": "Inquérito online · CATI"
+            },
+            {
+              "title": "Níveis de preço e embalagem",
+              "body": "Testar níveis de preço e formatos de embalagem antes da negociação de listagem.",
+              "methods": "Testes de embalagem · testes de preço"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Embalagem e preço",
+          "frame": "O que a embalagem tem de fazer e se o preço se mantém.",
+          "cards": [
+            {
+              "title": "Teste de embalagem",
+              "body": "Testar o design da embalagem e as alegações com os compradores que a têm de encontrar.",
+              "methods": "Testes em local central · estímulos de embalagem"
+            },
+            {
+              "title": "Preço e promoção",
+              "body": "Testar pontos de preço e mecânicas promocionais face ao que os compradores pagam.",
+              "methods": "Testes de preço · inquérito online"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Prateleira e loja",
+          "frame": "Como o produto é visto no corredor.",
+          "cards": [
+            {
+              "title": "Visibilidade na prateleira",
+              "body": "Testar facings, bloqueio e disposição numa prateleira controlada, e registar o que os compradores encontram primeiro.",
+              "methods": "Testes em local central"
+            },
+            {
+              "title": "Experiência em loja",
+              "body": "Estudar a visita: como o comprador se move no corredor e o que interrompe a compra.",
+              "methods": "Entrevistas em profundidade · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Marca e recompra",
+          "frame": "Se a marca aguenta e se o comprador volta.",
+          "cards": [
+            {
+              "title": "Saúde de marca",
+              "body": "Acompanhar notoriedade, consideração e recomendação face às marcas realmente comparadas.",
+              "methods": "Tracking online · medidas fixas"
+            },
+            {
+              "title": "Recompra e abandono",
+              "body": "Acompanhar a recompra e as razões pelas quais um comprador pára.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Testes em local central",
+          "Testes de embalagem e prateleira em local central, com expositores construídos para a categoria."
+        ],
+        [
+          "Testes de produto e embalagem",
+          "Testes de produto e embalagem, em local central ou em casa."
+        ],
+        [
+          "Consumidor cara a cara (CAPI)",
+          "Entrevistas estruturadas em local central ou em loja, para compradores difíceis de alcançar online."
+        ],
+        [
+          "Inquérito online",
+          "Inquérito a compradores, com quotas por canal, cidade e despesa na categoria."
+        ],
+        [
+          "CATI",
+          "Entrevistas telefónicas guionizadas, com quotas por cidade, canal ou tipo de cliente."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Розница и FMCG",
+      "lead": "Исследования для ритейлеров и для брендов продуктов питания, напитков и товаров для дома: как меняется категория, что должна делать упаковка и что происходит на полке.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Розница и товары повседневного спроса встречаются в одном проходе: бренд решает упаковку и цену, ритейлер решает место и позицию.",
+        "Мы изучаем категорию, упаковку и полку по отдельности, потому что каждое решение принимает другая команда и в другом графике.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать: какую упаковку выпускать, какую цену выдержит полка и как бренд удерживает место. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Категория и спрос",
+          "frame": "Откуда приходит спрос и что он заменяет.",
+          "cards": [
+            {
+              "title": "Возможность категории",
+              "body": "Оценить категорию и смежные, понять, откуда приходит спрос и что он заменяет.",
+              "methods": "Онлайн-опрос · CATI"
+            },
+            {
+              "title": "Ценовые уровни и упаковка",
+              "body": "Проверить ценовые уровни и форматы упаковки до переговоров о листинге.",
+              "methods": "Тесты упаковки · ценовые тесты"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Упаковка и цена",
+          "frame": "Что должна делать упаковка и выдерживает ли цену.",
+          "cards": [
+            {
+              "title": "Тест упаковки",
+              "body": "Проверить дизайн упаковки и заявления с покупателями, которым её нужно найти.",
+              "methods": "Тесты в центральной локации · стимулы упаковки"
+            },
+            {
+              "title": "Цена и промо",
+              "body": "Проверить ценовые точки и механики промо относительно того, что готовы платить покупатели.",
+              "methods": "Ценовые тесты · онлайн-опрос"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Полка и магазин",
+          "frame": "Как продукт виден в проходе.",
+          "cards": [
+            {
+              "title": "Заметность на полке",
+              "body": "Проверить фейсинги, блокировку и раскладку на контролируемой полке и зафиксировать, что покупатели находят первым.",
+              "methods": "Тесты в центральной локации"
+            },
+            {
+              "title": "Опыт в магазине",
+              "body": "Изучить посещение магазина: как покупатель движется по проходу и что прерывает покупку.",
+              "methods": "Глубинные интервью · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Бренд и повторная покупка",
+          "frame": "Удерживается ли бренд и возвращается ли покупатель.",
+          "cards": [
+            {
+              "title": "Здоровье бренда",
+              "body": "Отслеживать известность, рассмотрение и рекомендацию относительно реально сравниваемых брендов.",
+              "methods": "Онлайн-трекинг · фиксированные показатели"
+            },
+            {
+              "title": "Повторная покупка и отток",
+              "body": "Отслеживать повторные покупки и причины, по которым покупатель прекращает.",
+              "methods": "Трекинг · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Тесты в центральной локации",
+          "Тесты упаковки и полки в центральной локации, с выкладкой, собранной под категорию."
+        ],
+        [
+          "Тесты продукта и упаковки",
+          "Тесты продукта и упаковки в центральной локации или дома."
+        ],
+        [
+          "Потребитель лицом к лицу (CAPI)",
+          "Структурированные интервью в центральной локации или в магазине — для покупателей, которых трудно застать онлайн."
+        ],
+        [
+          "Онлайн-опрос",
+          "Опрос покупателей с квотами по каналу, городу и расходам в категории."
+        ],
+        [
+          "CATI",
+          "Телефонные интервью по скрипту с квотами по городу, каналу или типу клиента."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "Handel och dagligvaror",
+      "lead": "Undersökningar för handlare och för mat-, dryckes- och hushållsvarumärken: hur kategorin förändras, vad förpackningen måste göra och vad som händer i hyllan.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "Handel och dagligvaror möts i samma gång: varumärket bestämmer förpackning och pris, handlaren bestämmer ytan och placeringen.",
+        "Vi undersöker kategori, förpackning och hylla var för sig, eftersom var och en beslutas av olika team och i olika takt.",
+        "Varje studie byggs kring det beslut den ska stödja: vilken förpackning som ska lanseras, vilket pris hyllan bär och hur varumärket håller sin plats. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kategori och efterfrågan",
+          "frame": "Varifrån efterfrågan kommer och vad den ersätter.",
+          "cards": [
+            {
+              "title": "Kategorimöjlighet",
+              "body": "Storleksbestäm kategorin och angränsande kategorier, och fastställ varifrån efterfrågan kommer och vad den ersätter.",
+              "methods": "Onlineundersökning · CATI"
+            },
+            {
+              "title": "Prisnivåer och förpackning",
+              "body": "Testa prisnivåer och förpackningsformat före listningsförhandlingen.",
+              "methods": "Förpackningstester · pristester"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Förpackning och pris",
+          "frame": "Vad förpackningen måste göra och om priset håller.",
+          "cards": [
+            {
+              "title": "Förpackningstest",
+              "body": "Testa förpackningsdesign och påståenden med de shoppare som måste hitta den.",
+              "methods": "Central location-tester · förpackningsstimuli"
+            },
+            {
+              "title": "Pris och kampanj",
+              "body": "Testa prispunkter och kampanjmekanik mot vad shoppare betalar.",
+              "methods": "Pristester · onlineundersökning"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Hylla och butik",
+          "frame": "Hur produkten syns i gången.",
+          "cards": [
+            {
+              "title": "Synlighet i hyllan",
+              "body": "Testa facings, blockning och hyllayout i en kontrollerad hylla, och registrera vad shoppare hittar först.",
+              "methods": "Central location-tester"
+            },
+            {
+              "title": "Butiksupplevelse",
+              "body": "Undersök butiksbesöket: hur shopparen rör sig genom gången och vad som avbryter köpet.",
+              "methods": "Djupintervjuer · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Varumärke och återköp",
+          "frame": "Om varumärket håller och om köparen återvänder.",
+          "cards": [
+            {
+              "title": "Varumärkeshälsa",
+              "body": "Följ kännedom, övervägande och rekommendation mot de varumärken som faktiskt jämförs.",
+              "methods": "Onlinetracking · fasta mått"
+            },
+            {
+              "title": "Återköp och tapp",
+              "body": "Följ återköp och orsakerna till att en köpare slutar.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "Central location-tester",
+          "Förpacknings- och hylltester på en central plats, med hyllor byggda för kategorin."
+        ],
+        [
+          "Produkt- och förpackningstester",
+          "Produkt- och förpackningstester, på central plats eller hemma."
+        ],
+        [
+          "Konsument ansikte mot ansikte (CAPI)",
+          "Strukturerade intervjuer på central plats eller i butik, för shoppare som är svåra att nå online."
+        ],
+        [
+          "Onlineundersökning",
+          "Undersökning bland shoppare, med kvoter efter kanal, stad och kategorispendering."
+        ],
+        [
+          "CATI",
+          "Skriptade telefonintervjuer, med kvoter efter stad, kanal eller kundtyp."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "Perakende ve hızlı tüketim",
+      "lead": "Perakendeciler ve gıda, içecek, ev ürünleri markaları için araştırma: kategori nasıl değişiyor, ambalaj ne yapmalı ve rafta ne oluyor.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Perakende ve hızlı tüketim aynı koridorda buluşur: marka ambalajı ve fiyatı, perakendeci alanı ve konumu belirler.",
+        "Kategoriyi, ambalajı ve rafı ayrı ayrı inceliyoruz; çünkü her biri farklı bir ekip tarafından, farklı bir takvimle kararlaştırılır.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır: hangi ambalaj çıkacak, raf hangi fiyatı taşıyacak ve marka yerini nasıl koruyacak. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kategori ve talep",
+          "frame": "Talebin nereden geldiği ve neyin yerini aldığı.",
+          "cards": [
+            {
+              "title": "Kategori fırsatı",
+              "body": "Kategoriyi ve komşu kategorileri ölçün; talebin nereden geldiğini ve neyin yerini aldığını ortaya koyun.",
+              "methods": "Çevrimiçi anket · CATI"
+            },
+            {
+              "title": "Fiyat kademeleri ve ambalaj",
+              "body": "Listeleme görüşmesinden önce fiyat kademelerini ve ambalaj formatlarını test edin.",
+              "methods": "Ambalaj testleri · fiyat testleri"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Ambalaj ve fiyat",
+          "frame": "Ambalajın ne yapması gerektiği ve fiyatın tutup tutmadığı.",
+          "cards": [
+            {
+              "title": "Ambalaj testi",
+              "body": "Ambalaj tasarımını ve ambalaj üzerindeki iddiaları, onu bulması gereken alışverişçilerle test edin.",
+              "methods": "Merkezi lokasyon testleri · ambalaj uyaranları"
+            },
+            {
+              "title": "Fiyat ve promosyon",
+              "body": "Fiyat noktalarını ve promosyon mekaniklerini, alışverişçilerin ödeyeceği tutara göre test edin.",
+              "methods": "Fiyat testleri · çevrimiçi anket"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Raf ve mağaza",
+          "frame": "Ürünün koridorda nasıl görüldüğü.",
+          "cards": [
+            {
+              "title": "Raf görünürlüğü",
+              "body": "Kontrollü bir rafta facing, bloklama ve raf yerleşimini test edin; alışverişçilerin ilk ne bulduğunu kaydedin.",
+              "methods": "Merkezi lokasyon testleri"
+            },
+            {
+              "title": "Mağaza deneyimi",
+              "body": "Mağaza ziyaretini inceleyin: alışverişçi koridorda nasıl hareket ediyor ve satın almayı ne kesiyor.",
+              "methods": "Derinlemesine görüşmeler · CAPI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Marka ve tekrar alım",
+          "frame": "Markanın tutup tutmadığı ve alıcının geri dönüp dönmediği.",
+          "cards": [
+            {
+              "title": "Marka sağlığı",
+              "body": "Bilinirlik, değerlendirme ve tavsiyeyi gerçekten karşılaştırılan markalara göre izleyin.",
+              "methods": "Çevrimiçi tracking · sabit ölçütler"
+            },
+            {
+              "title": "Tekrar alım ve kayıp",
+              "body": "Tekrar alımları ve alıcının neden vazgeçtiğini izleyin.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "Merkezi lokasyon testleri",
+          "Kategori için kurulmuş raflarla merkezi bir lokasyonda ambalaj ve raf testleri."
+        ],
+        [
+          "Ürün ve ambalaj testleri",
+          "Ürün ve ambalaj testleri; merkezi lokasyonda veya evde."
+        ],
+        [
+          "Tüketici yüz yüze (CAPI)",
+          "Merkezi lokasyonda veya mağazada yapılandırılmış görüşmeler; çevrimiçi ulaşılması zor alışverişçiler için."
+        ],
+        [
+          "Çevrimiçi anket",
+          "Alışverişçi anketi; kanal, şehir ve kategori harcamasına göre kotalar."
+        ],
+        [
+          "CATI",
+          "Şehir, kanal veya müşteri tipine göre kotalı, senaryolu telefon görüşmeleri."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   },
   "healthcare": {
