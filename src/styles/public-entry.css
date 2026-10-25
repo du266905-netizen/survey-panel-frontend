@@ -241,8 +241,9 @@ div.notranslate iframe[src*="accounts.google.com"],
 iframe[src*="accounts.google.com/gsi/button"] {
   height: 44px !important;
   max-height: 44px !important;
-  max-width: 100% !important;
-  /* 直角，但四个角略微收圆：和站内其余控件的"软直角"一致。 */
-  border-radius: 6px !important;
-  overflow: hidden !important;
+  /* Google 的胶囊按钮比它的 iframe 宽约 20px，右边圆角会被切平。
+     把 iframe 加宽同样的量、再左移一半，圆角就完整了。 */
+  width: calc(100% + 20px) !important;
+  max-width: none !important;
+  margin-left: -10px !important;
 }

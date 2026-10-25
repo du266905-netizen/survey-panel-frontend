@@ -130,7 +130,7 @@ export function GoogleButton({ mode, onCredential, onError, language, label, not
           theme,
           size: 'large',
           text: mode === 'login' ? 'signin_with' : 'signup_with',
-          shape: 'rectangular',
+          shape: 'pill',
           width: Math.min(container.clientWidth || 360, 380),
           logo_alignment: 'left',
           locale: language === 'zh-CN' ? 'zh_CN' : language === 'zh-Hant' ? 'zh_TW' : language.split('-')[0],
