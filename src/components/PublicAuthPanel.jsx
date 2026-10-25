@@ -395,7 +395,7 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
         <p className="public-auth-consent">{isLogin ? copy.consentLogin : copy.consentRegister} <Link to={businessTermsPath} target="_blank" rel="noopener noreferrer">{termsLabel}</Link> {copy.and} <Link to={privacyPath} target="_blank" rel="noopener noreferrer">{copy.privacy}</Link>.</p>
 
         <div className={loading ? 'pointer-events-none opacity-60' : ''}>
-          {accountType !== 'BUSINESS' ? <GoogleButton mode={mode} onCredential={handleGoogleCredential} onError={showError} language={language} label={copy.google} note={copy.googleUnavailable} /> : null}
+          {accountType !== 'BUSINESS' ? <GoogleButton mode={mode} onCredential={handleGoogleCredential} onError={showError} language={language} label={copy.google} note={copy.googleUnavailable} variant="field" /> : null}
         </div>
 
         {accountType !== 'BUSINESS' ? <div className="public-auth-divider"><span>{copy.emailOption}</span></div> : null}

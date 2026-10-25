@@ -260,3 +260,32 @@ iframe[src*="accounts.google.com/gsi/button"] {
   max-width: none !important;
   margin-left: -10px !important;
 }
+
+/* 账号页的谷歌按钮：可见的那一层是我们自己的皮肤，下面是透明的 GSI iframe，
+   点击仍然走 Google。这样就不存在 iframe 自己的重绘，也就没有残影。 */
+.google-field {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgba(20, 20, 19, .2);
+  border-radius: 0;
+  background: #fff;
+  color: #141413;
+  cursor: pointer;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.google-field:hover { border-color: #141413; }
+.google-field:focus-within { border-color: #141413; box-shadow: 0 0 0 3px rgba(20, 20, 19, .06); }
+.google-field-visual { display: inline-flex; align-items: center; gap: 10px; pointer-events: none; }
+.google-field-hit { position: absolute; inset: 0; z-index: 2; opacity: 0; }
+.google-field-hit > div { width: 100% !important; height: 100% !important; min-height: 0 !important; }
+.google-field-hit iframe { width: 100% !important; height: 100% !important; }
+.google-field--fallback { color: #626b64; }
