@@ -189,7 +189,7 @@
   color: #FFFFFF;
   /* 2026-10-26：这行是 80 档（整屏居中的主体字），字体用 Newsreader。 */
   font-family: var(--font-impact);
-  font-size: clamp(38px, 5vw, 80px);
+  font-size: clamp(38px, 4vw, 56px);
   font-style: normal;
   font-weight: 400;
   letter-spacing: -.03em;
@@ -259,7 +259,7 @@
   justify-content: center;
   gap: 8px;
   color: #FFFFFF;
-  font-family: var(--font-sans);
+  font-family: var(--font-impact);
   font-size: clamp(16px, 2vw, 22px);
   font-style: normal;
   font-weight: 400;
@@ -313,8 +313,8 @@
   max-width: none;
   margin-top: 20px;
   flex-wrap: nowrap;
-  font-family: var(--font-reading);
-  font-size: clamp(40px, 4vw, 56px);
+  font-family: var(--font-impact);
+  font-size: clamp(38px, 4vw, 56px);
   font-weight: 400;
   letter-spacing: -.03em;
   line-height: 1.05;
