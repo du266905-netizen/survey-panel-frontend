@@ -59,8 +59,8 @@
   padding-left: 24px;
   margin: 0;
   color: #141413;
-  /* 2026-10-26：56 档，字体仍是原来的衬线；Newsreader 只留给 80（--font-impact）。 */
-  font-family: var(--font-reading);
+  /* 本地试验（2026-10-26）：56 档改用 Newsreader，看整句标题的气质。 */
+  font-family: var(--font-impact);
   font-size: clamp(38px, 4.6vw, 56px);
   font-weight: 400;
   letter-spacing: -.028em;

@@ -51,8 +51,9 @@
 .about-page .ab-theme {
   max-width: 900px;
   margin: 18px auto 0;
-  font-family: var(--font-serif);
-  font-size: clamp(30px, 3.4vw, 48px);
+  /* 2026-10-26：主题句归到 56 档，字体用 Newsreader（56/80 专用展示体）。 */
+  font-family: var(--font-impact);
+  font-size: clamp(38px, 4vw, 56px);
   font-weight: 400;
   letter-spacing: -.028em;
   line-height: 1.06;

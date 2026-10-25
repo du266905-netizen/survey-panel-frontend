@@ -187,7 +187,8 @@
   justify-content: center;
   gap: 6px 14px;
   color: #FFFFFF;
-  font-family: var(--font-reading);
+  /* 2026-10-26：这行是 80 档（整屏居中的主体字），字体用 Newsreader。 */
+  font-family: var(--font-impact);
   font-size: clamp(38px, 5vw, 80px);
   font-style: normal;
   font-weight: 400;
@@ -238,7 +239,8 @@
   max-width: 1000px;
   margin: 0 auto;
   color: #FFFFFF;
-  font-family: var(--font-reading);
+  /* 本地试验（2026-10-26）：黑底 CTA 那句 56 试 Newsreader，打字机不动。 */
+  font-family: var(--font-impact);
   font-size: clamp(40px, 4.5vw, 56px);
   font-weight: 400;
   letter-spacing: -.03em;

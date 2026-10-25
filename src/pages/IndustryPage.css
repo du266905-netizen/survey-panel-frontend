@@ -499,3 +499,5 @@
   .industry-page .ind-hero--travel > img { object-position: 42% center; }
 }
 
+/* 本地试验（2026-10-26）：行业页 56 档标题换 Newsreader，看“标题页”的效果。 */
+.industry-page .ind-hero h1 { font-family: var(--font-impact); }
