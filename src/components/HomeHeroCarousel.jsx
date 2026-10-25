@@ -3,18 +3,21 @@ import HomeHero from './HomeHero';
 import HomeHeroLake from './HomeHeroLake';
 import './HomeHeroCarousel.css';
 
-/* Homepage first screen: two frames, no controls.
+/* Homepage first screen: two frames, no arrows.
 
-   The owner asked for a rotating first screen (2026-10-26) without arrows:
-   the window photograph, then the lake. Frames cross-fade on a timer, the
-   timer pauses while the pointer or keyboard focus is inside, and readers who
-   set "reduce motion" get the first frame only. */
-const FRAME_MS = 7000;
+   The owner asked for a rotating first screen (2026-10-26): the window
+   photograph, then the lake. Frames cross-fade on a ten second clock, which
+   the lime line under the header shows. There is no pause on hover — with an
+   explicit play/pause control in the utility strip, a page that freezes
+   whenever the pointer rests anywhere on a full-bleed photograph reads as
+   broken. Keyboard focus still stops the clock, and readers who set "reduce
+   motion" get the first frame only. */
+const FRAME_MS = 10000;
 
 export default function HomeHeroCarousel({ lead, rest, body, line, learnMore, communityLabel, stopped = false }) {
   const [frame, setFrame] = useState(0);
-  const [hovering, setHovering] = useState(false);
-  const paused = hovering || stopped;
+  const [focusWithin, setFocusWithin] = useState(false);
+  const paused = focusWithin || stopped;
   const [still, setStill] = useState(false);
   const barRef = useRef(null);
   const elapsedRef = useRef(0);
@@ -33,8 +36,8 @@ export default function HomeHeroCarousel({ lead, rest, body, line, learnMore, co
   }, []);
 
   /* One clock for both the lime line and the frame change: the line is the
-     timer, so it can never disagree with the picture. Hovering pauses the
-     clock where it stands instead of restarting it. */
+     timer, so it can never disagree with the picture. Pausing holds the clock
+     where it stands instead of restarting it. */
   /* Off-screen the clock stops: a reader halfway down the page should not pay
      for a bar they cannot see. */
   useEffect(() => {
@@ -80,10 +83,8 @@ export default function HomeHeroCarousel({ lead, rest, body, line, learnMore, co
     <div
       ref={hostRef}
       className={`home-hero-carousel${still ? ' is-still' : ''}`}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-      onFocusCapture={() => setHovering(true)}
-      onBlurCapture={() => setHovering(false)}
+      onFocusCapture={() => setFocusWithin(true)}
+      onBlurCapture={() => setFocusWithin(false)}
     >
       <div className="home-hero-progress" aria-hidden="true">
         <span ref={barRef} />

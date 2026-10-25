@@ -16,13 +16,13 @@ export default function HeroRotationToggle({ stopped, onToggle, label }) {
       onClick={onToggle}
     >
       {stopped ? (
-        <svg width="12" height="12" viewBox="0 0 11 11" aria-hidden="true" focusable="false">
+        <svg width="22" height="22" viewBox="0 0 11 11" aria-hidden="true" focusable="false">
           <path d="M2 1.2 9.4 5.5 2 9.8Z" fill="currentColor" />
         </svg>
       ) : (
-        <svg width="12" height="12" viewBox="0 0 11 11" aria-hidden="true" focusable="false">
-          <rect x="2" y="1.4" width="2.4" height="8.2" fill="currentColor" />
-          <rect x="6.6" y="1.4" width="2.4" height="8.2" fill="currentColor" />
+        <svg width="22" height="22" viewBox="0 0 11 11" aria-hidden="true" focusable="false">
+          <rect x="2.1" y="1.2" width="2.8" height="8.6" rx=".5" fill="currentColor" />
+          <rect x="6.1" y="1.2" width="2.8" height="8.6" rx=".5" fill="currentColor" />
         </svg>
       )}
     </button>

@@ -2,8 +2,8 @@
    quiet until hovered. */
 .psn-rotation-toggle {
   display: inline-flex;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
   padding: 0;
