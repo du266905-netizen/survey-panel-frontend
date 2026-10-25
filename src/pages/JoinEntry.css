@@ -1,0 +1,10 @@
+/* Public sign-in page: the homepage chooser as a page.
+
+   The band already subtracts a 100px header of its own, and the public header
+   on this page measures 100px, so header + band fill the first screen exactly.
+
+   The page keeps the white ground of the band: the home page's warm paper
+   behind it would only show if a browser rounded the band short. */
+.join-entry-page.home-atlas {
+  background: #fff;
+}

@@ -24,10 +24,13 @@ const copy = {
   },
 };
 
-export default function HomeChoiceSection() {
+export default function HomeChoiceSection({ headingLevel = 2 }) {
   const [audience, setAudience] = useState('participant');
   const { language } = useLanguage();
   const text = copy[language] || copy.en;
+  // On the home page this is a section heading; when the block is mounted as
+  // a page (the /access entry) it is the page's one h1.
+  const Heading = headingLevel === 1 ? 'h1' : 'h2';
 
   return (
     <section className="home-choice" aria-label="Join as a participant or run research">
@@ -40,7 +43,7 @@ export default function HomeChoiceSection() {
         </figure>
 
         <div className="home-choice-entry">
-          <h2 className="home-choice-title">{text.title}</h2>
+          <Heading className="home-choice-title">{text.title}</Heading>
           <p className="home-choice-note">{text.note}</p>
           <div className="home-choice-card">
             <HomeEntry audience={audience} onAudienceChange={setAudience} />

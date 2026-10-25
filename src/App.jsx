@@ -63,6 +63,7 @@ import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
 import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinChoice from './pages/JoinChoice';
+import JoinEntry from './pages/JoinEntry';
 import ChinaMarketInsights from './pages/ChinaMarketInsights';
 import IndustryAutomotive from './pages/IndustryAutomotive';
 import IndustryTravel from './pages/IndustryTravel';
@@ -167,7 +168,7 @@ export default function App() {
         <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" authOnly /></PublicEntry>} />
         <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
         <Route path="/join" element={<JoinChoice />} />
-        <Route path="/access" element={<PublicEntry><JoinChoice mode="login" /></PublicEntry>} />
+        <Route path="/access" element={<PublicEntry><JoinEntry /></PublicEntry>} />
         <Route path="/business" element={<Business />} />
         <Route path="/china-market-insights" element={<ChinaMarketInsights />} />
         <Route path="/business/access" element={<BusinessAccess />} />
