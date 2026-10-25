@@ -94,6 +94,9 @@ export function GoogleButton({ mode, onCredential, onError, language, label, not
      要么加载了但 iframe 永远不出现 —— 结果是面板上留一个 44px 空白槽，用户"看不到谷歌登录"。
      这里改成：失败或超时就在原位显示一行可见说明，不留空白、也不假装按钮在。 */
   const [failed, setFailed] = useState(false);
+  /* GSI 的 iframe 定型前会以默认尺寸画一帧，看起来像残影。iframe 没出现之前
+     整块不可见，出现后 0.2s 淡入。 */
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     handlersRef.current = { onCredential, onError };
@@ -135,6 +138,13 @@ export function GoogleButton({ mode, onCredential, onError, language, label, not
           logo_alignment: 'left',
           locale: language === 'zh-CN' ? 'zh_CN' : language === 'zh-Hant' ? 'zh_TW' : language.split('-')[0],
         });
+        const waitForFrame = (tries = 30) => {
+          if (!active) return;
+          if (containerRef.current?.querySelector('iframe')) { setReady(true); return; }
+          if (tries <= 0) return;
+          window.setTimeout(() => waitForFrame(tries - 1), 50);
+        };
+        waitForFrame();
       })
       .catch(() => {
         if (active) setFailed(true);
@@ -192,7 +202,7 @@ export function GoogleButton({ mode, onCredential, onError, language, label, not
     );
   }
 
-  return <div ref={containerRef} className="notranslate min-h-11" translate="no" data-translate="no" />;
+  return <div ref={containerRef} className={`notranslate min-h-11${ready ? ' is-ready' : ''}`} translate="no" data-translate="no" />;
 }
 
 export default function PublicAuthPanel({ mode = 'register', onModeChange, accountType = 'PARTICIPANT', initialEmail = '' }) {

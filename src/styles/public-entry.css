@@ -244,7 +244,11 @@ body:has(.landing-page--auth-only) { background: #FFFFFF; }
 div.notranslate.min-h-11 {
   height: 44px;
   overflow: hidden;
+  opacity: 0;
+  transition: opacity .2s ease;
 }
+
+div.notranslate.min-h-11.is-ready { opacity: 1; }
 
 div.notranslate iframe[src*="accounts.google.com"],
 iframe[src*="accounts.google.com/gsi/button"] {
