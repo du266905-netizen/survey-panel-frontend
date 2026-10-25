@@ -12995,6 +12995,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "Industrie und Baustoffe",
+      "lead": "Forschung für Baustoffmarken, Anbieter industrieller Ausrüstung und ihre Vertriebsnetze: was Händler empfehlen, was Planer ausschreiben und was die Baustelle wirklich verwendet.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Baustoffe werden zweimal verkauft: einmal in ein Vertriebsnetz, einmal in ein Projekt. Dieselbe Marke bedient beides, mit anderen Preisen, Regeln und Kunden.",
+        "Wir untersuchen jede Seite dieser Kette: den Händler, der entscheidet, ob er führt, den Planer, der entscheidet, ob er ausschreibt, und die Crew, die entscheidet, ob sie es einsetzt.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll — welche Spezifikation zu forcieren, welche Region zu öffnen, warum ein Händler die Linie fallen lässt. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produkt und Ausschreibung",
+          "frame": "Was verkauft wird, zu welchem Preis, gegen wen.",
+          "cards": [
+            {
+              "title": "Preisstufen und Ausschreibung",
+              "body": "Spezifikationen und Preispunkte gegen die Produkte testen, die im selben Regal oder in derselben Ausschreibung begegnen.",
+              "methods": "CATI · Händlerinterviews"
+            },
+            {
+              "title": "Neue Produkte und Substitution",
+              "body": "Feststellen, ob ein neues Produkt ein bestehendes ersetzt oder eine Linie ergänzt, die niemand verlangt hat.",
+              "methods": "Tiefeninterviews · Produkttests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kanal und Händler",
+          "frame": "Warum ein Händler eine Marke schiebt und eine andere ins Regal stellt.",
+          "cards": [
+            {
+              "title": "Stimme des Händlers",
+              "body": "Zufriedenheit, Boni, Zahlungsbedingungen und der Punkt, an dem ein Händler aufhört, die Marke zu empfehlen.",
+              "methods": "CATI-Vollerhebung · Tiefeninterviews"
+            },
+            {
+              "title": "Abdeckung und Abverkauf",
+              "body": "Abbilden, wo die Marke geführt wird und wie viel davon den Laden wirklich verlässt.",
+              "methods": "CATI · Abverkauf nach Händlerangaben"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Projekte und Ausschreibung",
+          "frame": "Wer die Marke in das Projekt schreibt.",
+          "cards": [
+            {
+              "title": "Der Weg in die Ausschreibung",
+              "body": "Ein Produkt von der ersten Wahrnehmung bis zur Aufnahme in die Zeichnungen verfolgen und den Punkt, an dem es herausfällt.",
+              "methods": "Planerinterviews"
+            },
+            {
+              "title": "Vergabe und Bauunternehmen",
+              "body": "Verstehen, was das Bauunternehmen bei der Vergabe abwägt und wo der Preis die Spezifikation überstimmt.",
+              "methods": "Tiefeninterviews · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Wiederkauf und Service",
+          "frame": "Warum die nächste Bestellung woanders hingeht.",
+          "cards": [
+            {
+              "title": "Lieferung und After-Sales",
+              "body": "Lieferzuverlässigkeit, After-Sales-Reaktion und die Fehler messen, die einen Wechsel auslösen.",
+              "methods": "CATI · Händlerinterviews"
+            },
+            {
+              "title": "Konditionen und Bindung",
+              "body": "Feststellen, wie Zahlungsbedingungen und Boni einen Händler halten, und wie lange.",
+              "methods": "CATI-Vollerhebung"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "Händlernetz-Vollerhebung",
+          "Eine telefonische Vollerhebung des Händler- und Distributorennetzes zu Bestückung, Abverkauf, Konditionen und Zufriedenheit."
+        ],
+        [
+          "Interviews mit Bauunternehmen und Crews",
+          "Persönliche Interviews mit Bauunternehmen und Verarbeitern, wo das Produkt tatsächlich eingesetzt wird."
+        ],
+        [
+          "Planerinterviews",
+          "Interviews mit Architekten und Ingenieuren, die Produkte in Spezifikationen schreiben."
+        ],
+        [
+          "Eigenheimbesitzer-Befragung",
+          "Online-Befragung von Eigenheimbesitzern und Renovierern, mit Quoten nach Stadt und Projekttyp."
+        ],
+        [
+          "Produkt- und Mustertests",
+          "Produkt- und Mustertests mit den Menschen, die das Material verarbeiten."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "Industrie et produits de construction",
+      "lead": "Études pour les marques de matériaux, les fabricants d'équipements industriels et leurs réseaux de distribution : ce que les distributeurs poussent, ce que les prescripteurs écrivent et ce que le chantier utilise vraiment.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "Les produits de construction se vendent deux fois : une fois dans un réseau de distribution, une fois dans un projet. La même marque gère les deux, avec des prix, des politiques et des clients différents.",
+        "Nous étudions chaque côté de cette chaîne : le distributeur qui décide de référencer, le prescripteur qui décide d'écrire, et l'équipe qui décide d'utiliser.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer — quelle spécification pousser, quelle région ouvrir, pourquoi un distributeur abandonne la gamme. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produit et prescription",
+          "frame": "Ce qui est vendu, à quel prix, contre qui.",
+          "cards": [
+            {
+              "title": "Niveaux de prix et prescription",
+              "body": "Tester spécifications et niveaux de prix face aux produits rencontrés sur le même rayon ou dans le même appel d'offres.",
+              "methods": "CATI · entretiens distributeurs"
+            },
+            {
+              "title": "Nouveaux produits et substitution",
+              "body": "Établir si un nouveau produit remplace un existant ou ajoute une gamme que personne n'a demandée.",
+              "methods": "Entretiens approfondis · tests produit"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Canal et distributeurs",
+          "frame": "Pourquoi un distributeur pousse une marque et en range une autre.",
+          "cards": [
+            {
+              "title": "La voix du distributeur",
+              "body": "Satisfaction, remises, conditions de paiement, et le point où un distributeur cesse de recommander la marque.",
+              "methods": "Recensement CATI · entretiens approfondis"
+            },
+            {
+              "title": "Couverture et sorties",
+              "body": "Cartographier où la marque est référencée, et quelle part sort réellement du magasin.",
+              "methods": "CATI · sorties déclarées par le distributeur"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Projets et prescription",
+          "frame": "Qui inscrit la marque dans le chantier.",
+          "cards": [
+            {
+              "title": "Le parcours de prescription",
+              "body": "Suivre un produit de la première connaissance à son inscription dans les plans, et le point où il disparaît.",
+              "methods": "Entretiens prescripteurs"
+            },
+            {
+              "title": "Appels d'offres et entreprises",
+              "body": "Comprendre ce que l'entreprise pèse à l'appel d'offres, et où le prix l'emporte sur la prescription.",
+              "methods": "Entretiens approfondis · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Réachat et service",
+          "frame": "Pourquoi la commande suivante va ailleurs.",
+          "cards": [
+            {
+              "title": "Livraison et service après-vente",
+              "body": "Mesurer la fiabilité des livraisons, la réactivité du SAV et les défaillances qui déclenchent un changement.",
+              "methods": "CATI · entretiens distributeurs"
+            },
+            {
+              "title": "Conditions et fidélité",
+              "body": "Établir comment les conditions de paiement et les remises retiennent un distributeur, et pour combien de temps.",
+              "methods": "Recensement CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Recensement du réseau",
+          "Un recensement téléphonique du réseau de distributeurs, couvrant référencement, sorties, conditions et satisfaction."
+        ],
+        [
+          "Entretiens entreprises et équipes",
+          "Entretiens en face-à-face avec entreprises et applicateurs, là où le produit est réellement utilisé."
+        ],
+        [
+          "Entretiens prescripteurs",
+          "Entretiens avec les architectes et ingénieurs qui inscrivent les produits dans les spécifications."
+        ],
+        [
+          "Enquête propriétaires",
+          "Enquête en ligne auprès de propriétaires et rénovateurs, avec quotas par ville et type de projet."
+        ],
+        [
+          "Tests produit et échantillons",
+          "Tests produit et échantillons avec les personnes qui appliquent le matériau."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "Industrie en bouwproducten",
+      "lead": "Onderzoek voor bouwmaterialmerken, fabrikanten van industriële apparatuur en hun distributienetwerken: wat dealers pushen, wat voorschrijvers opschrijven en wat de bouwplaats echt gebruikt.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Bouwproducten worden twee keer verkocht: één keer in een distributienetwerk, één keer in een project. Hetzelfde merk bedient beide, met andere prijzen, regels en klanten.",
+        "We onderzoeken elke kant van die keten: de dealer die beslist of hij het voert, de voorschrijver die beslist of hij het opschrijft, en de ploeg die beslist of zij het gebruikt.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen — welke specificatie te pushen, welke regio te openen, waarom een dealer de lijn laat vallen. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Product en specificatie",
+          "frame": "Wat wordt verkocht, tegen welke prijs, tegen wie.",
+          "cards": [
+            {
+              "title": "Prijsniveaus en specificatie",
+              "body": "Specificaties en prijspunten testen tegen de producten die ze in hetzelfde schap of dezelfde aanbesteding tegenkomen.",
+              "methods": "CATI · dealerinterviews"
+            },
+            {
+              "title": "Nieuwe producten en substitutie",
+              "body": "Vaststellen of een nieuw product een bestaand vervangt of een lijn toevoegt waar niemand om vroeg.",
+              "methods": "Diepte-interviews · producttests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kanaal en dealers",
+          "frame": "Waarom een dealer het ene merk pusht en het andere laat staan.",
+          "cards": [
+            {
+              "title": "De stem van de dealer",
+              "body": "Tevredenheid, bonussen, betalingsvoorwaarden en het punt waarop een dealer het merk niet meer aanbeveelt.",
+              "methods": "CATI-volledige telling · diepte-interviews"
+            },
+            {
+              "title": "Dekking en afzet",
+              "body": "In kaart brengen waar het merk wordt gevoerd, en hoeveel ervan de winkel echt verlaat.",
+              "methods": "CATI · afzet volgens dealer"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Projecten en specificatie",
+          "frame": "Wie het merk in het werk schrijft.",
+          "cards": [
+            {
+              "title": "De weg naar de specificatie",
+              "body": "Een product volgen van eerste bekendheid tot opname in de tekeningen, en het punt waar het afvalt.",
+              "methods": "Voorschrijversinterviews"
+            },
+            {
+              "title": "Aanbesteding en aannemers",
+              "body": "Begrijpen wat de aannemer bij de aanbesteding afweegt, en waar prijs de specificatie overstemt.",
+              "methods": "Diepte-interviews · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Herhaalorder en service",
+          "frame": "Waarom de volgende order ergens anders heen gaat.",
+          "cards": [
+            {
+              "title": "Levering en after-sales",
+              "body": "Leverbetrouwbaarheid, after-salesreactie en de fouten die een overstap uitlokken meten.",
+              "methods": "CATI · dealerinterviews"
+            },
+            {
+              "title": "Voorwaarden en loyaliteit",
+              "body": "Vaststellen hoe betalingsvoorwaarden en bonussen een dealer binden, en hoe lang.",
+              "methods": "CATI-volledige telling"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "Volledige dealerinventarisatie",
+          "Een telefonische volledige telling van het dealer- en distributienetwerk, met assortiment, afzet, voorwaarden en tevredenheid."
+        ],
+        [
+          "Interviews met aannemers en ploegen",
+          "Face-to-face interviews met aannemers en verwerkers, waar het product echt wordt gebruikt."
+        ],
+        [
+          "Voorschrijversinterviews",
+          "Interviews met architecten en ingenieurs die producten in specificaties schrijven."
+        ],
+        [
+          "Huiseigenarenonderzoek",
+          "Online-enquête onder huiseigenaren en verbouwers, met quota naar stad en projecttype."
+        ],
+        [
+          "Product- en monsterproeven",
+          "Product- en monsterproeven met de mensen die het materiaal aanbrengen."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "Industri og byggematerialer",
+      "lead": "Research for byggematerialemærker, producenter af industrielt udstyr og deres distributionsnetværk: hvad forhandlere skubber på, hvad projekterende skriver, og hvad byggepladsen faktisk bruger.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "Byggematerialer sælges to gange: én gang ind i et distributionsnetværk, én gang ind i et projekt. Samme mærke driver begge, med forskellige priser, regler og kunder.",
+        "Vi undersøger hver side af den kæde: forhandleren, der beslutter at føre det, projekterende, der beslutter at skrive det, og holdet, der beslutter at bruge det.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte — hvilken specifikation der skal pushes, hvilken region der skal åbnes, hvorfor en forhandler dropper linjen. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produkt og specifikation",
+          "frame": "Hvad der sælges, til hvilken pris, mod hvem.",
+          "cards": [
+            {
+              "title": "Prisniveauer og specifikation",
+              "body": "Test specifikationer og prispunkter mod de produkter, de møder på samme hylde eller i samme udbud.",
+              "methods": "CATI · forhandlerinterviews"
+            },
+            {
+              "title": "Nye produkter og substitution",
+              "body": "Fastslå, om et nyt produkt erstatter et eksisterende eller tilføjer en linje, ingen bad om.",
+              "methods": "Dybdeinterviews · produktte­sts"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kanal og forhandlere",
+          "frame": "Hvorfor en forhandler skubber til et mærke og stiller et andet på hylden.",
+          "cards": [
+            {
+              "title": "Forhandlerens stemme",
+              "body": "Tilfredshed, bonusser, betalingsbetingelser og det punkt, hvor en forhandler holder op med at anbefale mærket.",
+              "methods": "CATI-optælling · dybdeinterviews"
+            },
+            {
+              "title": "Dækning og afsætning",
+              "body": "Kortlæg, hvor mærket føres, og hvor meget der faktisk forlader butikken.",
+              "methods": "CATI · afsætning oplyst af forhandler"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Projekter og specifikation",
+          "frame": "Hvem der skriver mærket ind i opgaven.",
+          "cards": [
+            {
+              "title": "Vejen til specifikationen",
+              "body": "Følg et produkt fra første kendskab til optagelse i tegningerne, og det punkt, hvor det falder ud.",
+              "methods": "Interviews med projekterende"
+            },
+            {
+              "title": "Udbud og entreprenører",
+              "body": "Forstå, hvad entreprenøren afvejer ved udbud, og hvor prisen overtrumfer specifikationen.",
+              "methods": "Dybdeinterviews · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Genkøb og service",
+          "frame": "Hvorfor den næste ordre går et andet sted hen.",
+          "cards": [
+            {
+              "title": "Levering og eftersalg",
+              "body": "Mål leveringspåli­delighed, eftersalg­srespons og de fejl, der udløser et skift.",
+              "methods": "CATI · forhandlerinterviews"
+            },
+            {
+              "title": "Vilkår og loyalitet",
+              "body": "Fastslå, hvordan betalingsbetingelser og bonusser holder på en forhandler, og hvor længe.",
+              "methods": "CATI-optælling"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "Fuld optælling af forhandlernetværk",
+          "En telefonisk optælling af forhandler- og distributørnetværket med sortiment, afsætning, vilkår og tilfredshed."
+        ],
+        [
+          "Interviews med entreprenører og hold",
+          "Face-to-face interviews med entreprenører og håndværkere, hvor produktet faktisk bruges."
+        ],
+        [
+          "Interviews med projekterende",
+          "Interviews med arkitekter og ingeniører, der skriver produkter ind i specifikationer."
+        ],
+        [
+          "Boligejerundersøgelse",
+          "Onlineundersøgelse blandt boligejere og renoveringer, med kvoter efter by og projekttype."
+        ],
+        [
+          "Produkt- og prøvetests",
+          "Produkt- og prøvetests med de mennesker, der påfører materialet."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Industria y materiales de construcción",
+      "lead": "Investigación para marcas de materiales, fabricantes de equipos industriales y sus redes de distribución: qué empujan los distribuidores, qué especifican los prescriptores y qué usa realmente la obra.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "Los materiales de construcción se venden dos veces: una en una red de distribución y otra en un proyecto. La misma marca atiende ambas, con precios, políticas y clientes distintos.",
+        "Estudiamos cada lado de esa cadena: el distribuidor que decide si lo tiene, el prescriptor que decide si lo especifica y el equipo que decide si lo usa.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener — qué especificación empujar, qué región abrir, por qué un distribuidor abandona la línea. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Producto y especificación",
+          "frame": "Qué se vende, a qué precio y contra quién.",
+          "cards": [
+            {
+              "title": "Niveles de precio y especificación",
+              "body": "Probar especificaciones y puntos de precio frente a los productos que encuentran en el mismo lineal o en la misma licitación.",
+              "methods": "CATI · entrevistas a distribuidores"
+            },
+            {
+              "title": "Productos nuevos y sustitución",
+              "body": "Establecer si un producto nuevo sustituye a uno existente o añade una línea que nadie pidió.",
+              "methods": "Entrevistas en profundidad · pruebas de producto"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Canal y distribuidores",
+          "frame": "Por qué un distribuidor empuja una marca y arrincona otra.",
+          "cards": [
+            {
+              "title": "La voz del distribuidor",
+              "body": "Satisfacción, bonificaciones, condiciones de pago y el punto en que un distribuidor deja de recomendar la marca.",
+              "methods": "Censo CATI · entrevistas en profundidad"
+            },
+            {
+              "title": "Cobertura y ventas",
+              "body": "Mapear dónde está referenciada la marca y cuánto sale realmente de la tienda.",
+              "methods": "CATI · ventas declaradas por el distribuidor"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Proyectos y especificación",
+          "frame": "Quién escribe la marca en la obra.",
+          "cards": [
+            {
+              "title": "El recorrido de la especificación",
+              "body": "Seguir un producto desde el primer conocimiento hasta su inclusión en los planos, y el punto en que se cae.",
+              "methods": "Entrevistas a prescriptores"
+            },
+            {
+              "title": "Licitación y contratistas",
+              "body": "Entender qué sopesa el contratista en la licitación y dónde el precio se impone a la especificación.",
+              "methods": "Entrevistas en profundidad · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Recompra y servicio",
+          "frame": "Por qué el siguiente pedido se va a otro sitio.",
+          "cards": [
+            {
+              "title": "Entrega y posventa",
+              "body": "Medir la fiabilidad de entrega, la respuesta posventa y los fallos que provocan un cambio.",
+              "methods": "CATI · entrevistas a distribuidores"
+            },
+            {
+              "title": "Condiciones y fidelidad",
+              "body": "Establecer cómo las condiciones de pago y las bonificaciones retienen a un distribuidor, y por cuánto tiempo.",
+              "methods": "Censo CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Censo de la red de concesionarios",
+          "Un censo telefónico de la red de distribuidores, que cubre referenciación, ventas, condiciones y satisfacción."
+        ],
+        [
+          "Entrevistas a contratistas y equipos",
+          "Entrevistas presenciales con contratistas y aplicadores, donde el producto se usa realmente."
+        ],
+        [
+          "Entrevistas a prescriptores",
+          "Entrevistas con arquitectos e ingenieros que escriben productos en las especificaciones."
+        ],
+        [
+          "Encuesta a propietarios",
+          "Encuesta online a propietarios y reformistas, con cuotas por ciudad y tipo de proyecto."
+        ],
+        [
+          "Pruebas de producto y muestras",
+          "Pruebas de producto y muestras con quienes aplican el material."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Teollisuus ja rakennustuotteet",
+      "lead": "Tutkimusta rakennusmateriaalibrändeille, teollisen kaluston valmistajille ja niiden jakeluverkostoille: mitä jälleenmyyjät työntävät, mitä suunnittelijat kirjoittavat ja mitä työmaalla todella käytetään.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Rakennustuotteet myydään kahdesti: kerran jakeluverkostoon, kerran hankkeeseen. Sama brändi hoitaa molemmat, eri hinnoin, säännöin ja asiakkain.",
+        "Tutkimme ketjun jokaista puolta: jälleenmyyjä, joka päättää ottaa valikoimaan, suunnittelija, joka päättää kirjoittaa, ja työryhmä, joka päättää käyttää.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava — mitä spesifikaatiota työntää, mikä alue avata, miksi jälleenmyyjä pudottaa tuotelinjan. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Tuote ja spesifikaatio",
+          "frame": "Mitä myydään, millä hinnalla, ketä vastaan.",
+          "cards": [
+            {
+              "title": "Hintaportaat ja spesifikaatio",
+              "body": "Testaa spesifikaatiot ja hintapisteet tuotteita vastaan, jotka kohtaavat samalla hyllyllä tai samassa tarjouskilpailussa.",
+              "methods": "CATI · jälleenmyyjähaastattelut"
+            },
+            {
+              "title": "Uudet tuotteet ja korvaaminen",
+              "body": "Selvitä, korvaako uusi tuote olemassa olevan vai lisääkö linjan, jota kukaan ei pyytänyt.",
+              "methods": "Syvähaastattelut · tuotetestit"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kanava ja jälleenmyyjät",
+          "frame": "Miksi jälleenmyyjä työntää yhtä brändiä ja jättää toisen hyllyyn.",
+          "cards": [
+            {
+              "title": "Jälleenmyyjän ääni",
+              "body": "Tyytyväisyys, bonukset, maksuehdot ja piste, jossa jälleenmyyjä lopettaa brändin suosittelun.",
+              "methods": "CATI-kartoitus · syvähaastattelut"
+            },
+            {
+              "title": "Kattavuus ja myynti",
+              "body": "Kartoita, missä brändi on valikoimassa ja kuinka paljon siitä todella lähtee kaupasta.",
+              "methods": "CATI · jälleenmyyjän ilmoittama myynti"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Hankkeet ja spesifikaatio",
+          "frame": "Kuka kirjoittaa brändin hankkeeseen.",
+          "cards": [
+            {
+              "title": "Polku spesifikaatioon",
+              "body": "Seuraa tuotetta ensituntemuksesta piirustuksiin kirjaamiseen ja piste, jossa se putoaa.",
+              "methods": "Suunnittelijahaastattelut"
+            },
+            {
+              "title": "Tarjouskilpailu ja urakoitsijat",
+              "body": "Ymmärrä, mitä urakoitsija punnitsee tarjouksessa ja missä hinta ohittaa spesifikaation.",
+              "methods": "Syvähaastattelut · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Uusintatilaus ja palvelu",
+          "frame": "Miksi seuraava tilaus menee muualle.",
+          "cards": [
+            {
+              "title": "Toimitus ja myynnin jälkeinen palvelu",
+              "body": "Mittaa toimitusten luotettavuus, myynnin jälkeinen vaste ja ne virheet, jotka laukaisevat vaihdon.",
+              "methods": "CATI · jälleenmyyjähaastattelut"
+            },
+            {
+              "title": "Ehdot ja lojaalius",
+              "body": "Selvitä, miten maksuehdot ja bonukset pitävät jälleenmyyjää, ja kuinka kauan.",
+              "methods": "CATI-kartoitus"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "Jälleenmyyjäverkoston kartoitus",
+          "Puhelimitse tehty jälleenmyyjä- ja jakelijaverkoston kartoitus: valikoima, myynti, ehdot ja tyytyväisyys."
+        ],
+        [
+          "Urakoitsija- ja työryhmähaastattelut",
+          "Kasvokkaiset haastattelut urakoitsijoiden ja asentajien kanssa siellä, missä tuotetta todella käytetään."
+        ],
+        [
+          "Suunnittelijahaastattelut",
+          "Haastattelut arkkitehtien ja insinöörien kanssa, jotka kirjoittavat tuotteita spesifikaatioihin."
+        ],
+        [
+          "Asunnonomistajakysely",
+          "Verkkokysely asunnonomistajille ja remontoijille, kiintiöt kaupungin ja hanketyypin mukaan."
+        ],
+        [
+          "Tuote- ja näytetestit",
+          "Tuote- ja näytetestit niiden ihmisten kanssa, jotka levittävät materiaalin."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "Industria e materiali da costruzione",
+      "lead": "Ricerche per marchi di materiali, produttori di attrezzature industriali e le loro reti distributive: cosa spingono i distributori, cosa scrivono i progettisti e cosa usa davvero il cantiere.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "I materiali da costruzione si vendono due volte: una in una rete distributiva, una in un progetto. Lo stesso marchio gestisce entrambe, con prezzi, politiche e clienti diversi.",
+        "Studiamo ogni lato di quella catena: il distributore che decide se tenerlo, il progettista che decide se scriverlo e la squadra che decide se usarlo.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere — quale specifica spingere, quale regione aprire, perché un distributore abbandona la linea. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Prodotto e specifica",
+          "frame": "Cosa si vende, a che prezzo, contro chi.",
+          "cards": [
+            {
+              "title": "Fasce di prezzo e specifica",
+              "body": "Testare specifiche e punti di prezzo rispetto ai prodotti che incontrano sullo stesso scaffale o nella stessa gara.",
+              "methods": "CATI · interviste a distributori"
+            },
+            {
+              "title": "Nuovi prodotti e sostituzione",
+              "body": "Stabilire se un nuovo prodotto sostituisce uno esistente o aggiunge una linea che nessuno ha chiesto.",
+              "methods": "Interviste in profondità · test di prodotto"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Canale e distributori",
+          "frame": "Perché un distributore spinge un marchio e ne accantona un altro.",
+          "cards": [
+            {
+              "title": "La voce del distributore",
+              "body": "Soddisfazione, sconti, condizioni di pagamento e il punto in cui un distributore smette di consigliare il marchio.",
+              "methods": "Censimento CATI · interviste in profondità"
+            },
+            {
+              "title": "Copertura e sell-out",
+              "body": "Mappare dove il marchio è distribuito e quanto ne esce davvero dal punto vendita.",
+              "methods": "CATI · sell-out dichiarato dal distributore"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Progetti e specifica",
+          "frame": "Chi scrive il marchio nel lavoro.",
+          "cards": [
+            {
+              "title": "Il percorso della specifica",
+              "body": "Seguire un prodotto dalla prima conoscenza all'inserimento nei disegni, e il punto in cui esce.",
+              "methods": "Interviste a progettisti"
+            },
+            {
+              "title": "Gara e imprese",
+              "body": "Capire cosa pesa l'impresa in gara, e dove il prezzo prevale sulla specifica.",
+              "methods": "Interviste in profondità · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Riacquisto e servizio",
+          "frame": "Perché il prossimo ordine va altrove.",
+          "cards": [
+            {
+              "title": "Consegna e post-vendita",
+              "body": "Misurare affidabilità delle consegne, risposta post-vendita e i guasti che innescano un cambio.",
+              "methods": "CATI · interviste a distributori"
+            },
+            {
+              "title": "Condizioni e fedeltà",
+              "body": "Stabilire come condizioni di pagamento e sconti trattengono un distributore, e per quanto.",
+              "methods": "Censimento CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Censimento della rete",
+          "Un censimento telefonico della rete di distributori, che copre assortimento, sell-out, condizioni e soddisfazione."
+        ],
+        [
+          "Interviste a imprese e squadre",
+          "Interviste in presenza con imprese e applicatori, dove il prodotto viene realmente usato."
+        ],
+        [
+          "Interviste a progettisti",
+          "Interviste con architetti e ingegneri che scrivono i prodotti nelle specifiche."
+        ],
+        [
+          "Indagine proprietari",
+          "Indagine online su proprietari e ristrutturatori, con quote per città e tipo di progetto."
+        ],
+        [
+          "Test di prodotto e campioni",
+          "Test di prodotto e campioni con chi applica il materiale."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "産業と建材",
+      "lead": "建材ブランド、産業機器メーカー、その流通網向けの調査：販売店が何を推し、設計者が何を書き、現場が実際に何を使うか。",
+      "introKicker": "進め方",
+      "intro": [
+        "建材は二度売られます。一度は流通網に、一度はプロジェクトに。同じブランドが両方を、異なる価格・規則・顧客で扱います。",
+        "私たちはその連鎖の各側を調べます。扱うかを決める販売店、仕様に書くかを決める設計者、使うかを決める施工班。",
+        "各調査は、それが支えるべき意思決定を中心に設計します — どの仕様を推すか、どの地域を開くか、なぜ販売店がラインを落とすか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "製品と仕様",
+          "frame": "何が、いくらで、誰に対して売られるか。",
+          "cards": [
+            {
+              "title": "価格帯と仕様",
+              "body": "同じ棚や同じ入札で相対する製品に対して、仕様と価格点を検証します。",
+              "methods": "CATI · 販売店インタビュー"
+            },
+            {
+              "title": "新製品と代替",
+              "body": "新製品が既存品を置き換えるのか、誰も求めていないラインを足すのかを明らかにします。",
+              "methods": "デプスインタビュー · 製品テスト"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "チャネルと販売店",
+          "frame": "なぜ販売店はあるブランドを推し、別のブランドを棚に置くのか。",
+          "cards": [
+            {
+              "title": "販売店の声",
+              "body": "満足度、リベート、支払条件、そして販売店がブランドの推薦をやめる地点。",
+              "methods": "CATI全数調査 · デプスインタビュー"
+            },
+            {
+              "title": "カバレッジと販売",
+              "body": "ブランドがどこで扱われ、そのうちどれだけが実際に店を出るかを描きます。",
+              "methods": "CATI · 販売店申告の販売実績"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "プロジェクトと仕様",
+          "frame": "誰がブランドを図面に書き込むか。",
+          "cards": [
+            {
+              "title": "仕様化の道のり",
+              "body": "最初の認知から図面への記載まで製品を追い、脱落する地点を捉えます。",
+              "methods": "設計者インタビュー"
+            },
+            {
+              "title": "入札と施工者",
+              "body": "施工者が入札で何を秤にかけ、どこで価格が仕様を上回るかを理解します。",
+              "methods": "デプスインタビュー · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "再発注とサービス",
+          "frame": "なぜ次の発注が他社に行くのか。",
+          "cards": [
+            {
+              "title": "納品とアフターサービス",
+              "body": "納品の信頼性、アフターサービスの対応、乗り換えを引き起こす不具合を測ります。",
+              "methods": "CATI · 販売店インタビュー"
+            },
+            {
+              "title": "条件とロイヤルティ",
+              "body": "支払条件とリベートが販売店をどれだけ、いつまでつなぎとめるかを明らかにします。",
+              "methods": "CATI全数調査"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "ディーラー網の全数調査",
+          "販売店・販社ネットワークへの電話全数調査。取扱い、販売実績、条件、満足度を確認します。"
+        ],
+        [
+          "施工者・作業班インタビュー",
+          "製品が実際に使われる現場で、施工者と施工担当者に対面インタビューを行います。"
+        ],
+        [
+          "設計者インタビュー",
+          "製品を仕様に書き込む建築家・エンジニアへのインタビュー。"
+        ],
+        [
+          "施主調査",
+          "住宅所有者とリノベーターへのオンライン調査。都市とプロジェクト種別で割り付けます。"
+        ],
+        [
+          "製品・サンプルテスト",
+          "材料を施工する人々とともに製品・サンプルをテストします。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "산업과 건축자재",
+      "lead": "건축자재 브랜드, 산업 장비 제조사, 그 유통망을 위한 조사: 대리점이 무엇을 밀고, 설계자가 무엇을 쓰고, 현장이 실제로 무엇을 쓰는지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "건축자재는 두 번 팔립니다. 한 번은 유통망에, 한 번은 프로젝트에. 같은 브랜드가 둘을 다른 가격, 정책, 고객으로 운영합니다.",
+        "우리는 그 사슬의 각 측면을 조사합니다. 취급을 결정하는 대리점, 설계에 반영할지 결정하는 설계자, 사용할지 결정하는 시공팀.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다 — 어떤 사양을 밀지, 어느 지역을 열지, 왜 대리점이 라인을 버리는지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "제품과 사양",
+          "frame": "무엇이, 얼마에, 누구를 상대로 팔리는가.",
+          "cards": [
+            {
+              "title": "가격대와 사양",
+              "body": "같은 매대나 같은 입찰에서 만나는 제품을 기준으로 사양과 가격대를 테스트합니다.",
+              "methods": "CATI · 대리점 인터뷰"
+            },
+            {
+              "title": "신제품과 대체",
+              "body": "신제품이 기존 제품을 대체하는지, 아무도 요청하지 않은 라인을 더하는지 밝힙니다.",
+              "methods": "심층 인터뷰 · 제품 테스트"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "채널과 대리점",
+          "frame": "왜 대리점이 한 브랜드를 밀고 다른 브랜드를 매대에 두는가.",
+          "cards": [
+            {
+              "title": "대리점의 목소리",
+              "body": "만족도, 리베이트, 지급 조건, 그리고 대리점이 브랜드 추천을 멈추는 지점.",
+              "methods": "CATI 전수 조사 · 심층 인터뷰"
+            },
+            {
+              "title": "커버리지와 판매",
+              "body": "브랜드가 어디에 깔려 있고 그중 얼마가 실제로 매장을 떠나는지 그립니다.",
+              "methods": "CATI · 대리점 보고 판매"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "프로젝트와 사양",
+          "frame": "누가 브랜드를 도면에 넣는가.",
+          "cards": [
+            {
+              "title": "사양화의 경로",
+              "body": "첫 인지에서 도면 반영까지 제품을 추적하고 이탈 지점을 찾습니다.",
+              "methods": "설계자 인터뷰"
+            },
+            {
+              "title": "입찰과 시공사",
+              "body": "시공사가 입찰에서 무엇을 저울질하고 어디서 가격이 사양을 앞서는지 이해합니다.",
+              "methods": "심층 인터뷰 · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "재주문과 서비스",
+          "frame": "왜 다음 주문이 다른 곳으로 가는가.",
+          "cards": [
+            {
+              "title": "납품과 사후 서비스",
+              "body": "납품 신뢰성, 사후 대응, 전환을 촉발하는 실패를 측정합니다.",
+              "methods": "CATI · 대리점 인터뷰"
+            },
+            {
+              "title": "조건과 충성도",
+              "body": "지급 조건과 리베이트가 대리점을 얼마나, 얼마 동안 붙잡는지 밝힙니다.",
+              "methods": "CATI 전수 조사"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "딜러망 전수 조사",
+          "대리점·유통 네트워크 전화 전수 조사. 취급, 판매 실적, 조건, 만족도를 확인합니다."
+        ],
+        [
+          "시공사·작업팀 인터뷰",
+          "제품이 실제로 쓰이는 현장에서 시공사와 시공자에게 대면 인터뷰를 진행합니다."
+        ],
+        [
+          "설계자 인터뷰",
+          "제품을 사양서에 쓰는 건축가와 엔지니어 인터뷰."
+        ],
+        [
+          "주택 소유자 조사",
+          "주택 소유자와 리모델링 고객 대상 온라인 조사. 도시와 프로젝트 유형으로 할당합니다."
+        ],
+        [
+          "제품·샘플 테스트",
+          "자재를 시공하는 사람들과 제품·샘플을 테스트합니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "Industri og byggevarer",
+      "lead": "Forskning for byggevaremerker, produsenter av industrielt utstyr og deres distribusjonsnettverk: hva forhandlere skyver på, hva prosjekterende skriver og hva byggeplassen faktisk bruker.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "Byggevarer selges to ganger: én gang inn i et distribusjonsnettverk, én gang inn i et prosjekt. Samme merke driver begge, med ulike priser, regler og kunder.",
+        "Vi undersøker hver side av den kjeden: forhandleren som bestemmer om den skal føres, prosjekterende som bestemmer om den skal skrives, og laget som bestemmer om det skal brukes.",
+        "Hver studie designes rundt beslutningen den skal støtte — hvilken spesifikasjon som skal pushes, hvilken region som skal åpnes, hvorfor en forhandler dropper linjen. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produkt og spesifikasjon",
+          "frame": "Hva som selges, til hvilken pris, mot hvem.",
+          "cards": [
+            {
+              "title": "Prisnivåer og spesifikasjon",
+              "body": "Test spesifikasjoner og prispunkter mot produktene de møter på samme hylle eller i samme anbud.",
+              "methods": "CATI · forhandlerintervjuer"
+            },
+            {
+              "title": "Nye produkter og substitusjon",
+              "body": "Fastslå om et nytt produkt erstatter et eksisterende eller legger til en linje ingen ba om.",
+              "methods": "Dybdeintervjuer · produkttester"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kanal og forhandlere",
+          "frame": "Hvorfor en forhandler skyver på ett merke og setter et annet på hyllen.",
+          "cards": [
+            {
+              "title": "Forhandlerens stemme",
+              "body": "Tilfredshet, bonuser, betalingsbetingelser og punktet der en forhandler slutter å anbefale merket.",
+              "methods": "CATI-telling · dybdeintervjuer"
+            },
+            {
+              "title": "Dekning og utsalg",
+              "body": "Kartlegg hvor merket føres, og hvor mye av det som faktisk forlater butikken.",
+              "methods": "CATI · utsalg rapportert av forhandler"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Prosjekter og spesifikasjon",
+          "frame": "Hvem som skriver merket inn i jobben.",
+          "cards": [
+            {
+              "title": "Veien til spesifikasjon",
+              "body": "Følg et produkt fra første kjennskap til det skrives inn i tegningene, og punktet der det faller ut.",
+              "methods": "Projekterendes intervjuer"
+            },
+            {
+              "title": "Anbud og entreprenører",
+              "body": "Forstå hva entreprenøren veier ved anbud, og hvor pris overstyrer spesifikasjonen.",
+              "methods": "Dybdeintervjuer · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Gjenkjøp og service",
+          "frame": "Hvorfor neste ordre går et annet sted.",
+          "cards": [
+            {
+              "title": "Levering og ettersalg",
+              "body": "Mål leveringspålitelighet, ettersalgsrespons og feilene som utløser et bytte.",
+              "methods": "CATI · forhandlerintervjuer"
+            },
+            {
+              "title": "Vilkår og lojalitet",
+              "body": "Fastslå hvordan betalingsbetingelser og bonuser holder på en forhandler, og hvor lenge.",
+              "methods": "CATI-telling"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "Fulltelling av forhandlernettverket",
+          "En telefonisk telling av forhandler- og distributørnettverket, med sortiment, utsalg, vilkår og tilfredshet."
+        ],
+        [
+          "Intervjuer med entreprenører og lag",
+          "Ansikt-til-ansikt-intervjuer med entreprenører og utførende, der produktet faktisk brukes."
+        ],
+        [
+          "Projekterendes intervjuer",
+          "Intervjuer med arkitekter og ingeniører som skriver produkter inn i spesifikasjoner."
+        ],
+        [
+          "Huseierundersøkelse",
+          "Nettundersøkelse blant huseiere og renoverere, med kvoter etter by og prosjekttype."
+        ],
+        [
+          "Produkt- og prøvetester",
+          "Produkt- og prøvetester med menneskene som påfører materialet."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Indústria e materiais de construção",
+      "lead": "Investigação para marcas de materiais, fabricantes de equipamento industrial e as suas redes de distribuição: o que os distribuidores empurram, o que os prescritores escrevem e o que a obra usa realmente.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "Os materiais de construção vendem-se duas vezes: uma numa rede de distribuição, outra num projeto. A mesma marca serve ambas, com preços, políticas e clientes diferentes.",
+        "Estudamos cada lado dessa cadeia: o distribuidor que decide se o tem, o prescritor que decide se o especifica e a equipa que decide se o usa.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar — que especificação empurrar, que região abrir, porque um distribuidor abandona a linha. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produto e especificação",
+          "frame": "O que se vende, a que preço, contra quem.",
+          "cards": [
+            {
+              "title": "Níveis de preço e especificação",
+              "body": "Testar especificações e pontos de preço face aos produtos que encontram na mesma prateleira ou no mesmo concurso.",
+              "methods": "CATI · entrevistas a distribuidores"
+            },
+            {
+              "title": "Produtos novos e substituição",
+              "body": "Estabelecer se um produto novo substitui um existente ou acrescenta uma linha que ninguém pediu.",
+              "methods": "Entrevistas em profundidade · testes de produto"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Canal e distribuidores",
+          "frame": "Porque um distribuidor empurra uma marca e arruma outra.",
+          "cards": [
+            {
+              "title": "A voz do distribuidor",
+              "body": "Satisfação, descontos, condições de pagamento e o ponto em que um distribuidor deixa de recomendar a marca.",
+              "methods": "Censo CATI · entrevistas em profundidade"
+            },
+            {
+              "title": "Cobertura e vendas",
+              "body": "Mapear onde a marca está referenciada e quanto sai realmente da loja.",
+              "methods": "CATI · vendas declaradas pelo distribuidor"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Projetos e especificação",
+          "frame": "Quem escreve a marca na obra.",
+          "cards": [
+            {
+              "title": "O percurso da especificação",
+              "body": "Seguir um produto do primeiro conhecimento à inclusão nos desenhos, e o ponto em que cai.",
+              "methods": "Entrevistas a prescritores"
+            },
+            {
+              "title": "Concurso e empreiteiros",
+              "body": "Compreender o que o empreiteiro pondera no concurso, e onde o preço se sobrepõe à especificação.",
+              "methods": "Entrevistas em profundidade · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Recompra e serviço",
+          "frame": "Porque a encomenda seguinte vai para outro lado.",
+          "cards": [
+            {
+              "title": "Entrega e pós-venda",
+              "body": "Medir a fiabilidade da entrega, a resposta pós-venda e as falhas que desencadeiam uma mudança.",
+              "methods": "CATI · entrevistas a distribuidores"
+            },
+            {
+              "title": "Condições e fidelidade",
+              "body": "Estabelecer como as condições de pagamento e os descontos retêm um distribuidor, e por quanto tempo.",
+              "methods": "Censo CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Censo da rede de concessionários",
+          "Um censo telefónico da rede de distribuidores, que cobre referência, vendas, condições e satisfação."
+        ],
+        [
+          "Entrevistas a empreiteiros e equipas",
+          "Entrevistas presenciais com empreiteiros e aplicadores, onde o produto é realmente usado."
+        ],
+        [
+          "Entrevistas a prescritores",
+          "Entrevistas com arquitetos e engenheiros que escrevem produtos nas especificações."
+        ],
+        [
+          "Inquérito a proprietários",
+          "Inquérito online a proprietários e renovadores, com quotas por cidade e tipo de projeto."
+        ],
+        [
+          "Testes de produto e amostras",
+          "Testes de produto e amostras com quem aplica o material."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Промышленность и стройматериалы",
+      "lead": "Исследования для брендов стройматериалов, производителей промышленного оборудования и их дистрибуции: что продвигают дилеры, что прописывают проектировщики и что реально использует стройка.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Стройматериалы продаются дважды: один раз в дистрибьюторскую сеть, другой раз в проект. Один бренд ведёт оба, с разными ценами, правилами и клиентами.",
+        "Мы изучаем каждую сторону этой цепи: дилера, который решает держать, проектировщика, который решает прописать, и бригаду, которая решает применять.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать — какую спецификацию продвигать, какой регион открывать, почему дилер снимает линейку. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Продукт и спецификация",
+          "frame": "Что продаётся, по какой цене, против кого.",
+          "cards": [
+            {
+              "title": "Ценовые уровни и спецификация",
+              "body": "Проверить спецификации и ценовые точки против продуктов, с которыми они встречаются на одной полке или в одном тендере.",
+              "methods": "CATI · интервью с дилерами"
+            },
+            {
+              "title": "Новые продукты и замещение",
+              "body": "Определить, заменяет ли новый продукт существующий или добавляет линейку, которую никто не просил.",
+              "methods": "Глубинные интервью · тесты продукта"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Канал и дилеры",
+          "frame": "Почему дилер продвигает один бренд и ставит на полку другой.",
+          "cards": [
+            {
+              "title": "Голос дилера",
+              "body": "Удовлетворённость, бонусы, условия оплаты и точка, где дилер перестаёт рекомендовать бренд.",
+              "methods": "Перепись CATI · глубинные интервью"
+            },
+            {
+              "title": "Покрытие и продажи",
+              "body": "Нанести, где бренд представлен и сколько его реально уходит из магазина.",
+              "methods": "CATI · продажи по данным дилера"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Проекты и спецификация",
+          "frame": "Кто вписывает бренд в проект.",
+          "cards": [
+            {
+              "title": "Путь к спецификации",
+              "body": "Проследить продукт от первого знакомства до внесения в чертежи и точку, где он выпадает.",
+              "methods": "Интервью с проектировщиками"
+            },
+            {
+              "title": "Тендер и подрядчики",
+              "body": "Понять, что подрядчик взвешивает в тендере и где цена перевешивает спецификацию.",
+              "methods": "Глубинные интервью · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Повторная закупка и сервис",
+          "frame": "Почему следующий заказ уходит в другое место.",
+          "cards": [
+            {
+              "title": "Поставка и послепродажный сервис",
+              "body": "Измерить надёжность поставок, отклик сервиса и сбои, запускающие переход.",
+              "methods": "CATI · интервью с дилерами"
+            },
+            {
+              "title": "Условия и лояльность",
+              "body": "Определить, как условия оплаты и бонусы удерживают дилера и насколько долго.",
+              "methods": "Перепись CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Перепись дилерской сети",
+          "Телефонная перепись дилерской и дистрибьюторской сети: ассортимент, продажи, условия и удовлетворённость."
+        ],
+        [
+          "Интервью с подрядчиками и бригадами",
+          "Интервью лицом к лицу с подрядчиками и исполнителями там, где продукт реально применяется."
+        ],
+        [
+          "Интервью с проектировщиками",
+          "Интервью с архитекторами и инженерами, которые вписывают продукты в спецификации."
+        ],
+        [
+          "Опрос домовладельцев",
+          "Онлайн-опрос домовладельцев и тех, кто делает ремонт, с квотами по городу и типу проекта."
+        ],
+        [
+          "Тесты продукта и образцов",
+          "Тесты продукта и образцов с теми, кто наносит материал."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "Industri och byggmaterial",
+      "lead": "Undersökningar för byggmaterialvarumärken, tillverkare av industriell utrustning och deras distributionsnätverk: vad handlare trycker på, vad projekterare skriver och vad bygget faktiskt använder.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "Byggmaterial säljs två gånger: en gång in i ett distributionsnätverk, en gång in i ett projekt. Samma varumärke driver båda, med olika priser, regler och kunder.",
+        "Vi undersöker varje sida av den kedjan: handlaren som beslutar att föra den, projekteraren som beslutar att skriva den och laget som beslutar att använda den.",
+        "Varje studie byggs kring det beslut den ska stödja — vilken specifikation som ska tryckas på, vilken region som ska öppnas, varför en handlare släpper linjen. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produkt och specifikation",
+          "frame": "Vad som säljs, till vilket pris, mot vem.",
+          "cards": [
+            {
+              "title": "Prisnivåer och specifikation",
+              "body": "Testa specifikationer och prispunkter mot de produkter de möter på samma hylla eller i samma upphandling.",
+              "methods": "CATI · handlarintervjuer"
+            },
+            {
+              "title": "Nya produkter och substitution",
+              "body": "Fastställa om en ny produkt ersätter en befintlig eller lägger till en linje ingen bad om.",
+              "methods": "Djupintervjuer · produkttester"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kanal och handlare",
+          "frame": "Varför en handlare trycker på ett varumärke och ställer ett annat på hyllan.",
+          "cards": [
+            {
+              "title": "Handlarens röst",
+              "body": "Nöjdhet, bonusar, betalningsvillkor och punkten där en handlare slutar rekommendera varumärket.",
+              "methods": "CATI-fullräkning · djupintervjuer"
+            },
+            {
+              "title": "Täckning och utflöde",
+              "body": "Kartlägg var varumärket förs och hur mycket av det som faktiskt lämnar butiken.",
+              "methods": "CATI · utflöde enligt handlare"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Projekt och specifikation",
+          "frame": "Vem som skriver in varumärket i jobbet.",
+          "cards": [
+            {
+              "title": "Vägen till specifikation",
+              "body": "Följ en produkt från första kännedom till att den skrivs in i ritningarna, och punkten där den faller ut.",
+              "methods": "Projekterarintervjuer"
+            },
+            {
+              "title": "Upphandling och entreprenörer",
+              "body": "Förstå vad entreprenören väger vid upphandling, och var pris överstyr specifikationen.",
+              "methods": "Djupintervjuer · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Återköp och service",
+          "frame": "Varför nästa order går någon annanstans.",
+          "cards": [
+            {
+              "title": "Leverans och eftermarknad",
+              "body": "Mät leveranspålitlighet, eftermarknadssvar och de fel som utlöser ett byte.",
+              "methods": "CATI · handlarintervjuer"
+            },
+            {
+              "title": "Villkor och lojalitet",
+              "body": "Fastställa hur betalningsvillkor och bonusar håller kvar en handlare, och hur länge.",
+              "methods": "CATI-fullräkning"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "Fullräkning av återförsäljarnätet",
+          "En telefonisk fullräkning av handlar- och distributörsnätet, med sortiment, utflöde, villkor och nöjdhet."
+        ],
+        [
+          "Intervjuer med entreprenörer och lag",
+          "Intervjuer ansikte mot ansikte med entreprenörer och utförare, där produkten faktiskt används."
+        ],
+        [
+          "Projekterarintervjuer",
+          "Intervjuer med arkitekter och ingenjörer som skriver produkter i specifikationer."
+        ],
+        [
+          "Bostadsägareundersökning",
+          "Onlineundersökning bland bostadsägare och renoverare, med kvoter efter stad och projekttyp."
+        ],
+        [
+          "Produkt- och provprover",
+          "Produkt- och provprover med de människor som applicerar materialet."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "Sanayi ve yapı malzemeleri",
+      "lead": "Yapı malzemesi markaları, endüstriyel ekipman üreticileri ve dağıtım ağları için araştırma: bayiler neyi öne çıkarıyor, proje müellifleri neyi yazıyor ve şantiye gerçekte neyi kullanıyor.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Yapı malzemeleri iki kez satılır: bir kez dağıtım ağına, bir kez projeye. Aynı marka ikisini de farklı fiyat, politika ve müşterilerle yürütür.",
+        "Bu zincirin her tarafını inceliyoruz: stokta tutup tutmayacağına karar veren bayi, şartnameye yazıp yazmayacağına karar veren müellif ve kullanıp kullanmayacağına karar veren ekip.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır — hangi şartnameyi öne çıkarmak, hangi bölgeyi açmak, bir bayi neden ürün hattını bırakır. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Ürün ve şartname",
+          "frame": "Ne satılıyor, hangi fiyatla, kime karşı.",
+          "cards": [
+            {
+              "title": "Fiyat kademeleri ve şartname",
+              "body": "Aynı rafta veya aynı ihalede karşılaştıkları ürünlere karşı şartnameleri ve fiyat noktalarını test edin.",
+              "methods": "CATI · bayi görüşmeleri"
+            },
+            {
+              "title": "Yeni ürünler ve ikame",
+              "body": "Yeni bir ürünün mevcut olanın yerini mi aldığını, yoksa kimsenin istemediği bir hat mı eklediğini belirleyin.",
+              "methods": "Derinlemesine görüşmeler · ürün testleri"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kanal ve bayiler",
+          "frame": "Bir bayinin neden bir markayı öne çıkarıp diğerini rafa koyduğu.",
+          "cards": [
+            {
+              "title": "Bayinin sesi",
+              "body": "Memnuniyet, primler, ödeme koşulları ve bayinin markayı önermeyi bıraktığı nokta.",
+              "methods": "CATI sayımı · derinlemesine görüşmeler"
+            },
+            {
+              "title": "Kapsama ve satış",
+              "body": "Markanın nerede bulunduğunu ve ne kadarının gerçekten mağazadan çıktığını haritalayın.",
+              "methods": "CATI · bayi bildirimli satış"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Projeler ve şartname",
+          "frame": "Markayı işe kimin yazdığı.",
+          "cards": [
+            {
+              "title": "Şartname yolculuğu",
+              "body": "Bir ürünü ilk farkındalıktan çizimlere girişe kadar izleyin ve düştüğü noktayı görün.",
+              "methods": "Müellif görüşmeleri"
+            },
+            {
+              "title": "İhale ve yükleniciler",
+              "body": "Yüklenicinin ihalede neyi tarttığını ve fiyatın şartnameyi nerede bastırdığını anlayın.",
+              "methods": "Derinlemesine görüşmeler · CATI"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Tekrar sipariş ve servis",
+          "frame": "Bir sonraki siparişin neden başka yere gittiği.",
+          "cards": [
+            {
+              "title": "Teslimat ve satış sonrası",
+              "body": "Teslimat güvenilirliğini, satış sonrası yanıtı ve geçişi tetikleyen arızaları ölçün.",
+              "methods": "CATI · bayi görüşmeleri"
+            },
+            {
+              "title": "Koşullar ve sadakat",
+              "body": "Ödeme koşulları ve primlerin bir bayiyi ne kadar ve ne süre tuttuğunu belirleyin.",
+              "methods": "CATI sayımı"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "Bayi ağı sayımı",
+          "Bayi ve distribütör ağının telefonla tam sayımı: stok, satış, koşullar ve memnuniyet."
+        ],
+        [
+          "Yüklenici ve ekip görüşmeleri",
+          "Ürünün gerçekten kullanıldığı yerde yükleniciler ve uygulayıcılarla yüz yüze görüşmeler."
+        ],
+        [
+          "Müellif görüşmeleri",
+          "Ürünleri şartnamelere yazan mimar ve mühendislerle görüşmeler."
+        ],
+        [
+          "Ev sahibi anketi",
+          "Ev sahipleri ve tadilat yapanlarla çevrimiçi anket; şehir ve proje tipine göre kotalar."
+        ],
+        [
+          "Ürün ve numune testleri",
+          "Malzemeyi uygulayan kişilerle ürün ve numune testleri."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   },
   "tech": {
