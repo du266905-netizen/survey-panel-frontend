@@ -14977,6 +14977,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "Technologie und Digital",
+      "lead": "Forschung für Software-, Plattform-, Internet- und Gerätehersteller: was die Roadmap enthalten sollte, wie es bepreist wird und warum Nutzer gehen.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Ein Technologieprodukt wird entschieden, bevor es ausgeliefert wird: welche Funktionen es auf die Roadmap schaffen, welche Stufe den Preis trägt und was die ersten Wochen der Nutzung beweisen müssen.",
+        "Wir untersuchen Käufer und Nutzer getrennt — die technische Entscheidungsperson, die unterschreibt, und die Person, die es nutzen muss — und den Punkt, an dem beide auseinandergehen.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll: was als Nächstes gebaut wird, wie es verpackt wird, warum die Einführung stockt. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produkt und Roadmap",
+          "frame": "Was als Nächstes gebaut wird und was wegfällt.",
+          "cards": [
+            {
+              "title": "Priorisierung von Funktionen",
+              "body": "Feststellen, welche Funktionen eine Kauf- oder Nutzungsentscheidung verändern würden, bevor sie in die Roadmap kommen.",
+              "methods": "Konzepttests · B2B-Stichprobe"
+            },
+            {
+              "title": "Konzeptvalidierung",
+              "body": "Ein Konzept mit den Käufern und Nutzern testen, für die es gedacht ist, bevor Engineering-Zeit gebunden wird.",
+              "methods": "Konzept- und A/B-Tests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Preis und Abonnement",
+          "frame": "Wie es verpackt wird und was jede Stufe trägt.",
+          "cards": [
+            {
+              "title": "Preis und Stufen",
+              "body": "Preispunkte und Stufengrenzen gegen die Zahlungsbereitschaft testen.",
+              "methods": "Preistests · B2B-Stichprobe"
+            },
+            {
+              "title": "Verpackung und Nutzung",
+              "body": "Feststellen, ob Sitze, Nutzung oder Funktionen den Preis tragen sollten.",
+              "methods": "Tiefeninterviews · Preistests"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marke und Wettbewerb",
+          "frame": "Ob das Produkt auf der Auswahlliste steht und wofür es bekannt ist.",
+          "cards": [
+            {
+              "title": "Marke und Anteil an der Aufmerksamkeit",
+              "body": "Bekanntheit, Erwägung und Weiterempfehlung gegen die Plattformen tracken, die Käufer tatsächlich vergleichen.",
+              "methods": "Online-Tracking · feste Messgrößen"
+            },
+            {
+              "title": "Wettbewerbsumfeld",
+              "body": "Abbilden, wer in einer Kaufentscheidung tatsächlich verglichen wird — selten die Liste, die die Kategorie annimmt.",
+              "methods": "B2B-Befragung · Tiefeninterviews"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Einführung und Bindung",
+          "frame": "Warum Nutzer anfangen und warum sie aufhören.",
+          "cards": [
+            {
+              "title": "Onboarding und Aktivierung",
+              "body": "Die ersten Wochen der Nutzung untersuchen und wo neue Nutzer den Wert nicht erreichen.",
+              "methods": "Nutzerbefragung · Tiefeninterviews"
+            },
+            {
+              "title": "Abwanderung und Bindung",
+              "body": "Feststellen, warum Konten gehen und welche Signale vorausgehen.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "Stichprobe Technologiekäufer",
+          "Entscheider in IT, Produkt und Einkauf, gescreent nach Rolle, Unternehmensgröße und Technologie-Stack."
+        ],
+        [
+          "Konzepte-Tests",
+          "Konzepte und Funktionen auf vergleichbaren Stichproben getestet, jeweils eine Variable verändert."
+        ],
+        [
+          "Online-Befragung",
+          "Befragung von Nutzern oder Käufern, mit Quoten nach Rolle, Unternehmensgröße und Markt."
+        ],
+        [
+          "Tiefeninterviews",
+          "Tiefeninterviews von 45 bis 60 Minuten mit Käufern oder Nutzern, eins zu eins vom Forschungsteam geführt."
+        ],
+        [
+          "Preistests",
+          "Preispunkte und Verpackung gegen Zahlungsbereitschaft getestet, mit ausgewiesenen Annahmen berichtet."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "Technologie et digital",
+      "lead": "Études pour les éditeurs de logiciels, plateformes, internet et fabricants d'appareils : ce que la roadmap doit contenir, comment le tarifer et pourquoi les utilisateurs partent.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "Un produit technologique se décide avant sa sortie : quelles fonctionnalités entrent dans la roadmap, quel palier porte le prix et ce que les premières semaines d'usage doivent prouver.",
+        "Nous étudions acheteurs et utilisateurs séparément — le décideur technique qui signe et la personne qui doit l'utiliser — et le point où les deux divergent.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer : quoi construire ensuite, comment le conditionner, pourquoi l'adoption stagne. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produit et roadmap",
+          "frame": "Quoi construire ensuite, et quoi laisser de côté.",
+          "cards": [
+            {
+              "title": "Priorisation des fonctionnalités",
+              "body": "Établir quelles fonctionnalités changeraient une décision d'achat ou d'usage, avant qu'elles entrent dans la roadmap.",
+              "methods": "Tests de concept · échantillon B2B"
+            },
+            {
+              "title": "Validation de concept",
+              "body": "Tester un concept auprès des acheteurs et utilisateurs visés, avant d'engager du temps d'ingénierie.",
+              "methods": "Tests de concept et A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Prix et abonnement",
+          "frame": "Comment c'est conditionné, et ce que chaque palier porte.",
+          "cards": [
+            {
+              "title": "Prix et paliers",
+              "body": "Tester les points de prix et les frontières de paliers face à la disposition à payer.",
+              "methods": "Tests de prix · échantillon B2B"
+            },
+            {
+              "title": "Conditionnement et usage",
+              "body": "Établir si ce sont les sièges, l'usage ou les fonctionnalités qui doivent porter le prix.",
+              "methods": "Entretiens approfondis · tests de prix"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marque et concurrence",
+          "frame": "Si le produit est sur la liste, et pour quoi il est connu.",
+          "cards": [
+            {
+              "title": "Marque et part de voix",
+              "body": "Suivre notoriété, considération et recommandation face aux plateformes réellement comparées.",
+              "methods": "Tracking en ligne · mesures fixes"
+            },
+            {
+              "title": "Ensemble concurrentiel",
+              "body": "Cartographier qui est réellement comparé dans une décision d'achat — rarement la liste que la catégorie suppose.",
+              "methods": "Enquête B2B · entretiens approfondis"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Adoption et rétention",
+          "frame": "Pourquoi les utilisateurs commencent, et pourquoi ils arrêtent.",
+          "cards": [
+            {
+              "title": "Onboarding et activation",
+              "body": "Étudier les premières semaines d'usage, et où les nouveaux utilisateurs n'atteignent pas la valeur.",
+              "methods": "Enquête utilisateurs · entretiens approfondis"
+            },
+            {
+              "title": "Attrition et rétention",
+              "body": "Établir pourquoi les comptes partent, et quels signaux précèdent.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Échantillon acheteurs technologie",
+          "Décideurs en IT, produit et achats, filtrés par rôle, taille d'entreprise et stack technologique."
+        ],
+        [
+          "Tests de concept",
+          "Concepts et fonctionnalités testés sur des échantillons comparables, une variable modifiée à la fois."
+        ],
+        [
+          "Enquête en ligne",
+          "Enquête auprès d'utilisateurs ou d'acheteurs, avec quotas par rôle, taille d'entreprise et marché."
+        ],
+        [
+          "Entretiens approfondis",
+          "Entretiens approfondis de 45 à 60 minutes avec acheteurs ou utilisateurs, menés en tête-à-tête par l'équipe."
+        ],
+        [
+          "Tests de prix",
+          "Points de prix et conditionnement testés face à la disposition à payer, présentés avec les hypothèses."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "Technologie en digitaal",
+      "lead": "Onderzoek voor software-, platform-, internet- en apparaatbedrijven: wat de roadmap moet bevatten, hoe het geprijsd moet worden en waarom gebruikers vertrekken.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Een technologisch product wordt besloten voordat het uitkomt: welke functies de roadmap halen, welke tier de prijs draagt en wat de eerste weken van gebruik moeten bewijzen.",
+        "We onderzoeken kopers en gebruikers apart — de technische beslisser die tekent en de persoon die het moet gebruiken — en het punt waar beide het oneens zijn.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen: wat als volgende te bouwen, hoe het te verpakken, waarom adoptie stokt. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Product en roadmap",
+          "frame": "Wat als volgende te bouwen en wat weg te laten.",
+          "cards": [
+            {
+              "title": "Prioritering van functies",
+              "body": "Vaststellen welke functies een koop- of gebruiksbeslissing zouden veranderen, voordat ze de roadmap in gaan.",
+              "methods": "Concepttests · B2B-steekproef"
+            },
+            {
+              "title": "Conceptvalidatie",
+              "body": "Een concept testen met de kopers en gebruikers voor wie het bedoeld is, voordat engineeringtijd wordt vastgelegd.",
+              "methods": "Concept- en A/B-tests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Prijs en abonnement",
+          "frame": "Hoe het verpakt is en wat elke tier draagt.",
+          "cards": [
+            {
+              "title": "Prijs en tiers",
+              "body": "Prijspunten en tiergrenzen testen tegen betalingsbereidheid.",
+              "methods": "Prijstests · B2B-steekproef"
+            },
+            {
+              "title": "Verpakking en gebruik",
+              "body": "Vaststellen of seats, gebruik of functies de prijs moeten dragen.",
+              "methods": "Diepte-interviews · prijstests"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Merk en concurrentie",
+          "frame": "Of het product op de shortlist staat en waar het om bekend is.",
+          "cards": [
+            {
+              "title": "Merk en aandeel in de aandacht",
+              "body": "Bekendheid, overweging en aanbeveling volgen tegen de platforms die kopers echt vergelijken.",
+              "methods": "Online tracking · vaste maten"
+            },
+            {
+              "title": "Concurrentieset",
+              "body": "In kaart brengen wie in een koopbeslissing echt wordt vergeleken — zelden de lijst die de categorie veronderstelt.",
+              "methods": "B2B-enquête · diepte-interviews"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Adoptie en behoud",
+          "frame": "Waarom gebruikers beginnen en waarom zij stoppen.",
+          "cards": [
+            {
+              "title": "Onboarding en activatie",
+              "body": "De eerste weken van gebruik onderzoeken, en waar nieuwe gebruikers de waarde niet bereiken.",
+              "methods": "Gebruikersonderzoek · diepte-interviews"
+            },
+            {
+              "title": "Uitstroom en behoud",
+              "body": "Vaststellen waarom accounts vertrekken en welke signalen daaraan voorafgaan.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "Steekproef technologiekopers",
+          "Beslissers in IT, product en inkoop, gescreend op rol, bedrijfsgrootte en technologiestack."
+        ],
+        [
+          "Concepttests",
+          "Concepten en functies getest op vergelijkbare steekproeven, met één variabele per keer."
+        ],
+        [
+          "Online-enquête",
+          "Enquête onder gebruikers of kopers, met quota naar rol, bedrijfsgrootte en markt."
+        ],
+        [
+          "Diepte-interviews",
+          "Diepte-interviews van 45 tot 60 minuten met kopers of gebruikers, één op één door het onderzoeksteam."
+        ],
+        [
+          "Prijs tests",
+          "Prijspunten en verpakking getest tegen betalingsbereidheid, gerapporteerd met de aannames."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "Teknologi og digital",
+      "lead": "Research for software-, platform-, internet- og enhedsvirksomheder: hvad roadmapet skal indeholde, hvordan det skal prissættes, og hvorfor brugere forsvinder.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "Et teknologiprodukt besluttes, før det udkommer: hvilke funktioner der kommer på roadmapet, hvilket niveau der bærer prisen, og hvad de første ugers brug skal bevise.",
+        "Vi undersøger købere og brugere hver for sig — den tekniske beslutningstager, der underskriver, og personen, der skal bruge det — og det punkt, hvor de er uenige.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte: hvad der skal bygges næste gang, hvordan det pakkes, hvorfor adoption går i stå. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produkt og roadmap",
+          "frame": "Hvad der skal bygges næste gang, og hvad der skal udelades.",
+          "cards": [
+            {
+              "title": "Prioritering af funktioner",
+              "body": "Fastslå, hvilke funktioner der ville ændre en købs- eller brugsbeslutning, før de kommer på roadmapet.",
+              "methods": "Koncepttests · B2B-stikprøve"
+            },
+            {
+              "title": "Konceptvalidering",
+              "body": "Test et koncept med de købere og brugere, det er rettet mod, før der bindes engineering-tid.",
+              "methods": "Koncept- og A/B-test"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Pris og abonnement",
+          "frame": "Hvordan det er pakket, og hvad hvert niveau bærer.",
+          "cards": [
+            {
+              "title": "Pris og niveauer",
+              "body": "Test prispunkter og niveaugrænser mod betalingsvillighed.",
+              "methods": "Pristests · B2B-stikprøve"
+            },
+            {
+              "title": "Pakning og brug",
+              "body": "Fastslå, om pladser, brug eller funktioner skal bære prisen.",
+              "methods": "Dybdeinterviews · pristests"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Mærke og konkurrence",
+          "frame": "Om produktet er på listen, og hvad det er kendt for.",
+          "cards": [
+            {
+              "title": "Mærke og andel af opmærksomhed",
+              "body": "Følg kendskab, overvejelse og anbefaling mod de platforme, købere faktisk sammenligner.",
+              "methods": "Online tracking · faste mål"
+            },
+            {
+              "title": "Konkurrencesæt",
+              "body": "Kortlæg, hvem der faktisk sammenlignes i en købsbeslutning — sjældent den liste, kategorien antager.",
+              "methods": "B2B-undersøgelse · dybdeinterviews"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Adoption og fastholdelse",
+          "frame": "Hvorfor brugere starter, og hvorfor de stopper.",
+          "cards": [
+            {
+              "title": "Onboarding og aktivering",
+              "body": "Undersøg de første ugers brug, og hvor nye brugere ikke når værdien.",
+              "methods": "Brugerundersøgelse · dybdeinterviews"
+            },
+            {
+              "title": "Frafald og fastholdelse",
+              "body": "Fastslå, hvorfor konti forlader, og hvilke signaler der går forud.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "Stikprøve af teknologikøbere",
+          "Beslutningstagere i IT, produkt og indkøb, screenet efter rolle, virksomhedsstørrelse og teknologisk stack."
+        ],
+        [
+          "Koncepttests",
+          "Koncepter og funktioner testet på sammenlignelige stikprøver med én variabel ændret ad gangen."
+        ],
+        [
+          "Onlineundersøgelse",
+          "Undersøgelse blandt brugere eller købere, med kvoter efter rolle, virksomhedsstørrelse og marked."
+        ],
+        [
+          "Dybdeinterviews",
+          "Dybdeinterviews på 45-60 minutter med købere eller brugere, gennemført en til en af researchteamet."
+        ],
+        [
+          "Pristests",
+          "Prispunkter og pakning testet mod betalingsvillighed, rapporteret med angivne antagelser."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Tecnología y digital",
+      "lead": "Investigación para empresas de software, plataformas, internet y dispositivos: qué debe contener la hoja de ruta, cómo debe fijarse el precio y por qué se van los usuarios.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "Un producto tecnológico se decide antes de salir: qué funciones entran en la hoja de ruta, qué nivel sostiene el precio y qué deben demostrar las primeras semanas de uso.",
+        "Estudiamos compradores y usuarios por separado — el decisor técnico que firma y la persona que tiene que usarlo — y el punto en que ambos discrepan.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener: qué construir después, cómo empaquetarlo, por qué se estanca la adopción. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Producto y hoja de ruta",
+          "frame": "Qué construir después y qué dejar fuera.",
+          "cards": [
+            {
+              "title": "Priorización de funciones",
+              "body": "Establecer qué funciones cambiarían una decisión de compra o uso, antes de entrar en la hoja de ruta.",
+              "methods": "Pruebas de concepto · muestra B2B"
+            },
+            {
+              "title": "Validación de concepto",
+              "body": "Probar un concepto con los compradores y usuarios a los que va dirigido, antes de comprometer tiempo de ingeniería.",
+              "methods": "Pruebas de concepto y A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Precio y suscripción",
+          "frame": "Cómo se empaqueta y qué sostiene cada nivel.",
+          "cards": [
+            {
+              "title": "Precio y niveles",
+              "body": "Probar puntos de precio y fronteras de nivel frente a la disposición a pagar.",
+              "methods": "Pruebas de precio · muestra B2B"
+            },
+            {
+              "title": "Empaquetado y uso",
+              "body": "Establecer si deben sostener el precio los asientos, el uso o las funciones.",
+              "methods": "Entrevistas en profundidad · pruebas de precio"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marca y competencia",
+          "frame": "Si el producto está en la lista y por qué es conocido.",
+          "cards": [
+            {
+              "title": "Marca y cuota de voz",
+              "body": "Seguir notoriedad, consideración y recomendación frente a las plataformas que los compradores comparan de verdad.",
+              "methods": "Tracking online · medidas fijas"
+            },
+            {
+              "title": "Conjunto competitivo",
+              "body": "Mapear a quién se compara realmente en una decisión de compra — rara vez la lista que la categoría supone.",
+              "methods": "Encuesta B2B · entrevistas en profundidad"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Adopción y retención",
+          "frame": "Por qué empiezan los usuarios y por qué paran.",
+          "cards": [
+            {
+              "title": "Onboarding y activación",
+              "body": "Estudiar las primeras semanas de uso y dónde los nuevos usuarios no alcanzan el valor.",
+              "methods": "Encuesta a usuarios · entrevistas en profundidad"
+            },
+            {
+              "title": "Abandono y retención",
+              "body": "Establecer por qué se van las cuentas y qué señales lo preceden.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Muestra de compradores de tecnología",
+          "Decisores de TI, producto y compras, filtrados por rol, tamaño de empresa y stack tecnológico."
+        ],
+        [
+          "Pruebas de concepto",
+          "Conceptos y funciones probados en muestras comparables, cambiando una variable cada vez."
+        ],
+        [
+          "Encuesta online",
+          "Encuesta a usuarios o compradores, con cuotas por rol, tamaño de empresa y mercado."
+        ],
+        [
+          "Entrevistas en profundidad",
+          "Entrevistas en profundidad de 45 a 60 minutos con compradores o usuarios, realizadas uno a uno por el equipo."
+        ],
+        [
+          "Pruebas de precio",
+          "Puntos de precio y empaquetado probados frente a la disposición a pagar, presentados con los supuestos declarados."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Teknologia ja digitaalinen",
+      "lead": "Tutkimusta ohjelmisto-, alusta-, internet- ja laiteyrityksille: mitä tiekartalla pitäisi olla, miten se hinnoitellaan ja miksi käyttäjät lähtevät.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Teknologiatuote päätetään ennen julkaisua: mitkä ominaisuudet pääsevät tiekartalle, mikä taso kantaa hinnan ja mitä ensimmäisten käyttöviikkojen on todistettava.",
+        "Tutkimme ostajia ja käyttäjiä erikseen — tekninen päättäjä, joka allekirjoittaa, ja henkilö, jonka on pakko käyttää sitä — ja pisteen, jossa he ovat eri mieltä.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava: mitä rakennetaan seuraavaksi, miten se paketoidaan, miksi käyttöönotto pysähtyy. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Tuote ja tiekartta",
+          "frame": "Mitä rakennetaan seuraavaksi ja mitä jätetään pois.",
+          "cards": [
+            {
+              "title": "Ominaisuuksien priorisointi",
+              "body": "Selvitä, mitkä ominaisuudet muuttaisivat osto- tai käyttöpäätöstä, ennen kuin ne pääsevät tiekartalle.",
+              "methods": "Konseptitestit · B2B-otos"
+            },
+            {
+              "title": "Konseptin validointi",
+              "body": "Testaa konsepti kohdeostajilla ja -käyttäjillä ennen insinöörityön varaamista.",
+              "methods": "Konsepti- ja A/B-testaus"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Hinta ja tilaus",
+          "frame": "Miten se paketoidaan ja mitä kukin taso kantaa.",
+          "cards": [
+            {
+              "title": "Hinta ja tasot",
+              "body": "Testaa hintapisteet ja tasorajat maksuhalukkuutta vastaan.",
+              "methods": "Hintatestit · B2B-otos"
+            },
+            {
+              "title": "Paketointi ja käyttö",
+              "body": "Selvitä, pitäisikö hinnan kantaa paikkojen, käytön vai ominaisuuksien.",
+              "methods": "Syvähaastattelut · hintatestit"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Brändi ja kilpailu",
+          "frame": "Onko tuote listalla ja mistä se tunnetaan.",
+          "cards": [
+            {
+              "title": "Brändi ja osuus näkyvyydestä",
+              "body": "Seuraa tunnettuutta, harkintaa ja suosittelua alustoja vastaan, joita ostajat todella vertailevat.",
+              "methods": "Verkkotracking · kiinteät mittarit"
+            },
+            {
+              "title": "Kilpailujoukko",
+              "body": "Kartoita, keitä ostopäätöksessä todella verrataan — harvoin se lista, jota kategoria olettaa.",
+              "methods": "B2B-kysely · syvähaastattelut"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Käyttöönotto ja pysyvyys",
+          "frame": "Miksi käyttäjät aloittavat ja miksi lopettavat.",
+          "cards": [
+            {
+              "title": "Onboarding ja aktivointi",
+              "body": "Tutki ensimmäisiä käyttöviikkoja ja sitä, missä uudet käyttäjät eivät saavuta arvoa.",
+              "methods": "Käyttäjäkysely · syvähaastattelut"
+            },
+            {
+              "title": "Poistuma ja pysyvyys",
+              "body": "Selvitä, miksi tilit lähtevät ja mitkä signaalit edeltävät sitä.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "Teknologiaostajien otos",
+          "IT:n, tuotteen ja hankinnan päättäjät, seulottu roolin, yrityskoon ja teknologiastackin mukaan."
+        ],
+        [
+          "Konseptitestaus",
+          "Konseptit ja ominaisuudet testataan vertailukelpoisilla otoksilla, yhtä muuttujaa kerrallaan."
+        ],
+        [
+          "Verkkokysely",
+          "Kysely käyttäjille tai ostajille, kiintiöt roolin, yrityskoon ja markkinan mukaan."
+        ],
+        [
+          "Syvähaastattelut",
+          "45–60 minuutin syvähaastattelut ostajien tai käyttäjien kanssa, tutkimustiimi tekee kahdestaan."
+        ],
+        [
+          "Hintatestit",
+          "Hintapisteet ja paketointi testattuna maksuhalukkuutta vastaan, raportoituna ilmoitetuin oletuksin."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "Tecnologia e digitale",
+      "lead": "Ricerche per aziende di software, piattaforme, internet e dispositivi: cosa deve contenere la roadmap, come va prezzato e perché gli utenti se ne vanno.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "Un prodotto tecnologico si decide prima di uscire: quali funzioni entrano nella roadmap, quale livello porta il prezzo e cosa devono dimostrare le prime settimane d'uso.",
+        "Studiamo acquirenti e utenti separatamente — il decisore tecnico che firma e la persona che deve usarlo — e il punto in cui i due non sono d'accordo.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere: cosa costruire dopo, come confezionarlo, perché l'adozione si ferma. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Prodotto e roadmap",
+          "frame": "Cosa costruire dopo e cosa lasciare fuori.",
+          "cards": [
+            {
+              "title": "Prioritizzazione delle funzioni",
+              "body": "Stabilire quali funzioni cambierebbero una decisione di acquisto o d'uso, prima che entrino nella roadmap.",
+              "methods": "Test di concept · campione B2B"
+            },
+            {
+              "title": "Validazione del concept",
+              "body": "Testare un concept con gli acquirenti e gli utenti a cui è destinato, prima di impegnare tempo di engineering.",
+              "methods": "Test di concept e A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Prezzo e abbonamento",
+          "frame": "Come è confezionato e cosa porta ogni livello.",
+          "cards": [
+            {
+              "title": "Prezzo e livelli",
+              "body": "Testare punti di prezzo e confini di livello rispetto alla disponibilità a pagare.",
+              "methods": "Test di prezzo · campione B2B"
+            },
+            {
+              "title": "Confezionamento e utilizzo",
+              "body": "Stabilire se debbano portare il prezzo posti, utilizzo o funzioni.",
+              "methods": "Interviste in profondità · test di prezzo"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marchio e concorrenza",
+          "frame": "Se il prodotto è in lista, e per cosa è noto.",
+          "cards": [
+            {
+              "title": "Marchio e quota di voce",
+              "body": "Monitorare notorietà, considerazione e raccomandazione rispetto alle piattaforme realmente confrontate.",
+              "methods": "Tracking online · misure fisse"
+            },
+            {
+              "title": "Set competitivo",
+              "body": "Mappare chi viene realmente confrontato in una decisione d'acquisto — raramente la lista che la categoria presuppone.",
+              "methods": "Indagine B2B · interviste in profondità"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Adozione e retention",
+          "frame": "Perché gli utenti iniziano e perché smettono.",
+          "cards": [
+            {
+              "title": "Onboarding e attivazione",
+              "body": "Studiare le prime settimane d'uso e dove i nuovi utenti non raggiungono il valore.",
+              "methods": "Indagine utenti · interviste in profondità"
+            },
+            {
+              "title": "Abbandono e retention",
+              "body": "Stabilire perché gli account se ne vanno e quali segnali lo precedono.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Campione acquirenti tecnologia",
+          "Decisori in IT, prodotto e acquisti, filtrati per ruolo, dimensione aziendale e stack tecnologico."
+        ],
+        [
+          "Test di concept",
+          "Concept e funzioni testati su campioni comparabili, con una variabile cambiata alla volta."
+        ],
+        [
+          "Indagine online",
+          "Indagine su utenti o acquirenti, con quote per ruolo, dimensione aziendale e mercato."
+        ],
+        [
+          "Interviste in profondità",
+          "Interviste in profondità di 45-60 minuti con acquirenti o utenti, condotte uno a uno dal team."
+        ],
+        [
+          "Test di prezzo",
+          "Punti di prezzo e confezionamento testati rispetto alla disponibilità a pagare, riportati con le assunzioni."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "テクノロジーとデジタル",
+      "lead": "ソフトウェア、プラットフォーム、インターネット、デバイス企業向けの調査：ロードマップに何を載せるか、どう価格づけるか、なぜユーザーが離れるか。",
+      "introKicker": "進め方",
+      "intro": [
+        "テクノロジー製品は出荷前に決まります。どの機能がロードマップに載るか、どの階層が価格を担うか、最初の数週間の利用が何を証明するか。",
+        "買い手と利用者を分けて調べます — 署名する技術的意思決定者と、実際に使う人 — そして両者が食い違う地点。",
+        "各調査は、それが支えるべき意思決定を中心に設計します。次に何を作るか、どう束ねるか、なぜ導入が止まるか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "製品とロードマップ",
+          "frame": "次に何を作り、何を外すか。",
+          "cards": [
+            {
+              "title": "機能の優先順位",
+              "body": "どの機能が購入や利用の判断を変えるかを、ロードマップに入る前に明らかにします。",
+              "methods": "コンセプトテスト · B2Bサンプル"
+            },
+            {
+              "title": "コンセプト検証",
+              "body": "開発工数を割く前に、想定する買い手と利用者でコンセプトをテストします。",
+              "methods": "コンセプト／A/Bテスト"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "価格とサブスクリプション",
+          "frame": "どう束ね、各階層が何を担うか。",
+          "cards": [
+            {
+              "title": "価格と階層",
+              "body": "価格点と階層の境界を支払意欲に対してテストします。",
+              "methods": "価格テスト · B2Bサンプル"
+            },
+            {
+              "title": "束ね方と利用",
+              "body": "席数、利用量、機能のどれが価格を担うべきかを明らかにします。",
+              "methods": "デプスインタビュー · 価格テスト"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "ブランドと競争",
+          "frame": "製品が候補に入っているか、何で知られているか。",
+          "cards": [
+            {
+              "title": "ブランドとシェアオブボイス",
+              "body": "買い手が実際に比較するプラットフォームに対して、認知・検討・推奨を追跡します。",
+              "methods": "オンライントラッキング · 固定指標"
+            },
+            {
+              "title": "競合集合",
+              "body": "購買決定で実際に比較される相手を描きます — カテゴリーが想定するリストとは限りません。",
+              "methods": "B2B調査 · デプスインタビュー"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "導入と維持",
+          "frame": "なぜ使い始め、なぜやめるのか。",
+          "cards": [
+            {
+              "title": "オンボーディングと活性化",
+              "body": "最初の数週間の利用と、新しい利用者が価値に届かない地点を調べます。",
+              "methods": "利用者調査 · デプスインタビュー"
+            },
+            {
+              "title": "解約と維持",
+              "body": "アカウントが離れる理由と、その前兆となるシグナルを明らかにします。",
+              "methods": "トラッキング · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "テクノロジー買い手サンプル",
+          "IT、プロダクト、調達の意思決定者。役割、企業規模、技術スタックでスクリーニングします。"
+        ],
+        [
+          "コンセプトテスト",
+          "コンセプトと機能を同等のサンプルで、一度に1変数だけ変えてテストします。"
+        ],
+        [
+          "オンライン調査",
+          "利用者または買い手への調査。役割、企業規模、市場で割り付けます。"
+        ],
+        [
+          "デプスインタビュー",
+          "買い手または利用者への45〜60分のデプスインタビュー。調査チームが1対1で行います。"
+        ],
+        [
+          "価格テスト",
+          "価格点と束ね方を支払意欲に対してテストし、前提を明記して報告します。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "기술과 디지털",
+      "lead": "소프트웨어, 플랫폼, 인터넷, 디바이스 기업을 위한 조사: 로드맵에 무엇을 담을지, 어떻게 가격을 매길지, 왜 사용자가 떠나는지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "기술 제품은 출시 전에 결정됩니다. 어떤 기능이 로드맵에 오르고, 어느 등급이 가격을 담당하며, 첫 몇 주의 사용이 무엇을 증명해야 하는지.",
+        "구매자와 사용자를 따로 조사합니다 — 서명하는 기술 의사결정자와 실제로 써야 하는 사람 — 그리고 둘이 어긋나는 지점.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다. 다음에 무엇을 만들지, 어떻게 묶을지, 왜 도입이 멈추는지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "제품과 로드맵",
+          "frame": "다음에 무엇을 만들고 무엇을 뺄지.",
+          "cards": [
+            {
+              "title": "기능 우선순위",
+              "body": "어떤 기능이 구매나 사용 결정을 바꿀지 로드맵에 오르기 전에 밝힙니다.",
+              "methods": "콘셉트 테스트 · B2B 표본"
+            },
+            {
+              "title": "콘셉트 검증",
+              "body": "엔지니어링 시간을 투입하기 전에, 겨냥한 구매자와 사용자로 콘셉트를 테스트합니다.",
+              "methods": "콘셉트·A/B 테스트"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "가격과 구독",
+          "frame": "어떻게 묶고 각 등급이 무엇을 담당하는지.",
+          "cards": [
+            {
+              "title": "가격과 등급",
+              "body": "가격대와 등급 경계를 지불 의향에 대해 테스트합니다.",
+              "methods": "가격 테스트 · B2B 표본"
+            },
+            {
+              "title": "묶음과 사용",
+              "body": "좌석, 사용량, 기능 중 무엇이 가격을 담당해야 하는지 밝힙니다.",
+              "methods": "심층 인터뷰 · 가격 테스트"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "브랜드와 경쟁",
+          "frame": "제품이 후보에 있는지, 무엇으로 알려졌는지.",
+          "cards": [
+            {
+              "title": "브랜드와 점유율",
+              "body": "구매자가 실제로 비교하는 플랫폼을 기준으로 인지, 고려, 추천을 추적합니다.",
+              "methods": "온라인 트래킹 · 고정 지표"
+            },
+            {
+              "title": "경쟁 집합",
+              "body": "구매 결정에서 실제로 비교되는 대상을 그립니다 — 카테고리가 가정하는 목록과는 다릅니다.",
+              "methods": "B2B 조사 · 심층 인터뷰"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "도입과 유지",
+          "frame": "왜 사용자가 시작하고 왜 멈추는지.",
+          "cards": [
+            {
+              "title": "온보딩과 활성화",
+              "body": "첫 몇 주의 사용과 신규 사용자가 가치에 도달하지 못하는 지점을 조사합니다.",
+              "methods": "사용자 조사 · 심층 인터뷰"
+            },
+            {
+              "title": "이탈과 유지",
+              "body": "계정이 떠나는 이유와 그 전조 신호를 밝힙니다.",
+              "methods": "트래킹 · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "기술 구매자 표본",
+          "IT, 제품, 구매 의사결정자. 역할, 기업 규모, 기술 스택으로 선별합니다."
+        ],
+        [
+          "콘셉트 테스트",
+          "콘셉트와 기능을 동등한 표본에서 한 번에 한 변수만 바꿔 테스트합니다."
+        ],
+        [
+          "온라인 조사",
+          "사용자 또는 구매자 조사. 역할, 기업 규모, 시장으로 할당합니다."
+        ],
+        [
+          "심층 인터뷰",
+          "구매자 또는 사용자와 45~60분 심층 인터뷰. 조사팀이 1대1로 진행합니다."
+        ],
+        [
+          "가격 테스트",
+          "가격대와 묶음을 지불 의향에 대해 테스트하고 가정을 명시해 보고합니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "Teknologi og digital",
+      "lead": "Forskning for software-, plattform-, internett- og enhetsbedrifter: hva veikartet bør inneholde, hvordan det bør prises, og hvorfor brukere forlater.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "Et teknologiprodukt besluttes før det lanseres: hvilke funksjoner som kommer på veikartet, hvilket nivå som bærer prisen, og hva de første ukene med bruk må bevise.",
+        "Vi undersøker kjøpere og brukere hver for seg — den tekniske beslutningstakeren som signerer, og personen som må bruke det — og punktet der de er uenige.",
+        "Hver studie designes rundt beslutningen den skal støtte: hva som skal bygges neste, hvordan det pakkes, hvorfor innføringen stopper. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produkt og veikart",
+          "frame": "Hva som skal bygges neste, og hva som skal utelates.",
+          "cards": [
+            {
+              "title": "Prioritering av funksjoner",
+              "body": "Fastslå hvilke funksjoner som ville endre en kjøps- eller bruksbeslutning, før de kommer på veikartet.",
+              "methods": "Konsepttester · B2B-utvalg"
+            },
+            {
+              "title": "Konseptvalidering",
+              "body": "Test et konsept med kjøperne og brukerne det er rettet mot, før ingeniørtid bindes.",
+              "methods": "Konsept- og A/B-testing"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Pris og abonnement",
+          "frame": "Hvordan det pakkes, og hva hvert nivå bærer.",
+          "cards": [
+            {
+              "title": "Pris og nivåer",
+              "body": "Test prispunkter og nivågrenser mot betalingsvillighet.",
+              "methods": "Pristester · B2B-utvalg"
+            },
+            {
+              "title": "Pakking og bruk",
+              "body": "Fastslå om plasser, bruk eller funksjoner skal bære prisen.",
+              "methods": "Dybdeintervjuer · pristester"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Merke og konkurranse",
+          "frame": "Om produktet er på listen, og hva det er kjent for.",
+          "cards": [
+            {
+              "title": "Merke og andel av oppmerksomhet",
+              "body": "Følg kjennskap, vurdering og anbefaling mot plattformene kjøpere faktisk sammenligner.",
+              "methods": "Nettracking · faste mål"
+            },
+            {
+              "title": "Konkurransesett",
+              "body": "Kartlegg hvem som faktisk sammenlignes i en kjøpsbeslutning — sjelden listen kategorien antar.",
+              "methods": "B2B-undersøkelse · dybdeintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Innføring og bevaring",
+          "frame": "Hvorfor brukere starter, og hvorfor de stopper.",
+          "cards": [
+            {
+              "title": "Onboarding og aktivering",
+              "body": "Undersøk de første ukene med bruk, og hvor nye brukere ikke når verdien.",
+              "methods": "Brukerundersøkelse · dybdeintervjuer"
+            },
+            {
+              "title": "Frafald og bevaring",
+              "body": "Fastslå hvorfor kontoer forlater, og hvilke signaler som kommer før.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "Utvalg av teknologikjøpere",
+          "Beslutningstakere i IT, produkt og innkjøp, screenet etter rolle, selskapsstørrelse og teknologistack."
+        ],
+        [
+          "Konsepttesting",
+          "Konsepter og funksjoner testet på sammenlignbare utvalg, med én variabel endret om gangen."
+        ],
+        [
+          "Nettundersøkelse",
+          "Undersøkelse blant brukere eller kjøpere, med kvoter etter rolle, selskapsstørrelse og marked."
+        ],
+        [
+          "Dybdeintervjuer",
+          "Dybdeintervjuer på 45–60 minutter med kjøpere eller brukere, gjennomført en til en av forskerteamet."
+        ],
+        [
+          "Pristester",
+          "Prispunkter og pakking testet mot betalingsvillighet, rapportert med oppgitte forutsetninger."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Tecnologia e digital",
+      "lead": "Investigação para empresas de software, plataformas, internet e dispositivos: o que o roteiro deve conter, como deve ser precificado e porque os utilizadores saem.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "Um produto tecnológico decide-se antes de sair: que funcionalidades entram no roteiro, que nível suporta o preço e o que as primeiras semanas de uso têm de provar.",
+        "Estudamos compradores e utilizadores em separado — o decisor técnico que assina e a pessoa que tem de usar — e o ponto em que discordam.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar: o que construir a seguir, como empacotar, porque a adoção estagna. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produto e roteiro",
+          "frame": "O que construir a seguir e o que deixar de fora.",
+          "cards": [
+            {
+              "title": "Priorização de funcionalidades",
+              "body": "Estabelecer que funcionalidades mudariam uma decisão de compra ou uso, antes de entrarem no roteiro.",
+              "methods": "Testes de conceito · amostra B2B"
+            },
+            {
+              "title": "Validação de conceito",
+              "body": "Testar um conceito com os compradores e utilizadores a quem se destina, antes de comprometer tempo de engenharia.",
+              "methods": "Testes de conceito e A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Preço e subscrição",
+          "frame": "Como é empacotado e o que cada nível suporta.",
+          "cards": [
+            {
+              "title": "Preço e níveis",
+              "body": "Testar pontos de preço e fronteiras de nível face à disponibilidade a pagar.",
+              "methods": "Testes de preço · amostra B2B"
+            },
+            {
+              "title": "Empacotamento e uso",
+              "body": "Estabelecer se devem suportar o preço os lugares, o uso ou as funcionalidades.",
+              "methods": "Entrevistas em profundidade · testes de preço"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marca e concorrência",
+          "frame": "Se o produto está na lista e por que é conhecido.",
+          "cards": [
+            {
+              "title": "Marca e quota de voz",
+              "body": "Acompanhar notoriedade, consideração e recomendação face às plataformas que os compradores comparam de facto.",
+              "methods": "Tracking online · medidas fixas"
+            },
+            {
+              "title": "Conjunto concorrencial",
+              "body": "Mapear quem é realmente comparado numa decisão de compra — raramente a lista que a categoria assume.",
+              "methods": "Inquérito B2B · entrevistas em profundidade"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Adoção e retenção",
+          "frame": "Porque os utilizadores começam e porque param.",
+          "cards": [
+            {
+              "title": "Onboarding e ativação",
+              "body": "Estudar as primeiras semanas de uso e onde os novos utilizadores não chegam ao valor.",
+              "methods": "Inquérito a utilizadores · entrevistas em profundidade"
+            },
+            {
+              "title": "Abandono e retenção",
+              "body": "Estabelecer porque as contas saem e que sinais o antecedem.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Amostra de compradores de tecnologia",
+          "Decisores em TI, produto e compras, filtrados por função, dimensão da empresa e stack tecnológico."
+        ],
+        [
+          "Testes de conceito",
+          "Conceitos e funcionalidades testados em amostras comparáveis, com uma variável alterada de cada vez."
+        ],
+        [
+          "Inquérito online",
+          "Inquérito a utilizadores ou compradores, com quotas por função, dimensão da empresa e mercado."
+        ],
+        [
+          "Entrevistas em profundidade",
+          "Entrevistas em profundidade de 45 a 60 minutos com compradores ou utilizadores, conduzidas um a um pela equipa."
+        ],
+        [
+          "Testes de preço",
+          "Pontos de preço e empacotamento testados face à disponibilidade a pagar, apresentados com os pressupostos."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Технологии и цифровые продукты",
+      "lead": "Исследования для софтверных, платформенных, интернет- и аппаратных компаний: что должно быть в роадмапе, как это оценивать и почему пользователи уходят.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Технологический продукт решается до выпуска: какие функции попадут в роадмап, какой тариф несёт цену и что должны доказать первые недели использования.",
+        "Мы изучаем покупателей и пользователей отдельно — технического заказчика, который подписывает, и человека, которому этим пользоваться, — и точку, где они расходятся.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать: что строить дальше, как упаковать, почему внедрение стоит. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Продукт и роадмап",
+          "frame": "Что строить дальше и что не брать.",
+          "cards": [
+            {
+              "title": "Приоритизация функций",
+              "body": "Определить, какие функции изменят решение о покупке или использовании, до попадания в роадмап.",
+              "methods": "Тесты концепций · B2B-выборка"
+            },
+            {
+              "title": "Валидация концепции",
+              "body": "Проверить концепцию на покупателях и пользователях, для которых он создан, до затрат инженерного времени.",
+              "methods": "Тестирование концепций и A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Цена и подписка",
+          "frame": "Как упаковано и что несёт каждый тариф.",
+          "cards": [
+            {
+              "title": "Цена и тарифы",
+              "body": "Проверить ценовые точки и границы тарифов на готовность платить.",
+              "methods": "Ценовые тесты · B2B-выборка"
+            },
+            {
+              "title": "Упаковка и использование",
+              "body": "Определить, что должно нести цену: места, использование или функции.",
+              "methods": "Глубинные интервью · ценовые тесты"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Бренд и конкуренция",
+          "frame": "Входит ли продукт в шорт-лист и чем он известен.",
+          "cards": [
+            {
+              "title": "Бренд и доля внимания",
+              "body": "Отслеживать известность, рассмотрение и рекомендацию относительно платформ, которые покупатели действительно сравнивают.",
+              "methods": "Онлайн-трекинг · фиксированные показатели"
+            },
+            {
+              "title": "Конкурентный набор",
+              "body": "Нанести, кого реально сравнивают при покупке — редко это список, который предполагает категория.",
+              "methods": "B2B-опрос · глубинные интервью"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Внедрение и удержание",
+          "frame": "Почему пользователи начинают и почему бросают.",
+          "cards": [
+            {
+              "title": "Онбординг и активация",
+              "body": "Изучить первые недели использования и где новые пользователи не доходят до ценности.",
+              "methods": "Опрос пользователей · глубинные интервью"
+            },
+            {
+              "title": "Отток и удержание",
+              "body": "Определить, почему аккаунты уходят и какие сигналы предшествуют.",
+              "methods": "Трекинг · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Выборка покупателей технологий",
+          "Руководители в ИТ, продукте и закупках, отобранные по роли, размеру компании и технологическому стеку."
+        ],
+        [
+          "Тесты концепций",
+          "Концепции и функции проверяются на сопоставимых выборках с изменением одной переменной за раз."
+        ],
+        [
+          "Онлайн-опрос",
+          "Опрос пользователей или покупателей с квотами по роли, размеру компании и рынку."
+        ],
+        [
+          "Глубинные интервью",
+          "Глубинные интервью по 45–60 минут с покупателями или пользователями, один на один с исследовательской командой."
+        ],
+        [
+          "Ценовые тесты",
+          "Ценовые точки и упаковка, проверенные на готовность платить, с указанием допущений."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "Teknik och digitalt",
+      "lead": "Undersökningar för mjukvaru-, plattforms-, internet- och enhetsbolag: vad färdplanen bör innehålla, hur det ska prissättas och varför användare lämnar.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "En teknikprodukt beslutas innan den släpps: vilka funktioner som hamnar på färdplanen, vilken nivå som bär priset och vad de första veckornas användning måste bevisa.",
+        "Vi undersöker köpare och användare var för sig — den tekniska beslutsfattaren som signerar och personen som måste använda det — och punkten där de inte är överens.",
+        "Varje studie byggs kring det beslut den ska stödja: vad som ska byggas härnäst, hur det ska paketeras, varför införandet stannar. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Produkt och färdplan",
+          "frame": "Vad som ska byggas härnäst och vad som ska lämnas utanför.",
+          "cards": [
+            {
+              "title": "Prioritering av funktioner",
+              "body": "Fastställa vilka funktioner som skulle ändra ett köp- eller användningsbeslut, innan de hamnar på färdplanen.",
+              "methods": "Koncepttester · B2B-urval"
+            },
+            {
+              "title": "Konceptvalidering",
+              "body": "Testa ett koncept med de köpare och användare det riktar sig till, innan ingenjörstid binds.",
+              "methods": "Koncept- och A/B-test"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Pris och prenumeration",
+          "frame": "Hur det paketeras och vad varje nivå bär.",
+          "cards": [
+            {
+              "title": "Pris och nivåer",
+              "body": "Testa prispunkter och nivågränser mot betalningsvilja.",
+              "methods": "Pristester · B2B-urval"
+            },
+            {
+              "title": "Paketering och användning",
+              "body": "Fastställa om platser, användning eller funktioner ska bära priset.",
+              "methods": "Djupintervjuer · pristester"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Varumärke och konkurrens",
+          "frame": "Om produkten är på listan, och vad den är känd för.",
+          "cards": [
+            {
+              "title": "Varumärke och andel av uppmärksamhet",
+              "body": "Följ kännedom, övervägande och rekommendation mot de plattformar köpare faktiskt jämför.",
+              "methods": "Onlinetracking · fasta mått"
+            },
+            {
+              "title": "Konkurrensuppsättning",
+              "body": "Kartlägg vem som faktiskt jämförs i ett köpbeslut — sällan den lista kategorin antar.",
+              "methods": "B2B-undersökning · djupintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Införande och behållning",
+          "frame": "Varför användare börjar, och varför de slutar.",
+          "cards": [
+            {
+              "title": "Onboarding och aktivering",
+              "body": "Undersök de första veckornas användning, och var nya användare inte når värdet.",
+              "methods": "Användarundersökning · djupintervjuer"
+            },
+            {
+              "title": "Tapp och behållning",
+              "body": "Fastställa varför konton lämnar, och vilka signaler som föregår det.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "Urval av teknikköpare",
+          "Beslutsfattare inom IT, produkt och inköp, screenade efter roll, företagsstorlek och teknikstack."
+        ],
+        [
+          "Koncepttestning",
+          "Koncept och funktioner testade på jämförbara urval, med en variabel ändrad i taget."
+        ],
+        [
+          "Onlineundersökning",
+          "Undersökning bland användare eller köpare, med kvoter efter roll, företagsstorlek och marknad."
+        ],
+        [
+          "Djupintervjuer",
+          "Djupintervjuer på 45–60 minuter med köpare eller användare, genomförda en mot en av forskarteamet."
+        ],
+        [
+          "Pristester",
+          "Prispunkter och paketering testade mot betalningsvilja, rapporterade med angivna antaganden."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "Teknoloji ve dijital",
+      "lead": "Yazılım, platform, internet ve cihaz şirketleri için araştırma: yol haritasında ne olmalı, nasıl fiyatlanmalı ve kullanıcılar neden ayrılıyor.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Bir teknoloji ürünü çıkmadan önce kararlaştırılır: hangi özellikler yol haritasına girecek, hangi katman fiyatı taşıyacak ve ilk haftalar neyi kanıtlamalı.",
+        "Alıcıları ve kullanıcıları ayrı ayrı inceliyoruz — imza atan teknik karar verici ve onu kullanmak zorunda olan kişi — ve ikisinin ayrıştığı nokta.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır: sırada ne inşa edilecek, nasıl paketlenecek, benimseme neden duruyor. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Ürün ve yol haritası",
+          "frame": "Sırada ne inşa edilecek ve ne dışarıda bırakılacak.",
+          "cards": [
+            {
+              "title": "Özellik önceliklendirme",
+              "body": "Hangi özelliklerin satın alma veya kullanım kararını değiştireceğini yol haritasına girmeden önce belirleyin.",
+              "methods": "Konsept testleri · B2B örneklem"
+            },
+            {
+              "title": "Konsept doğrulama",
+              "body": "Mühendislik zamanı ayrılmadan önce bir konsepti hedeflediği alıcı ve kullanıcılarla test edin.",
+              "methods": "Konsept ve A/B testi"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Fiyat ve abonelik",
+          "frame": "Nasıl paketlendiği ve her katmanın neyi taşıdığı.",
+          "cards": [
+            {
+              "title": "Fiyat ve katmanlar",
+              "body": "Fiyat noktalarını ve katman sınırlarını ödeme istekliliğine karşı test edin.",
+              "methods": "Fiyat testleri · B2B örneklem"
+            },
+            {
+              "title": "Paketleme ve kullanım",
+              "body": "Fiyatı koltukların, kullanımın yoksa özelliklerin mi taşıması gerektiğini belirleyin.",
+              "methods": "Derinlemesine görüşmeler · fiyat testleri"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marka ve rekabet",
+          "frame": "Ürün kısa listede mi ve neyle tanınıyor.",
+          "cards": [
+            {
+              "title": "Marka ve ses payı",
+              "body": "Alıcıların gerçekten karşılaştırdığı platformlara karşı bilinirlik, değerlendirme ve tavsiyeyi izleyin.",
+              "methods": "Çevrimiçi tracking · sabit ölçütler"
+            },
+            {
+              "title": "Rekabet kümesi",
+              "body": "Satın alma kararında gerçekten kimin karşılaştırıldığını haritalayın — kategorinin varsaydığı liste nadiren budur.",
+              "methods": "B2B anketi · derinlemesine görüşmeler"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Benimseme ve elde tutma",
+          "frame": "Kullanıcılar neden başlıyor ve neden bırakıyor.",
+          "cards": [
+            {
+              "title": "Onboarding ve aktivasyon",
+              "body": "İlk haftaları ve yeni kullanıcıların değere ulaşamadığı noktayı inceleyin.",
+              "methods": "Kullanıcı anketi · derinlemesine görüşmeler"
+            },
+            {
+              "title": "Kayıp ve elde tutma",
+              "body": "Hesapların neden ayrıldığını ve hangi sinyallerin önce geldiğini belirleyin.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "Teknoloji alıcı örneklemi",
+          "IT, ürün ve satın alma karar vericileri; rol, şirket büyüklüğü ve teknoloji yığınına göre elenir."
+        ],
+        [
+          "Konsept testi",
+          "Konseptler ve özellikler karşılaştırılabilir örneklemlerde, her seferinde tek değişken değiştirilerek test edilir."
+        ],
+        [
+          "Çevrimiçi anket",
+          "Kullanıcı veya alıcı anketi; rol, şirket büyüklüğü ve pazara göre kotalar."
+        ],
+        [
+          "Derinlemesine görüşmeler",
+          "Alıcı veya kullanıcılarla 45-60 dakikalık derinlemesine görüşmeler; araştırma ekibi bire bir yürütür."
+        ],
+        [
+          "Fiyat testleri",
+          "Fiyat noktaları ve paketleme, ödeme istekliliğine karşı test edilir; varsayımlar belirtilerek raporlanır."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   },
   "media": {
