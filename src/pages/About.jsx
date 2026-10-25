@@ -13,7 +13,10 @@ export default function About() {
   const { language, publicCopy } = useLanguage();
   const text = publicCopy.pages.about;
   const approach = publicCopy.approach;
-  const manifesto = [approach.deck, approach.lede, approach.voicesBody, approach.technologyBody, approach.principleBody]
+  // The human-first paragraph has its own one-piece translation in the
+  // library; where it is missing (the four languages that already carry the
+  // approach section) the five sentences are joined as before.
+  const manifesto = text.humanBody || [approach.deck, approach.lede, approach.voicesBody, approach.technologyBody, approach.principleBody]
     .filter(Boolean)
     .join(language.startsWith('zh') ? '' : ' ');
 
