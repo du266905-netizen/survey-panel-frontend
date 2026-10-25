@@ -8,258 +8,474 @@
      pages.access                 /access (the homepage chooser, mounted as a page)
      pages.industries.<slug>      the ten industry pages
 
-   en-US is the source language for the industry pages; zh-CN / zh-Hant are
-   maintained alongside it, and every other language falls back to English.
-   Edit copy here, not in the page components. */
+   en-US is the source language; zh-CN and zh-Hant are maintained alongside it.
+   Every other language has its own entered translation; anything missing falls
+   back to English. Edit copy here, not in the page components. */
 
 export const aboutCopy = {
-  'en-US': {
-    eyebrow: 'About us',
-    theme: 'Your opinions shape the world.',
-    whoEyebrow: 'Who we are',
-    humanEyebrow: 'Human first',
-    body: 'We are a cross-regional insight and research company, building an open, interconnected and sustainable research community. We connect participants, research commissioners and organisations across business, culture, everyday life and public questions, turning real voices into clear judgements — for better decisions, and for a better world.',
-    storyTitle: 'Rooted in China, connected to the world.',
-    points: [
-      { num: '01', title: 'A Chinese foundation', body: 'The team has focused on market research for years and has built a stable community and research network in China, reaching real, verifiable local samples.' },
-      { num: '02', title: 'Regional partners', body: 'Across Greater China, Asia-Pacific, the Middle East, Europe and North America we work with local research partners, so each market is run by people who know it.' },
-      { num: '03', title: 'Always extending', body: 'As studies require, we keep extending partner and participant coverage in major markets — starting from a particular place and connecting to a wider view.' },
-    ],
+  "en-US": {
+    "eyebrow": "About us",
+    "theme": "Your opinions shape the world.",
+    "whoEyebrow": "Who we are",
+    "humanEyebrow": "Human first",
+    "body": "We are a cross-regional insight and research company, building an open, interconnected and sustainable research community. We connect participants, research commissioners and organisations across business, culture, everyday life and public questions, turning real voices into clear judgements — for better decisions, and for a better world.",
+    "storyTitle": "Rooted in China, connected to the world.",
+    "points": [
+      {
+        "num": "01",
+        "title": "A Chinese foundation",
+        "body": "The team has focused on market research for years and has built a stable community and research network in China, reaching real, verifiable local samples."
+      },
+      {
+        "num": "02",
+        "title": "Regional partners",
+        "body": "Across Greater China, Asia-Pacific, the Middle East, Europe and North America we work with local research partners, so each market is run by people who know it."
+      },
+      {
+        "num": "03",
+        "title": "Always extending",
+        "body": "As studies require, we keep extending partner and participant coverage in major markets — starting from a particular place and connecting to a wider view."
+      }
+    ]
   },
-  'en-GB': {
-    eyebrow: 'About us',
-    theme: 'Your opinions shape the world.',
-    whoEyebrow: 'Who we are',
-    humanEyebrow: 'Human first',
-    body: 'We are a cross-regional insight and research company, building an open, interconnected and sustainable research community. We connect participants, research commissioners and organisations across business, culture, everyday life and public questions, turning real voices into clear judgements — for better decisions, and for a better world.',
-    storyTitle: 'Rooted in China, connected to the world.',
-    points: [
-      { num: '01', title: 'A Chinese foundation', body: 'The team has focused on market research for years and has built a stable community and research network in China, reaching real, verifiable local samples.' },
-      { num: '02', title: 'Regional partners', body: 'Across Greater China, Asia-Pacific, the Middle East, Europe and North America we work with local research partners, so each market is run by people who know it.' },
-      { num: '03', title: 'Always extending', body: 'As studies require, we keep extending partner and participant coverage in major markets — starting from a particular place and connecting to a wider view.' },
-    ],
+  "en-GB": {
+    "eyebrow": "About us",
+    "theme": "Your opinions shape the world.",
+    "whoEyebrow": "Who we are",
+    "humanEyebrow": "Human first",
+    "body": "We are a cross-regional insight and research company, building an open, interconnected and sustainable research community. We connect participants, research commissioners and organisations across business, culture, everyday life and public questions, turning real voices into clear judgements — for better decisions, and for a better world.",
+    "storyTitle": "Rooted in China, connected to the world.",
+    "points": [
+      {
+        "num": "01",
+        "title": "A Chinese foundation",
+        "body": "The team has focused on market research for years and has built a stable community and research network in China, reaching real, verifiable local samples."
+      },
+      {
+        "num": "02",
+        "title": "Regional partners",
+        "body": "Across Greater China, Asia-Pacific, the Middle East, Europe and North America we work with local research partners, so each market is run by people who know it."
+      },
+      {
+        "num": "03",
+        "title": "Always extending",
+        "body": "As studies require, we keep extending partner and participant coverage in major markets — starting from a particular place and connecting to a wider view."
+      }
+    ]
   },
-  'zh-CN': {
-    eyebrow: '关于我们',
-    theme: '你的观点影响世界。',
-    whoEyebrow: '我们是谁',
-    humanEyebrow: '以人为本',
-    body: '我们是一家跨区域的信息洞察研究公司，致力于打造开放、共生、可持续的生态社区。我们连接参与者、研究发起人与组织，围绕商业、文化、日常生活与公共议题，让真实的声音转化为清晰的判断——为更好的决策，也为更好的世界。',
-    storyTitle: '立足中国，连接世界',
-    points: [
-      { num: '01', title: '中国根基', body: '团队长期专注市场研究，在中国建立了稳定的社区与调研网络，能够触达真实、可验证的样本。' },
-      { num: '02', title: '区域伙伴', body: '在大中华区、亚太、中东、欧洲与北美，我们与当地研究伙伴长期协作，让每个市场都由熟悉当地的人执行。' },
-      { num: '03', title: '持续拓展', body: '根据研究需要，我们持续拓展主要市场的伙伴与参与者覆盖；从一个具体的地方出发，连接更广的研究视野。' },
-    ],
+  "zh-CN": {
+    "eyebrow": "关于我们",
+    "theme": "你的观点影响世界。",
+    "whoEyebrow": "我们是谁",
+    "humanEyebrow": "以人为本",
+    "body": "我们是一家跨区域的信息洞察研究公司，致力于打造开放、共生、可持续的生态社区。我们连接参与者、研究发起人与组织，围绕商业、文化、日常生活与公共议题，让真实的声音转化为清晰的判断——为更好的决策，也为更好的世界。",
+    "storyTitle": "立足中国，连接世界",
+    "points": [
+      {
+        "num": "01",
+        "title": "中国根基",
+        "body": "团队长期专注市场研究，在中国建立了稳定的社区与调研网络，能够触达真实、可验证的样本。"
+      },
+      {
+        "num": "02",
+        "title": "区域伙伴",
+        "body": "在大中华区、亚太、中东、欧洲与北美，我们与当地研究伙伴长期协作，让每个市场都由熟悉当地的人执行。"
+      },
+      {
+        "num": "03",
+        "title": "持续拓展",
+        "body": "根据研究需要，我们持续拓展主要市场的伙伴与参与者覆盖；从一个具体的地方出发，连接更广的研究视野。"
+      }
+    ]
   },
-  'zh-Hant': {
-    eyebrow: '關於我們',
-    theme: '你的觀點影響世界。',
-    whoEyebrow: '我們是誰',
-    humanEyebrow: '以人為本',
-    body: '我們是一家跨區域的資訊洞察研究公司，致力於打造開放、共生、可持續的生態社區。我們連結參與者、研究發起人與組織，圍繞商業、文化、日常生活與公共議題，讓真實的聲音轉化為清晰的判斷——為更好的決策，也為更好的世界。',
-    storyTitle: '立足中國，連接世界',
-    points: [
-      { num: '01', title: '中國根基', body: '團隊長期專注市場研究，在中國建立了穩定的社區與調研網絡，能夠觸達真實、可驗證的樣本。' },
-      { num: '02', title: '區域伙伴', body: '在大中華區、亞太、中東、歐洲與北美，我們與當地研究伙伴長期協作，讓每個市場都由熟悉當地的人執行。' },
-      { num: '03', title: '持續拓展', body: '根據研究需要，我們持續拓展主要市場的伙伴與參與者覆蓋；從一個具體的地方出發，連接更廣的研究視野。' },
-    ],
+  "zh-Hant": {
+    "eyebrow": "關於我們",
+    "theme": "你的觀點影響世界。",
+    "whoEyebrow": "我們是誰",
+    "humanEyebrow": "以人為本",
+    "body": "我們是一家跨區域的資訊洞察研究公司，致力於打造開放、共生、可持續的生態社區。我們連結參與者、研究發起人與組織，圍繞商業、文化、日常生活與公共議題，讓真實的聲音轉化為清晰的判斷——為更好的決策，也為更好的世界。",
+    "storyTitle": "立足中國，連接世界",
+    "points": [
+      {
+        "num": "01",
+        "title": "中國根基",
+        "body": "團隊長期專注市場研究，在中國建立了穩定的社區與調研網絡，能夠觸達真實、可驗證的樣本。"
+      },
+      {
+        "num": "02",
+        "title": "區域伙伴",
+        "body": "在大中華區、亞太、中東、歐洲與北美，我們與當地研究伙伴長期協作，讓每個市場都由熟悉當地的人執行。"
+      },
+      {
+        "num": "03",
+        "title": "持續拓展",
+        "body": "根據研究需要，我們持續拓展主要市場的伙伴與參與者覆蓋；從一個具體的地方出發，連接更廣的研究視野。"
+      }
+    ]
   },
-  'de': {
-    humanBody: "Wir glauben, dass echte Menschen immer der Ausgangspunkt jeder Forschung sind. KI kann endlose Inhalte erzeugen, die echt wirken. Doch sie kann niemals einen bestimmten Menschen in einem bestimmten Moment nachbilden, der sagt, was er wirklich denkt. Hinter jedem Umfrageergebnis steht ein Mensch, der sich entschieden hat, eine Sichtweise zu teilen. Diese einzelnen Stimmen machen Insights vertrauenswürdig. Wir nutzen Matching und Echtzeitdaten, um Ihre Zeit zu respektieren, Ihre Wirkung zu zeigen und jede Vergütungsregel klar und fair zu halten. Menschenzentriert bedeutet nicht, Technik abzulehnen. Es bedeutet, Technik in den Dienst der Menschen zu stellen.",
-    eyebrow: "Über uns",
-    theme: "Ihre Meinungen prägen die Welt.",
-    whoEyebrow: "Wer wir sind",
-    humanEyebrow: "Der Mensch zuerst",
-    body: "Wir sind ein regional übergreifendes Marktforschungs- und Insight-Unternehmen und bauen eine offene, vernetzte und nachhaltige Forschungsgemeinschaft auf. Wir verbinden Teilnehmende, Auftraggeber und Organisationen aus Wirtschaft, Kultur, Alltag und öffentlichen Fragen und übersetzen echte Stimmen in klare Urteile – für bessere Entscheidungen und eine bessere Welt.",
-    storyTitle: "In China verwurzelt, weltweit vernetzt.",
-    points: [
-      { num: '01', title: "Chinesisches Fundament", body: "Das Team arbeitet seit Jahren in der Marktforschung und hat in China eine stabile Community und ein Forschungsnetzwerk aufgebaut, das echte, überprüfbare lokale Stichproben erreicht." },
-      { num: '02', title: "Regionale Partner", body: "In Greater China, dem asiatisch-pazifischen Raum, dem Nahen Osten, Europa und Nordamerika arbeiten wir mit lokalen Forschungspartnern, sodass jeder Markt von Menschen vor Ort betreut wird." },
-      { num: '03', title: "Ständige Erweiterung", body: "Je nach Studie erweitern wir die Abdeckung von Partnern und Teilnehmenden in wichtigen Märkten – ausgehend von einem konkreten Ort mit Blick auf ein weiteres Feld." },
-    ],
+  "de": {
+    "humanBody": "Wir glauben, dass echte Menschen immer der Ausgangspunkt jeder Forschung sind. KI kann endlose Inhalte erzeugen, die echt wirken. Doch sie kann niemals einen bestimmten Menschen in einem bestimmten Moment nachbilden, der sagt, was er wirklich denkt. Hinter jedem Umfrageergebnis steht ein Mensch, der sich entschieden hat, eine Sichtweise zu teilen. Diese einzelnen Stimmen machen Insights vertrauenswürdig. Wir nutzen Matching und Echtzeitdaten, um Ihre Zeit zu respektieren, Ihre Wirkung zu zeigen und jede Vergütungsregel klar und fair zu halten. Menschenzentriert bedeutet nicht, Technik abzulehnen. Es bedeutet, Technik in den Dienst der Menschen zu stellen.",
+    "eyebrow": "Über uns",
+    "theme": "Ihre Meinungen prägen die Welt.",
+    "whoEyebrow": "Wer wir sind",
+    "humanEyebrow": "Der Mensch zuerst",
+    "body": "Wir sind ein regional übergreifendes Marktforschungs- und Insight-Unternehmen und bauen eine offene, vernetzte und nachhaltige Forschungsgemeinschaft auf. Wir verbinden Teilnehmende, Auftraggeber und Organisationen aus Wirtschaft, Kultur, Alltag und öffentlichen Fragen und übersetzen echte Stimmen in klare Urteile – für bessere Entscheidungen und eine bessere Welt.",
+    "storyTitle": "In China verwurzelt, weltweit vernetzt.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Chinesisches Fundament",
+        "body": "Das Team arbeitet seit Jahren in der Marktforschung und hat in China eine stabile Community und ein Forschungsnetzwerk aufgebaut, das echte, überprüfbare lokale Stichproben erreicht."
+      },
+      {
+        "num": "02",
+        "title": "Regionale Partner",
+        "body": "In Greater China, dem asiatisch-pazifischen Raum, dem Nahen Osten, Europa und Nordamerika arbeiten wir mit lokalen Forschungspartnern, sodass jeder Markt von Menschen vor Ort betreut wird."
+      },
+      {
+        "num": "03",
+        "title": "Ständige Erweiterung",
+        "body": "Je nach Studie erweitern wir die Abdeckung von Partnern und Teilnehmenden in wichtigen Märkten – ausgehend von einem konkreten Ort mit Blick auf ein weiteres Feld."
+      }
+    ]
   },
-  'fr': {
-    humanBody: "Nous croyons que les personnes réelles seront toujours le point de départ de la recherche. L'IA peut générer un contenu infini qui semble réel. Mais elle ne pourra jamais recréer une personne précise, à un moment précis, exprimant ce qu'elle pense vraiment. Derrière chaque résultat d'enquête se trouve une personne qui a choisi de partager un point de vue. Ces voix individuelles rendent l'insight digne de confiance. Nous utilisons le matching et des données en temps réel pour respecter votre temps, montrer votre impact et garder chaque règle de récompense claire et équitable. Être centré sur l'humain ne signifie pas rejeter la technologie. Cela signifie mettre la technologie au service des personnes.",
-    eyebrow: "À propos",
-    theme: "Vos opinions façonnent le monde.",
-    whoEyebrow: "Qui nous sommes",
-    humanEyebrow: "L'humain d'abord",
-    body: "Nous sommes une entreprise d'études et d'insights à l'échelle interrégionale, qui construit une communauté de recherche ouverte, interconnectée et durable. Nous relions participants, commanditaires et organisations autour du commerce, de la culture, du quotidien et des questions publiques, en transformant des voix réelles en jugements clairs — pour de meilleures décisions et un monde meilleur.",
-    storyTitle: "Ancrés en Chine, connectés au monde.",
-    points: [
-      { num: '01', title: "Un ancrage chinois", body: "L'équipe se consacre depuis des années aux études de marché et a bâti en Chine une communauté et un réseau de recherche stables, capables d'atteindre des échantillons locaux réels et vérifiables." },
-      { num: '02', title: "Des partenaires régionaux", body: "En Grande Chine, en Asie-Pacifique, au Moyen-Orient, en Europe et en Amérique du Nord, nous travaillons avec des partenaires locaux, afin que chaque marché soit mené par des personnes qui le connaissent." },
-      { num: '03', title: "Toujours en extension", body: "Selon les besoins de l'étude, nous étendons la couverture des partenaires et des participants sur les grands marchés — en partant d'un lieu précis pour rejoindre une vision plus large." },
-    ],
+  "fr": {
+    "humanBody": "Nous croyons que les personnes réelles seront toujours le point de départ de la recherche. L'IA peut générer un contenu infini qui semble réel. Mais elle ne pourra jamais recréer une personne précise, à un moment précis, exprimant ce qu'elle pense vraiment. Derrière chaque résultat d'enquête se trouve une personne qui a choisi de partager un point de vue. Ces voix individuelles rendent l'insight digne de confiance. Nous utilisons le matching et des données en temps réel pour respecter votre temps, montrer votre impact et garder chaque règle de récompense claire et équitable. Être centré sur l'humain ne signifie pas rejeter la technologie. Cela signifie mettre la technologie au service des personnes.",
+    "eyebrow": "À propos",
+    "theme": "Vos opinions façonnent le monde.",
+    "whoEyebrow": "Qui nous sommes",
+    "humanEyebrow": "L'humain d'abord",
+    "body": "Nous sommes une entreprise d'études et d'insights à l'échelle interrégionale, qui construit une communauté de recherche ouverte, interconnectée et durable. Nous relions participants, commanditaires et organisations autour du commerce, de la culture, du quotidien et des questions publiques, en transformant des voix réelles en jugements clairs — pour de meilleures décisions et un monde meilleur.",
+    "storyTitle": "Ancrés en Chine, connectés au monde.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Un ancrage chinois",
+        "body": "L'équipe se consacre depuis des années aux études de marché et a bâti en Chine une communauté et un réseau de recherche stables, capables d'atteindre des échantillons locaux réels et vérifiables."
+      },
+      {
+        "num": "02",
+        "title": "Des partenaires régionaux",
+        "body": "En Grande Chine, en Asie-Pacifique, au Moyen-Orient, en Europe et en Amérique du Nord, nous travaillons avec des partenaires locaux, afin que chaque marché soit mené par des personnes qui le connaissent."
+      },
+      {
+        "num": "03",
+        "title": "Toujours en extension",
+        "body": "Selon les besoins de l'étude, nous étendons la couverture des partenaires et des participants sur les grands marchés — en partant d'un lieu précis pour rejoindre une vision plus large."
+      }
+    ]
   },
-  'nl': {
-    humanBody: "Wij geloven dat echte mensen altijd het startpunt van onderzoek zijn. AI kan eindeloos veel content maken die echt lijkt. Maar zij kan nooit een bepaald persoon op een bepaald moment nabootsen die zegt wat hij werkelijk vindt. Achter elk enquêteresultaat staat iemand die ervoor koos een perspectief te delen. Die afzonderlijke stemmen maken inzicht betrouwbaar. We gebruiken matching en realtime data om uw tijd te respecteren, uw impact te laten zien en elke beloningsregel helder en eerlijk te houden. Mensgericht betekent niet dat we technologie afwijzen. Het betekent dat technologie mensen dient.",
-    eyebrow: "Over ons",
-    theme: "Uw mening vormt de wereld.",
-    whoEyebrow: "Wie we zijn",
-    humanEyebrow: "De mens voorop",
-    body: "Wij zijn een interregionaal insight- en onderzoeksbedrijf en bouwen aan een open, verbonden en duurzame onderzoeksgemeenschap. We verbinden deelnemers, opdrachtgevers en organisaties rond handel, cultuur, dagelijks leven en publieke vragen, en vertalen echte stemmen naar heldere oordelen — voor betere beslissingen en een betere wereld.",
-    storyTitle: "Geworteld in China, verbonden met de wereld.",
-    points: [
-      { num: '01', title: "Een Chinese basis", body: "Het team richt zich al jaren op marktonderzoek en heeft in China een stabiele community en een onderzoeksnetwerk opgebouwd, met toegang tot echte, verifieerbare lokale steekproeven." },
-      { num: '02', title: "Regionale partners", body: "In Groot-China, Azië-Pacific, het Midden-Oosten, Europa en Noord-Amerika werken we met lokale onderzoekspartners, zodat elke markt wordt uitgevoerd door mensen die die markt kennen." },
-      { num: '03', title: "Altijd in uitbreiding", body: "Afhankelijk van het onderzoek breiden we de dekking van partners en deelnemers in belangrijke markten uit — vanuit een concrete plek naar een breder perspectief." },
-    ],
+  "nl": {
+    "humanBody": "Wij geloven dat echte mensen altijd het startpunt van onderzoek zijn. AI kan eindeloos veel content maken die echt lijkt. Maar zij kan nooit een bepaald persoon op een bepaald moment nabootsen die zegt wat hij werkelijk vindt. Achter elk enquêteresultaat staat iemand die ervoor koos een perspectief te delen. Die afzonderlijke stemmen maken inzicht betrouwbaar. We gebruiken matching en realtime data om uw tijd te respecteren, uw impact te laten zien en elke beloningsregel helder en eerlijk te houden. Mensgericht betekent niet dat we technologie afwijzen. Het betekent dat technologie mensen dient.",
+    "eyebrow": "Over ons",
+    "theme": "Uw mening vormt de wereld.",
+    "whoEyebrow": "Wie we zijn",
+    "humanEyebrow": "De mens voorop",
+    "body": "Wij zijn een interregionaal insight- en onderzoeksbedrijf en bouwen aan een open, verbonden en duurzame onderzoeksgemeenschap. We verbinden deelnemers, opdrachtgevers en organisaties rond handel, cultuur, dagelijks leven en publieke vragen, en vertalen echte stemmen naar heldere oordelen — voor betere beslissingen en een betere wereld.",
+    "storyTitle": "Geworteld in China, verbonden met de wereld.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Een Chinese basis",
+        "body": "Het team richt zich al jaren op marktonderzoek en heeft in China een stabiele community en een onderzoeksnetwerk opgebouwd, met toegang tot echte, verifieerbare lokale steekproeven."
+      },
+      {
+        "num": "02",
+        "title": "Regionale partners",
+        "body": "In Groot-China, Azië-Pacific, het Midden-Oosten, Europa en Noord-Amerika werken we met lokale onderzoekspartners, zodat elke markt wordt uitgevoerd door mensen die die markt kennen."
+      },
+      {
+        "num": "03",
+        "title": "Altijd in uitbreiding",
+        "body": "Afhankelijk van het onderzoek breiden we de dekking van partners en deelnemers in belangrijke markten uit — vanuit een concrete plek naar een breder perspectief."
+      }
+    ]
   },
-  'da': {
-    humanBody: "Vi mener, at rigtige mennesker altid er udgangspunktet for research. AI kan skabe uendeligt indhold, der ser ægte ud. Men den kan aldrig genskabe et bestemt menneske i et bestemt øjeblik, der siger, hvad det virkelig mener. Bag hvert undersøgelsesresultat står et menneske, der valgte at dele et perspektiv. De enkelte stemmer gør indsigt værd at stole på. Vi bruger matching og realtidsdata til at respektere din tid, vise din effekt og holde hver belønningsregel klar og fair. Menneskecentreret betyder ikke at afvise teknologi. Det betyder at lade teknologi tjene mennesker.",
-    eyebrow: "Om os",
-    theme: "Dine holdninger former verden.",
-    whoEyebrow: "Hvem vi er",
-    humanEyebrow: "Mennesket først",
-    body: "Vi er en tværregional insight- og analysevirksomhed, der opbygger et åbent, sammenkoblet og bæredygtigt forskningsfællesskab. Vi forbinder deltagere, opdragsgivere og organisationer på tværs af handel, kultur, hverdag og offentlige spørgsmål og omsætter rigtige stemmer til klare vurderinger — for bedre beslutninger og en bedre verden.",
-    storyTitle: "Forankret i Kina, forbundet med verden.",
-    points: [
-      { num: '01', title: "Et kinesisk fundament", body: "Teamet har arbejdet med markedsanalyse i årevis og har opbygget et stabilt fællesskab og forskningsnetværk i Kina med adgang til rigtige, verificerbare lokale stikprøver." },
-      { num: '02', title: "Regionale partnere", body: "I Stor-Kina, Asien-Stillehavet, Mellemøsten, Europa og Nordamerika arbejder vi med lokale forskningspartnere, så hvert marked drives af mennesker, der kender det." },
-      { num: '03', title: "Altid under udvidelse", body: "Afhængigt af undersøgelsen udvider vi dækningen af partnere og deltagere på store markeder — med udgangspunkt i et konkret sted og blik for et bredere perspektiv." },
-    ],
+  "da": {
+    "humanBody": "Vi mener, at rigtige mennesker altid er udgangspunktet for research. AI kan skabe uendeligt indhold, der ser ægte ud. Men den kan aldrig genskabe et bestemt menneske i et bestemt øjeblik, der siger, hvad det virkelig mener. Bag hvert undersøgelsesresultat står et menneske, der valgte at dele et perspektiv. De enkelte stemmer gør indsigt værd at stole på. Vi bruger matching og realtidsdata til at respektere din tid, vise din effekt og holde hver belønningsregel klar og fair. Menneskecentreret betyder ikke at afvise teknologi. Det betyder at lade teknologi tjene mennesker.",
+    "eyebrow": "Om os",
+    "theme": "Dine holdninger former verden.",
+    "whoEyebrow": "Hvem vi er",
+    "humanEyebrow": "Mennesket først",
+    "body": "Vi er en tværregional insight- og analysevirksomhed, der opbygger et åbent, sammenkoblet og bæredygtigt forskningsfællesskab. Vi forbinder deltagere, opdragsgivere og organisationer på tværs af handel, kultur, hverdag og offentlige spørgsmål og omsætter rigtige stemmer til klare vurderinger — for bedre beslutninger og en bedre verden.",
+    "storyTitle": "Forankret i Kina, forbundet med verden.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Et kinesisk fundament",
+        "body": "Teamet har arbejdet med markedsanalyse i årevis og har opbygget et stabilt fællesskab og forskningsnetværk i Kina med adgang til rigtige, verificerbare lokale stikprøver."
+      },
+      {
+        "num": "02",
+        "title": "Regionale partnere",
+        "body": "I Stor-Kina, Asien-Stillehavet, Mellemøsten, Europa og Nordamerika arbejder vi med lokale forskningspartnere, så hvert marked drives af mennesker, der kender det."
+      },
+      {
+        "num": "03",
+        "title": "Altid under udvidelse",
+        "body": "Afhængigt af undersøgelsen udvider vi dækningen af partnere og deltagere på store markeder — med udgangspunkt i et konkret sted og blik for et bredere perspektiv."
+      }
+    ]
   },
-  'es': {
-    humanBody: "Creemos que las personas reales son siempre el punto de partida de la investigación. La IA puede generar contenido infinito que parece real. Pero nunca podrá recrear a una persona concreta, en un momento concreto, expresando lo que piensa de verdad. Detrás de cada resultado de encuesta hay una persona que decidió compartir una perspectiva. Esas voces individuales hacen que el insight merezca confianza. Usamos matching y datos en tiempo real para respetar tu tiempo, mostrar tu impacto y mantener cada regla de recompensa clara y justa. Estar centrado en las personas no significa rechazar la tecnología. Significa poner la tecnología al servicio de las personas.",
-    eyebrow: "Sobre nosotros",
-    theme: "Tus opiniones dan forma al mundo.",
-    whoEyebrow: "Quiénes somos",
-    humanEyebrow: "Las personas primero",
-    body: "Somos una empresa interregional de investigación e insight que construye una comunidad de investigación abierta, interconectada y sostenible. Conectamos a participantes, clientes y organizaciones en torno a los negocios, la cultura, la vida cotidiana y las cuestiones públicas, y convertimos voces reales en juicios claros — para mejores decisiones y un mundo mejor.",
-    storyTitle: "Con raíces en China, conectados con el mundo.",
-    points: [
-      { num: '01', title: "Una base china", body: "El equipo lleva años centrado en la investigación de mercados y ha construido en China una comunidad y una red de investigación estables, con acceso a muestras locales reales y verificables." },
-      { num: '02', title: "Socios regionales", body: "En la Gran China, Asia-Pacífico, Oriente Medio, Europa y Norteamérica trabajamos con socios locales, de modo que cada mercado lo ejecutan personas que lo conocen." },
-      { num: '03', title: "Siempre ampliando", body: "Según lo exige cada estudio, ampliamos la cobertura de socios y participantes en los principales mercados — partiendo de un lugar concreto hacia una visión más amplia." },
-    ],
+  "es": {
+    "humanBody": "Creemos que las personas reales son siempre el punto de partida de la investigación. La IA puede generar contenido infinito que parece real. Pero nunca podrá recrear a una persona concreta, en un momento concreto, expresando lo que piensa de verdad. Detrás de cada resultado de encuesta hay una persona que decidió compartir una perspectiva. Esas voces individuales hacen que el insight merezca confianza. Usamos matching y datos en tiempo real para respetar tu tiempo, mostrar tu impacto y mantener cada regla de recompensa clara y justa. Estar centrado en las personas no significa rechazar la tecnología. Significa poner la tecnología al servicio de las personas.",
+    "eyebrow": "Sobre nosotros",
+    "theme": "Tus opiniones dan forma al mundo.",
+    "whoEyebrow": "Quiénes somos",
+    "humanEyebrow": "Las personas primero",
+    "body": "Somos una empresa interregional de investigación e insight que construye una comunidad de investigación abierta, interconectada y sostenible. Conectamos a participantes, clientes y organizaciones en torno a los negocios, la cultura, la vida cotidiana y las cuestiones públicas, y convertimos voces reales en juicios claros — para mejores decisiones y un mundo mejor.",
+    "storyTitle": "Con raíces en China, conectados con el mundo.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Una base china",
+        "body": "El equipo lleva años centrado en la investigación de mercados y ha construido en China una comunidad y una red de investigación estables, con acceso a muestras locales reales y verificables."
+      },
+      {
+        "num": "02",
+        "title": "Socios regionales",
+        "body": "En la Gran China, Asia-Pacífico, Oriente Medio, Europa y Norteamérica trabajamos con socios locales, de modo que cada mercado lo ejecutan personas que lo conocen."
+      },
+      {
+        "num": "03",
+        "title": "Siempre ampliando",
+        "body": "Según lo exige cada estudio, ampliamos la cobertura de socios y participantes en los principales mercados — partiendo de un lugar concreto hacia una visión más amplia."
+      }
+    ]
   },
-  'fi': {
-    humanBody: "Uskomme, että todelliset ihmiset ovat aina tutkimuksen lähtökohta. Tekoäly voi tuottaa loputtomasti sisältöä, joka näyttää aidolta. Mutta se ei voi koskaan toisintaa tiettyä ihmistä tietyssä hetkessä kertomassa, mitä hän todella ajattelee. Jokaisen kyselytuloksen takana on ihminen, joka päätti jakaa näkökulman. Juuri nämä yksittäiset äänet tekevät insighsistä luotettavaa. Käytämme matchausta ja reaaliaikaista dataa, jotta kunnioitamme aikaasi, näytämme vaikutuksesi ja pidämme jokaisen palkitsemissäännön selkeänä ja reiluna. Ihmiskeskeisyys ei tarkoita teknologian hylkäämistä. Se tarkoittaa, että teknologia palvelee ihmisiä.",
-    eyebrow: "Tietoa meistä",
-    theme: "Näkemyksesi muokkaavat maailmaa.",
-    whoEyebrow: "Keitä olemme",
-    humanEyebrow: "Ihminen ensin",
-    body: "Olemme alueiden välinen insight- ja tutkimusyritys, joka rakentaa avointa, verkottunutta ja kestävää tutkimusyhteisöä. Yhdistämme osallistujat, tutkimuksen tilaajat ja organisaatiot liiketoiminnan, kulttuurin, arjen ja julkisten kysymysten ympärille ja muunnamme aidot äänet selkeiksi arvioiksi — parempien päätösten ja paremman maailman puolesta.",
-    storyTitle: "Juuret Kiinassa, yhteydet maailmaan.",
-    points: [
-      { num: '01', title: "Kiinalainen perusta", body: "Tiimi on keskittynyt markkinatutkimukseen vuosia ja rakentanut Kiinaan vakaan yhteisön ja tutkimusverkoston, joka tavoittaa aitoja, todennettavia paikallisia otoksia." },
-      { num: '02', title: "Alueelliset kumppanit", body: "Suur-Kiinassa, Aasian ja Tyynenmeren alueella, Lähi-idässä, Euroopassa ja Pohjois-Amerikassa teemme yhteistyötä paikallisten tutkimuskumppaneiden kanssa, jotta jokaisen markkinan toteuttavat sen tuntevat ihmiset." },
-      { num: '03', title: "Jatkuvasti laajeneva", body: "Tutkimuksen tarpeen mukaan laajennamme kumppanien ja osallistujien kattavuutta keskeisillä markkinoilla — lähtien tietystä paikasta ja yhdistyen laajempaan näkymään." },
-    ],
+  "fi": {
+    "humanBody": "Uskomme, että todelliset ihmiset ovat aina tutkimuksen lähtökohta. Tekoäly voi tuottaa loputtomasti sisältöä, joka näyttää aidolta. Mutta se ei voi koskaan toisintaa tiettyä ihmistä tietyssä hetkessä kertomassa, mitä hän todella ajattelee. Jokaisen kyselytuloksen takana on ihminen, joka päätti jakaa näkökulman. Juuri nämä yksittäiset äänet tekevät insighsistä luotettavaa. Käytämme matchausta ja reaaliaikaista dataa, jotta kunnioitamme aikaasi, näytämme vaikutuksesi ja pidämme jokaisen palkitsemissäännön selkeänä ja reiluna. Ihmiskeskeisyys ei tarkoita teknologian hylkäämistä. Se tarkoittaa, että teknologia palvelee ihmisiä.",
+    "eyebrow": "Tietoa meistä",
+    "theme": "Näkemyksesi muokkaavat maailmaa.",
+    "whoEyebrow": "Keitä olemme",
+    "humanEyebrow": "Ihminen ensin",
+    "body": "Olemme alueiden välinen insight- ja tutkimusyritys, joka rakentaa avointa, verkottunutta ja kestävää tutkimusyhteisöä. Yhdistämme osallistujat, tutkimuksen tilaajat ja organisaatiot liiketoiminnan, kulttuurin, arjen ja julkisten kysymysten ympärille ja muunnamme aidot äänet selkeiksi arvioiksi — parempien päätösten ja paremman maailman puolesta.",
+    "storyTitle": "Juuret Kiinassa, yhteydet maailmaan.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Kiinalainen perusta",
+        "body": "Tiimi on keskittynyt markkinatutkimukseen vuosia ja rakentanut Kiinaan vakaan yhteisön ja tutkimusverkoston, joka tavoittaa aitoja, todennettavia paikallisia otoksia."
+      },
+      {
+        "num": "02",
+        "title": "Alueelliset kumppanit",
+        "body": "Suur-Kiinassa, Aasian ja Tyynenmeren alueella, Lähi-idässä, Euroopassa ja Pohjois-Amerikassa teemme yhteistyötä paikallisten tutkimuskumppaneiden kanssa, jotta jokaisen markkinan toteuttavat sen tuntevat ihmiset."
+      },
+      {
+        "num": "03",
+        "title": "Jatkuvasti laajeneva",
+        "body": "Tutkimuksen tarpeen mukaan laajennamme kumppanien ja osallistujien kattavuutta keskeisillä markkinoilla — lähtien tietystä paikasta ja yhdistyen laajempaan näkymään."
+      }
+    ]
   },
-  'it': {
-    humanBody: "Crediamo che le persone reali siano sempre il punto di partenza della ricerca. L'IA può generare contenuti infiniti che sembrano reali. Ma non potrà mai ricreare una persona precisa, in un momento preciso, che esprime ciò che pensa davvero. Dietro ogni risultato di indagine c'è una persona che ha scelto di condividere un punto di vista. Sono queste voci individuali a rendere l'insight degno di fiducia. Usiamo matching e dati in tempo reale per rispettare il tuo tempo, mostrare il tuo impatto e mantenere ogni regola di ricompensa chiara ed equa. Essere centrati sulle persone non significa rifiutare la tecnologia. Significa mettere la tecnologia al servizio delle persone.",
-    eyebrow: "Su di noi",
-    theme: "Le tue opinioni danno forma al mondo.",
-    whoEyebrow: "Chi siamo",
-    humanEyebrow: "Le persone prima di tutto",
-    body: "Siamo un'azienda interregionale di ricerche e insight che costruisce una comunità di ricerca aperta, interconnessa e sostenibile. Colleghiamo partecipanti, committenti e organizzazioni intorno a business, cultura, vita quotidiana e questioni pubbliche, trasformando voci reali in giudizi chiari — per decisioni migliori e un mondo migliore.",
-    storyTitle: "Radici in Cina, connessi al mondo.",
-    points: [
-      { num: '01', title: "Una base cinese", body: "Il team si occupa da anni di ricerche di mercato e ha costruito in Cina una comunità e una rete di ricerca stabili, con accesso a campioni locali reali e verificabili." },
-      { num: '02', title: "Partner regionali", body: "Nella Grande Cina, in Asia-Pacifico, in Medio Oriente, in Europa e in Nord America lavoriamo con partner di ricerca locali, così ogni mercato è gestito da persone che lo conoscono." },
-      { num: '03', title: "Sempre in espansione", body: "In base alle esigenze dello studio, ampliamo la copertura di partner e partecipanti nei principali mercati — partendo da un luogo concreto verso una prospettiva più ampia." },
-    ],
+  "it": {
+    "humanBody": "Crediamo che le persone reali siano sempre il punto di partenza della ricerca. L'IA può generare contenuti infiniti che sembrano reali. Ma non potrà mai ricreare una persona precisa, in un momento preciso, che esprime ciò che pensa davvero. Dietro ogni risultato di indagine c'è una persona che ha scelto di condividere un punto di vista. Sono queste voci individuali a rendere l'insight degno di fiducia. Usiamo matching e dati in tempo reale per rispettare il tuo tempo, mostrare il tuo impatto e mantenere ogni regola di ricompensa chiara ed equa. Essere centrati sulle persone non significa rifiutare la tecnologia. Significa mettere la tecnologia al servizio delle persone.",
+    "eyebrow": "Su di noi",
+    "theme": "Le tue opinioni danno forma al mondo.",
+    "whoEyebrow": "Chi siamo",
+    "humanEyebrow": "Le persone prima di tutto",
+    "body": "Siamo un'azienda interregionale di ricerche e insight che costruisce una comunità di ricerca aperta, interconnessa e sostenibile. Colleghiamo partecipanti, committenti e organizzazioni intorno a business, cultura, vita quotidiana e questioni pubbliche, trasformando voci reali in giudizi chiari — per decisioni migliori e un mondo migliore.",
+    "storyTitle": "Radici in Cina, connessi al mondo.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Una base cinese",
+        "body": "Il team si occupa da anni di ricerche di mercato e ha costruito in Cina una comunità e una rete di ricerca stabili, con accesso a campioni locali reali e verificabili."
+      },
+      {
+        "num": "02",
+        "title": "Partner regionali",
+        "body": "Nella Grande Cina, in Asia-Pacifico, in Medio Oriente, in Europa e in Nord America lavoriamo con partner di ricerca locali, così ogni mercato è gestito da persone che lo conoscono."
+      },
+      {
+        "num": "03",
+        "title": "Sempre in espansione",
+        "body": "In base alle esigenze dello studio, ampliamo la copertura di partner e partecipanti nei principali mercati — partendo da un luogo concreto verso una prospettiva più ampia."
+      }
+    ]
   },
-  'ja': {
-    humanBody: "私たちは、実在する人が研究の出発点であり続けると考えています。AI は本物に見えるコンテンツを無限に生成できます。しかし、ある特定の人が、ある特定の瞬間に、本当に考えていることを語る姿を再現することはできません。すべての調査結果の背後には、視点を共有することを選んだ人がいます。その一人ひとりの声が、インサイトを信頼できるものにします。私たちはマッチングとリアルタイムデータを使い、あなたの時間を尊重し、影響を可視化し、報酬ルールを明確で公平に保ちます。人間中心とは、技術を拒むことではありません。技術を人のために働かせることです。",
-    eyebrow: "会社概要",
-    theme: "あなたの意見が世界を形づくる。",
-    whoEyebrow: "私たちについて",
-    humanEyebrow: "人を中心に",
-    body: "私たちは地域を越えて活動するインサイト・リサーチ会社で、開かれた相互につながり、持続可能なリサーチコミュニティをつくっています。参加者、調査依頼者、組織をビジネス、文化、日常生活、公共の問いのもとで結び、実際の声を明確な判断に変えていきます — よりよい意思決定と、よりよい世界のために。",
-    storyTitle: "中国に根ざし、世界とつながる。",
-    points: [
-      { num: '01', title: "中国での基盤", body: "チームは長年マーケットリサーチに取り組み、中国で安定したコミュニティと調査ネットワークを築き、実在し検証可能な現地サンプルに到達できます。" },
-      { num: '02', title: "地域パートナー", body: "大中華圏、アジア太平洋、中東、欧州、北米では現地の調査パートナーと協働し、各市場をその市場を知る人びとが担当します。" },
-      { num: '03', title: "拡大を続ける", body: "調査の必要に応じて、主要市場でのパートナーと参加者のカバレッジを広げています — 特定の場所から始め、より広い視野へ。" },
-    ],
+  "ja": {
+    "humanBody": "私たちは、実在する人が研究の出発点であり続けると考えています。AI は本物に見えるコンテンツを無限に生成できます。しかし、ある特定の人が、ある特定の瞬間に、本当に考えていることを語る姿を再現することはできません。すべての調査結果の背後には、視点を共有することを選んだ人がいます。その一人ひとりの声が、インサイトを信頼できるものにします。私たちはマッチングとリアルタイムデータを使い、あなたの時間を尊重し、影響を可視化し、報酬ルールを明確で公平に保ちます。人間中心とは、技術を拒むことではありません。技術を人のために働かせることです。",
+    "eyebrow": "会社概要",
+    "theme": "あなたの意見が世界を形づくる。",
+    "whoEyebrow": "私たちについて",
+    "humanEyebrow": "人を中心に",
+    "body": "私たちは地域を越えて活動するインサイト・リサーチ会社で、開かれた相互につながり、持続可能なリサーチコミュニティをつくっています。参加者、調査依頼者、組織をビジネス、文化、日常生活、公共の問いのもとで結び、実際の声を明確な判断に変えていきます — よりよい意思決定と、よりよい世界のために。",
+    "storyTitle": "中国に根ざし、世界とつながる。",
+    "points": [
+      {
+        "num": "01",
+        "title": "中国での基盤",
+        "body": "チームは長年マーケットリサーチに取り組み、中国で安定したコミュニティと調査ネットワークを築き、実在し検証可能な現地サンプルに到達できます。"
+      },
+      {
+        "num": "02",
+        "title": "地域パートナー",
+        "body": "大中華圏、アジア太平洋、中東、欧州、北米では現地の調査パートナーと協働し、各市場をその市場を知る人びとが担当します。"
+      },
+      {
+        "num": "03",
+        "title": "拡大を続ける",
+        "body": "調査の必要に応じて、主要市場でのパートナーと参加者のカバレッジを広げています — 特定の場所から始め、より広い視野へ。"
+      }
+    ]
   },
-  'ko': {
-    humanBody: "우리는 실제 사람이 언제나 연구의 출발점이라고 믿습니다. AI는 실제처럼 보이는 콘텐츠를 끝없이 만들 수 있습니다. 하지만 특정한 사람이 특정한 순간에 자신이 진짜로 생각하는 것을 말하는 모습을 재현할 수는 없습니다. 모든 설문 결과 뒤에는 관점을 나누기로 선택한 사람이 있습니다. 그 개별적인 목소리가 인사이트를 신뢰할 수 있게 만듭니다. 우리는 매칭과 실시간 데이터로 당신의 시간을 존중하고, 영향력을 보여 주며, 모든 보상 규칙을 명확하고 공정하게 유지합니다. 사람 중심은 기술을 거부하는 것이 아닙니다. 기술이 사람을 위해 일하게 하는 것입니다.",
-    eyebrow: "회사 소개",
-    theme: "당신의 의견이 세상을 만듭니다.",
-    whoEyebrow: "우리는 누구인가",
-    humanEyebrow: "사람이 먼저",
-    body: "우리는 지역을 넘어 활동하는 인사이트·리서치 기업으로, 열려 있고 상호 연결된 지속 가능한 리서치 커뮤니티를 만들어 갑니다. 비즈니스, 문화, 일상, 공공 의제 전반에서 참여자·의뢰자·조직을 연결하고, 실제 목소리를 명확한 판단으로 바꿉니다 — 더 나은 결정과 더 나은 세상을 위해.",
-    storyTitle: "중국에 뿌리를 두고 세계와 연결되다.",
-    points: [
-      { num: '01', title: "중국 기반", body: "팀은 오랫동안 시장조사에 집중해 왔으며, 중국에서 안정적인 커뮤니티와 조사 네트워크를 구축해 실제로 검증 가능한 현지 표본에 접근합니다." },
-      { num: '02', title: "지역 파트너", body: "중화권, 아시아태평양, 중동, 유럽, 북미에서 현지 조사 파트너와 협력해 각 시장을 그 시장을 아는 사람들이 수행합니다." },
-      { num: '03', title: "계속 확장", body: "조사 필요에 따라 주요 시장에서 파트너와 참여자 범위를 넓혀 왔습니다 — 특정한 지점에서 시작해 더 넓은 시야로 이어갑니다." },
-    ],
+  "ko": {
+    "humanBody": "우리는 실제 사람이 언제나 연구의 출발점이라고 믿습니다. AI는 실제처럼 보이는 콘텐츠를 끝없이 만들 수 있습니다. 하지만 특정한 사람이 특정한 순간에 자신이 진짜로 생각하는 것을 말하는 모습을 재현할 수는 없습니다. 모든 설문 결과 뒤에는 관점을 나누기로 선택한 사람이 있습니다. 그 개별적인 목소리가 인사이트를 신뢰할 수 있게 만듭니다. 우리는 매칭과 실시간 데이터로 당신의 시간을 존중하고, 영향력을 보여 주며, 모든 보상 규칙을 명확하고 공정하게 유지합니다. 사람 중심은 기술을 거부하는 것이 아닙니다. 기술이 사람을 위해 일하게 하는 것입니다.",
+    "eyebrow": "회사 소개",
+    "theme": "당신의 의견이 세상을 만듭니다.",
+    "whoEyebrow": "우리는 누구인가",
+    "humanEyebrow": "사람이 먼저",
+    "body": "우리는 지역을 넘어 활동하는 인사이트·리서치 기업으로, 열려 있고 상호 연결된 지속 가능한 리서치 커뮤니티를 만들어 갑니다. 비즈니스, 문화, 일상, 공공 의제 전반에서 참여자·의뢰자·조직을 연결하고, 실제 목소리를 명확한 판단으로 바꿉니다 — 더 나은 결정과 더 나은 세상을 위해.",
+    "storyTitle": "중국에 뿌리를 두고 세계와 연결되다.",
+    "points": [
+      {
+        "num": "01",
+        "title": "중국 기반",
+        "body": "팀은 오랫동안 시장조사에 집중해 왔으며, 중국에서 안정적인 커뮤니티와 조사 네트워크를 구축해 실제로 검증 가능한 현지 표본에 접근합니다."
+      },
+      {
+        "num": "02",
+        "title": "지역 파트너",
+        "body": "중화권, 아시아태평양, 중동, 유럽, 북미에서 현지 조사 파트너와 협력해 각 시장을 그 시장을 아는 사람들이 수행합니다."
+      },
+      {
+        "num": "03",
+        "title": "계속 확장",
+        "body": "조사 필요에 따라 주요 시장에서 파트너와 참여자 범위를 넓혀 왔습니다 — 특정한 지점에서 시작해 더 넓은 시야로 이어갑니다."
+      }
+    ]
   },
-  'no': {
-    humanBody: "Vi mener at ekte mennesker alltid er utgangspunktet for forskning. AI kan lage uendelig mye innhold som ser ekte ut. Men den kan aldri gjenskape et bestemt menneske i et bestemt øyeblikk som sier hva det virkelig mener. Bak hvert undersøkelsesresultat står et menneske som valgte å dele et perspektiv. De enkelte stemmene gjør innsikt verdt å stole på. Vi bruker matching og samtidsdata for å respektere tiden din, vise effekten din og holde hver belønningsregel klar og rettferdig. Menneskesentrert betyr ikke å avvise teknologi. Det betyr å la teknologi tjene mennesker.",
-    eyebrow: "Om oss",
-    theme: "Dine meninger former verden.",
-    whoEyebrow: "Hvem vi er",
-    humanEyebrow: "Mennesket først",
-    body: "Vi er et tverrregionalt innsikts- og forskningsselskap som bygger et åpent, sammenkoblet og bærekraftig forskningsfellesskap. Vi knytter sammen deltakere, oppdragsgivere og organisasjoner på tvers av næringsliv, kultur, hverdag og offentlige spørsmål, og gjør ekte stemmer om til klare vurderinger — for bedre beslutninger og en bedre verden.",
-    storyTitle: "Forankret i Kina, knyttet til verden.",
-    points: [
-      { num: '01', title: "Et kinesisk fundament", body: "Teamet har arbeidet med markedsundersøkelser i mange år og har bygget et stabilt fellesskap og forskningsnettverk i Kina, med tilgang til ekte, etterprøvbare lokale utvalg." },
-      { num: '02', title: "Regionale partnere", body: "I Stor-Kina, Asia-Stillehavet, Midtøsten, Europa og Nord-Amerika samarbeider vi med lokale forskningspartnere, slik at hvert marked drives av mennesker som kjenner det." },
-      { num: '03', title: "Alltid under utvidelse", body: "Etter behov i studien utvider vi dekningen av partnere og deltakere i viktige markeder — med utgangspunkt i et konkret sted og blikk for et bredere perspektiv." },
-    ],
+  "no": {
+    "humanBody": "Vi mener at ekte mennesker alltid er utgangspunktet for forskning. AI kan lage uendelig mye innhold som ser ekte ut. Men den kan aldri gjenskape et bestemt menneske i et bestemt øyeblikk som sier hva det virkelig mener. Bak hvert undersøkelsesresultat står et menneske som valgte å dele et perspektiv. De enkelte stemmene gjør innsikt verdt å stole på. Vi bruker matching og samtidsdata for å respektere tiden din, vise effekten din og holde hver belønningsregel klar og rettferdig. Menneskesentrert betyr ikke å avvise teknologi. Det betyr å la teknologi tjene mennesker.",
+    "eyebrow": "Om oss",
+    "theme": "Dine meninger former verden.",
+    "whoEyebrow": "Hvem vi er",
+    "humanEyebrow": "Mennesket først",
+    "body": "Vi er et tverrregionalt innsikts- og forskningsselskap som bygger et åpent, sammenkoblet og bærekraftig forskningsfellesskap. Vi knytter sammen deltakere, oppdragsgivere og organisasjoner på tvers av næringsliv, kultur, hverdag og offentlige spørsmål, og gjør ekte stemmer om til klare vurderinger — for bedre beslutninger og en bedre verden.",
+    "storyTitle": "Forankret i Kina, knyttet til verden.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Et kinesisk fundament",
+        "body": "Teamet har arbeidet med markedsundersøkelser i mange år og har bygget et stabilt fellesskap og forskningsnettverk i Kina, med tilgang til ekte, etterprøvbare lokale utvalg."
+      },
+      {
+        "num": "02",
+        "title": "Regionale partnere",
+        "body": "I Stor-Kina, Asia-Stillehavet, Midtøsten, Europa og Nord-Amerika samarbeider vi med lokale forskningspartnere, slik at hvert marked drives av mennesker som kjenner det."
+      },
+      {
+        "num": "03",
+        "title": "Alltid under utvidelse",
+        "body": "Etter behov i studien utvider vi dekningen av partnere og deltakere i viktige markeder — med utgangspunkt i et konkret sted og blikk for et bredere perspektiv."
+      }
+    ]
   },
-  'pt': {
-    humanBody: "Acreditamos que as pessoas reais são sempre o ponto de partida da investigação. A IA pode gerar conteúdo infinito que parece real. Mas nunca conseguirá recriar uma pessoa concreta, num momento concreto, a expressar o que realmente pensa. Por trás de cada resultado de inquérito está uma pessoa que decidiu partilhar uma perspetiva. São essas vozes individuais que tornam o insight digno de confiança. Usamos matching e dados em tempo real para respeitar o seu tempo, mostrar o seu impacto e manter cada regra de recompensa clara e justa. Estar centrado nas pessoas não significa rejeitar a tecnologia. Significa pôr a tecnologia ao serviço das pessoas.",
-    eyebrow: "Sobre nós",
-    theme: "As suas opiniões moldam o mundo.",
-    whoEyebrow: "Quem somos",
-    humanEyebrow: "As pessoas primeiro",
-    body: "Somos uma empresa inter-regional de estudos e insight que constrói uma comunidade de investigação aberta, interligada e sustentável. Ligamos participantes, clientes e organizações em torno dos negócios, da cultura, do quotidiano e das questões públicas, transformando vozes reais em juízos claros — para melhores decisões e um mundo melhor.",
-    storyTitle: "Enraizados na China, ligados ao mundo.",
-    points: [
-      { num: '01', title: "Uma base chinesa", body: "A equipa dedica-se há anos à investigação de mercado e construiu na China uma comunidade e uma rede de investigação estáveis, com acesso a amostras locais reais e verificáveis." },
-      { num: '02', title: "Parceiros regionais", body: "Na Grande China, Ásia-Pacífico, Médio Oriente, Europa e América do Norte trabalhamos com parceiros locais, para que cada mercado seja executado por quem o conhece." },
-      { num: '03', title: "Sempre a alargar", body: "Consoante o estudo, alargamos a cobertura de parceiros e participantes nos principais mercados — partindo de um lugar concreto para uma visão mais ampla." },
-    ],
+  "pt": {
+    "humanBody": "Acreditamos que as pessoas reais são sempre o ponto de partida da investigação. A IA pode gerar conteúdo infinito que parece real. Mas nunca conseguirá recriar uma pessoa concreta, num momento concreto, a expressar o que realmente pensa. Por trás de cada resultado de inquérito está uma pessoa que decidiu partilhar uma perspetiva. São essas vozes individuais que tornam o insight digno de confiança. Usamos matching e dados em tempo real para respeitar o seu tempo, mostrar o seu impacto e manter cada regra de recompensa clara e justa. Estar centrado nas pessoas não significa rejeitar a tecnologia. Significa pôr a tecnologia ao serviço das pessoas.",
+    "eyebrow": "Sobre nós",
+    "theme": "As suas opiniões moldam o mundo.",
+    "whoEyebrow": "Quem somos",
+    "humanEyebrow": "As pessoas primeiro",
+    "body": "Somos uma empresa inter-regional de estudos e insight que constrói uma comunidade de investigação aberta, interligada e sustentável. Ligamos participantes, clientes e organizações em torno dos negócios, da cultura, do quotidiano e das questões públicas, transformando vozes reais em juízos claros — para melhores decisões e um mundo melhor.",
+    "storyTitle": "Enraizados na China, ligados ao mundo.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Uma base chinesa",
+        "body": "A equipa dedica-se há anos à investigação de mercado e construiu na China uma comunidade e uma rede de investigação estáveis, com acesso a amostras locais reais e verificáveis."
+      },
+      {
+        "num": "02",
+        "title": "Parceiros regionais",
+        "body": "Na Grande China, Ásia-Pacífico, Médio Oriente, Europa e América do Norte trabalhamos com parceiros locais, para que cada mercado seja executado por quem o conhece."
+      },
+      {
+        "num": "03",
+        "title": "Sempre a alargar",
+        "body": "Consoante o estudo, alargamos a cobertura de parceiros e participantes nos principais mercados — partindo de um lugar concreto para uma visão mais ampla."
+      }
+    ]
   },
-  'ru': {
-    humanBody: "Мы считаем, что реальные люди всегда остаются отправной точкой исследования. ИИ может создавать бесконечный контент, который выглядит настоящим. Но он никогда не воссоздаст конкретного человека в конкретный момент, говорящего, что он действительно думает. За каждым результатом опроса стоит человек, который решил поделиться своей точкой зрения. Именно эти отдельные голоса делают инсайт заслуживающим доверия. Мы используем мэтчинг и данные в реальном времени, чтобы уважать ваше время, показывать ваше влияние и сохранять каждое правило вознаграждения ясным и справедливым. Человекоцентричность — это не отказ от технологий. Это значит, что технологии служат людям.",
-    eyebrow: "О нас",
-    theme: "Ваши мнения формируют мир.",
-    whoEyebrow: "Кто мы",
-    humanEyebrow: "Человек прежде всего",
-    body: "Мы — межрегиональная исследовательская компания и компания в области инсайтов, которая строит открытое, взаимосвязанное и устойчивое исследовательское сообщество. Мы соединяем участников, заказчиков и организации в сферах бизнеса, культуры, повседневной жизни и общественных вопросов и превращаем реальные голоса в ясные суждения — ради лучших решений и лучшего мира.",
-    storyTitle: "Укоренены в Китае, связаны с миром.",
-    points: [
-      { num: '01', title: "Китайская основа", body: "Команда много лет занимается маркетинговыми исследованиями и создала в Китае устойчивое сообщество и исследовательскую сеть с доступом к реальным, проверяемым локальным выборкам." },
-      { num: '02', title: "Региональные партнёры", body: "В Большом Китае, Азиатско-Тихоокеанском регионе, на Ближнем Востоке, в Европе и Северной Америке мы работаем с местными исследовательскими партнёрами, чтобы каждый рынок вели те, кто его знает." },
-      { num: '03', title: "Постоянное расширение", body: "В зависимости от задачи исследования мы расширяем охват партнёров и участников на ключевых рынках — от конкретного места к более широкому взгляду." },
-    ],
+  "ru": {
+    "humanBody": "Мы считаем, что реальные люди всегда остаются отправной точкой исследования. ИИ может создавать бесконечный контент, который выглядит настоящим. Но он никогда не воссоздаст конкретного человека в конкретный момент, говорящего, что он действительно думает. За каждым результатом опроса стоит человек, который решил поделиться своей точкой зрения. Именно эти отдельные голоса делают инсайт заслуживающим доверия. Мы используем мэтчинг и данные в реальном времени, чтобы уважать ваше время, показывать ваше влияние и сохранять каждое правило вознаграждения ясным и справедливым. Человекоцентричность — это не отказ от технологий. Это значит, что технологии служат людям.",
+    "eyebrow": "О нас",
+    "theme": "Ваши мнения формируют мир.",
+    "whoEyebrow": "Кто мы",
+    "humanEyebrow": "Человек прежде всего",
+    "body": "Мы — межрегиональная исследовательская компания и компания в области инсайтов, которая строит открытое, взаимосвязанное и устойчивое исследовательское сообщество. Мы соединяем участников, заказчиков и организации в сферах бизнеса, культуры, повседневной жизни и общественных вопросов и превращаем реальные голоса в ясные суждения — ради лучших решений и лучшего мира.",
+    "storyTitle": "Укоренены в Китае, связаны с миром.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Китайская основа",
+        "body": "Команда много лет занимается маркетинговыми исследованиями и создала в Китае устойчивое сообщество и исследовательскую сеть с доступом к реальным, проверяемым локальным выборкам."
+      },
+      {
+        "num": "02",
+        "title": "Региональные партнёры",
+        "body": "В Большом Китае, Азиатско-Тихоокеанском регионе, на Ближнем Востоке, в Европе и Северной Америке мы работаем с местными исследовательскими партнёрами, чтобы каждый рынок вели те, кто его знает."
+      },
+      {
+        "num": "03",
+        "title": "Постоянное расширение",
+        "body": "В зависимости от задачи исследования мы расширяем охват партнёров и участников на ключевых рынках — от конкретного места к более широкому взгляду."
+      }
+    ]
   },
-  'sv': {
-    humanBody: "Vi tror att verkliga människor alltid är utgångspunkten för forskning. AI kan skapa oändligt mycket innehåll som ser äkta ut. Men den kan aldrig återskapa en specifik människa i ett specifikt ögonblick som säger vad hen verkligen tycker. Bakom varje undersökningsresultat står en människa som valde att dela ett perspektiv. De enskilda rösterna gör insikt värt att lita på. Vi använder matchning och realtidsdata för att respektera din tid, visa din påverkan och hålla varje belöningsregel tydlig och rättvis. Människocentrerat betyder inte att avvisa teknik. Det betyder att låta teknik tjäna människor.",
-    eyebrow: "Om oss",
-    theme: "Dina åsikter formar världen.",
-    whoEyebrow: "Vilka vi är",
-    humanEyebrow: "Människan först",
-    body: "Vi är ett tvärregionalt insight- och undersökningsföretag som bygger en öppen, sammankopplad och hållbar forskningsgemenskap. Vi knyter samman deltagare, uppdragsgivare och organisationer inom näringsliv, kultur, vardag och offentliga frågor och gör verkliga röster till tydliga bedömningar — för bättre beslut och en bättre värld.",
-    storyTitle: "Rotade i Kina, kopplade till världen.",
-    points: [
-      { num: '01', title: "En kinesisk grund", body: "Teamet har i många år arbetat med marknadsundersökningar och har byggt upp en stabil gemenskap och ett forskningsnätverk i Kina, med tillgång till verkliga och verifierbara lokala urval." },
-      { num: '02', title: "Regionala partner", body: "I Stor-Kina, Asien-Stillahavsområdet, Mellanöstern, Europa och Nordamerika arbetar vi med lokala undersökningspartner, så att varje marknad drivs av människor som känner den." },
-      { num: '03', title: "Ständigt växande", body: "Beroende på studien utökar vi täckningen av partner och deltagare på viktiga marknader — med utgångspunkt i en konkret plats och blick för ett bredare perspektiv." },
-    ],
+  "sv": {
+    "humanBody": "Vi tror att verkliga människor alltid är utgångspunkten för forskning. AI kan skapa oändligt mycket innehåll som ser äkta ut. Men den kan aldrig återskapa en specifik människa i ett specifikt ögonblick som säger vad hen verkligen tycker. Bakom varje undersökningsresultat står en människa som valde att dela ett perspektiv. De enskilda rösterna gör insikt värt att lita på. Vi använder matchning och realtidsdata för att respektera din tid, visa din påverkan och hålla varje belöningsregel tydlig och rättvis. Människocentrerat betyder inte att avvisa teknik. Det betyder att låta teknik tjäna människor.",
+    "eyebrow": "Om oss",
+    "theme": "Dina åsikter formar världen.",
+    "whoEyebrow": "Vilka vi är",
+    "humanEyebrow": "Människan först",
+    "body": "Vi är ett tvärregionalt insight- och undersökningsföretag som bygger en öppen, sammankopplad och hållbar forskningsgemenskap. Vi knyter samman deltagare, uppdragsgivare och organisationer inom näringsliv, kultur, vardag och offentliga frågor och gör verkliga röster till tydliga bedömningar — för bättre beslut och en bättre värld.",
+    "storyTitle": "Rotade i Kina, kopplade till världen.",
+    "points": [
+      {
+        "num": "01",
+        "title": "En kinesisk grund",
+        "body": "Teamet har i många år arbetat med marknadsundersökningar och har byggt upp en stabil gemenskap och ett forskningsnätverk i Kina, med tillgång till verkliga och verifierbara lokala urval."
+      },
+      {
+        "num": "02",
+        "title": "Regionala partner",
+        "body": "I Stor-Kina, Asien-Stillahavsområdet, Mellanöstern, Europa och Nordamerika arbetar vi med lokala undersökningspartner, så att varje marknad drivs av människor som känner den."
+      },
+      {
+        "num": "03",
+        "title": "Ständigt växande",
+        "body": "Beroende på studien utökar vi täckningen av partner och deltagare på viktiga marknader — med utgångspunkt i en konkret plats och blick för ett bredare perspektiv."
+      }
+    ]
   },
-  'tr': {
-    humanBody: "Gerçek insanların her zaman araştırmanın başlangıç noktası olduğuna inanıyoruz. Yapay zekâ gerçek görünen sonsuz içerik üretebilir. Ancak belirli bir kişiyi, belirli bir anda, gerçekten düşündüğünü söylerken asla yeniden yaratamaz. Her anket sonucunun arkasında bakış açısını paylaşmayı seçen bir insan vardır. Bu bireysel sesler içgörüyü güvenilir kılar. Eşleştirme ve gerçek zamanlı verilerle zamanınıza saygı duyuyor, etkinizi gösteriyor ve her ödül kuralını açık ve adil tutuyoruz. İnsan odaklı olmak teknolojiyi reddetmek değildir. Teknolojinin insanlara hizmet etmesini sağlamaktır.",
-    eyebrow: "Hakkımızda",
-    theme: "Görüşleriniz dünyayı şekillendirir.",
-    whoEyebrow: "Biz kimiz",
-    humanEyebrow: "Önce insan",
-    body: "Bölgeler arası bir içgörü ve araştırma şirketiyiz; açık, birbirine bağlı ve sürdürülebilir bir araştırma topluluğu kuruyoruz. Katılımcıları, araştırma talebinde bulunanları ve kurumları ticaret, kültür, günlük yaşam ve kamusal konular etrafında bir araya getiriyor, gerçek sesleri net yargılara dönüştürüyoruz — daha iyi kararlar ve daha iyi bir dünya için.",
-    storyTitle: "Çin'de köklü, dünyayla bağlantılı.",
-    points: [
-      { num: '01', title: "Çin'de bir temel", body: "Ekip yıllardır pazar araştırmasına odaklanıyor ve Çin'de istikrarlı bir topluluk ile araştırma ağı kurdu; gerçek ve doğrulanabilir yerel örneklere ulaşabiliyor." },
-      { num: '02', title: "Bölgesel ortaklar", body: "Büyük Çin, Asya-Pasifik, Orta Doğu, Avrupa ve Kuzey Amerika'da yerel araştırma ortaklarıyla çalışıyoruz; böylece her pazarı o pazarı tanıyan kişiler yürütüyor." },
-      { num: '03', title: "Sürekli genişleyen", body: "Araştırmanın gereğine göre önemli pazarlarda ortak ve katılımcı kapsamını genişletiyoruz — belirli bir yerden başlayıp daha geniş bir bakışa uzanıyoruz." },
-    ],
+  "tr": {
+    "humanBody": "Gerçek insanların her zaman araştırmanın başlangıç noktası olduğuna inanıyoruz. Yapay zekâ gerçek görünen sonsuz içerik üretebilir. Ancak belirli bir kişiyi, belirli bir anda, gerçekten düşündüğünü söylerken asla yeniden yaratamaz. Her anket sonucunun arkasında bakış açısını paylaşmayı seçen bir insan vardır. Bu bireysel sesler içgörüyü güvenilir kılar. Eşleştirme ve gerçek zamanlı verilerle zamanınıza saygı duyuyor, etkinizi gösteriyor ve her ödül kuralını açık ve adil tutuyoruz. İnsan odaklı olmak teknolojiyi reddetmek değildir. Teknolojinin insanlara hizmet etmesini sağlamaktır.",
+    "eyebrow": "Hakkımızda",
+    "theme": "Görüşleriniz dünyayı şekillendirir.",
+    "whoEyebrow": "Biz kimiz",
+    "humanEyebrow": "Önce insan",
+    "body": "Bölgeler arası bir içgörü ve araştırma şirketiyiz; açık, birbirine bağlı ve sürdürülebilir bir araştırma topluluğu kuruyoruz. Katılımcıları, araştırma talebinde bulunanları ve kurumları ticaret, kültür, günlük yaşam ve kamusal konular etrafında bir araya getiriyor, gerçek sesleri net yargılara dönüştürüyoruz — daha iyi kararlar ve daha iyi bir dünya için.",
+    "storyTitle": "Çin'de köklü, dünyayla bağlantılı.",
+    "points": [
+      {
+        "num": "01",
+        "title": "Çin'de bir temel",
+        "body": "Ekip yıllardır pazar araştırmasına odaklanıyor ve Çin'de istikrarlı bir topluluk ile araştırma ağı kurdu; gerçek ve doğrulanabilir yerel örneklere ulaşabiliyor."
+      },
+      {
+        "num": "02",
+        "title": "Bölgesel ortaklar",
+        "body": "Büyük Çin, Asya-Pasifik, Orta Doğu, Avrupa ve Kuzey Amerika'da yerel araştırma ortaklarıyla çalışıyoruz; böylece her pazarı o pazarı tanıyan kişiler yürütüyor."
+      },
+      {
+        "num": "03",
+        "title": "Sürekli genişleyen",
+        "body": "Araştırmanın gereğine göre önemli pazarlarda ortak ve katılımcı kapsamını genişletiyoruz — belirli bir yerden başlayıp daha geniş bir bakışa uzanıyoruz."
+      }
+    ]
   }
 };
 
@@ -2869,6 +3085,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "Reisen und Verkehr",
+      "lead": "Forschung für Destinationen, Hotelgruppen, Verkehrsbetriebe und Travel Retail: wer reist, wie die Reise entschieden wird und was zur Rückkehr bewegt.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Eine Reise wird in Etappen entschieden, und jede Etappe gehört zu einem anderen Akteur: Destination, Carrier, Hotel, Agentur.",
+        "Wir untersuchen den Reisenden über diese Etappen hinweg: Was bringt eine Destination auf die Auswahlliste, was entscheidet die Buchung, was geschieht bei der Ankunft, und was wird danach gesagt.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll: welchen Quellmarkt zu öffnen, welches Segment zu adressieren und wo die Reise den Reisenden verliert. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destination und Zielgruppe",
+          "frame": "Wer reist, warum und woher.",
+          "cards": [
+            {
+              "title": "Quellmärkte und Segmente",
+              "body": "Reisende nach Herkunftsmarkt, Reisezweck und Ausgaben segmentieren und jede Gruppe beziffern, bevor ein Markt geöffnet wird.",
+              "methods": "Online-Befragung · CATI"
+            },
+            {
+              "title": "Destinationswahrnehmung",
+              "body": "Erheben, wofür die Destination bekannt ist und was sie von der Auswahlliste fernhält.",
+              "methods": "Online-Befragung · Tiefeninterviews"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Entscheidung und Buchung",
+          "frame": "Wie aus der Auswahlliste eine Buchung wird.",
+          "cards": [
+            {
+              "title": "Reiseentscheidungen",
+              "body": "Die Reise von der Auswahlliste bis zur Buchung verfolgen und die Punkte, an denen eine Destination oder ein Anbieter herausfällt.",
+              "methods": "Online-Befragung · Tiefeninterviews"
+            },
+            {
+              "title": "Preis und Saison",
+              "body": "Preiserwartungen und Saisonalität gegen die Destinationen testen, die um dieselbe Reise konkurrieren.",
+              "methods": "Preistests · Online-Befragung"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Ankunft und Aufenthalt",
+          "frame": "Was geschieht, sobald der Reisende ankommt.",
+          "cards": [
+            {
+              "title": "Anreise und Ankunft",
+              "body": "Untersuchen, wie Reisende ihre Anreise wählen und was diese Wahl mit dem Rest der Reise macht.",
+              "methods": "Online-Befragung · Tiefeninterviews"
+            },
+            {
+              "title": "Erlebnis und Aufenthalt",
+              "body": "Den Aufenthalt, den Service und das lokale Erlebnis daran messen, was die Destination versprochen hat.",
+              "methods": "Tiefeninterviews · Online-Befragung"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Weiterempfehlung und Rückkehr",
+          "frame": "Ob sie zurückkommen und ob sie empfehlen.",
+          "cards": [
+            {
+              "title": "Empfehlung und Wiederbesuch",
+              "body": "Weiterempfehlung und Wiederbesuche messen und klären, warum Reisende nicht zurückkehren.",
+              "methods": "Tracking · Online-Befragung"
+            },
+            {
+              "title": "Reisendenprofil über die Zeit",
+              "body": "Verfolgen, wie sich das Reisendenprofil nach Markt und Saison verändert.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "Reisendenbefragung",
+          "Befragung vergangener oder geplanter Reisender mit Quoten nach Quellmarkt, Reisezweck und Ausgaben."
+        ],
+        [
+          "Destinationsinterviews",
+          "Tiefeninterviews von 45 bis 60 Minuten mit Reisenden und Handelspartnern, eins zu eins vom Forschungsteam geführt."
+        ],
+        [
+          "Online-Tracking",
+          "Monatliches oder quartalsweises Tracking auf festen Messgrößen, damit Bewegung gegen dieselbe Basis lesbar bleibt."
+        ],
+        [
+          "CATI",
+          "Standardisierte Telefoninterviews mit Quoten nach Markt, Segment oder Reisetyp."
+        ],
+        [
+          "Preistests",
+          "Preiserwartungen und Saisonalität getestet gegen die Destinationen, die um dieselbe Reise konkurrieren."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "Voyage et transport",
+      "lead": "Études pour les organisations de destination, les groupes hôteliers, les transporteurs et le travel retail : qui voyage, comment le voyage se décide et ce qui les fait revenir.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "Un voyage se décide par étapes, et chaque étape appartient à un acteur différent : la destination, le transporteur, l'hôtel, l'agence.",
+        "Nous étudions le voyageur à travers ces étapes : ce qui met une destination sur la liste, ce qui décide la réservation, ce qui se passe à l'arrivée et ce qui en est dit ensuite.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer : quel marché source ouvrir, quel segment cibler et où le parcours perd le voyageur. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destination et audience",
+          "frame": "Qui voyage, pourquoi et d'où.",
+          "cards": [
+            {
+              "title": "Marchés sources et segments",
+              "body": "Segmenter les voyageurs par marché d'origine, motif et dépense, et dimensionner chaque groupe avant d'ouvrir un marché.",
+              "methods": "Enquête en ligne · CATI"
+            },
+            {
+              "title": "Perception de la destination",
+              "body": "Établir ce pour quoi la destination est connue et ce qui la tient hors de la liste.",
+              "methods": "Enquête en ligne · entretiens approfondis"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Décision et réservation",
+          "frame": "Comment la liste devient une réservation.",
+          "cards": [
+            {
+              "title": "Décisions de voyage",
+              "body": "Suivre le voyage de la liste à la réservation, et les points où une destination ou un opérateur décroche.",
+              "methods": "Enquête en ligne · entretiens approfondis"
+            },
+            {
+              "title": "Prix et saison",
+              "body": "Tester les attentes de prix et la saisonnalité face aux destinations qui concurrencent le même voyage.",
+              "methods": "Tests de prix · enquête en ligne"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Arrivée et séjour",
+          "frame": "Ce qui se passe une fois le voyageur arrivé.",
+          "cards": [
+            {
+              "title": "Transport et arrivée",
+              "body": "Étudier comment les voyageurs choisissent de s'y rendre, et l'effet de ce choix sur le reste du voyage.",
+              "methods": "Enquête en ligne · entretiens approfondis"
+            },
+            {
+              "title": "Expérience et séjour",
+              "body": "Évaluer le séjour, le service et l'expérience locale au regard de ce que la destination a promis.",
+              "methods": "Entretiens approfondis · enquête en ligne"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Recommandation et retour",
+          "frame": "S'ils reviennent, et s'ils recommandent.",
+          "cards": [
+            {
+              "title": "Recommandation et répétition",
+              "body": "Mesurer la recommandation et les visites répétées, et établir pourquoi les voyageurs ne reviennent pas.",
+              "methods": "Tracking · enquête en ligne"
+            },
+            {
+              "title": "Profil du voyageur dans le temps",
+              "body": "Suivre l'évolution du profil des voyageurs par marché et par saison.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Enquête voyageurs",
+          "Enquête auprès de voyageurs passés ou potentiels, avec quotas par marché source, motif et dépense."
+        ],
+        [
+          "Entretiens destination",
+          "Entretiens approfondis de 45 à 60 minutes avec voyageurs et partenaires, menés en tête-à-tête par l'équipe."
+        ],
+        [
+          "Tracking en ligne",
+          "Tracking mensuel ou trimestriel sur des mesures fixes, pour lire les évolutions sur la même base."
+        ],
+        [
+          "CATI",
+          "Entretiens téléphoniques scriptés, avec quotas par marché, segment ou type de voyage."
+        ],
+        [
+          "Tests de prix",
+          "Attentes de prix et saisonnalité testées face aux destinations concurrentes sur le même voyage."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "Reizen en vervoer",
+      "lead": "Onderzoek voor bestemmingsorganisaties, hotelgroepen, vervoerders en travel retail: wie reist, hoe de reis wordt besloten en wat hen terugbrengt.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Een reis wordt in fasen besloten, en elke fase hoort bij een andere partij: de bestemming, de vervoerder, het hotel, het agentschap.",
+        "We onderzoeken de reiziger over die fasen: wat een bestemming op de shortlist zet, wat de boeking bepaalt, wat er bij aankomst gebeurt en wat er daarna wordt gezegd.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen: welke bronmarkt te openen, welk segment te richten en waar de reis de reiziger verliest. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Bestemming en publiek",
+          "frame": "Wie reist, waarom en vanwaar.",
+          "cards": [
+            {
+              "title": "Bronmarkten en segmenten",
+              "body": "Reizigers segmenteren naar herkomstmarkt, doel en besteding, en elke groep kwantificeren voordat een markt opengaat.",
+              "methods": "Online-enquête · CATI"
+            },
+            {
+              "title": "Beeld van de bestemming",
+              "body": "Vaststellen waar de bestemming bekend om staat en wat haar van de shortlist houdt.",
+              "methods": "Online-enquête · diepte-interviews"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Beslissing en boeking",
+          "frame": "Hoe de shortlist een boeking wordt.",
+          "cards": [
+            {
+              "title": "Reisbeslissingen",
+              "body": "De reis volgen van shortlist tot boeking, en de punten waar een bestemming of aanbieder afvalt.",
+              "methods": "Online-enquête · diepte-interviews"
+            },
+            {
+              "title": "Prijs en seizoen",
+              "body": "Prijsverwachtingen en seizoensinvloed testen tegen de bestemmingen die om dezelfde reis concurreren.",
+              "methods": "Prijs tests · online-enquête"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Aankomst en verblijf",
+          "frame": "Wat er gebeurt zodra de reiziger aankomt.",
+          "cards": [
+            {
+              "title": "Vervoer en aankomst",
+              "body": "Onderzoeken hoe reizigers hun reis ernaartoe kiezen, en wat die keuze doet met de rest van de reis.",
+              "methods": "Online-enquête · diepte-interviews"
+            },
+            {
+              "title": "Beleving en verblijf",
+              "body": "Het verblijf, de service en de lokale beleving afmeten aan wat de bestemming beloofde.",
+              "methods": "Diepte-interviews · online-enquête"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Aanbeveling en terugkeer",
+          "frame": "Of ze terugkomen, en of ze het aanbevelen.",
+          "cards": [
+            {
+              "title": "Aanbeveling en herhaalbezoek",
+              "body": "Aanbeveling en herhaalbezoek meten, en vaststellen waarom reizigers niet terugkeren.",
+              "methods": "Tracking · online-enquête"
+            },
+            {
+              "title": "Reizigersprofiel in de tijd",
+              "body": "Volgen hoe het reizigersprofiel per markt en per seizoen verandert.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "Reizigersenquête",
+          "Enquête onder vroegere of beoogde reizigers, met quota naar bronmarkt, doel en besteding."
+        ],
+        [
+          "Interviews per bestemming",
+          "Diepte-interviews van 45 tot 60 minuten met reizigers en handelspartners, één op één door het onderzoeksteam."
+        ],
+        [
+          "Online tracking",
+          "Maandelijkse of driemaandelijkse tracking op vaste maten, zodat beweging tegen dezelfde basis leesbaar blijft."
+        ],
+        [
+          "CATI",
+          "Gescripte telefonische interviews, met quota naar markt, segment of reistype."
+        ],
+        [
+          "Prijs tests",
+          "Prijsverwachtingen en seizoensinvloed getest tegen de bestemmingen die om dezelfde reis concurreren."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "Rejser og transport",
+      "lead": "Research for destinationer, hotelgrupper, transportører og travel retail: hvem der rejser, hvordan rejsen besluttes, og hvad der bringer dem tilbage.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "En rejse besluttes i etaper, og hver etape tilhører en anden aktør: destinationen, transportøren, hotellet, agenturet.",
+        "Vi undersøger den rejsende gennem etaperne: hvad der sætter en destination på listen, hvad der afgør bookingen, hvad der sker ved ankomsten, og hvad der siges bagefter.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte: hvilket kildemarked der skal åbnes, hvilket segment der skal rammes, og hvor rejsen mister den rejsende. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destination og målgruppe",
+          "frame": "Hvem der rejser, hvorfor og hvorfra.",
+          "cards": [
+            {
+              "title": "Kildemarkeder og segmenter",
+              "body": "Segmentér rejsende efter oprindelsesmarked, formål og forbrug, og størrelsesbestem hver gruppe, før et marked åbnes.",
+              "methods": "Onlineundersøgelse · CATI"
+            },
+            {
+              "title": "Destinationsopfattelse",
+              "body": "Fastslå, hvad destinationen er kendt for, og hvad der holder den uden for listen.",
+              "methods": "Onlineundersøgelse · dybdeinterviews"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Beslutning og booking",
+          "frame": "Hvordan listen bliver en booking.",
+          "cards": [
+            {
+              "title": "Rejsebeslutninger",
+              "body": "Følg rejsen fra liste til booking, og de punkter, hvor en destination eller operatør falder fra.",
+              "methods": "Onlineundersøgelse · dybdeinterviews"
+            },
+            {
+              "title": "Pris og sæson",
+              "body": "Test prisforventninger og sæson mod de destinationer, der konkurrerer om samme rejse.",
+              "methods": "Pristests · onlineundersøgelse"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Ankomst og ophold",
+          "frame": "Hvad der sker, når den rejsende ankommer.",
+          "cards": [
+            {
+              "title": "Transport og ankomst",
+              "body": "Undersøg, hvordan rejsende vælger at komme dertil, og hvad valget gør ved resten af rejsen.",
+              "methods": "Onlineundersøgelse · dybdeinterviews"
+            },
+            {
+              "title": "Oplevelse og ophold",
+              "body": "Vurdér opholdet, servicen og den lokale oplevelse mod det, destinationen lovede.",
+              "methods": "Dybdeinterviews · onlineundersøgelse"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Anbefaling og genbesøg",
+          "frame": "Om de kommer igen, og om de anbefaler det.",
+          "cards": [
+            {
+              "title": "Anbefaling og genkøb",
+              "body": "Mål anbefaling og genbesøg, og fastslå, hvorfor rejsende ikke vender tilbage.",
+              "methods": "Tracking · onlineundersøgelse"
+            },
+            {
+              "title": "Rejsendes profil over tid",
+              "body": "Følg, hvordan den rejsendes profil ændrer sig pr. marked og sæson.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "Rejsendeundersøgelse",
+          "Undersøgelse blandt tidligere eller planlagte rejsende med kvoter efter kildemarked, formål og forbrug."
+        ],
+        [
+          "Destinationsinterviews",
+          "Dybdeinterviews på 45-60 minutter med rejsende og handelspartnere, gennemført en til en af researchteamet."
+        ],
+        [
+          "Online tracking",
+          "Månedlig eller kvartalsvis tracking på faste mål, så bevægelse kan læses mod samme base."
+        ],
+        [
+          "CATI",
+          "Scriptede telefoninterviews med kvoter efter marked, segment eller rejstype."
+        ],
+        [
+          "Pristests",
+          "Prisforventninger og sæson testet mod de destinationer, der konkurrerer om samme rejse."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Viajes y transporte",
+      "lead": "Investigación para organizaciones de destino, grupos hoteleros, operadores de transporte y travel retail: quién viaja, cómo se decide el viaje y qué les hace volver.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "Un viaje se decide por etapas, y cada etapa pertenece a un actor distinto: el destino, el transportista, el hotel, la agencia.",
+        "Estudiamos al viajero a lo largo de esas etapas: qué pone un destino en la lista, qué decide la reserva, qué ocurre a la llegada y qué se dice después.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener: qué mercado emisor abrir, qué segmento abordar y dónde el recorrido pierde al viajero. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destino y audiencia",
+          "frame": "Quién viaja, por qué y desde dónde.",
+          "cards": [
+            {
+              "title": "Mercados emisores y segmentos",
+              "body": "Segmentar a los viajeros por mercado de origen, motivo y gasto, y dimensionar cada grupo antes de abrir un mercado.",
+              "methods": "Encuesta online · CATI"
+            },
+            {
+              "title": "Percepción del destino",
+              "body": "Establecer por qué es conocido el destino y qué lo mantiene fuera de la lista.",
+              "methods": "Encuesta online · entrevistas en profundidad"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Decisión y reserva",
+          "frame": "Cómo la lista se convierte en reserva.",
+          "cards": [
+            {
+              "title": "Decisiones de viaje",
+              "body": "Seguir el viaje desde la lista hasta la reserva, y los puntos en que un destino u operador se cae.",
+              "methods": "Encuesta online · entrevistas en profundidad"
+            },
+            {
+              "title": "Precio y temporada",
+              "body": "Probar expectativas de precio y estacionalidad frente a los destinos que compiten por el mismo viaje.",
+              "methods": "Pruebas de precio · encuesta online"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Llegada y estancia",
+          "frame": "Qué ocurre cuando el viajero llega.",
+          "cards": [
+            {
+              "title": "Transporte y llegada",
+              "body": "Estudiar cómo eligen los viajeros llegar y qué hace esa elección con el resto del viaje.",
+              "methods": "Encuesta online · entrevistas en profundidad"
+            },
+            {
+              "title": "Experiencia y estancia",
+              "body": "Evaluar la estancia, el servicio y la experiencia local frente a lo que prometió el destino.",
+              "methods": "Entrevistas en profundidad · encuesta online"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Recomendación y regreso",
+          "frame": "Si vuelven y si lo recomiendan.",
+          "cards": [
+            {
+              "title": "Recomendación y repetición",
+              "body": "Medir la recomendación y las visitas repetidas, y establecer por qué los viajeros no vuelven.",
+              "methods": "Tracking · encuesta online"
+            },
+            {
+              "title": "Perfil del viajero en el tiempo",
+              "body": "Seguir cómo cambia el perfil del viajero por mercado y temporada.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Encuesta a viajeros",
+          "Encuesta a viajeros pasados o potenciales, con cuotas por mercado emisor, motivo y gasto."
+        ],
+        [
+          "Entrevistas de destino",
+          "Entrevistas en profundidad de 45 a 60 minutos con viajeros y socios comerciales, realizadas uno a uno por el equipo."
+        ],
+        [
+          "Tracking online",
+          "Tracking mensual o trimestral sobre medidas fijas, para leer el movimiento contra la misma base."
+        ],
+        [
+          "CATI",
+          "Entrevistas telefónicas guionizadas, con cuotas por mercado, segmento o tipo de viaje."
+        ],
+        [
+          "Pruebas de precio",
+          "Expectativas de precio y estacionalidad probadas frente a los destinos que compiten por el mismo viaje."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Matkailu ja liikenne",
+      "lead": "Tutkimusta matkakohteille, hotelliketjuille, liikenneoperaattoreille ja travel retailille: ketkä matkustavat, miten matka päätetään ja mikä saa heidät palaamaan.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Matka päätetään vaiheissa, ja jokainen vaihe kuuluu eri toimijalle: kohde, liikennöitsijä, hotelli, matkatoimisto.",
+        "Tutkimme matkustajaa näissä vaiheissa: mikä nostaa kohteen listalle, mikä ratkaisee varauksen, mitä saapumisessa tapahtuu ja mitä sen jälkeen sanotaan.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava: mikä lähtömarkkina avata, mihin segmenttiin kohdistaa ja missä matka kadottaa matkustajan. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kohde ja yleisö",
+          "frame": "Ketkä matkustavat, miksi ja mistä.",
+          "cards": [
+            {
+              "title": "Lähtömarkkinat ja segmentit",
+              "body": "Segmentoi matkustajat lähtömarkkinan, tarkoituksen ja kulutuksen mukaan ja mitoita jokainen ryhmä ennen markkinan avaamista.",
+              "methods": "Verkkokysely · CATI"
+            },
+            {
+              "title": "Kohdekuva",
+              "body": "Selvitä, mistä kohde tunnetaan ja mikä pitää sen poissa listalta.",
+              "methods": "Verkkokysely · syvähaastattelut"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Päätös ja varaus",
+          "frame": "Miten listasta tulee varaus.",
+          "cards": [
+            {
+              "title": "Matkapäätökset",
+              "body": "Seuraa matkaa listalta varaukseen ja pisteet, joissa kohde tai operaattori putoaa.",
+              "methods": "Verkkokysely · syvähaastattelut"
+            },
+            {
+              "title": "Hinta ja kausi",
+              "body": "Testaa hintaodotuksia ja kausivaihtelua kohteita vastaan, jotka kilpailevat samasta matkasta.",
+              "methods": "Hintatestit · verkkokysely"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Saapuminen ja oleskelu",
+          "frame": "Mitä tapahtuu, kun matkustaja saapuu.",
+          "cards": [
+            {
+              "title": "Liikenne ja saapuminen",
+              "body": "Tutki, miten matkustajat valitsevat perille pääsyn ja mitä valinta tekee matkan muulle osalle.",
+              "methods": "Verkkokysely · syvähaastattelut"
+            },
+            {
+              "title": "Kokemus ja oleskelu",
+              "body": "Arvioi oleskelua, palvelua ja paikallista kokemusta sitä vasten, mitä kohde lupasi.",
+              "methods": "Syvähaastattelut · verkkokysely"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Suosittelu ja paluu",
+          "frame": "Palaavatko he ja suosittelevatko he.",
+          "cards": [
+            {
+              "title": "Suosittelu ja toistuvat käynnit",
+              "body": "Mittaa suosittelua ja toistuvia käyntejä ja selvitä, miksi matkustajat eivät palaa.",
+              "methods": "Tracking · verkkokysely"
+            },
+            {
+              "title": "Matkustajaprofiili ajassa",
+              "body": "Seuraa, miten matkustajaprofiili muuttuu markkinoittain ja kausittain.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "Matkustajakysely",
+          "Kysely aiemmille tai suunnitteleville matkustajille, kiintiöt lähtömarkkinan, tarkoituksen ja kulutuksen mukaan."
+        ],
+        [
+          "Kohdehaastattelut",
+          "45–60 minuutin syvähaastattelut matkustajien ja kauppakumppanien kanssa, tutkimustiimi tekee kahdestaan."
+        ],
+        [
+          "Verkkotracking",
+          "Kuukausittainen tai neljännesvuosittainen tracking kiinteillä mittareilla, jotta liike on luettavissa samasta kannasta."
+        ],
+        [
+          "CATI",
+          "Käsikirjoitetut puhelinhaastattelut, kiintiöt markkinan, segmentin tai matkatyypin mukaan."
+        ],
+        [
+          "Hintatestit",
+          "Hintaodotukset ja kausivaihtelu testattuna kohteita vastaan, jotka kilpailevat samasta matkasta."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "Viaggi e trasporti",
+      "lead": "Ricerche per organizzazioni di destinazione, gruppi alberghieri, operatori di trasporto e travel retail: chi viaggia, come si decide il viaggio e cosa li riporta.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "Un viaggio si decide per fasi, e ogni fase appartiene a un attore diverso: la destinazione, il vettore, l'hotel, l'agenzia.",
+        "Studiamo il viaggiatore attraverso quelle fasi: cosa mette una destinazione in lista, cosa decide la prenotazione, cosa accade all'arrivo e cosa si dice dopo.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere: quale mercato di origine aprire, quale segmento indirizzare e dove il percorso perde il viaggiatore. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destinazione e pubblico",
+          "frame": "Chi viaggia, perché e da dove.",
+          "cards": [
+            {
+              "title": "Mercati di origine e segmenti",
+              "body": "Segmentare i viaggiatori per mercato di origine, motivo e spesa, e dimensionare ogni gruppo prima di aprire un mercato.",
+              "methods": "Indagine online · CATI"
+            },
+            {
+              "title": "Percezione della destinazione",
+              "body": "Stabilire per cosa è nota la destinazione e cosa la tiene fuori dalla lista.",
+              "methods": "Indagine online · interviste in profondità"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Decisione e prenotazione",
+          "frame": "Come la lista diventa prenotazione.",
+          "cards": [
+            {
+              "title": "Decisioni di viaggio",
+              "body": "Seguire il viaggio dalla lista alla prenotazione, e i punti in cui una destinazione o un operatore esce.",
+              "methods": "Indagine online · interviste in profondità"
+            },
+            {
+              "title": "Prezzo e stagione",
+              "body": "Testare aspettative di prezzo e stagionalità contro le destinazioni che competono per lo stesso viaggio.",
+              "methods": "Test di prezzo · indagine online"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Arrivo e soggiorno",
+          "frame": "Cosa accade quando il viaggiatore arriva.",
+          "cards": [
+            {
+              "title": "Trasporto e arrivo",
+              "body": "Studiare come i viaggiatori scelgono di arrivare e cosa fa quella scelta al resto del viaggio.",
+              "methods": "Indagine online · interviste in profondità"
+            },
+            {
+              "title": "Esperienza e soggiorno",
+              "body": "Valutare il soggiorno, il servizio e l'esperienza locale rispetto a ciò che la destinazione ha promesso.",
+              "methods": "Interviste in profondità · indagine online"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Raccomandazione e ritorno",
+          "frame": "Se tornano, e se lo consigliano.",
+          "cards": [
+            {
+              "title": "Raccomandazione e ritorno",
+              "body": "Misurare raccomandazione e visite ripetute, e stabilire perché i viaggiatori non tornano.",
+              "methods": "Tracking · indagine online"
+            },
+            {
+              "title": "Profilo del viaggiatore nel tempo",
+              "body": "Seguire come cambia il profilo del viaggiatore per mercato e stagione.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Indagine viaggiatori",
+          "Indagine su viaggiatori passati o potenziali, con quote per mercato di origine, motivo e spesa."
+        ],
+        [
+          "Interviste alla destinazione",
+          "Interviste in profondità di 45-60 minuti con viaggiatori e partner commerciali, condotte uno a uno dal team."
+        ],
+        [
+          "Tracking online",
+          "Tracking mensile o trimestrale su misure fisse, così il movimento si legge sulla stessa base."
+        ],
+        [
+          "CATI",
+          "Interviste telefoniche scriptate, con quote per mercato, segmento o tipo di viaggio."
+        ],
+        [
+          "Test di prezzo",
+          "Aspettative di prezzo e stagionalità testate contro le destinazioni che competono per lo stesso viaggio."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "旅行と交通",
+      "lead": "旅行先の組織、ホテルグループ、交通事業者、トラベルリテール向けの調査：誰が旅するのか、旅はどう決まるのか、何が再訪につながるのか。",
+      "introKicker": "進め方",
+      "intro": [
+        "旅は段階を追って決まり、各段階は別の担い手に属します。旅行先、交通事業者、ホテル、旅行代理店です。",
+        "私たちはそれらの段階を通して旅行者を調べます。何が旅行先を候補に入れるのか、何が予約を決めるのか、到着時に何が起きるのか、その後何が語られるのか。",
+        "各調査は、それが支えるべき意思決定を中心に設計します。どの送客市場を開くのか、どのセグメントを狙うのか、どこで旅が旅行者を失うのか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "旅行先とオーディエンス",
+          "frame": "誰が、なぜ、どこから旅するのか。",
+          "cards": [
+            {
+              "title": "送客市場とセグメント",
+              "body": "出発市場、目的、支出で旅行者をセグメント化し、市場を開く前に各グループの規模を把握します。",
+              "methods": "オンライン調査 · CATI"
+            },
+            {
+              "title": "旅行先の認知",
+              "body": "旅行先が何で知られ、何が候補から外すのかを明らかにします。",
+              "methods": "オンライン調査 · デプスインタビュー"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "意思決定と予約",
+          "frame": "候補が予約になるまで。",
+          "cards": [
+            {
+              "title": "旅行の意思決定",
+              "body": "候補から予約までの旅を追い、旅行先や事業者が脱落する地点を捉えます。",
+              "methods": "オンライン調査 · デプスインタビュー"
+            },
+            {
+              "title": "価格と季節",
+              "body": "同じ旅を争う旅行先に対して、価格期待と季節性を検証します。",
+              "methods": "価格テスト · オンライン調査"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "到着と滞在",
+          "frame": "旅行者が到着した後に何が起きるか。",
+          "cards": [
+            {
+              "title": "交通と到着",
+              "body": "旅行者がどう行き方を選ぶのか、その選択が旅の残りに何をもたらすのかを調べます。",
+              "methods": "オンライン調査 · デプスインタビュー"
+            },
+            {
+              "title": "体験と滞在",
+              "body": "滞在、サービス、現地体験を、旅行先が約束したことに対して評価します。",
+              "methods": "デプスインタビュー · オンライン調査"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "推奨と再訪",
+          "frame": "戻ってくるのか、勧めるのか。",
+          "cards": [
+            {
+              "title": "推奨と再訪",
+              "body": "推奨と再訪を測り、なぜ旅行者が戻らないのかを明らかにします。",
+              "methods": "トラッキング · オンライン調査"
+            },
+            {
+              "title": "時系列の旅行者プロファイル",
+              "body": "市場別・季節別に旅行者プロファイルがどう変わるかを追います。",
+              "methods": "トラッキング · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "旅行者調査",
+          "過去または予定の旅行者への調査。送客市場、目的、支出で割り付けます。"
+        ],
+        [
+          "旅行先インタビュー",
+          "旅行者と取引先への45〜60分のデプスインタビュー。調査チームが1対1で行います。"
+        ],
+        [
+          "オンライントラッキング",
+          "固定指標による月次または四半期のトラッキング。同じ基準で変化を読めます。"
+        ],
+        [
+          "CATI",
+          "スクリプトに沿った電話調査。市場、セグメント、旅の種類で割り付けます。"
+        ],
+        [
+          "価格テスト",
+          "同じ旅を争う旅行先に対して、価格期待と季節性を検証します。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "여행과 교통",
+      "lead": "여행지 기관, 호텔 그룹, 교통 사업자, 트래블 리테일을 위한 조사: 누가 여행하는지, 여행은 어떻게 결정되는지, 무엇이 다시 오게 하는지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "여행은 단계적으로 결정되고, 각 단계는 다른 주체에 속합니다. 여행지, 운송사, 호텔, 여행사입니다.",
+        "우리는 그 단계를 따라 여행자를 조사합니다. 무엇이 여행지를 후보에 올리는지, 무엇이 예약을 결정하는지, 도착 후 어떤 일이 벌어지는지, 그 뒤에 무엇이 말해지는지.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다. 어느 송출 시장을 열지, 어느 세그먼트를 겨냥할지, 어디서 여정이 여행자를 잃는지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "여행지와 고객",
+          "frame": "누가, 왜, 어디서 여행하는가.",
+          "cards": [
+            {
+              "title": "송출 시장과 세그먼트",
+              "body": "출발 시장, 목적, 지출로 여행자를 세분화하고, 시장을 열기 전에 각 집단의 규모를 파악합니다.",
+              "methods": "온라인 조사 · CATI"
+            },
+            {
+              "title": "여행지 인식",
+              "body": "여행지가 무엇으로 알려져 있고 무엇이 후보에서 밀어내는지 밝힙니다.",
+              "methods": "온라인 조사 · 심층 인터뷰"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "결정과 예약",
+          "frame": "후보가 예약이 되는 과정.",
+          "cards": [
+            {
+              "title": "여행 결정",
+              "body": "후보에서 예약까지의 여정을 따라가며 여행지나 사업자가 탈락하는 지점을 찾습니다.",
+              "methods": "온라인 조사 · 심층 인터뷰"
+            },
+            {
+              "title": "가격과 시즌",
+              "body": "같은 여행을 두고 경쟁하는 여행지를 상대로 가격 기대와 계절성을 검증합니다.",
+              "methods": "가격 테스트 · 온라인 조사"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "도착과 체류",
+          "frame": "여행자가 도착한 뒤 벌어지는 일.",
+          "cards": [
+            {
+              "title": "교통과 도착",
+              "body": "여행자가 어떻게 갈지를 선택하는지, 그 선택이 나머지 여정에 무엇을 하는지 조사합니다.",
+              "methods": "온라인 조사 · 심층 인터뷰"
+            },
+            {
+              "title": "경험과 체류",
+              "body": "체류, 서비스, 현지 경험을 여행지가 약속한 것과 견주어 평가합니다.",
+              "methods": "심층 인터뷰 · 온라인 조사"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "추천과 재방문",
+          "frame": "다시 오는지, 추천하는지.",
+          "cards": [
+            {
+              "title": "추천과 재방문",
+              "body": "추천과 재방문을 측정하고 여행자가 돌아오지 않는 이유를 밝힙니다.",
+              "methods": "트래킹 · 온라인 조사"
+            },
+            {
+              "title": "시간에 따른 여행자 프로필",
+              "body": "시장별·시즌별로 여행자 프로필이 어떻게 바뀌는지 추적합니다.",
+              "methods": "트래킹 · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "여행자 조사",
+          "과거 또는 예정 여행자를 대상으로 한 조사. 송출 시장, 목적, 지출로 할당합니다."
+        ],
+        [
+          "여행지 인터뷰",
+          "여행자와 거래 파트너를 대상으로 한 45~60분 심층 인터뷰. 조사팀이 1대1로 진행합니다."
+        ],
+        [
+          "온라인 트래킹",
+          "고정 지표로 월별 또는 분기별 트래킹. 같은 기준으로 변화를 읽습니다."
+        ],
+        [
+          "CATI",
+          "스크립트 기반 전화 조사. 시장, 세그먼트, 여행 유형으로 할당합니다."
+        ],
+        [
+          "가격 테스트",
+          "같은 여행을 두고 경쟁하는 여행지를 상대로 가격 기대와 계절성을 검증합니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "Reiser og transport",
+      "lead": "Forskning for destinasjonsselskaper, hotellgrupper, transportoperatører og travel retail: hvem som reiser, hvordan reisen besluttes, og hva som får dem tilbake.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "En reise besluttes i etapper, og hver etappe tilhører en annen aktør: destinasjonen, transportøren, hotellet, agenturet.",
+        "Vi undersøker den reisende gjennom etappene: hva som setter en destinasjon på listen, hva som avgjør bookingen, hva som skjer ved ankomst, og hva som sies etterpå.",
+        "Hver studie designes rundt beslutningen den skal støtte: hvilket kildemarked som skal åpnes, hvilket segment som skal nås, og hvor reisen mister den reisende. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destinasjon og målgruppe",
+          "frame": "Hvem som reiser, hvorfor og hvorfra.",
+          "cards": [
+            {
+              "title": "Kildemarkeder og segmenter",
+              "body": "Segmenter reisende etter opprinnelsesmarked, formål og forbruk, og dimensjoner hver gruppe før et marked åpnes.",
+              "methods": "Nettundersøkelse · CATI"
+            },
+            {
+              "title": "Destinasjonsoppfatning",
+              "body": "Fastslå hva destinasjonen er kjent for, og hva som holder den utenfor listen.",
+              "methods": "Nettundersøkelse · dybdeintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Beslutning og booking",
+          "frame": "Hvordan listen blir en booking.",
+          "cards": [
+            {
+              "title": "Reisebeslutninger",
+              "body": "Følg reisen fra liste til booking, og punktene der en destinasjon eller operatør faller fra.",
+              "methods": "Nettundersøkelse · dybdeintervjuer"
+            },
+            {
+              "title": "Pris og sesong",
+              "body": "Test prisforventninger og sesong mot destinasjonene som konkurrerer om samme reise.",
+              "methods": "Pristester · nettundersøkelse"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Ankomst og opphold",
+          "frame": "Hva som skjer når den reisende ankommer.",
+          "cards": [
+            {
+              "title": "Transport og ankomst",
+              "body": "Undersøk hvordan reisende velger å komme seg dit, og hva valget gjør med resten av reisen.",
+              "methods": "Nettundersøkelse · dybdeintervjuer"
+            },
+            {
+              "title": "Opplevelse og opphold",
+              "body": "Vurder oppholdet, servicen og den lokale opplevelsen mot det destinasjonen lovet.",
+              "methods": "Dybdeintervjuer · nettundersøkelse"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Anbefaling og gjenbesøk",
+          "frame": "Om de kommer tilbake, og om de anbefaler det.",
+          "cards": [
+            {
+              "title": "Anbefaling og gjenkjøp",
+              "body": "Mål anbefaling og gjenbesøk, og fastslå hvorfor reisende ikke kommer tilbake.",
+              "methods": "Tracking · nettundersøkelse"
+            },
+            {
+              "title": "Reisendes profil over tid",
+              "body": "Følg hvordan den reisendes profil endrer seg per marked og sesong.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "Reiseundersøkelse",
+          "Undersøkelse blant tidligere eller planlagte reisende, med kvoter etter kildemarked, formål og forbruk."
+        ],
+        [
+          "Destinasjonsintervjuer",
+          "Dybdeintervjuer på 45–60 minutter med reisende og handelspartnere, gjennomført en til en av forskerteamet."
+        ],
+        [
+          "Nettracking",
+          "Månedlig eller kvartalsvis tracking på faste mål, slik at bevegelse kan leses mot samme base."
+        ],
+        [
+          "CATI",
+          "Skriptede telefonintervjuer, med kvoter etter marked, segment eller reisetype."
+        ],
+        [
+          "Pristester",
+          "Prisforventninger og sesong testet mot destinasjonene som konkurrerer om samme reise."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Viagens e transporte",
+      "lead": "Investigação para organizações de destino, grupos hoteleiros, operadores de transporte e travel retail: quem viaja, como a viagem se decide e o que os faz voltar.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "Uma viagem decide-se por etapas, e cada etapa pertence a um ator diferente: o destino, o transportador, o hotel, a agência.",
+        "Estudamos o viajante ao longo dessas etapas: o que põe um destino na lista, o que decide a reserva, o que acontece à chegada e o que se diz depois.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar: que mercado emissor abrir, que segmento abordar e onde o percurso perde o viajante. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destino e público",
+          "frame": "Quem viaja, porquê e de onde.",
+          "cards": [
+            {
+              "title": "Mercados emissores e segmentos",
+              "body": "Segmentar viajantes por mercado de origem, motivo e despesa, e dimensionar cada grupo antes de abrir um mercado.",
+              "methods": "Inquérito online · CATI"
+            },
+            {
+              "title": "Perceção do destino",
+              "body": "Estabelecer pelo que o destino é conhecido e o que o mantém fora da lista.",
+              "methods": "Inquérito online · entrevistas em profundidade"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Decisão e reserva",
+          "frame": "Como a lista se torna reserva.",
+          "cards": [
+            {
+              "title": "Decisões de viagem",
+              "body": "Seguir a viagem da lista à reserva, e os pontos em que um destino ou operador se perde.",
+              "methods": "Inquérito online · entrevistas em profundidade"
+            },
+            {
+              "title": "Preço e época",
+              "body": "Testar expectativas de preço e sazonalidade face aos destinos que competem pela mesma viagem.",
+              "methods": "Testes de preço · inquérito online"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Chegada e estadia",
+          "frame": "O que acontece quando o viajante chega.",
+          "cards": [
+            {
+              "title": "Transporte e chegada",
+              "body": "Estudar como os viajantes escolhem chegar e o que essa escolha faz ao resto da viagem.",
+              "methods": "Inquérito online · entrevistas em profundidade"
+            },
+            {
+              "title": "Experiência e estadia",
+              "body": "Avaliar a estadia, o serviço e a experiência local face ao que o destino prometeu.",
+              "methods": "Entrevistas em profundidade · inquérito online"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Recomendação e regresso",
+          "frame": "Se voltam, e se recomendam.",
+          "cards": [
+            {
+              "title": "Recomendação e repetição",
+              "body": "Medir recomendação e visitas repetidas, e estabelecer porque os viajantes não regressam.",
+              "methods": "Tracking · inquérito online"
+            },
+            {
+              "title": "Perfil do viajante ao longo do tempo",
+              "body": "Acompanhar como o perfil do viajante muda por mercado e por época.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Inquérito a viajantes",
+          "Inquérito a viajantes passados ou potenciais, com quotas por mercado emissor, motivo e despesa."
+        ],
+        [
+          "Entrevistas ao destino",
+          "Entrevistas em profundidade de 45 a 60 minutos com viajantes e parceiros comerciais, conduzidas um a um pela equipa."
+        ],
+        [
+          "Tracking online",
+          "Tracking mensal ou trimestral sobre medidas fixas, para ler o movimento contra a mesma base."
+        ],
+        [
+          "CATI",
+          "Entrevistas telefónicas guionizadas, com quotas por mercado, segmento ou tipo de viagem."
+        ],
+        [
+          "Testes de preço",
+          "Expectativas de preço e sazonalidade testadas face aos destinos que competem pela mesma viagem."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Путешествия и транспорт",
+      "lead": "Исследования для туристических организаций, гостиничных групп, перевозчиков и travel retail: кто путешествует, как принимается решение о поездке и что заставляет вернуться.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Поездка решается поэтапно, и каждый этап принадлежит разному участнику: направлению, перевозчику, отелю, агентству.",
+        "Мы изучаем путешественника на этих этапах: что ставит направление в список, что решает бронирование, что происходит по прибытии и что говорят после.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать: какой исходный рынок открывать, на какой сегмент ориентироваться и где путь теряет путешественника. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Направление и аудитория",
+          "frame": "Кто путешествует, зачем и откуда.",
+          "cards": [
+            {
+              "title": "Исходные рынки и сегменты",
+              "body": "Сегментировать путешественников по рынку происхождения, цели и расходам и оценить размер каждой группы до открытия рынка.",
+              "methods": "Онлайн-опрос · CATI"
+            },
+            {
+              "title": "Восприятие направления",
+              "body": "Определить, чем известно направление и что удерживает его вне списка.",
+              "methods": "Онлайн-опрос · глубинные интервью"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Решение и бронирование",
+          "frame": "Как список становится бронированием.",
+          "cards": [
+            {
+              "title": "Решения о поездке",
+              "body": "Проследить путь от списка до бронирования и точки, где направление или оператор выпадают.",
+              "methods": "Онлайн-опрос · глубинные интервью"
+            },
+            {
+              "title": "Цена и сезон",
+              "body": "Проверить ценовые ожидания и сезонность на фоне направлений, конкурирующих за ту же поездку.",
+              "methods": "Ценовые тесты · онлайн-опрос"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Прибытие и проживание",
+          "frame": "Что происходит, когда путешественник прибывает.",
+          "cards": [
+            {
+              "title": "Транспорт и прибытие",
+              "body": "Изучить, как путешественники выбирают способ добраться и что этот выбор делает с остальной поездкой.",
+              "methods": "Онлайн-опрос · глубинные интервью"
+            },
+            {
+              "title": "Впечатление и проживание",
+              "body": "Оценить проживание, сервис и местные впечатления относительно обещаний направления.",
+              "methods": "Глубинные интервью · онлайн-опрос"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Рекомендация и возвращение",
+          "frame": "Возвращаются ли и рекомендуют ли.",
+          "cards": [
+            {
+              "title": "Рекомендация и повторные визиты",
+              "body": "Измерить рекомендацию и повторные визиты и понять, почему путешественники не возвращаются.",
+              "methods": "Трекинг · онлайн-опрос"
+            },
+            {
+              "title": "Профиль путешественника во времени",
+              "body": "Отслеживать, как профиль путешественника меняется по рынкам и сезонам.",
+              "methods": "Трекинг · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Опрос путешественников",
+          "Опрос прошлых или планируемых путешественников с квотами по рынку происхождения, цели и расходам."
+        ],
+        [
+          "Интервью о направлении",
+          "Глубинные интервью по 45–60 минут с путешественниками и торговыми партнёрами, один на один с исследовательской командой."
+        ],
+        [
+          "Онлайн-трекинг",
+          "Ежемесячный или ежеквартальный трекинг по фиксированным показателям, чтобы читать динамику на одной базе."
+        ],
+        [
+          "CATI",
+          "Телефонные интервью по скрипту с квотами по рынку, сегменту или типу поездки."
+        ],
+        [
+          "Ценовые тесты",
+          "Ценовые ожидания и сезонность, проверенные на направлениях, конкурирующих за ту же поездку."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "Resor och transport",
+      "lead": "Undersökningar för destinationsorganisationer, hotellgrupper, transportoperatörer och travel retail: vilka som reser, hur resan beslutas och vad som får dem att återvända.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "En resa beslutas i etapper, och varje etapp tillhör en annan aktör: destinationen, transportören, hotellet, agenturen.",
+        "Vi undersöker resenären genom etapperna: vad som sätter en destination på listan, vad som avgör bokningen, vad som händer vid ankomst och vad som sägs efteråt.",
+        "Varje studie byggs kring det beslut den ska stödja: vilken källmarknad som ska öppnas, vilket segment som ska nås och var resan tappar resenären. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destination och målgrupp",
+          "frame": "Vilka som reser, varför och varifrån.",
+          "cards": [
+            {
+              "title": "Källmarknader och segment",
+              "body": "Segmentera resenärer efter ursprungsmarknad, syfte och spendering, och storleksbestäm varje grupp innan en marknad öppnas.",
+              "methods": "Onlineundersökning · CATI"
+            },
+            {
+              "title": "Destinationsuppfattning",
+              "body": "Fastställa vad destinationen är känd för och vad som håller den utanför listan.",
+              "methods": "Onlineundersökning · djupintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Beslut och bokning",
+          "frame": "Hur listan blir en bokning.",
+          "cards": [
+            {
+              "title": "Resebeslut",
+              "body": "Följ resan från lista till bokning, och punkterna där en destination eller operatör faller bort.",
+              "methods": "Onlineundersökning · djupintervjuer"
+            },
+            {
+              "title": "Pris och säsong",
+              "body": "Testa prisförväntningar och säsong mot de destinationer som konkurrerar om samma resa.",
+              "methods": "Pristester · onlineundersökning"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Ankomst och vistelse",
+          "frame": "Vad som händer när resenären anländer.",
+          "cards": [
+            {
+              "title": "Transport och ankomst",
+              "body": "Undersöka hur resenärer väljer att ta sig dit, och vad valet gör med resten av resan.",
+              "methods": "Onlineundersökning · djupintervjuer"
+            },
+            {
+              "title": "Upplevelse och vistelse",
+              "body": "Bedöma vistelsen, servicen och den lokala upplevelsen mot vad destinationen lovade.",
+              "methods": "Djupintervjuer · onlineundersökning"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Rekommendation och återkomst",
+          "frame": "Om de kommer tillbaka, och om de rekommenderar.",
+          "cards": [
+            {
+              "title": "Rekommendation och återbesök",
+              "body": "Mäta rekommendation och återbesök, och fastställa varför resenärer inte återvänder.",
+              "methods": "Tracking · onlineundersökning"
+            },
+            {
+              "title": "Resenärsprofil över tid",
+              "body": "Följa hur resenärsprofilen förändras per marknad och säsong.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "Resenärsundersökning",
+          "Undersökning bland tidigare eller planerade resenärer, med kvoter efter källmarknad, syfte och spendering."
+        ],
+        [
+          "Destinationsintervjuer",
+          "Djupintervjuer på 45–60 minuter med resenärer och handelspartner, genomförda en mot en av forskarteamet."
+        ],
+        [
+          "Onlinetracking",
+          "Månatlig eller kvartalsvis tracking på fasta mått, så att rörelse kan läsas mot samma bas."
+        ],
+        [
+          "CATI",
+          "Skriptade telefonintervjuer, med kvoter efter marknad, segment eller restyp."
+        ],
+        [
+          "Pristester",
+          "Prisförväntningar och säsong testade mot de destinationer som konkurrerar om samma resa."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "Seyahat ve ulaşım",
+      "lead": "Destinasyon kuruluşları, otel grupları, ulaşım operatörleri ve travel retail için araştırma: kim seyahat ediyor, seyahat nasıl kararlaştırılıyor ve onları ne geri getiriyor.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Bir seyahat aşamalar hâlinde kararlaştırılır ve her aşama farklı bir tarafa aittir: destinasyon, taşıyıcı, otel, acente.",
+        "Gezginin bu aşamalardaki hâlini inceliyoruz: bir destinasyonu listeye ne sokuyor, rezervasyonu ne belirliyor, varışta ne oluyor ve sonrasında ne söyleniyor.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır: hangi kaynak pazar açılacak, hangi segmente odaklanılacak ve yolculuk gezgini nerede kaybediyor. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Destinasyon ve hedef kitle",
+          "frame": "Kim seyahat ediyor, neden ve nereden.",
+          "cards": [
+            {
+              "title": "Kaynak pazarlar ve segmentler",
+              "body": "Gezginleri çıkış pazarı, amaç ve harcama bazında segmentlere ayırın ve bir pazar açılmadan önce her grubun büyüklüğünü belirleyin.",
+              "methods": "Çevrimiçi anket · CATI"
+            },
+            {
+              "title": "Destinasyon algısı",
+              "body": "Destinasyonun neyle tanındığını ve onu listeden uzak tutan şeyin ne olduğunu ortaya koyun.",
+              "methods": "Çevrimiçi anket · derinlemesine görüşmeler"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Karar ve rezervasyon",
+          "frame": "Listenin rezervasyona nasıl dönüştüğü.",
+          "cards": [
+            {
+              "title": "Seyahat kararları",
+              "body": "Seyahati listeden rezervasyona kadar izleyin ve bir destinasyonun ya da operatörün düştüğü noktaları görün.",
+              "methods": "Çevrimiçi anket · derinlemesine görüşmeler"
+            },
+            {
+              "title": "Fiyat ve sezon",
+              "body": "Aynı seyahat için rekabet eden destinasyonlara karşı fiyat beklentilerini ve mevsimselliği test edin.",
+              "methods": "Fiyat testleri · çevrimiçi anket"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Varış ve konaklama",
+          "frame": "Gezgin vardığında ne oluyor.",
+          "cards": [
+            {
+              "title": "Ulaşım ve varış",
+              "body": "Gezginlerin oraya nasıl gitmeyi seçtiğini ve bu seçimin seyahatin geri kalanına ne yaptığını inceleyin.",
+              "methods": "Çevrimiçi anket · derinlemesine görüşmeler"
+            },
+            {
+              "title": "Deneyim ve konaklama",
+              "body": "Konaklamayı, hizmeti ve yerel deneyimi destinasyonun vaat ettiğiyle karşılaştırarak değerlendirin.",
+              "methods": "Derinlemesine görüşmeler · çevrimiçi anket"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Tavsiye ve geri dönüş",
+          "frame": "Geri dönüyorlar mı ve tavsiye ediyorlar mı.",
+          "cards": [
+            {
+              "title": "Tavsiye ve tekrar ziyaret",
+              "body": "Tavsiyeyi ve tekrar ziyaretleri ölçün ve gezginlerin neden dönmediğini ortaya koyun.",
+              "methods": "Tracking · çevrimiçi anket"
+            },
+            {
+              "title": "Zaman içinde gezgin profili",
+              "body": "Gezgin profilinin pazara ve sezona göre nasıl değiştiğini izleyin.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "Gezgin anketi",
+          "Geçmiş veya potansiyel gezginlerle anket; kaynak pazar, amaç ve harcamaya göre kotalar."
+        ],
+        [
+          "Destinasyon görüşmeleri",
+          "Gezginler ve ticari ortaklarla 45-60 dakikalık derinlemesine görüşmeler; araştırma ekibi bire bir yürütür."
+        ],
+        [
+          "Çevrimiçi tracking",
+          "Sabit ölçütlerle aylık veya üç aylık tracking; hareket aynı taban üzerinden okunur."
+        ],
+        [
+          "CATI",
+          "Pazar, segment veya seyahat türüne göre kotalı, senaryolu telefon görüşmeleri."
+        ],
+        [
+          "Fiyat testleri",
+          "Aynı seyahat için rekabet eden destinasyonlara karşı test edilen fiyat beklentileri ve mevsimsellik."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   },
   "consumer": {
