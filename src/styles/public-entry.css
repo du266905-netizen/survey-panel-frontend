@@ -242,4 +242,7 @@ iframe[src*="accounts.google.com/gsi/button"] {
   height: 44px !important;
   max-height: 44px !important;
   max-width: 100% !important;
+  /* 直角，但四个角略微收圆：和站内其余控件的"软直角"一致。 */
+  border-radius: 6px !important;
+  overflow: hidden !important;
 }
