@@ -7049,6 +7049,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "Gesundheitswesen und Life Sciences",
+      "lead": "Forschung für Pharma-, Medtech- und Versorgungsanbieter: der Patientenpfad, was Behandler entscheiden und was den Zugang begrenzt.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Versorgung wird an mehr als einem Ort entschieden: in der Praxis, beim Kostenträger und zu Hause, wo der Patient entscheidet, ob er weitermacht.",
+        "Wir untersuchen jedes davon: wie ein Patient vom Symptom zur Diagnose kommt, was ein Behandler bei der Therapiewahl abwägt und was Kosten, Entfernung oder Stigma mit dem Zugang machen.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll — ob ein Markt betreten wird, wie die Evidenz gerahmt wird, welche Fachgruppe zuerst angesprochen wird. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Patientenpfad",
+          "frame": "Wo der Pfad stockt, vom Symptom über die Diagnose zur Behandlung.",
+          "cards": [
+            {
+              "title": "Weg zur Diagnose",
+              "body": "Den Weg vom ersten Symptom zur gesicherten Diagnose abbilden und die Punkte, an denen Patienten verzögert oder verloren gehen.",
+              "methods": "Tiefeninterviews · Patientenbefragung"
+            },
+            {
+              "title": "Behandlung und Adhärenz",
+              "body": "Verfolgen, was nach der Verordnung geschieht: wer weitermacht, wer aufhört und warum.",
+              "methods": "Patientenbefragung · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Behandler und Verordnung",
+          "frame": "Was ein Behandler bei der Therapiewahl abwägt und was er nicht akzeptiert.",
+          "cards": [
+            {
+              "title": "Wahrnehmung und Verordnung",
+              "body": "Verstehen, wie Fachärzte die Erkrankung, die Optionen und die Evidenz dahinter wahrnehmen.",
+              "methods": "Tiefeninterviews mit Ärzten"
+            },
+            {
+              "title": "Facharztstichprobe",
+              "body": "Fachärzte werden nach Subspezialität, Praxisumfeld und Fallvolumen gescreent; ihre Nachweise werden vor dem Interview geprüft.",
+              "methods": "Geprüfte HCP-Stichprobe"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Zugang und Erstattung",
+          "frame": "Kosten, Deckung, Entfernung und Stigma — und was davon die Behandlung stoppt.",
+          "cards": [
+            {
+              "title": "Kosten und Erschwinglichkeit",
+              "body": "Feststellen, was Patienten zahlen, was gedeckt ist und wo Kosten die Behandlung beenden.",
+              "methods": "Patientenbefragung · Tiefeninterviews"
+            },
+            {
+              "title": "Stigma und Hilfesuche",
+              "body": "Untersuchen, wann Menschen die Versorgung hinauszögern und an wen sie sich zuerst wenden.",
+              "methods": "Patientenbefragung · Tiefeninterviews"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Launch und Marktzugang",
+          "frame": "Wie die Evidenz gerahmt wird und wer zuerst übernimmt.",
+          "cards": [
+            {
+              "title": "Evidenz- und Botschaftstest",
+              "body": "Testen, wie klinische Evidenz von den Fachärzten und Kostenträgern verstanden wird, die danach handeln.",
+              "methods": "Botschaftstest · Facharztinterviews"
+            },
+            {
+              "title": "Frühe Übernahme",
+              "body": "Identifizieren, welche Zentren und Behandler zuerst übernehmen und was sie dafür brauchen.",
+              "methods": "Tiefeninterviews · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "Tiefeninterviews mit Ärzten",
+          "Interviews von 45 bis 60 Minuten mit Fachärzten, Nachweise vor der Feldarbeit geprüft."
+        ],
+        [
+          "Facharztstichprobe",
+          "Fachärzte werden nach Fachgebiet und Subspezialität, Praxisumfeld, Fallvolumen und Verordnungsbefugnis gescreent; Nachweise vor dem Interview geprüft."
+        ],
+        [
+          "Patientenbefragung",
+          "Patienten werden online oder telefonisch befragt, mit Quoten nach Erkrankung, Behandlungsstadium, Schweregrad und Markt. Seltene Erkrankungen werden über Patientengemeinschaften rekrutiert."
+        ],
+        [
+          "CATI",
+          "Standardisierte Telefoninterviews mit Quoten nach Fachgebiet, Setting oder Markt. Eingesetzt, wo die Liste definiert ist."
+        ],
+        [
+          "Online-Tracking",
+          "Monatliches oder quartalsweises Tracking auf festen Messgrößen, damit Bewegung gegen dieselbe Basis lesbar bleibt."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "Santé et sciences de la vie",
+      "lead": "Études pour les acteurs pharmaceutiques, medtech et de soins : le parcours patient, ce que décident les cliniciens et ce qui limite l'accès.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "Le soin se décide à plus d'un endroit : au cabinet, chez le payeur et à domicile, où le patient décide de poursuivre ou non.",
+        "Nous étudions chacun d'eux : comment un patient passe du symptôme au diagnostic, ce qu'un clinicien pèse au moment de choisir un traitement, et ce que le coût, la distance ou la stigmatisation font à l'accès.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer — entrer sur un marché, cadrer les preuves, quelle spécialité approcher d'abord. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Parcours patient",
+          "frame": "Où le parcours bloque, du symptôme au diagnostic puis au traitement.",
+          "cards": [
+            {
+              "title": "Parcours diagnostique",
+              "body": "Cartographier le chemin du premier symptôme au diagnostic confirmé, et les points où les patients sont retardés ou perdus.",
+              "methods": "Entretiens approfondis · enquête patients"
+            },
+            {
+              "title": "Traitement et observance",
+              "body": "Suivre ce qui se passe après la prescription : qui continue, qui arrête, et pourquoi.",
+              "methods": "Enquête patients · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Cliniciens et prescription",
+          "frame": "Ce qu'un clinicien pèse au moment de choisir un traitement, et ce qu'il n'acceptera pas.",
+          "cards": [
+            {
+              "title": "Perception et prescription",
+              "body": "Comprendre comment les spécialistes perçoivent la pathologie, les options et les preuves qui les soutiennent.",
+              "methods": "Entretiens approfondis médecins"
+            },
+            {
+              "title": "Échantillon de spécialistes",
+              "body": "Les spécialistes sont filtrés sur la surspécialité, le cadre d'exercice et le volume de cas, et leurs titres vérifiés avant l'entretien.",
+              "methods": "Échantillon de soignants vérifié"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Accès et remboursement",
+          "frame": "Coût, couverture, distance et stigmatisation — et lequel arrête le traitement.",
+          "cards": [
+            {
+              "title": "Coût et abordabilité",
+              "body": "Établir ce que les patients paient, ce qui est couvert, et où le coût met fin au traitement.",
+              "methods": "Enquête patients · entretiens approfondis"
+            },
+            {
+              "title": "Stigmatisation et recours aux soins",
+              "body": "Étudier quand les personnes retardent les soins, et vers qui elles se tournent d'abord.",
+              "methods": "Enquête patients · entretiens approfondis"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lancement et accès au marché",
+          "frame": "Comment les preuves sont cadrées, et qui adopte en premier.",
+          "cards": [
+            {
+              "title": "Test des preuves et du message",
+              "body": "Tester comment les preuves cliniques sont comprises par les spécialistes et les payeurs qui agissent dessus.",
+              "methods": "Test de message · entretiens spécialistes"
+            },
+            {
+              "title": "Adoption précoce",
+              "body": "Identifier quels centres et cliniciens adoptent en premier, et ce dont ils ont besoin avant.",
+              "methods": "Entretiens approfondis · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Entretiens approfondis médecins",
+          "Entretiens de 45 à 60 minutes avec des spécialistes, titres vérifiés avant le terrain."
+        ],
+        [
+          "Échantillon de spécialistes",
+          "Les spécialistes sont filtrés sur la spécialité et la surspécialité, le cadre d'exercice, le volume de cas et le droit de prescrire, avec vérification des titres avant l'entretien."
+        ],
+        [
+          "Enquête patients",
+          "Les patients sont interrogés en ligne ou par téléphone, avec quotas par pathologie, stade de traitement, sévérité et marché. Les maladies rares sont recrutées via les communautés de patients."
+        ],
+        [
+          "CATI",
+          "Entretiens téléphoniques scriptés, avec quotas par spécialité, cadre ou marché. Utilisés lorsque la liste est définie."
+        ],
+        [
+          "Tracking en ligne",
+          "Tracking mensuel ou trimestriel sur des mesures fixes, pour lire les évolutions sur la même base."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "Zorg en life sciences",
+      "lead": "Onderzoek voor farma-, medtech- en zorgaanbieders: het patiënttraject, wat clinici beslissen en wat toegang beperkt.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Zorg wordt op meer dan één plek besloten: in de praktijk, bij de betaler en thuis, waar de patiënt beslist of hij doorgaat.",
+        "We onderzoeken elk daarvan: hoe een patiënt van symptoom naar diagnose komt, wat een clinicus afweegt bij de keuze van een behandeling, en wat kosten, afstand of stigma met toegang doen.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen — of een markt wordt betreden, hoe het bewijs wordt geframed, welke specialismegroep eerst wordt benaderd. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Patiënttraject",
+          "frame": "Waar het traject stokt, van symptoom via diagnose naar behandeling.",
+          "cards": [
+            {
+              "title": "Traject naar diagnose",
+              "body": "Breng de route van eerste symptoom tot bevestigde diagnose in kaart, en de punten waar patiënten vertraging oplopen of afhaken.",
+              "methods": "Diepte-interviews · patiëntenonderzoek"
+            },
+            {
+              "title": "Behandeling en therapietrouw",
+              "body": "Volgen wat er na het voorschrift gebeurt: wie doorgaat, wie stopt en waarom.",
+              "methods": "Patiëntenonderzoek · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Clinici en voorschrijven",
+          "frame": "Wat een clinicus afweegt bij de keuze van een behandeling, en wat hij niet accepteert.",
+          "cards": [
+            {
+              "title": "Perceptie en voorschrijven",
+              "body": "Begrijpen hoe specialisten de aandoening, de opties en het bewijs daarachter waarnemen.",
+              "methods": "Diepte-interviews met artsen"
+            },
+            {
+              "title": "Specialistensteekproef",
+              "body": "Specialisten worden gescreend op subspecialisme, praktijkomgeving en caseload; hun bewijs wordt vóór het interview gecontroleerd.",
+              "methods": "Gecontroleerde HCP-steekproef"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Toegang en vergoeding",
+          "frame": "Kosten, dekking, afstand en stigma — en wat daarvan de behandeling stopt.",
+          "cards": [
+            {
+              "title": "Kosten en betaalbaarheid",
+              "body": "Vaststellen wat patiënten betalen, wat vergoed wordt en waar kosten de behandeling beëindigen.",
+              "methods": "Patiëntenonderzoek · diepte-interviews"
+            },
+            {
+              "title": "Stigma en zorgzoekend gedrag",
+              "body": "Onderzoeken wanneer mensen zorg uitstellen, en tot wie zij zich eerst wenden.",
+              "methods": "Patiëntenonderzoek · diepte-interviews"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lancering en markttoegang",
+          "frame": "Hoe het bewijs wordt geframed, en wie eerst adopteren.",
+          "cards": [
+            {
+              "title": "Bewijs- en boodschaptest",
+              "body": "Testen hoe klinisch bewijs wordt begrepen door de specialisten en betalers die erop handelen.",
+              "methods": "Boodschaptest · specialisteninterviews"
+            },
+            {
+              "title": "Vroege adoptie",
+              "body": "Vaststellen welke centra en clinici eerst adopteren, en wat zij daarvoor nodig hebben.",
+              "methods": "Diepte-interviews · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "Diepte-interviews met artsen",
+          "Interviews van 45 tot 60 minuten met specialisten, met vóór het veldwerk gecontroleerde bewijsstukken."
+        ],
+        [
+          "Specialistensteekproef",
+          "Specialisten worden gescreend op specialisme en subspecialisme, praktijkomgeving, caseload en voorschrijfbevoegdheid, met controle van bewijsstukken vóór het interview."
+        ],
+        [
+          "Patiëntenonderzoek",
+          "Patiënten worden online of telefonisch bevraagd, met quota naar aandoening, behandelstadium, ernst en markt. Zeldzame aandoeningen worden geworven via patiëntengemeenschappen."
+        ],
+        [
+          "CATI",
+          "Gescripte telefonische interviews, met quota naar specialisme, setting of markt. Gebruikt waar de lijst gedefinieerd is."
+        ],
+        [
+          "Online tracking",
+          "Maandelijkse of driemaandelijkse tracking op vaste maten, zodat beweging tegen dezelfde basis leesbaar blijft."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "Sundhed og life science",
+      "lead": "Research for farma-, medtech- og behandlere: patientforløbet, hvad klinikere beslutter, og hvad der begrænser adgang.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "Behandling besluttes mere end ét sted: i klinikken, hos betaleren og i hjemmet, hvor patienten beslutter, om der skal fortsættes.",
+        "Vi undersøger hver af dem: hvordan en patient bevæger sig fra symptom til diagnose, hvad en kliniker afvejer ved valg af behandling, og hvad pris, afstand eller stigma gør ved adgangen.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte — om et marked skal betrædes, hvordan evidensen rammes ind, hvilken specialgruppe der skal kontaktes først. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Patientforløb",
+          "frame": "Hvor forløbet stopper, fra symptom til diagnose til behandling.",
+          "cards": [
+            {
+              "title": "Forløb til diagnose",
+              "body": "Kortlæg vejen fra første symptom til bekræftet diagnose, og de punkter, hvor patienter forsinkes eller mistes.",
+              "methods": "Dybdeinterviews · patientundersøgelse"
+            },
+            {
+              "title": "Behandling og compliance",
+              "body": "Følg, hvad der sker efter recepter: hvem fortsætter, hvem stopper, og hvorfor.",
+              "methods": "Patientundersøgelse · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Klinikere og ordination",
+          "frame": "Hvad en kliniker afvejer ved valg af behandling, og hvad de ikke accepterer.",
+          "cards": [
+            {
+              "title": "Opfattelse og ordination",
+              "body": "Forstå, hvordan specialister opfatter sygdommen, mulighederne og evidensen bag dem.",
+              "methods": "Dybdeinterviews med læger"
+            },
+            {
+              "title": "Specialiststikprøve",
+              "body": "Specialister screenes på subspecialitet, praksisform og sagsvolumen, og deres legitimationsoplysninger verificeres før interviewet.",
+              "methods": "Verificeret HCP-stikprøve"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Adgang og betaling",
+          "frame": "Pris, dækning, afstand og stigma — og hvilket af dem der stopper behandlingen.",
+          "cards": [
+            {
+              "title": "Pris og betalbarhed",
+              "body": "Fastslå, hvad patienter betaler, hvad der dækkes, og hvor prisen afslutter behandlingen.",
+              "methods": "Patientundersøgelse · dybdeinterviews"
+            },
+            {
+              "title": "Stigma og søgning af behandling",
+              "body": "Undersøg, hvornår mennesker udskyder behandling, og hvem de først henvender sig til.",
+              "methods": "Patientundersøgelse · dybdeinterviews"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Launch og markedsadgang",
+          "frame": "Hvordan evidensen rammes ind, og hvem der tager den først i brug.",
+          "cards": [
+            {
+              "title": "Evidens- og budskabstest",
+              "body": "Test, hvordan klinisk evidens forstås af de specialister og betalere, der handler på den.",
+              "methods": "Budskabstest · specialistinterviews"
+            },
+            {
+              "title": "Tidlig ibrugtagning",
+              "body": "Identificér, hvilke centre og klinikere der tager den først i brug, og hvad de har brug for inden.",
+              "methods": "Dybdeinterviews · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "Dybdeinterviews med læger",
+          "Interviews af 45-60 minutter med specialister, med verificerede kvalifikationer før feltarbejdet."
+        ],
+        [
+          "Specialiststikprøve",
+          "Specialister screenes på speciale og subspeciale, praksisform, sagsvolumen og ordinationsret, med verificerede kvalifikationer før interviewet."
+        ],
+        [
+          "Patientundersøgelse",
+          "Patienter spørges online eller telefonisk, med kvoter efter sygdom, behandlingsstadie, sværhedsgrad og marked. Sjældne sygdomme rekrutteres via patientfællesskaber."
+        ],
+        [
+          "CATI",
+          "Scriptede telefoninterviews med kvoter efter speciale, setting eller marked. Bruges, hvor listen er defineret."
+        ],
+        [
+          "Online tracking",
+          "Månedlig eller kvartalsvis tracking på faste mål, så bevægelse kan læses mod samme base."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Salud y ciencias de la vida",
+      "lead": "Investigación para farmacéuticas, medtech y proveedores de cuidados: la ruta del paciente, lo que deciden los clínicos y qué limita el acceso.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "El cuidado se decide en más de un lugar: en la consulta, en el pagador y en casa, donde el paciente decide si continúa.",
+        "Estudiamos cada uno: cómo pasa un paciente del síntoma al diagnóstico, qué sopesa un clínico al elegir tratamiento y qué hacen el coste, la distancia o el estigma con el acceso.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener — entrar en un mercado, enmarcar la evidencia, qué especialidad abordar primero. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Ruta del paciente",
+          "frame": "Dónde se atasca la ruta, del síntoma al diagnóstico y al tratamiento.",
+          "cards": [
+            {
+              "title": "Itinerario diagnóstico",
+              "body": "Mapear el camino del primer síntoma al diagnóstico confirmado, y los puntos donde los pacientes se retrasan o se pierden.",
+              "methods": "Entrevistas en profundidad · encuesta a pacientes"
+            },
+            {
+              "title": "Tratamiento y adherencia",
+              "body": "Seguir qué ocurre tras la prescripción: quién continúa, quién abandona y por qué.",
+              "methods": "Encuesta a pacientes · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Clínicos y prescripción",
+          "frame": "Qué sopesa un clínico al elegir tratamiento y qué no aceptará.",
+          "cards": [
+            {
+              "title": "Percepción y prescripción",
+              "body": "Entender cómo perciben los especialistas la patología, las opciones y la evidencia que las sostiene.",
+              "methods": "Entrevistas en profundidad con médicos"
+            },
+            {
+              "title": "Muestra de especialistas",
+              "body": "Los especialistas se filtran por subespecialidad, entorno de práctica y volumen de casos, y sus credenciales se verifican antes de la entrevista.",
+              "methods": "Muestra de profesionales verificada"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Acceso y pago",
+          "frame": "Coste, cobertura, distancia y estigma, y cuál de ellos detiene el tratamiento.",
+          "cards": [
+            {
+              "title": "Coste y asequibilidad",
+              "body": "Establecer qué pagan los pacientes, qué está cubierto y dónde el coste termina el tratamiento.",
+              "methods": "Encuesta a pacientes · entrevistas en profundidad"
+            },
+            {
+              "title": "Estigma y búsqueda de atención",
+              "body": "Estudiar cuándo las personas retrasan la atención y a quién acuden primero.",
+              "methods": "Encuesta a pacientes · entrevistas en profundidad"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lanzamiento y acceso al mercado",
+          "frame": "Cómo se enmarca la evidencia y quién adopta primero.",
+          "cards": [
+            {
+              "title": "Prueba de evidencia y mensaje",
+              "body": "Probar cómo entienden la evidencia clínica los especialistas y pagadores que actúan sobre ella.",
+              "methods": "Prueba de mensaje · entrevistas a especialistas"
+            },
+            {
+              "title": "Adopción temprana",
+              "body": "Identificar qué centros y clínicos adoptan primero y qué necesitan antes de hacerlo.",
+              "methods": "Entrevistas en profundidad · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Entrevistas en profundidad con médicos",
+          "Entrevistas de 45 a 60 minutos con especialistas, con credenciales verificadas antes del trabajo de campo."
+        ],
+        [
+          "Muestra de especialistas",
+          "Los especialistas se filtran por especialidad y subespecialidad, entorno de práctica, volumen de casos y autoridad de prescripción, con credenciales verificadas antes de la entrevista."
+        ],
+        [
+          "Encuesta a pacientes",
+          "Los pacientes se encuestan online o por teléfono, con cuotas por patología, fase de tratamiento, gravedad y mercado. Las enfermedades raras se reclutan a través de comunidades de pacientes."
+        ],
+        [
+          "CATI",
+          "Entrevistas telefónicas guionizadas, con cuotas por especialidad, entorno o mercado. Se usan cuando la lista está definida."
+        ],
+        [
+          "Tracking online",
+          "Tracking mensual o trimestral sobre medidas fijas, para leer el movimiento contra la misma base."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Terveydenhuolto ja life sciences",
+      "lead": "Tutkimusta lääke-, medtech- ja hoitopalvelujen tuottajille: potilaan polku, mitä kliinikot päättävät ja mikä rajoittaa pääsyä.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Hoito päätetään useammassa paikassa: vastaanotolla, maksajalla ja kotona, jossa potilas päättää jatkaako.",
+        "Tutkimme jokaista niistä: miten potilas siirtyy oireesta diagnoosiin, mitä kliinikko punnitsee valitessaan hoitoa ja mitä kustannus, etäisyys tai stigma tekee pääsylle.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava — markkinalle astuminen, näytön kehystäminen, mikä erikoisalaryhmä tavoitetaan ensin. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Potilaan polku",
+          "frame": "Missä polku pysähtyy, oireesta diagnoosiin ja hoitoon.",
+          "cards": [
+            {
+              "title": "Polku diagnoosiin",
+              "body": "Kartoita reitti ensimmäisestä oireesta vahvistettuun diagnoosiin ja pisteet, joissa potilaat viivästyvät tai katoavat.",
+              "methods": "Syvähaastattelut · potilaskysely"
+            },
+            {
+              "title": "Hoito ja sitoutuminen",
+              "body": "Seuraa, mitä reseptin jälkeen tapahtuu: kuka jatkaa, kuka lopettaa ja miksi.",
+              "methods": "Potilaskysely · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kliinikot ja määrääminen",
+          "frame": "Mitä kliinikko punnitsee valitessaan hoitoa ja mitä hän ei hyväksy.",
+          "cards": [
+            {
+              "title": "Käsitys ja määrääminen",
+              "body": "Ymmärrä, miten erikoislääkärit näkevät sairauden, vaihtoehdot ja niiden taustalla olevan näytön.",
+              "methods": "Syvähaastattelut lääkäreille"
+            },
+            {
+              "title": "Erikoislääkäriotos",
+              "body": "Erikoislääkärit seulotaan erikoisalan ja alaerikoisalan, toimintaympäristön ja tapausmäärän mukaan, ja pätevyydet varmistetaan ennen haastattelua.",
+              "methods": "Varmennettu HCP-otos"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Pääsy ja korvattavuus",
+          "frame": "Kustannus, korvaus, etäisyys ja stigma — ja mikä niistä pysäyttää hoidon.",
+          "cards": [
+            {
+              "title": "Kustannus ja kohtuuhintaisuus",
+              "body": "Selvitä, mitä potilaat maksavat, mikä korvataan ja missä kustannus lopettaa hoidon.",
+              "methods": "Potilaskysely · syvähaastattelut"
+            },
+            {
+              "title": "Stigma ja avun hakeminen",
+              "body": "Tutki, milloin ihmiset lykkäävät hoitoa ja kenen puoleen he kääntyvät ensin.",
+              "methods": "Potilaskysely · syvähaastattelut"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lanseeraus ja markkinoille pääsy",
+          "frame": "Miten näyttö kehystetään ja kuka ottaa sen ensimmäisenä käyttöön.",
+          "cards": [
+            {
+              "title": "Näytön ja viestin testaus",
+              "body": "Testaa, miten kliinisen näytön ymmärtävät ne erikoislääkärit ja maksajat, jotka toimivat sen pohjalta.",
+              "methods": "Viestitestaus · erikoislääkärihaastattelut"
+            },
+            {
+              "title": "Varhainen käyttöönotto",
+              "body": "Tunnista, mitkä keskukset ja kliinikot ottavat ensimmäisenä käyttöön ja mitä he tarvitsevat ennen sitä.",
+              "methods": "Syvähaastattelut · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "Syvähaastattelut lääkäreille",
+          "45–60 minuutin haastattelut erikoislääkäreille, pätevyydet varmennettu ennen kenttätyötä."
+        ],
+        [
+          "Erikoislääkäriotos",
+          "Erikoislääkärit seulotaan erikoisalan ja alaerikoisalan, toimintaympäristön, tapausmäärän ja määräämisoikeuden mukaan, pätevyydet varmennetaan ennen haastattelua."
+        ],
+        [
+          "Potilaskysely",
+          "Potilaita kysytään verkossa tai puhelimitse, kiintiöt sairauden, hoitovaiheen, vakavuuden ja markkinan mukaan. Harvinaiset sairaudet rekrytoidaan potilasyhteisöjen kautta."
+        ],
+        [
+          "CATI",
+          "Käsikirjoitetut puhelinhaastattelut, kiintiöt erikoisalan, ympäristön tai markkinan mukaan. Käytetään, kun lista on määritelty."
+        ],
+        [
+          "Verkkotracking",
+          "Kuukausittainen tai neljännesvuosittainen tracking kiinteillä mittareilla, jotta liike on luettavissa samasta kannasta."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "Sanità e scienze della vita",
+      "lead": "Ricerche per aziende farmaceutiche, medtech e fornitori di cure: il percorso del paziente, cosa decidono i clinici e cosa limita l'accesso.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "La cura si decide in più di un luogo: nello studio, presso il pagatore e a casa, dove il paziente decide se continuare.",
+        "Studiamo ciascuno di essi: come un paziente passa dal sintomo alla diagnosi, cosa pesa un clinico nella scelta di una terapia e cosa fanno costo, distanza o stigma all'accesso.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere — entrare in un mercato, inquadrare l'evidenza, quale specialità avvicinare per prima. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Percorso del paziente",
+          "frame": "Dove il percorso si blocca, dal sintomo alla diagnosi alla terapia.",
+          "cards": [
+            {
+              "title": "Percorso diagnostico",
+              "body": "Mappare il percorso dal primo sintomo alla diagnosi confermata, e i punti in cui i pazienti subiscono ritardi o si perdono.",
+              "methods": "Interviste in profondità · indagine pazienti"
+            },
+            {
+              "title": "Terapia e aderenza",
+              "body": "Seguire cosa accade dopo la prescrizione: chi continua, chi smette e perché.",
+              "methods": "Indagine pazienti · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Clinici e prescrizione",
+          "frame": "Cosa pesa un clinico nella scelta di una terapia e cosa non accetterà.",
+          "cards": [
+            {
+              "title": "Percezione e prescrizione",
+              "body": "Capire come gli specialisti percepiscono la patologia, le opzioni e l'evidenza che le sostiene.",
+              "methods": "Interviste in profondità a medici"
+            },
+            {
+              "title": "Campione di specialisti",
+              "body": "Gli specialisti sono selezionati per sottospecialità, contesto di pratica e volume di casi, e le credenziali sono verificate prima dell'intervista.",
+              "methods": "Campione HCP verificato"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Accesso e rimborso",
+          "frame": "Costo, copertura, distanza e stigma — e quale di essi interrompe la terapia.",
+          "cards": [
+            {
+              "title": "Costo e sostenibilità",
+              "body": "Stabilire quanto pagano i pazienti, cosa è coperto e dove il costo termina la terapia.",
+              "methods": "Indagine pazienti · interviste in profondità"
+            },
+            {
+              "title": "Stigma e ricerca di cura",
+              "body": "Studiare quando le persone ritardano le cure e a chi si rivolgono per prime.",
+              "methods": "Indagine pazienti · interviste in profondità"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lancio e accesso al mercato",
+          "frame": "Come viene inquadrata l'evidenza e chi adotta per primo.",
+          "cards": [
+            {
+              "title": "Test di evidenza e messaggio",
+              "body": "Testare come l'evidenza clinica è compresa dagli specialisti e dai pagatori che agiscono su di essa.",
+              "methods": "Test di messaggio · interviste a specialisti"
+            },
+            {
+              "title": "Adozione precoce",
+              "body": "Identificare quali centri e clinici adottano per primi, e cosa serve loro prima di farlo.",
+              "methods": "Interviste in profondità · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Interviste in profondità a medici",
+          "Interviste di 45-60 minuti con specialisti, con credenziali verificate prima del fieldwork."
+        ],
+        [
+          "Campione di specialisti",
+          "Gli specialisti sono selezionati per specialità e sottospecialità, contesto di pratica, volume di casi e autorità prescrittiva, con credenziali verificate prima dell'intervista."
+        ],
+        [
+          "Indagine pazienti",
+          "I pazienti sono intervistati online o per telefono, con quote per patologia, fase di trattamento, gravità e mercato. Le malattie rare sono reclutate tramite comunità di pazienti."
+        ],
+        [
+          "CATI",
+          "Interviste telefoniche scriptate, con quote per specialità, contesto o mercato. Usate quando la lista è definita."
+        ],
+        [
+          "Tracking online",
+          "Tracking mensile o trimestrale su misure fisse, così il movimento si legge sulla stessa base."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "医療とライフサイエンス",
+      "lead": "医薬品・メドテック・ケア提供者向けの調査：患者の経路、臨床医が何を決めるか、何がアクセスを制限するか。",
+      "introKicker": "進め方",
+      "intro": [
+        "ケアは複数の場所で決まります。診察室、支払者、そして患者が続けるかを決める自宅です。",
+        "私たちはそれぞれを調べます。患者が症状から診断へどう進むか、臨床医が治療選択で何を秤にかけるか、費用・距離・スティグマがアクセスに何をするか。",
+        "各調査は、それが支えるべき意思決定を中心に設計します — 市場に参入するか、エビデンスをどう枠づけるか、どの専門領域に先に働きかけるか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "患者の経路",
+          "frame": "経路がどこで止まるか。症状から診断、治療まで。",
+          "cards": [
+            {
+              "title": "診断までの道のり",
+              "body": "最初の症状から確定診断までの経路を描き、患者が遅れる、あるいは離脱する地点を特定します。",
+              "methods": "デプスインタビュー · 患者調査"
+            },
+            {
+              "title": "治療と服薬継続",
+              "body": "処方後に何が起きるかを追います。誰が続け、誰がやめ、なぜか。",
+              "methods": "患者調査 · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "臨床医と処方",
+          "frame": "臨床医が治療選択で何を秤にかけ、何を受け入れないか。",
+          "cards": [
+            {
+              "title": "認知と処方",
+              "body": "専門医が疾患、選択肢、その背後のエビデンスをどう捉えるかを理解します。",
+              "methods": "医師デプスインタビュー"
+            },
+            {
+              "title": "専門医サンプル",
+              "body": "専門医はサブスペシャルティ、診療環境、症例数でスクリーニングし、面接前に資格を確認します。",
+              "methods": "資格確認済みHCPサンプル"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "アクセスと支払い",
+          "frame": "費用、保障、距離、スティグマ — どれが治療を止めるか。",
+          "cards": [
+            {
+              "title": "費用と負担可能性",
+              "body": "患者が何を支払い、何が保障され、どこで費用が治療を終わらせるかを明らかにします。",
+              "methods": "患者調査 · デプスインタビュー"
+            },
+            {
+              "title": "スティグマと受診行動",
+              "body": "人がいつ受診を遅らせ、最初に誰を頼るかを調べます。",
+              "methods": "患者調査 · デプスインタビュー"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "発売と市場アクセス",
+          "frame": "エビデンスをどう枠づけ、誰が最初に採用するか。",
+          "cards": [
+            {
+              "title": "エビデンスとメッセージのテスト",
+              "body": "臨床エビデンスが、それに基づいて行動する専門医と支払者にどう理解されるかをテストします。",
+              "methods": "メッセージテスト · 専門医インタビュー"
+            },
+            {
+              "title": "早期採用",
+              "body": "どの施設と臨床医が最初に採用し、その前に何を必要とするかを特定します。",
+              "methods": "デプスインタビュー · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "医師デプスインタビュー",
+          "専門医への45〜60分のインタビュー。現場に入る前に資格を確認します。"
+        ],
+        [
+          "専門医サンプル",
+          "専門医は専門・サブスペシャルティ、診療環境、症例数、処方権限でスクリーニングし、面接前に資格を確認します。"
+        ],
+        [
+          "患者調査",
+          "患者にはオンラインまたは電話で調査し、疾患、治療段階、重症度、市場で割り付けます。希少疾患は患者コミュニティを通じて募集します。"
+        ],
+        [
+          "CATI",
+          "スクリプトに沿った電話調査。専門、環境、市場で割り付けます。名簿が確定している場合に使います。"
+        ],
+        [
+          "オンライントラッキング",
+          "固定指標による月次または四半期のトラッキング。同じ基準で変化を読めます。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "의료와 라이프사이언스",
+      "lead": "제약·메드테크·케어 제공자를 위한 조사: 환자 경로, 임상의가 무엇을 결정하는지, 무엇이 접근을 제한하는지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "케어는 한 곳에서만 결정되지 않습니다. 진료실, 지불자, 그리고 계속할지를 환자가 결정하는 가정입니다.",
+        "우리는 각각을 조사합니다. 환자가 증상에서 진단으로 어떻게 이동하는지, 임상의가 치료 선택에서 무엇을 저울질하는지, 비용·거리·낙인이 접근에 무엇을 하는지.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다 — 시장에 진입할지, 근거를 어떻게 구성할지, 어느 전문의 집단에 먼저 접근할지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "환자 경로",
+          "frame": "경로가 어디서 멈추는가. 증상에서 진단, 치료까지.",
+          "cards": [
+            {
+              "title": "진단까지의 경로",
+              "body": "첫 증상에서 확진까지의 경로를 그리고 환자가 지연되거나 이탈하는 지점을 찾습니다.",
+              "methods": "심층 인터뷰 · 환자 조사"
+            },
+            {
+              "title": "치료와 순응",
+              "body": "처방 후 무엇이 일어나는지 추적합니다. 누가 계속하고 누가 중단하며 왜인지.",
+              "methods": "환자 조사 · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "임상의와 처방",
+          "frame": "임상의가 치료 선택에서 무엇을 저울질하고 무엇을 받아들이지 않는지.",
+          "cards": [
+            {
+              "title": "인식과 처방",
+              "body": "전문의가 질환, 선택지, 그 배경의 근거를 어떻게 인식하는지 이해합니다.",
+              "methods": "의사 심층 인터뷰"
+            },
+            {
+              "title": "전문의 표본",
+              "body": "전문의는 세부 전공, 진료 환경, 사례 수로 선별하고 인터뷰 전에 자격을 확인합니다.",
+              "methods": "자격 확인 HCP 표본"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "접근과 지불",
+          "frame": "비용, 보장, 거리, 낙인 — 그중 무엇이 치료를 멈추는가.",
+          "cards": [
+            {
+              "title": "비용과 부담 가능성",
+              "body": "환자가 무엇을 지불하고 무엇이 보장되며 어디서 비용이 치료를 끝내는지 밝힙니다.",
+              "methods": "환자 조사 · 심층 인터뷰"
+            },
+            {
+              "title": "낙인과 진료 추구",
+              "body": "사람들이 언제 진료를 미루고 누구를 먼저 찾는지 조사합니다.",
+              "methods": "환자 조사 · 심층 인터뷰"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "출시와 시장 접근",
+          "frame": "근거를 어떻게 구성하고 누가 먼저 도입하는가.",
+          "cards": [
+            {
+              "title": "근거와 메시지 테스트",
+              "body": "임상 근거가 그것에 따라 행동하는 전문의와 지불자에게 어떻게 이해되는지 테스트합니다.",
+              "methods": "메시지 테스트 · 전문의 인터뷰"
+            },
+            {
+              "title": "초기 도입",
+              "body": "어느 센터와 임상의가 먼저 도입하고 그 전에 무엇이 필요한지 파악합니다.",
+              "methods": "심층 인터뷰 · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "의사 심층 인터뷰",
+          "전문의와 45~60분 인터뷰. 현장 조사 전에 자격을 확인합니다."
+        ],
+        [
+          "전문의 표본",
+          "전문의는 전공과 세부 전공, 진료 환경, 사례 수, 처방 권한으로 선별하고 인터뷰 전에 자격을 확인합니다."
+        ],
+        [
+          "환자 조사",
+          "환자는 온라인 또는 전화로 조사하며 질환, 치료 단계, 중증도, 시장으로 할당합니다. 희귀 질환은 환자 커뮤니티를 통해 모집합니다."
+        ],
+        [
+          "CATI",
+          "스크립트 기반 전화 조사. 전공, 환경, 시장으로 할당합니다. 명단이 정해진 경우에 사용합니다."
+        ],
+        [
+          "온라인 트래킹",
+          "고정 지표로 월별 또는 분기별 트래킹. 같은 기준으로 변화를 읽습니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "Helse og life science",
+      "lead": "Forskning for farma-, medtech- og behandlingsaktører: pasientforløpet, hva klinikere beslutter, og hva som begrenser tilgang.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "Behandling besluttes på mer enn ett sted: i klinikken, hos betaleren og hjemme, der pasienten bestemmer om hen fortsetter.",
+        "Vi undersøker hver av dem: hvordan en pasient beveger seg fra symptom til diagnose, hva en kliniker veier når hen velger behandling, og hva kostnad, avstand eller stigma gjør med tilgangen.",
+        "Hver studie designes rundt beslutningen den skal støtte — om et marked skal betres, hvordan evidensen rammes inn, hvilken spesialistgruppe som kontaktes først. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Pasientforløp",
+          "frame": "Hvor forløpet stopper, fra symptom til diagnose til behandling.",
+          "cards": [
+            {
+              "title": "Veien til diagnose",
+              "body": "Kartlegg veien fra første symptom til bekreftet diagnose, og punktene der pasienter forsinkes eller mistes.",
+              "methods": "Dybdeintervjuer · pasientundersøkelse"
+            },
+            {
+              "title": "Behandling og etterlevelse",
+              "body": "Følg hva som skjer etter resepten: hvem som fortsetter, hvem som slutter, og hvorfor.",
+              "methods": "Pasientundersøkelse · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Klinikere og forskrivning",
+          "frame": "Hva en kliniker veier ved valg av behandling, og hva hen ikke aksepterer.",
+          "cards": [
+            {
+              "title": "Oppfatning og forskrivning",
+              "body": "Forstå hvordan spesialister oppfatter tilstanden, alternativene og evidensen bak dem.",
+              "methods": "Dybdeintervjuer med leger"
+            },
+            {
+              "title": "Spesialistutvalg",
+              "body": "Spesialister screenes på subspesialitet, praksisform og saksvolum, og kvalifikasjonene verifiseres før intervjuet.",
+              "methods": "Verifisert HCP-utvalg"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Tilgang og betaling",
+          "frame": "Kostnad, dekning, avstand og stigma — og hvilket av dem som stopper behandlingen.",
+          "cards": [
+            {
+              "title": "Kostnad og betalbarhet",
+              "body": "Fastslå hva pasienter betaler, hva som dekkes, og hvor kostnaden avslutter behandlingen.",
+              "methods": "Pasientundersøkelse · dybdeintervjuer"
+            },
+            {
+              "title": "Stigma og hjelpesøking",
+              "body": "Undersøk når mennesker utsetter behandling, og hvem de først henvender seg til.",
+              "methods": "Pasientundersøkelse · dybdeintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lansering og markedsadgang",
+          "frame": "Hvordan evidensen rammes inn, og hvem som tar den i bruk først.",
+          "cards": [
+            {
+              "title": "Evidens- og budskapstest",
+              "body": "Test hvordan klinisk evidens forstås av spesialistene og betalerne som handler på den.",
+              "methods": "Budskapstest · spesialistintervjuer"
+            },
+            {
+              "title": "Tidlig ibruktaking",
+              "body": "Identifiser hvilke sentre og klinikere som tar den i bruk først, og hva de trenger før det.",
+              "methods": "Dybdeintervjuer · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "Dybdeintervjuer med leger",
+          "Intervjuer på 45–60 minutter med spesialister, med verifiserte kvalifikasjoner før feltarbeidet."
+        ],
+        [
+          "Spesialistutvalg",
+          "Spesialister screenes på spesialitet og subspesialitet, praksisform, saksvolum og forskrivningsrett, med verifiserte kvalifikasjoner før intervjuet."
+        ],
+        [
+          "Pasientundersøkelse",
+          "Pasienter spørres på nett eller telefon, med kvoter etter tilstand, behandlingsfase, alvorlighet og marked. Sjeldne tilstander rekrutteres via pasientfellesskap."
+        ],
+        [
+          "CATI",
+          "Skriptede telefonintervjuer med kvoter etter spesialitet, setting eller marked. Brukes der listen er definert."
+        ],
+        [
+          "Nettracking",
+          "Månedlig eller kvartalsvis tracking på faste mål, slik at bevegelse kan leses mot samme base."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Saúde e ciências da vida",
+      "lead": "Investigação para farmacêuticas, medtech e prestadores de cuidados: o percurso do doente, o que decidem os clínicos e o que limita o acesso.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "O cuidado decide-se em mais de um lugar: no consultório, no pagador e em casa, onde o doente decide se continua.",
+        "Estudamos cada um deles: como um doente passa do sintoma ao diagnóstico, o que um clínico pondera ao escolher um tratamento e o que o custo, a distância ou o estigma fazem ao acesso.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar — entrar num mercado, enquadrar a evidência, que especialidade abordar primeiro. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Percurso do doente",
+          "frame": "Onde o percurso trava, do sintoma ao diagnóstico e ao tratamento.",
+          "cards": [
+            {
+              "title": "Percurso até ao diagnóstico",
+              "body": "Mapear o caminho do primeiro sintoma ao diagnóstico confirmado, e os pontos onde os doentes se atrasam ou se perdem.",
+              "methods": "Entrevistas em profundidade · inquérito a doentes"
+            },
+            {
+              "title": "Tratamento e adesão",
+              "body": "Acompanhar o que acontece após a prescrição: quem continua, quem pára e porquê.",
+              "methods": "Inquérito a doentes · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Clínicos e prescrição",
+          "frame": "O que um clínico pondera ao escolher um tratamento e o que não aceita.",
+          "cards": [
+            {
+              "title": "Perceção e prescrição",
+              "body": "Compreender como os especialistas percebem a doença, as opções e a evidência que as sustenta.",
+              "methods": "Entrevistas em profundidade a médicos"
+            },
+            {
+              "title": "Amostra de especialistas",
+              "body": "Os especialistas são filtrados por subespecialidade, contexto de prática e volume de casos, e as credenciais são verificadas antes da entrevista.",
+              "methods": "Amostra de profissionais verificada"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Acesso e pagamento",
+          "frame": "Custo, cobertura, distância e estigma — e qual deles interrompe o tratamento.",
+          "cards": [
+            {
+              "title": "Custo e acessibilidade",
+              "body": "Estabelecer o que os doentes pagam, o que está coberto e onde o custo termina o tratamento.",
+              "methods": "Inquérito a doentes · entrevistas em profundidade"
+            },
+            {
+              "title": "Estigma e procura de cuidados",
+              "body": "Estudar quando as pessoas adiam cuidados, e a quem recorrem primeiro.",
+              "methods": "Inquérito a doentes · entrevistas em profundidade"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lançamento e acesso ao mercado",
+          "frame": "Como a evidência é enquadrada e quem adota primeiro.",
+          "cards": [
+            {
+              "title": "Teste de evidência e mensagem",
+              "body": "Testar como a evidência clínica é compreendida pelos especialistas e pagadores que agem sobre ela.",
+              "methods": "Teste de mensagem · entrevistas a especialistas"
+            },
+            {
+              "title": "Adoção precoce",
+              "body": "Identificar que centros e clínicos adotam primeiro, e do que precisam antes.",
+              "methods": "Entrevistas em profundidade · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Entrevistas em profundidade a médicos",
+          "Entrevistas de 45 a 60 minutos com especialistas, com credenciais verificadas antes do trabalho de campo."
+        ],
+        [
+          "Amostra de especialistas",
+          "Os especialistas são filtrados por especialidade e subespecialidade, contexto de prática, volume de casos e autoridade de prescrição, com credenciais verificadas antes da entrevista."
+        ],
+        [
+          "Inquérito a doentes",
+          "Os doentes são inquiridos online ou por telefone, com quotas por doença, fase de tratamento, gravidade e mercado. As doenças raras são recrutadas através de comunidades de doentes."
+        ],
+        [
+          "CATI",
+          "Entrevistas telefónicas guionizadas, com quotas por especialidade, contexto ou mercado. Usadas quando a lista está definida."
+        ],
+        [
+          "Tracking online",
+          "Tracking mensal ou trimestral sobre medidas fixas, para ler o movimento contra a mesma base."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Здравоохранение и науки о жизни",
+      "lead": "Исследования для фармацевтических, medtech-компаний и поставщиков помощи: путь пациента, что решают врачи и что ограничивает доступ.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Помощь решается более чем в одном месте: в кабинете, у плательщика и дома, где пациент решает, продолжать ли.",
+        "Мы изучаем каждое из них: как пациент проходит от симптома к диагнозу, что врач взвешивает при выборе лечения и что стоимость, расстояние или стигма делают с доступом.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать — выходить ли на рынок, как подать доказательства, к какой специальности обратиться первой. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Путь пациента",
+          "frame": "Где путь останавливается: от симптома к диагнозу и лечению.",
+          "cards": [
+            {
+              "title": "Путь к диагнозу",
+              "body": "Нанести маршрут от первого симптома до подтверждённого диагноза и точки, где пациенты задерживаются или теряются.",
+              "methods": "Глубинные интервью · опрос пациентов"
+            },
+            {
+              "title": "Лечение и приверженность",
+              "body": "Проследить, что происходит после назначения: кто продолжает, кто бросает и почему.",
+              "methods": "Опрос пациентов · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Врачи и назначение",
+          "frame": "Что врач взвешивает при выборе лечения и чего не примет.",
+          "cards": [
+            {
+              "title": "Восприятие и назначение",
+              "body": "Понять, как специалисты воспринимают заболевание, варианты и доказательства за ними.",
+              "methods": "Глубинные интервью с врачами"
+            },
+            {
+              "title": "Выборка специалистов",
+              "body": "Специалисты отбираются по субспециальности, условиям практики и объёму случаев; их квалификация проверяется до интервью.",
+              "methods": "Проверенная выборка HCP"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Доступ и оплата",
+          "frame": "Стоимость, покрытие, расстояние и стигма — и что из этого останавливает лечение.",
+          "cards": [
+            {
+              "title": "Стоимость и доступность",
+              "body": "Определить, сколько платят пациенты, что покрывается и где стоимость прекращает лечение.",
+              "methods": "Опрос пациентов · глубинные интервью"
+            },
+            {
+              "title": "Стигма и обращение за помощью",
+              "body": "Изучить, когда люди откладывают помощь и к кому обращаются первыми.",
+              "methods": "Опрос пациентов · глубинные интервью"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Запуск и доступ к рынку",
+          "frame": "Как подаются доказательства и кто внедряет первым.",
+          "cards": [
+            {
+              "title": "Тест доказательств и сообщения",
+              "body": "Проверить, как клинические доказательства понимают специалисты и плательщики, которые действуют на их основе.",
+              "methods": "Тест сообщения · интервью со специалистами"
+            },
+            {
+              "title": "Раннее внедрение",
+              "body": "Определить, какие центры и врачи внедряют первыми и что им нужно до этого.",
+              "methods": "Глубинные интервью · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Глубинные интервью с врачами",
+          "Интервью по 45–60 минут со специалистами, квалификация проверена до полевого этапа."
+        ],
+        [
+          "Выборка специалистов",
+          "Специалисты отбираются по специальности и субспециальности, условиям практики, объёму случаев и праву назначения; квалификация проверяется до интервью."
+        ],
+        [
+          "Опрос пациентов",
+          "Пациентов опрашивают онлайн или по телефону с квотами по заболеванию, этапу лечения, тяжести и рынку. Редкие заболевания набираются через сообщества пациентов."
+        ],
+        [
+          "CATI",
+          "Телефонные интервью по скрипту с квотами по специальности, условиям или рынку. Применяются там, где список определён."
+        ],
+        [
+          "Онлайн-трекинг",
+          "Ежемесячный или ежеквартальный трекинг по фиксированным показателям, чтобы читать динамику на одной базе."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "Hälso- och life science",
+      "lead": "Undersökningar för läkemedels-, medtech- och vårdaktörer: patientresan, vad kliniker beslutar och vad som begränsar tillgång.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "Vård beslutas på mer än en plats: i mottagningen, hos betalaren och hemma, där patienten avgör om hen fortsätter.",
+        "Vi undersöker var och en av dem: hur en patient rör sig från symtom till diagnos, vad en kliniker väger när hen väljer behandling, och vad kostnad, avstånd eller stigma gör med tillgången.",
+        "Varje studie byggs kring det beslut den ska stödja — om en marknad ska beträdas, hur evidensen ramas in, vilken specialistgrupp som kontaktas först. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Patientresa",
+          "frame": "Var resan stannar, från symtom till diagnos till behandling.",
+          "cards": [
+            {
+              "title": "Vägen till diagnos",
+              "body": "Kartlägg vägen från första symtom till bekräftad diagnos, och punkterna där patienter fördröjs eller tappas.",
+              "methods": "Djupintervjuer · patientundersökning"
+            },
+            {
+              "title": "Behandling och följsamhet",
+              "body": "Följ vad som händer efter förskrivningen: vilka som fortsätter, vilka som slutar och varför.",
+              "methods": "Patientundersökning · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Kliniker och förskrivning",
+          "frame": "Vad en kliniker väger vid val av behandling, och vad hen inte accepterar.",
+          "cards": [
+            {
+              "title": "Uppfattning och förskrivning",
+              "body": "Förstå hur specialister uppfattar tillståndet, alternativen och evidensen bakom dem.",
+              "methods": "Djupintervjuer med läkare"
+            },
+            {
+              "title": "Specialisturval",
+              "body": "Specialister screenas på subspecialitet, praktikmiljö och ärendevolym, och deras meriter verifieras före intervjun.",
+              "methods": "Verifierat HCP-urval"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Tillgång och betalning",
+          "frame": "Kostnad, täckning, avstånd och stigma — och vilket av dem som stoppar behandlingen.",
+          "cards": [
+            {
+              "title": "Kostnad och betalbarhet",
+              "body": "Fastställa vad patienter betalar, vad som täcks och var kostnaden avslutar behandlingen.",
+              "methods": "Patientundersökning · djupintervjuer"
+            },
+            {
+              "title": "Stigma och vårdsökande",
+              "body": "Undersöka när människor skjuter upp vård, och vem de vänder sig till först.",
+              "methods": "Patientundersökning · djupintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lansering och marknadstillgång",
+          "frame": "Hur evidensen ramas in, och vem som tar den i bruk först.",
+          "cards": [
+            {
+              "title": "Evidens- och budskapstest",
+              "body": "Testa hur klinisk evidens förstås av de specialister och betalare som agerar på den.",
+              "methods": "Budskapstest · specialistintervjuer"
+            },
+            {
+              "title": "Tidig användning",
+              "body": "Identifiera vilka center och kliniker som tar den i bruk först, och vad de behöver innan.",
+              "methods": "Djupintervjuer · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "Djupintervjuer med läkare",
+          "Intervjuer på 45–60 minuter med specialister, med verifierade meriter före fältarbetet."
+        ],
+        [
+          "Specialisturval",
+          "Specialister screenas på specialitet och subspecialitet, praktikmiljö, ärendevolym och förskrivningsrätt, med verifierade meriter före intervjun."
+        ],
+        [
+          "Patientundersökning",
+          "Patienter tillfrågas online eller per telefon, med kvoter efter tillstånd, behandlingsfas, svårighetsgrad och marknad. Sällsynta tillstånd rekryteras via patientgemenskaper."
+        ],
+        [
+          "CATI",
+          "Skriptade telefonintervjuer med kvoter efter specialitet, miljö eller marknad. Används där listan är definierad."
+        ],
+        [
+          "Onlinetracking",
+          "Månatlig eller kvartalsvis tracking på fasta mått, så att rörelse kan läsas mot samma bas."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "Sağlık ve yaşam bilimleri",
+      "lead": "İlaç, medtech ve bakım sağlayıcıları için araştırma: hasta yolculuğu, klinisyenlerin ne kararlaştırdığı ve erişimi neyin sınırladığı.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Bakım birden fazla yerde kararlaştırılır: muayenehanede, ödeyicide ve devam edip etmeyeceğine hastanın karar verdiği evde.",
+        "Her birini inceliyoruz: hasta semptomdan teşhise nasıl geçiyor, klinisyen tedavi seçerken neyi tartıyor ve maliyet, mesafe ya da damgalama erişime ne yapıyor.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır — pazara girip girmemek, kanıtı nasıl çerçevelemek, önce hangi uzmanlık grubuna yaklaşmak. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Hasta yolculuğu",
+          "frame": "Yolculuğun nerede tıkandığı; semptomdan teşhise, tedaviye.",
+          "cards": [
+            {
+              "title": "Teşhise giden yol",
+              "body": "İlk semptomdan doğrulanmış teşhise giden yolu ve hastaların geciktiği ya da kaybolduğu noktaları haritalayın.",
+              "methods": "Derinlemesine görüşmeler · hasta anketi"
+            },
+            {
+              "title": "Tedavi ve uyum",
+              "body": "Reçeteden sonra ne olduğunu izleyin: kim devam ediyor, kim bırakıyor ve neden.",
+              "methods": "Hasta anketi · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Klinisyenler ve reçete",
+          "frame": "Klinisyenin tedavi seçerken neyi tarttığı ve neyi kabul etmeyeceği.",
+          "cards": [
+            {
+              "title": "Algı ve reçete",
+              "body": "Uzmanların hastalığı, seçenekleri ve arkalarındaki kanıtı nasıl algıladığını anlayın.",
+              "methods": "Hekim derinlemesine görüşmeleri"
+            },
+            {
+              "title": "Uzman örneklemi",
+              "body": "Uzmanlar alt uzmanlık, uygulama ortamı ve vaka hacmine göre elenir; yetkinlikleri görüşmeden önce doğrulanır.",
+              "methods": "Doğrulanmış HCP örneklemi"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Erişim ve ödeme",
+          "frame": "Maliyet, kapsam, mesafe ve damgalama — ve bunlardan hangisinin tedaviyi durdurduğu.",
+          "cards": [
+            {
+              "title": "Maliyet ve karşılanabilirlik",
+              "body": "Hastaların ne ödediğini, neyin kapsandığını ve maliyetin tedaviyi nerede bitirdiğini belirleyin.",
+              "methods": "Hasta anketi · derinlemesine görüşmeler"
+            },
+            {
+              "title": "Damgalama ve yardım arama",
+              "body": "İnsanların bakımı ne zaman ertelediğini ve önce kime başvurduğunu inceleyin.",
+              "methods": "Hasta anketi · derinlemesine görüşmeler"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Lansman ve pazar erişimi",
+          "frame": "Kanıtın nasıl çerçevelendiği ve kimin önce benimsediği.",
+          "cards": [
+            {
+              "title": "Kanıt ve mesaj testi",
+              "body": "Klinik kanıtın, ona göre hareket eden uzmanlar ve ödeyiciler tarafından nasıl anlaşıldığını test edin.",
+              "methods": "Mesaj testi · uzman görüşmeleri"
+            },
+            {
+              "title": "Erken benimseme",
+              "body": "Hangi merkezlerin ve klinisyenlerin önce benimsediğini ve öncesinde neye ihtiyaç duyduklarını belirleyin.",
+              "methods": "Derinlemesine görüşmeler · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "Hekim derinlemesine görüşmeleri",
+          "Uzmanlarla 45-60 dakikalık görüşmeler; yetkinlikler saha çalışmasından önce doğrulanır."
+        ],
+        [
+          "Uzman örneklemi",
+          "Uzmanlar uzmanlık ve alt uzmanlık, uygulama ortamı, vaka hacmi ve reçete yetkisine göre elenir; yetkinlikler görüşmeden önce doğrulanır."
+        ],
+        [
+          "Hasta anketi",
+          "Hastalarla çevrimiçi veya telefonla anket yapılır; hastalık, tedavi aşaması, şiddet ve pazara göre kotalar. Nadir hastalıklar hasta toplulukları aracılığıyla toplanır."
+        ],
+        [
+          "CATI",
+          "Uzmanlık, ortam veya pazara göre kotalı, senaryolu telefon görüşmeleri. Listenin tanımlı olduğu yerlerde kullanılır."
+        ],
+        [
+          "Çevrimiçi tracking",
+          "Sabit ölçütlerle aylık veya üç aylık tracking; hareket aynı taban üzerinden okunur."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   },
   "finance": {
