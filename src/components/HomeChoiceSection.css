@@ -59,11 +59,12 @@
   padding-left: 24px;
   margin: 0;
   color: #141413;
+  /* 2026-10-26：56 档，字体仍是原来的衬线；Newsreader 只留给 80（--font-impact）。 */
   font-family: var(--font-reading);
-  font-size: 38px;
+  font-size: clamp(38px, 4.6vw, 56px);
   font-weight: 400;
-  letter-spacing: -.025em;
-  line-height: 1.15;
+  letter-spacing: -.028em;
+  line-height: 1.06;
 }
 .home-choice-note {
   max-width: 480px;
