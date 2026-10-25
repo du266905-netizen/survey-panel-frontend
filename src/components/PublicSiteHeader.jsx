@@ -18,7 +18,7 @@ const CLOSE_DELAY = 160;
    it (about / solutions / industries / support), the real globe, English only
    for now. The four group names and their temporary pages live in
    `constants/publicNavigation.js`; the bar itself carries no page copy. */
-export default function PublicSiteHeader() {
+export default function PublicSiteHeader({ stripStart = null }) {
   const { user } = useAuth();
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const chrome = publicCopy.chrome;
@@ -195,6 +195,7 @@ export default function PublicSiteHeader() {
           the black bar above. */}
       <div className="psn-strip">
         <div className="psn-strip-inner">
+          {stripStart ? <div className="psn-strip-start">{stripStart}</div> : null}
           <Link className="psn-strip-link" to={withLanguage('/business/access', language)}>{chrome.header.contactSales}</Link>
           <Link className="psn-strip-link" to={withLanguage('/how-it-works', language)}>{chrome.header.helpCentre}</Link>
         </div>

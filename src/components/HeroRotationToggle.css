@@ -1,0 +1,28 @@
+/* Sits at the left end of the grey utility strip: same height as the links,
+   quiet until hovered. */
+.psn-rotation-toggle {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, .74);
+  cursor: pointer;
+  transition: color .14s ease, background .14s ease;
+}
+
+.psn-rotation-toggle:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .08);
+}
+
+.psn-rotation-toggle:focus-visible {
+  outline: 2px solid var(--pub-lime, #deef24);
+  outline-offset: 2px;
+}
+
+.psn-rotation-toggle.is-stopped { color: var(--pub-lime, #deef24); }

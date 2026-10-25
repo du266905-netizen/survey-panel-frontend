@@ -11,9 +11,10 @@ import './HomeHeroCarousel.css';
    set "reduce motion" get the first frame only. */
 const FRAME_MS = 7000;
 
-export default function HomeHeroCarousel({ lead, rest, body, line, learnMore, communityLabel }) {
+export default function HomeHeroCarousel({ lead, rest, body, line, learnMore, communityLabel, stopped = false }) {
   const [frame, setFrame] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const paused = hovering || stopped;
   const [still, setStill] = useState(false);
   const barRef = useRef(null);
   const elapsedRef = useRef(0);
@@ -79,10 +80,10 @@ export default function HomeHeroCarousel({ lead, rest, body, line, learnMore, co
     <div
       ref={hostRef}
       className={`home-hero-carousel${still ? ' is-still' : ''}`}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      onFocusCapture={() => setHovering(true)}
+      onBlurCapture={() => setHovering(false)}
     >
       <div className="home-hero-progress" aria-hidden="true">
         <span ref={barRef} />

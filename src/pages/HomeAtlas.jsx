@@ -4,6 +4,7 @@ import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import HomeHeroCarousel from '../components/HomeHeroCarousel';
+import HeroRotationToggle from '../components/HeroRotationToggle';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
@@ -45,12 +46,24 @@ function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onIna
 export default function HomeAtlas() {
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
+  const [heroStopped, setHeroStopped] = useState(false);
+  const rotationLabel = heroStopped
+    ? (publicCopy.chrome.header.playRotation || 'Play rotation')
+    : (publicCopy.chrome.header.pauseRotation || 'Pause rotation');
   const [heroLead, ...heroRest] = publicCopy.hero.lines;
   const heroLines = [heroLead, heroRest.join(['zh-CN', 'zh-Hant', 'ja', 'ko'].includes(language) ? '' : ' ')].filter(Boolean);
   return (
     <main className="home-atlas">
       <div className="home-atlas-frame" aria-hidden="true" />
-      <PublicSiteHeader />
+      <PublicSiteHeader
+        stripStart={(
+          <HeroRotationToggle
+            stopped={heroStopped}
+            onToggle={() => setHeroStopped((stopped) => !stopped)}
+            label={rotationLabel}
+          />
+        )}
+      />
 
       {/* Photograph hero: statement bottom-left, one white action to its right.
           The account chooser that used to sit below the hero moved out to its
@@ -62,6 +75,7 @@ export default function HomeAtlas() {
         line={publicCopy.homeSlide.line}
         learnMore={publicCopy.homeSlide.learnMore}
         communityLabel={publicCopy.navigation.meetCommunity}
+        stopped={heroStopped}
       />
 
       <HomeLegacySections />

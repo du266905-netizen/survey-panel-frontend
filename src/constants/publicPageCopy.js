@@ -20745,7 +20745,9 @@ export const chromeCopy = {
       "contactSales": "Contact sales",
       "helpCentre": "Help centre",
       "menuOpen": "Open menu",
-      "menuClose": "Close menu"
+      "menuClose": "Close menu",
+      "pauseRotation": "Pause rotation",
+      "playRotation": "Play rotation"
     }
   },
   "en-GB": {
@@ -20845,7 +20847,9 @@ export const chromeCopy = {
       "contactSales": "Contact sales",
       "helpCentre": "Help centre",
       "menuOpen": "Open menu",
-      "menuClose": "Close menu"
+      "menuClose": "Close menu",
+      "pauseRotation": "Pause rotation",
+      "playRotation": "Play rotation"
     }
   },
   "en": {
@@ -20945,7 +20949,9 @@ export const chromeCopy = {
       "contactSales": "Contact sales",
       "helpCentre": "Help centre",
       "menuOpen": "Open menu",
-      "menuClose": "Close menu"
+      "menuClose": "Close menu",
+      "pauseRotation": "Pause rotation",
+      "playRotation": "Play rotation"
     }
   },
   "zh-CN": {
@@ -21045,7 +21051,9 @@ export const chromeCopy = {
       "contactSales": "联系销售",
       "helpCentre": "帮助中心",
       "menuOpen": "打开菜单",
-      "menuClose": "关闭菜单"
+      "menuClose": "关闭菜单",
+      "pauseRotation": "暂停轮播",
+      "playRotation": "继续轮播"
     }
   },
   "zh-Hant": {
@@ -21145,7 +21153,9 @@ export const chromeCopy = {
       "contactSales": "聯絡業務",
       "helpCentre": "幫助中心",
       "menuOpen": "開啟選單",
-      "menuClose": "關閉選單"
+      "menuClose": "關閉選單",
+      "pauseRotation": "暫停輪播",
+      "playRotation": "繼續輪播"
     }
   },
   "de": {
@@ -22552,18 +22562,23 @@ export const chromeCopy = {
 
 export const homeSlideCopy = {
   "en-US": {
-    "line": "The world is wide. Your part of it can't be left out.", "learnMore": "Learn more"
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more"
   },
   "en-GB": {
-    "line": "The world is wide. Your part of it can't be left out.", "learnMore": "Learn more"
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more"
   },
   "en": {
-    "line": "The world is wide. Your part of it can't be left out.", "learnMore": "Learn more"
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more"
   },
   "zh-CN": {
-    "line": "世界那么大，你的那一份也不能少。", "learnMore": "了解更多"
+    "line": "世界那么大，你的那一份也不能少。",
+    "learnMore": "了解更多"
   },
   "zh-Hant": {
-    "line": "世界那麼大，你的那一份也不能少。", "learnMore": "瞭解更多"
+    "line": "世界那麼大，你的那一份也不能少。",
+    "learnMore": "瞭解更多"
   }
 };

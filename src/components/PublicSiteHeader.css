@@ -284,6 +284,7 @@
   gap: 26px;
   margin: 0 auto;
 }
+.psn-strip-start { display: flex; align-items: center; margin-right: auto; }
 .psn-strip-link {
   color: rgba(255, 255, 255, .74);
   font: 500 12px/1 var(--font-sans);
@@ -297,6 +298,7 @@
 @media (max-width: 900px) {
   .psn-strip { height: 32px; }
   .psn-strip-inner { width: calc(100% - 40px); gap: 18px; }
-  .psn-strip-link { font-size: 11px; }
+  .psn-strip-start { display: flex; align-items: center; margin-right: auto; }
+.psn-strip-link { font-size: 11px; }
   .psn-mobile { top: 96px; }
 }
