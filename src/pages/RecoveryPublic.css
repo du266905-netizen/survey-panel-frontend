@@ -36,16 +36,25 @@
 /* 左栏那个巨大的 G 水印在两页都去掉。 */
 .recovery-page .recovery-brand-mark { display: none !important; }
 .recovery-page--public .recovery-brand::before { display: none; }
+/* 2026-10-26：左栏是“大字站中间”的场合 —— 80 档、居中；字重 300 与字体本身一致，
+   避免浏览器合成加粗（CJK 子集只有 300）。 */
+.recovery-page .recovery-brand-copy {
+  max-width: none;
+  margin: auto;
+  text-align: center;
+}
+
 .recovery-page .recovery-brand-copy h1 {
-  max-width: 600px;
-  margin: 16px 0 0;
-  color: #FAF9F5;
+  max-width: 14em;
+  margin: 18px auto 0;
+  color: inherit;
   font-family: var(--font-impact);
-  /* 2026-10-26：从 clamp 收到 56 档；中文 9 个字也放得下一行。 */
   font-size: clamp(38px, 4vw, 56px);
-  font-weight: 400;
+  font-weight: 300;
+  font-synthesis-style: none;
   letter-spacing: -.03em;
-  line-height: 1.06;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 .recovery-page--public .recovery-kicker {
   margin: 0;
@@ -57,8 +66,8 @@
   text-transform: uppercase;
 }
 .recovery-page--public .recovery-brand-copy > p:last-child {
-  max-width: 480px;
-  margin: 22px 0 0;
+  max-width: 34em;
+  margin: 22px auto 0;
   color: rgba(250, 249, 245, .78);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -165,3 +174,51 @@
   .recovery-page--public .recovery-brand-copy h1 { font-size: 56px; }
   .recovery-page--public .recovery-card { padding: 32px 24px; }
 }
+
+/* 2026-10-26：研究端（无 --public）也改成淡鼠尾草骨白，与参与端同色；
+   深色底上的浅色文字、卡片、按钮一并转成浅底深字。 */
+.recovery-page:not(.recovery-page--public) { background: #F2F3EC; color: #141413; }
+.recovery-page:not(.recovery-page--public) .recovery-brand { background: #F2F3EC; color: #141413; }
+.recovery-page:not(.recovery-page--public) .recovery-brand .recovery-logo img { filter: none; }
+.recovery-page:not(.recovery-page--public) .recovery-brand-copy h1 { color: #141413; }
+.recovery-page:not(.recovery-page--public) .recovery-brand-copy > p:last-child { color: rgba(20, 20, 19, .72); }
+.recovery-page:not(.recovery-page--public) .recovery-brand-note { border-top-color: rgba(20, 20, 19, .16); color: rgba(20, 20, 19, .6); }
+.recovery-page:not(.recovery-page--public) .recovery-panel { background: #F2F3EC; }
+.recovery-page:not(.recovery-page--public) .recovery-return { color: rgba(20, 20, 19, .6); }
+.recovery-page:not(.recovery-page--public) .recovery-return:hover { color: #141413; }
+.recovery-page:not(.recovery-page--public) .recovery-card { border-color: rgba(20, 20, 19, .1); background: #FFFFFF; }
+.recovery-page:not(.recovery-page--public) .recovery-card h2 { color: #141413; }
+.recovery-page:not(.recovery-page--public) .recovery-intro { color: rgba(20, 20, 19, .68); }
+.recovery-page:not(.recovery-page--public) .recovery-icon { border-color: rgba(20, 20, 19, .12); background: rgba(20, 20, 19, .04); color: #141413; }
+.recovery-page:not(.recovery-page--public) .recovery-field-group > span:first-child { color: rgba(20, 20, 19, .58); }
+.recovery-page:not(.recovery-page--public) .recovery-submit {
+  border-color: #141413;
+  background: #141413;
+  box-shadow: none;
+  color: #fffdf7;
+}
+.recovery-page:not(.recovery-page--public) .recovery-submit:hover { border-color: #000; background: #000; box-shadow: none; }
+
+/* 研究端浅底：输入框与说明行也要转浅。 */
+.recovery-page:not(.recovery-page--public) .recovery-input {
+  border-color: rgba(20, 20, 19, .18);
+  background: #FFFFFF;
+  color: rgba(20, 20, 19, .5);
+}
+.recovery-page:not(.recovery-page--public) .recovery-input:focus-within {
+  border-color: rgba(20, 20, 19, .55);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(20, 20, 19, .05);
+}
+.recovery-page:not(.recovery-page--public) .recovery-input input { color: #141413; }
+.recovery-page:not(.recovery-page--public) .recovery-input input::placeholder { color: rgba(20, 20, 19, .38); }
+.recovery-page:not(.recovery-page--public) .recovery-password-toggle { color: rgba(20, 20, 19, .55); }
+.recovery-page:not(.recovery-page--public) .recovery-password-toggle:hover { color: #141413; }
+.recovery-page:not(.recovery-page--public) .recovery-card { box-shadow: none; }
+
+/* 卡片里的眉标与底部那行也要转深，否则在浅底上几乎看不见。 */
+.recovery-page:not(.recovery-page--public) .recovery-kicker { color: rgba(20, 20, 19, .55); }
+.recovery-page:not(.recovery-page--public) .recovery-card p,
+.recovery-page:not(.recovery-page--public) .recovery-card a { color: inherit; }
+.recovery-page:not(.recovery-page--public) .recovery-card .recovery-intro { color: rgba(20, 20, 19, .68); }
+.recovery-page:not(.recovery-page--public) .recovery-card a { color: #141413; text-decoration-color: rgba(20, 20, 19, .4); }
