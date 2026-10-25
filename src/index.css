@@ -30,6 +30,19 @@ div#CybotCookiebotDialogPoweredByText,
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+
+/* Noto Serif SC 300 — the Chinese half of the 80/56 display voice. Subsetted to
+   the 102 glyphs those two steps actually use (23.8KB); anything else falls
+   through to the system serif, so no tofu. */
+@font-face {
+  font-family: 'Noto Serif SC Display';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./assets/fonts/noto-serif-sc-display.woff2') format('woff2');
+  unicode-range: U+3002, U+4e00, U+4e0b, U+4e0e, U+4e16, U+4e1a, U+4e50, U+4e8b, U+4ea4, U+4ece, U+4f1a, U+4f4d, U+4f53, U+4f60, U+4f9d, U+5065, U+5224, U+533b, U+547d, U+54c1, U+54cd, U+552e, U+5546, U+59cb, U+5a1b, U+5a31, U+5a92, U+5b57, U+5b66, U+5b78, U+5b9e, U+5bcc, U+5be6, U+5de5, U+5eb7, U+5efa, U+5f00, U+5f71, U+5f9e, U+5feb, U+6280, U+636e, U+64da, U+6559, U+6570, U+6578, U+65ad, U+65b7, U+65c5, U+6703, U+6709, U+6750, U+696d, U+6a02, U+6b21, U+6b65, U+6bcf, U+6c7d, U+6d88, U+6e38, U+70b9, U+7269, U+7406, U+751f, U+7535, U+754c, U+7597, U+7642, U+7684, U+793e, U+79d1, U+7ba1, U+8005, U+80b2, U+8207, U+878d, U+88e1, U+89c0, U+89c2, U+8b93, U+8ba9, U+8ca1, U+8cfc, U+8d22, U+8d2d, U+8eca, U+8f66, U+8fd9, U+9019-901a, U+904a, U+90fd, U+91ab, U+91cc, U+91d1, U+958b, U+96f6, U+96fb, U+97ff, U+9ad4, U+9ede, U+ff0c;
+}
+
 :root {
   --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-reading: "Source Serif 4 Variable", "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -37,7 +50,7 @@ div#CybotCookiebotDialogPoweredByText,
   --font-marketing-serif: "Source Han Serif SC", "Noto Serif SC", "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
   --font-display: "Source Serif 4 Variable", "Source Serif 4", Georgia, "Times New Roman", serif;
   /* 80 档专用展示体：Newsreader（自托管）。中文没有字形，会回落到衬线正文体。 */
-  --font-impact: "Newsreader", "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
+  --font-impact: "Newsreader", "Noto Serif SC Display", "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
   --font-accent: var(--font-reading);
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-paper: #f7f7f3;
