@@ -1,13 +1,16 @@
 /* The lake frame: one long line, low on the water, one action to its right. */
 .home-hero--lake .home-lake-line {
-  max-width: 13em;
+  /* 与第一帧同一档：38px 的 page 档、同一套字距与行高。48 不在十档里，
+     之前那版是自造尺寸，字太大显得笨。 */
+  max-width: 1040px;
   margin: 0;
   color: #fff;
-  font-family: var(--font-serif);
-  font-size: clamp(30px, 3.4vw, 48px);
+  font-family: var(--font-reading);
+  font-size: 38px;
   font-weight: 400;
-  letter-spacing: -.015em;
-  line-height: 1.22;
+  letter-spacing: -.025em;
+  line-height: 1.12;
+  text-wrap: pretty;
   text-shadow: 0 2px 24px rgba(0, 0, 0, .35);
 }
 
@@ -25,11 +28,12 @@
 .home-lake-copy { max-width: 50rem; }
 
 .home-lake-note {
-  max-width: 30em;
-  margin: 20px 0 0;
-  color: rgba(255, 255, 255, .84);
-  font-size: clamp(16px, 1.15vw, 19px);
-  line-height: 1.62;
+  /* 第一帧的副句是 22 / 70% 白，这里照抄，两帧看起来才是同一套排版。 */
+  max-width: 760px;
+  margin: 26px 0 0;
+  color: rgba(255, 255, 255, .7);
+  font-size: 22px;
+  line-height: 1.6;
   text-shadow: 0 1px 14px rgba(0, 0, 0, .45);
 }
 
