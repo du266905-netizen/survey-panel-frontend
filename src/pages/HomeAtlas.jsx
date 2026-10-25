@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
-import HomeHero from '../components/HomeHero';
+import HomeHeroCarousel from '../components/HomeHeroCarousel';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
 import newsWallIllustration from '../assets/home/news-wall-illustration.png';
@@ -55,7 +55,14 @@ export default function HomeAtlas() {
       {/* Photograph hero: statement bottom-left, one white action to its right.
           The account chooser that used to sit below the hero moved out to its
           own page (/access) on 2026-10-25; the home page no longer carries it. */}
-      <HomeHero lead={heroLines[0]} rest={heroLines[1]} body={publicCopy.hero.description} />
+      <HomeHeroCarousel
+        lead={heroLines[0]}
+        rest={heroLines[1]}
+        body={publicCopy.hero.description}
+        line={publicCopy.homeSlide.line}
+        learnMore={publicCopy.homeSlide.learnMore}
+        communityLabel={publicCopy.navigation.meetCommunity}
+      />
 
       <HomeLegacySections />
     </main>

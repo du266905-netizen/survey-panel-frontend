@@ -1,0 +1,31 @@
+/* The first screen is a stack of full-height frames; only the active one is
+   visible, and the change is a slow cross-fade. */
+.home-hero-carousel {
+  position: relative;
+  min-height: calc(100svh - 100px);
+  background: #141413;
+}
+
+.home-hero-frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  pointer-events: none;
+}
+
+.home-hero-frame.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.home-hero-frame .home-hero {
+  min-height: 100%;
+  height: 100%;
+}
+
+.home-hero-carousel.is-still .home-hero-frame { transition: none; }
+
+@media (max-width: 720px) {
+  .home-hero-carousel { min-height: calc(100svh - 96px); }
+}

@@ -9,7 +9,7 @@ import './HomeHero.css';
    research workspace greeting (Inter, light, one step for the whole
    paragraph). The first sentence is the emphasis: same size, heavier
    weight. One white button sits to the right of the paragraph. */
-export default function HomeHero({ lead = '', rest = '', body = '' }) {
+export default function HomeHero({ lead = '', rest = '', body = '', ctaLabel = 'Learn more' }) {
   const { language } = useLanguage();
 
   return (
@@ -21,7 +21,7 @@ export default function HomeHero({ lead = '', rest = '', body = '' }) {
           <strong>{lead}{rest ? <><br />{rest}</> : null}</strong>{' '}
           <span>{body}</span>
         </p>
-        <Link className="home-hero-cta" to={withLanguage('/about', language)}>Learn more</Link>
+        <Link className="home-hero-cta" to={withLanguage('/about', language)}>{ctaLabel}</Link>
       </div>
     </section>
   );

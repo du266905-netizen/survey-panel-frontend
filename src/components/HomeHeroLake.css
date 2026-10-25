@@ -1,0 +1,29 @@
+/* The lake frame: one long line, low on the water, one action to its right. */
+.home-hero--lake .home-lake-line {
+  max-width: 13em;
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: clamp(30px, 3.4vw, 48px);
+  font-weight: 400;
+  letter-spacing: -.015em;
+  line-height: 1.22;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, .35);
+}
+
+/* The Chinese line carries its own pause; each half sits on its own line. */
+.home-hero--lake .home-lake-line span { display: block; }
+
+/* The water is bright in the middle; a slightly deeper foot keeps the line
+   readable without dimming the sky. */
+.home-hero-scrim--lake {
+  background:
+    linear-gradient(180deg, rgba(8, 10, 12, 0) 38%, rgba(8, 10, 12, .46) 78%, rgba(8, 10, 12, .62) 100%),
+    linear-gradient(90deg, rgba(8, 10, 12, .34) 0%, rgba(8, 10, 12, 0) 52%);
+}
+
+.home-hero-inner--lake { gap: 40px; }
+
+@media (max-width: 720px) {
+  .home-hero-inner--lake { gap: 20px; }
+}
