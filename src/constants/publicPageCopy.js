@@ -16959,6 +16959,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "Medien und Unterhaltung",
+      "lead": "Forschung für Sender, Plattformen, Verlage und Spielestudios: wer das Publikum ist, was es sehen oder spielen wird und was es zahlen lässt.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Medien werden auf Aufmerksamkeit gekauft und an Bindung gemessen: Ein Titel hat ein Startfenster, und das Publikum entscheidet darin.",
+        "Wir untersuchen beide Seiten dieses Geschäfts: das Publikum, das wählt, was es sieht oder spielt, und die Werbetreibenden, die wissen müssen, neben was ihr Budget steht.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll: welchen Titel beauftragen, wie einen Start positionieren, ob das Werbeumfeld sicher ist und warum Abonnenten gehen. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Publikum und Inhalt",
+          "frame": "Wer sieht oder spielt und was gewählt wird.",
+          "cards": [
+            {
+              "title": "Publikum und Inhaltspräferenz",
+              "body": "Das Publikum nach Plattform, Genre und Seh- oder Spielverhalten segmentieren und testen, welche Inhalte es wählen würde.",
+              "methods": "Online-Befragung · CATI"
+            },
+            {
+              "title": "Konzepttest für Inhalte",
+              "body": "Titel, Formate und Trailer mit dem Publikum vor dem Startfenster testen.",
+              "methods": "Konzept- und A/B-Tests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Start und Programmplanung",
+          "frame": "Ob es im ersten Fenster ankommt.",
+          "cards": [
+            {
+              "title": "Pretest vor dem Start",
+              "body": "Positionierung und Schnitt vor der Veröffentlichung testen und festhalten, was das Publikum verstanden hat.",
+              "methods": "Konzepte-Test · Tiefeninterviews"
+            },
+            {
+              "title": "Plattform und Fenster",
+              "body": "Feststellen, wo das Publikum den Titel erwartet und was es für frühen Zugang zahlen würde.",
+              "methods": "Online-Befragung · Tiefeninterviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marke und Werbung",
+          "frame": "In welchen Inhalten die Werbung läuft und was das mit der Marke macht.",
+          "cards": [
+            {
+              "title": "Markensicherheit",
+              "body": "Testen, wie Werbung in verschiedenen Inhaltsumgebungen beurteilt wird und was das Vertrauen in die Marke beschädigt.",
+              "methods": "Werbetreibendenbefragung · Botschaftstest"
+            },
+            {
+              "title": "Werbewirkung",
+              "body": "Erinnerung und Kaufabsicht gegen die Inhalte messen, in denen die Werbung lief.",
+              "methods": "Online-Befragung · Werbetest"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Abonnement und Bindung",
+          "frame": "Warum Abonnenten bleiben und warum sie kündigen.",
+          "cards": [
+            {
+              "title": "Abonnement und Abwanderung",
+              "body": "Abonnentenverhalten und Kündigungsgründe verfolgen.",
+              "methods": "Tracking · Online-Befragung"
+            },
+            {
+              "title": "Markengesundheit",
+              "body": "Bekanntheit, Erwägung und Weiterempfehlung gegen die tatsächlich verglichenen Plattformen tracken.",
+              "methods": "Tracking · feste Messgrößen"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "Publikumsbefragung",
+          "Befragung von Zuschauern oder Spielern, mit Quoten nach Plattform, Genre und Markt."
+        ],
+        [
+          "Inhalts- und Werbetests",
+          "Titel, Trailer und Kreation auf vergleichbaren Stichproben getestet, jeweils eine Variable verändert."
+        ],
+        [
+          "Werbetreibendenbefragung",
+          "Befragung von Marketing- und Medienentscheidern, gescreent nach Budget und Kategorie."
+        ],
+        [
+          "Markentracking",
+          "Monatliches oder quartalsweises Tracking auf festen Messgrößen, damit Bewegung gegen dieselbe Basis lesbar bleibt."
+        ],
+        [
+          "Tiefeninterviews",
+          "Tiefeninterviews von 45 bis 60 Minuten, eins zu eins vom Forschungsteam geführt."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "Médias et divertissement",
+      "lead": "Études pour diffuseurs, plateformes, éditeurs et studios de jeux : qui est le public, ce qu'il regardera ou jouera, et ce qui le fait payer.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "Les médias s'achètent à l'attention et se jugent à la rétention : un titre a une fenêtre de lancement, et le public décide dedans.",
+        "Nous étudions les deux côtés de cet échange : le public qui choisit quoi regarder ou jouer, et les annonceurs qui doivent savoir à côté de quoi se trouve leur budget.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer : quel titre commander, comment positionner un lancement, si l'environnement publicitaire est sûr et pourquoi les abonnés partent. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Public et contenus",
+          "frame": "Qui regarde ou joue, et ce qu'il choisit.",
+          "cards": [
+            {
+              "title": "Public et préférence de contenu",
+              "body": "Segmenter le public par plateforme, genre et comportement de visionnage ou de jeu, et tester quels contenus il choisirait.",
+              "methods": "Enquête en ligne · CATI"
+            },
+            {
+              "title": "Test de concept de contenu",
+              "body": "Tester titres, formats et bandes-annonces avec le public avant la fenêtre de lancement.",
+              "methods": "Tests de concept et A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Lancement et programmation",
+          "frame": "S'il atterrit dans la première fenêtre.",
+          "cards": [
+            {
+              "title": "Test avant lancement",
+              "body": "Tester positionnement et montage avant sortie, et noter ce que le public en a compris.",
+              "methods": "Test de concept · entretiens approfondis"
+            },
+            {
+              "title": "Plateforme et fenêtre",
+              "body": "Établir où le public attend le titre, et ce qu'il paiera pour un accès anticipé.",
+              "methods": "Enquête en ligne · entretiens approfondis"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marque et publicité",
+          "frame": "Dans quels contenus la publicité passe, et ce que cela fait à la marque.",
+          "cards": [
+            {
+              "title": "Sécurité de marque",
+              "body": "Tester comment la publicité est jugée dans différents environnements de contenu, et ce qui abîme la confiance dans la marque.",
+              "methods": "Enquête annonceurs · test de message"
+            },
+            {
+              "title": "Efficacité publicitaire",
+              "body": "Mesurer mémorisation et intention d'achat face aux contenus dans lesquels la publicité est passée.",
+              "methods": "Enquête en ligne · test publicitaire"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Abonnement et rétention",
+          "frame": "Pourquoi les abonnés restent, et pourquoi ils résilient.",
+          "cards": [
+            {
+              "title": "Abonnement et attrition",
+              "body": "Suivre le comportement des abonnés et les motifs de résiliation.",
+              "methods": "Tracking · enquête en ligne"
+            },
+            {
+              "title": "Santé de marque",
+              "body": "Suivre notoriété, considération et recommandation face aux plateformes réellement comparées.",
+              "methods": "Tracking · mesures fixes"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Enquête public",
+          "Enquête auprès de spectateurs ou de joueurs, avec quotas par plateforme, genre et marché."
+        ],
+        [
+          "Tests de contenu et de publicité",
+          "Titres, bandes-annonces et créations testés sur des échantillons comparables, une variable modifiée à la fois."
+        ],
+        [
+          "Enquête annonceurs",
+          "Enquête auprès de décideurs marketing et médias, filtrés par budget et catégorie."
+        ],
+        [
+          "Suivi de marque",
+          "Tracking mensuel ou trimestriel sur des mesures fixes, pour lire les évolutions sur la même base."
+        ],
+        [
+          "Entretiens approfondis",
+          "Entretiens approfondis de 45 à 60 minutes, menés en tête-à-tête par l'équipe."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "Media en entertainment",
+      "lead": "Onderzoek voor omroepen, platforms, uitgevers en gamestudio's: wie het publiek is, wat het zal kijken of spelen en wat hen laat betalen.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Media worden gekocht op aandacht en beoordeeld op behoud: een titel heeft één lanceervenster, en het publiek beslist daarbinnen.",
+        "We onderzoeken beide kanten van die ruil: het publiek dat kiest wat het kijkt of speelt, en adverteerders die moeten weten naast welke inhoud hun budget staat.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen: welke titel te bestellen, hoe een lancering te positioneren, of de advertentieomgeving veilig is en waarom abonnees vertrekken. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Publiek en inhoud",
+          "frame": "Wie kijkt of speelt, en wat zij kiezen.",
+          "cards": [
+            {
+              "title": "Publiek en inhoudsvoorkeur",
+              "body": "Het publiek segmenteren naar platform, genre en kijk- of speelgedrag, en testen welke inhoud zij zouden kiezen.",
+              "methods": "Online-enquête · CATI"
+            },
+            {
+              "title": "Concepttest voor inhoud",
+              "body": "Titels, formats en trailers met het publiek testen vóór het lanceervenster.",
+              "methods": "Concept- en A/B-tests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Lancering en planning",
+          "frame": "Of het binnen het eerste venster landt.",
+          "cards": [
+            {
+              "title": "Pretest vóór de lancering",
+              "body": "Positionering en montage vóór release testen en vastleggen wat het publiek ervan begreep.",
+              "methods": "Concepttest · diepte-interviews"
+            },
+            {
+              "title": "Platform en venster",
+              "body": "Vaststellen waar het publiek de titel verwacht, en wat het voor vroege toegang betaalt.",
+              "methods": "Online-enquête · diepte-interviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Merk en advertenties",
+          "frame": "In welke inhoud de advertentie loopt, en wat dat met het merk doet.",
+          "cards": [
+            {
+              "title": "Merkveiligheid",
+              "body": "Testen hoe advertenties in verschillende inhoudsomgevingen worden beoordeeld, en wat het vertrouwen in het merk schaadt.",
+              "methods": "Adverteerdersonderzoek · boodschaptest"
+            },
+            {
+              "title": "Adverteffectiviteit",
+              "body": "Herinnering en koopintentie meten tegen de inhoud waarin de advertentie liep.",
+              "methods": "Online-enquête · advertentietest"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Abonnement en behoud",
+          "frame": "Waarom abonnees blijven en waarom zij opzeggen.",
+          "cards": [
+            {
+              "title": "Abonnement en uitstroom",
+              "body": "Abonneegedrag en opzegredenen volgen.",
+              "methods": "Tracking · online-enquête"
+            },
+            {
+              "title": "Merkgezondheid",
+              "body": "Bekendheid, overweging en aanbeveling volgen tegen de platforms die daadwerkelijk worden vergeleken.",
+              "methods": "Tracking · vaste maten"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "Publieksonderzoek",
+          "Enquête onder kijkers of spelers, met quota naar platform, genre en markt."
+        ],
+        [
+          "Inhouds- en advertentietests",
+          "Titels, trailers en creatie getest op vergelijkbare steekproeven, met één variabele per keer."
+        ],
+        [
+          "Adverteerdersonderzoek",
+          "Enquête onder marketing- en mediadecisionmakers, gescreend op budget en categorie."
+        ],
+        [
+          "Merktracking",
+          "Maandelijkse of driemaandelijkse tracking op vaste maten, zodat beweging tegen dezelfde basis leesbaar blijft."
+        ],
+        [
+          "Diepte-interviews",
+          "Diepte-interviews van 45 tot 60 minuten, één op één door het onderzoeksteam."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "Medier og underholdning",
+      "lead": "Research for broadcastere, platforme, forlag og spilstudier: hvem publikum er, hvad de vil se eller spille, og hvad der holder dem betalende.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "Medier købes på opmærksomhed og vurderes på fastholdelse: en titel har ét launch-vindue, og publikum beslutter inden for det.",
+        "Vi undersøger begge sider af den handel: publikum, der vælger, hvad de ser eller spiller, og annoncørerne, der skal vide, hvad deres budget ligger ved siden af.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte: hvilken titel der skal bestilles, hvordan en launch positioneres, om annoncemiljøet er sikkert, og hvorfor abonnenter forsvinder. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Publikum og indhold",
+          "frame": "Hvem der ser eller spiller, og hvad de vælger.",
+          "cards": [
+            {
+              "title": "Publikum og indholdspræference",
+              "body": "Segmentér publikum efter platform, genre og se- eller spilleadfærd, og test hvilket indhold de ville vælge.",
+              "methods": "Onlineundersøgelse · CATI"
+            },
+            {
+              "title": "Koncepttest af indhold",
+              "body": "Test titler, formater og trailere med publikum før launch-vinduet.",
+              "methods": "Koncept- og A/B-test"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Launch og planlægning",
+          "frame": "Om det lander i det første vindue.",
+          "cards": [
+            {
+              "title": "Prætest før launch",
+              "body": "Test positionering og klip før udgivelse, og notér, hvad publikum forstod.",
+              "methods": "Koncepttest · dybdeinterviews"
+            },
+            {
+              "title": "Platform og vindue",
+              "body": "Fastslå, hvor publikum forventer at finde titlen, og hvad de vil betale for tidlig adgang.",
+              "methods": "Onlineundersøgelse · dybdeinterviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Mærke og annoncering",
+          "frame": "Hvilket indhold annoncen kører i, og hvad det gør ved mærket.",
+          "cards": [
+            {
+              "title": "Mærkesikkerhed",
+              "body": "Test, hvordan annoncering vurderes i forskellige indholdsmiljøer, og hvad der skader tilliden til mærket.",
+              "methods": "Annoncør­undersøgelse · budskabstest"
+            },
+            {
+              "title": "Annonceeffekt",
+              "body": "Mål genkaldelse og købsintention mod det indhold, annoncen kørte i.",
+              "methods": "Onlineundersøgelse · annoncetest"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Abonnement og fastholdelse",
+          "frame": "Hvorfor abonnenter bliver, og hvorfor de opsiger.",
+          "cards": [
+            {
+              "title": "Abonnement og frafald",
+              "body": "Følg abonnentadfærd og opsigelsesårsager.",
+              "methods": "Tracking · onlineundersøgelse"
+            },
+            {
+              "title": "Mærkesundhed",
+              "body": "Følg kendskab, overvejelse og anbefaling mod de platforme, der faktisk sammenlignes.",
+              "methods": "Tracking · faste mål"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "Publikumsundersøgelse",
+          "Undersøgelse blandt seere eller spillere, med kvoter efter platform, genre og marked."
+        ],
+        [
+          "Indholds- og annoncetests",
+          "Titler, trailere og kreativt materiale testet på sammenlignelige stikprøver med én variabel ændret ad gangen."
+        ],
+        [
+          "Annoncør­undersøgelse",
+          "Undersøgelse blandt marketing- og mediebeslutningstagere, screenet efter budget og kategori."
+        ],
+        [
+          "Mærketracking",
+          "Månedlig eller kvartalsvis tracking på faste mål, så bevægelse kan læses mod samme base."
+        ],
+        [
+          "Dybdeinterviews",
+          "Dybdeinterviews på 45-60 minutter, gennemført en til en af researchteamet."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Medios y entretenimiento",
+      "lead": "Investigación para cadenas, plataformas, editoriales y estudios de juegos: quién es el público, qué verá o jugará y qué le mantiene pagando.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "Los medios se compran por atención y se juzgan por retención: un título tiene una ventana de lanzamiento, y el público decide dentro de ella.",
+        "Estudiamos ambos lados de ese intercambio: el público que elige qué ver o jugar, y los anunciantes que necesitan saber junto a qué está su inversión.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener: qué título encargar, cómo posicionar un lanzamiento, si el entorno publicitario es seguro y por qué se van los suscriptores. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Público y contenido",
+          "frame": "Quién ve o juega, y qué elige.",
+          "cards": [
+            {
+              "title": "Público y preferencia de contenido",
+              "body": "Segmentar al público por plataforma, género y comportamiento de visionado o juego, y probar qué contenido elegiría.",
+              "methods": "Encuesta online · CATI"
+            },
+            {
+              "title": "Prueba de concepto de contenido",
+              "body": "Probar títulos, formatos y tráileres con el público antes de la ventana de lanzamiento.",
+              "methods": "Pruebas de concepto y A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Lanzamiento y programación",
+          "frame": "Si aterriza dentro de la primera ventana.",
+          "cards": [
+            {
+              "title": "Prueba previa al lanzamiento",
+              "body": "Probar posicionamiento y montaje antes del estreno, y registrar qué entendió el público.",
+              "methods": "Prueba de concepto · entrevistas en profundidad"
+            },
+            {
+              "title": "Plataforma y ventana",
+              "body": "Establecer dónde espera el público encontrar el título, y qué pagará por acceso anticipado.",
+              "methods": "Encuesta online · entrevistas en profundidad"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marca y publicidad",
+          "frame": "En qué contenidos se emite la publicidad, y qué le hace a la marca.",
+          "cards": [
+            {
+              "title": "Seguridad de marca",
+              "body": "Probar cómo se juzga la publicidad en distintos entornos de contenido, y qué daña la confianza en la marca.",
+              "methods": "Encuesta a anunciantes · prueba de mensaje"
+            },
+            {
+              "title": "Eficacia publicitaria",
+              "body": "Medir recuerdo e intención de compra frente al contenido en que se emitió la publicidad.",
+              "methods": "Encuesta online · prueba publicitaria"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Suscripción y retención",
+          "frame": "Por qué se quedan los suscriptores y por qué cancelan.",
+          "cards": [
+            {
+              "title": "Suscripción y abandono",
+              "body": "Seguir el comportamiento de los suscriptores y los motivos de cancelación.",
+              "methods": "Tracking · encuesta online"
+            },
+            {
+              "title": "Salud de marca",
+              "body": "Seguir notoriedad, consideración y recomendación frente a las plataformas realmente comparadas.",
+              "methods": "Tracking · medidas fijas"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Encuesta de audiencia",
+          "Encuesta a espectadores o jugadores, con cuotas por plataforma, género y mercado."
+        ],
+        [
+          "Pruebas de contenido y publicidad",
+          "Títulos, tráileres y creatividades probados en muestras comparables, cambiando una variable cada vez."
+        ],
+        [
+          "Encuesta a anunciantes",
+          "Encuesta a decisores de marketing y medios, filtrados por inversión y categoría."
+        ],
+        [
+          "Seguimiento de marca",
+          "Tracking mensual o trimestral sobre medidas fijas, para leer el movimiento contra la misma base."
+        ],
+        [
+          "Entrevistas en profundidad",
+          "Entrevistas en profundidad de 45 a 60 minutos, realizadas uno a uno por el equipo."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Media ja viihde",
+      "lead": "Tutkimusta lähettäjille, alustoille, kustantajille ja pelistudioille: kuka yleisö on, mitä se katsoo tai pelaa ja mikä pitää maksamassa.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Media ostetaan huomiolla ja arvioidaan pysyvyydellä: nimikkeellä on yksi lanseerausikkuna, ja yleisö päättää sen sisällä.",
+        "Tutkimme kaupan molempia puolia: yleisöä, joka valitsee mitä katsoo tai pelaa, ja mainostajia, joiden on tiedettävä minkä sisällön vieressä heidän budjettinsa on.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava: mikä nimike tilataan, miten lanseeraus positioidaan, onko mainosympäristö turvallinen ja miksi tilaajat lähtevät. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Yleisö ja sisältö",
+          "frame": "Kuka katsoo tai pelaa, ja mitä valitsee.",
+          "cards": [
+            {
+              "title": "Yleisö ja sisältöpreferenssi",
+              "body": "Segmentoi yleisö alustan, genren ja katselu- tai pelikäyttäytymisen mukaan ja testaa, mitä sisältöä se valitsisi.",
+              "methods": "Verkkokysely · CATI"
+            },
+            {
+              "title": "Sisältökonseptin testaus",
+              "body": "Testaa nimikkeitä, formaatteja ja trailereita yleisöllä ennen lanseerausikkunaa.",
+              "methods": "Konsepti- ja A/B-testaus"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Lanseeraus ja ohjelmointi",
+          "frame": "Laskeutuuko se ensimmäiseen ikkunaan.",
+          "cards": [
+            {
+              "title": "Esitestaus ennen lanseerausta",
+              "body": "Testaa positiointi ja leikkaus ennen julkaisua ja kirjaa, mitä yleisö ymmärsi.",
+              "methods": "Konseptitestaus · syvähaastattelut"
+            },
+            {
+              "title": "Alusta ja ikkuna",
+              "body": "Selvitä, mistä yleisö odottaa nimikkeen löytyvän ja mitä se maksaisi varhaisesta pääsystä.",
+              "methods": "Verkkokysely · syvähaastattelut"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Brändi ja mainonta",
+          "frame": "Missä sisällössä mainos pyörii, ja mitä se tekee brändille.",
+          "cards": [
+            {
+              "title": "Bränditurvallisuus",
+              "body": "Testaa, miten mainontaa arvioidaan eri sisältöympäristöissä ja mikä vahingoittaa luottamusta brändiin.",
+              "methods": "Mainostajakysely · viestitestaus"
+            },
+            {
+              "title": "Mainonnan tehokkuus",
+              "body": "Mittaa muistettavuutta ja ostoaiketta sisältöä vastaan, jossa mainos pyöri.",
+              "methods": "Verkkokysely · mainostestaus"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Tilaus ja pysyvyys",
+          "frame": "Miksi tilaajat jäävät ja miksi peruuttavat.",
+          "cards": [
+            {
+              "title": "Tilaus ja poistuma",
+              "body": "Seuraa tilaajakäyttäytymistä ja peruutuksen syitä.",
+              "methods": "Tracking · verkkokysely"
+            },
+            {
+              "title": "Brändin terveys",
+              "body": "Seuraa tunnettuutta, harkintaa ja suosittelua alustoja vastaan, joita todella verrataan.",
+              "methods": "Tracking · kiinteät mittarit"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "Yleisökysely",
+          "Kysely katsojille tai pelaajille, kiintiöt alustan, genren ja markkinan mukaan."
+        ],
+        [
+          "Sisältö- ja mainostestit",
+          "Nimikkeet, trailerit ja mainonta testattuna vertailukelpoisilla otoksilla, yhtä muuttujaa kerrallaan."
+        ],
+        [
+          "Mainostajakysely",
+          "Kysely markkinoinnin ja median päättäjille, seulottu budjetin ja kategorian mukaan."
+        ],
+        [
+          "Bränditracking",
+          "Kuukausittainen tai neljännesvuosittainen tracking kiinteillä mittareilla, jotta liike on luettavissa samasta kannasta."
+        ],
+        [
+          "Syvähaastattelut",
+          "45–60 minuutin syvähaastattelut, tutkimustiimi tekee kahdestaan."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "Media e intrattenimento",
+      "lead": "Ricerche per broadcaster, piattaforme, editori e studi di gioco: chi è il pubblico, cosa guarderà o giocherà e cosa lo tiene a pagare.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "I media si comprano sull'attenzione e si giudicano sulla retention: un titolo ha una finestra di lancio, e il pubblico decide dentro quella.",
+        "Studiamo entrambi i lati di quello scambio: il pubblico che sceglie cosa guardare o giocare, e gli inserzionisti che devono sapere accanto a cosa sta il loro budget.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere: quale titolo commissionare, come posizionare un lancio, se l'ambiente pubblicitario è sicuro e perché gli abbonati se ne vanno. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Pubblico e contenuti",
+          "frame": "Chi guarda o gioca, e cosa sceglie.",
+          "cards": [
+            {
+              "title": "Pubblico e preferenza di contenuto",
+              "body": "Segmentare il pubblico per piattaforma, genere e comportamento di visione o gioco, e testare quale contenuto sceglierebbe.",
+              "methods": "Indagine online · CATI"
+            },
+            {
+              "title": "Test di concept dei contenuti",
+              "body": "Testare titoli, formati e trailer con il pubblico prima della finestra di lancio.",
+              "methods": "Test di concept e A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Lancio e programmazione",
+          "frame": "Se atterra nella prima finestra.",
+          "cards": [
+            {
+              "title": "Test pre-lancio",
+              "body": "Testare posizionamento e montaggio prima dell'uscita, e registrare cosa il pubblico ha capito.",
+              "methods": "Test di concept · interviste in profondità"
+            },
+            {
+              "title": "Piattaforma e finestra",
+              "body": "Stabilire dove il pubblico si aspetta di trovare il titolo, e quanto pagherebbe per l'accesso anticipato.",
+              "methods": "Indagine online · interviste in profondità"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marchio e pubblicità",
+          "frame": "In quali contenuti va la pubblicità, e cosa fa al marchio.",
+          "cards": [
+            {
+              "title": "Brand safety",
+              "body": "Testare come viene giudicata la pubblicità in diversi ambienti di contenuto, e cosa danneggia la fiducia nel marchio.",
+              "methods": "Indagine inserzionisti · test di messaggio"
+            },
+            {
+              "title": "Efficacia pubblicitaria",
+              "body": "Misurare ricordo e intenzione d'acquisto rispetto ai contenuti in cui è andata la pubblicità.",
+              "methods": "Indagine online · test pubblicitario"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Abbonamento e retention",
+          "frame": "Perché gli abbonati restano, e perché disdicono.",
+          "cards": [
+            {
+              "title": "Abbonamento e abbandono",
+              "body": "Monitorare il comportamento degli abbonati e i motivi di disdetta.",
+              "methods": "Tracking · indagine online"
+            },
+            {
+              "title": "Salute del marchio",
+              "body": "Monitorare notorietà, considerazione e raccomandazione rispetto alle piattaforme realmente confrontate.",
+              "methods": "Tracking · misure fisse"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Indagine sul pubblico",
+          "Indagine su spettatori o giocatori, con quote per piattaforma, genere e mercato."
+        ],
+        [
+          "Test di contenuto e pubblicità",
+          "Titoli, trailer e creatività testati su campioni comparabili, con una variabile cambiata alla volta."
+        ],
+        [
+          "Indagine inserzionisti",
+          "Indagine su decisori marketing e media, filtrati per spesa e categoria."
+        ],
+        [
+          "Brand tracking",
+          "Tracking mensile o trimestrale su misure fisse, così il movimento si legge sulla stessa base."
+        ],
+        [
+          "Interviste in profondità",
+          "Interviste in profondità di 45-60 minuti, condotte uno a uno dal team."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "メディアとエンターテインメント",
+      "lead": "放送局、プラットフォーム、出版社、ゲームスタジオ向けの調査：誰が観客か、何を見るか・遊ぶか、何が支払いを続けさせるか。",
+      "introKicker": "進め方",
+      "intro": [
+        "メディアは注目で買われ、継続で評価されます。タイトルには一つの公開期間があり、その中で観客が決めます。",
+        "その取引の両側を調べます。何を見るか遊ぶかを選ぶ観客と、自分たちの予算が何の隣に置かれるかを知る必要がある広告主。",
+        "各調査は、それが支えるべき意思決定を中心に設計します。どのタイトルを企画するか、公開をどう位置づけるか、広告環境は安全か、なぜ購読者が離れるか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "観客とコンテンツ",
+          "frame": "誰が見るか・遊ぶか、何を選ぶか。",
+          "cards": [
+            {
+              "title": "観客とコンテンツの好み",
+              "body": "観客をプラットフォーム、ジャンル、視聴・プレイ行動でセグメント化し、どのコンテンツを選ぶかをテストします。",
+              "methods": "オンライン調査 · CATI"
+            },
+            {
+              "title": "コンテンツのコンセプトテスト",
+              "body": "公開期間の前に、タイトル、フォーマット、予告編を観客とテストします。",
+              "methods": "コンセプト／A/Bテスト"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "公開と編成",
+          "frame": "最初の期間に届くか。",
+          "cards": [
+            {
+              "title": "公開前テスト",
+              "body": "公開前に位置づけと編集をテストし、観客が何を理解したかを記録します。",
+              "methods": "コンセプトテスト · デプスインタビュー"
+            },
+            {
+              "title": "プラットフォームと期間",
+              "body": "観客がタイトルをどこで見つけると期待し、早期視聴にいくら払うかを明らかにします。",
+              "methods": "オンライン調査 · デプスインタビュー"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "ブランドと広告",
+          "frame": "広告がどのコンテンツで流れ、それがブランドに何をするか。",
+          "cards": [
+            {
+              "title": "ブランドセーフティ",
+              "body": "異なるコンテンツ環境で広告がどう評価され、何がブランドへの信頼を損なうかをテストします。",
+              "methods": "広告主調査 · メッセージテスト"
+            },
+            {
+              "title": "広告効果",
+              "body": "広告が流れたコンテンツに対して、想起と購入意向を測ります。",
+              "methods": "オンライン調査 · 広告テスト"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "購読と維持",
+          "frame": "購読者がなぜ残り、なぜ解約するか。",
+          "cards": [
+            {
+              "title": "購読と解約",
+              "body": "購読者の行動と解約理由を追跡します。",
+              "methods": "トラッキング · オンライン調査"
+            },
+            {
+              "title": "ブランドの健全性",
+              "body": "実際に比較されるプラットフォームに対して、認知・検討・推奨を追跡します。",
+              "methods": "トラッキング · 固定指標"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "観客調査",
+          "視聴者またはプレイヤーへの調査。プラットフォーム、ジャンル、市場で割り付けます。"
+        ],
+        [
+          "コンテンツ・広告テスト",
+          "タイトル、予告編、クリエイティブを同等のサンプルで、一度に1変数ずつ変えてテストします。"
+        ],
+        [
+          "広告主調査",
+          "マーケティングとメディアの意思決定者への調査。支出とカテゴリーでスクリーニングします。"
+        ],
+        [
+          "ブランドトラッキング",
+          "固定指標による月次または四半期のトラッキング。同じ基準で変化を読めます。"
+        ],
+        [
+          "デプスインタビュー",
+          "45〜60分のデプスインタビュー。調査チームが1対1で行います。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "미디어와 엔터테인먼트",
+      "lead": "방송사, 플랫폼, 출판사, 게임 스튜디오를 위한 조사: 시청자가 누구인지, 무엇을 보고 즐기는지, 무엇이 계속 결제하게 하는지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "미디어는 주목으로 사고 유지로 평가됩니다. 한 타이틀에는 하나의 공개 기간이 있고, 그 안에서 관객이 결정합니다.",
+        "그 거래의 양쪽을 조사합니다. 무엇을 볼지 고르는 관객과, 자신의 예산이 무엇 옆에 놓이는지 알아야 하는 광고주.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다. 어떤 타이틀을 제작할지, 공개를 어떻게 위치시킬지, 광고 환경이 안전한지, 왜 구독자가 떠나는지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "관객과 콘텐츠",
+          "frame": "누가 보고 즐기며 무엇을 고르는가.",
+          "cards": [
+            {
+              "title": "관객과 콘텐츠 선호",
+              "body": "관객을 플랫폼, 장르, 시청·플레이 행동으로 세분화하고 어떤 콘텐츠를 고를지 테스트합니다.",
+              "methods": "온라인 조사 · CATI"
+            },
+            {
+              "title": "콘텐츠 콘셉트 테스트",
+              "body": "공개 기간 전에 타이틀, 포맷, 예고편을 관객과 테스트합니다.",
+              "methods": "콘셉트·A/B 테스트"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "공개와 편성",
+          "frame": "첫 기간 안에 안착하는가.",
+          "cards": [
+            {
+              "title": "공개 전 테스트",
+              "body": "공개 전에 포지셔닝과 편집을 테스트하고 관객이 무엇을 이해했는지 기록합니다.",
+              "methods": "콘셉트 테스트 · 심층 인터뷰"
+            },
+            {
+              "title": "플랫폼과 기간",
+              "body": "관객이 타이틀을 어디서 찾기를 기대하며 조기 시청에 얼마를 낼지 밝힙니다.",
+              "methods": "온라인 조사 · 심층 인터뷰"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "브랜드와 광고",
+          "frame": "광고가 어느 콘텐츠에서 나가고 그것이 브랜드에 무엇을 하는지.",
+          "cards": [
+            {
+              "title": "브랜드 안전성",
+              "body": "다양한 콘텐츠 환경에서 광고가 어떻게 평가되고 무엇이 브랜드 신뢰를 훼손하는지 테스트합니다.",
+              "methods": "광고주 조사 · 메시지 테스트"
+            },
+            {
+              "title": "광고 효과",
+              "body": "광고가 나간 콘텐츠를 기준으로 회상과 구매 의향을 측정합니다.",
+              "methods": "온라인 조사 · 광고 테스트"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "구독과 유지",
+          "frame": "구독자가 왜 남고 왜 해지하는지.",
+          "cards": [
+            {
+              "title": "구독과 이탈",
+              "body": "구독자 행동과 해지 사유를 추적합니다.",
+              "methods": "트래킹 · 온라인 조사"
+            },
+            {
+              "title": "브랜드 건강도",
+              "body": "실제로 비교되는 플랫폼을 기준으로 인지, 고려, 추천을 추적합니다.",
+              "methods": "트래킹 · 고정 지표"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "관객 조사",
+          "시청자 또는 플레이어 조사. 플랫폼, 장르, 시장으로 할당합니다."
+        ],
+        [
+          "콘텐츠·광고 테스트",
+          "타이틀, 예고편, 크리에이티브를 동등한 표본에서 한 번에 한 변수씩 바꿔 테스트합니다."
+        ],
+        [
+          "광고주 조사",
+          "마케팅·미디어 의사결정자 조사. 지출과 카테고리로 선별합니다."
+        ],
+        [
+          "브랜드 트래킹",
+          "고정 지표로 월별 또는 분기별 트래킹. 같은 기준으로 변화를 읽습니다."
+        ],
+        [
+          "심층 인터뷰",
+          "45~60분 심층 인터뷰. 조사팀이 1대1로 진행합니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "Medier og underholdning",
+      "lead": "Forskning for kringkastere, plattformer, forlag og spillstudioer: hvem publikum er, hva de vil se eller spille, og hva som holder dem betalende.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "Medier kjøpes på oppmerksomhet og vurderes på bevaring: en tittel har ett lanseringsvindu, og publikum bestemmer innenfor det.",
+        "Vi undersøker begge sider av den handelen: publikum som velger hva de ser eller spiller, og annonsørene som må vite hva budsjettet deres ligger ved siden av.",
+        "Hver studie designes rundt beslutningen den skal støtte: hvilken tittel som skal bestilles, hvordan en lansering posisjoneres, om annonsemiljøet er trygt, og hvorfor abonnenter forlater. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Publikum og innhold",
+          "frame": "Hvem som ser eller spiller, og hva de velger.",
+          "cards": [
+            {
+              "title": "Publikum og innholdspreferanse",
+              "body": "Segmenter publikum etter plattform, sjanger og se- eller spillatferd, og test hvilket innhold de ville velge.",
+              "methods": "Nettundersøkelse · CATI"
+            },
+            {
+              "title": "Konsepttest av innhold",
+              "body": "Test titler, formater og trailere med publikum før lanseringsvinduet.",
+              "methods": "Konsept- og A/B-testing"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Lansering og programmering",
+          "frame": "Om det lander i det første vinduet.",
+          "cards": [
+            {
+              "title": "Forhåndstest før lansering",
+              "body": "Test posisjonering og klipp før utgivelse, og registrer hva publikum forstod.",
+              "methods": "Konsepttest · dybdeintervjuer"
+            },
+            {
+              "title": "Plattform og vindu",
+              "body": "Fastslå hvor publikum forventer å finne tittelen, og hva de vil betale for tidlig tilgang.",
+              "methods": "Nettundersøkelse · dybdeintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Merke og annonsering",
+          "frame": "Hvilket innhold annonsen går i, og hva det gjør med merket.",
+          "cards": [
+            {
+              "title": "Merkesikkerhet",
+              "body": "Test hvordan annonsering vurderes i ulike innholdsmiljøer, og hva som skader tilliten til merket.",
+              "methods": "Annonsør­undersøkelse · budskapstest"
+            },
+            {
+              "title": "Annonseeffekt",
+              "body": "Mål gjenkalling og kjøpsintensjon mot innholdet annonsen gikk i.",
+              "methods": "Nettundersøkelse · annonsetest"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Abonnement og bevaring",
+          "frame": "Hvorfor abonnenter blir, og hvorfor de sier opp.",
+          "cards": [
+            {
+              "title": "Abonnement og frafall",
+              "body": "Følg abonnentatferd og oppsigelsesårsaker.",
+              "methods": "Tracking · nettundersøkelse"
+            },
+            {
+              "title": "Merkehelse",
+              "body": "Følg kjennskap, vurdering og anbefaling mot plattformene som faktisk sammenlignes.",
+              "methods": "Tracking · faste mål"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "Publikumsundersøkelse",
+          "Undersøkelse blant seere eller spillere, med kvoter etter plattform, sjanger og marked."
+        ],
+        [
+          "Innholds- og annonsetester",
+          "Titler, trailere og kreativt materiale testet på sammenlignbare utvalg, med én variabel endret om gangen."
+        ],
+        [
+          "Annonsør­undersøkelse",
+          "Undersøkelse blant markeds- og mediebeslutningstakere, screenet etter budsjett og kategori."
+        ],
+        [
+          "Merketracking",
+          "Månedlig eller kvartalsvis tracking på faste mål, slik at bevegelse kan leses mot samme base."
+        ],
+        [
+          "Dybdeintervjuer",
+          "Dybdeintervjuer på 45–60 minutter, gjennomført en til en av forskerteamet."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Media e entretenimento",
+      "lead": "Investigação para radiodifusores, plataformas, editoras e estúdios de jogos: quem é o público, o que vai ver ou jogar e o que o mantém a pagar.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "Os media compram-se por atenção e avaliam-se por retenção: um título tem uma janela de lançamento, e o público decide dentro dela.",
+        "Estudamos os dois lados dessa troca: o público que escolhe o que ver ou jogar, e os anunciantes que precisam de saber ao lado do que está o seu orçamento.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar: que título encomendar, como posicionar um lançamento, se o ambiente publicitário é seguro e porque os subscritores saem. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Público e conteúdo",
+          "frame": "Quem vê ou joga, e o que escolhe.",
+          "cards": [
+            {
+              "title": "Público e preferência de conteúdo",
+              "body": "Segmentar o público por plataforma, género e comportamento de visionamento ou jogo, e testar que conteúdo escolheria.",
+              "methods": "Inquérito online · CATI"
+            },
+            {
+              "title": "Teste de conceito de conteúdo",
+              "body": "Testar títulos, formatos e trailers com o público antes da janela de lançamento.",
+              "methods": "Testes de conceito e A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Lançamento e programação",
+          "frame": "Se aterra na primeira janela.",
+          "cards": [
+            {
+              "title": "Teste antes do lançamento",
+              "body": "Testar posicionamento e montagem antes da estreia, e registar o que o público entendeu.",
+              "methods": "Teste de conceito · entrevistas em profundidade"
+            },
+            {
+              "title": "Plataforma e janela",
+              "body": "Estabelecer onde o público espera encontrar o título, e quanto pagará por acesso antecipado.",
+              "methods": "Inquérito online · entrevistas em profundidade"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marca e publicidade",
+          "frame": "Em que conteúdos passa a publicidade, e o que isso faz à marca.",
+          "cards": [
+            {
+              "title": "Segurança de marca",
+              "body": "Testar como a publicidade é julgada em diferentes ambientes de conteúdo, e o que danifica a confiança na marca.",
+              "methods": "Inquérito a anunciantes · teste de mensagem"
+            },
+            {
+              "title": "Eficácia publicitária",
+              "body": "Medir recordação e intenção de compra face ao conteúdo em que passou a publicidade.",
+              "methods": "Inquérito online · teste publicitário"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Subscrição e retenção",
+          "frame": "Porque ficam os subscritores e porque cancelam.",
+          "cards": [
+            {
+              "title": "Subscrição e abandono",
+              "body": "Acompanhar o comportamento dos subscritores e os motivos de cancelamento.",
+              "methods": "Tracking · inquérito online"
+            },
+            {
+              "title": "Saúde de marca",
+              "body": "Acompanhar notoriedade, consideração e recomendação face às plataformas realmente comparadas.",
+              "methods": "Tracking · medidas fixas"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Inquérito ao público",
+          "Inquérito a espectadores ou jogadores, com quotas por plataforma, género e mercado."
+        ],
+        [
+          "Testes de conteúdo e publicidade",
+          "Títulos, trailers e criatividade testados em amostras comparáveis, com uma variável alterada de cada vez."
+        ],
+        [
+          "Inquérito a anunciantes",
+          "Inquérito a decisores de marketing e media, filtrados por investimento e categoria."
+        ],
+        [
+          "Tracking de marca",
+          "Tracking mensal ou trimestral sobre medidas fixas, para ler o movimento contra a mesma base."
+        ],
+        [
+          "Entrevistas em profundidade",
+          "Entrevistas em profundidade de 45 a 60 minutos, conduzidas um a um pela equipa."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Медиа и развлечения",
+      "lead": "Исследования для вещателей, платформ, издателей и игровых студий: кто аудитория, что она будет смотреть или играть и что заставляет её платить.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Медиа покупают за внимание и оценивают по удержанию: у тайтла одно окно запуска, и аудитория решает внутри него.",
+        "Мы изучаем обе стороны сделки: аудиторию, которая выбирает, что смотреть или во что играть, и рекламодателей, которым нужно знать, рядом с чем стоит их бюджет.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать: какой тайтл заказать, как позиционировать запуск, безопасна ли рекламная среда и почему подписчики уходят. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Аудитория и контент",
+          "frame": "Кто смотрит или играет и что выбирает.",
+          "cards": [
+            {
+              "title": "Аудитория и предпочтения в контенте",
+              "body": "Сегментировать аудиторию по платформе, жанру и поведению просмотра или игры и проверить, какой контент она выберет.",
+              "methods": "Онлайн-опрос · CATI"
+            },
+            {
+              "title": "Тест концепции контента",
+              "body": "Проверить тайтлы, форматы и трейлеры с аудиторией до окна запуска.",
+              "methods": "Тестирование концепций и A/B"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Запуск и программирование",
+          "frame": "Попадает ли он в первое окно.",
+          "cards": [
+            {
+              "title": "Претест до запуска",
+              "body": "Проверить позиционирование и монтаж до выхода и зафиксировать, что аудитория поняла.",
+              "methods": "Тест концепции · глубинные интервью"
+            },
+            {
+              "title": "Платформа и окно",
+              "body": "Определить, где аудитория ожидает найти тайтл и сколько заплатит за ранний доступ.",
+              "methods": "Онлайн-опрос · глубинные интервью"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Бренд и реклама",
+          "frame": "В каком контенте идёт реклама и что это делает с брендом.",
+          "cards": [
+            {
+              "title": "Безопасность бренда",
+              "body": "Проверить, как рекламу оценивают в разных контентных средах и что подрывает доверие к бренду.",
+              "methods": "Опрос рекламодателей · тест сообщения"
+            },
+            {
+              "title": "Эффективность рекламы",
+              "body": "Измерить запоминание и намерение купить относительно контента, в котором шла реклама.",
+              "methods": "Онлайн-опрос · тест рекламы"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Подписка и удержание",
+          "frame": "Почему подписчики остаются и почему отменяют.",
+          "cards": [
+            {
+              "title": "Подписка и отток",
+              "body": "Отслеживать поведение подписчиков и причины отмены.",
+              "methods": "Трекинг · онлайн-опрос"
+            },
+            {
+              "title": "Здоровье бренда",
+              "body": "Отслеживать известность, рассмотрение и рекомендацию относительно реально сравниваемых платформ.",
+              "methods": "Трекинг · фиксированные показатели"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Опрос аудитории",
+          "Опрос зрителей или игроков с квотами по платформе, жанру и рынку."
+        ],
+        [
+          "Тесты контента и рекламы",
+          "Тайтлы, трейлеры и креатив, проверенные на сопоставимых выборках с изменением одной переменной за раз."
+        ],
+        [
+          "Опрос рекламодателей",
+          "Опрос руководителей маркетинга и медиа, отобранных по бюджету и категории."
+        ],
+        [
+          "Трекинг бренда",
+          "Ежемесячный или ежеквартальный трекинг по фиксированным показателям, чтобы читать динамику на одной базе."
+        ],
+        [
+          "Глубинные интервью",
+          "Глубинные интервью по 45–60 минут, один на один с исследовательской командой."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "Medier och underhållning",
+      "lead": "Undersökningar för broadcasters, plattformar, förlag och spelstudioer: vem publiken är, vad den kommer att titta på eller spela och vad som får den att betala.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "Medier köps på uppmärksamhet och bedöms på behållning: en titel har ett lanseringsfönster, och publiken avgör inom det.",
+        "Vi undersöker båda sidor av den handeln: publiken som väljer vad den tittar på eller spelar, och annonsörerna som måste veta vad deras budget ligger bredvid.",
+        "Varje studie byggs kring det beslut den ska stödja: vilken titel som ska beställas, hur en lansering ska positioneras, om annonsmiljön är säker och varför prenumeranter lämnar. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Publik och innehåll",
+          "frame": "Vem som tittar eller spelar, och vad de väljer.",
+          "cards": [
+            {
+              "title": "Publik och innehållspreferens",
+              "body": "Segmentera publiken efter plattform, genre och tittar- eller spelbeteende, och testa vilket innehåll de skulle välja.",
+              "methods": "Onlineundersökning · CATI"
+            },
+            {
+              "title": "Koncepttest av innehåll",
+              "body": "Testa titlar, format och trailers med publiken före lanseringsfönstret.",
+              "methods": "Koncept- och A/B-test"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Lansering och tablå",
+          "frame": "Om det landar i det första fönstret.",
+          "cards": [
+            {
+              "title": "Förtest före lansering",
+              "body": "Testa positionering och klippning före release, och registrera vad publiken förstod.",
+              "methods": "Koncepttest · djupintervjuer"
+            },
+            {
+              "title": "Plattform och fönster",
+              "body": "Fastställa var publiken förväntar sig hitta titeln, och vad den betalar för tidig tillgång.",
+              "methods": "Onlineundersökning · djupintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Varumärke och reklam",
+          "frame": "I vilket innehåll reklamen går, och vad det gör med varumärket.",
+          "cards": [
+            {
+              "title": "Varumärkessäkerhet",
+              "body": "Testa hur reklam bedöms i olika innehållsmiljöer, och vad som skadar förtroendet för varumärket.",
+              "methods": "Annonsörsundersökning · budskapstest"
+            },
+            {
+              "title": "Reklameffekt",
+              "body": "Mät erinran och köpintention mot innehållet reklamen gick i.",
+              "methods": "Onlineundersökning · reklamtest"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Prenumeration och behållning",
+          "frame": "Varför prenumeranter stannar, och varför de avslutar.",
+          "cards": [
+            {
+              "title": "Prenumeration och tapp",
+              "body": "Följ prenumerantbeteende och orsaker till uppsägning.",
+              "methods": "Tracking · onlineundersökning"
+            },
+            {
+              "title": "Varumärkeshälsa",
+              "body": "Följ kännedom, övervägande och rekommendation mot de plattformar som faktiskt jämförs.",
+              "methods": "Tracking · fasta mått"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "Publikundersökning",
+          "Undersökning bland tittare eller spelare, med kvoter efter plattform, genre och marknad."
+        ],
+        [
+          "Innehålls- och reklamtester",
+          "Titlar, trailers och kreativt material testade på jämförbara urval, med en variabel ändrad i taget."
+        ],
+        [
+          "Annonsörsundersökning",
+          "Undersökning bland marknads- och mediebeslutsfattare, screenade efter budget och kategori."
+        ],
+        [
+          "Varumärkestracking",
+          "Månatlig eller kvartalsvis tracking på fasta mått, så att rörelse kan läsas mot samma bas."
+        ],
+        [
+          "Djupintervjuer",
+          "Djupintervjuer på 45–60 minuter, genomförda en mot en av forskarteamet."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "Medya ve eğlence",
+      "lead": "Yayıncılar, platformlar, yayınevleri ve oyun stüdyoları için araştırma: izleyici kim, neyi izleyecek veya oynayacak ve onu ne ödemeye devam ettirir.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Medya dikkatle satın alınır ve elde tutmayla değerlendirilir: bir başlığın tek bir çıkış penceresi vardır ve izleyici o pencerede karar verir.",
+        "Bu alışverişin iki tarafını inceliyoruz: neyi izleyeceğini seçen izleyici ve bütçesinin neyin yanında durduğunu bilmesi gereken reklamverenler.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır: hangi başlık sipariş edilecek, çıkış nasıl konumlandırılacak, reklam ortamı güvenli mi ve aboneler neden ayrılıyor. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "İzleyici ve içerik",
+          "frame": "Kim izliyor veya oynuyor ve neyi seçiyor.",
+          "cards": [
+            {
+              "title": "İzleyici ve içerik tercihi",
+              "body": "İzleyiciyi platform, tür ve izleme/oynama davranışına göre segmentlere ayırın ve hangi içeriği seçeceğini test edin.",
+              "methods": "Çevrimiçi anket · CATI"
+            },
+            {
+              "title": "İçerik konsept testi",
+              "body": "Çıkış penceresinden önce başlıkları, formatları ve fragmanları izleyiciyle test edin.",
+              "methods": "Konsept ve A/B testi"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Çıkış ve programlama",
+          "frame": "İlk pencereye iniyor mu.",
+          "cards": [
+            {
+              "title": "Çıkış öncesi test",
+              "body": "Yayından önce konumlandırmayı ve kurguyu test edin; izleyicinin ne anladığını kaydedin.",
+              "methods": "Konsept testi · derinlemesine görüşmeler"
+            },
+            {
+              "title": "Platform ve pencere",
+              "body": "İzleyicinin başlığı nerede bulmayı beklediğini ve erken erişime ne ödeyeceğini belirleyin.",
+              "methods": "Çevrimiçi anket · derinlemesine görüşmeler"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Marka ve reklam",
+          "frame": "Reklamın hangi içerikte yayınlandığı ve bunun markaya ne yaptığı.",
+          "cards": [
+            {
+              "title": "Marka güvenliği",
+              "body": "Reklamın farklı içerik ortamlarında nasıl değerlendirildiğini ve markaya güveni neyin zedelediğini test edin.",
+              "methods": "Reklamveren anketi · mesaj testi"
+            },
+            {
+              "title": "Reklam etkinliği",
+              "body": "Reklamın yayınlandığı içeriğe göre hatırlama ve satın alma niyetini ölçün.",
+              "methods": "Çevrimiçi anket · reklam testi"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Abonelik ve elde tutma",
+          "frame": "Aboneler neden kalıyor ve neden iptal ediyor.",
+          "cards": [
+            {
+              "title": "Abonelik ve kayıp",
+              "body": "Abone davranışını ve iptal nedenlerini izleyin.",
+              "methods": "Tracking · çevrimiçi anket"
+            },
+            {
+              "title": "Marka sağlığı",
+              "body": "Gerçekten karşılaştırılan platformlara göre bilinirlik, değerlendirme ve tavsiyeyi izleyin.",
+              "methods": "Tracking · sabit ölçütler"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "İzleyici anketi",
+          "İzleyici veya oyuncu anketi; platform, tür ve pazara göre kotalar."
+        ],
+        [
+          "İçerik ve reklam testleri",
+          "Başlıklar, fragmanlar ve kreatifler karşılaştırılabilir örneklemlerde, her seferinde tek değişken değiştirilerek test edilir."
+        ],
+        [
+          "Reklamveren anketi",
+          "Pazarlama ve medya karar vericileriyle anket; harcama ve kategoriye göre elenir."
+        ],
+        [
+          "Marka takibi",
+          "Sabit ölçütlerle aylık veya üç aylık tracking; hareket aynı taban üzerinden okunur."
+        ],
+        [
+          "Derinlemesine görüşmeler",
+          "45-60 dakikalık derinlemesine görüşmeler; araştırma ekibi bire bir yürütür."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   },
   "ecommerce": {
