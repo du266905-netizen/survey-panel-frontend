@@ -482,75 +482,237 @@ export const aboutCopy = {
 export const accessEntryCopy = {
   "zh-CN": {
     "title": "让每一次判断\n都有事实依据。",
-    "note": "准备好加入我们了吗？\n共同打造开放、共生、可持续的研究生态。"
+    "note": "准备好加入我们了吗？\n共同打造开放、共生、可持续的研究生态。",
+    "form": {
+      "participant": "参与者",
+      "researcher": "研究员",
+      "google": "使用 Google 登录",
+      "or": "或",
+      "emailPlaceholder": "输入邮箱",
+      "continue": "继续",
+      "terms": "登录即表示你同意{terms}和{privacy}。"
+    }
   },
   "zh-Hant": {
     "title": "讓每一次判斷\n都有事實依據。",
-    "note": "準備好加入我們了嗎？\n共同打造開放、共生、可持續的研究生態。"
+    "note": "準備好加入我們了嗎？\n共同打造開放、共生、可持續的研究生態。",
+    "form": {
+      "participant": "參與者",
+      "researcher": "研究員",
+      "google": "使用 Google 登入",
+      "or": "或",
+      "emailPlaceholder": "輸入信箱",
+      "continue": "繼續",
+      "terms": "登入即表示你同意{terms}和{privacy}。"
+    }
   },
   "en": {
     "title": "Let every judgement\nrest on evidence.",
-    "note": "Ready to join us?\nTogether we build an open, interconnected and sustainable research ecosystem."
+    "note": "Ready to join us?\nTogether we build an open, interconnected and sustainable research ecosystem.",
+    "form": {
+      "participant": "Participant",
+      "researcher": "Researcher",
+      "google": "Sign in with Google",
+      "or": "or",
+      "emailPlaceholder": "Enter email",
+      "continue": "Continue",
+      "terms": "By signing in, you agree to the {terms} and {privacy}."
+    }
   },
   "de": {
     "title": "Jedes Urteil\nruht auf Belegen.",
-    "note": "Bereit, Teil davon zu werden?\nGemeinsam bauen wir ein offenes, vernetztes und nachhaltiges Forschungsökosystem."
+    "note": "Bereit, Teil davon zu werden?\nGemeinsam bauen wir ein offenes, vernetztes und nachhaltiges Forschungsökosystem.",
+    "form": {
+      "participant": "Teilnehmende",
+      "researcher": "Forschende",
+      "google": "Mit Google anmelden",
+      "or": "oder",
+      "emailPlaceholder": "E-Mail eingeben",
+      "continue": "Weiter",
+      "terms": "Mit der Anmeldung stimmen Sie den {terms} und der {privacy} zu."
+    }
   },
   "fr": {
     "title": "Chaque jugement\nrepose sur des preuves.",
-    "note": "Prêt à nous rejoindre ?\nEnsemble, nous construisons un écosystème de recherche ouvert, interconnecté et durable."
+    "note": "Prêt à nous rejoindre ?\nEnsemble, nous construisons un écosystème de recherche ouvert, interconnecté et durable.",
+    "form": {
+      "participant": "Participant",
+      "researcher": "Chercheur",
+      "google": "Se connecter avec Google",
+      "or": "ou",
+      "emailPlaceholder": "Saisir l'e-mail",
+      "continue": "Continuer",
+      "terms": "En vous connectant, vous acceptez les {terms} et la {privacy}."
+    }
   },
   "nl": {
     "title": "Elk oordeel\nrust op bewijs.",
-    "note": "Klaar om mee te doen?\nSamen bouwen we een open, verbonden en duurzaam onderzoeksecosysteem."
+    "note": "Klaar om mee te doen?\nSamen bouwen we een open, verbonden en duurzaam onderzoeksecosysteem.",
+    "form": {
+      "participant": "Deelnemer",
+      "researcher": "Onderzoeker",
+      "google": "Inloggen met Google",
+      "or": "of",
+      "emailPlaceholder": "E-mail invoeren",
+      "continue": "Doorgaan",
+      "terms": "Door in te loggen gaat u akkoord met de {terms} en het {privacy}."
+    }
   },
   "da": {
     "title": "Hver vurdering\nhviler på evidens.",
-    "note": "Klar til at være med?\nSammen bygger vi et åbent, sammenkoblet og bæredygtigt forskningsøkosystem."
+    "note": "Klar til at være med?\nSammen bygger vi et åbent, sammenkoblet og bæredygtigt forskningsøkosystem.",
+    "form": {
+      "participant": "Deltager",
+      "researcher": "Forsker",
+      "google": "Log ind med Google",
+      "or": "eller",
+      "emailPlaceholder": "Indtast e-mail",
+      "continue": "Fortsæt",
+      "terms": "Ved at logge ind accepterer du {terms} og {privacy}."
+    }
   },
   "es": {
     "title": "Cada juicio\nse apoya en pruebas.",
-    "note": "¿Listo para unirte?\nJuntos construimos un ecosistema de investigación abierto, interconectado y sostenible."
+    "note": "¿Listo para unirte?\nJuntos construimos un ecosistema de investigación abierto, interconectado y sostenible.",
+    "form": {
+      "participant": "Participante",
+      "researcher": "Investigador",
+      "google": "Iniciar sesión con Google",
+      "or": "o",
+      "emailPlaceholder": "Introduce tu correo",
+      "continue": "Continuar",
+      "terms": "Al iniciar sesión, aceptas los {terms} y la {privacy}."
+    }
   },
   "fi": {
     "title": "Jokainen arvio\nperustuu näyttöön.",
-    "note": "Valmis liittymään?\nRakennamme yhdessä avointa, verkottunutta ja kestävää tutkimusekosysteemiä."
+    "note": "Valmis liittymään?\nRakennamme yhdessä avointa, verkottunutta ja kestävää tutkimusekosysteemiä.",
+    "form": {
+      "participant": "Osallistuja",
+      "researcher": "Tutkija",
+      "google": "Kirjaudu Googlella",
+      "or": "tai",
+      "emailPlaceholder": "Syötä sähköposti",
+      "continue": "Jatka",
+      "terms": "Kirjautumalla hyväksyt {terms} ja {privacy}."
+    }
   },
   "it": {
     "title": "Ogni giudizio\nsi basa su prove.",
-    "note": "Pronto a unirsi a noi?\nInsieme costruiamo un ecosistema di ricerca aperto, interconnesso e sostenibile."
+    "note": "Pronto a unirsi a noi?\nInsieme costruiamo un ecosistema di ricerca aperto, interconnesso e sostenibile.",
+    "form": {
+      "participant": "Partecipante",
+      "researcher": "Ricercatore",
+      "google": "Accedi con Google",
+      "or": "oppure",
+      "emailPlaceholder": "Inserisci email",
+      "continue": "Continua",
+      "terms": "Accedendo, accetti i {terms} e la {privacy}."
+    }
   },
   "ja": {
     "title": "すべての判断を\n事実にもとづかせる。",
-    "note": "参加しませんか。\n開かれ、相互につながり、持続可能なリサーチの生態系を共につくります。"
+    "note": "参加しませんか。\n開かれ、相互につながり、持続可能なリサーチの生態系を共につくります。",
+    "form": {
+      "participant": "参加者",
+      "researcher": "研究者",
+      "google": "Google でログイン",
+      "or": "または",
+      "emailPlaceholder": "メールアドレスを入力",
+      "continue": "続行",
+      "terms": "ログインすると、{terms} と {privacy} に同意したものとみなされます。"
+    }
   },
   "ko": {
     "title": "모든 판단이\n사실에 근거하도록.",
-    "note": "함께하시겠습니까?\n열려 있고 상호 연결된 지속 가능한 리서치 생태계를 함께 만듭니다."
+    "note": "함께하시겠습니까?\n열려 있고 상호 연결된 지속 가능한 리서치 생태계를 함께 만듭니다.",
+    "form": {
+      "participant": "참여자",
+      "researcher": "연구자",
+      "google": "Google로 로그인",
+      "or": "또는",
+      "emailPlaceholder": "이메일 입력",
+      "continue": "계속",
+      "terms": "로그인하면 {terms} 및 {privacy}에 동의하는 것으로 간주됩니다."
+    }
   },
   "no": {
     "title": "Hver vurdering\nhviler på bevis.",
-    "note": "Klar til å bli med?\nSammen bygger vi et åpent, sammenkoblet og bærekraftig forskningsøkosystem."
+    "note": "Klar til å bli med?\nSammen bygger vi et åpent, sammenkoblet og bærekraftig forskningsøkosystem.",
+    "form": {
+      "participant": "Deltaker",
+      "researcher": "Forsker",
+      "google": "Logg inn med Google",
+      "or": "eller",
+      "emailPlaceholder": "Skriv inn e-post",
+      "continue": "Fortsett",
+      "terms": "Ved å logge inn godtar du {terms} og {privacy}."
+    }
   },
   "pt": {
     "title": "Cada juízo\nassenta em provas.",
-    "note": "Pronto para se juntar a nós?\nJuntos construímos um ecossistema de investigação aberto, interligado e sustentável."
+    "note": "Pronto para se juntar a nós?\nJuntos construímos um ecossistema de investigação aberto, interligado e sustentável.",
+    "form": {
+      "participant": "Participante",
+      "researcher": "Investigador",
+      "google": "Iniciar sessão com Google",
+      "or": "ou",
+      "emailPlaceholder": "Introduza o e-mail",
+      "continue": "Continuar",
+      "terms": "Ao iniciar sessão, aceita os {terms} e a {privacy}."
+    }
   },
   "ru": {
     "title": "Пусть каждое суждение\nопирается на факты.",
-    "note": "Готовы присоединиться?\nВместе мы строим открытую, взаимосвязанную и устойчивую исследовательскую экосистему."
+    "note": "Готовы присоединиться?\nВместе мы строим открытую, взаимосвязанную и устойчивую исследовательскую экосистему.",
+    "form": {
+      "participant": "Участник",
+      "researcher": "Исследователь",
+      "google": "Войти через Google",
+      "or": "или",
+      "emailPlaceholder": "Введите email",
+      "continue": "Продолжить",
+      "terms": "Входя, вы принимаете {terms} и {privacy}."
+    }
   },
   "sv": {
     "title": "Varje bedömning\nvilar på bevis.",
-    "note": "Redo att vara med?\nTillsammans bygger vi ett öppet, sammankopplat och hållbart forskningsekosystem."
+    "note": "Redo att vara med?\nTillsammans bygger vi ett öppet, sammankopplat och hållbart forskningsekosystem.",
+    "form": {
+      "participant": "Deltagare",
+      "researcher": "Forskare",
+      "google": "Logga in med Google",
+      "or": "eller",
+      "emailPlaceholder": "Ange e-post",
+      "continue": "Fortsätt",
+      "terms": "Genom att logga in godkänner du {terms} och {privacy}."
+    }
   },
   "tr": {
     "title": "Her yargı\nkanıta dayansın.",
-    "note": "Bize katılmaya hazır mısınız?\nBirlikte açık, birbirine bağlı ve sürdürülebilir bir araştırma ekosistemi kuruyoruz."
+    "note": "Bize katılmaya hazır mısınız?\nBirlikte açık, birbirine bağlı ve sürdürülebilir bir araştırma ekosistemi kuruyoruz.",
+    "form": {
+      "participant": "Katılımcı",
+      "researcher": "Araştırmacı",
+      "google": "Google ile giriş yap",
+      "or": "veya",
+      "emailPlaceholder": "E-posta girin",
+      "continue": "Devam",
+      "terms": "Giriş yaparak {terms} ve {privacy} metinlerini kabul edersiniz."
+    }
   },
   "en-GB": {
     "title": "Let every judgement\nrest on evidence.",
-    "note": "Ready to join us?\nTogether we build an open, interconnected and sustainable research ecosystem."
+    "note": "Ready to join us?\nTogether we build an open, interconnected and sustainable research ecosystem.",
+    "form": {
+      "participant": "Participant",
+      "researcher": "Researcher",
+      "google": "Sign in with Google",
+      "or": "or",
+      "emailPlaceholder": "Enter email",
+      "continue": "Continue",
+      "terms": "By signing in, you agree to the {terms} and {privacy}."
+    }
   }
 };
 
@@ -18941,6 +19103,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "E-Commerce und Shopper",
+      "lead": "Forschung für Marktplätze, Marken und Händler, die online verkaufen: wo der Shopper das Produkt findet, was im Warenkorb liegt und warum er zu einer Plattform zurückkehrt.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Online ist das Regal ein Suchergebnis, und der Shopper vergleicht mehr Angebote in kürzerer Zeit, als es ein Laden erlaubt.",
+        "Wir untersuchen den Weg, wie er geschieht: wie ein Produkt gefunden wird, was das Listing vermittelt, was in den Warenkorb geht und wo der Kauf stoppt.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll: welche Plattform zu priorisieren, wie gegen das Listing daneben zu bepreisen und was einen Shopper zurückbringt. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Plattform und Kategorie",
+          "frame": "Wo die Kategorie gekauft wird und gegen was.",
+          "cards": [
+            {
+              "title": "Plattformwahl",
+              "body": "Feststellen, wo die Kategorie gekauft wird und wie sich die Plattformwahl nach Markt und Käufer verschiebt.",
+              "methods": "Shopper-Tracker · Online-Befragung"
+            },
+            {
+              "title": "Kategorie und Preis",
+              "body": "Preisstufen und Packungsgrößen gegen die Listings testen, neben denen sie erscheinen.",
+              "methods": "Online-Befragung · Preistests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Auffinden und Listing",
+          "frame": "Wie das Produkt gefunden wird und was das Listing sagt.",
+          "cards": [
+            {
+              "title": "Suche und Auffinden",
+              "body": "Untersuchen, wie Shopper das Produkt finden — Suche, Listenreihenfolge, Empfehlung — und was sie übersehen.",
+              "methods": "Online-Befragung · Tiefeninterviews"
+            },
+            {
+              "title": "Listing und Bildsprache",
+              "body": "Produktseiten, Bilder und Bewertungen darauf testen, was sie vor dem Klick vermitteln.",
+              "methods": "Konzept- und A/B-Tests"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Warenkorb und Checkout",
+          "frame": "Was hineingeht und wo der Kauf stoppt.",
+          "cards": [
+            {
+              "title": "Warenkorb und Abbruch",
+              "body": "Messen, was in den Warenkorb geht, was abgebrochen wird und in welchem Schritt.",
+              "methods": "Shopper-Tracker · Online-Befragung"
+            },
+            {
+              "title": "Lieferung und Rücksendung",
+              "body": "Feststellen, was Lieferkosten, Lieferzeit und Rückgaberegeln mit dem Abschluss machen.",
+              "methods": "Online-Befragung · A/B-Tests"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Wiederkauf und Loyalität",
+          "frame": "Warum der Shopper zu einer Plattform zurückkehrt.",
+          "cards": [
+            {
+              "title": "Wiederkauf",
+              "body": "Wiederkäufe und die Gründe verfolgen, warum ein Shopper zu derselben Plattform zurückkehrt.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Promotions und Mitgliedschaft",
+              "body": "Testen, wie Promotions und Mitgliedschaft Warenkorbgröße und Kaufhäufigkeit verändern.",
+              "methods": "Tracker · Online-Befragung"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "Shopper-Tracker",
+          "Monatliches oder quartalsweises Tracking auf festen Messgrößen, damit Bewegung gegen dieselbe Basis lesbar bleibt."
+        ],
+        [
+          "Online-Befragung",
+          "Befragung von Online-Shoppern, mit Quoten nach Plattform, Kategorie und Markt."
+        ],
+        [
+          "Tiefeninterviews",
+          "Tiefeninterviews von 45 bis 60 Minuten mit Shoppern, eins zu eins vom Forschungsteam geführt."
+        ],
+        [
+          "Konzept- und A/B-Tests",
+          "Listings, Bilder und Checkout-Schritte auf vergleichbaren Stichproben getestet, jeweils eine Variable."
+        ],
+        [
+          "Preistests",
+          "Preispunkte und Liefergrenzen gegen Zahlungsbereitschaft getestet."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "E-commerce et shopper",
+      "lead": "Études pour marketplaces, marques et distributeurs vendant en ligne : où l'acheteur trouve le produit, ce qu'il y a dans le panier et pourquoi il revient sur une plateforme.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "En ligne, le rayon est un résultat de recherche, et l'acheteur compare plus d'annonces en moins de temps qu'aucun magasin ne le permet.",
+        "Nous étudions le parcours tel qu'il se produit : comment un produit est trouvé, ce que l'annonce communique, ce qui entre dans le panier et où l'achat s'arrête.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer : quelle plateforme prioriser, comment se positionner face à l'annonce voisine, et ce qui fait revenir l'acheteur. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Plateforme et catégorie",
+          "frame": "Où la catégorie s'achète, et contre quoi.",
+          "cards": [
+            {
+              "title": "Choix de plateforme",
+              "body": "Établir où la catégorie s'achète, et comment le choix de plateforme varie par marché et par acheteur.",
+              "methods": "Tracker shopper · enquête en ligne"
+            },
+            {
+              "title": "Catégorie et prix",
+              "body": "Tester niveaux de prix et formats face aux annonces à côté desquelles ils apparaissent.",
+              "methods": "Enquête en ligne · tests de prix"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Découverte et annonce",
+          "frame": "Comment le produit est trouvé, et ce que dit l'annonce.",
+          "cards": [
+            {
+              "title": "Recherche et découverte",
+              "body": "Étudier comment les acheteurs trouvent le produit — recherche, ordre des annonces, recommandation — et ce qu'ils ignorent.",
+              "methods": "Enquête en ligne · entretiens approfondis"
+            },
+            {
+              "title": "Annonce et visuels",
+              "body": "Tester pages produit, images et avis sur ce qu'ils communiquent avant le clic.",
+              "methods": "Tests de concept et A/B"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Panier et paiement",
+          "frame": "Ce qui entre, et où l'achat s'arrête.",
+          "cards": [
+            {
+              "title": "Panier et abandon",
+              "body": "Mesurer ce qui entre dans le panier, ce qui est abandonné, et à quelle étape.",
+              "methods": "Tracker shopper · enquête en ligne"
+            },
+            {
+              "title": "Livraison et retours",
+              "body": "Établir ce que coût, délai et politique de retour font à la finalisation.",
+              "methods": "Enquête en ligne · tests A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Réachat et fidélité",
+          "frame": "Pourquoi l'acheteur revient sur une plateforme.",
+          "cards": [
+            {
+              "title": "Réachat",
+              "body": "Suivre le réachat et les raisons pour lesquelles un acheteur revient sur la même plateforme.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Promotions et adhésion",
+              "body": "Tester comment promotions et adhésion changent la taille du panier et la fréquence d'achat.",
+              "methods": "Tracker · enquête en ligne"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Tracker shopper",
+          "Tracking mensuel ou trimestriel sur des mesures fixes, pour lire les évolutions sur la même base."
+        ],
+        [
+          "Enquête en ligne",
+          "Enquête auprès d'acheteurs en ligne, avec quotas par plateforme, catégorie et marché."
+        ],
+        [
+          "Entretiens approfondis",
+          "Entretiens approfondis de 45 à 60 minutes avec des acheteurs, menés en tête-à-tête par l'équipe."
+        ],
+        [
+          "Tests de concept et A/B",
+          "Annonces, images et étapes de paiement testées sur des échantillons comparables, une variable à la fois."
+        ],
+        [
+          "Tests de prix",
+          "Points de prix et seuils de livraison testés face à la disposition à payer."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "E-commerce en shopper",
+      "lead": "Onderzoek voor marktplaatsen, merken en retailers die online verkopen: waar de shopper het product vindt, wat er in de mand zit en waarom hij terugkeert naar één platform.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Online is het schap een zoekresultaat, en de shopper vergelijkt meer advertenties in minder tijd dan welke winkel ook toestaat.",
+        "We onderzoeken het pad zoals het gebeurt: hoe een product wordt gevonden, wat de listing communiceert, wat in de mand gaat en waar de aankoop stopt.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen: welk platform prioriteit krijgt, hoe te prijzen tegen de listing ernaast, en wat een shopper laat terugkomen. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Platform en categorie",
+          "frame": "Waar de categorie wordt gekocht, en waartegen.",
+          "cards": [
+            {
+              "title": "Platformkeuze",
+              "body": "Vaststellen waar de categorie wordt gekocht, en hoe platformkeuze verschuift per markt en per koper.",
+              "methods": "Shopper-tracker · online-enquête"
+            },
+            {
+              "title": "Categorie en prijs",
+              "body": "Prijsniveaus en verpakkingsmaten testen tegen de listings waar ze naast staan.",
+              "methods": "Online-enquête · prijstests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Ontdekking en listing",
+          "frame": "Hoe het product wordt gevonden, en wat de listing zegt.",
+          "cards": [
+            {
+              "title": "Zoeken en ontdekken",
+              "body": "Onderzoeken hoe shoppers het product vinden — zoekopdracht, volgorde, aanbeveling — en wat zij voorbijgaan.",
+              "methods": "Online-enquête · diepte-interviews"
+            },
+            {
+              "title": "Listing en beeld",
+              "body": "Productpagina's, afbeeldingen en reviews testen op wat zij vóór de klik communiceren.",
+              "methods": "Concept- en A/B-tests"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Mand en checkout",
+          "frame": "Wat erin gaat, en waar de aankoop stopt.",
+          "cards": [
+            {
+              "title": "Mand en afbreken",
+              "body": "Meten wat in de mand gaat, wat wordt afgebroken en in welke stap.",
+              "methods": "Shopper-tracker · online-enquête"
+            },
+            {
+              "title": "Levering en retour",
+              "body": "Vaststellen wat leverkosten, levertijd en retourbeleid doen met de afronding.",
+              "methods": "Online-enquête · A/B-tests"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Herhaalaankoop en loyaliteit",
+          "frame": "Waarom de shopper terugkeert naar één platform.",
+          "cards": [
+            {
+              "title": "Herhaalaankoop",
+              "body": "Herhaalaankopen volgen en de redenen waarom een shopper naar hetzelfde platform terugkeert.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Promoties en lidmaatschap",
+              "body": "Testen hoe promoties en lidmaatschap de mandgrootte en aankoopfrequentie veranderen.",
+              "methods": "Tracker · online-enquête"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "Shopper-tracker",
+          "Maandelijkse of driemaandelijkse tracking op vaste maten, zodat beweging tegen dezelfde basis leesbaar blijft."
+        ],
+        [
+          "Online-enquête",
+          "Enquête onder online shoppers, met quota naar platform, categorie en markt."
+        ],
+        [
+          "Diepte-interviews",
+          "Diepte-interviews van 45 tot 60 minuten met shoppers, één op één door het onderzoeksteam."
+        ],
+        [
+          "Concept- en A/B-tests",
+          "Listings, afbeeldingen en checkoutstappen getest op vergelijkbare steekproeven, één variabele per keer."
+        ],
+        [
+          "Prijs tests",
+          "Prijspunten en leverdrempels getest tegen betalingsbereidheid."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "E-handel og shopper",
+      "lead": "Research for markedspladser, mærker og forhandlere, der sælger online: hvor shopperen finder produktet, hvad der ligger i kurven, og hvorfor de vender tilbage til én platform.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "Online er hylden et søgeresultat, og shopperen sammenligner flere annoncer på kortere tid, end nogen butik tillader.",
+        "Vi undersøger rejsen, som den sker: hvordan et produkt findes, hvad annoncen formidler, hvad der kommer i kurven, og hvor købet stopper.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte: hvilken platform der skal prioriteres, hvordan der skal prissættes mod annoncen ved siden af, og hvad der får en shopper tilbage. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Platform og kategori",
+          "frame": "Hvor kategorien købes, og mod hvad.",
+          "cards": [
+            {
+              "title": "Platformsvalg",
+              "body": "Fastslå, hvor kategorien købes, og hvordan platformsvalget skifter efter marked og køber.",
+              "methods": "Shopper-tracker · onlineundersøgelse"
+            },
+            {
+              "title": "Kategori og pris",
+              "body": "Test prisniveauer og pakningsstørrelser mod de annoncer, de står ved siden af.",
+              "methods": "Onlineundersøgelse · pristests"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Opdagelse og annonce",
+          "frame": "Hvordan produktet findes, og hvad annoncen siger.",
+          "cards": [
+            {
+              "title": "Søgning og opdagelse",
+              "body": "Undersøg, hvordan shoppere finder produktet — søgning, rækkefølge, anbefaling — og hvad de går forbi.",
+              "methods": "Onlineundersøgelse · dybdeinterviews"
+            },
+            {
+              "title": "Annonce og billeder",
+              "body": "Test produktsider, billeder og anmeldelser for det, de formidler før klikket.",
+              "methods": "Koncept- og A/B-test"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Kurv og checkout",
+          "frame": "Hvad der kommer i, og hvor købet stopper.",
+          "cards": [
+            {
+              "title": "Kurv og afbrud",
+              "body": "Mål, hvad der kommer i kurven, hvad der afbrydes, og i hvilket trin.",
+              "methods": "Shopper-tracker · onlineundersøgelse"
+            },
+            {
+              "title": "Levering og retur",
+              "body": "Fastslå, hvad leveringspris, tid og returpolitik gør ved gennemførelsen.",
+              "methods": "Onlineundersøgelse · A/B-tests"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Genkøb og loyalitet",
+          "frame": "Hvorfor shopperen vender tilbage til én platform.",
+          "cards": [
+            {
+              "title": "Genkøb",
+              "body": "Følg genkøb og årsagerne til, at en shopper vender tilbage til samme platform.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Kampagner og medlemskab",
+              "body": "Test, hvordan kampagner og medlemskab ændrer kurvstørrelse og købsfrekvens.",
+              "methods": "Tracker · onlineundersøgelse"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "Shopper-tracker",
+          "Månedlig eller kvartalsvis tracking på faste mål, så bevægelse kan læses mod samme base."
+        ],
+        [
+          "Onlineundersøgelse",
+          "Undersøgelse blandt online-shoppere, med kvoter efter platform, kategori og marked."
+        ],
+        [
+          "Dybdeinterviews",
+          "Dybdeinterviews på 45-60 minutter med shoppere, gennemført en til en af researchteamet."
+        ],
+        [
+          "Koncept- og A/B-test",
+          "Annoncer, billeder og checkout-trin testet på sammenlignelige stikprøver, én variabel ad gangen."
+        ],
+        [
+          "Pristests",
+          "Prispunkter og leveringsgrænser testet mod betalingsvillighed."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Comercio electrónico y comprador",
+      "lead": "Investigación para marketplaces, marcas y minoristas que venden online: dónde encuentra el producto el comprador, qué hay en la cesta y por qué vuelve a una plataforma.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "En línea, el lineal es un resultado de búsqueda, y el comprador compara más anuncios en menos tiempo del que permite cualquier tienda.",
+        "Estudiamos el recorrido tal como ocurre: cómo se encuentra un producto, qué comunica el anuncio, qué entra en la cesta y dónde se detiene la compra.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener: qué plataforma priorizar, cómo fijar precio frente al anuncio de al lado y qué hace volver al comprador. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Plataforma y categoría",
+          "frame": "Dónde se compra la categoría y contra qué.",
+          "cards": [
+            {
+              "title": "Elección de plataforma",
+              "body": "Establecer dónde se compra la categoría y cómo cambia la elección de plataforma por mercado y por comprador.",
+              "methods": "Tracker de compradores · encuesta online"
+            },
+            {
+              "title": "Categoría y precio",
+              "body": "Probar niveles de precio y tamaños de pack frente a los anuncios junto a los que aparecen.",
+              "methods": "Encuesta online · pruebas de precio"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Descubrimiento y anuncio",
+          "frame": "Cómo se encuentra el producto y qué dice el anuncio.",
+          "cards": [
+            {
+              "title": "Búsqueda y descubrimiento",
+              "body": "Estudiar cómo encuentran el producto — búsqueda, orden, recomendación — y qué dejan pasar.",
+              "methods": "Encuesta online · entrevistas en profundidad"
+            },
+            {
+              "title": "Anuncio e imágenes",
+              "body": "Probar páginas de producto, imágenes y reseñas por lo que comunican antes del clic.",
+              "methods": "Pruebas de concepto y A/B"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Cesta y pago",
+          "frame": "Qué entra y dónde se detiene la compra.",
+          "cards": [
+            {
+              "title": "Cesta y abandono",
+              "body": "Medir qué entra en la cesta, qué se abandona y en qué paso.",
+              "methods": "Tracker de compradores · encuesta online"
+            },
+            {
+              "title": "Entrega y devoluciones",
+              "body": "Establecer qué hacen el coste, el plazo y la política de devoluciones con la finalización.",
+              "methods": "Encuesta online · pruebas A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Recompra y fidelidad",
+          "frame": "Por qué el comprador vuelve a una plataforma.",
+          "cards": [
+            {
+              "title": "Recompra",
+              "body": "Seguir la recompra y los motivos por los que un comprador vuelve a la misma plataforma.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Promociones y membresía",
+              "body": "Probar cómo las promociones y la membresía cambian el tamaño de la cesta y la frecuencia de compra.",
+              "methods": "Tracker · encuesta online"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Tracker de compradores",
+          "Tracking mensual o trimestral sobre medidas fijas, para leer el movimiento contra la misma base."
+        ],
+        [
+          "Encuesta online",
+          "Encuesta a compradores online, con cuotas por plataforma, categoría y mercado."
+        ],
+        [
+          "Entrevistas en profundidad",
+          "Entrevistas en profundidad de 45 a 60 minutos con compradores, realizadas uno a uno por el equipo."
+        ],
+        [
+          "Pruebas de concepto y A/B",
+          "Anuncios, imágenes y pasos de pago probados en muestras comparables, una variable cada vez."
+        ],
+        [
+          "Pruebas de precio",
+          "Puntos de precio y umbrales de entrega probados frente a la disposición a pagar."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Verkkokauppa ja ostaja",
+      "lead": "Tutkimusta markkinapaikoille, brändeille ja jälleenmyyjille, jotka myyvät verkossa: mistä ostaja löytää tuotteen, mitä korissa on ja miksi hän palaa yhdelle alustalle.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Verkossa hylly on hakutulos, ja ostaja vertaa useampia ilmoituksia lyhyemmässä ajassa kuin mikään myymälä sallii.",
+        "Tutkimme polun sellaisena kuin se tapahtuu: miten tuote löytyy, mitä ilmoitus viestii, mitä koriin tulee ja mihin ostaminen pysähtyy.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava: mikä alusta asetetaan etusijalle, miten hinnoitellaan vieressä olevaan ilmoitukseen nähden ja mikä saa ostajan palaamaan. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Alusta ja kategoria",
+          "frame": "Missä kategoria ostetaan ja mitä vastaan.",
+          "cards": [
+            {
+              "title": "Alustan valinta",
+              "body": "Selvitä, missä kategoria ostetaan ja miten alustan valinta vaihtuu markkinan ja ostajan mukaan.",
+              "methods": "Ostajatracker · verkkokysely"
+            },
+            {
+              "title": "Kategoria ja hinta",
+              "body": "Testaa hintaportaat ja pakkauskoot ilmoituksia vastaan, joiden vieressä ne näkyvät.",
+              "methods": "Verkkokysely · hintatestit"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Löytäminen ja ilmoitus",
+          "frame": "Miten tuote löytyy ja mitä ilmoitus kertoo.",
+          "cards": [
+            {
+              "title": "Haku ja löytäminen",
+              "body": "Tutki, miten ostajat löytävät tuotteen — haku, järjestys, suositus — ja mitä he ohittavat.",
+              "methods": "Verkkokysely · syvähaastattelut"
+            },
+            {
+              "title": "Ilmoitus ja kuvat",
+              "body": "Testaa tuotesivuja, kuvia ja arvosteluja sen mukaan, mitä ne viestivät ennen klikkausta.",
+              "methods": "Konsepti- ja A/B-testaus"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Kori ja kassa",
+          "frame": "Mitä sisään tulee ja mihin osto pysähtyy.",
+          "cards": [
+            {
+              "title": "Kori ja keskeytys",
+              "body": "Mittaa, mitä koriin tulee, mitä keskeytetään ja missä vaiheessa.",
+              "methods": "Ostajatracker · verkkokysely"
+            },
+            {
+              "title": "Toimitus ja palautukset",
+              "body": "Selvitä, mitä toimituskustannus, -aika ja palautuskäytäntö tekevät loppuun saattamiselle.",
+              "methods": "Verkkokysely · A/B-testit"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Uusintaosto ja lojaalius",
+          "frame": "Miksi ostaja palaa yhdelle alustalle.",
+          "cards": [
+            {
+              "title": "Uusintaosto",
+              "body": "Seuraa uusintaostoja ja syitä, miksi ostaja palaa samalle alustalle.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Kampanjat ja jäsenyys",
+              "body": "Testaa, miten kampanjat ja jäsenyys muuttavat korin kokoa ja ostotiheyttä.",
+              "methods": "Tracker · verkkokysely"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "Ostajatracker",
+          "Kuukausittainen tai neljännesvuosittainen tracking kiinteillä mittareilla, jotta liike on luettavissa samasta kannasta."
+        ],
+        [
+          "Verkkokysely",
+          "Kysely verkkokaupan ostajille, kiintiöt alustan, kategorian ja markkinan mukaan."
+        ],
+        [
+          "Syvähaastattelut",
+          "45–60 minuutin syvähaastattelut ostajien kanssa, tutkimustiimi tekee kahdestaan."
+        ],
+        [
+          "Konsepti- ja A/B-testaus",
+          "Ilmoitukset, kuvat ja kassavaiheet testattuna vertailukelpoisilla otoksilla, yksi muuttuja kerrallaan."
+        ],
+        [
+          "Hintatestit",
+          "Hintapisteet ja toimitusten kynnysarvot testattuna maksuhalukkuutta vastaan."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "E-commerce e shopper",
+      "lead": "Ricerche per marketplace, marchi e retailer che vendono online: dove lo shopper trova il prodotto, cosa c'è nel carrello e perché torna su una piattaforma.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "Online lo scaffale è un risultato di ricerca, e lo shopper confronta più annunci in meno tempo di quanto consenta qualsiasi negozio.",
+        "Studiamo il percorso come accade: come si trova un prodotto, cosa comunica l'annuncio, cosa entra nel carrello e dove si ferma l'acquisto.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere: quale piattaforma privilegiare, come prezzare rispetto all'annuncio accanto e cosa fa tornare lo shopper. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Piattaforma e categoria",
+          "frame": "Dove si compra la categoria, e contro cosa.",
+          "cards": [
+            {
+              "title": "Scelta della piattaforma",
+              "body": "Stabilire dove si compra la categoria e come cambia la scelta della piattaforma per mercato e acquirente.",
+              "methods": "Tracker shopper · indagine online"
+            },
+            {
+              "title": "Categoria e prezzo",
+              "body": "Testare fasce di prezzo e formati contro gli annunci accanto ai quali appaiono.",
+              "methods": "Indagine online · test di prezzo"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Scoperta e annuncio",
+          "frame": "Come si trova il prodotto e cosa dice l'annuncio.",
+          "cards": [
+            {
+              "title": "Ricerca e scoperta",
+              "body": "Studiare come gli shopper trovano il prodotto — ricerca, ordine, raccomandazione — e cosa tralasciano.",
+              "methods": "Indagine online · interviste in profondità"
+            },
+            {
+              "title": "Annuncio e immagini",
+              "body": "Testare pagine prodotto, immagini e recensioni per ciò che comunicano prima del clic.",
+              "methods": "Test di concept e A/B"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Carrello e checkout",
+          "frame": "Cosa entra, e dove si ferma l'acquisto.",
+          "cards": [
+            {
+              "title": "Carrello e abbandono",
+              "body": "Misurare cosa entra nel carrello, cosa viene abbandonato e in quale fase.",
+              "methods": "Tracker shopper · indagine online"
+            },
+            {
+              "title": "Consegna e resi",
+              "body": "Stabilire cosa fanno costo, tempi e politica di reso sul completamento.",
+              "methods": "Indagine online · test A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Riacquisto e fedeltà",
+          "frame": "Perché lo shopper torna su una piattaforma.",
+          "cards": [
+            {
+              "title": "Riacquisto",
+              "body": "Monitorare il riacquisto e i motivi per cui uno shopper torna sulla stessa piattaforma.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Promozioni e membership",
+              "body": "Testare come promozioni e membership cambiano dimensione del carrello e frequenza d'acquisto.",
+              "methods": "Tracker · indagine online"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Tracker shopper",
+          "Tracking mensile o trimestrale su misure fisse, così il movimento si legge sulla stessa base."
+        ],
+        [
+          "Indagine online",
+          "Indagine su shopper online, con quote per piattaforma, categoria e mercato."
+        ],
+        [
+          "Interviste in profondità",
+          "Interviste in profondità di 45-60 minuti con shopper, condotte uno a uno dal team."
+        ],
+        [
+          "Test di concept e A/B",
+          "Annunci, immagini e fasi di checkout testati su campioni comparabili, una variabile alla volta."
+        ],
+        [
+          "Test di prezzo",
+          "Punti di prezzo e soglie di consegna testati rispetto alla disponibilità a pagare."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "ECとショッパー",
+      "lead": "マーケットプレイス、ブランド、オンライン販売の小売向けの調査：買い物客がどこで商品を見つけ、カートに何が入り、なぜ同じプラットフォームに戻るのか。",
+      "introKicker": "進め方",
+      "intro": [
+        "オンラインでは棚は検索結果であり、買い物客は実店舗では不可能な速さで多くの出品を比較します。",
+        "私たちは実際の経路を調べます。商品がどう見つかり、出品が何を伝え、何がカートに入り、どこで購入が止まるか。",
+        "各調査は、それが支えるべき意思決定を中心に設計します。どのプラットフォームを優先するか、隣の出品に対してどう価格づけるか、何が買い物客を戻すか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "プラットフォームとカテゴリー",
+          "frame": "カテゴリーがどこで買われ、何と比べられるか。",
+          "cards": [
+            {
+              "title": "プラットフォーム選択",
+              "body": "カテゴリーがどこで買われるか、プラットフォーム選択が市場と買い手でどう変わるかを明らかにします。",
+              "methods": "ショッパートラッカー · オンライン調査"
+            },
+            {
+              "title": "カテゴリーと価格",
+              "body": "価格帯と容量を、隣に並ぶ出品に対してテストします。",
+              "methods": "オンライン調査 · 価格テスト"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "発見と出品",
+          "frame": "商品がどう見つかり、出品が何を語るか。",
+          "cards": [
+            {
+              "title": "検索と発見",
+              "body": "買い物客がどう商品を見つけるか — 検索、表示順、推薦 — と何を通過するかを調べます。",
+              "methods": "オンライン調査 · デプスインタビュー"
+            },
+            {
+              "title": "出品と画像",
+              "body": "商品ページ、画像、レビューがクリック前に何を伝えるかをテストします。",
+              "methods": "コンセプト／A/Bテスト"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "カートと決済",
+          "frame": "何が入り、どこで購入が止まるか。",
+          "cards": [
+            {
+              "title": "カートと離脱",
+              "body": "カートに何が入り、何が放棄され、どの段階かを測ります。",
+              "methods": "ショッパートラッカー · オンライン調査"
+            },
+            {
+              "title": "配送と返品",
+              "body": "配送費、日数、返品方針が完了に何をするかを明らかにします。",
+              "methods": "オンライン調査 · A/Bテスト"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "再購入とロイヤルティ",
+          "frame": "なぜ買い物客が同じプラットフォームに戻るか。",
+          "cards": [
+            {
+              "title": "再購入",
+              "body": "再購入と、買い物客が同じプラットフォームに戻る理由を追跡します。",
+              "methods": "トラッカー · CATI"
+            },
+            {
+              "title": "販促と会員",
+              "body": "販促と会員がカートの大きさと購入頻度をどう変えるかをテストします。",
+              "methods": "トラッカー · オンライン調査"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "ショッパートラッカー",
+          "固定指標による月次または四半期のトラッキング。同じ基準で変化を読めます。"
+        ],
+        [
+          "オンライン調査",
+          "オンライン買い物客への調査。プラットフォーム、カテゴリー、市場で割り付けます。"
+        ],
+        [
+          "デプスインタビュー",
+          "買い物客への45〜60分のデプスインタビュー。調査チームが1対1で行います。"
+        ],
+        [
+          "コンセプト／A/Bテスト",
+          "出品、画像、決済ステップを同等のサンプルで、一度に1変数ずつテストします。"
+        ],
+        [
+          "価格テスト",
+          "価格点と送料無料の閾値を支払意欲に対してテストします。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "이커머스와 쇼퍼",
+      "lead": "마켓플레이스, 브랜드, 온라인 판매 유통사를 위한 조사: 쇼퍼가 어디서 상품을 찾고, 장바구니에 무엇이 담기며, 왜 한 플랫폼으로 돌아오는지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "온라인에서 매대는 검색 결과이고, 쇼퍼는 어떤 매장보다 짧은 시간에 더 많은 상품을 비교합니다.",
+        "실제로 일어나는 경로를 조사합니다. 상품이 어떻게 발견되고, 상품 페이지가 무엇을 전하며, 무엇이 장바구니에 담기고, 어디서 구매가 멈추는지.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다. 어느 플랫폼을 우선할지, 옆 상품 대비 어떻게 가격을 매길지, 무엇이 쇼퍼를 돌아오게 하는지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "플랫폼과 카테고리",
+          "frame": "카테고리가 어디서 사고, 무엇과 비교되는가.",
+          "cards": [
+            {
+              "title": "플랫폼 선택",
+              "body": "카테고리가 어디서 구매되는지, 플랫폼 선택이 시장과 구매자에 따라 어떻게 달라지는지 밝힙니다.",
+              "methods": "쇼퍼 트래커 · 온라인 조사"
+            },
+            {
+              "title": "카테고리와 가격",
+              "body": "가격대와 용량을 옆에 놓이는 상품에 대해 테스트합니다.",
+              "methods": "온라인 조사 · 가격 테스트"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "발견과 상품 페이지",
+          "frame": "상품이 어떻게 발견되고 페이지가 무엇을 말하는가.",
+          "cards": [
+            {
+              "title": "검색과 발견",
+              "body": "쇼퍼가 상품을 어떻게 찾는지 — 검색, 노출 순서, 추천 — 무엇을 지나치는지 조사합니다.",
+              "methods": "온라인 조사 · 심층 인터뷰"
+            },
+            {
+              "title": "상품 페이지와 이미지",
+              "body": "상품 페이지, 이미지, 리뷰가 클릭 전에 무엇을 전달하는지 테스트합니다.",
+              "methods": "콘셉트·A/B 테스트"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "장바구니와 결제",
+          "frame": "무엇이 담기고 어디서 구매가 멈추는가.",
+          "cards": [
+            {
+              "title": "장바구니와 이탈",
+              "body": "장바구니에 무엇이 담기고, 무엇이 포기되며, 어느 단계인지 측정합니다.",
+              "methods": "쇼퍼 트래커 · 온라인 조사"
+            },
+            {
+              "title": "배송과 반품",
+              "body": "배송비, 소요 시간, 반품 정책이 완료에 무엇을 하는지 밝힙니다.",
+              "methods": "온라인 조사 · A/B 테스트"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "재구매와 충성도",
+          "frame": "왜 쇼퍼가 한 플랫폼으로 돌아오는가.",
+          "cards": [
+            {
+              "title": "재구매",
+              "body": "재구매와 쇼퍼가 같은 플랫폼으로 돌아오는 이유를 추적합니다.",
+              "methods": "트래커 · CATI"
+            },
+            {
+              "title": "프로모션과 멤버십",
+              "body": "프로모션과 멤버십이 장바구니 크기와 구매 빈도를 어떻게 바꾸는지 테스트합니다.",
+              "methods": "트래커 · 온라인 조사"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "쇼퍼 트래커",
+          "고정 지표로 월별 또는 분기별 트래킹. 같은 기준으로 변화를 읽습니다."
+        ],
+        [
+          "온라인 조사",
+          "온라인 쇼퍼 조사. 플랫폼, 카테고리, 시장으로 할당합니다."
+        ],
+        [
+          "심층 인터뷰",
+          "쇼퍼와 45~60분 심층 인터뷰. 조사팀이 1대1로 진행합니다."
+        ],
+        [
+          "콘셉트·A/B 테스트",
+          "상품 페이지, 이미지, 결제 단계를 동등한 표본에서 한 번에 한 변수씩 테스트합니다."
+        ],
+        [
+          "가격 테스트",
+          "가격대와 무료 배송 기준을 지불 의향에 대해 테스트합니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "E-handel og shopper",
+      "lead": "Forskning for markedsplasser, merker og forhandlere som selger på nett: hvor kjøperen finner produktet, hva som ligger i kurven, og hvorfor de kommer tilbake til én plattform.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "På nett er hyllen et søkeresultat, og kjøperen sammenligner flere annonser på kortere tid enn noen butikk tillater.",
+        "Vi undersøker reisen slik den skjer: hvordan et produkt finnes, hva annonsen formidler, hva som havner i kurven, og hvor kjøpet stopper.",
+        "Hver studie designes rundt beslutningen den skal støtte: hvilken plattform som skal prioriteres, hvordan prises mot annonsen ved siden av, og hva som får en kjøper tilbake. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Plattform og kategori",
+          "frame": "Hvor kategorien kjøpes, og mot hva.",
+          "cards": [
+            {
+              "title": "Plattformvalg",
+              "body": "Fastslå hvor kategorien kjøpes, og hvordan plattformvalget skifter etter marked og kjøper.",
+              "methods": "Shopper-tracker · nettundersøkelse"
+            },
+            {
+              "title": "Kategori og pris",
+              "body": "Test prisnivåer og pakningsstørrelser mot annonsene de står ved siden av.",
+              "methods": "Nettundersøkelse · pristester"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Oppdagelse og annonse",
+          "frame": "Hvordan produktet finnes, og hva annonsen sier.",
+          "cards": [
+            {
+              "title": "Søk og oppdagelse",
+              "body": "Undersøk hvordan kjøpere finner produktet — søk, rekkefølge, anbefaling — og hva de går forbi.",
+              "methods": "Nettundersøkelse · dybdeintervjuer"
+            },
+            {
+              "title": "Annonse og bilder",
+              "body": "Test produktsider, bilder og anmeldelser for det de formidler før klikket.",
+              "methods": "Konsept- og A/B-testing"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Kurv og kasse",
+          "frame": "Hva som kommer i, og hvor kjøpet stopper.",
+          "cards": [
+            {
+              "title": "Kurv og avbrudd",
+              "body": "Mål hva som havner i kurven, hva som avbrytes, og i hvilket trinn.",
+              "methods": "Shopper-tracker · nettundersøkelse"
+            },
+            {
+              "title": "Levering og retur",
+              "body": "Fastslå hva leveringskostnad, tid og returpolicy gjør med fullføringen.",
+              "methods": "Nettundersøkelse · A/B-tester"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Gjenkjøp og lojalitet",
+          "frame": "Hvorfor kjøperen kommer tilbake til én plattform.",
+          "cards": [
+            {
+              "title": "Gjenkjøp",
+              "body": "Følg gjenkjøp og årsakene til at en kjøper kommer tilbake til samme plattform.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Kampanjer og medlemskap",
+              "body": "Test hvordan kampanjer og medlemskap endrer kurvstørrelse og kjøpsfrekvens.",
+              "methods": "Tracker · nettundersøkelse"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "Shopper-tracker",
+          "Månedlig eller kvartalsvis tracking på faste mål, slik at bevegelse kan leses mot samme base."
+        ],
+        [
+          "Nettundersøkelse",
+          "Undersøkelse blant nettkjøpere, med kvoter etter plattform, kategori og marked."
+        ],
+        [
+          "Dybdeintervjuer",
+          "Dybdeintervjuer på 45–60 minutter med kjøpere, gjennomført en til en av forskerteamet."
+        ],
+        [
+          "Konsept- og A/B-testing",
+          "Annonser, bilder og kassetrinn testet på sammenlignbare utvalg, én variabel om gangen."
+        ],
+        [
+          "Pristester",
+          "Prispunkter og leveringsgrenser testet mot betalingsvillighet."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Comércio eletrónico e comprador",
+      "lead": "Investigação para marketplaces, marcas e retalhistas que vendem online: onde o comprador encontra o produto, o que está no carrinho e porque regressa a uma plataforma.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "Online, a prateleira é um resultado de pesquisa, e o comprador compara mais anúncios em menos tempo do que qualquer loja permite.",
+        "Estudamos o percurso como acontece: como um produto é encontrado, o que o anúncio comunica, o que entra no carrinho e onde a compra pára.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar: que plataforma priorizar, como fixar preço face ao anúncio ao lado e o que faz o comprador voltar. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Plataforma e categoria",
+          "frame": "Onde se compra a categoria, e contra quê.",
+          "cards": [
+            {
+              "title": "Escolha de plataforma",
+              "body": "Estabelecer onde se compra a categoria e como a escolha de plataforma varia por mercado e por comprador.",
+              "methods": "Tracker de compradores · inquérito online"
+            },
+            {
+              "title": "Categoria e preço",
+              "body": "Testar níveis de preço e formatos face aos anúncios junto aos quais aparecem.",
+              "methods": "Inquérito online · testes de preço"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Descoberta e anúncio",
+          "frame": "Como o produto é encontrado, e o que diz o anúncio.",
+          "cards": [
+            {
+              "title": "Pesquisa e descoberta",
+              "body": "Estudar como os compradores encontram o produto — pesquisa, ordem, recomendação — e o que deixam passar.",
+              "methods": "Inquérito online · entrevistas em profundidade"
+            },
+            {
+              "title": "Anúncio e imagens",
+              "body": "Testar páginas de produto, imagens e avaliações pelo que comunicam antes do clique.",
+              "methods": "Testes de conceito e A/B"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Carrinho e pagamento",
+          "frame": "O que entra, e onde a compra pára.",
+          "cards": [
+            {
+              "title": "Carrinho e abandono",
+              "body": "Medir o que entra no carrinho, o que é abandonado e em que passo.",
+              "methods": "Tracker de compradores · inquérito online"
+            },
+            {
+              "title": "Entrega e devoluções",
+              "body": "Estabelecer o que custo, prazo e política de devolução fazem à conclusão.",
+              "methods": "Inquérito online · testes A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Recompra e fidelidade",
+          "frame": "Porque o comprador regressa a uma plataforma.",
+          "cards": [
+            {
+              "title": "Recompra",
+              "body": "Acompanhar a recompra e as razões pelas quais um comprador regressa à mesma plataforma.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Promoções e adesão",
+              "body": "Testar como promoções e adesão alteram o tamanho do carrinho e a frequência de compra.",
+              "methods": "Tracker · inquérito online"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Tracker de compradores",
+          "Tracking mensal ou trimestral sobre medidas fixas, para ler o movimento contra a mesma base."
+        ],
+        [
+          "Inquérito online",
+          "Inquérito a compradores online, com quotas por plataforma, categoria e mercado."
+        ],
+        [
+          "Entrevistas em profundidade",
+          "Entrevistas em profundidade de 45 a 60 minutos com compradores, conduzidas um a um pela equipa."
+        ],
+        [
+          "Testes de conceito e A/B",
+          "Anúncios, imagens e passos de pagamento testados em amostras comparáveis, uma variável de cada vez."
+        ],
+        [
+          "Testes de preço",
+          "Pontos de preço e limiares de entrega testados face à disponibilidade a pagar."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Электронная коммерция и покупатель",
+      "lead": "Исследования для маркетплейсов, брендов и ритейлеров, продающих онлайн: где покупатель находит товар, что в корзине и почему он возвращается на одну платформу.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Онлайн полка — это результат поиска, и покупатель сравнивает больше предложений за меньшее время, чем позволяет любой магазин.",
+        "Мы изучаем путь как он происходит: как находится товар, что сообщает карточка, что попадает в корзину и где покупка останавливается.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать: какую платформу приоритизировать, как ставить цену относительно соседнего предложения и что заставляет покупателя вернуться. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Платформа и категория",
+          "frame": "Где покупают категорию и против чего.",
+          "cards": [
+            {
+              "title": "Выбор платформы",
+              "body": "Определить, где покупают категорию и как выбор платформы меняется по рынкам и покупателям.",
+              "methods": "Трекер покупателей · онлайн-опрос"
+            },
+            {
+              "title": "Категория и цена",
+              "body": "Проверить ценовые уровни и объёмы упаковки относительно карточек, рядом с которыми они стоят.",
+              "methods": "Онлайн-опрос · ценовые тесты"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Обнаружение и карточка",
+          "frame": "Как находят товар и что говорит карточка.",
+          "cards": [
+            {
+              "title": "Поиск и обнаружение",
+              "body": "Изучить, как покупатели находят товар — поиск, порядок, рекомендация — и что пропускают.",
+              "methods": "Онлайн-опрос · глубинные интервью"
+            },
+            {
+              "title": "Карточка и изображения",
+              "body": "Проверить страницы товара, изображения и отзывы на то, что они сообщают до клика.",
+              "methods": "Тестирование концепций и A/B"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Корзина и оформление",
+          "frame": "Что попадает внутрь и где покупка останавливается.",
+          "cards": [
+            {
+              "title": "Корзина и отказ",
+              "body": "Измерить, что попадает в корзину, что бросают и на каком шаге.",
+              "methods": "Трекер покупателей · онлайн-опрос"
+            },
+            {
+              "title": "Доставка и возвраты",
+              "body": "Определить, что стоимость, сроки и политика возврата делают с завершением.",
+              "methods": "Онлайн-опрос · A/B-тесты"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Повторная покупка и лояльность",
+          "frame": "Почему покупатель возвращается на одну платформу.",
+          "cards": [
+            {
+              "title": "Повторная покупка",
+              "body": "Отслеживать повторные покупки и причины, по которым покупатель возвращается на ту же платформу.",
+              "methods": "Трекер · CATI"
+            },
+            {
+              "title": "Акции и членство",
+              "body": "Проверить, как акции и членство меняют размер корзины и частоту покупок.",
+              "methods": "Трекер · онлайн-опрос"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Трекер покупателей",
+          "Ежемесячный или ежеквартальный трекинг по фиксированным показателям, чтобы читать динамику на одной базе."
+        ],
+        [
+          "Онлайн-опрос",
+          "Опрос онлайн-покупателей с квотами по платформе, категории и рынку."
+        ],
+        [
+          "Глубинные интервью",
+          "Глубинные интервью по 45–60 минут с покупателями, один на один с исследовательской командой."
+        ],
+        [
+          "Тестирование концепций и A/B",
+          "Карточки, изображения и шаги оформления, проверенные на сопоставимых выборках, по одной переменной."
+        ],
+        [
+          "Ценовые тесты",
+          "Ценовые точки и пороги доставки, проверенные на готовность платить."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "E-handel och shoppare",
+      "lead": "Undersökningar för marknadsplatser, varumärken och handlare som säljer online: var shopparen hittar produkten, vad som ligger i korgen och varför de återvänder till en plattform.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "Online är hyllan ett sökresultat, och shopparen jämför fler annonser på kortare tid än någon butik tillåter.",
+        "Vi undersöker resan som den sker: hur en produkt hittas, vad annonsen förmedlar, vad som hamnar i korgen och var köpet stannar.",
+        "Varje studie byggs kring det beslut den ska stödja: vilken plattform som ska prioriteras, hur priset ska sättas mot annonsen bredvid och vad som får en shoppare att återvända. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Plattform och kategori",
+          "frame": "Var kategorin köps, och mot vad.",
+          "cards": [
+            {
+              "title": "Plattformsval",
+              "body": "Fastställa var kategorin köps och hur plattformsvalet skiftar per marknad och köpare.",
+              "methods": "Shoppertracker · onlineundersökning"
+            },
+            {
+              "title": "Kategori och pris",
+              "body": "Testa prisnivåer och förpackningsstorlekar mot annonserna de står bredvid.",
+              "methods": "Onlineundersökning · pristester"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Upptäckt och annons",
+          "frame": "Hur produkten hittas, och vad annonsen säger.",
+          "cards": [
+            {
+              "title": "Sök och upptäckt",
+              "body": "Undersök hur shoppare hittar produkten — sök, ordning, rekommendation — och vad de går förbi.",
+              "methods": "Onlineundersökning · djupintervjuer"
+            },
+            {
+              "title": "Annons och bilder",
+              "body": "Testa produktsidor, bilder och recensioner för vad de förmedlar före klicket.",
+              "methods": "Koncept- och A/B-test"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Korg och kassa",
+          "frame": "Vad som kommer i, och var köpet stannar.",
+          "cards": [
+            {
+              "title": "Korg och avbrott",
+              "body": "Mät vad som hamnar i korgen, vad som överges och i vilket steg.",
+              "methods": "Shoppertracker · onlineundersökning"
+            },
+            {
+              "title": "Leverans och returer",
+              "body": "Fastställa vad leveranskostnad, tid och returpolicy gör med slutförandet.",
+              "methods": "Onlineundersökning · A/B-tester"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Återköp och lojalitet",
+          "frame": "Varför shopparen återvänder till en plattform.",
+          "cards": [
+            {
+              "title": "Återköp",
+              "body": "Följ återköp och orsakerna till att en shoppare återvänder till samma plattform.",
+              "methods": "Tracker · CATI"
+            },
+            {
+              "title": "Kampanjer och medlemskap",
+              "body": "Testa hur kampanjer och medlemskap ändrar korgstorlek och köpfrekvens.",
+              "methods": "Tracker · onlineundersökning"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "Shoppertracker",
+          "Månatlig eller kvartalsvis tracking på fasta mått, så att rörelse kan läsas mot samma bas."
+        ],
+        [
+          "Onlineundersökning",
+          "Undersökning bland onlineshoppare, med kvoter efter plattform, kategori och marknad."
+        ],
+        [
+          "Djupintervjuer",
+          "Djupintervjuer på 45–60 minuter med shoppare, genomförda en mot en av forskarteamet."
+        ],
+        [
+          "Koncept- och A/B-test",
+          "Annonser, bilder och kassasteg testade på jämförbara urval, en variabel i taget."
+        ],
+        [
+          "Pristester",
+          "Prispunkter och leveranströsklar testade mot betalningsvilja."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "E-ticaret ve alışverişçi",
+      "lead": "Pazaryerleri, markalar ve çevrimiçi satış yapan perakendeciler için araştırma: alışverişçi ürünü nerede buluyor, sepette ne var ve neden tek bir platforma geri dönüyor.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Çevrimiçi ortamda raf bir arama sonucudur ve alışverişçi, hiçbir mağazanın izin vermediği kadar kısa sürede daha fazla ilanı karşılaştırır.",
+        "Yolculuğu olduğu gibi inceliyoruz: ürün nasıl bulunuyor, ilan ne anlatıyor, sepete ne giriyor ve satın alma nerede duruyor.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır: hangi platforma öncelik verilecek, yanındaki ilana göre nasıl fiyatlanacak ve alışverişçiyi ne geri getiriyor. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Platform ve kategori",
+          "frame": "Kategorinin nerede alındığı ve neye karşı.",
+          "cards": [
+            {
+              "title": "Platform seçimi",
+              "body": "Kategorinin nerede alındığını ve platform seçiminin pazara ve alıcıya göre nasıl değiştiğini belirleyin.",
+              "methods": "Alışverişçi takibi · çevrimiçi anket"
+            },
+            {
+              "title": "Kategori ve fiyat",
+              "body": "Fiyat kademelerini ve ambalaj boyutlarını, yanında göründükleri ilanlara karşı test edin.",
+              "methods": "Çevrimiçi anket · fiyat testleri"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Keşif ve ilan",
+          "frame": "Ürünün nasıl bulunduğu ve ilanın ne söylediği.",
+          "cards": [
+            {
+              "title": "Arama ve keşif",
+              "body": "Alışverişçilerin ürünü nasıl bulduğunu — arama, sıralama, öneri — ve neyi geçtiğini inceleyin.",
+              "methods": "Çevrimiçi anket · derinlemesine görüşmeler"
+            },
+            {
+              "title": "İlan ve görseller",
+              "body": "Ürün sayfalarını, görselleri ve yorumları tıklamadan önce ne ilettikleri açısından test edin.",
+              "methods": "Konsept ve A/B testi"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Sepet ve ödeme",
+          "frame": "Neyin girdiği ve satın almanın nerede durduğu.",
+          "cards": [
+            {
+              "title": "Sepet ve terk",
+              "body": "Sepete ne girdiğini, neyin terk edildiğini ve hangi adımda olduğunu ölçün.",
+              "methods": "Alışverişçi takibi · çevrimiçi anket"
+            },
+            {
+              "title": "Teslimat ve iadeler",
+              "body": "Teslimat maliyeti, süresi ve iade politikasının tamamlamaya ne yaptığını belirleyin.",
+              "methods": "Çevrimiçi anket · A/B testleri"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Tekrar alım ve sadakat",
+          "frame": "Alışverişçinin neden tek bir platforma döndüğü.",
+          "cards": [
+            {
+              "title": "Tekrar alım",
+              "body": "Tekrar alımları ve alışverişçinin aynı platforma dönme nedenlerini izleyin.",
+              "methods": "Takip · CATI"
+            },
+            {
+              "title": "Promosyonlar ve üyelik",
+              "body": "Promosyonların ve üyeliğin sepet büyüklüğünü ve satın alma sıklığını nasıl değiştirdiğini test edin.",
+              "methods": "Takip · çevrimiçi anket"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "Alışverişçi takibi",
+          "Sabit ölçütlerle aylık veya üç aylık tracking; hareket aynı taban üzerinden okunur."
+        ],
+        [
+          "Çevrimiçi anket",
+          "Çevrimiçi alışverişçilerle anket; platform, kategori ve pazara göre kotalar."
+        ],
+        [
+          "Derinlemesine görüşmeler",
+          "Alışverişçilerle 45-60 dakikalık derinlemesine görüşmeler; araştırma ekibi bire bir yürütür."
+        ],
+        [
+          "Konsept ve A/B testi",
+          "İlanlar, görseller ve ödeme adımları karşılaştırılabilir örneklemlerde, her seferinde tek değişkenle test edilir."
+        ],
+        [
+          "Fiyat testleri",
+          "Fiyat noktaları ve teslimat eşikleri ödeme istekliliğine karşı test edilir."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   }
 };

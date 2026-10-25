@@ -9,16 +9,12 @@ import './HomeEntry.css';
    film and threw the hero off balance, so they live here as their own band.
    Keeping them in one component also means the same block can be reused on
    another entry surface without copying the form. */
-const audienceLabels = {
-  'zh-CN': ['参与者', '研究员'],
-  'zh-Hant': ['參與者', '研究員'],
-  en: ['Participant', 'Researcher'],
-};
-
 export default function HomeEntry({ audience, onAudienceChange }) {
-  const { language } = useLanguage();
+  const { publicCopy } = useLanguage();
   const isResearch = audience === 'research';
-  const [participantLabel, researchLabel] = audienceLabels[language] || audienceLabels.en;
+  const form = publicCopy.pages.access.form;
+  const participantLabel = form.participant;
+  const researchLabel = form.researcher;
 
   return (
     <section className="home-entry" aria-label="Choose an account type">

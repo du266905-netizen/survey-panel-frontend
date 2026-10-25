@@ -10,7 +10,8 @@ export default function HomeAuthForm({ audience = 'participant' }) {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const { setUser } = useAuth();
-  const { language } = useLanguage();
+  const { language, publicCopy } = useLanguage();
+  const form = publicCopy.pages.access.form;
   const navigate = useNavigate();
   const isResearch = audience === 'research';
 
@@ -48,11 +49,11 @@ export default function HomeAuthForm({ audience = 'participant' }) {
               language="en-US"
               theme="outline"
               variant="field"
-              label="Sign in with Google"
+              label={form.google}
               note="Google sign-in is unavailable on this network"
             />
           </div>
-          <div className="home-auth-or"><span>or</span></div>
+          <div className="home-auth-or"><span>{form.or}</span></div>
         </>
       )}
 
@@ -61,20 +62,34 @@ export default function HomeAuthForm({ audience = 'participant' }) {
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="Enter email"
+          placeholder={form.emailPlaceholder}
           aria-label="Email address"
           autoComplete="email"
           required
         />
-        <button type="submit">Continue</button>
+        <button type="submit">{form.continue}</button>
       </form>
 
       {error && <p className="home-auth-error" role="alert">{error}</p>}
 
       <p className="home-auth-terms">
-        By signing in, you agree to the{' '}
-        <Link to={isResearch ? '/business/terms' : '/terms'} target="_blank" rel="noopener noreferrer">Terms of Service</Link>{' '}
-        and <Link to="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</Link>.
+        {form.terms.split(/(\{terms\}|\{privacy\})/).map((part, index) => {
+          if (part === '{terms}') {
+            return (
+              <Link key={index} to={isResearch ? '/business/terms' : '/terms'} target="_blank" rel="noopener noreferrer">
+                {publicCopy.home.footer.termsService}
+              </Link>
+            );
+          }
+          if (part === '{privacy}') {
+            return (
+              <Link key={index} to="/privacy" target="_blank" rel="noopener noreferrer">
+                {publicCopy.home.footer.privacyPolicy}
+              </Link>
+            );
+          }
+          return part;
+        })}
       </p>
     </div>
   );
