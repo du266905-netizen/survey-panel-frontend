@@ -260,6 +260,17 @@
    那是「左图右表单」旧版留下的，sticky 会让照片栏脱离文档流，把外壳整体顶下去一个顶栏的高度
    （实测外壳被推到 y=96、整页多出 78px）。旧规则不动，只在本页作用域覆盖。 */
 .business-login-page .business-login-intro { position: relative !important; top: auto; align-self: stretch; height: auto; min-height: 0; display: flex; width: 58%; flex-direction: column; overflow: hidden; border: 0; background: #d9ddd6; margin: 0; padding: 0 !important; }
+
+/* 2026-10-26：注册／登录页与参与端对齐 —— 表单 60%、照片 40%，照片上不再压字，
+   照片往右裁。 */
+.business-login-page .business-login-form { width: 60%; min-width: 0; }
+.business-login-page .business-login-intro { width: 40%; }
+.business-login-page .business-login-intro > div { display: none; }
+.business-login-page .business-login-intro img { object-position: 82% 50%; }
+@media (max-width: 1180px) {
+  .business-login-page .business-login-form { width: 100%; }
+  .business-login-page .business-login-intro { width: 100%; }
+}
 .business-login-intro > img { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: none; }
 /* 压暗渐变：图上文案要白字（用户 2026-10-16 已定）。 */
 .business-login-intro::after { display: block; position: absolute; z-index: 1; inset: 0; background: linear-gradient(100deg, rgba(9, 22, 16, .74) 0%, rgba(9, 22, 16, .34) 46%, rgba(9, 22, 16, .06) 100%); content: ''; }

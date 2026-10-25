@@ -130,6 +130,25 @@
   font-weight: 500 !important;
   min-height: 46px !important;
 }
+/* 2026-10-26：参与端和研究端的账号页主按钮统一黑色，黄底与黑字一起撤掉。
+   荧光黄仍用于其余公开页的按钮。 */
+.public-auth-submit,
+.public-auth-email-cta,
+.landing-page--auth-only .public-auth-submit,
+.landing-page--auth-only .public-auth-email-cta {
+  border-color: #141413 !important;
+  background: #141413 !important;
+  color: #fffdf7 !important;
+}
+.public-auth-submit:hover,
+.public-auth-email-cta:hover,
+.landing-page--auth-only .public-auth-submit:hover,
+.landing-page--auth-only .public-auth-email-cta:hover {
+  border-color: #000 !important;
+  background: #000 !important;
+  color: #fffdf7 !important;
+}
+
 .public-auth-submit:hover,
 .public-auth-email-cta:hover,
 .business-access-page .business-button:hover,
@@ -270,9 +289,9 @@
   box-shadow: none !important;
 }
 .home-atlas .video-hero-cta:not(.video-hero-cta--outline):hover {
-  border-color: var(--pub-lime-deep) !important;
-  background: var(--pub-lime-deep) !important;
-  color: #14161a !important;
+  border-color: #000 !important;
+  background: #000 !important;
+  color: #fffdf7 !important;
   box-shadow: none !important;
 }
 .home-atlas .home-auth-email button {
@@ -448,9 +467,9 @@
 }
 .home-atlas .community-hub-primary-action:hover,
 .home-atlas .atlas-contact-submit:hover {
-  border-color: var(--pub-lime-deep) !important;
-  background: var(--pub-lime-deep) !important;
-  color: #14161a !important;
+  border-color: #000 !important;
+  background: #000 !important;
+  color: #fffdf7 !important;
 }
 
 /* ---- tighter page openings ---------------------------------------------- */

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 import PublicAuthPanel from '../components/PublicAuthPanel';
 import PublicSiteHeader from '../components/PublicSiteHeader';
+import AuthTopBar from '../components/AuthTopBar';
 import { submitBusinessInquiry } from '../api/realApi';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import researcherRegistrationTeam from '../assets/business/researcher-registration-team.jpg';
@@ -59,8 +60,8 @@ export default function BusinessAccess() {
   return authMode ? (
     <>
       <main className={`business-access-page business-login-page business-login-page--${authMode}`}>
-        {/* 顶栏放进 main 里，才能用 absolute 压在照片上（照片从页面顶端铺到底）。 */}
-        <PublicSiteHeader />
+        {/* 2026-10-26：和参与端一致——只留品牌标 + 右侧返回，照片上不再压字。 */}
+        <AuthTopBar backLabel={publicCopy.chrome.header.back || 'Back'} />
         <div className="business-login-shell">
           <section className="business-login-form" aria-label="Account access">
             <PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(`${withLanguage(nextMode === 'login' ? '/business/login' : '/business/register', language)}${initialEmail ? `&email=${encodeURIComponent(initialEmail)}` : ''}`, { replace: true })} accountType="BUSINESS" initialEmail={initialEmail} />

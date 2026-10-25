@@ -6,6 +6,7 @@ import GlobalGlobe from '../components/GlobalGlobe';
 import Logo from '../components/Logo';
 import PublicAuthPanel from '../components/PublicAuthPanel';
 import PublicSiteHeader from '../components/PublicSiteHeader';
+import AuthTopBar from '../components/AuthTopBar';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import participantStudyImage from '../assets/auth/participant-study.jpg';
 
@@ -978,7 +979,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
            右边是图。表单栏加回 96px 上内边距，落点与之前一致（面板仍在 y=108）。 */
         .landing-page--auth-only > .public-site-header { position: absolute; z-index: 20; top: 18px; right: 0; left: 0; margin: 0 auto; }
         .landing-page--auth-only .landing-shell { height: 100svh; min-height: 650px; }
-        .landing-page--auth-only .landing-access { padding-top: 76px; }
+        .landing-page--auth-only .landing-access { padding-top: 92px; }
         /* 2026-10-26：注册／登录页去掉整条导航、图上的文案，表单 60%、图 40%，
            照片往右裁。 */
         .landing-page--auth-only .landing-shell { grid-template-columns: 60% 40%; }
@@ -1369,9 +1370,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
       `}</style>
 
       {authOnly ? (
-        <Link className="landing-auth-back" to={withLanguage('/', language)}>
-          <ChevronLeft size={15} aria-hidden="true" /> {publicCopy.chrome.header.back || 'Back'}
-        </Link>
+        <AuthTopBar backLabel={publicCopy.chrome.header.back || 'Back'} />
       ) : (
         <PublicSiteHeader />
       )}

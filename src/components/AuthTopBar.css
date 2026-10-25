@@ -1,0 +1,46 @@
+/* Sits over the white form column, above the tabs. */
+.auth-topbar {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px clamp(20px, 4vw, 44px);
+  pointer-events: none;
+}
+
+.auth-topbar-brand,
+.auth-topbar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+  text-decoration: none;
+}
+
+.auth-topbar-brand img { display: block; width: 136px; height: auto; }
+
+.auth-topbar-back {
+  /* The bar sits over the photograph on both pages, so the way back carries its
+     own white plate instead of relying on the picture behind it. */
+  padding: 9px 14px;
+  border: 1px solid rgba(20, 20, 19, .12);
+  background: rgba(252, 253, 251, .95);
+  color: #24272c;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  transition: color .16s ease, border-color .16s ease;
+}
+
+.auth-topbar-back:hover { border-color: #141413; color: #141413; }
+.auth-topbar-brand:focus-visible,
+.auth-topbar-back:focus-visible { outline: 2px solid #141413; outline-offset: 4px; }
+
+@media (max-width: 700px) {
+  .auth-topbar { padding: 18px 16px; }
+  .auth-topbar-brand img { width: 124px; }
+}
