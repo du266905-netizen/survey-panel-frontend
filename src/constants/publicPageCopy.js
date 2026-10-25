@@ -1,17 +1,3 @@
-/* Public page copy — entered into the language library 2026-10-25.
-
-   These used to live as `const copy = {...}` inside each page file. The pages
-   now read them through `useLanguage().publicCopy.pages`, so one library holds
-   the copy, the language switch and the fallback:
-
-     pages.about                  /about
-     pages.access                 /access (the homepage chooser, mounted as a page)
-     pages.industries.<slug>      the ten industry pages
-
-   en-US is the source language; zh-CN and zh-Hant are maintained alongside it.
-   Every other language has its own entered translation; anything missing falls
-   back to English. Edit copy here, not in the page components. */
-
 export const aboutCopy = {
   "en-US": {
     "eyebrow": "About us",
@@ -481,8 +467,8 @@ export const aboutCopy = {
 
 export const accessEntryCopy = {
   "zh-CN": {
-    "title": "让每一次判断\n都有事实依据。",
-    "note": "准备好加入我们了吗？\n共同打造开放、共生、可持续的研究生态。",
+    "title": "你接下来想做什么，想清楚了吗？",
+    "note": "让每一次判断都有事实依据。",
     "form": {
       "participant": "参与者",
       "researcher": "研究员",
@@ -494,8 +480,8 @@ export const accessEntryCopy = {
     }
   },
   "zh-Hant": {
-    "title": "讓每一次判斷\n都有事實依據。",
-    "note": "準備好加入我們了嗎？\n共同打造開放、共生、可持續的研究生態。",
+    "title": "你接下來想做什麼，想清楚了嗎？",
+    "note": "讓每一次判斷都有事實依據。",
     "form": {
       "participant": "參與者",
       "researcher": "研究員",
@@ -507,8 +493,8 @@ export const accessEntryCopy = {
     }
   },
   "en": {
-    "title": "Let every judgement\nrest on evidence.",
-    "note": "Ready to join us?\nTogether we build an open, interconnected and sustainable research ecosystem.",
+    "title": "Have you thought about what to do next?",
+    "note": "Let every judgement rest on evidence.",
     "form": {
       "participant": "Participant",
       "researcher": "Researcher",
@@ -520,8 +506,8 @@ export const accessEntryCopy = {
     }
   },
   "de": {
-    "title": "Jedes Urteil\nruht auf Belegen.",
-    "note": "Bereit, Teil davon zu werden?\nGemeinsam bauen wir ein offenes, vernetztes und nachhaltiges Forschungsökosystem.",
+    "title": "Hast du dir überlegt, was als Nächstes kommt?",
+    "note": "Jedes Urteil ruht auf Belegen.",
     "form": {
       "participant": "Teilnehmende",
       "researcher": "Forschende",
@@ -533,8 +519,8 @@ export const accessEntryCopy = {
     }
   },
   "fr": {
-    "title": "Chaque jugement\nrepose sur des preuves.",
-    "note": "Prêt à nous rejoindre ?\nEnsemble, nous construisons un écosystème de recherche ouvert, interconnecté et durable.",
+    "title": "Avez-vous réfléchi à ce que vous voulez faire ensuite ?",
+    "note": "Chaque jugement repose sur des preuves.",
     "form": {
       "participant": "Participant",
       "researcher": "Chercheur",
@@ -546,8 +532,8 @@ export const accessEntryCopy = {
     }
   },
   "nl": {
-    "title": "Elk oordeel\nrust op bewijs.",
-    "note": "Klaar om mee te doen?\nSamen bouwen we een open, verbonden en duurzaam onderzoeksecosysteem.",
+    "title": "Heb je nagedacht over wat je hierna wilt doen?",
+    "note": "Elk oordeel rust op bewijs.",
     "form": {
       "participant": "Deelnemer",
       "researcher": "Onderzoeker",
@@ -559,8 +545,8 @@ export const accessEntryCopy = {
     }
   },
   "da": {
-    "title": "Hver vurdering\nhviler på evidens.",
-    "note": "Klar til at være med?\nSammen bygger vi et åbent, sammenkoblet og bæredygtigt forskningsøkosystem.",
+    "title": "Har du tænkt over, hvad du vil gøre nu?",
+    "note": "Hver vurdering hviler på evidens.",
     "form": {
       "participant": "Deltager",
       "researcher": "Forsker",
@@ -572,8 +558,8 @@ export const accessEntryCopy = {
     }
   },
   "es": {
-    "title": "Cada juicio\nse apoya en pruebas.",
-    "note": "¿Listo para unirte?\nJuntos construimos un ecosistema de investigación abierto, interconectado y sostenible.",
+    "title": "¿Has pensado qué hacer ahora?",
+    "note": "Cada juicio se apoya en pruebas.",
     "form": {
       "participant": "Participante",
       "researcher": "Investigador",
@@ -585,8 +571,8 @@ export const accessEntryCopy = {
     }
   },
   "fi": {
-    "title": "Jokainen arvio\nperustuu näyttöön.",
-    "note": "Valmis liittymään?\nRakennamme yhdessä avointa, verkottunutta ja kestävää tutkimusekosysteemiä.",
+    "title": "Oletko miettinyt, mitä seuraavaksi?",
+    "note": "Jokainen arvio perustuu näyttöön.",
     "form": {
       "participant": "Osallistuja",
       "researcher": "Tutkija",
@@ -598,8 +584,8 @@ export const accessEntryCopy = {
     }
   },
   "it": {
-    "title": "Ogni giudizio\nsi basa su prove.",
-    "note": "Pronto a unirsi a noi?\nInsieme costruiamo un ecosistema di ricerca aperto, interconnesso e sostenibile.",
+    "title": "Hai pensato a cosa fare adesso?",
+    "note": "Ogni giudizio si basa su prove.",
     "form": {
       "participant": "Partecipante",
       "researcher": "Ricercatore",
@@ -611,8 +597,8 @@ export const accessEntryCopy = {
     }
   },
   "ja": {
-    "title": "すべての判断を\n事実にもとづかせる。",
-    "note": "参加しませんか。\n開かれ、相互につながり、持続可能なリサーチの生態系を共につくります。",
+    "title": "次に何をするか、もう考えましたか？",
+    "note": "すべての判断を事実にもとづかせる。",
     "form": {
       "participant": "参加者",
       "researcher": "研究者",
@@ -624,8 +610,8 @@ export const accessEntryCopy = {
     }
   },
   "ko": {
-    "title": "모든 판단이\n사실에 근거하도록.",
-    "note": "함께하시겠습니까?\n열려 있고 상호 연결된 지속 가능한 리서치 생태계를 함께 만듭니다.",
+    "title": "다음에 무엇을 할지 생각해 보셨나요?",
+    "note": "모든판단이사실에근거하도록.",
     "form": {
       "participant": "참여자",
       "researcher": "연구자",
@@ -637,8 +623,8 @@ export const accessEntryCopy = {
     }
   },
   "no": {
-    "title": "Hver vurdering\nhviler på bevis.",
-    "note": "Klar til å bli med?\nSammen bygger vi et åpent, sammenkoblet og bærekraftig forskningsøkosystem.",
+    "title": "Har du tenkt på hva du vil gjøre nå?",
+    "note": "Hver vurdering hviler på bevis.",
     "form": {
       "participant": "Deltaker",
       "researcher": "Forsker",
@@ -650,8 +636,8 @@ export const accessEntryCopy = {
     }
   },
   "pt": {
-    "title": "Cada juízo\nassenta em provas.",
-    "note": "Pronto para se juntar a nós?\nJuntos construímos um ecossistema de investigação aberto, interligado e sustentável.",
+    "title": "Já pensou no que fazer a seguir?",
+    "note": "Cada juízo assenta em provas.",
     "form": {
       "participant": "Participante",
       "researcher": "Investigador",
@@ -663,8 +649,8 @@ export const accessEntryCopy = {
     }
   },
   "ru": {
-    "title": "Пусть каждое суждение\nопирается на факты.",
-    "note": "Готовы присоединиться?\nВместе мы строим открытую, взаимосвязанную и устойчивую исследовательскую экосистему.",
+    "title": "Вы думали, что делать дальше?",
+    "note": "Пусть каждое суждение опирается на факты.",
     "form": {
       "participant": "Участник",
       "researcher": "Исследователь",
@@ -676,8 +662,8 @@ export const accessEntryCopy = {
     }
   },
   "sv": {
-    "title": "Varje bedömning\nvilar på bevis.",
-    "note": "Redo att vara med?\nTillsammans bygger vi ett öppet, sammankopplat och hållbart forskningsekosystem.",
+    "title": "Har du tänkt på vad du vill göra härnäst?",
+    "note": "Varje bedömning vilar på bevis.",
     "form": {
       "participant": "Deltagare",
       "researcher": "Forskare",
@@ -689,8 +675,8 @@ export const accessEntryCopy = {
     }
   },
   "tr": {
-    "title": "Her yargı\nkanıta dayansın.",
-    "note": "Bize katılmaya hazır mısınız?\nBirlikte açık, birbirine bağlı ve sürdürülebilir bir araştırma ekosistemi kuruyoruz.",
+    "title": "Sırada ne yapacağını düşündün mü?",
+    "note": "Her yargı kanıta dayansın.",
     "form": {
       "participant": "Katılımcı",
       "researcher": "Araştırmacı",
@@ -702,8 +688,8 @@ export const accessEntryCopy = {
     }
   },
   "en-GB": {
-    "title": "Let every judgement\nrest on evidence.",
-    "note": "Ready to join us?\nTogether we build an open, interconnected and sustainable research ecosystem.",
+    "title": "Have you thought about what to do next?",
+    "note": "Let every judgement rest on evidence.",
     "form": {
       "participant": "Participant",
       "researcher": "Researcher",
@@ -22572,18 +22558,92 @@ export const homeSlideCopy = {
   },
   "en-GB": {
     "line": "The world is wide. Your part of it can't be left out.",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "note": "Ready to join us? Together we build an open, interconnected and sustainable research ecosystem."
   },
   "en": {
     "line": "The world is wide. Your part of it can't be left out.",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "note": "Ready to join us? Together we build an open, interconnected and sustainable research ecosystem."
   },
   "zh-CN": {
     "line": "世界那么大，你的那一份也不能少。",
-    "learnMore": "了解更多"
+    "learnMore": "了解更多",
+    "note": "准备好加入我们了吗？共同打造开放、共生、可持续的研究生态。"
   },
   "zh-Hant": {
     "line": "世界那麼大，你的那一份也不能少。",
-    "learnMore": "瞭解更多"
+    "learnMore": "瞭解更多",
+    "note": "準備好加入我們了嗎？共同打造開放、共生、可持續的研究生態。"
+  },
+  "de": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Bereit, Teil davon zu werden? Gemeinsam bauen wir ein offenes, vernetztes und nachhaltiges Forschungsökosystem."
+  },
+  "fr": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Prêt à nous rejoindre ? Ensemble, nous construisons un écosystème de recherche ouvert, interconnecté et durable."
+  },
+  "nl": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Klaar om mee te doen? Samen bouwen we een open, verbonden en duurzaam onderzoeksecosysteem."
+  },
+  "da": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Klar til at være med? Sammen bygger vi et åbent, sammenkoblet og bæredygtigt forskningsøkosystem."
+  },
+  "es": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "¿Listo para unirte? Juntos construimos un ecosistema de investigación abierto, interconectado y sostenible."
+  },
+  "fi": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Valmis liittymään? Rakennamme yhdessä avointa, verkottunutta ja kestävää tutkimusekosysteemiä."
+  },
+  "it": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Pronto a unirsi a noi? Insieme costruiamo un ecosistema di ricerca aperto, interconnesso e sostenibile."
+  },
+  "ja": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "参加しませんか。開かれ、相互につながり、持続可能なリサーチの生態系を共につくります。"
+  },
+  "ko": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "함께하시겠습니까?열려있고상호연결된지속가능한리서치생태계를함께만듭니다."
+  },
+  "no": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Klar til å bli med? Sammen bygger vi et åpent, sammenkoblet og bærekraftig forskningsøkosystem."
+  },
+  "pt": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Pronto para se juntar a nós? Juntos construímos um ecossistema de investigação aberto, interligado e sustentável."
+  },
+  "ru": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Готовы присоединиться? Вместе мы строим открытую, взаимосвязанную и устойчивую исследовательскую экосистему."
+  },
+  "sv": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Redo att vara med? Tillsammans bygger vi ett öppet, sammankopplat och hållbart forskningsekosystem."
+  },
+  "tr": {
+    "line": "The world is wide. Your part of it can't be left out.",
+    "learnMore": "Learn more",
+    "note": "Bize katılmaya hazır mısınız? Birlikte açık, birbirine bağlı ve sürdürülebilir bir araştırma ekosistemi kuruyoruz."
   }
 };

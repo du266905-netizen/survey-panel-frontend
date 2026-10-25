@@ -22,6 +22,17 @@
     linear-gradient(90deg, rgba(8, 10, 12, .34) 0%, rgba(8, 10, 12, 0) 52%);
 }
 
+.home-lake-copy { max-width: 50rem; }
+
+.home-lake-note {
+  max-width: 30em;
+  margin: 20px 0 0;
+  color: rgba(255, 255, 255, .84);
+  font-size: clamp(16px, 1.15vw, 19px);
+  line-height: 1.62;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, .45);
+}
+
 .home-hero-inner--lake { gap: 40px; }
 
 @media (max-width: 720px) {

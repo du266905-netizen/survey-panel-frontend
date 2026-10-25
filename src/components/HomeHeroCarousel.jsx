@@ -14,7 +14,7 @@ import './HomeHeroCarousel.css';
    motion" get the first frame only. */
 const FRAME_MS = 10000;
 
-export default function HomeHeroCarousel({ lead, rest, body, line, learnMore, communityLabel, stopped = false }) {
+export default function HomeHeroCarousel({ lead, rest, body, line, note, learnMore, communityLabel, stopped = false }) {
   const [frame, setFrame] = useState(0);
   const [focusWithin, setFocusWithin] = useState(false);
   const paused = focusWithin || stopped;
@@ -93,7 +93,7 @@ export default function HomeHeroCarousel({ lead, rest, body, line, learnMore, co
         <HomeHero lead={lead} rest={rest} body={body} ctaLabel={learnMore} />
       </div>
       <div className={`home-hero-frame${frame === 1 ? ' is-active' : ''}`} aria-hidden={frame !== 1} {...(frame !== 1 ? { inert: '' } : {})}>
-        <HomeHeroLake line={line} cta={communityLabel} />
+        <HomeHeroLake line={line} note={note} cta={communityLabel} />
       </div>
     </div>
   );

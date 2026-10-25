@@ -73,6 +73,7 @@ export default function HomeAtlas() {
         rest={heroLines[1]}
         body={publicCopy.hero.description}
         line={publicCopy.homeSlide.line}
+        note={publicCopy.homeSlide.note}
         learnMore={publicCopy.homeSlide.learnMore}
         communityLabel={publicCopy.navigation.meetCommunity}
         stopped={heroStopped}
