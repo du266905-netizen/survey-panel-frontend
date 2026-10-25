@@ -13,7 +13,7 @@ export default function AuthTopBar({ backLabel = 'Back' }) {
   return (
     <div className="auth-topbar">
       <Link className="auth-topbar-brand" to={withLanguage('/', language)} aria-label="GuanyiSearch home">
-        <img src="/guanyisearch-wordmark.png" alt="" width="136" height="21" />
+        <img src="/guanyisearch-wordmark.png" alt="" width="178" height="27" />
       </Link>
       <Link className="auth-topbar-back" to={withLanguage('/', language)}>
         {backLabel}

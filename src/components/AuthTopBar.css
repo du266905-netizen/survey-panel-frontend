@@ -21,7 +21,7 @@
   text-decoration: none;
 }
 
-.auth-topbar-brand img { display: block; width: 136px; height: auto; }
+.auth-topbar-brand img { display: block; width: 178px; height: auto; }
 
 .auth-topbar-back {
   /* The bar sits over the photograph on both pages, so the way back carries its
@@ -42,5 +42,5 @@
 
 @media (max-width: 700px) {
   .auth-topbar { padding: 18px 16px; }
-  .auth-topbar-brand img { width: 124px; }
+  .auth-topbar-brand img { width: 146px; }
 }

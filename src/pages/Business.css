@@ -239,7 +239,7 @@
 /* 面板给到 440px：那句 "Create your research workspace." 在 380px 里会被挤成三行
    （用户 2026-10-17：黑字大标语非得列成三行吗）。参与端文案短，仍是共享表里的 380px；
    顺带一条好处 —— 两张页面的面板右边缘算下来都落在 x=510。 */
-.business-login-form .public-auth-panel { width: min(100%, 440px); max-width: none; margin-left: 12px; }
+.business-login-form .public-auth-panel { width: min(100%, 440px); max-width: none; margin: 0 auto; }
 /* 面板那一圈边框、投影和留白是给「左图右表单」那版用的；这里表单自己就是一整栏，去掉。 */
 .business-login-form .business-access-panel { display: block; min-height: 0; border: 0; background: transparent; box-shadow: none; padding: 0; }
 /* 表单里那行大标题：106 行把它换成了 --font-display / 39px / w560，这里改回参与端的衬线，

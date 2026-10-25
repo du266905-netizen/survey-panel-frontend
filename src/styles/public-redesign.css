@@ -149,6 +149,25 @@
   color: #fffdf7 !important;
 }
 
+/* 2026-10-26：黄底时代的"注射"效果（内阴影填充 + 浮起阴影）在黑底上像故障，
+   账号页这两个按钮一并去掉，只保留纯黑与悬停加深。 */
+.public-auth-submit,
+.public-auth-email-cta,
+.landing-page--auth-only .public-auth-submit,
+.landing-page--auth-only .public-auth-email-cta {
+  box-shadow: none !important;
+}
+
+.public-auth-submit:hover:not(:disabled),
+.public-auth-email-cta:hover,
+.landing-page--auth-only .public-auth-submit:hover:not(:disabled),
+.landing-page--auth-only .public-auth-email-cta:hover {
+  box-shadow: none !important;
+  background: #000 !important;
+  border-color: #000 !important;
+  color: #fffdf7 !important;
+}
+
 .public-auth-submit:hover,
 .public-auth-email-cta:hover,
 .business-access-page .business-button:hover,
