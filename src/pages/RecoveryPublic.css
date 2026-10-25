@@ -12,13 +12,29 @@
 .recovery-page--public h2 { font-family: var(--font-serif); }
 .recovery-page--public::before,
 .recovery-page--public::after { display: none; }
-.recovery-page--public .recovery-shell { grid-template-columns: minmax(0, 1.02fr) minmax(440px, .98fr); }
+/* 2026-10-26：左右各一半。 */
+.recovery-page--public .recovery-shell { grid-template-columns: 1fr 1fr; }
 
 .recovery-page--public .recovery-brand {
-  background: #141413;
-  color: #FAF9F5;
+  /* 2026-10-26：左栏从黑底改成淡鼠尾草骨白，字与标同时转深。 */
+  background: #F2F3EC;
+  color: #141413;
   padding: 64px clamp(32px, 5vw, 72px);
 }
+
+.recovery-page--public .recovery-brand .recovery-logo img { filter: none; }
+.recovery-page--public .recovery-brand .recovery-kicker { color: rgba(20, 20, 19, .58); }
+.recovery-page--public .recovery-brand-copy > p:last-child { color: rgba(20, 20, 19, .72); }
+.recovery-page--public .recovery-brand-note { border-top-color: rgba(20, 20, 19, .16); color: rgba(20, 20, 19, .6); }
+/* 左栏现在是浅底，文字必须全部转深（index.css 里的白字规则优先级更高）。 */
+.recovery-page--public .recovery-brand h1 { color: #141413 !important; }
+.recovery-page--public .recovery-brand .recovery-kicker { color: rgba(20, 20, 19, .58) !important; }
+.recovery-page--public .recovery-brand-copy > p:last-child { color: rgba(20, 20, 19, .72) !important; }
+.recovery-page--public .recovery-brand-note { border-top-color: rgba(20, 20, 19, .16) !important; color: rgba(20, 20, 19, .6) !important; }
+.recovery-page--public .recovery-brand-note svg { color: rgba(20, 20, 19, .55) !important; }
+
+/* 左栏那个巨大的 G 水印在两页都去掉。 */
+.recovery-page .recovery-brand-mark { display: none !important; }
 .recovery-page--public .recovery-brand::before { display: none; }
 .recovery-page .recovery-brand-copy h1 {
   max-width: 600px;
@@ -56,10 +72,11 @@
   font-weight: 500;
 }
 
-.recovery-page--public .recovery-panel { background: #FAF9F5; }
+/* 右栏与左栏同一个淡鼠尾草骨白，避免中线两侧两种纸色。 */
+.recovery-page--public .recovery-panel { background: #F2F3EC; }
 .recovery-page--public .recovery-panel::before { display: none; }
 /* 2026-10-26：卡片加宽，38 的标题一行放得下。 */
-.recovery-page--public .recovery-panel-inner { width: min(100%, 560px); }
+.recovery-page--public .recovery-panel-inner { width: min(100%, 620px); }
 .recovery-page--public .recovery-return { color: #6F6A5F; font-family: var(--font-sans); font-size: 14px; font-weight: 500; }
 .recovery-page--public .recovery-return:hover { color: #141413; }
 
@@ -68,7 +85,7 @@
   border-radius: 22px;
   background: #FFFFFF;
   box-shadow: none;
-  padding: 40px;
+  padding: 40px 36px;
 }
 .recovery-page--public .recovery-icon {
   border: 0;
