@@ -1,5 +1,5 @@
-/* The first screen is a stack of full-height frames; only the active one is
-   visible, and the change is a slow cross-fade. */
+/* Homepage first screen: two full-height frames stacked, only the active one
+   visible, the change a slow cross-fade. */
 .home-hero-carousel {
   position: relative;
   min-height: calc(100svh - 100px);
@@ -26,6 +26,9 @@
   background: var(--pub-lime, #deef24);
   transform: scaleX(0);
   transform-origin: left center;
+  /* Its own layer: the bar is written every frame and must not repaint the
+     photograph underneath. */
+  will-change: transform;
 }
 
 .home-hero-carousel.is-still .home-hero-progress { display: none; }
@@ -33,13 +36,18 @@
 .home-hero-frame {
   position: absolute;
   inset: 0;
+  visibility: hidden;
   opacity: 0;
-  transition: opacity 1.4s ease;
+  /* visibility flips after the fade so the outgoing photograph can leave the
+     compositor instead of sitting at zero opacity for seven seconds. */
+  transition: opacity 1s ease, visibility 0s linear 1s;
   pointer-events: none;
 }
 
 .home-hero-frame.is-active {
+  visibility: visible;
   opacity: 1;
+  transition: opacity 1s ease, visibility 0s linear 0s;
   pointer-events: auto;
 }
 
@@ -48,31 +56,21 @@
   height: 100%;
 }
 
-.home-hero-carousel.is-still /* The lime line under the header is the rotation's clock: it fills over the
-   seven seconds and resets when the picture changes. */
-.home-hero-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  height: 2px;
-  background: rgba(255, 255, 255, .09);
-  pointer-events: none;
+/* The pictures dissolve into each other, but the words do not: the outgoing
+   line leaves in a quarter second, the incoming one arrives after the
+   pictures are more than half way. Two headlines never sit on top of one
+   another. */
+.home-hero-frame .home-hero-inner {
+  opacity: 0;
+  transition: opacity .25s ease;
 }
 
-.home-hero-progress span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: var(--pub-lime, #deef24);
-  transform: scaleX(0);
-  transform-origin: left center;
+.home-hero-frame.is-active .home-hero-inner {
+  opacity: 1;
+  transition: opacity .55s ease .5s;
 }
 
-.home-hero-carousel.is-still .home-hero-progress { display: none; }
-
-.home-hero-frame { transition: none; }
+.home-hero-carousel.is-still .home-hero-frame { transition: none; }
 
 @media (max-width: 720px) {
   .home-hero-carousel { min-height: calc(100svh - 96px); }
