@@ -50,7 +50,8 @@
   color: inherit;
   font-family: var(--font-impact);
   font-size: clamp(38px, 4vw, 56px);
-  font-weight: 300;
+  /* 与行业页 / /access 的 56 档统一用 400：300 会显得像另一套字。 */
+  font-weight: 400;
   font-synthesis-style: none;
   letter-spacing: -.03em;
   line-height: 1.02;
