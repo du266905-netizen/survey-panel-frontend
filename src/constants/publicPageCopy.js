@@ -22552,18 +22552,18 @@ export const chromeCopy = {
 
 export const homeSlideCopy = {
   "en-US": {
-    "line": "The world is wide. Your part of it counts.", "learnMore": "Learn more"
+    "line": "The world is wide. Your part of it can't be left out.", "learnMore": "Learn more"
   },
   "en-GB": {
-    "line": "The world is wide. Your part of it counts.", "learnMore": "Learn more"
+    "line": "The world is wide. Your part of it can't be left out.", "learnMore": "Learn more"
   },
   "en": {
-    "line": "The world is wide. Your part of it counts.", "learnMore": "Learn more"
+    "line": "The world is wide. Your part of it can't be left out.", "learnMore": "Learn more"
   },
   "zh-CN": {
-    "line": "世界那么大，你的那一份也少不了。", "learnMore": "了解更多"
+    "line": "世界那么大，你的那一份也不能少。", "learnMore": "了解更多"
   },
   "zh-Hant": {
-    "line": "世界那麼大，你的那一份也少不了。", "learnMore": "瞭解更多"
+    "line": "世界那麼大，你的那一份也不能少。", "learnMore": "瞭解更多"
   }
 };

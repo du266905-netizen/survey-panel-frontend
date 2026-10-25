@@ -6,6 +6,30 @@
   background: #141413;
 }
 
+/* The lime line under the header is the rotation's clock: it fills over the
+   seven seconds and resets when the picture changes. */
+.home-hero-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 2px;
+  background: rgba(255, 255, 255, .09);
+  pointer-events: none;
+}
+
+.home-hero-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--pub-lime, #deef24);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.home-hero-carousel.is-still .home-hero-progress { display: none; }
+
 .home-hero-frame {
   position: absolute;
   inset: 0;
@@ -24,7 +48,31 @@
   height: 100%;
 }
 
-.home-hero-carousel.is-still .home-hero-frame { transition: none; }
+.home-hero-carousel.is-still /* The lime line under the header is the rotation's clock: it fills over the
+   seven seconds and resets when the picture changes. */
+.home-hero-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 2px;
+  background: rgba(255, 255, 255, .09);
+  pointer-events: none;
+}
+
+.home-hero-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--pub-lime, #deef24);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.home-hero-carousel.is-still .home-hero-progress { display: none; }
+
+.home-hero-frame { transition: none; }
 
 @media (max-width: 720px) {
   .home-hero-carousel { min-height: calc(100svh - 96px); }
