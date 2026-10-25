@@ -3,6 +3,11 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
    partial regeneration must not be able to break the whole app with a missing
    named export. Each namespace falls back to an empty map. */
 import * as researchTranslations from '../constants/researchTranslations';
+import { aboutCopy, accessEntryCopy, industryCopy } from '../constants/publicPageCopy';
+/* Page copy entered 2026-10-25. Each page used to carry its own `copy` map;
+   the library now resolves the language once, so a page asks for
+   `publicCopy.pages.about` and gets the right text or the English fallback. */
+const pickPageCopy = (map, language) => map[language] || map['en-US'] || map.en || map['en-GB'] || {};
 const aiBriefTranslations = researchTranslations.aiBriefTranslations || {};
 const workspaceUiTranslations = researchTranslations.workspaceUiTranslations || {};
 const customRequestTranslations = researchTranslations.customRequestTranslations || {};
@@ -2027,6 +2032,11 @@ export function LanguageProvider({ children }) {
       navigation: { ...englishCopy.navigation, ...(publicCopyByLanguage[language]?.navigation || {}), items: { ...englishCopy.navigation.items, ...(publicCopyByLanguage[language]?.navigation?.items || {}) } },
       hero: { ...englishCopy.hero, ...(publicCopyByLanguage[language]?.hero || {}) },
       approach: { ...englishCopy.approach, ...(publicCopyByLanguage[language]?.approach || {}) },
+      pages: {
+        about: pickPageCopy(aboutCopy, language),
+        access: pickPageCopy(accessEntryCopy, language),
+        industries: Object.fromEntries(Object.entries(industryCopy).map(([key, map]) => [key, pickPageCopy(map, language)])),
+      },
       home: { ...englishCopy.home, ...(publicCopyByLanguage[language]?.home || {}) },
       /* The survey list and the news list used to keep their own tables here,
          translated for twelve languages at most; the library carries all
