@@ -9031,6 +9031,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "Finanzdienstleistungen und Vermögensverwaltung",
+      "lead": "Forschung für Banken, Vermögensverwalter und Fintechs: was Kunden vertrauen, wofür sie zahlen und warum sie gehen.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Vertrauen in Finanzdienstleistungen entsteht langsam und geht in einer einzigen Interaktion verloren: eine Gebühr, die nicht erklärt wurde, eine Überweisung, die scheiterte, ein Anruf, der nicht beantwortet wurde.",
+        "Wir untersuchen Kunde und Berater getrennt: wie Anleger vergleichen und entscheiden, wofür sie zahlen, was Berater empfehlen und warum, und wo das Erlebnis bricht.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll — ob ein Segment betreten wird, wie ein Produkt bepreist wird, welcher Kanal Wachstum trägt und warum Kunden gehen. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kunde und Vermögen",
+          "frame": "Wer der Kunde ist und wo die Vermögen liegen.",
+          "cards": [
+            {
+              "title": "Segmentierung vermögender Kunden",
+              "body": "Kunden nach investierbarem Vermögen, Produkthaltung und Markt segmentieren und jede Gruppe beziffern, bevor das Angebot gebaut wird.",
+              "methods": "HNW-Stichprobe · Online-Befragung"
+            },
+            {
+              "title": "Anlageverhalten und Vertrauen",
+              "body": "Verstehen, wie Anleger entscheiden, was sie vertrauen und wie eine Empfehlung befolgt oder ignoriert wird.",
+              "methods": "Tiefeninterviews · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Berater und Vertrieb",
+          "frame": "Wer empfiehlt und über welche Plattform.",
+          "cards": [
+            {
+              "title": "Berater-Ökosystem",
+              "body": "Wie Berater und Vertriebspartner Plattformen nutzen und wo digitale Werkzeuge ihre Empfehlungen verändern.",
+              "methods": "Tiefeninterviews mit Beratern"
+            },
+            {
+              "title": "Anteil am Vermögen",
+              "body": "Feststellen, wie viel des Kundenvermögens bei einem Anbieter liegt und was den Rest bewegt.",
+              "methods": "HNW-Befragung · Beraterinterviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Produkt und Preis",
+          "frame": "Was es kostet und was es wert ist.",
+          "cards": [
+            {
+              "title": "Preis und Gebühren",
+              "body": "Gebührenstrukturen und Preispunkte gegen Zahlungsbereitschaft testen, bevor das Angebot startet.",
+              "methods": "Preissensitivitätsmodelle · HNW-Befragung"
+            },
+            {
+              "title": "Produkt- und Funktionstests",
+              "body": "Angebote und Plattformfunktionen mit den Kunden testen, für die sie gebaut sind.",
+              "methods": "Konzept- und A/B-Tests"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Erlebnis und Bindung",
+          "frame": "Ob der Kunde bleibt und warum nicht.",
+          "cards": [
+            {
+              "title": "Kundenerlebnis",
+              "body": "Das Kundenerlebnis und die Wechseltreiber unter Vermögenskunden messen.",
+              "methods": "Online-Befragung · Tiefeninterviews"
+            },
+            {
+              "title": "Bindung und Abwanderung",
+              "body": "Bindung, Vermögensanteil und die Gründe für Abwanderung verfolgen.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "HNW-Stichprobe",
+          "Kunden über verifizierte Vermögenspanels und Empfehlungen rekrutiert, gescreent nach investierbarem Vermögen, Produkthaltung und Markt."
+        ],
+        [
+          "Tiefeninterviews mit Beratern",
+          "Interviews von 45 bis 60 Minuten mit Beratern, Family Offices und Plattformmitarbeitern, eins zu eins vom Forschungsteam geführt."
+        ],
+        [
+          "Online-Befragung",
+          "Befragung von Kunden oder Interessenten mit Quoten nach Vermögen, Produkthaltung und Markt."
+        ],
+        [
+          "CATI",
+          "Standardisierte Telefoninterviews mit Quoten nach Markt, Produkthaltung oder Kundensegment. Eingesetzt, wo die Liste definiert ist."
+        ],
+        [
+          "Preissensitivitätsmodelle",
+          "Zahlungsbereitschafts- und Preissensitivitätsmodelle, als Bandbreite mit ausgewiesenen Annahmen berichtet."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "Services financiers et gestion de patrimoine",
+      "lead": "Études pour les banques, les gérants de patrimoine et les fintechs : ce en quoi les clients ont confiance, ce qu'ils paient et pourquoi ils partent.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "La confiance dans les services financiers se construit lentement et se perd en une seule interaction : des frais non expliqués, un virement échoué, un appel sans réponse.",
+        "Nous étudions le client et le conseiller séparément : comment les investisseurs comparent et décident, ce qu'ils paient, ce que les conseillers recommandent et pourquoi, et où l'expérience se brise.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer — entrer sur un segment, fixer le prix d'un produit, quel canal porte la croissance et pourquoi les clients partent. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Client et actifs",
+          "frame": "Qui est le client, et où se situent les actifs.",
+          "cards": [
+            {
+              "title": "Segmentation des clients aisés",
+              "body": "Segmenter les clients par actifs investissables, détention de produits et marché, et dimensionner chaque groupe avant de construire l'offre.",
+              "methods": "Échantillon HNW · enquête en ligne"
+            },
+            {
+              "title": "Comportement d'investissement et confiance",
+              "body": "Comprendre comment les investisseurs décident, ce qu'ils croient et comment une recommandation est suivie ou ignorée.",
+              "methods": "Entretiens approfondis · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Conseillers et distribution",
+          "frame": "Qui recommande, et via quelle plateforme.",
+          "cards": [
+            {
+              "title": "Écosystème de conseillers",
+              "body": "Comment les conseillers et partenaires de distribution utilisent les plateformes, et où les outils numériques changent leurs recommandations.",
+              "methods": "Entretiens approfondis conseillers"
+            },
+            {
+              "title": "Part du patrimoine",
+              "body": "Établir quelle part des actifs d'un client se trouve chez un fournisseur, et ce qui fait bouger le reste.",
+              "methods": "Enquête HNW · entretiens conseillers"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Produit et tarification",
+          "frame": "Ce que cela coûte, et ce que cela vaut.",
+          "cards": [
+            {
+              "title": "Prix et frais",
+              "body": "Tester les structures de frais et les niveaux de prix face à la disposition à payer, avant le lancement de l'offre.",
+              "methods": "Modèles de sensibilité au prix · enquête HNW"
+            },
+            {
+              "title": "Test de produit et de fonctionnalités",
+              "body": "Tester offres et fonctionnalités avec les clients pour lesquels elles sont conçues.",
+              "methods": "Tests de concept et A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Expérience et fidélisation",
+          "frame": "Si le client reste, et pourquoi non.",
+          "cards": [
+            {
+              "title": "Expérience client",
+              "body": "Mesurer l'expérience client et les moteurs du changement de fournisseur chez les clients fortunés.",
+              "methods": "Enquête en ligne · entretiens approfondis"
+            },
+            {
+              "title": "Fidélisation et attrition",
+              "body": "Suivre la fidélisation, la part de patrimoine et les raisons de départ.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Échantillon HNW",
+          "Clients recrutés via des panels patrimoniaux vérifiés et par recommandation, filtrés par actifs investissables, détention de produits et marché."
+        ],
+        [
+          "Entretiens approfondis conseillers",
+          "Entretiens de 45 à 60 minutes avec conseillers, family offices et équipes de plateforme, menés en tête-à-tête par l'équipe."
+        ],
+        [
+          "Enquête en ligne",
+          "Enquête auprès de clients ou de prospects, avec quotas par actifs, détention de produits et marché."
+        ],
+        [
+          "CATI",
+          "Entretiens téléphoniques scriptés, avec quotas par marché, détention de produits ou segment de clientèle. Utilisés lorsque la liste est définie."
+        ],
+        [
+          "Modèles de sensibilité au prix",
+          "Modèles de disposition à payer et de sensibilité au prix, présentés en fourchette avec les hypothèses explicitées."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "Financiële dienstverlening en vermogensbeheer",
+      "lead": "Onderzoek voor banken, vermogensbeheerders en fintechs: wat klanten vertrouwen, waarvoor zij betalen en waarom zij vertrekken.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Vertrouwen in financiële dienstverlening ontstaat langzaam en verdwijnt in één interactie: een vergoeding die niet is uitgelegd, een overboeking die mislukte, een gesprek dat niet werd beantwoord.",
+        "We onderzoeken klant en adviseur apart: hoe beleggers vergelijken en beslissen, waarvoor zij betalen, wat adviseurs aanbevelen en waarom, en waar de ervaring breekt.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen — een segment betreden, een product prijzen, welk kanaal groei draagt en waarom klanten vertrekken. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Klant en vermogen",
+          "frame": "Wie de klant is en waar het vermogen zit.",
+          "cards": [
+            {
+              "title": "Segmentatie van vermogende klanten",
+              "body": "Klanten segmenteren naar belegbaar vermogen, productbezit en markt, en elke groep kwantificeren voordat het aanbod wordt gebouwd.",
+              "methods": "HNW-steekproef · online-enquête"
+            },
+            {
+              "title": "Beleggingsgedrag en vertrouwen",
+              "body": "Begrijpen hoe beleggers beslissen, wat zij vertrouwen en hoe een advies wordt opgevolgd of genegeerd.",
+              "methods": "Diepte-interviews · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Adviseurs en distributie",
+          "frame": "Wie adviseert, en via welk platform.",
+          "cards": [
+            {
+              "title": "Adviseurs-ecosysteem",
+              "body": "Hoe adviseurs en distributiepartners platforms gebruiken, en waar digitale tools hun advies veranderen.",
+              "methods": "Diepte-interviews met adviseurs"
+            },
+            {
+              "title": "Aandeel in het vermogen",
+              "body": "Vaststellen welk deel van het klantvermogen bij één aanbieder zit, en wat de rest beweegt.",
+              "methods": "HNW-enquête · adviseursinterviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Product en prijs",
+          "frame": "Wat het kost en wat het waard is.",
+          "cards": [
+            {
+              "title": "Prijs en kosten",
+              "body": "Kostenstructuren en prijspunten testen tegen betalingsbereidheid, voordat het aanbod start.",
+              "methods": "Prijsgevoeligheidsmodellen · HNW-enquête"
+            },
+            {
+              "title": "Product- en functietests",
+              "body": "Aanbod en platformfuncties testen met de klanten voor wie ze zijn gebouwd.",
+              "methods": "Concept- en A/B-tests"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Ervaring en behoud",
+          "frame": "Of de klant blijft, en waarom niet.",
+          "cards": [
+            {
+              "title": "Klantbeleving",
+              "body": "De klantbeleving en de drijfveren om te wisselen onder vermogende klanten meten.",
+              "methods": "Online-enquête · diepte-interviews"
+            },
+            {
+              "title": "Behoud en uitstroom",
+              "body": "Behoud, aandeel in het vermogen en redenen om te vertrekken volgen.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "HNW-steekproef",
+          "Klanten geworven via geverifieerde vermogenspanels en doorverwijzing, gescreend op belegbaar vermogen, productbezit en markt."
+        ],
+        [
+          "Diepte-interviews met adviseurs",
+          "Interviews van 45 tot 60 minuten met adviseurs, family offices en platformmedewerkers, één op één door het onderzoeksteam."
+        ],
+        [
+          "Online-enquête",
+          "Enquête onder klanten of prospects, met quota naar vermogen, productbezit en markt."
+        ],
+        [
+          "CATI",
+          "Gescripte telefonische interviews, met quota naar markt, productbezit of klantsegment. Gebruikt waar de lijst gedefinieerd is."
+        ],
+        [
+          "Prijsgevoeligheidsmodellen",
+          "Betalingsbereidheids- en prijsgevoeligheidsmodellen, gerapporteerd als bandbreedte met vermelde aannames."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "Finansielle ydelser og formue",
+      "lead": "Research for banker, formueforvaltere og fintechs: hvad kunderne har tillid til, hvad de betaler for, og hvorfor de forsvinder.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "Tillid til finansielle ydelser opbygges langsomt og mistes i én enkelt interaktion: et gebyr, der ikke blev forklaret, en overførsel, der fejlede, et opkald, der ikke blev besvaret.",
+        "Vi undersøger kunde og rådgiver hver for sig: hvordan investorer sammenligner og beslutter, hvad de betaler for, hvad rådgivere anbefaler og hvorfor, og hvor oplevelsen brister.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte — om et segment skal betrædes, hvordan et produkt prissættes, hvilken kanal der bærer væksten, og hvorfor kunder forsvinder. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kunde og formue",
+          "frame": "Hvem kunden er, og hvor formuen ligger.",
+          "cards": [
+            {
+              "title": "Segmentering af formuende kunder",
+              "body": "Segmentér kunder efter investerbar formue, produktbesiddelse og marked, og størrelsesbestem hver gruppe, før tilbuddet bygges.",
+              "methods": "HNW-stikprøve · onlineundersøgelse"
+            },
+            {
+              "title": "Investeringsadfærd og tillid",
+              "body": "Forstå, hvordan investorer beslutter, hvad de har tillid til, og hvordan en anbefaling følges eller ignoreres.",
+              "methods": "Dybdeinterviews · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Rådgivere og distribution",
+          "frame": "Hvem der anbefaler, og via hvilken platform.",
+          "cards": [
+            {
+              "title": "Rådgiverøkosystem",
+              "body": "Hvordan rådgivere og distributionspartnere bruger platforme, og hvor digitale værktøjer ændrer deres anbefalinger.",
+              "methods": "Dybdeinterviews med rådgivere"
+            },
+            {
+              "title": "Andel af formuen",
+              "body": "Fastslå, hvor stor en del af kundens formue der ligger hos én udbyder, og hvad der flytter resten.",
+              "methods": "HNW-undersøgelse · rådgiverinterviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Produkt og prissætning",
+          "frame": "Hvad det koster, og hvad det er værd.",
+          "cards": [
+            {
+              "title": "Pris og gebyrer",
+              "body": "Test gebyrstrukturer og prispunkter mod betalingsvillighed, før tilbuddet lanceres.",
+              "methods": "Prisfølsomhedsmodeller · HNW-undersøgelse"
+            },
+            {
+              "title": "Produkt- og funktionstest",
+              "body": "Test tilbud og platformfunktioner med de kunder, de er bygget til.",
+              "methods": "Koncept- og A/B-test"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Oplevelse og fastholdelse",
+          "frame": "Om kunden bliver, og hvorfor ikke.",
+          "cards": [
+            {
+              "title": "Kundeoplevelse",
+              "body": "Mål kundeoplevelsen og drivkræfterne for skift blandt formuende kunder.",
+              "methods": "Onlineundersøgelse · dybdeinterviews"
+            },
+            {
+              "title": "Fastholdelse og frafald",
+              "body": "Følg fastholdelse, andel af formue og årsagerne til, at kunder forsvinder.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "HNW-stikprøve",
+          "Kunder rekrutteret via verificerede formuepaneler og henvisning, screenet efter investerbar formue, produktbesiddelse og marked."
+        ],
+        [
+          "Dybdeinterviews med rådgivere",
+          "Interviews på 45-60 minutter med rådgivere, family offices og platformmedarbejdere, gennemført en til en af researchteamet."
+        ],
+        [
+          "Onlineundersøgelse",
+          "Undersøgelse blandt kunder eller prospects, med kvoter efter formue, produktbesiddelse og marked."
+        ],
+        [
+          "CATI",
+          "Scriptede telefoninterviews med kvoter efter marked, produktbesiddelse eller kundesegment. Bruges, hvor listen er defineret."
+        ],
+        [
+          "Prisfølsomhedsmodeller",
+          "Betalingsvilligheds- og prisfølsomhedsmodeller, rapporteret som interval med angivne antagelser."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Servicios financieros y patrimonio",
+      "lead": "Investigación para bancos, gestores de patrimonio y fintechs: en qué confían los clientes, por qué pagan y por qué se van.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "La confianza en los servicios financieros se construye despacio y se pierde en una sola interacción: una comisión no explicada, una transferencia fallida, una llamada sin respuesta.",
+        "Estudiamos al cliente y al asesor por separado: cómo comparan y deciden los inversores, por qué pagan, qué recomiendan los asesores y por qué, y dónde se rompe la experiencia.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener — entrar en un segmento, fijar el precio de un producto, qué canal sostiene el crecimiento y por qué se van los clientes. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Cliente y patrimonio",
+          "frame": "Quién es el cliente y dónde está el patrimonio.",
+          "cards": [
+            {
+              "title": "Segmentación de clientes acomodados",
+              "body": "Segmentar clientes por patrimonio invertible, tenencia de productos y mercado, y dimensionar cada grupo antes de construir la propuesta.",
+              "methods": "Muestra HNW · encuesta online"
+            },
+            {
+              "title": "Comportamiento inversor y confianza",
+              "body": "Entender cómo deciden los inversores, en qué confían y cómo se sigue o se ignora una recomendación.",
+              "methods": "Entrevistas en profundidad · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Asesores y distribución",
+          "frame": "Quién recomienda y a través de qué plataforma.",
+          "cards": [
+            {
+              "title": "Ecosistema de asesores",
+              "body": "Cómo usan las plataformas los asesores y socios de distribución, y dónde las herramientas digitales cambian lo que recomiendan.",
+              "methods": "Entrevistas en profundidad con asesores"
+            },
+            {
+              "title": "Cuota de patrimonio",
+              "body": "Establecer qué parte del patrimonio de un cliente está en un proveedor y qué mueve el resto.",
+              "methods": "Encuesta HNW · entrevistas a asesores"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Producto y precio",
+          "frame": "Cuánto cuesta y cuánto vale.",
+          "cards": [
+            {
+              "title": "Precio y comisiones",
+              "body": "Probar estructuras de comisiones y puntos de precio frente a la disposición a pagar, antes de lanzar la propuesta.",
+              "methods": "Modelos de sensibilidad al precio · encuesta HNW"
+            },
+            {
+              "title": "Pruebas de producto y funcionalidad",
+              "body": "Probar propuestas y funcionalidades con los clientes para quienes se construyen.",
+              "methods": "Pruebas de concepto y A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Experiencia y retención",
+          "frame": "Si el cliente se queda y por qué no.",
+          "cards": [
+            {
+              "title": "Experiencia del cliente",
+              "body": "Medir la experiencia del cliente y los motivos de cambio entre clientes de patrimonio.",
+              "methods": "Encuesta online · entrevistas en profundidad"
+            },
+            {
+              "title": "Retención y abandono",
+              "body": "Seguir la retención, la cuota de patrimonio y los motivos de salida.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Muestra HNW",
+          "Clientes reclutados mediante paneles patrimoniales verificados y referidos, filtrados por patrimonio invertible, tenencia de productos y mercado."
+        ],
+        [
+          "Entrevistas en profundidad con asesores",
+          "Entrevistas de 45 a 60 minutos con asesores, family offices y personal de plataforma, realizadas uno a uno por el equipo."
+        ],
+        [
+          "Encuesta online",
+          "Encuesta a clientes o prospectos, con cuotas por patrimonio, tenencia de productos y mercado."
+        ],
+        [
+          "CATI",
+          "Entrevistas telefónicas guionizadas, con cuotas por mercado, tenencia de productos o segmento de cliente. Se usan cuando la lista está definida."
+        ],
+        [
+          "Modelos de sensibilidad al precio",
+          "Modelos de disposición a pagar y sensibilidad al precio, presentados como rango con los supuestos declarados."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Rahoituspalvelut ja varallisuudenhoito",
+      "lead": "Tutkimusta pankeille, varainhoitajille ja fintech-yrityksille: mihin asiakkaat luottavat, mistä he maksavat ja miksi he lähtevät.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Luottamus rahoituspalveluihin rakentuu hitaasti ja katoaa yhdessä vuorovaikutuksessa: selittämätön maksu, epäonnistunut siirto, vastaamaton puhelu.",
+        "Tutkimme asiakasta ja neuvonantajaa erikseen: miten sijoittajat vertailevat ja päättävät, mistä he maksavat, mitä neuvonantajat suosittelevat ja miksi, ja missä kokemus katkeaa.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava — segmentille astuminen, tuotteen hinnoittelu, mikä kanava kantaa kasvua ja miksi asiakkaat lähtevät. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Asiakas ja varallisuus",
+          "frame": "Kuka asiakas on ja missä varallisuus on.",
+          "cards": [
+            {
+              "title": "Varakkaiden asiakkaiden segmentointi",
+              "body": "Segmentoi asiakkaat sijoitettavan varallisuuden, tuoteomistuksen ja markkinan mukaan ja mitoita jokainen ryhmä ennen tarjooman rakentamista.",
+              "methods": "HNW-otos · verkkokysely"
+            },
+            {
+              "title": "Sijoituskäyttäytyminen ja luottamus",
+              "body": "Ymmärrä, miten sijoittajat päättävät, mihin he luottavat ja miten suositusta seurataan tai jätetään huomiotta.",
+              "methods": "Syvähaastattelut · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Neuvonantajat ja jakelu",
+          "frame": "Kuka suosittelee ja millä alustalla.",
+          "cards": [
+            {
+              "title": "Neuvonantajaekosysteemi",
+              "body": "Miten neuvonantajat ja jakelukumppanit käyttävät alustoja ja missä digitaaliset työkalut muuttavat heidän suosituksiaan.",
+              "methods": "Syvähaastattelut neuvonantajille"
+            },
+            {
+              "title": "Osuus varallisuudesta",
+              "body": "Selvitä, kuinka suuri osa asiakkaan varallisuudesta on yhdellä tarjoajalla ja mikä liikuttaa loput.",
+              "methods": "HNW-kysely · neuvonantajahaastattelut"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Tuote ja hinnoittelu",
+          "frame": "Mitä se maksaa ja mitä se on arvoinen.",
+          "cards": [
+            {
+              "title": "Hinta ja palkkiot",
+              "body": "Testaa palkkiorakenteet ja hintapisteet maksuhalukkuutta vastaan ennen tarjooman lanseerausta.",
+              "methods": "Hintasensitiivisyysmallit · HNW-kysely"
+            },
+            {
+              "title": "Tuote- ja ominaisuustestit",
+              "body": "Testaa tarjoomia ja alustaominaisuuksia asiakkaille, joille ne on rakennettu.",
+              "methods": "Konsepti- ja A/B-testaus"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Kokemus ja pysyvyys",
+          "frame": "Pysyykö asiakas ja miksi ei.",
+          "cards": [
+            {
+              "title": "Asiakaskokemus",
+              "body": "Mittaa asiakaskokemusta ja vaihtamisen ajureita varakkaiden asiakkaiden keskuudessa.",
+              "methods": "Verkkokysely · syvähaastattelut"
+            },
+            {
+              "title": "Pysyvyys ja poistuma",
+              "body": "Seuraa pysyvyyttä, osuutta varallisuudesta ja syitä lähteä.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "HNW-otos",
+          "Asiakkaat rekrytoitu varmennetuista varallisuuspaneeleista ja suositusten kautta, seulottu sijoitettavan varallisuuden, tuoteomistuksen ja markkinan mukaan."
+        ],
+        [
+          "Syvähaastattelut neuvonantajille",
+          "45–60 minuutin haastattelut neuvonantajien, family office -toimijoiden ja alustahenkilöstön kanssa, tutkimustiimi tekee kahdestaan."
+        ],
+        [
+          "Verkkokysely",
+          "Kysely asiakkaille tai potentiaalisille asiakkaille, kiintiöt varallisuuden, tuoteomistuksen ja markkinan mukaan."
+        ],
+        [
+          "CATI",
+          "Käsikirjoitetut puhelinhaastattelut, kiintiöt markkinan, tuoteomistuksen tai asiakassegmentin mukaan. Käytetään, kun lista on määritelty."
+        ],
+        [
+          "Hintasensitiivisyysmallit",
+          "Maksuhalukkuus- ja hintasensitiivisyysmallit, raportoituna vaihteluvälinä ilmoitetuin oletuksin."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "Servizi finanziari e patrimonio",
+      "lead": "Ricerche per banche, gestori patrimoniali e fintech: di cosa si fidano i clienti, per cosa pagano e perché se ne vanno.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "La fiducia nei servizi finanziari si costruisce lentamente e si perde in una sola interazione: una commissione non spiegata, un bonifico fallito, una chiamata senza risposta.",
+        "Studiamo cliente e consulente separatamente: come gli investitori confrontano e decidono, per cosa pagano, cosa consigliano i consulenti e perché, e dove l'esperienza si rompe.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere — entrare in un segmento, prezzare un prodotto, quale canale porta crescita e perché i clienti se ne vanno. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Cliente e patrimonio",
+          "frame": "Chi è il cliente e dove sta il patrimonio.",
+          "cards": [
+            {
+              "title": "Segmentazione dei clienti facoltosi",
+              "body": "Segmentare i clienti per patrimonio investibile, possesso di prodotti e mercato, e dimensionare ogni gruppo prima di costruire la proposta.",
+              "methods": "Campione HNW · indagine online"
+            },
+            {
+              "title": "Comportamento di investimento e fiducia",
+              "body": "Capire come decidono gli investitori, di cosa si fidano e come un consiglio viene seguito o ignorato.",
+              "methods": "Interviste in profondità · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Consulenti e distribuzione",
+          "frame": "Chi consiglia e attraverso quale piattaforma.",
+          "cards": [
+            {
+              "title": "Ecosistema dei consulenti",
+              "body": "Come consulenti e partner di distribuzione usano le piattaforme, e dove gli strumenti digitali cambiano ciò che consigliano.",
+              "methods": "Interviste in profondità a consulenti"
+            },
+            {
+              "title": "Quota di patrimonio",
+              "body": "Stabilire quanta parte del patrimonio di un cliente è presso un fornitore, e cosa muove il resto.",
+              "methods": "Indagine HNW · interviste a consulenti"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Prodotto e prezzo",
+          "frame": "Quanto costa e quanto vale.",
+          "cards": [
+            {
+              "title": "Prezzo e commissioni",
+              "body": "Testare strutture di commissioni e punti di prezzo rispetto alla disponibilità a pagare, prima del lancio della proposta.",
+              "methods": "Modelli di sensibilità al prezzo · indagine HNW"
+            },
+            {
+              "title": "Test di prodotto e funzionalità",
+              "body": "Testare proposte e funzionalità con i clienti per cui sono costruite.",
+              "methods": "Test di concept e A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Esperienza e retention",
+          "frame": "Se il cliente resta, e perché no.",
+          "cards": [
+            {
+              "title": "Esperienza del cliente",
+              "body": "Misurare l'esperienza del cliente e i motivi di cambio tra clienti patrimoniali.",
+              "methods": "Indagine online · interviste in profondità"
+            },
+            {
+              "title": "Retention e abbandono",
+              "body": "Monitorare retention, quota di patrimonio e motivi di uscita.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Campione HNW",
+          "Clienti reclutati tramite panel patrimoniali verificati e passaparola, filtrati per patrimonio investibile, possesso di prodotti e mercato."
+        ],
+        [
+          "Interviste in profondità a consulenti",
+          "Interviste di 45-60 minuti con consulenti, family office e staff di piattaforma, condotte uno a uno dal team."
+        ],
+        [
+          "Indagine online",
+          "Indagine su clienti o prospect, con quote per patrimonio, possesso di prodotti e mercato."
+        ],
+        [
+          "CATI",
+          "Interviste telefoniche scriptate, con quote per mercato, possesso di prodotti o segmento di clientela. Usate quando la lista è definita."
+        ],
+        [
+          "Modelli di sensibilità al prezzo",
+          "Modelli di disponibilità a pagare e sensibilità al prezzo, riportati come intervallo con le assunzioni dichiarate."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "金融と資産管理",
+      "lead": "銀行、資産運用会社、フィンテック向けの調査：顧客が何を信頼し、何に費用を払い、なぜ離れるのか。",
+      "introKicker": "進め方",
+      "intro": [
+        "金融サービスへの信頼はゆっくり築かれ、一度のやり取りで失われます。説明のない手数料、失敗した送金、つながらない電話。",
+        "顧客とアドバイザーを分けて調べます。投資家がどう比較し決めるか、何に費用を払うか、アドバイザーが何をなぜ勧めるか、どこで体験が途切れるか。",
+        "各調査は、それが支えるべき意思決定を中心に設計します — セグメントに参入するか、製品をどう価格づけるか、どのチャネルが成長を担うか、なぜ顧客が離れるか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "顧客と資産",
+          "frame": "顧客は誰で、資産はどこにあるか。",
+          "cards": [
+            {
+              "title": "富裕層セグメンテーション",
+              "body": "投資可能資産、商品保有、市場で顧客をセグメント化し、提案を作る前に各グループの規模を測ります。",
+              "methods": "富裕層サンプル · オンライン調査"
+            },
+            {
+              "title": "投資行動と信頼",
+              "body": "投資家がどう決め、何を信頼し、推薦がどう実行されるか、あるいは無視されるかを理解します。",
+              "methods": "デプスインタビュー · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "アドバイザーと流通",
+          "frame": "誰が勧め、どのプラットフォームを通すか。",
+          "cards": [
+            {
+              "title": "アドバイザー・エコシステム",
+              "body": "アドバイザーと流通パートナーがプラットフォームをどう使い、デジタルツールが勧める内容をどこで変えるか。",
+              "methods": "アドバイザーへのデプスインタビュー"
+            },
+            {
+              "title": "資産シェア",
+              "body": "顧客資産のうち1社に預けられている割合と、残りを動かすものを明らかにします。",
+              "methods": "富裕層調査 · アドバイザーインタビュー"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "商品と価格",
+          "frame": "いくらかかり、いくらの価値があるか。",
+          "cards": [
+            {
+              "title": "価格と手数料",
+              "body": "提案の開始前に、手数料体系と価格点を支払意欲に対してテストします。",
+              "methods": "価格感度モデル · 富裕層調査"
+            },
+            {
+              "title": "商品・機能テスト",
+              "body": "提案とプラットフォーム機能を、それが作られた顧客とともにテストします。",
+              "methods": "コンセプト／A/Bテスト"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "体験と維持",
+          "frame": "顧客が残るか、なぜ残らないか。",
+          "cards": [
+            {
+              "title": "顧客体験",
+              "body": "富裕層顧客の顧客体験とスイッチの要因を測ります。",
+              "methods": "オンライン調査 · デプスインタビュー"
+            },
+            {
+              "title": "維持と離脱",
+              "body": "維持率、資産シェア、離れる理由を追跡します。",
+              "methods": "トラッキング · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "富裕層サンプル",
+          "検証済みの富裕層パネルと紹介で募集し、投資可能資産、商品保有、市場でスクリーニングします。"
+        ],
+        [
+          "アドバイザーへのデプスインタビュー",
+          "アドバイザー、ファミリーオフィス、プラットフォーム担当者への45〜60分のインタビュー。調査チームが1対1で行います。"
+        ],
+        [
+          "オンライン調査",
+          "顧客または見込み客への調査。資産、商品保有、市場で割り付けます。"
+        ],
+        [
+          "CATI",
+          "スクリプトに沿った電話調査。市場、商品保有、顧客セグメントで割り付けます。名簿が確定している場合に使います。"
+        ],
+        [
+          "価格感度モデル",
+          "支払意欲と価格感度のモデル。前提を明記した幅として報告します。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "금융과 자산관리",
+      "lead": "은행, 자산운용사, 핀테크를 위한 조사: 고객이 무엇을 신뢰하고, 무엇에 비용을 내며, 왜 떠나는지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "금융 서비스에 대한 신뢰는 천천히 쌓이고 한 번의 상호작용으로 사라집니다. 설명되지 않은 수수료, 실패한 이체, 받지 않은 전화.",
+        "고객과 어드바이저를 따로 조사합니다. 투자자가 어떻게 비교하고 결정하는지, 무엇에 비용을 내는지, 어드바이저가 무엇을 왜 권하는지, 어디서 경험이 끊기는지.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다 — 세그먼트 진입, 상품 가격 책정, 어느 채널이 성장을 담당하는지, 왜 고객이 떠나는지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "고객과 자산",
+          "frame": "고객은 누구이고 자산은 어디에 있는가.",
+          "cards": [
+            {
+              "title": "고액자산가 세분화",
+              "body": "투자 가능 자산, 상품 보유, 시장으로 고객을 세분화하고 제안을 만들기 전에 각 집단 규모를 측정합니다.",
+              "methods": "HNW 표본 · 온라인 조사"
+            },
+            {
+              "title": "투자 행동과 신뢰",
+              "body": "투자자가 어떻게 결정하고 무엇을 신뢰하며 권유가 어떻게 실행되거나 무시되는지 이해합니다.",
+              "methods": "심층 인터뷰 · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "어드바이저와 유통",
+          "frame": "누가 권하고 어떤 플랫폼을 통하는가.",
+          "cards": [
+            {
+              "title": "어드바이저 생태계",
+              "body": "어드바이저와 유통 파트너가 플랫폼을 어떻게 쓰고, 디지털 도구가 어디서 권유 내용을 바꾸는지.",
+              "methods": "어드바이저 심층 인터뷰"
+            },
+            {
+              "title": "자산 점유율",
+              "body": "고객 자산 중 한 제공자에게 있는 비중과 나머지를 움직이는 요인을 밝힙니다.",
+              "methods": "HNW 조사 · 어드바이저 인터뷰"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "상품과 가격",
+          "frame": "얼마인지, 얼마의 가치가 있는지.",
+          "cards": [
+            {
+              "title": "가격과 수수료",
+              "body": "제안 출시 전에 수수료 구조와 가격대를 지불 의향에 대해 테스트합니다.",
+              "methods": "가격 민감도 모델 · HNW 조사"
+            },
+            {
+              "title": "상품·기능 테스트",
+              "body": "제안과 플랫폼 기능을 그것이 만들어진 고객과 함께 테스트합니다.",
+              "methods": "콘셉트·A/B 테스트"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "경험과 유지",
+          "frame": "고객이 남는지, 왜 남지 않는지.",
+          "cards": [
+            {
+              "title": "고객 경험",
+              "body": "고액자산가 고객의 경험과 전환 요인을 측정합니다.",
+              "methods": "온라인 조사 · 심층 인터뷰"
+            },
+            {
+              "title": "유지와 이탈",
+              "body": "유지율, 자산 점유율, 떠나는 이유를 추적합니다.",
+              "methods": "트래킹 · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "HNW 표본",
+          "검증된 고액자산가 패널과 추천으로 모집하고, 투자 가능 자산, 상품 보유, 시장으로 선별합니다."
+        ],
+        [
+          "어드바이저 심층 인터뷰",
+          "어드바이저, 패밀리오피스, 플랫폼 담당자와 45~60분 인터뷰. 조사팀이 1대1로 진행합니다."
+        ],
+        [
+          "온라인 조사",
+          "고객 또는 잠재 고객 조사. 자산, 상품 보유, 시장으로 할당합니다."
+        ],
+        [
+          "CATI",
+          "스크립트 기반 전화 조사. 시장, 상품 보유, 고객 세그먼트로 할당합니다. 명단이 정해진 경우에 사용합니다."
+        ],
+        [
+          "가격 민감도 모델",
+          "지불 의향과 가격 민감도 모델. 가정을 명시한 범위로 보고합니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "Finans og formue",
+      "lead": "Forskning for banker, formuesforvaltere og fintechs: hva kundene har tillit til, hva de betaler for, og hvorfor de forlater.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "Tillit til finansielle tjenester bygges sakte og mistes i én enkelt interaksjon: et gebyr som ikke ble forklart, en overføring som feilet, en samtale som ikke ble besvart.",
+        "Vi undersøker kunde og rådgiver hver for seg: hvordan investorer sammenligner og beslutter, hva de betaler for, hva rådgivere anbefaler og hvorfor, og hvor opplevelsen brister.",
+        "Hver studie designes rundt beslutningen den skal støtte — om et segment skal betres, hvordan et produkt prises, hvilken kanal som bærer veksten, og hvorfor kunder forlater. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kunde og formue",
+          "frame": "Hvem kunden er, og hvor formuen ligger.",
+          "cards": [
+            {
+              "title": "Segmentering av formuende kunder",
+              "body": "Segmenter kunder etter investerbar formue, produktbesittelse og marked, og dimensjoner hver gruppe før tilbudet bygges.",
+              "methods": "HNW-utvalg · nettundersøkelse"
+            },
+            {
+              "title": "Investeringsatferd og tillit",
+              "body": "Forstå hvordan investorer beslutter, hva de har tillit til, og hvordan en anbefaling følges eller ignoreres.",
+              "methods": "Dybdeintervjuer · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Rådgivere og distribusjon",
+          "frame": "Hvem som anbefaler, og via hvilken plattform.",
+          "cards": [
+            {
+              "title": "Rådgiverøkosystem",
+              "body": "Hvordan rådgivere og distribusjonspartnere bruker plattformer, og hvor digitale verktøy endrer det de anbefaler.",
+              "methods": "Dybdeintervjuer med rådgivere"
+            },
+            {
+              "title": "Andel av formuen",
+              "body": "Fastslå hvor stor del av kundens formue som ligger hos én tilbyder, og hva som flytter resten.",
+              "methods": "HNW-undersøkelse · rådgiverintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Produkt og prising",
+          "frame": "Hva det koster, og hva det er verdt.",
+          "cards": [
+            {
+              "title": "Pris og gebyrer",
+              "body": "Test gebyrstrukturer og prispunkter mot betalingsvillighet, før tilbudet lanseres.",
+              "methods": "Prisfølsomhetsmodeller · HNW-undersøkelse"
+            },
+            {
+              "title": "Produkt- og funksjonstester",
+              "body": "Test tilbud og plattformfunksjoner med kundene de er bygget for.",
+              "methods": "Konsept- og A/B-testing"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Opplevelse og bevaring",
+          "frame": "Om kunden blir, og hvorfor ikke.",
+          "cards": [
+            {
+              "title": "Kundeopplevelse",
+              "body": "Mål kundeopplevelsen og drivkreftene for bytte blant formuende kunder.",
+              "methods": "Nettundersøkelse · dybdeintervjuer"
+            },
+            {
+              "title": "Bevaring og frafall",
+              "body": "Følg bevaring, andel av formue og årsakene til at kunder forlater.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "HNW-utvalg",
+          "Kunder rekruttert via verifiserte formuespaneler og henvisning, screenet etter investerbar formue, produktbesittelse og marked."
+        ],
+        [
+          "Dybdeintervjuer med rådgivere",
+          "Intervjuer på 45–60 minutter med rådgivere, family offices og plattformansatte, gjennomført en til en av forskerteamet."
+        ],
+        [
+          "Nettundersøkelse",
+          "Undersøkelse blant kunder eller potensielle kunder, med kvoter etter formue, produktbesittelse og marked."
+        ],
+        [
+          "CATI",
+          "Skriptede telefonintervjuer med kvoter etter marked, produktbesittelse eller kundesegment. Brukes der listen er definert."
+        ],
+        [
+          "Prisfølsomhetsmodeller",
+          "Betalingsvillighets- og prisfølsomhetsmodeller, rapportert som intervall med oppgitte forutsetninger."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Serviços financeiros e património",
+      "lead": "Investigação para bancos, gestores de património e fintechs: em que os clientes confiam, pelo que pagam e porque saem.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "A confiança nos serviços financeiros constrói-se devagar e perde-se numa única interação: uma comissão não explicada, uma transferência falhada, uma chamada sem resposta.",
+        "Estudamos cliente e consultor em separado: como os investidores comparam e decidem, pelo que pagam, o que os consultores recomendam e porquê, e onde a experiência se quebra.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar — entrar num segmento, fixar o preço de um produto, que canal sustenta o crescimento e porque os clientes saem. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Cliente e património",
+          "frame": "Quem é o cliente e onde está o património.",
+          "cards": [
+            {
+              "title": "Segmentação de clientes abastados",
+              "body": "Segmentar clientes por património investível, posse de produtos e mercado, e dimensionar cada grupo antes de construir a proposta.",
+              "methods": "Amostra HNW · inquérito online"
+            },
+            {
+              "title": "Comportamento de investimento e confiança",
+              "body": "Compreender como os investidores decidem, em que confiam e como uma recomendação é seguida ou ignorada.",
+              "methods": "Entrevistas em profundidade · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Consultores e distribuição",
+          "frame": "Quem recomenda e através de que plataforma.",
+          "cards": [
+            {
+              "title": "Ecossistema de consultores",
+              "body": "Como consultores e parceiros de distribuição usam plataformas, e onde as ferramentas digitais mudam o que recomendam.",
+              "methods": "Entrevistas em profundidade a consultores"
+            },
+            {
+              "title": "Quota de património",
+              "body": "Estabelecer que parte do património de um cliente está num fornecedor, e o que move o resto.",
+              "methods": "Inquérito HNW · entrevistas a consultores"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Produto e preço",
+          "frame": "Quanto custa e quanto vale.",
+          "cards": [
+            {
+              "title": "Preço e comissões",
+              "body": "Testar estruturas de comissões e pontos de preço face à disponibilidade a pagar, antes do lançamento da proposta.",
+              "methods": "Modelos de sensibilidade ao preço · inquérito HNW"
+            },
+            {
+              "title": "Testes de produto e funcionalidades",
+              "body": "Testar propostas e funcionalidades com os clientes para quem são construídas.",
+              "methods": "Testes de conceito e A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Experiência e retenção",
+          "frame": "Se o cliente fica, e porque não.",
+          "cards": [
+            {
+              "title": "Experiência do cliente",
+              "body": "Medir a experiência do cliente e os motivos de mudança entre clientes de património.",
+              "methods": "Inquérito online · entrevistas em profundidade"
+            },
+            {
+              "title": "Retenção e abandono",
+              "body": "Acompanhar retenção, quota de património e motivos de saída.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Amostra HNW",
+          "Clientes recrutados através de painéis patrimoniais verificados e referências, filtrados por património investível, posse de produtos e mercado."
+        ],
+        [
+          "Entrevistas em profundidade a consultores",
+          "Entrevistas de 45 a 60 minutos com consultores, family offices e equipas de plataforma, conduzidas um a um pela equipa."
+        ],
+        [
+          "Inquérito online",
+          "Inquérito a clientes ou potenciais clientes, com quotas por património, posse de produtos e mercado."
+        ],
+        [
+          "CATI",
+          "Entrevistas telefónicas guionizadas, com quotas por mercado, posse de produtos ou segmento de cliente. Usadas quando a lista está definida."
+        ],
+        [
+          "Modelos de sensibilidade ao preço",
+          "Modelos de disponibilidade a pagar e sensibilidade ao preço, apresentados como intervalo com os pressupostos declarados."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Финансовые услуги и управление капиталом",
+      "lead": "Исследования для банков, управляющих капиталом и финтеха: чему доверяют клиенты, за что платят и почему уходят.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Доверие к финансовым услугам строится медленно и теряется в одном взаимодействии: необъяснённая комиссия, неудачный перевод, неотвеченный звонок.",
+        "Мы изучаем клиента и консультанта отдельно: как инвесторы сравнивают и решают, за что платят, что рекомендуют консультанты и почему, и где опыт ломается.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать — выход в сегмент, цена продукта, какой канал несёт рост и почему клиенты уходят. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Клиент и капитал",
+          "frame": "Кто клиент и где находится капитал.",
+          "cards": [
+            {
+              "title": "Сегментация состоятельных клиентов",
+              "body": "Сегментировать клиентов по инвестируемому капиталу, владению продуктами и рынку и оценить размер каждой группы до создания предложения.",
+              "methods": "Выборка HNW · онлайн-опрос"
+            },
+            {
+              "title": "Инвестиционное поведение и доверие",
+              "body": "Понять, как инвесторы решают, чему доверяют и как рекомендация выполняется или игнорируется.",
+              "methods": "Глубинные интервью · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Консультанты и дистрибуция",
+          "frame": "Кто рекомендует и через какую платформу.",
+          "cards": [
+            {
+              "title": "Экосистема консультантов",
+              "body": "Как консультанты и дистрибуционные партнёры используют платформы и где цифровые инструменты меняют их рекомендации.",
+              "methods": "Глубинные интервью с консультантами"
+            },
+            {
+              "title": "Доля капитала",
+              "body": "Определить, какая часть капитала клиента находится у одного провайдера и что двигает остальное.",
+              "methods": "Опрос HNW · интервью с консультантами"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Продукт и цена",
+          "frame": "Сколько это стоит и сколько это стоит на самом деле.",
+          "cards": [
+            {
+              "title": "Цена и комиссии",
+              "body": "Проверить структуры комиссий и ценовые точки на готовность платить до запуска предложения.",
+              "methods": "Модели ценовой чувствительности · опрос HNW"
+            },
+            {
+              "title": "Тесты продукта и функций",
+              "body": "Проверить предложения и функции платформы с клиентами, для которых они созданы.",
+              "methods": "Тестирование концепций и A/B"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Опыт и удержание",
+          "frame": "Остаётся ли клиент и почему нет.",
+          "cards": [
+            {
+              "title": "Клиентский опыт",
+              "body": "Измерить клиентский опыт и движущие силы перехода среди состоятельных клиентов.",
+              "methods": "Онлайн-опрос · глубинные интервью"
+            },
+            {
+              "title": "Удержание и отток",
+              "body": "Отслеживать удержание, долю капитала и причины ухода.",
+              "methods": "Трекинг · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Выборка HNW",
+          "Клиенты набраны через проверенные панели состоятельных лиц и по рекомендациям, отобраны по инвестируемому капиталу, владению продуктами и рынку."
+        ],
+        [
+          "Глубинные интервью с консультантами",
+          "Интервью по 45–60 минут с консультантами, family office и сотрудниками платформ, один на один с исследовательской командой."
+        ],
+        [
+          "Онлайн-опрос",
+          "Опрос клиентов или потенциальных клиентов с квотами по капиталу, владению продуктами и рынку."
+        ],
+        [
+          "CATI",
+          "Телефонные интервью по скрипту с квотами по рынку, владению продуктами или сегменту клиентов. Применяются там, где список определён."
+        ],
+        [
+          "Модели ценовой чувствительности",
+          "Модели готовности платить и ценовой чувствительности, представленные диапазоном с указанными допущениями."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "Finansiella tjänster och förmögenhetsförvaltning",
+      "lead": "Undersökningar för banker, förmögenhetsförvaltare och fintech: vad kunderna litar på, vad de betalar för och varför de lämnar.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "Tillit till finansiella tjänster byggs långsamt och förloras i en enda interaktion: en avgift som inte förklarades, en överföring som misslyckades, ett samtal som inte besvarades.",
+        "Vi undersöker kund och rådgivare var för sig: hur investerare jämför och beslutar, vad de betalar för, vad rådgivare rekommenderar och varför, och var upplevelsen brister.",
+        "Varje studie byggs kring det beslut den ska stödja — att gå in i ett segment, prissätta en produkt, vilken kanal som bär tillväxten och varför kunder lämnar. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Kund och förmögenhet",
+          "frame": "Vem kunden är och var förmögenheten finns.",
+          "cards": [
+            {
+              "title": "Segmentering av förmögna kunder",
+              "body": "Segmentera kunder efter investerbart kapital, produktinnehav och marknad, och storleksbestäm varje grupp innan erbjudandet byggs.",
+              "methods": "HNW-urval · onlineundersökning"
+            },
+            {
+              "title": "Investeringsbeteende och tillit",
+              "body": "Förstå hur investerare beslutar, vad de litar på och hur en rekommendation följs eller ignoreras.",
+              "methods": "Djupintervjuer · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Rådgivare och distribution",
+          "frame": "Vem som rekommenderar, och via vilken plattform.",
+          "cards": [
+            {
+              "title": "Rådgivarekossystem",
+              "body": "Hur rådgivare och distributionspartner använder plattformar, och var digitala verktyg ändrar vad de rekommenderar.",
+              "methods": "Djupintervjuer med rådgivare"
+            },
+            {
+              "title": "Andel av förmögenheten",
+              "body": "Fastställa hur stor del av kundens förmögenhet som ligger hos en leverantör, och vad som flyttar resten.",
+              "methods": "HNW-undersökning · rådgivarintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Produkt och prissättning",
+          "frame": "Vad det kostar och vad det är värt.",
+          "cards": [
+            {
+              "title": "Pris och avgifter",
+              "body": "Testa avgiftsstrukturer och prispunkter mot betalningsvilja, innan erbjudandet lanseras.",
+              "methods": "Priskänslighetsmodeller · HNW-undersökning"
+            },
+            {
+              "title": "Produkt- och funktionstester",
+              "body": "Testa erbjudanden och plattformsfunktioner med de kunder de är byggda för.",
+              "methods": "Koncept- och A/B-test"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Upplevelse och behållning",
+          "frame": "Om kunden stannar, och varför inte.",
+          "cards": [
+            {
+              "title": "Kundupplevelse",
+              "body": "Mät kundupplevelsen och drivkrafterna för byte bland förmögna kunder.",
+              "methods": "Onlineundersökning · djupintervjuer"
+            },
+            {
+              "title": "Behållning och tapp",
+              "body": "Följ behållning, andel av förmögenhet och orsaker till att kunder lämnar.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "HNW-urval",
+          "Kunder rekryterade via verifierade förmögenhetspaneler och hänvisning, screenade efter investerbart kapital, produktinnehav och marknad."
+        ],
+        [
+          "Djupintervjuer med rådgivare",
+          "Intervjuer på 45–60 minuter med rådgivare, family offices och plattformspersonal, genomförda en mot en av forskarteamet."
+        ],
+        [
+          "Onlineundersökning",
+          "Undersökning bland kunder eller potentiella kunder, med kvoter efter förmögenhet, produktinnehav och marknad."
+        ],
+        [
+          "CATI",
+          "Skriptade telefonintervjuer med kvoter efter marknad, produktinnehav eller kundsegment. Används där listan är definierad."
+        ],
+        [
+          "Priskänslighetsmodeller",
+          "Betalningsvilja- och priskänslighetsmodeller, rapporterade som intervall med angivna antaganden."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "Finansal hizmetler ve varlık yönetimi",
+      "lead": "Bankalar, varlık yöneticileri ve fintechler için araştırma: müşteriler neye güveniyor, ne için ödüyor ve neden ayrılıyor.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Finansal hizmetlere güven yavaş kurulur ve tek bir etkileşimde kaybolur: açıklanmayan bir ücret, başarısız bir transfer, cevaplanmayan bir arama.",
+        "Müşteriyi ve danışmanı ayrı ayrı inceliyoruz: yatırımcılar nasıl karşılaştırıp karar veriyor, ne için ödüyor, danışmanlar neyi neden öneriyor ve deneyim nerede kopuyor.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır — bir segmente girmek, bir ürünü fiyatlamak, hangi kanalın büyümeyi taşıdığı ve müşterilerin neden ayrıldığı. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Müşteri ve varlık",
+          "frame": "Müşterinin kim olduğu ve varlığın nerede durduğu.",
+          "cards": [
+            {
+              "title": "Varlıklı müşteri segmentasyonu",
+              "body": "Müşterileri yatırılabilir varlık, ürün sahipliği ve pazara göre segmentlere ayırın ve teklif kurulmadan önce her grubun büyüklüğünü belirleyin.",
+              "methods": "HNW örneklemi · çevrimiçi anket"
+            },
+            {
+              "title": "Yatırım davranışı ve güven",
+              "body": "Yatırımcıların nasıl karar verdiğini, neye güvendiğini ve bir önerinin nasıl izlendiğini ya da yok sayıldığını anlayın.",
+              "methods": "Derinlemesine görüşmeler · CATI"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Danışmanlar ve dağıtım",
+          "frame": "Kimin önerdiği ve hangi platform üzerinden.",
+          "cards": [
+            {
+              "title": "Danışman ekosistemi",
+              "body": "Danışmanların ve dağıtım ortaklarının platformları nasıl kullandığı ve dijital araçların önerilerini nerede değiştirdiği.",
+              "methods": "Danışmanlarla derinlemesine görüşmeler"
+            },
+            {
+              "title": "Varlık payı",
+              "body": "Bir müşterinin varlığının ne kadarının tek sağlayıcıda olduğunu ve geri kalanı neyin hareket ettirdiğini belirleyin.",
+              "methods": "HNW anketi · danışman görüşmeleri"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Ürün ve fiyatlandırma",
+          "frame": "Ne kadara mal olduğu ve neye değdiği.",
+          "cards": [
+            {
+              "title": "Fiyat ve ücretler",
+              "body": "Teklif başlatılmadan önce ücret yapılarını ve fiyat noktalarını ödeme istekliliğine karşı test edin.",
+              "methods": "Fiyat duyarlılığı modelleri · HNW anketi"
+            },
+            {
+              "title": "Ürün ve özellik testleri",
+              "body": "Teklifleri ve platform özelliklerini, kendileri için kuruldukları müşterilerle test edin.",
+              "methods": "Konsept ve A/B testi"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Deneyim ve elde tutma",
+          "frame": "Müşterinin kalıp kalmadığı ve neden kalmadığı.",
+          "cards": [
+            {
+              "title": "Müşteri deneyimi",
+              "body": "Varlıklı müşteriler arasında müşteri deneyimini ve geçiş nedenlerini ölçün.",
+              "methods": "Çevrimiçi anket · derinlemesine görüşmeler"
+            },
+            {
+              "title": "Elde tutma ve kayıp",
+              "body": "Elde tutmayı, varlık payını ve ayrılma nedenlerini izleyin.",
+              "methods": "Tracking · CATI"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "HNW örneklemi",
+          "Müşteriler doğrulanmış varlık panelleri ve yönlendirme yoluyla toplanır; yatırılabilir varlık, ürün sahipliği ve pazara göre elenir."
+        ],
+        [
+          "Danışmanlarla derinlemesine görüşmeler",
+          "Danışmanlar, family office ve platform ekipleriyle 45-60 dakikalık görüşmeler; araştırma ekibi bire bir yürütür."
+        ],
+        [
+          "Çevrimiçi anket",
+          "Müşteri veya potansiyel müşteri anketi; varlık, ürün sahipliği ve pazara göre kotalar."
+        ],
+        [
+          "CATI",
+          "Pazar, ürün sahipliği veya müşteri segmentine göre kotalı, senaryolu telefon görüşmeleri. Listenin tanımlı olduğu yerlerde kullanılır."
+        ],
+        [
+          "Fiyat duyarlılığı modelleri",
+          "Ödeme istekliliği ve fiyat duyarlılığı modelleri; varsayımları belirtilmiş aralık olarak raporlanır."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   },
   "social": {
