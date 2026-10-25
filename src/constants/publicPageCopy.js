@@ -11013,6 +11013,1546 @@ export const industryCopy = {
       "ctaBody": "You receive the findings, the evidence behind them, and the recommended next step.",
       "ctaPrimary": "Talk to the research team",
       "ctaSecondary": "Join us"
+    },
+    "de": {
+      "kicker": "Branchen",
+      "title": "Gesellschaft und Bildung",
+      "lead": "Forschung für Stiftungen, Non-Profits und Bildungsträger: wer das Publikum ist, was das Programm verändert und wie man es zeigt.",
+      "introKicker": "So arbeiten wir",
+      "intro": [
+        "Öffentliche Programme und Bildung werden an Wirkungen gemessen, die Jahre brauchen, und an Zielgruppen, die selten an einem Ort sind.",
+        "Wir untersuchen die Menschen, die ein Programm erreichen soll: was sie brauchen, ob sie es erhalten und was sich für sie verändert hat. Dasselbe Design erreicht Förderer, Umsetzungsteam und die Öffentlichkeit, die ein Bericht überzeugen muss.",
+        "Jede Studie wird um die Entscheidung herum konzipiert, die sie stützen soll — ob ein Programm beginnt oder endet, wie es ausgerichtet wird und welche Evidenz der Förderer akzeptiert. Design, Stichprobe und Bericht folgen dieser Frage."
+      ],
+      "stagesKicker": "Was wir untersuchen",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Thema und Zielgruppe",
+          "frame": "Wer betroffen ist und wie der Bedarf wirklich aussieht.",
+          "cards": [
+            {
+              "title": "Bevölkerungs- und Zielgruppenforschung",
+              "body": "Eine Bevölkerung oder eine definierte Zielgruppe befragen, um den Stand des Themas zu klären, bevor ein Programm entworfen wird.",
+              "methods": "Repräsentative Befragung · online"
+            },
+            {
+              "title": "Bedarf und Zugang",
+              "body": "Feststellen, wer die Leistung braucht und was sie derzeit davon abhält.",
+              "methods": "Tiefeninterviews · Befragung"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Programmdesign",
+          "frame": "Was die Intervention sein sollte und ob sie vor der Skalierung wirkt.",
+          "cards": [
+            {
+              "title": "Programmtest",
+              "body": "Ein Modell oder eine Botschaft mit den Menschen testen, für die es gedacht ist, bevor skaliert wird.",
+              "methods": "Konzepte-Test · Fokusgruppen"
+            },
+            {
+              "title": "Spender- und Unterstützerforschung",
+              "body": "Verstehen, was Unterstützer über die Sache glauben und was sie finanzieren.",
+              "methods": "Online-Befragung · Tiefeninterviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Umsetzung und Reichweite",
+          "frame": "Wer es tatsächlich erhält und wo es abreißt.",
+          "cards": [
+            {
+              "title": "Umsetzung und Reichweite",
+              "body": "Abbilden, wer erreicht und wer verfehlt wird, und die operativen Punkte, an denen die Umsetzung scheitert.",
+              "methods": "Tiefeninterviews · Befragung"
+            },
+            {
+              "title": "Teilnehmendenerfahrung",
+              "body": "Die Erfahrung der Menschen im Programm untersuchen und was sie bleiben oder aussteigen lässt.",
+              "methods": "Befragung · Fokusgruppen"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Evidenz und Wirkung",
+          "frame": "Was sich verändert hat und wie man es darstellt.",
+          "cards": [
+            {
+              "title": "Veränderung gegen eine Basislinie",
+              "body": "Veränderung gegen eine Basislinie messen und klar sagen, was die Daten dem Programm zuschreiben können und was nicht.",
+              "methods": "Befragung · Interviews"
+            },
+            {
+              "title": "Evidenz und Bericht",
+              "body": "Befunde in einen Bericht übersetzen, den Förderer, Ministerium oder Öffentlichkeit akzeptieren.",
+              "methods": "Befragung · Interviews · Desk Research"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Was jede Methode ist und wann wir sie einsetzen.",
+      "methods": [
+        [
+          "Repräsentative Befragung",
+          "National oder regional repräsentative Stichproben, mit Quoten nach der Bevölkerung, die das Programm bedient."
+        ],
+        [
+          "Befragung mehrerer Anspruchsgruppen",
+          "Begünstigte, Umsetzungsteam und Förderer in einem Design befragt, sodass dieselben Fragen jede Seite des Programms erreichen."
+        ],
+        [
+          "Tiefeninterviews",
+          "Tiefeninterviews von 45 bis 60 Minuten, eins zu eins vom Forschungsteam geführt."
+        ],
+        [
+          "Fokusgruppen",
+          "Gruppendiskussionen von etwa 90 Minuten, dafür, wie ein Thema unter Gleichgesinnten besprochen wird."
+        ],
+        [
+          "Persönliche Feldarbeit (CAPI)",
+          "Strukturierte Interviews persönlich, wo die Bevölkerung per Telefon oder online nicht erreichbar ist."
+        ]
+      ],
+      "ctaTitle": "Sagen Sie uns, welche Entscheidung diese Forschung stützen soll.",
+      "ctaBody": "Sie erhalten die Ergebnisse, die Belege dahinter und den empfohlenen nächsten Schritt.",
+      "ctaPrimary": "Mit dem Forschungsteam sprechen",
+      "ctaSecondary": "Mitmachen"
+    },
+    "fr": {
+      "kicker": "Secteurs",
+      "title": "Société et éducation",
+      "lead": "Études pour fondations, associations et acteurs de l'éducation : qui est le public, ce que le programme change, et comment le montrer.",
+      "introKicker": "Notre méthode",
+      "intro": [
+        "Les programmes publics et l'éducation se jugent sur des résultats qui prennent des années, et sur des publics rarement au même endroit.",
+        "Nous étudions les personnes qu'un programme doit atteindre : ce dont elles ont besoin, si elles le reçoivent et ce qui a changé pour elles. Le même dispositif couvre le financeur, l'équipe de mise en œuvre et le public qu'un rapport doit convaincre.",
+        "Chaque étude est conçue autour de la décision qu'elle doit éclairer — démarrer ou arrêter un programme, comment le cibler, et quelles preuves le financeur acceptera. Design, échantillon et rapport découlent de cette question."
+      ],
+      "stagesKicker": "Ce que nous étudions",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Enjeu et public",
+          "frame": "Qui est concerné, et quel est réellement le besoin.",
+          "cards": [
+            {
+              "title": "Recherche sur le public",
+              "body": "Interroger une population ou un public défini pour établir l'état de l'enjeu avant de concevoir un programme.",
+              "methods": "Enquête représentative · en ligne"
+            },
+            {
+              "title": "Besoin et accès",
+              "body": "Établir qui a besoin du service, et ce qui l'en empêche aujourd'hui.",
+              "methods": "Entretiens approfondis · enquête"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Conception du programme",
+          "frame": "Ce que l'intervention doit être, et si elle fonctionne avant le passage à l'échelle.",
+          "cards": [
+            {
+              "title": "Test de programme",
+              "body": "Tester un modèle ou un message auprès des personnes visées, avant de passer à l'échelle.",
+              "methods": "Test de concept · groupes de discussion"
+            },
+            {
+              "title": "Recherche donateurs et soutiens",
+              "body": "Comprendre ce que les soutiens croient de la cause, et ce qu'ils financeront.",
+              "methods": "Enquête en ligne · entretiens approfondis"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Mise en œuvre et portée",
+          "frame": "Qui le reçoit réellement, et où cela décroche.",
+          "cards": [
+            {
+              "title": "Mise en œuvre et portée",
+              "body": "Cartographier qui est atteint et qui est manqué, et les points opérationnels où la mise en œuvre échoue.",
+              "methods": "Entretiens approfondis · enquête"
+            },
+            {
+              "title": "Expérience des participants",
+              "body": "Étudier l'expérience des personnes dans le programme, et ce qui les fait rester ou sortir.",
+              "methods": "Enquête · groupes de discussion"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Preuves et influence",
+          "frame": "Ce qui a changé, et comment le présenter.",
+          "cards": [
+            {
+              "title": "Changement par rapport à une base",
+              "body": "Mesurer le changement par rapport à une base, et dire clairement ce que les données peuvent ou non attribuer au programme.",
+              "methods": "Enquête · entretiens"
+            },
+            {
+              "title": "Preuves et rapport",
+              "body": "Transformer les résultats en un rapport que le financeur, le ministère ou le public acceptera.",
+              "methods": "Enquête · entretiens · recherche documentaire"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Méthodes",
+      "methodsLead": "Ce qu'est chaque méthode et quand nous l'utilisons.",
+      "methods": [
+        [
+          "Enquête représentative",
+          "Échantillons représentatifs au niveau national ou régional, avec des quotas fixés sur la population servie par le programme."
+        ],
+        [
+          "Enquête multi-parties",
+          "Bénéficiaires, équipes de mise en œuvre et financeurs interrogés dans un même dispositif, pour que les mêmes questions atteignent chaque côté du programme."
+        ],
+        [
+          "Entretiens approfondis",
+          "Entretiens approfondis de 45 à 60 minutes, menés en tête-à-tête par l'équipe."
+        ],
+        [
+          "Groupes de discussion",
+          "Discussions de groupe d'environ 90 minutes, pour la façon dont un sujet se parle entre pairs."
+        ],
+        [
+          "Terrain en face-à-face (CAPI)",
+          "Entretiens structurés menés en personne, là où la population n'est joignable ni par téléphone ni en ligne."
+        ]
+      ],
+      "ctaTitle": "Dites-nous quelle décision cette étude doit éclairer.",
+      "ctaBody": "Vous recevez les résultats, les preuves qui les sous-tendent et la prochaine étape recommandée.",
+      "ctaPrimary": "Parler à l'équipe",
+      "ctaSecondary": "Nous rejoindre"
+    },
+    "nl": {
+      "kicker": "Sectoren",
+      "title": "Maatschappij en onderwijs",
+      "lead": "Onderzoek voor fondsen, non-profits en onderwijsaanbieders: wie het publiek is, wat het programma verandert en hoe je dat laat zien.",
+      "introKicker": "Zo werken we",
+      "intro": [
+        "Publieke programma's en onderwijs worden beoordeeld op uitkomsten die jaren kosten, en op doelgroepen die zelden op één plek zijn.",
+        "We onderzoeken de mensen die een programma moet bereiken: wat zij nodig hebben, of zij het ontvangen en wat er voor hen veranderde. Hetzelfde ontwerp bedient de financier, het uitvoeringsteam en het publiek dat een rapport moet overtuigen.",
+        "Elke studie wordt opgebouwd rond de beslissing die zij moet ondersteunen — een programma starten of stoppen, hoe het te richten en welk bewijs de financier accepteert. Ontwerp, steekproef en rapportage volgen die vraag."
+      ],
+      "stagesKicker": "Wat we onderzoeken",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Thema en publiek",
+          "frame": "Wie geraakt wordt en wat de behoefte werkelijk is.",
+          "cards": [
+            {
+              "title": "Publieksonderzoek",
+              "body": "Een populatie of een afgebakend publiek bevragen om de stand van het thema vast te stellen voordat een programma wordt ontworpen.",
+              "methods": "Representatief onderzoek · online"
+            },
+            {
+              "title": "Behoefte en toegang",
+              "body": "Vaststellen wie de dienst nodig heeft en wat hen er nu van weerhoudt.",
+              "methods": "Diepte-interviews · enquête"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Programmaontwerp",
+          "frame": "Wat de interventie moet zijn en of zij werkt vóór opschaling.",
+          "cards": [
+            {
+              "title": "Programmatest",
+              "body": "Een model of boodschap testen met de mensen voor wie het bedoeld is, voordat het wordt opgeschaald.",
+              "methods": "Concepttest · focusgroepen"
+            },
+            {
+              "title": "Donor- en supportersonderzoek",
+              "body": "Begrijpen wat supporters van de zaak vinden en wat zij financieren.",
+              "methods": "Online-enquête · diepte-interviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Uitvoering en bereik",
+          "frame": "Wie het werkelijk ontvangt en waar het afbreekt.",
+          "cards": [
+            {
+              "title": "Uitvoering en bereik",
+              "body": "In kaart brengen wie wordt bereikt en wie wordt gemist, en de operationele punten waar uitvoering faalt.",
+              "methods": "Diepte-interviews · enquête"
+            },
+            {
+              "title": "Ervaring van deelnemers",
+              "body": "De ervaring van mensen in het programma onderzoeken en wat hen laat blijven of afhaken.",
+              "methods": "Enquête · focusgroepen"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Bewijs en invloed",
+          "frame": "Wat er veranderde en hoe je dat presenteert.",
+          "cards": [
+            {
+              "title": "Verandering tegen een nulmeting",
+              "body": "Verandering meten tegen een nulmeting en duidelijk zeggen wat de data wel en niet aan het programma kunnen toeschrijven.",
+              "methods": "Enquête · interviews"
+            },
+            {
+              "title": "Bewijs en rapportage",
+              "body": "Bevindingen omzetten in een rapport dat financier, ministerie of publiek accepteert.",
+              "methods": "Enquête · interviews · bureauonderzoek"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Methoden",
+      "methodsLead": "Wat elke methode is en wanneer we die gebruiken.",
+      "methods": [
+        [
+          "Representatief onderzoek",
+          "Nationaal of regionaal representatieve steekproeven, met quota naar de populatie die het programma bedient."
+        ],
+        [
+          "Onderzoek onder meerdere partijen",
+          "Begunstigden, uitvoerend personeel en financiers in één ontwerp bevraagd, zodat dezelfde vragen elke kant van het programma bereiken."
+        ],
+        [
+          "Diepte-interviews",
+          "Diepte-interviews van 45 tot 60 minuten, één op één door het onderzoeksteam."
+        ],
+        [
+          "Focusgroepen",
+          "Groepsgesprekken van ongeveer 90 minuten, voor hoe over een onderwerp onder gelijken wordt gesproken."
+        ],
+        [
+          "Face-to-face veldwerk (CAPI)",
+          "Gestructureerde interviews in persoon, waar de populatie niet per telefoon of online bereikbaar is."
+        ]
+      ],
+      "ctaTitle": "Vertel ons welke beslissing dit onderzoek moet ondersteunen.",
+      "ctaBody": "U ontvangt de resultaten, het bewijs erachter en de aanbevolen volgende stap.",
+      "ctaPrimary": "Praat met het onderzoeksteam",
+      "ctaSecondary": "Doe mee"
+    },
+    "da": {
+      "kicker": "Brancher",
+      "title": "Samfund og uddannelse",
+      "lead": "Research for fonde, nonprofitorganisationer og uddannelsesaktører: hvem målgruppen er, hvad programmet ændrer, og hvordan det vises.",
+      "introKicker": "Sådan arbejder vi",
+      "intro": [
+        "Offentlige programmer og uddannelse vurderes på resultater, der tager år, og på målgrupper, der sjældent er ét sted.",
+        "Vi undersøger de mennesker, et program skal nå: hvad de har brug for, om de får det, og hvad der ændrede sig for dem. Samme design dækker bevillingsgiver, udførelsesteam og den offentlighed, en rapport skal overbevise.",
+        "Hver undersøgelse designes om den beslutning, den skal understøtte — om et program skal starte eller stoppe, hvordan det målrettes, og hvilken evidens bevillingsgiveren accepterer. Design, stikprøve og rapportering følger det spørgsmål."
+      ],
+      "stagesKicker": "Hvad vi undersøger",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Emne og målgruppe",
+          "frame": "Hvem der er berørt, og hvad behovet egentlig er.",
+          "cards": [
+            {
+              "title": "Befolknings- og målgruppeundersøgelse",
+              "body": "Undersøg en befolkning eller en defineret målgruppe for at fastslå, hvordan emnet ser ud, før et program designes.",
+              "methods": "Repræsentativ undersøgelse · online"
+            },
+            {
+              "title": "Behov og adgang",
+              "body": "Fastslå, hvem der har brug for ydelsen, og hvad der i dag holder dem fra den.",
+              "methods": "Dybdeinterviews · undersøgelse"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Programdesign",
+          "frame": "Hvad indsatsen skal være, og om den virker før skalering.",
+          "cards": [
+            {
+              "title": "Programtest",
+              "body": "Test en model eller et budskab med de mennesker, den er beregnet til, før den skaleres.",
+              "methods": "Koncepttest · fokusgrupper"
+            },
+            {
+              "title": "Donor- og støtteundersøgelse",
+              "body": "Forstå, hvad støttere mener om sagen, og hvad de vil finansiere.",
+              "methods": "Onlineundersøgelse · dybdeinterviews"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Udførelse og rækkevidde",
+          "frame": "Hvem der faktisk modtager det, og hvor det falder fra.",
+          "cards": [
+            {
+              "title": "Udførelse og rækkevidde",
+              "body": "Kortlæg, hvem der nås og hvem der misses, og de operationelle punkter, hvor udførelsen svigter.",
+              "methods": "Dybdeinterviews · undersøgelse"
+            },
+            {
+              "title": "Deltagernes oplevelse",
+              "body": "Undersøg oplevelsen for de mennesker, der er i programmet, og hvad der får dem til at blive eller falde fra.",
+              "methods": "Undersøgelse · fokusgrupper"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Evidens og gennemslag",
+          "frame": "Hvad der ændrede sig, og hvordan det præsenteres.",
+          "cards": [
+            {
+              "title": "Ændring mod en baseline",
+              "body": "Mål ændring mod en baseline, og sig klart, hvad data kan og ikke kan tilskrive programmet.",
+              "methods": "Undersøgelse · interviews"
+            },
+            {
+              "title": "Evidens og rapportering",
+              "body": "Omsæt fund til en rapport, som bevillingsgiver, ministerium eller offentlighed accepterer.",
+              "methods": "Undersøgelse · interviews · desk research"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hvad hver metode er, og hvornår vi bruger den.",
+      "methods": [
+        [
+          "Repræsentativ undersøgelse",
+          "Nationalt eller regionalt repræsentative stikprøver med kvoter sat efter den befolkning, programmet betjener."
+        ],
+        [
+          "Undersøgelse blandt flere parter",
+          "Modtagere, udførende personale og bevillingsgivere undersøgt i ét design, så de samme spørgsmål når hver side af programmet."
+        ],
+        [
+          "Dybdeinterviews",
+          "Dybdeinterviews på 45-60 minutter, gennemført en til en af researchteamet."
+        ],
+        [
+          "Fokusgrupper",
+          "Gruppediskussioner på cirka 90 minutter, for hvordan et emne tales om blandt ligestillede."
+        ],
+        [
+          "Face-to-face feltarbejde (CAPI)",
+          "Strukturerede interviews gennemført personligt, hvor befolkningen ikke kan nås per telefon eller online."
+        ]
+      ],
+      "ctaTitle": "Fortæl os, hvilken beslutning denne research skal understøtte.",
+      "ctaBody": "Du får resultaterne, belægget bag dem og det anbefalede næste skridt.",
+      "ctaPrimary": "Tal med researchteamet",
+      "ctaSecondary": "Vær med"
+    },
+    "es": {
+      "kicker": "Sectores",
+      "title": "Sociedad y educación",
+      "lead": "Investigación para fundaciones, entidades sin ánimo de lucro y proveedores educativos: quién es el público, qué cambia el programa y cómo mostrarlo.",
+      "introKicker": "Cómo trabajamos",
+      "intro": [
+        "Los programas públicos y la educación se juzgan por resultados que tardan años y por públicos que rara vez están en un solo lugar.",
+        "Estudiamos a las personas a las que un programa debe llegar: qué necesitan, si lo reciben y qué cambió para ellas. El mismo diseño cubre al financiador, al equipo de ejecución y al público al que un informe debe convencer.",
+        "Cada estudio se diseña en torno a la decisión que debe sostener — iniciar o detener un programa, cómo orientarlo y qué evidencia aceptará el financiador. El diseño, la muestra y el informe se derivan de esa pregunta."
+      ],
+      "stagesKicker": "Qué estudiamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Tema y público",
+          "frame": "A quién afecta y cuál es realmente la necesidad.",
+          "cards": [
+            {
+              "title": "Investigación de público",
+              "body": "Encuestar a una población o a un público definido para establecer cómo está el tema antes de diseñar un programa.",
+              "methods": "Encuesta representativa · online"
+            },
+            {
+              "title": "Necesidad y acceso",
+              "body": "Establecer quién necesita el servicio y qué se lo impide ahora.",
+              "methods": "Entrevistas en profundidad · encuesta"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Diseño del programa",
+          "frame": "Qué debe ser la intervención y si funciona antes de escalar.",
+          "cards": [
+            {
+              "title": "Prueba de programa",
+              "body": "Probar un modelo o un mensaje con las personas a las que va dirigido, antes de escalarlo.",
+              "methods": "Prueba de concepto · grupos focales"
+            },
+            {
+              "title": "Investigación de donantes y simpatizantes",
+              "body": "Entender qué creen los simpatizantes sobre la causa y qué financiarán.",
+              "methods": "Encuesta online · entrevistas en profundidad"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Ejecución y alcance",
+          "frame": "Quién lo recibe realmente y dónde se cae.",
+          "cards": [
+            {
+              "title": "Ejecución y alcance",
+              "body": "Mapear a quién se alcanza y a quién se pierde, y los puntos operativos donde falla la ejecución.",
+              "methods": "Entrevistas en profundidad · encuesta"
+            },
+            {
+              "title": "Experiencia de los participantes",
+              "body": "Estudiar la experiencia de las personas dentro del programa y qué les hace quedarse o abandonar.",
+              "methods": "Encuesta · grupos focales"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Evidencia e influencia",
+          "frame": "Qué cambió y cómo presentarlo.",
+          "cards": [
+            {
+              "title": "Cambio frente a una línea base",
+              "body": "Medir el cambio frente a una línea base y decir con claridad qué pueden atribuir los datos al programa y qué no.",
+              "methods": "Encuesta · entrevistas"
+            },
+            {
+              "title": "Evidencia e informe",
+              "body": "Convertir los hallazgos en un informe que el financiador, el ministerio o el público acepte.",
+              "methods": "Encuesta · entrevistas · investigación documental"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "Qué es cada método y cuándo lo usamos.",
+      "methods": [
+        [
+          "Encuesta representativa",
+          "Muestras representativas a nivel nacional o regional, con cuotas fijadas a la población que atiende el programa."
+        ],
+        [
+          "Encuesta multiparte",
+          "Beneficiarios, personal de ejecución y financiadores encuestados en un mismo diseño, para que las mismas preguntas lleguen a cada lado del programa."
+        ],
+        [
+          "Entrevistas en profundidad",
+          "Entrevistas en profundidad de 45 a 60 minutos, realizadas uno a uno por el equipo."
+        ],
+        [
+          "Grupos focales",
+          "Discusiones de grupo de unos 90 minutos, para cómo se habla de un tema entre pares."
+        ],
+        [
+          "Trabajo de campo presencial (CAPI)",
+          "Entrevistas estructuradas realizadas en persona, donde la población no es alcanzable por teléfono u online."
+        ]
+      ],
+      "ctaTitle": "Cuéntenos qué decisión debe sostener esta investigación.",
+      "ctaBody": "Recibe los resultados, las pruebas que los sostienen y el siguiente paso recomendado.",
+      "ctaPrimary": "Hablar con el equipo",
+      "ctaSecondary": "Únete"
+    },
+    "fi": {
+      "kicker": "Toimialat",
+      "title": "Yhteiskunta ja koulutus",
+      "lead": "Tutkimusta säätiöille, järjestöille ja koulutuksen tarjoajille: kuka yleisö on, mitä ohjelma muuttaa ja miten se näytetään.",
+      "introKicker": "Näin työskentelemme",
+      "intro": [
+        "Julkisia ohjelmia ja koulutusta arvioidaan tuloksilla, jotka vievät vuosia, ja yleisöillä, jotka harvoin ovat yhdessä paikassa.",
+        "Tutkimme ihmisiä, joihin ohjelman on tarkoitus päästä: mitä he tarvitsevat, saavatko he sitä ja mikä heille muuttui. Sama suunnittelu kattaa rahoittajan, toteuttajatiimin ja yleisön, jonka raportin on vakuutettava.",
+        "Jokainen tutkimus rakennetaan sen päätöksen ympärille, jota sen on tuettava — aloitetaanko ohjelma vai lopetetaanko, miten se kohdennetaan ja minkä näytön rahoittaja hyväksyy. Suunnittelu, otos ja raportointi seuraavat tätä kysymystä."
+      ],
+      "stagesKicker": "Mitä tutkimme",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Aihe ja yleisö",
+          "frame": "Kehen se vaikuttaa ja mikä tarve todella on.",
+          "cards": [
+            {
+              "title": "Väestö- ja yleisötutkimus",
+              "body": "Kysy väestöltä tai määritellyltä yleisöltä selvittääksesi aiheen tilan ennen ohjelman suunnittelua.",
+              "methods": "Edustava kysely · verkko"
+            },
+            {
+              "title": "Tarve ja pääsy",
+              "body": "Selvitä, kuka palvelua tarvitsee ja mikä estää sen nyt.",
+              "methods": "Syvähaastattelut · kysely"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Ohjelman suunnittelu",
+          "frame": "Mikä intervention tulisi olla ja toimiiko se ennen skaalausta.",
+          "cards": [
+            {
+              "title": "Ohjelmatesti",
+              "body": "Testaa mallia tai viestiä niillä ihmisillä, joille se on tarkoitettu, ennen skaalausta.",
+              "methods": "Konseptitesti · fokusryhmät"
+            },
+            {
+              "title": "Lahjoittaja- ja tukijatutkimus",
+              "body": "Ymmärrä, mitä tukijat uskovat asiasta ja mitä he rahoittavat.",
+              "methods": "Verkkokysely · syvähaastattelut"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Toteutus ja kattavuus",
+          "frame": "Kuka sen todella saa ja mihin se katkeaa.",
+          "cards": [
+            {
+              "title": "Toteutus ja kattavuus",
+              "body": "Kartoita, ketkä tavoitetaan ja ketkä jäävät ulkopuolelle, ja operatiiviset pisteet, joissa toteutus pettää.",
+              "methods": "Syvähaastattelut · kysely"
+            },
+            {
+              "title": "Osallistujien kokemus",
+              "body": "Tutki ohjelmassa olevien ihmisten kokemusta ja sitä, mikä saa heidät jäämään tai lähtemään.",
+              "methods": "Kysely · fokusryhmät"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Näyttö ja vaikuttaminen",
+          "frame": "Mikä muuttui ja miten se esitetään.",
+          "cards": [
+            {
+              "title": "Muutos lähtötasoon verrattuna",
+              "body": "Mittaa muutosta lähtötasoon ja sano selvästi, minkä data voi ja ei voi kohdistaa ohjelmaan.",
+              "methods": "Kysely · haastattelut"
+            },
+            {
+              "title": "Näyttö ja raportointi",
+              "body": "Muunna tulokset raportiksi, jonka rahoittaja, ministeriö tai yleisö hyväksyy.",
+              "methods": "Kysely · haastattelut · taustatutkimus"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Menetelmät",
+      "methodsLead": "Mikä kukin menetelmä on ja milloin käytämme sitä.",
+      "methods": [
+        [
+          "Edustava kysely",
+          "Kansallisesti tai alueellisesti edustavat otokset, kiintiöt asetettu ohjelman palveleman väestön mukaan."
+        ],
+        [
+          "Monitoimijakysely",
+          "Edunsaajat, toteuttava henkilöstö ja rahoittajat yhdessä suunnittelussa, jotta samat kysymykset tavoittavat ohjelman jokaisen puolen."
+        ],
+        [
+          "Syvähaastattelut",
+          "45–60 minuutin syvähaastattelut, tutkimustiimi tekee kahdestaan."
+        ],
+        [
+          "Fokusryhmät",
+          "Noin 90 minuutin ryhmäkeskustelut, siitä miten aiheesta puhutaan vertaisten kesken."
+        ],
+        [
+          "Kasvokkainen kenttätyö (CAPI)",
+          "Jäsennellyt haastattelut henkilökohtaisesti siellä, missä väestöä ei tavoiteta puhelimella tai verkossa."
+        ]
+      ],
+      "ctaTitle": "Kerro meille, mitä päätöstä tämän tutkimuksen on tuettava.",
+      "ctaBody": "Saat tulokset, niiden taustalla olevan näytön ja suositellun seuraavan askeleen.",
+      "ctaPrimary": "Keskustele tutkimustiimin kanssa",
+      "ctaSecondary": "Liity mukaan"
+    },
+    "it": {
+      "kicker": "Settori",
+      "title": "Società e istruzione",
+      "lead": "Ricerche per fondazioni, non-profit e provider educativi: chi è il pubblico, cosa cambia il programma e come mostrarlo.",
+      "introKicker": "Come lavoriamo",
+      "intro": [
+        "I programmi pubblici e l'istruzione si giudicano su risultati che richiedono anni, e su pubblici raramente in un solo luogo.",
+        "Studiamo le persone che un programma deve raggiungere: di cosa hanno bisogno, se lo ricevono e cosa è cambiato per loro. Lo stesso disegno copre finanziatore, team di erogazione e pubblico che un rapporto deve convincere.",
+        "Ogni studio è costruito attorno alla decisione che deve sostenere — avviare o fermare un programma, come indirizzarlo e quale evidenza accetterà il finanziatore. Disegno, campione e report discendono da quella domanda."
+      ],
+      "stagesKicker": "Cosa studiamo",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Tema e pubblico",
+          "frame": "Chi è coinvolto e qual è davvero il bisogno.",
+          "cards": [
+            {
+              "title": "Ricerca su popolazione e pubblico",
+              "body": "Intervistare una popolazione o un pubblico definito per stabilire lo stato del tema prima di progettare un programma.",
+              "methods": "Indagine rappresentativa · online"
+            },
+            {
+              "title": "Bisogno e accesso",
+              "body": "Stabilire chi ha bisogno del servizio e cosa oggi glielo impedisce.",
+              "methods": "Interviste in profondità · indagine"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Disegno del programma",
+          "frame": "Cosa deve essere l'intervento e se funziona prima della scala.",
+          "cards": [
+            {
+              "title": "Test del programma",
+              "body": "Testare un modello o un messaggio con le persone a cui è destinato, prima di scalarlo.",
+              "methods": "Test di concetto · focus group"
+            },
+            {
+              "title": "Ricerca su donatori e sostenitori",
+              "body": "Capire cosa credono i sostenitori della causa e cosa finanzieranno.",
+              "methods": "Indagine online · interviste in profondità"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Erogazione e copertura",
+          "frame": "Chi lo riceve davvero e dove si perde.",
+          "cards": [
+            {
+              "title": "Erogazione e copertura",
+              "body": "Mappare chi viene raggiunto e chi manca, e i punti operativi in cui l'erogazione fallisce.",
+              "methods": "Interviste in profondità · indagine"
+            },
+            {
+              "title": "Esperienza dei partecipanti",
+              "body": "Studiare l'esperienza delle persone dentro il programma e cosa le fa restare o uscire.",
+              "methods": "Indagine · focus group"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Evidenza e influenza",
+          "frame": "Cosa è cambiato e come presentarlo.",
+          "cards": [
+            {
+              "title": "Cambiamento rispetto a una baseline",
+              "body": "Misurare il cambiamento rispetto a una baseline e dire chiaramente cosa i dati possono e non possono attribuire al programma.",
+              "methods": "Indagine · interviste"
+            },
+            {
+              "title": "Evidenza e reporting",
+              "body": "Trasformare i risultati in un rapporto che finanziatore, ministero o pubblico accetterà.",
+              "methods": "Indagine · interviste · ricerca documentale"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metodi",
+      "methodsLead": "Che cos'è ogni metodo e quando lo usiamo.",
+      "methods": [
+        [
+          "Indagine rappresentativa",
+          "Campioni rappresentativi a livello nazionale o regionale, con quote fissate sulla popolazione servita dal programma."
+        ],
+        [
+          "Indagine multi-attore",
+          "Beneficiari, staff di erogazione e finanziatori intervistati in un unico disegno, così le stesse domande raggiungono ogni lato del programma."
+        ],
+        [
+          "Interviste in profondità",
+          "Interviste in profondità di 45-60 minuti, condotte uno a uno dal team."
+        ],
+        [
+          "Focus group",
+          "Discussioni di gruppo di circa 90 minuti, per come si parla di un tema tra pari."
+        ],
+        [
+          "Fieldwork in presenza (CAPI)",
+          "Interviste strutturate condotte di persona, dove la popolazione non è raggiungibile per telefono o online."
+        ]
+      ],
+      "ctaTitle": "Dicci quale decisione deve sostenere questa ricerca.",
+      "ctaBody": "Ricevi i risultati, le prove che li sostengono e il prossimo passo consigliato.",
+      "ctaPrimary": "Parla con il team di ricerca",
+      "ctaSecondary": "Unisciti"
+    },
+    "ja": {
+      "kicker": "業界",
+      "title": "社会と教育",
+      "lead": "財団、非営利団体、教育提供者向けの調査：誰が対象か、プログラムが何を変えるか、どう示すか。",
+      "introKicker": "進め方",
+      "intro": [
+        "公共プログラムと教育は、何年もかかる成果と、めったに一か所に集まらない対象者で評価されます。",
+        "私たちは、プログラムが届くべき人を調べます。何を必要とし、実際に受け取っているか、何が変わったか。同じ設計で、資金提供者、実施チーム、報告書が説得すべき公衆をカバーします。",
+        "各調査は、それが支えるべき意思決定を中心に設計します — プログラムを始めるか止めるか、どう対象を絞るか、資金提供者がどの証拠を受け入れるか。設計・サンプル・報告はこの問いから決まります。"
+      ],
+      "stagesKicker": "調査する内容",
+      "stages": [
+        {
+          "n": "01",
+          "name": "課題と対象",
+          "frame": "誰が影響を受け、必要は実際に何か。",
+          "cards": [
+            {
+              "title": "公衆・対象者調査",
+              "body": "プログラムを設計する前に、母集団または定義された対象者を調査し、課題の現状を把握します。",
+              "methods": "代表調査 · オンライン"
+            },
+            {
+              "title": "ニーズとアクセス",
+              "body": "サービスを必要とする人と、それを妨げているものを明らかにします。",
+              "methods": "デプスインタビュー · 調査"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "プログラム設計",
+          "frame": "介入は何であるべきか、拡大前に機能するか。",
+          "cards": [
+            {
+              "title": "プログラムテスト",
+              "body": "拡大前に、想定する人々とモデルやメッセージをテストします。",
+              "methods": "コンセプトテスト · フォーカスグループ"
+            },
+            {
+              "title": "寄付者・支援者調査",
+              "body": "支援者がその課題をどう捉え、何に資金を出すかを理解します。",
+              "methods": "オンライン調査 · デプスインタビュー"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "実施と到達",
+          "frame": "誰が実際に受け取り、どこで途切れるか。",
+          "cards": [
+            {
+              "title": "実施と到達",
+              "body": "誰に届き誰に届かないか、実施が失敗する業務上の地点を描きます。",
+              "methods": "デプスインタビュー · 調査"
+            },
+            {
+              "title": "参加者の体験",
+              "body": "プログラム内の人々の体験と、留まるか離脱する理由を調べます。",
+              "methods": "調査 · フォーカスグループ"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "エビデンスと影響",
+          "frame": "何が変わり、どう示すか。",
+          "cards": [
+            {
+              "title": "ベースラインに対する変化",
+              "body": "ベースラインに対する変化を測り、データがプログラムに帰属できることとできないことを明確に述べます。",
+              "methods": "調査 · インタビュー"
+            },
+            {
+              "title": "エビデンスと報告",
+              "body": "知見を、資金提供者・省庁・公衆が受け入れる報告書に変えます。",
+              "methods": "調査 · インタビュー · デスクリサーチ"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "手法",
+      "methodsLead": "各手法の内容と、使う場面。",
+      "methods": [
+        [
+          "代表調査",
+          "全国または地域の代表サンプル。プログラムが対象とする母集団に合わせて割り付けます。"
+        ],
+        [
+          "多主体調査",
+          "受益者、実施スタッフ、資金提供者を一つの設計で調査し、同じ質問がプログラムの各側に届くようにします。"
+        ],
+        [
+          "デプスインタビュー",
+          "45〜60分のデプスインタビュー。調査チームが1対1で行います。"
+        ],
+        [
+          "フォーカスグループ",
+          "約90分のグループディスカッション。同輩の間で話題がどう語られるかを捉えます。"
+        ],
+        [
+          "対面調査（CAPI）",
+          "電話やオンラインで届かない母集団に対して、対面で構造化インタビューを行います。"
+        ]
+      ],
+      "ctaTitle": "この調査が支えるべき意思決定をお聞かせください。",
+      "ctaBody": "結果、その根拠、推奨する次の一手をお渡しします。",
+      "ctaPrimary": "調査チームに相談する",
+      "ctaSecondary": "参加する"
+    },
+    "ko": {
+      "kicker": "산업",
+      "title": "사회와 교육",
+      "lead": "재단, 비영리단체, 교육 기관을 위한 조사: 누가 대상인지, 프로그램이 무엇을 바꾸는지, 어떻게 보여 줄지.",
+      "introKicker": "일하는 방식",
+      "intro": [
+        "공공 프로그램과 교육은 몇 년이 걸리는 성과와, 좀처럼 한곳에 모이지 않는 대상으로 평가됩니다.",
+        "우리는 프로그램이 닿아야 할 사람을 조사합니다. 무엇이 필요한지, 실제로 받는지, 무엇이 달라졌는지. 같은 설계로 재원 제공자, 실행 팀, 보고서가 설득해야 할 공중을 포괄합니다.",
+        "각 조사는 그것이 뒷받침해야 할 결정을 중심으로 설계합니다 — 프로그램을 시작할지 멈출지, 어떻게 겨냥할지, 재원 제공자가 어떤 근거를 받아들일지. 설계, 표본, 보고는 이 질문에서 나옵니다."
+      ],
+      "stagesKicker": "무엇을 조사하는가",
+      "stages": [
+        {
+          "n": "01",
+          "name": "이슈와 대상",
+          "frame": "누가 영향을 받고 필요가 실제로 무엇인가.",
+          "cards": [
+            {
+              "title": "공중·대상 조사",
+              "body": "프로그램을 설계하기 전에 모집단 또는 정의된 대상을 조사해 이슈의 현황을 파악합니다.",
+              "methods": "대표 조사 · 온라인"
+            },
+            {
+              "title": "필요와 접근",
+              "body": "서비스가 필요한 사람과 그것을 막는 요인을 밝힙니다.",
+              "methods": "심층 인터뷰 · 조사"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "프로그램 설계",
+          "frame": "개입이 무엇이어야 하고 확장 전에 작동하는가.",
+          "cards": [
+            {
+              "title": "프로그램 테스트",
+              "body": "확장 전에, 의도한 사람들과 모델이나 메시지를 테스트합니다.",
+              "methods": "콘셉트 테스트 · 포커스 그룹"
+            },
+            {
+              "title": "기부자·후원자 조사",
+              "body": "후원자가 그 사안을 어떻게 보고 무엇에 자금을 낼지 이해합니다.",
+              "methods": "온라인 조사 · 심층 인터뷰"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "실행과 도달",
+          "frame": "누가 실제로 받고 어디서 끊기는가.",
+          "cards": [
+            {
+              "title": "실행과 도달",
+              "body": "누구에게 닿고 누구에게 닿지 않는지, 실행이 실패하는 운영 지점을 그립니다.",
+              "methods": "심층 인터뷰 · 조사"
+            },
+            {
+              "title": "참여자 경험",
+              "body": "프로그램 안 사람들의 경험과 남거나 이탈하는 이유를 조사합니다.",
+              "methods": "조사 · 포커스 그룹"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "근거와 영향",
+          "frame": "무엇이 달라졌고 어떻게 제시할지.",
+          "cards": [
+            {
+              "title": "기준선 대비 변화",
+              "body": "기준선 대비 변화를 측정하고, 데이터가 프로그램에 귀속할 수 있는 것과 없는 것을 분명히 밝힙니다.",
+              "methods": "조사 · 인터뷰"
+            },
+            {
+              "title": "근거와 보고",
+              "body": "결과를 재원 제공자, 부처, 공중이 받아들일 보고서로 바꿉니다.",
+              "methods": "조사 · 인터뷰 · 문헌 조사"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "방법",
+      "methodsLead": "각 방법이 무엇이고 언제 쓰는가.",
+      "methods": [
+        [
+          "대표 조사",
+          "전국 또는 지역 대표 표본. 프로그램이 대상으로 하는 모집단에 맞춰 할당합니다."
+        ],
+        [
+          "다주체 조사",
+          "수혜자, 실행 인력, 재원 제공자를 하나의 설계로 조사해 같은 질문이 프로그램의 모든 측면에 닿게 합니다."
+        ],
+        [
+          "심층 인터뷰",
+          "45~60분 심층 인터뷰. 조사팀이 1대1로 진행합니다."
+        ],
+        [
+          "포커스 그룹",
+          "약 90분의 그룹 토론. 동료 사이에서 주제가 어떻게 이야기되는지를 봅니다."
+        ],
+        [
+          "대면 조사(CAPI)",
+          "전화나 온라인으로 닿지 않는 모집단에 대해 대면으로 구조화 인터뷰를 진행합니다."
+        ]
+      ],
+      "ctaTitle": "이 조사가 뒷받침해야 할 결정을 알려주세요.",
+      "ctaBody": "결과, 그 근거, 권장하는 다음 단계를 받습니다.",
+      "ctaPrimary": "조사팀과 상담하기",
+      "ctaSecondary": "참여하기"
+    },
+    "no": {
+      "kicker": "Bransjer",
+      "title": "Samfunn og utdanning",
+      "lead": "Forskning for stiftelser, ideelle organisasjoner og utdanningsaktører: hvem målgruppen er, hva programmet endrer, og hvordan det vises.",
+      "introKicker": "Slik arbeider vi",
+      "intro": [
+        "Offentlige programmer og utdanning vurderes på resultater som tar år, og på målgrupper som sjelden er på ett sted.",
+        "Vi undersøker menneskene et program skal nå: hva de trenger, om de får det, og hva som endret seg for dem. Samme design dekker finansieringskilden, gjennomføringsteamet og offentligheten en rapport skal overbevise.",
+        "Hver studie designes rundt beslutningen den skal støtte — om et program skal starte eller stoppe, hvordan det målrettes, og hvilken evidens finansieringskilden aksepterer. Design, utvalg og rapportering følger dette spørsmålet."
+      ],
+      "stagesKicker": "Hva vi undersøker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Tema og målgruppe",
+          "frame": "Hvem som berøres, og hva behovet egentlig er.",
+          "cards": [
+            {
+              "title": "Befolknings- og målgruppeundersøkelse",
+              "body": "Undersøk en befolkning eller en definert målgruppe for å fastslå hvordan temaet ser ut før et program designes.",
+              "methods": "Representativ undersøkelse · nett"
+            },
+            {
+              "title": "Behov og tilgang",
+              "body": "Fastslå hvem som trenger tjenesten, og hva som i dag holder dem fra den.",
+              "methods": "Dybdeintervjuer · undersøkelse"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Programdesign",
+          "frame": "Hva tiltaket skal være, og om det virker før skalering.",
+          "cards": [
+            {
+              "title": "Programtest",
+              "body": "Test en modell eller et budskap med menneskene den er ment for, før den skaleres.",
+              "methods": "Konsepttest · fokusgrupper"
+            },
+            {
+              "title": "Giver- og støtteundersøkelse",
+              "body": "Forstå hva støttespillere mener om saken, og hva de vil finansiere.",
+              "methods": "Nettundersøkelse · dybdeintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Gjennomføring og rekkevidde",
+          "frame": "Hvem som faktisk mottar det, og hvor det faller fra.",
+          "cards": [
+            {
+              "title": "Gjennomføring og rekkevidde",
+              "body": "Kartlegg hvem som nås og hvem som mistes, og de operative punktene der gjennomføringen svikter.",
+              "methods": "Dybdeintervjuer · undersøkelse"
+            },
+            {
+              "title": "Deltakernes opplevelse",
+              "body": "Undersøk opplevelsen til menneskene i programmet, og hva som får dem til å bli eller falle fra.",
+              "methods": "Undersøkelse · fokusgrupper"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Evidens og innflytelse",
+          "frame": "Hva som endret seg, og hvordan det presenteres.",
+          "cards": [
+            {
+              "title": "Endring mot en baseline",
+              "body": "Mål endring mot en baseline, og si klart hva dataene kan og ikke kan tilskrive programmet.",
+              "methods": "Undersøkelse · intervjuer"
+            },
+            {
+              "title": "Evidens og rapportering",
+              "body": "Gjør funn om til en rapport finansieringskilden, departementet eller offentligheten aksepterer.",
+              "methods": "Undersøkelse · intervjuer · skrivebordsforskning"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Hva hver metode er, og når vi bruker den.",
+      "methods": [
+        [
+          "Representativ undersøkelse",
+          "Nasjonalt eller regionalt representative utvalg, med kvoter satt etter befolkningen programmet betjener."
+        ],
+        [
+          "Undersøkelse blant flere parter",
+          "Mottakere, gjennomføringspersonale og finansieringskilder undersøkt i ett design, slik at de samme spørsmålene når hver side av programmet."
+        ],
+        [
+          "Dybdeintervjuer",
+          "Dybdeintervjuer på 45–60 minutter, gjennomført en til en av forskerteamet."
+        ],
+        [
+          "Fokusgrupper",
+          "Gruppediskusjoner på rundt 90 minutter, for hvordan et tema snakkes om blant likemenn."
+        ],
+        [
+          "Feltarbeid ansikt til ansikt (CAPI)",
+          "Strukturerte intervjuer gjennomført personlig, der befolkningen ikke nås per telefon eller nett."
+        ]
+      ],
+      "ctaTitle": "Fortell oss hvilken beslutning denne forskningen skal støtte.",
+      "ctaBody": "Du får funnene, belegget bak dem og anbefalt neste steg.",
+      "ctaPrimary": "Snakk med forskerteamet",
+      "ctaSecondary": "Bli med"
+    },
+    "pt": {
+      "kicker": "Setores",
+      "title": "Sociedade e educação",
+      "lead": "Investigação para fundações, organizações sem fins lucrativos e entidades educativas: quem é o público, o que o programa muda e como mostrá-lo.",
+      "introKicker": "Como trabalhamos",
+      "intro": [
+        "Os programas públicos e a educação são avaliados por resultados que levam anos e por públicos raramente num só lugar.",
+        "Estudamos as pessoas que um programa deve alcançar: do que precisam, se o recebem e o que mudou para elas. O mesmo desenho cobre o financiador, a equipa de execução e o público que um relatório tem de convencer.",
+        "Cada estudo é desenhado em torno da decisão que tem de sustentar — iniciar ou parar um programa, como o direcionar e que evidência o financiador aceitará. Desenho, amostra e relatório decorrem dessa pergunta."
+      ],
+      "stagesKicker": "O que estudamos",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Tema e público",
+          "frame": "Quem é afetado e qual é realmente a necessidade.",
+          "cards": [
+            {
+              "title": "Investigação de público",
+              "body": "Inquirir uma população ou um público definido para estabelecer o estado do tema antes de desenhar um programa.",
+              "methods": "Inquérito representativo · online"
+            },
+            {
+              "title": "Necessidade e acesso",
+              "body": "Estabelecer quem precisa do serviço e o que hoje o impede.",
+              "methods": "Entrevistas em profundidade · inquérito"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Desenho do programa",
+          "frame": "O que deve ser a intervenção e se funciona antes de escalar.",
+          "cards": [
+            {
+              "title": "Teste do programa",
+              "body": "Testar um modelo ou uma mensagem com as pessoas a quem se destina, antes de escalar.",
+              "methods": "Teste de conceito · grupos focais"
+            },
+            {
+              "title": "Investigação de doadores e apoiantes",
+              "body": "Compreender o que os apoiantes pensam da causa e o que financiarão.",
+              "methods": "Inquérito online · entrevistas em profundidade"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Execução e alcance",
+          "frame": "Quem o recebe realmente e onde falha.",
+          "cards": [
+            {
+              "title": "Execução e alcance",
+              "body": "Mapear quem é alcançado e quem fica de fora, e os pontos operacionais onde a execução falha.",
+              "methods": "Entrevistas em profundidade · inquérito"
+            },
+            {
+              "title": "Experiência dos participantes",
+              "body": "Estudar a experiência das pessoas dentro do programa e o que as faz ficar ou desistir.",
+              "methods": "Inquérito · grupos focais"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Evidência e influência",
+          "frame": "O que mudou e como apresentá-lo.",
+          "cards": [
+            {
+              "title": "Mudança face a uma linha de base",
+              "body": "Medir a mudança face a uma linha de base e dizer claramente o que os dados podem e não podem atribuir ao programa.",
+              "methods": "Inquérito · entrevistas"
+            },
+            {
+              "title": "Evidência e relatório",
+              "body": "Transformar os resultados num relatório que o financiador, o ministério ou o público aceite.",
+              "methods": "Inquérito · entrevistas · investigação documental"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Métodos",
+      "methodsLead": "O que é cada método e quando o usamos.",
+      "methods": [
+        [
+          "Inquérito representativo",
+          "Amostras representativas a nível nacional ou regional, com quotas fixadas à população servida pelo programa."
+        ],
+        [
+          "Inquérito multi-partes",
+          "Beneficiários, equipas de execução e financiadores inquiridos num só desenho, para que as mesmas perguntas cheguem a cada lado do programa."
+        ],
+        [
+          "Entrevistas em profundidade",
+          "Entrevistas em profundidade de 45 a 60 minutos, conduzidas um a um pela equipa."
+        ],
+        [
+          "Grupos focais",
+          "Discussões de grupo de cerca de 90 minutos, para como um tema é falado entre pares."
+        ],
+        [
+          "Trabalho de campo presencial (CAPI)",
+          "Entrevistas estruturadas realizadas em pessoa, onde a população não é alcançável por telefone ou online."
+        ]
+      ],
+      "ctaTitle": "Diga-nos que decisão esta investigação tem de sustentar.",
+      "ctaBody": "Recebe os resultados, as provas que os sustentam e o próximo passo recomendado.",
+      "ctaPrimary": "Falar com a equipa",
+      "ctaSecondary": "Junte-se a nós"
+    },
+    "ru": {
+      "kicker": "Отрасли",
+      "title": "Общество и образование",
+      "lead": "Исследования для фондов, НКО и образовательных организаций: кто аудитория, что меняет программа и как это показать.",
+      "introKicker": "Как мы работаем",
+      "intro": [
+        "Публичные программы и образование оценивают по результатам, на которые уходят годы, и по аудиториям, которые редко собраны в одном месте.",
+        "Мы изучаем людей, до которых должна дойти программа: что им нужно, получают ли они это и что изменилось. Тот же дизайн охватывает фонд, команду исполнения и публику, которую должен убедить отчёт.",
+        "Каждое исследование строится вокруг решения, которое оно должно поддержать — начинать или прекращать программу, как её нацелить и какие доказательства примет фонд. Дизайн, выборка и отчёт следуют из этого вопроса."
+      ],
+      "stagesKicker": "Что мы изучаем",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Тема и аудитория",
+          "frame": "Кого это касается и в чём на самом деле потребность.",
+          "cards": [
+            {
+              "title": "Исследование населения и аудитории",
+              "body": "Опрос населения или определённой аудитории, чтобы понять состояние темы до разработки программы.",
+              "methods": "Репрезентативный опрос · онлайн"
+            },
+            {
+              "title": "Потребность и доступ",
+              "body": "Определить, кому нужна услуга и что сегодня этому мешает.",
+              "methods": "Глубинные интервью · опрос"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Дизайн программы",
+          "frame": "Какой должна быть интервенция и работает ли она до масштабирования.",
+          "cards": [
+            {
+              "title": "Тест программы",
+              "body": "Проверить модель или сообщение на людях, для которых они предназначены, до масштабирования.",
+              "methods": "Тест концепции · фокус-группы"
+            },
+            {
+              "title": "Исследование доноров и сторонников",
+              "body": "Понять, что сторонники думают о теме и что готовы финансировать.",
+              "methods": "Онлайн-опрос · глубинные интервью"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Исполнение и охват",
+          "frame": "Кто на самом деле получает и где обрывается.",
+          "cards": [
+            {
+              "title": "Исполнение и охват",
+              "body": "Нанести, кто охвачен и кто упущен, и операционные точки, где исполнение даёт сбой.",
+              "methods": "Глубинные интервью · опрос"
+            },
+            {
+              "title": "Опыт участников",
+              "body": "Изучить опыт людей внутри программы и то, что заставляет их остаться или уйти.",
+              "methods": "Опрос · фокус-группы"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Доказательства и влияние",
+          "frame": "Что изменилось и как это представить.",
+          "cards": [
+            {
+              "title": "Изменение относительно базовой линии",
+              "body": "Измерить изменение относительно базовой линии и ясно сказать, что данные могут и не могут отнести к программе.",
+              "methods": "Опрос · интервью"
+            },
+            {
+              "title": "Доказательства и отчёт",
+              "body": "Превратить выводы в отчёт, который примут фонд, министерство или публика.",
+              "methods": "Опрос · интервью · кабинетное исследование"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Методы",
+      "methodsLead": "Что представляет собой каждый метод и когда мы его применяем.",
+      "methods": [
+        [
+          "Репрезентативный опрос",
+          "Национально или регионально репрезентативные выборки с квотами по населению, которое обслуживает программа."
+        ],
+        [
+          "Опрос нескольких сторон",
+          "Благополучатели, исполнители и фонды опрошены в одном дизайне, чтобы одни и те же вопросы дошли до каждой стороны программы."
+        ],
+        [
+          "Глубинные интервью",
+          "Глубинные интервью по 45–60 минут, один на один с исследовательской командой."
+        ],
+        [
+          "Фокус-группы",
+          "Групповые дискуссии около 90 минут — о том, как о теме говорят среди равных."
+        ],
+        [
+          "Полевая работа лицом к лицу (CAPI)",
+          "Структурированные интервью лично, там, где население недоступно по телефону или онлайн."
+        ]
+      ],
+      "ctaTitle": "Расскажите, какое решение должно поддержать это исследование.",
+      "ctaBody": "Вы получаете результаты, доказательства за ними и рекомендуемый следующий шаг.",
+      "ctaPrimary": "Поговорить с командой",
+      "ctaSecondary": "Присоединиться"
+    },
+    "sv": {
+      "kicker": "Branscher",
+      "title": "Samhälle och utbildning",
+      "lead": "Undersökningar för stiftelser, ideella organisationer och utbildningsaktörer: vem målgruppen är, vad programmet förändrar och hur det visas.",
+      "introKicker": "Så arbetar vi",
+      "intro": [
+        "Offentliga program och utbildning bedöms på resultat som tar år, och på målgrupper som sällan är på ett ställe.",
+        "Vi undersöker människorna ett program ska nå: vad de behöver, om de får det och vad som förändrades för dem. Samma design täcker finansiären, genomförandeteamet och den allmänhet en rapport ska övertyga.",
+        "Varje studie byggs kring det beslut den ska stödja — att starta eller stoppa ett program, hur det ska riktas och vilken evidens finansiären accepterar. Design, urval och rapportering följer den frågan."
+      ],
+      "stagesKicker": "Vad vi undersöker",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Fråga och målgrupp",
+          "frame": "Vem som berörs och vad behovet egentligen är.",
+          "cards": [
+            {
+              "title": "Befolknings- och målgruppsundersökning",
+              "body": "Undersök en befolkning eller en definierad målgrupp för att fastställa frågans läge innan ett program designas.",
+              "methods": "Representativ undersökning · online"
+            },
+            {
+              "title": "Behov och tillgång",
+              "body": "Fastställa vem som behöver tjänsten och vad som i dag hindrar dem.",
+              "methods": "Djupintervjuer · undersökning"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Programdesign",
+          "frame": "Vad insatsen ska vara och om den fungerar före skalning.",
+          "cards": [
+            {
+              "title": "Programtest",
+              "body": "Testa en modell eller ett budskap med människorna den är avsedd för, innan den skalas.",
+              "methods": "Koncepttest · fokusgrupper"
+            },
+            {
+              "title": "Givar- och stödjandeundersökning",
+              "body": "Förstå vad stödjare tror om saken och vad de vill finansiera.",
+              "methods": "Onlineundersökning · djupintervjuer"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Genomförande och räckvidd",
+          "frame": "Vilka som faktiskt får det och var det faller.",
+          "cards": [
+            {
+              "title": "Genomförande och räckvidd",
+              "body": "Kartlägg vilka som nås och vilka som missas, och de operativa punkter där genomförandet brister.",
+              "methods": "Djupintervjuer · undersökning"
+            },
+            {
+              "title": "Deltagarnas upplevelse",
+              "body": "Undersök upplevelsen för människorna i programmet och vad som får dem att stanna eller hoppa av.",
+              "methods": "Undersökning · fokusgrupper"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Evidens och påverkan",
+          "frame": "Vad som förändrades och hur det presenteras.",
+          "cards": [
+            {
+              "title": "Förändring mot en baslinje",
+              "body": "Mät förändring mot en baslinje och säg tydligt vad data kan och inte kan tillskriva programmet.",
+              "methods": "Undersökning · intervjuer"
+            },
+            {
+              "title": "Evidens och rapportering",
+              "body": "Gör fynd till en rapport som finansiär, departement eller allmänhet accepterar.",
+              "methods": "Undersökning · intervjuer · skrivbordsforskning"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Metoder",
+      "methodsLead": "Vad varje metod är och när vi använder den.",
+      "methods": [
+        [
+          "Representativ undersökning",
+          "Nationellt eller regionalt representativa urval, med kvoter satta efter befolkningen programmet betjänar."
+        ],
+        [
+          "Undersökning bland flera parter",
+          "Mottagare, genomförandepersonal och finansiärer undersökta i en design, så att samma frågor når varje sida av programmet."
+        ],
+        [
+          "Djupintervjuer",
+          "Djupintervjuer på 45–60 minuter, genomförda en mot en av forskarteamet."
+        ],
+        [
+          "Fokusgrupper",
+          "Gruppdiskussioner på cirka 90 minuter, för hur ett ämne talas om bland jämlikar."
+        ],
+        [
+          "Fältarbete ansikte mot ansikte (CAPI)",
+          "Strukturerade intervjuer genomförda personligen, där befolkningen inte nås per telefon eller online."
+        ]
+      ],
+      "ctaTitle": "Berätta vilket beslut den här undersökningen ska stödja.",
+      "ctaBody": "Du får resultaten, underlaget bakom dem och rekommenderat nästa steg.",
+      "ctaPrimary": "Prata med forskarteamet",
+      "ctaSecondary": "Var med"
+    },
+    "tr": {
+      "kicker": "Sektörler",
+      "title": "Toplum ve eğitim",
+      "lead": "Vakıflar, kâr amacı gütmeyen kuruluşlar ve eğitim sağlayıcıları için araştırma: hedef kitle kim, program neyi değiştiriyor ve nasıl gösterilir.",
+      "introKicker": "Nasıl çalışıyoruz",
+      "intro": [
+        "Kamu programları ve eğitim, yıllar alan sonuçlarla ve nadiren tek bir yerde bulunan kitlelerle değerlendirilir.",
+        "Bir programın ulaşması gereken insanları inceliyoruz: neye ihtiyaçları var, bunu alıyorlar mı ve onlar için ne değişti. Aynı tasarım, fon sağlayıcıyı, uygulama ekibini ve bir raporun ikna etmesi gereken kamuoyunu kapsar.",
+        "Her çalışma, desteklemesi gereken kararın etrafında tasarlanır — program başlatılacak mı durdurulacak mı, nasıl hedeflenecek ve fon sağlayıcı hangi kanıtı kabul edecek. Tasarım, örneklem ve rapor bu sorudan türetilir."
+      ],
+      "stagesKicker": "Neyi inceliyoruz",
+      "stages": [
+        {
+          "n": "01",
+          "name": "Konu ve hedef kitle",
+          "frame": "Kim etkileniyor ve ihtiyaç gerçekte ne.",
+          "cards": [
+            {
+              "title": "Kamu ve hedef kitle araştırması",
+              "body": "Bir program tasarlanmadan önce konunun durumunu belirlemek için bir nüfusu veya tanımlı bir kitleyi araştırın.",
+              "methods": "Temsili anket · çevrimiçi"
+            },
+            {
+              "title": "İhtiyaç ve erişim",
+              "body": "Hizmete kimin ihtiyacı olduğunu ve bugün neyin engellediğini belirleyin.",
+              "methods": "Derinlemesine görüşmeler · anket"
+            }
+          ]
+        },
+        {
+          "n": "02",
+          "name": "Program tasarımı",
+          "frame": "Müdahalenin ne olması gerektiği ve ölçeklemeden önce işe yarayıp yaramadığı.",
+          "cards": [
+            {
+              "title": "Program testi",
+              "body": "Ölçeklemeden önce bir modeli veya mesajı, hedeflediği kişilerle test edin.",
+              "methods": "Konsept testi · odak grupları"
+            },
+            {
+              "title": "Bağışçı ve destekçi araştırması",
+              "body": "Destekçilerin konu hakkında ne düşündüğünü ve neyi finanse edeceklerini anlayın.",
+              "methods": "Çevrimiçi anket · derinlemesine görüşmeler"
+            }
+          ]
+        },
+        {
+          "n": "03",
+          "name": "Uygulama ve erişim",
+          "frame": "Kimin gerçekten aldığı ve nerede koptuğu.",
+          "cards": [
+            {
+              "title": "Uygulama ve erişim",
+              "body": "Kime ulaşıldığını ve kimin kaçtığını, uygulamanın başarısız olduğu operasyonel noktaları haritalayın.",
+              "methods": "Derinlemesine görüşmeler · anket"
+            },
+            {
+              "title": "Katılımcı deneyimi",
+              "body": "Programdaki insanların deneyimini ve onları tutan ya da bıraktıran şeyi inceleyin.",
+              "methods": "Anket · odak grupları"
+            }
+          ]
+        },
+        {
+          "n": "04",
+          "name": "Kanıt ve etki",
+          "frame": "Neyin değiştiği ve nasıl sunulacağı.",
+          "cards": [
+            {
+              "title": "Bir başlangıç çizgisine göre değişim",
+              "body": "Değişimi bir başlangıç çizgisine göre ölçün ve verinin programa neyi atfedebileceğini ve atfedemeyeceğini açıkça söyleyin.",
+              "methods": "Anket · görüşmeler"
+            },
+            {
+              "title": "Kanıt ve raporlama",
+              "body": "Bulguları fon sağlayıcının, bakanlığın veya kamuoyunun kabul edeceği bir rapora dönüştürün.",
+              "methods": "Anket · görüşmeler · masa araştırması"
+            }
+          ]
+        }
+      ],
+      "methodsKicker": "Yöntemler",
+      "methodsLead": "Her yöntemin ne olduğu ve ne zaman kullandığımız.",
+      "methods": [
+        [
+          "Temsili anket",
+          "Ulusal veya bölgesel temsili örneklemler; kotalar programın hizmet ettiği nüfusa göre."
+        ],
+        [
+          "Çok paydaşlı anket",
+          "Yararlanıcılar, uygulama personeli ve fon sağlayıcılar tek tasarımda araştırılır; aynı sorular programın her tarafına ulaşır."
+        ],
+        [
+          "Derinlemesine görüşmeler",
+          "45-60 dakikalık derinlemesine görüşmeler; araştırma ekibi bire bir yürütür."
+        ],
+        [
+          "Odak grupları",
+          "Yaklaşık 90 dakikalık grup tartışmaları; bir konunun akranlar arasında nasıl konuşulduğu için."
+        ],
+        [
+          "Yüz yüze saha çalışması (CAPI)",
+          "Nüfusa telefon veya çevrimiçi ulaşılamadığı yerde yüz yüze yapılan yapılandırılmış görüşmeler."
+        ]
+      ],
+      "ctaTitle": "Bu araştırmanın hangi kararı desteklemesi gerektiğini bize anlatın.",
+      "ctaBody": "Bulguları, arkalarındaki kanıtları ve önerilen sonraki adımı alırsınız.",
+      "ctaPrimary": "Araştırma ekibiyle konuşun",
+      "ctaSecondary": "Katılın"
     }
   },
   "industrial": {
