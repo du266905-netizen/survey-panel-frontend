@@ -62,7 +62,6 @@ import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
 import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
-import JoinChoice from './pages/JoinChoice';
 import JoinEntry from './pages/JoinEntry';
 import ChinaMarketInsights from './pages/ChinaMarketInsights';
 import IndustryAutomotive from './pages/IndustryAutomotive';
@@ -167,7 +166,8 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" authOnly /></PublicEntry>} />
         <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
-        <Route path="/join" element={<JoinChoice />} />
+        {/* /join 的两卡片页 2026-10-25 撤掉，入口统一走 /access；旧链接不断。 */}
+        <Route path="/join" element={<Navigate to="/access" replace />} />
         <Route path="/access" element={<PublicEntry><JoinEntry /></PublicEntry>} />
         <Route path="/business" element={<Business />} />
         <Route path="/china-market-insights" element={<ChinaMarketInsights />} />

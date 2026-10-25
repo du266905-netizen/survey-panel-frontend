@@ -68,7 +68,7 @@ export default function PublicSiteHeader() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const workspaceHref = user ? withLanguage(isBusinessRole(user.role) ? '/business/workspace' : '/dashboard', language) : withLanguage('/join', language);
+  const workspaceHref = user ? withLanguage(isBusinessRole(user.role) ? '/business/workspace' : '/dashboard', language) : withLanguage('/access', language);
   const ctaLabel = user ? 'Workspace' : 'Join us';
 
   return (
