@@ -76,7 +76,7 @@
   margin: 12px 0 0;
   color: #fff;
   font-family: var(--font-serif);
-  font-size: clamp(32px, 3.4vw, 48px);
+  font-size: clamp(38px, 4vw, 56px);
   font-weight: 400;
   letter-spacing: -.0234em;
   line-height: 1.05;
@@ -498,3 +498,4 @@
 @media (max-width: 900px) {
   .industry-page .ind-hero--travel > img { object-position: 42% center; }
 }
+
