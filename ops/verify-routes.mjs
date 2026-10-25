@@ -91,9 +91,17 @@ ws.addEventListener('message', (event) => {
     consoleErrors.push(`console.error: ${msg.params.args.map((a) => a.value ?? a.description ?? '').join(' ').slice(0, 160)}`);
   }
 });
+/* 每个 CDP 调用最多等 20 秒。以前这里没有超时：Chrome 在某一页卡住，
+   promise 永远不 resolve，整条门禁就挂在那里（2026-10-26 连续两次卡在
+   /business/terms）。超时后返回 { __timeout: true }，由调用方重试。 */
+const CDP_TIMEOUT_MS = 20000;
 const send = (method, params = {}) => new Promise((resolve) => {
   const id = seq++;
-  pending.set(id, resolve);
+  const timer = setTimeout(() => {
+    pending.delete(id);
+    resolve({ __timeout: true });
+  }, CDP_TIMEOUT_MS);
+  pending.set(id, (msg) => { clearTimeout(timer); resolve(msg); });
   ws.send(JSON.stringify({ id, method, params }));
 });
 const evaluate = async (expression) => {
@@ -133,6 +141,7 @@ const visit = async (route, viewport) => {
     if (bodyLength > 40) break;
   }
   const shot = await send('Page.captureScreenshot', { format: 'png' });
+  if (!shot?.result?.data) return { bodyLength, shot: null, errors: [...consoleErrors], timedOut: true };
   const name = `${route.replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '') || 'root'}-${viewport.tag}.png`;
   writeFileSync(join(OUT, name), Buffer.from(shot.result.data, 'base64'));
   return { bodyLength, shot: name, errors: [...consoleErrors] };
@@ -145,7 +154,12 @@ try {
 
   for (const viewport of VIEWPORTS) {
     for (const route of PUBLIC_ROUTES) {
-      const r = await visit(route, viewport);
+      let r = await visit(route, viewport);
+      if (r.timedOut) {
+        note(`${viewport.tag} ${route} 截图超时，重试一次`);
+        r = await visit(route, viewport);
+        if (r.timedOut) { bad(`${viewport.tag} ${route} 连续两次超时`, 'Chrome 没有在 20 秒内返回'); continue; }
+      }
       if (r.bodyLength > 40) ok(`${viewport.tag} ${route} 有真实内容（${r.bodyLength} 字符）→ ${r.shot}`);
       else bad(`${viewport.tag} ${route} 渲染为空`, `body=${r.bodyLength}`);
       if (r.errors.length) bad(`${viewport.tag} ${route} 控制台有 error`, r.errors.slice(0, 2).join(' | '));
