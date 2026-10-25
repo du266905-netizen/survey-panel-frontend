@@ -55,8 +55,9 @@
   line-height: 1.12;
   text-wrap: pretty;
 }
+/* 2026-10-26：与湖屋句、账号卡片标题统一在 38 / 400，不再单靠 600 加粗。 */
 .home-hero-statement strong {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 /* The supporting sentence drops a step and goes quiet: the weight contrast
