@@ -237,6 +237,15 @@ body:has(.landing-page--auth-only) { background: #FFFFFF; }
 /* Google 登录按钮是 accounts.google.com 的 iframe，GSI 会把它渲染成 150px 高，
    向下压住邮箱输入框（2026-10-26 用户报「邮箱框点不动」）。限定在 44px，
    宽度跟随容器。 */
+/* 容器先固定成 44 高并裁切：GSI 的 iframe 在定型前会以默认尺寸画一帧，
+   不裁就会闪出残影。 */
+/* 只裁谷歌按钮那个容器（同时带 min-h-11 的）。不能裁 div.notranslate：
+   站点根节点 .app-translation-guard 也带这个类，会把整页压成 44px。 */
+div.notranslate.min-h-11 {
+  height: 44px;
+  overflow: hidden;
+}
+
 div.notranslate iframe[src*="accounts.google.com"],
 iframe[src*="accounts.google.com/gsi/button"] {
   height: 44px !important;

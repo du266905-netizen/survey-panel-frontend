@@ -1,4 +1,5 @@
-.contact-page { background: #fff; color: #141413; }
+/* 2026-10-26：表单是白色，页面底色用淡鼠尾草骨白，把白表单托起来。 */
+.contact-page { background: #f2f3ec; color: #141413; }
 .contact-hero {
   width: calc(100% - 80px);
   max-width: 1120px;
@@ -9,7 +10,7 @@
   max-width: 860px;
   margin: 0;
   color: #141413;
-  font-family: var(--font-reading);
+  font-family: var(--font-impact);
   font-size: 56px;
   font-weight: 400;
   letter-spacing: -.03em;
@@ -31,7 +32,8 @@
   display: block !important;
   min-height: 0 !important;
   padding: 24px 0 80px !important;
-  background: #fff !important;
+  /* 页面底色是淡鼠尾草骨白，这一外层不能再用白色盖住；白的是那张表单面板。 */
+  background: transparent !important;
   background-image: none !important;
 }
 .contact-page #atlas-contact::after { display: none !important; }

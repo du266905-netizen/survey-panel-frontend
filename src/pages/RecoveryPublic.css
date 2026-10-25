@@ -57,7 +57,8 @@
 
 .recovery-page--public .recovery-panel { background: #FAF9F5; }
 .recovery-page--public .recovery-panel::before { display: none; }
-.recovery-page--public .recovery-panel-inner { width: min(100%, 480px); }
+/* 2026-10-26：卡片加宽，38 的标题一行放得下。 */
+.recovery-page--public .recovery-panel-inner { width: min(100%, 560px); }
 .recovery-page--public .recovery-return { color: #6F6A5F; font-family: var(--font-sans); font-size: 14px; font-weight: 500; }
 .recovery-page--public .recovery-return:hover { color: #141413; }
 

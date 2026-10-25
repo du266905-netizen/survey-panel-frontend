@@ -241,7 +241,6 @@ function HomeCommunityCta({ copy, navigation, language }) {
   return (
     <section className="home-community-cta" id="community" aria-label="Join the community or run research with us">
       <div className="home-community-cta-inner">
-        <h2 className="home-community-cta-title">So, have you thought about what to do next?</h2>
         <AtlasTypewriter begin={copy.begin} prompts={copy.prompts} />
         <div className="home-community-cta-actions">
           <Link className="home-community-cta-button is-primary" to={withLanguage('/join', language)}>
