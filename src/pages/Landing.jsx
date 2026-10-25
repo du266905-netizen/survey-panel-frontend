@@ -935,6 +935,9 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
   const location = useLocation();
   const { publicCopy } = useLanguage();
   const [authMode, setAuthMode] = useState(initialAuthMode);
+  // The homepage entry hands the address over in the URL; the panel seeds both
+  // of its forms with it so it never has to be typed twice.
+  const initialEmail = new URLSearchParams(location.search).get('email') || '';
 
   useEffect(() => setAuthMode(initialAuthMode), [initialAuthMode]);
 
@@ -1361,7 +1364,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         </section>
 
         <section className="landing-access" aria-label="Account access">
-          <div className="landing-access-inner"><PublicAuthPanel mode={authMode} onModeChange={setMode} /></div>
+          <div className="landing-access-inner"><PublicAuthPanel mode={authMode} onModeChange={setMode} initialEmail={initialEmail} /></div>
           {!authOnly && <span className="landing-scroll-cue"><ArrowRight size={14} /> Explore the platform below</span>}
         </section>
       </section>

@@ -195,7 +195,7 @@ export function GoogleButton({ mode, onCredential, onError, language, label, not
   return <div ref={containerRef} className="notranslate min-h-11" translate="no" data-translate="no" />;
 }
 
-export default function PublicAuthPanel({ mode = 'register', onModeChange, accountType = 'PARTICIPANT' }) {
+export default function PublicAuthPanel({ mode = 'register', onModeChange, accountType = 'PARTICIPANT', initialEmail = '' }) {
   const navigate = useNavigate();
   const location = useLocation();
   const panelRef = useRef(null);
@@ -215,6 +215,19 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   const [error, setError] = useState('');
   const [businessLoginMissing, setBusinessLoginMissing] = useState(false);
   const referredBy = new URLSearchParams(location.search).get('ref') || undefined;
+  /* 2026-10-25：从首页那块入口过来时，邮箱已经打过一遍，这里接住它；
+     登录和注册两个表单都填上，用户在面板里切换模式也不用重打。 */
+  const seededEmail = String(initialEmail || '').trim();
+
+  useEffect(() => {
+    if (!seededEmail) return;
+    // The participant register step normally hides the form behind
+    // "Continue with email"; arriving with an address already typed means the
+    // user has done that step, so open it rather than ask them to press again.
+    setRegisterExpanded(true);
+    setLoginForm((current) => (current.email ? current : { ...current, email: seededEmail }));
+    setRegisterForm((current) => (current.email ? current : { ...current, email: seededEmail }));
+  }, [seededEmail]);
 
   useEffect(() => {
     if (!codeCooldown) return undefined;
@@ -344,7 +357,8 @@ export default function PublicAuthPanel({ mode = 'register', onModeChange, accou
   };
 
   const changeMode = (nextMode) => {
-    setRegisterExpanded(nextMode === 'register' ? registerExpanded : false);
+    // Keep the email step open when an address came in with the page.
+    setRegisterExpanded(nextMode === 'register' ? registerExpanded || Boolean(seededEmail) : false);
     onModeChange(nextMode);
     resetFormScroll();
   };

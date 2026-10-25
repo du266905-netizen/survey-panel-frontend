@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { googleLogin } from '../api/realApi';
 import { useAuth } from './AuthContext';
+import { useLanguage, withLanguage } from './LanguageContext';
 import { GoogleButton } from './PublicAuthPanel';
 import './HomeAuthForm.css';
 
@@ -9,8 +10,19 @@ export default function HomeAuthForm({ audience = 'participant' }) {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const { setUser } = useAuth();
+  const { language } = useLanguage();
   const navigate = useNavigate();
   const isResearch = audience === 'research';
+
+  /* 2026-10-25：这一格以前是空按钮（onSubmit 只 preventDefault）。现在把邮箱带到
+     报名页，用户不用再打一遍；研究端回研究端的注册页，参与端回参与端的注册页。
+     登录仍在那两页的面板里切换。 */
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const target = isResearch ? '/business/register' : '/register';
+    const query = new URLSearchParams({ email: email.trim() }).toString();
+    navigate(`${withLanguage(target, language)}&${query}`);
+  };
 
   const handleGoogleCredential = async (credential) => {
     setError('');
@@ -44,7 +56,7 @@ export default function HomeAuthForm({ audience = 'participant' }) {
         </>
       )}
 
-      <form className="home-auth-email" onSubmit={(event) => event.preventDefault()}>
+      <form className="home-auth-email" onSubmit={handleSubmit}>
         <input
           type="email"
           value={email}

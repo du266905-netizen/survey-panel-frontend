@@ -23,6 +23,9 @@ export default function BusinessAccess() {
   const workspaceStaticMap = publicCopy?.workspace?.business?.workspaceStatic || {};
   const ws = workspaceStaticMap[language] || workspaceStaticMap['en-GB'] || {};
   const authMode = location.pathname.endsWith('/login') ? 'login' : location.pathname.endsWith('/register') ? 'register' : null;
+  // Carried over from the homepage entry (2026-10-25); the panel seeds both
+  // forms with it, and switching mode keeps it in the URL.
+  const initialEmail = new URLSearchParams(location.search).get('email') || '';
   const [form, setForm] = useState(initialForm);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState('');
@@ -60,7 +63,7 @@ export default function BusinessAccess() {
         <PublicSiteHeader />
         <div className="business-login-shell">
           <section className="business-login-form" aria-label="Account access">
-            <PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(withLanguage(nextMode === 'login' ? '/business/login' : '/business/register', language), { replace: true })} accountType="BUSINESS" />
+            <PublicAuthPanel mode={authMode} onModeChange={(nextMode) => navigate(`${withLanguage(nextMode === 'login' ? '/business/login' : '/business/register', language)}${initialEmail ? `&email=${encodeURIComponent(initialEmail)}` : ''}`, { replace: true })} accountType="BUSINESS" initialEmail={initialEmail} />
           </section>
           <section className="business-login-intro" aria-labelledby="business-login-title">
             <img src={researcherRegistrationTeam} alt="" aria-hidden="true" decoding="async" />
