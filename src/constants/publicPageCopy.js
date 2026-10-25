@@ -20747,7 +20747,8 @@ export const chromeCopy = {
       "menuOpen": "Open menu",
       "menuClose": "Close menu",
       "pauseRotation": "Pause rotation",
-      "playRotation": "Play rotation"
+      "playRotation": "Play rotation",
+      "back": "Back"
     }
   },
   "en-GB": {
@@ -20849,7 +20850,8 @@ export const chromeCopy = {
       "menuOpen": "Open menu",
       "menuClose": "Close menu",
       "pauseRotation": "Pause rotation",
-      "playRotation": "Play rotation"
+      "playRotation": "Play rotation",
+      "back": "Back"
     }
   },
   "en": {
@@ -20951,7 +20953,8 @@ export const chromeCopy = {
       "menuOpen": "Open menu",
       "menuClose": "Close menu",
       "pauseRotation": "Pause rotation",
-      "playRotation": "Play rotation"
+      "playRotation": "Play rotation",
+      "back": "Back"
     }
   },
   "zh-CN": {
@@ -21053,7 +21056,8 @@ export const chromeCopy = {
       "menuOpen": "打开菜单",
       "menuClose": "关闭菜单",
       "pauseRotation": "暂停轮播",
-      "playRotation": "继续轮播"
+      "playRotation": "继续轮播",
+      "back": "返回"
     }
   },
   "zh-Hant": {
@@ -21155,7 +21159,8 @@ export const chromeCopy = {
       "menuOpen": "開啟選單",
       "menuClose": "關閉選單",
       "pauseRotation": "暫停輪播",
-      "playRotation": "繼續輪播"
+      "playRotation": "繼續輪播",
+      "back": "返回"
     }
   },
   "de": {

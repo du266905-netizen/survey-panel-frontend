@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, BadgeCheck, ChevronDown, CircleDollarSign, Eye, Newspaper, ShieldCheck } from 'lucide-react';
+import { ArrowRight, BadgeCheck, ChevronDown, ChevronLeft, CircleDollarSign, Eye, Newspaper, ShieldCheck } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getNewsWall } from '../api/realApi';
 import GlobalGlobe from '../components/GlobalGlobe';
 import Logo from '../components/Logo';
 import PublicAuthPanel from '../components/PublicAuthPanel';
 import PublicSiteHeader from '../components/PublicSiteHeader';
-import { useLanguage } from '../components/LanguageContext';
+import { useLanguage, withLanguage } from '../components/LanguageContext';
 import participantStudyImage from '../assets/auth/participant-study.jpg';
 
 const socialLinks = [
@@ -933,7 +933,7 @@ function ResearchLedgerIllustration() {
 export default function Landing({ initialAuthMode = 'register', authOnly = false }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { publicCopy } = useLanguage();
+  const { language, publicCopy } = useLanguage();
   const [authMode, setAuthMode] = useState(initialAuthMode);
   // The homepage entry hands the address over in the URL; the panel seeds both
   // of its forms with it so it never has to be typed twice.
@@ -978,7 +978,28 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
            右边是图。表单栏加回 96px 上内边距，落点与之前一致（面板仍在 y=108）。 */
         .landing-page--auth-only > .public-site-header { position: absolute; z-index: 20; top: 18px; right: 0; left: 0; margin: 0 auto; }
         .landing-page--auth-only .landing-shell { height: 100svh; min-height: 650px; }
-        .landing-page--auth-only .landing-access { padding-top: 96px; }
+        .landing-page--auth-only .landing-access { padding-top: 76px; }
+        /* 2026-10-26：注册／登录页去掉整条导航、图上的文案，表单 60%、图 40%，
+           照片往右裁。 */
+        .landing-page--auth-only .landing-shell { grid-template-columns: 60% 40%; }
+        .landing-page--auth-only .landing-brand { width: 40%; margin-left: 60%; }
+        .landing-page--auth-only .landing-brand:after { background: none; background-color: transparent; }
+        .landing-page--auth-only .landing-brand-content { display: none; }
+        .landing-page--auth-only .landing-brand-photo { object-position: 88% 50%; }
+        .landing-page--auth-only .landing-access { width: 60%; min-width: 0; }
+        .landing-auth-back { position: absolute; z-index: 20; top: 26px; left: clamp(20px, 4vw, 40px); display: inline-flex; align-items: center; gap: 5px; color: #4b5a4d; font-size: 13px; font-weight: 700; letter-spacing: .01em; text-decoration: none; transition: color .16s ease; }
+        .landing-auth-back:hover { color: #163b2d; }
+        .landing-auth-back:focus-visible { outline: 2px solid #1f4b3a; outline-offset: 3px; }
+        /* 窄屏：60/40 两栏放不下，表单占满，照片退成一条横幅；再窄就只留表单。 */
+        @media (max-width: 1180px) {
+          .landing-page--auth-only .landing-shell { height: auto; min-height: 0; grid-template-columns: 1fr; }
+          .landing-page--auth-only .landing-access { position: static; order: 1; width: 100%; padding: 76px 24px 40px; }
+          .landing-page--auth-only .landing-brand { order: 2; width: 100%; min-height: 240px; margin-left: 0; }
+          .landing-page--auth-only .landing-brand-photo { object-position: 72% 42%; }
+        }
+        @media (max-width: 700px) {
+          .landing-page--auth-only .landing-brand { display: none; }
+        }
         .landing-site-nav { position: sticky; z-index: 50; top: 0; border-bottom: 1px solid rgba(31,31,27,.15); background: rgba(249,247,241,.94); color: #1f2822; backdrop-filter: blur(18px); }
         .landing-site-nav-inner { display: flex; width: min(100% - 64px, 1380px); min-height: 78px; align-items: center; gap: clamp(24px, 4vw, 64px); margin: 0 auto; }
         .landing-site-nav-brand { display: inline-flex; flex: 0 0 auto; align-items: center; text-decoration: none; }
@@ -1347,7 +1368,13 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
         @media (max-width: 700px) { .landing-brand { min-height: 625px; padding: 25px 24px 31px; } .landing-plum-cycle { top: 14%; right: -32px; width: min(84%, 340px); opacity: .52; } .landing-hero-sprout { top: 12%; right: -28px; width: min(82%, 370px); opacity: .57; } .landing-brand-content h1 { font-size: 38px; } .landing-brand-content > p { font-size: 14px; line-height: 1.65; } .landing-brand-proof { grid-template-columns: 1fr; gap: 2px; margin-top: 24px; } .landing-brand-proof span { min-height: 0; padding-top: 8px; } .landing-access { padding: 20px 24px 36px; } .landing-access-inner { padding-top: 40px; } .public-auth-content h2 { font-size: 22px; } .landing-container { width: min(100% - 40px, 1200px); } .landing-news-preview { padding-bottom: 44px; } .landing-news-preview-head { align-items: flex-start; flex-direction: column; } .landing-intro, .landing-quality-grid, .landing-global { grid-template-columns: 1fr; gap: 28px; padding: 64px 0; } .landing-intro > p { font-size: 14px; } .landing-photo-grid { grid-template-columns: 1fr; padding-bottom: 64px; } .landing-photo, .landing-photo.is-short, .landing-photo.is-wide { grid-column: auto; min-height: 315px; } .landing-quality, .landing-panelists { padding: 64px 0; } .landing-global { min-height: 0; } .landing-global-visual { order: 2; min-height: 282px; } .landing-global-copy { order: 1; border-left: 0; border-bottom: 1px solid rgba(34,31,23,.24); padding: 0 0 22px; } .landing-map-frame { min-height: 0; } .landing-map-frame:after { transform: translateY(116px); } .landing-global-globe { width: min(76%, 228px); transform: translate(0, -1%); } .landing-rewards-layout { padding: 54px 0; } .landing-reward-card-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 20px; } .landing-reward-card, .landing-reward-card.is-panel { min-height: 352px; grid-column: auto; padding: 24px; } .landing-reward-card p { max-width: none; font-size: 14px; } .landing-reward-sketch { width: 150px; height: 142px; } .landing-steps { grid-template-columns: 1fr; gap: 12px; margin-top: 38px; } .landing-step { min-height: 0; } .landing-step h3 { margin-top: 25px; } .landing-reward-banner { min-height: 470px; margin-top: 45px; } .landing-reward-copy { padding: 44px 28px; } .landing-footer-main { padding-top: 48px; padding-bottom: 44px; } .landing-footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 30px; } .landing-footer-bottom { align-items: flex-start; flex-direction: column; padding: 24px 0; } .landing-footer-links { justify-content: flex-start; } }
       `}</style>
 
-      <PublicSiteHeader />
+      {authOnly ? (
+        <Link className="landing-auth-back" to={withLanguage('/', language)}>
+          <ChevronLeft size={15} aria-hidden="true" /> {publicCopy.chrome.header.back || 'Back'}
+        </Link>
+      ) : (
+        <PublicSiteHeader />
+      )}
 
       <section className="landing-shell">
         <section className="landing-brand" aria-labelledby="landing-title">
