@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
+import usePageTitle from '../hooks/usePageTitle';
 import travelImage from '../assets/industries/luxury-hero.jpg';
 import './IndustryPage.css';
 
@@ -14,6 +15,7 @@ import './IndustryPage.css';
 export default function IndustryTravel() {
   const { publicCopy } = useLanguage();
   const c = publicCopy.pages.industries.travel;
+  usePageTitle(c.title);
 
   return (
     <main className="industry-page industry-page--travel">

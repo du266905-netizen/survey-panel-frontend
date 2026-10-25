@@ -20,7 +20,8 @@ const CLOSE_DELAY = 160;
    `constants/publicNavigation.js`; the bar itself carries no page copy. */
 export default function PublicSiteHeader() {
   const { user } = useAuth();
-  const { language, languages, navigateToLanguage } = useLanguage();
+  const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
+  const chrome = publicCopy.chrome;
   const { pathname } = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -69,7 +70,7 @@ export default function PublicSiteHeader() {
   }, []);
 
   const workspaceHref = user ? withLanguage(isBusinessRole(user.role) ? '/business/workspace' : '/dashboard', language) : withLanguage('/access', language);
-  const ctaLabel = user ? 'Workspace' : 'Join us';
+  const ctaLabel = user ? chrome.header.workspace : chrome.header.join;
 
   return (
     <header className="psn">
@@ -90,7 +91,7 @@ export default function PublicSiteHeader() {
                 onMouseLeave={() => { if (hasItems) scheduleClose(); }}
               >
                 {group.to ? (
-                  <Link className="psn-trigger" to={withLanguage(group.to, language)} onClick={closeAll}>{group.label}</Link>
+                  <Link className="psn-trigger" to={withLanguage(group.to, language)} onClick={closeAll}>{chrome.groups[group.id] || group.label}</Link>
                 ) : hasItems ? (
                   <button
                     className={`psn-trigger${isOpen ? ' is-open' : ''}`}
@@ -102,17 +103,17 @@ export default function PublicSiteHeader() {
                       setOpenMenu((current) => (current === group.id ? null : group.id));
                     }}
                   >
-                    {group.label}
+                    {chrome.groups[group.id] || group.label}
                     <ChevronDown aria-hidden="true" size={14} strokeWidth={1.9} />
                   </button>
                 ) : (
-                  <span className="psn-trigger is-static">{group.label}</span>
+                  <span className="psn-trigger is-static">{chrome.groups[group.id] || group.label}</span>
                 )}
 
                 {hasItems && (
                   <div id={`psn-panel-${group.id}`} className={`psn-panel${isOpen ? ' is-open' : ''}${group.items.length > 5 ? ' is-wide' : ''}`}>
                     <div className="psn-panel-inner">
-                      <p className="psn-panel-label">{group.label}</p>
+                      <p className="psn-panel-label">{chrome.groups[group.id] || group.label}</p>
                       {/* More than five entries flow into a second column, five rows each. */}
                       <div
                         className={`psn-items${group.items.length > 5 ? ' psn-items--two' : ''}`}
@@ -121,8 +122,8 @@ export default function PublicSiteHeader() {
                         {group.items.map((item) => (
                           <Link className="psn-item" to={withLanguage(item.to, language)} key={item.to} onClick={closeAll}>
                             <span>
-                              <strong>{item.title}</strong>
-                              <small>{item.note}</small>
+                              <strong>{chrome.items[item.to]?.title || item.title}</strong>
+                              <small>{chrome.items[item.to]?.note || item.note}</small>
                             </span>
                             <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
                           </Link>
@@ -172,7 +173,7 @@ export default function PublicSiteHeader() {
             </div>
           </div>
 
-          {!user && <Link className="psn-signin" to={withLanguage('/access', language)}>{'Sign in'}</Link>}
+          {!user && <Link className="psn-signin" to={withLanguage('/access', language)}>{chrome.header.signIn}</Link>}
           <Link className="psn-cta" to={workspaceHref}>
             {ctaLabel}
             <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.8} />
@@ -180,7 +181,7 @@ export default function PublicSiteHeader() {
           <button
             className="psn-burger"
             type="button"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-label={mobileOpen ? chrome.header.menuClose : chrome.header.menuOpen}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((open) => !open)}
           >
@@ -194,23 +195,23 @@ export default function PublicSiteHeader() {
           the black bar above. */}
       <div className="psn-strip">
         <div className="psn-strip-inner">
-          <Link className="psn-strip-link" to={withLanguage('/business/access', language)}>Contact sales</Link>
-          <Link className="psn-strip-link" to={withLanguage('/how-it-works', language)}>Help centre</Link>
+          <Link className="psn-strip-link" to={withLanguage('/business/access', language)}>{chrome.header.contactSales}</Link>
+          <Link className="psn-strip-link" to={withLanguage('/how-it-works', language)}>{chrome.header.helpCentre}</Link>
         </div>
       </div>
 
       <div className={`psn-mobile${mobileOpen ? ' is-open' : ''}`}>
         {publicNavigation.map((group) => (
           <div className="psn-mobile-group" key={group.id}>
-            <p>{group.label}</p>
+            <p>{chrome.groups[group.id] || group.label}</p>
             {group.to ? (
             <Link to={withLanguage(group.to, language)} onClick={closeAll}>
-              {group.label}
+              {chrome.groups[group.id] || group.label}
               <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
             </Link>
           ) : (group.items || []).length ? group.items.map((item) => (
               <Link key={item.to} to={withLanguage(item.to, language)} onClick={closeAll}>
-                {item.title}
+                {chrome.items[item.to]?.title || item.title}
                 <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
               </Link>
             )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}

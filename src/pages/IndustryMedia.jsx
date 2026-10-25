@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
+import usePageTitle from '../hooks/usePageTitle';
 import mediaImage from '../assets/industries/media-hero.jpg';
 import './IndustryPage.css';
 
@@ -13,6 +14,7 @@ import './IndustryPage.css';
 export default function IndustryMedia() {
   const { publicCopy } = useLanguage();
   const c = publicCopy.pages.industries.media;
+  usePageTitle(c.title);
 
   return (
     <main className="industry-page industry-page--media">

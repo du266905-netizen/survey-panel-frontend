@@ -20646,3 +20646,1906 @@ export const industryCopy = {
     }
   }
 };
+
+export const chromeCopy = {
+  "en-US": {
+    "groups": {
+      "about": "About us",
+      "solutions": "Solutions",
+      "industries": "Industries",
+      "participants": "Participants",
+      "support": "Support"
+    },
+    "items": {
+      "/business": {
+        "title": "Market research",
+        "note": "Studies for product, brand and market entry"
+      },
+      "/china-market-insights": {
+        "title": "China market insights",
+        "note": "Local context and expression"
+      },
+      "/how-it-works": {
+        "title": "How it works",
+        "note": "The panel, the standard, the process"
+      },
+      "/industries/automotive": {
+        "title": "Automotive",
+        "note": "Vehicles, dealers, buyers"
+      },
+      "/industries/travel": {
+        "title": "Travel & transportation",
+        "note": "Destinations, booking, stay"
+      },
+      "/industries/consumer": {
+        "title": "Retail & FMCG",
+        "note": "Category, pack, shelf"
+      },
+      "/industries/healthcare": {
+        "title": "Healthcare & life sciences",
+        "note": "Patients, clinicians, access"
+      },
+      "/industries/finance": {
+        "title": "Financial services & wealth",
+        "note": "Trust, pricing, retention"
+      },
+      "/industries/social": {
+        "title": "Social & education",
+        "note": "Access, delivery, evidence"
+      },
+      "/industries/industrial": {
+        "title": "Industrial & building products",
+        "note": "Dealers, specification, projects"
+      },
+      "/industries/tech": {
+        "title": "Technology & digital",
+        "note": "Roadmap, pricing, retention"
+      },
+      "/industries/media": {
+        "title": "Media & entertainment",
+        "note": "Audience, content, advertising"
+      },
+      "/industries/ecommerce": {
+        "title": "E-commerce & shopper",
+        "note": "Platform, listing, basket"
+      },
+      "/register": {
+        "title": "Join as a participant",
+        "note": "Take part in thoughtful, paid research"
+      },
+      "/partners": {
+        "title": "Available surveys",
+        "note": "Find a study that fits your profile"
+      },
+      "/rewards": {
+        "title": "Rewards",
+        "note": "Coins, gift cards and redemptions"
+      },
+      "/contact": {
+        "title": "Contact us",
+        "note": "Talk to the research team"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "A daily brief on the market"
+      },
+      "/privacy": {
+        "title": "Privacy",
+        "note": "How we handle your information"
+      },
+      "/terms": {
+        "title": "Terms",
+        "note": "Participation terms"
+      }
+    },
+    "header": {
+      "signIn": "Sign in",
+      "join": "Join us",
+      "workspace": "Workspace",
+      "contactSales": "Contact sales",
+      "helpCentre": "Help centre",
+      "menuOpen": "Open menu",
+      "menuClose": "Close menu"
+    }
+  },
+  "en-GB": {
+    "groups": {
+      "about": "About us",
+      "solutions": "Solutions",
+      "industries": "Industries",
+      "participants": "Participants",
+      "support": "Support"
+    },
+    "items": {
+      "/business": {
+        "title": "Market research",
+        "note": "Studies for product, brand and market entry"
+      },
+      "/china-market-insights": {
+        "title": "China market insights",
+        "note": "Local context and expression"
+      },
+      "/how-it-works": {
+        "title": "How it works",
+        "note": "The panel, the standard, the process"
+      },
+      "/industries/automotive": {
+        "title": "Automotive",
+        "note": "Vehicles, dealers, buyers"
+      },
+      "/industries/travel": {
+        "title": "Travel & transportation",
+        "note": "Destinations, booking, stay"
+      },
+      "/industries/consumer": {
+        "title": "Retail & FMCG",
+        "note": "Category, pack, shelf"
+      },
+      "/industries/healthcare": {
+        "title": "Healthcare & life sciences",
+        "note": "Patients, clinicians, access"
+      },
+      "/industries/finance": {
+        "title": "Financial services & wealth",
+        "note": "Trust, pricing, retention"
+      },
+      "/industries/social": {
+        "title": "Social & education",
+        "note": "Access, delivery, evidence"
+      },
+      "/industries/industrial": {
+        "title": "Industrial & building products",
+        "note": "Dealers, specification, projects"
+      },
+      "/industries/tech": {
+        "title": "Technology & digital",
+        "note": "Roadmap, pricing, retention"
+      },
+      "/industries/media": {
+        "title": "Media & entertainment",
+        "note": "Audience, content, advertising"
+      },
+      "/industries/ecommerce": {
+        "title": "E-commerce & shopper",
+        "note": "Platform, listing, basket"
+      },
+      "/register": {
+        "title": "Join as a participant",
+        "note": "Take part in thoughtful, paid research"
+      },
+      "/partners": {
+        "title": "Available surveys",
+        "note": "Find a study that fits your profile"
+      },
+      "/rewards": {
+        "title": "Rewards",
+        "note": "Coins, gift cards and redemptions"
+      },
+      "/contact": {
+        "title": "Contact us",
+        "note": "Talk to the research team"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "A daily brief on the market"
+      },
+      "/privacy": {
+        "title": "Privacy",
+        "note": "How we handle your information"
+      },
+      "/terms": {
+        "title": "Terms",
+        "note": "Participation terms"
+      }
+    },
+    "header": {
+      "signIn": "Sign in",
+      "join": "Join us",
+      "workspace": "Workspace",
+      "contactSales": "Contact sales",
+      "helpCentre": "Help centre",
+      "menuOpen": "Open menu",
+      "menuClose": "Close menu"
+    }
+  },
+  "en": {
+    "groups": {
+      "about": "About us",
+      "solutions": "Solutions",
+      "industries": "Industries",
+      "participants": "Participants",
+      "support": "Support"
+    },
+    "items": {
+      "/business": {
+        "title": "Market research",
+        "note": "Studies for product, brand and market entry"
+      },
+      "/china-market-insights": {
+        "title": "China market insights",
+        "note": "Local context and expression"
+      },
+      "/how-it-works": {
+        "title": "How it works",
+        "note": "The panel, the standard, the process"
+      },
+      "/industries/automotive": {
+        "title": "Automotive",
+        "note": "Vehicles, dealers, buyers"
+      },
+      "/industries/travel": {
+        "title": "Travel & transportation",
+        "note": "Destinations, booking, stay"
+      },
+      "/industries/consumer": {
+        "title": "Retail & FMCG",
+        "note": "Category, pack, shelf"
+      },
+      "/industries/healthcare": {
+        "title": "Healthcare & life sciences",
+        "note": "Patients, clinicians, access"
+      },
+      "/industries/finance": {
+        "title": "Financial services & wealth",
+        "note": "Trust, pricing, retention"
+      },
+      "/industries/social": {
+        "title": "Social & education",
+        "note": "Access, delivery, evidence"
+      },
+      "/industries/industrial": {
+        "title": "Industrial & building products",
+        "note": "Dealers, specification, projects"
+      },
+      "/industries/tech": {
+        "title": "Technology & digital",
+        "note": "Roadmap, pricing, retention"
+      },
+      "/industries/media": {
+        "title": "Media & entertainment",
+        "note": "Audience, content, advertising"
+      },
+      "/industries/ecommerce": {
+        "title": "E-commerce & shopper",
+        "note": "Platform, listing, basket"
+      },
+      "/register": {
+        "title": "Join as a participant",
+        "note": "Take part in thoughtful, paid research"
+      },
+      "/partners": {
+        "title": "Available surveys",
+        "note": "Find a study that fits your profile"
+      },
+      "/rewards": {
+        "title": "Rewards",
+        "note": "Coins, gift cards and redemptions"
+      },
+      "/contact": {
+        "title": "Contact us",
+        "note": "Talk to the research team"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "A daily brief on the market"
+      },
+      "/privacy": {
+        "title": "Privacy",
+        "note": "How we handle your information"
+      },
+      "/terms": {
+        "title": "Terms",
+        "note": "Participation terms"
+      }
+    },
+    "header": {
+      "signIn": "Sign in",
+      "join": "Join us",
+      "workspace": "Workspace",
+      "contactSales": "Contact sales",
+      "helpCentre": "Help centre",
+      "menuOpen": "Open menu",
+      "menuClose": "Close menu"
+    }
+  },
+  "zh-CN": {
+    "groups": {
+      "about": "关于我们",
+      "solutions": "解决方案",
+      "industries": "行业",
+      "participants": "参与者",
+      "support": "支持"
+    },
+    "items": {
+      "/business": {
+        "title": "市场研究",
+        "note": "针对产品、品牌与市场进入的研究"
+      },
+      "/china-market-insights": {
+        "title": "中国市场洞察",
+        "note": "本地语境与表达"
+      },
+      "/how-it-works": {
+        "title": "如何运作",
+        "note": "样本库、标准与流程"
+      },
+      "/industries/automotive": {
+        "title": "汽车与交通",
+        "note": "车型、经销商、购车者"
+      },
+      "/industries/travel": {
+        "title": "旅游与交通",
+        "note": "目的地、预订、停留"
+      },
+      "/industries/consumer": {
+        "title": "零售与快消品",
+        "note": "品类、包装、货架"
+      },
+      "/industries/healthcare": {
+        "title": "医疗健康与生命科学",
+        "note": "患者、医生、可及性"
+      },
+      "/industries/finance": {
+        "title": "金融与财富管理",
+        "note": "信任、定价、留存"
+      },
+      "/industries/social": {
+        "title": "社会与教育",
+        "note": "触达、执行、证据"
+      },
+      "/industries/industrial": {
+        "title": "工业与建材",
+        "note": "经销商、上图、项目"
+      },
+      "/industries/tech": {
+        "title": "科技与数字",
+        "note": "路线图、定价、留存"
+      },
+      "/industries/media": {
+        "title": "媒体与娱乐",
+        "note": "受众、内容、广告"
+      },
+      "/industries/ecommerce": {
+        "title": "电商与购物者",
+        "note": "平台、页面、购物篮"
+      },
+      "/register": {
+        "title": "以参与者身份加入",
+        "note": "参加有报酬的用心研究"
+      },
+      "/partners": {
+        "title": "可参与的问卷",
+        "note": "找到适合你资料的调研"
+      },
+      "/rewards": {
+        "title": "奖励",
+        "note": "Coins、礼品卡与兑换"
+      },
+      "/contact": {
+        "title": "联系我们",
+        "note": "与研究团队沟通"
+      },
+      "/news": {
+        "title": "资讯墙",
+        "note": "每日市场简报"
+      },
+      "/privacy": {
+        "title": "隐私",
+        "note": "我们如何处理你的信息"
+      },
+      "/terms": {
+        "title": "条款",
+        "note": "参与条款"
+      }
+    },
+    "header": {
+      "signIn": "登录",
+      "join": "加入我们",
+      "workspace": "工作区",
+      "contactSales": "联系销售",
+      "helpCentre": "帮助中心",
+      "menuOpen": "打开菜单",
+      "menuClose": "关闭菜单"
+    }
+  },
+  "zh-Hant": {
+    "groups": {
+      "about": "關於我們",
+      "solutions": "解決方案",
+      "industries": "行業",
+      "participants": "參與者",
+      "support": "支援"
+    },
+    "items": {
+      "/business": {
+        "title": "市場研究",
+        "note": "針對產品、品牌與市場進入的研究"
+      },
+      "/china-market-insights": {
+        "title": "中國市場洞察",
+        "note": "本地語境與表達"
+      },
+      "/how-it-works": {
+        "title": "如何運作",
+        "note": "樣本庫、標準與流程"
+      },
+      "/industries/automotive": {
+        "title": "汽車與交通",
+        "note": "車型、經銷商、購車者"
+      },
+      "/industries/travel": {
+        "title": "旅遊與交通",
+        "note": "目的地、預訂、停留"
+      },
+      "/industries/consumer": {
+        "title": "零售與快消品",
+        "note": "品類、包裝、貨架"
+      },
+      "/industries/healthcare": {
+        "title": "醫療健康與生命科學",
+        "note": "患者、醫師、可及性"
+      },
+      "/industries/finance": {
+        "title": "金融與財富管理",
+        "note": "信任、定價、留存"
+      },
+      "/industries/social": {
+        "title": "社會與教育",
+        "note": "觸達、執行、證據"
+      },
+      "/industries/industrial": {
+        "title": "工業與建材",
+        "note": "經銷商、圖說、專案"
+      },
+      "/industries/tech": {
+        "title": "科技與數位",
+        "note": "路線圖、定價、留存"
+      },
+      "/industries/media": {
+        "title": "媒體與娛樂",
+        "note": "受眾、內容、廣告"
+      },
+      "/industries/ecommerce": {
+        "title": "電商與購物者",
+        "note": "平台、頁面、購物籃"
+      },
+      "/register": {
+        "title": "以參與者身分加入",
+        "note": "參加有報酬的用心研究"
+      },
+      "/partners": {
+        "title": "可參與的問卷",
+        "note": "找到適合你資料的調研"
+      },
+      "/rewards": {
+        "title": "獎勵",
+        "note": "Coins、禮品卡與兌換"
+      },
+      "/contact": {
+        "title": "聯絡我們",
+        "note": "與研究團隊溝通"
+      },
+      "/news": {
+        "title": "資訊牆",
+        "note": "每日市場簡報"
+      },
+      "/privacy": {
+        "title": "隱私",
+        "note": "我們如何處理你的資訊"
+      },
+      "/terms": {
+        "title": "條款",
+        "note": "參與條款"
+      }
+    },
+    "header": {
+      "signIn": "登入",
+      "join": "加入我們",
+      "workspace": "工作區",
+      "contactSales": "聯絡業務",
+      "helpCentre": "幫助中心",
+      "menuOpen": "開啟選單",
+      "menuClose": "關閉選單"
+    }
+  },
+  "de": {
+    "groups": {
+      "about": "Über uns",
+      "solutions": "Lösungen",
+      "industries": "Branchen",
+      "participants": "Teilnehmende",
+      "support": "Support"
+    },
+    "items": {
+      "/business": {
+        "title": "Marktforschung",
+        "note": "Studien für Produkt, Marke und Markteintritt"
+      },
+      "/china-market-insights": {
+        "title": "China-Markteinblicke",
+        "note": "Lokaler Kontext und Ausdruck"
+      },
+      "/how-it-works": {
+        "title": "So funktioniert es",
+        "note": "Das Panel, der Standard, der Prozess"
+      },
+      "/industries/automotive": {
+        "title": "Automobil",
+        "note": "Fahrzeuge, Händler, Käufer"
+      },
+      "/industries/travel": {
+        "title": "Reisen und Verkehr",
+        "note": "Destinationen, Buchung, Aufenthalt"
+      },
+      "/industries/consumer": {
+        "title": "Einzelhandel und FMCG",
+        "note": "Kategorie, Verpackung, Regal"
+      },
+      "/industries/healthcare": {
+        "title": "Gesundheit und Life Sciences",
+        "note": "Patienten, Behandler, Zugang"
+      },
+      "/industries/finance": {
+        "title": "Finanzen und Vermögen",
+        "note": "Vertrauen, Preis, Bindung"
+      },
+      "/industries/social": {
+        "title": "Gesellschaft und Bildung",
+        "note": "Zugang, Umsetzung, Evidenz"
+      },
+      "/industries/industrial": {
+        "title": "Industrie und Baustoffe",
+        "note": "Händler, Ausschreibung, Projekte"
+      },
+      "/industries/tech": {
+        "title": "Technologie und Digital",
+        "note": "Roadmap, Preis, Bindung"
+      },
+      "/industries/media": {
+        "title": "Medien und Unterhaltung",
+        "note": "Publikum, Inhalt, Werbung"
+      },
+      "/industries/ecommerce": {
+        "title": "E-Commerce und Shopper",
+        "note": "Plattform, Listing, Warenkorb"
+      },
+      "/register": {
+        "title": "Als Teilnehmende mitmachen",
+        "note": "An sorgfältiger, bezahlter Forschung teilnehmen"
+      },
+      "/partners": {
+        "title": "Verfügbare Umfragen",
+        "note": "Eine Studie finden, die zu Ihrem Profil passt"
+      },
+      "/rewards": {
+        "title": "Prämien",
+        "note": "Coins, Geschenkkarten und Einlösungen"
+      },
+      "/contact": {
+        "title": "Kontakt",
+        "note": "Mit dem Forschungsteam sprechen"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Ein täglicher Marktüberblick"
+      },
+      "/privacy": {
+        "title": "Datenschutz",
+        "note": "Wie wir mit Ihren Daten umgehen"
+      },
+      "/terms": {
+        "title": "Bedingungen",
+        "note": "Teilnahmebedingungen"
+      }
+    },
+    "header": {
+      "signIn": "Anmelden",
+      "join": "Mitmachen",
+      "workspace": "Arbeitsbereich",
+      "contactSales": "Vertrieb kontaktieren",
+      "helpCentre": "Hilfe",
+      "menuOpen": "Menü öffnen",
+      "menuClose": "Menü schließen"
+    }
+  },
+  "fr": {
+    "groups": {
+      "about": "À propos",
+      "solutions": "Solutions",
+      "industries": "Secteurs",
+      "participants": "Participants",
+      "support": "Support"
+    },
+    "items": {
+      "/business": {
+        "title": "Études de marché",
+        "note": "Études pour produit, marque et entrée de marché"
+      },
+      "/china-market-insights": {
+        "title": "Insights marché Chine",
+        "note": "Contexte et expression locaux"
+      },
+      "/how-it-works": {
+        "title": "Comment ça marche",
+        "note": "Le panel, le standard, le processus"
+      },
+      "/industries/automotive": {
+        "title": "Automobile",
+        "note": "Véhicules, concessionnaires, acheteurs"
+      },
+      "/industries/travel": {
+        "title": "Voyage et transport",
+        "note": "Destinations, réservation, séjour"
+      },
+      "/industries/consumer": {
+        "title": "Distribution et FMCG",
+        "note": "Catégorie, pack, rayon"
+      },
+      "/industries/healthcare": {
+        "title": "Santé et sciences de la vie",
+        "note": "Patients, cliniciens, accès"
+      },
+      "/industries/finance": {
+        "title": "Services financiers et patrimoine",
+        "note": "Confiance, prix, fidélisation"
+      },
+      "/industries/social": {
+        "title": "Société et éducation",
+        "note": "Accès, mise en œuvre, preuves"
+      },
+      "/industries/industrial": {
+        "title": "Industrie et construction",
+        "note": "Distributeurs, prescription, projets"
+      },
+      "/industries/tech": {
+        "title": "Technologie et digital",
+        "note": "Roadmap, prix, fidélisation"
+      },
+      "/industries/media": {
+        "title": "Médias et divertissement",
+        "note": "Public, contenus, publicité"
+      },
+      "/industries/ecommerce": {
+        "title": "E-commerce et shopper",
+        "note": "Plateforme, annonce, panier"
+      },
+      "/register": {
+        "title": "Rejoindre comme participant",
+        "note": "Participer à des études réfléchies et rémunérées"
+      },
+      "/partners": {
+        "title": "Enquêtes disponibles",
+        "note": "Trouver une étude adaptée à votre profil"
+      },
+      "/rewards": {
+        "title": "Récompenses",
+        "note": "Coins, cartes cadeaux et échanges"
+      },
+      "/contact": {
+        "title": "Nous contacter",
+        "note": "Parler à l'équipe de recherche"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Un point quotidien sur le marché"
+      },
+      "/privacy": {
+        "title": "Confidentialité",
+        "note": "Comment nous traitons vos informations"
+      },
+      "/terms": {
+        "title": "Conditions",
+        "note": "Conditions de participation"
+      }
+    },
+    "header": {
+      "signIn": "Se connecter",
+      "join": "Nous rejoindre",
+      "workspace": "Espace de travail",
+      "contactSales": "Contacter les ventes",
+      "helpCentre": "Centre d'aide",
+      "menuOpen": "Ouvrir le menu",
+      "menuClose": "Fermer le menu"
+    }
+  },
+  "nl": {
+    "groups": {
+      "about": "Over ons",
+      "solutions": "Oplossingen",
+      "industries": "Sectoren",
+      "participants": "Deelnemers",
+      "support": "Support"
+    },
+    "items": {
+      "/business": {
+        "title": "Marktonderzoek",
+        "note": "Studies voor product, merk en marktbetreding"
+      },
+      "/china-market-insights": {
+        "title": "China-marktinzichten",
+        "note": "Lokale context en expressie"
+      },
+      "/how-it-works": {
+        "title": "Hoe het werkt",
+        "note": "Het panel, de standaard, het proces"
+      },
+      "/industries/automotive": {
+        "title": "Automotive",
+        "note": "Voertuigen, dealers, kopers"
+      },
+      "/industries/travel": {
+        "title": "Reizen en vervoer",
+        "note": "Bestemmingen, boeking, verblijf"
+      },
+      "/industries/consumer": {
+        "title": "Retail en FMCG",
+        "note": "Categorie, verpakking, schap"
+      },
+      "/industries/healthcare": {
+        "title": "Zorg en life sciences",
+        "note": "Patiënten, clinici, toegang"
+      },
+      "/industries/finance": {
+        "title": "Financiële diensten en vermogen",
+        "note": "Vertrouwen, prijs, behoud"
+      },
+      "/industries/social": {
+        "title": "Maatschappij en onderwijs",
+        "note": "Toegang, uitvoering, bewijs"
+      },
+      "/industries/industrial": {
+        "title": "Industrie en bouwproducten",
+        "note": "Dealers, specificatie, projecten"
+      },
+      "/industries/tech": {
+        "title": "Technologie en digitaal",
+        "note": "Roadmap, prijs, behoud"
+      },
+      "/industries/media": {
+        "title": "Media en entertainment",
+        "note": "Publiek, inhoud, reclame"
+      },
+      "/industries/ecommerce": {
+        "title": "E-commerce en shopper",
+        "note": "Platform, listing, mand"
+      },
+      "/register": {
+        "title": "Deelnemen als deelnemer",
+        "note": "Meedoen aan zorgvuldig, betaald onderzoek"
+      },
+      "/partners": {
+        "title": "Beschikbare enquêtes",
+        "note": "Een studie vinden die bij uw profiel past"
+      },
+      "/rewards": {
+        "title": "Beloningen",
+        "note": "Coins, cadeaubonnen en inwisselingen"
+      },
+      "/contact": {
+        "title": "Contact",
+        "note": "Praat met het onderzoeksteam"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Een dagelijks marktoverzicht"
+      },
+      "/privacy": {
+        "title": "Privacy",
+        "note": "Hoe we met uw gegevens omgaan"
+      },
+      "/terms": {
+        "title": "Voorwaarden",
+        "note": "Deelnamevoorwaarden"
+      }
+    },
+    "header": {
+      "signIn": "Inloggen",
+      "join": "Doe mee",
+      "workspace": "Werkruimte",
+      "contactSales": "Contact sales",
+      "helpCentre": "Helpcentrum",
+      "menuOpen": "Menu openen",
+      "menuClose": "Menu sluiten"
+    }
+  },
+  "da": {
+    "groups": {
+      "about": "Om os",
+      "solutions": "Løsninger",
+      "industries": "Brancher",
+      "participants": "Deltagere",
+      "support": "Support"
+    },
+    "items": {
+      "/business": {
+        "title": "Markedsundersøgelser",
+        "note": "Studier til produkt, brand og markedsindgang"
+      },
+      "/china-market-insights": {
+        "title": "Kina-markedsindsigt",
+        "note": "Lokal kontekst og udtryk"
+      },
+      "/how-it-works": {
+        "title": "Sådan virker det",
+        "note": "Panelet, standarden, processen"
+      },
+      "/industries/automotive": {
+        "title": "Biler og køretøjer",
+        "note": "Køretøjer, forhandlere, købere"
+      },
+      "/industries/travel": {
+        "title": "Rejser og transport",
+        "note": "Destinationer, booking, ophold"
+      },
+      "/industries/consumer": {
+        "title": "Detail og FMCG",
+        "note": "Kategori, pakke, hylde"
+      },
+      "/industries/healthcare": {
+        "title": "Sundhed og life science",
+        "note": "Patienter, klinikere, adgang"
+      },
+      "/industries/finance": {
+        "title": "Finans og formue",
+        "note": "Tillid, pris, fastholdelse"
+      },
+      "/industries/social": {
+        "title": "Samfund og uddannelse",
+        "note": "Adgang, udførelse, evidens"
+      },
+      "/industries/industrial": {
+        "title": "Industri og byggematerialer",
+        "note": "Forhandlere, specifikation, projekter"
+      },
+      "/industries/tech": {
+        "title": "Teknologi og digital",
+        "note": "Roadmap, pris, fastholdelse"
+      },
+      "/industries/media": {
+        "title": "Medier og underholdning",
+        "note": "Publikum, indhold, annoncering"
+      },
+      "/industries/ecommerce": {
+        "title": "E-handel og shopper",
+        "note": "Platform, annonce, kurv"
+      },
+      "/register": {
+        "title": "Bliv deltager",
+        "note": "Deltag i gennemtænkt, betalt research"
+      },
+      "/partners": {
+        "title": "Ledige undersøgelser",
+        "note": "Find en undersøgelse, der passer til din profil"
+      },
+      "/rewards": {
+        "title": "Belønninger",
+        "note": "Coins, gavekort og indløsninger"
+      },
+      "/contact": {
+        "title": "Kontakt os",
+        "note": "Tal med researchteamet"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "En daglig markedsorientering"
+      },
+      "/privacy": {
+        "title": "Privatliv",
+        "note": "Hvordan vi håndterer dine oplysninger"
+      },
+      "/terms": {
+        "title": "Vilkår",
+        "note": "Deltagelsesvilkår"
+      }
+    },
+    "header": {
+      "signIn": "Log ind",
+      "join": "Vær med",
+      "workspace": "Arbejdsområde",
+      "contactSales": "Kontakt salg",
+      "helpCentre": "Hjælpecenter",
+      "menuOpen": "Åbn menu",
+      "menuClose": "Luk menu"
+    }
+  },
+  "es": {
+    "groups": {
+      "about": "Sobre nosotros",
+      "solutions": "Soluciones",
+      "industries": "Sectores",
+      "participants": "Participantes",
+      "support": "Soporte"
+    },
+    "items": {
+      "/business": {
+        "title": "Investigación de mercados",
+        "note": "Estudios para producto, marca y entrada al mercado"
+      },
+      "/china-market-insights": {
+        "title": "Insights del mercado chino",
+        "note": "Contexto y expresión locales"
+      },
+      "/how-it-works": {
+        "title": "Cómo funciona",
+        "note": "El panel, el estándar, el proceso"
+      },
+      "/industries/automotive": {
+        "title": "Automoción",
+        "note": "Vehículos, concesionarios, compradores"
+      },
+      "/industries/travel": {
+        "title": "Viajes y transporte",
+        "note": "Destinos, reserva, estancia"
+      },
+      "/industries/consumer": {
+        "title": "Retail y gran consumo",
+        "note": "Categoría, envase, lineal"
+      },
+      "/industries/healthcare": {
+        "title": "Salud y ciencias de la vida",
+        "note": "Pacientes, clínicos, acceso"
+      },
+      "/industries/finance": {
+        "title": "Servicios financieros y patrimonio",
+        "note": "Confianza, precio, retención"
+      },
+      "/industries/social": {
+        "title": "Sociedad y educación",
+        "note": "Acceso, ejecución, evidencia"
+      },
+      "/industries/industrial": {
+        "title": "Industria y construcción",
+        "note": "Distribuidores, especificación, proyectos"
+      },
+      "/industries/tech": {
+        "title": "Tecnología y digital",
+        "note": "Hoja de ruta, precio, retención"
+      },
+      "/industries/media": {
+        "title": "Medios y entretenimiento",
+        "note": "Audiencia, contenido, publicidad"
+      },
+      "/industries/ecommerce": {
+        "title": "Comercio electrónico y comprador",
+        "note": "Plataforma, anuncio, cesta"
+      },
+      "/register": {
+        "title": "Únete como participante",
+        "note": "Participa en investigación cuidada y remunerada"
+      },
+      "/partners": {
+        "title": "Encuestas disponibles",
+        "note": "Encuentra un estudio que encaje con tu perfil"
+      },
+      "/rewards": {
+        "title": "Recompensas",
+        "note": "Coins, tarjetas regalo y canjes"
+      },
+      "/contact": {
+        "title": "Contáctanos",
+        "note": "Habla con el equipo de investigación"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Un resumen diario del mercado"
+      },
+      "/privacy": {
+        "title": "Privacidad",
+        "note": "Cómo tratamos tu información"
+      },
+      "/terms": {
+        "title": "Términos",
+        "note": "Condiciones de participación"
+      }
+    },
+    "header": {
+      "signIn": "Iniciar sesión",
+      "join": "Únete",
+      "workspace": "Espacio de trabajo",
+      "contactSales": "Contactar con ventas",
+      "helpCentre": "Centro de ayuda",
+      "menuOpen": "Abrir menú",
+      "menuClose": "Cerrar menú"
+    }
+  },
+  "fi": {
+    "groups": {
+      "about": "Tietoa meistä",
+      "solutions": "Ratkaisut",
+      "industries": "Toimialat",
+      "participants": "Osallistujat",
+      "support": "Tuki"
+    },
+    "items": {
+      "/business": {
+        "title": "Markkinatutkimus",
+        "note": "Tutkimukset tuotteelle, brändille ja markkinoille tulolle"
+      },
+      "/china-market-insights": {
+        "title": "Kiinan markkinanäkemykset",
+        "note": "Paikallinen konteksti ja ilmaisu"
+      },
+      "/how-it-works": {
+        "title": "Näin se toimii",
+        "note": "Paneeli, standardi, prosessi"
+      },
+      "/industries/automotive": {
+        "title": "Autoala",
+        "note": "Ajoneuvot, jälleenmyyjät, ostajat"
+      },
+      "/industries/travel": {
+        "title": "Matkailu ja liikenne",
+        "note": "Kohteet, varaus, oleskelu"
+      },
+      "/industries/consumer": {
+        "title": "Vähittäiskauppa ja FMCG",
+        "note": "Kategoria, pakkaus, hylly"
+      },
+      "/industries/healthcare": {
+        "title": "Terveys ja life sciences",
+        "note": "Potilaat, kliinikot, pääsy"
+      },
+      "/industries/finance": {
+        "title": "Rahoitus ja varallisuus",
+        "note": "Luottamus, hinta, pysyvyys"
+      },
+      "/industries/social": {
+        "title": "Yhteiskunta ja koulutus",
+        "note": "Pääsy, toteutus, näyttö"
+      },
+      "/industries/industrial": {
+        "title": "Teollisuus ja rakennustuotteet",
+        "note": "Jälleenmyyjät, spesifikaatio, hankkeet"
+      },
+      "/industries/tech": {
+        "title": "Teknologia ja digitaalinen",
+        "note": "Tiekartta, hinta, pysyvyys"
+      },
+      "/industries/media": {
+        "title": "Media ja viihde",
+        "note": "Yleisö, sisältö, mainonta"
+      },
+      "/industries/ecommerce": {
+        "title": "Verkkokauppa ja ostaja",
+        "note": "Alusta, ilmoitus, kori"
+      },
+      "/register": {
+        "title": "Liity osallistujaksi",
+        "note": "Osallistu harkittuun, palkittuun tutkimukseen"
+      },
+      "/partners": {
+        "title": "Avoimet kyselyt",
+        "note": "Löydä profiilillesi sopiva tutkimus"
+      },
+      "/rewards": {
+        "title": "Palkinnot",
+        "note": "Coins, lahjakortit ja lunastukset"
+      },
+      "/contact": {
+        "title": "Ota yhteyttä",
+        "note": "Keskustele tutkimustiimin kanssa"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Päivittäinen markkinakatsaus"
+      },
+      "/privacy": {
+        "title": "Tietosuoja",
+        "note": "Miten käsittelemme tietojasi"
+      },
+      "/terms": {
+        "title": "Ehdot",
+        "note": "Osallistumisehdot"
+      }
+    },
+    "header": {
+      "signIn": "Kirjaudu",
+      "join": "Liity",
+      "workspace": "Työtila",
+      "contactSales": "Myynti",
+      "helpCentre": "Ohjekeskus",
+      "menuOpen": "Avaa valikko",
+      "menuClose": "Sulje valikko"
+    }
+  },
+  "it": {
+    "groups": {
+      "about": "Chi siamo",
+      "solutions": "Soluzioni",
+      "industries": "Settori",
+      "participants": "Partecipanti",
+      "support": "Supporto"
+    },
+    "items": {
+      "/business": {
+        "title": "Ricerche di mercato",
+        "note": "Studi per prodotto, marca e ingresso nel mercato"
+      },
+      "/china-market-insights": {
+        "title": "Insight sul mercato cinese",
+        "note": "Contesto ed espressione locali"
+      },
+      "/how-it-works": {
+        "title": "Come funziona",
+        "note": "Il panel, lo standard, il processo"
+      },
+      "/industries/automotive": {
+        "title": "Automotive",
+        "note": "Veicoli, concessionari, acquirenti"
+      },
+      "/industries/travel": {
+        "title": "Viaggi e trasporti",
+        "note": "Destinazioni, prenotazione, soggiorno"
+      },
+      "/industries/consumer": {
+        "title": "Retail e largo consumo",
+        "note": "Categoria, pack, scaffale"
+      },
+      "/industries/healthcare": {
+        "title": "Sanità e scienze della vita",
+        "note": "Pazienti, clinici, accesso"
+      },
+      "/industries/finance": {
+        "title": "Servizi finanziari e patrimonio",
+        "note": "Fiducia, prezzo, retention"
+      },
+      "/industries/social": {
+        "title": "Società e istruzione",
+        "note": "Accesso, erogazione, evidenza"
+      },
+      "/industries/industrial": {
+        "title": "Industria e costruzioni",
+        "note": "Distributori, specifica, progetti"
+      },
+      "/industries/tech": {
+        "title": "Tecnologia e digitale",
+        "note": "Roadmap, prezzo, retention"
+      },
+      "/industries/media": {
+        "title": "Media e intrattenimento",
+        "note": "Pubblico, contenuti, pubblicità"
+      },
+      "/industries/ecommerce": {
+        "title": "E-commerce e shopper",
+        "note": "Piattaforma, annuncio, carrello"
+      },
+      "/register": {
+        "title": "Unisciti come partecipante",
+        "note": "Partecipa a ricerche curate e retribuite"
+      },
+      "/partners": {
+        "title": "Indagini disponibili",
+        "note": "Trova uno studio adatto al tuo profilo"
+      },
+      "/rewards": {
+        "title": "Premi",
+        "note": "Coins, carte regalo e riscatti"
+      },
+      "/contact": {
+        "title": "Contattaci",
+        "note": "Parla con il team di ricerca"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Una sintesi quotidiana del mercato"
+      },
+      "/privacy": {
+        "title": "Privacy",
+        "note": "Come trattiamo le tue informazioni"
+      },
+      "/terms": {
+        "title": "Termini",
+        "note": "Condizioni di partecipazione"
+      }
+    },
+    "header": {
+      "signIn": "Accedi",
+      "join": "Unisciti",
+      "workspace": "Area di lavoro",
+      "contactSales": "Contatta le vendite",
+      "helpCentre": "Centro assistenza",
+      "menuOpen": "Apri menu",
+      "menuClose": "Chiudi menu"
+    }
+  },
+  "ja": {
+    "groups": {
+      "about": "会社概要",
+      "solutions": "ソリューション",
+      "industries": "業界",
+      "participants": "参加者",
+      "support": "サポート"
+    },
+    "items": {
+      "/business": {
+        "title": "市場調査",
+        "note": "製品・ブランド・市場参入のための調査"
+      },
+      "/china-market-insights": {
+        "title": "中国市場インサイト",
+        "note": "現地の文脈と表現"
+      },
+      "/how-it-works": {
+        "title": "仕組み",
+        "note": "パネル、基準、プロセス"
+      },
+      "/industries/automotive": {
+        "title": "自動車",
+        "note": "車両、販売店、購入者"
+      },
+      "/industries/travel": {
+        "title": "旅行と交通",
+        "note": "旅行先、予約、滞在"
+      },
+      "/industries/consumer": {
+        "title": "小売と日用品",
+        "note": "カテゴリー、パッケージ、棚"
+      },
+      "/industries/healthcare": {
+        "title": "医療とライフサイエンス",
+        "note": "患者、臨床医、アクセス"
+      },
+      "/industries/finance": {
+        "title": "金融と資産管理",
+        "note": "信頼、価格、維持"
+      },
+      "/industries/social": {
+        "title": "社会と教育",
+        "note": "アクセス、実施、エビデンス"
+      },
+      "/industries/industrial": {
+        "title": "産業と建材",
+        "note": "販売店、仕様、プロジェクト"
+      },
+      "/industries/tech": {
+        "title": "テクノロジーとデジタル",
+        "note": "ロードマップ、価格、維持"
+      },
+      "/industries/media": {
+        "title": "メディアとエンタメ",
+        "note": "観客、コンテンツ、広告"
+      },
+      "/industries/ecommerce": {
+        "title": "ECとショッパー",
+        "note": "プラットフォーム、出品、カート"
+      },
+      "/register": {
+        "title": "参加者として登録",
+        "note": "丁寧で報酬のある研究に参加"
+      },
+      "/partners": {
+        "title": "参加できる調査",
+        "note": "プロフィールに合う調査を探す"
+      },
+      "/rewards": {
+        "title": "報酬",
+        "note": "Coins、ギフトカード、交換"
+      },
+      "/contact": {
+        "title": "お問い合わせ",
+        "note": "研究チームに相談"
+      },
+      "/news": {
+        "title": "ニュースウォール",
+        "note": "毎日の市場ブリーフ"
+      },
+      "/privacy": {
+        "title": "プライバシー",
+        "note": "情報の取り扱い"
+      },
+      "/terms": {
+        "title": "規約",
+        "note": "参加規約"
+      }
+    },
+    "header": {
+      "signIn": "ログイン",
+      "join": "参加する",
+      "workspace": "ワークスペース",
+      "contactSales": "営業に問い合わせ",
+      "helpCentre": "ヘルプセンター",
+      "menuOpen": "メニューを開く",
+      "menuClose": "メニューを閉じる"
+    }
+  },
+  "ko": {
+    "groups": {
+      "about": "회사 소개",
+      "solutions": "솔루션",
+      "industries": "산업",
+      "participants": "참여자",
+      "support": "지원"
+    },
+    "items": {
+      "/business": {
+        "title": "시장조사",
+        "note": "제품·브랜드·시장 진입을 위한 조사"
+      },
+      "/china-market-insights": {
+        "title": "중국 시장 인사이트",
+        "note": "현지 맥락과 표현"
+      },
+      "/how-it-works": {
+        "title": "이용 방법",
+        "note": "패널, 기준, 절차"
+      },
+      "/industries/automotive": {
+        "title": "자동차",
+        "note": "차량, 대리점, 구매자"
+      },
+      "/industries/travel": {
+        "title": "여행과 교통",
+        "note": "여행지, 예약, 체류"
+      },
+      "/industries/consumer": {
+        "title": "유통과 생활용품",
+        "note": "카테고리, 패키지, 매대"
+      },
+      "/industries/healthcare": {
+        "title": "의료와 라이프사이언스",
+        "note": "환자, 임상의, 접근"
+      },
+      "/industries/finance": {
+        "title": "금융과 자산관리",
+        "note": "신뢰, 가격, 유지"
+      },
+      "/industries/social": {
+        "title": "사회와 교육",
+        "note": "접근, 실행, 근거"
+      },
+      "/industries/industrial": {
+        "title": "산업과 건축자재",
+        "note": "대리점, 사양, 프로젝트"
+      },
+      "/industries/tech": {
+        "title": "기술과 디지털",
+        "note": "로드맵, 가격, 유지"
+      },
+      "/industries/media": {
+        "title": "미디어와 엔터테인먼트",
+        "note": "관객, 콘텐츠, 광고"
+      },
+      "/industries/ecommerce": {
+        "title": "이커머스와 쇼퍼",
+        "note": "플랫폼, 상품 페이지, 장바구니"
+      },
+      "/register": {
+        "title": "참여자로 가입",
+        "note": "정성스럽고 보상이 있는 연구에 참여"
+      },
+      "/partners": {
+        "title": "참여 가능한 설문",
+        "note": "프로필에 맞는 연구 찾기"
+      },
+      "/rewards": {
+        "title": "보상",
+        "note": "Coins, 기프트카드, 교환"
+      },
+      "/contact": {
+        "title": "문의하기",
+        "note": "조사팀과 상담"
+      },
+      "/news": {
+        "title": "뉴스월",
+        "note": "매일의 시장 브리핑"
+      },
+      "/privacy": {
+        "title": "개인정보",
+        "note": "정보 처리 방식"
+      },
+      "/terms": {
+        "title": "약관",
+        "note": "참여 약관"
+      }
+    },
+    "header": {
+      "signIn": "로그인",
+      "join": "참여하기",
+      "workspace": "워크스페이스",
+      "contactSales": "영업 문의",
+      "helpCentre": "도움말 센터",
+      "menuOpen": "메뉴 열기",
+      "menuClose": "메뉴 닫기"
+    }
+  },
+  "no": {
+    "groups": {
+      "about": "Om oss",
+      "solutions": "Løsninger",
+      "industries": "Bransjer",
+      "participants": "Deltakere",
+      "support": "Støtte"
+    },
+    "items": {
+      "/business": {
+        "title": "Markedsundersøkelser",
+        "note": "Studier for produkt, merke og markedsinngang"
+      },
+      "/china-market-insights": {
+        "title": "Kina-markedsinnsikt",
+        "note": "Lokal kontekst og uttrykk"
+      },
+      "/how-it-works": {
+        "title": "Slik fungerer det",
+        "note": "Panelet, standarden, prosessen"
+      },
+      "/industries/automotive": {
+        "title": "Biler og kjøretøy",
+        "note": "Kjøretøy, forhandlere, kjøpere"
+      },
+      "/industries/travel": {
+        "title": "Reiser og transport",
+        "note": "Destinasjoner, booking, opphold"
+      },
+      "/industries/consumer": {
+        "title": "Handel og dagligvarer",
+        "note": "Kategori, emballasje, hylle"
+      },
+      "/industries/healthcare": {
+        "title": "Helse og life science",
+        "note": "Pasienter, klinikere, tilgang"
+      },
+      "/industries/finance": {
+        "title": "Finans og formue",
+        "note": "Tillit, pris, bevaring"
+      },
+      "/industries/social": {
+        "title": "Samfunn og utdanning",
+        "note": "Tilgang, gjennomføring, evidens"
+      },
+      "/industries/industrial": {
+        "title": "Industri og byggevarer",
+        "note": "Forhandlere, spesifikasjon, prosjekter"
+      },
+      "/industries/tech": {
+        "title": "Teknologi og digital",
+        "note": "Veikart, pris, bevaring"
+      },
+      "/industries/media": {
+        "title": "Medier og underholdning",
+        "note": "Publikum, innhold, annonsering"
+      },
+      "/industries/ecommerce": {
+        "title": "E-handel og shopper",
+        "note": "Plattform, annonse, kurv"
+      },
+      "/register": {
+        "title": "Bli deltaker",
+        "note": "Delta i gjennomtenkt, betalt forskning"
+      },
+      "/partners": {
+        "title": "Ledige undersøkelser",
+        "note": "Finn en studie som passer profilen din"
+      },
+      "/rewards": {
+        "title": "Belønninger",
+        "note": "Coins, gavekort og innløsninger"
+      },
+      "/contact": {
+        "title": "Kontakt oss",
+        "note": "Snakk med forskerteamet"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "En daglig markedsorientering"
+      },
+      "/privacy": {
+        "title": "Personvern",
+        "note": "Hvordan vi håndterer informasjonen din"
+      },
+      "/terms": {
+        "title": "Vilkår",
+        "note": "Deltakervilkår"
+      }
+    },
+    "header": {
+      "signIn": "Logg inn",
+      "join": "Bli med",
+      "workspace": "Arbeidsområde",
+      "contactSales": "Kontakt salg",
+      "helpCentre": "Hjelpesenter",
+      "menuOpen": "Åpne meny",
+      "menuClose": "Lukk meny"
+    }
+  },
+  "pt": {
+    "groups": {
+      "about": "Sobre nós",
+      "solutions": "Soluções",
+      "industries": "Setores",
+      "participants": "Participantes",
+      "support": "Suporte"
+    },
+    "items": {
+      "/business": {
+        "title": "Estudos de mercado",
+        "note": "Estudos para produto, marca e entrada no mercado"
+      },
+      "/china-market-insights": {
+        "title": "Insights do mercado chinês",
+        "note": "Contexto e expressão locais"
+      },
+      "/how-it-works": {
+        "title": "Como funciona",
+        "note": "O painel, a norma, o processo"
+      },
+      "/industries/automotive": {
+        "title": "Automóvel",
+        "note": "Veículos, concessionários, compradores"
+      },
+      "/industries/travel": {
+        "title": "Viagens e transporte",
+        "note": "Destinos, reserva, estadia"
+      },
+      "/industries/consumer": {
+        "title": "Retalho e grande consumo",
+        "note": "Categoria, embalagem, prateleira"
+      },
+      "/industries/healthcare": {
+        "title": "Saúde e ciências da vida",
+        "note": "Doentes, clínicos, acesso"
+      },
+      "/industries/finance": {
+        "title": "Serviços financeiros e património",
+        "note": "Confiança, preço, retenção"
+      },
+      "/industries/social": {
+        "title": "Sociedade e educação",
+        "note": "Acesso, execução, evidência"
+      },
+      "/industries/industrial": {
+        "title": "Indústria e construção",
+        "note": "Distribuidores, especificação, projetos"
+      },
+      "/industries/tech": {
+        "title": "Tecnologia e digital",
+        "note": "Roteiro, preço, retenção"
+      },
+      "/industries/media": {
+        "title": "Media e entretenimento",
+        "note": "Público, conteúdo, publicidade"
+      },
+      "/industries/ecommerce": {
+        "title": "Comércio eletrónico e comprador",
+        "note": "Plataforma, anúncio, carrinho"
+      },
+      "/register": {
+        "title": "Junte-se como participante",
+        "note": "Participe em investigação cuidada e remunerada"
+      },
+      "/partners": {
+        "title": "Inquéritos disponíveis",
+        "note": "Encontre um estudo adequado ao seu perfil"
+      },
+      "/rewards": {
+        "title": "Recompensas",
+        "note": "Coins, cartões-presente e resgates"
+      },
+      "/contact": {
+        "title": "Contacte-nos",
+        "note": "Fale com a equipa de investigação"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Uma síntese diária do mercado"
+      },
+      "/privacy": {
+        "title": "Privacidade",
+        "note": "Como tratamos as suas informações"
+      },
+      "/terms": {
+        "title": "Termos",
+        "note": "Condições de participação"
+      }
+    },
+    "header": {
+      "signIn": "Iniciar sessão",
+      "join": "Junte-se",
+      "workspace": "Espaço de trabalho",
+      "contactSales": "Contactar vendas",
+      "helpCentre": "Centro de ajuda",
+      "menuOpen": "Abrir menu",
+      "menuClose": "Fechar menu"
+    }
+  },
+  "ru": {
+    "groups": {
+      "about": "О нас",
+      "solutions": "Решения",
+      "industries": "Отрасли",
+      "participants": "Участники",
+      "support": "Поддержка"
+    },
+    "items": {
+      "/business": {
+        "title": "Маркетинговые исследования",
+        "note": "Исследования для продукта, бренда и выхода на рынок"
+      },
+      "/china-market-insights": {
+        "title": "Инсайты рынка Китая",
+        "note": "Локальный контекст и выражение"
+      },
+      "/how-it-works": {
+        "title": "Как это работает",
+        "note": "Панель, стандарт, процесс"
+      },
+      "/industries/automotive": {
+        "title": "Автомобили",
+        "note": "Автомобили, дилеры, покупатели"
+      },
+      "/industries/travel": {
+        "title": "Путешествия и транспорт",
+        "note": "Направления, бронирование, проживание"
+      },
+      "/industries/consumer": {
+        "title": "Розница и FMCG",
+        "note": "Категория, упаковка, полка"
+      },
+      "/industries/healthcare": {
+        "title": "Здравоохранение и науки о жизни",
+        "note": "Пациенты, врачи, доступ"
+      },
+      "/industries/finance": {
+        "title": "Финансы и капитал",
+        "note": "Доверие, цена, удержание"
+      },
+      "/industries/social": {
+        "title": "Общество и образование",
+        "note": "Доступ, исполнение, доказательства"
+      },
+      "/industries/industrial": {
+        "title": "Промышленность и стройматериалы",
+        "note": "Дилеры, спецификация, проекты"
+      },
+      "/industries/tech": {
+        "title": "Технологии и цифровые продукты",
+        "note": "Роадмап, цена, удержание"
+      },
+      "/industries/media": {
+        "title": "Медиа и развлечения",
+        "note": "Аудитория, контент, реклама"
+      },
+      "/industries/ecommerce": {
+        "title": "Электронная коммерция",
+        "note": "Платформа, карточка, корзина"
+      },
+      "/register": {
+        "title": "Стать участником",
+        "note": "Участвовать в продуманных оплачиваемых исследованиях"
+      },
+      "/partners": {
+        "title": "Доступные опросы",
+        "note": "Найти исследование под ваш профиль"
+      },
+      "/rewards": {
+        "title": "Вознаграждения",
+        "note": "Coins, подарочные карты и обмен"
+      },
+      "/contact": {
+        "title": "Связаться",
+        "note": "Поговорить с исследовательской командой"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Ежедневный обзор рынка"
+      },
+      "/privacy": {
+        "title": "Конфиденциальность",
+        "note": "Как мы обращаемся с вашими данными"
+      },
+      "/terms": {
+        "title": "Условия",
+        "note": "Условия участия"
+      }
+    },
+    "header": {
+      "signIn": "Войти",
+      "join": "Присоединиться",
+      "workspace": "Рабочее пространство",
+      "contactSales": "Связаться с продажами",
+      "helpCentre": "Справочный центр",
+      "menuOpen": "Открыть меню",
+      "menuClose": "Закрыть меню"
+    }
+  },
+  "sv": {
+    "groups": {
+      "about": "Om oss",
+      "solutions": "Lösningar",
+      "industries": "Branscher",
+      "participants": "Deltagare",
+      "support": "Support"
+    },
+    "items": {
+      "/business": {
+        "title": "Marknadsundersökningar",
+        "note": "Studier för produkt, varumärke och marknadsinträde"
+      },
+      "/china-market-insights": {
+        "title": "Kina-marknadsinsikter",
+        "note": "Lokal kontext och uttryck"
+      },
+      "/how-it-works": {
+        "title": "Så fungerar det",
+        "note": "Panelen, standarden, processen"
+      },
+      "/industries/automotive": {
+        "title": "Bilar",
+        "note": "Fordon, handlare, köpare"
+      },
+      "/industries/travel": {
+        "title": "Resor och transport",
+        "note": "Destinationer, bokning, vistelse"
+      },
+      "/industries/consumer": {
+        "title": "Handel och dagligvaror",
+        "note": "Kategori, förpackning, hylla"
+      },
+      "/industries/healthcare": {
+        "title": "Hälsa och life science",
+        "note": "Patienter, kliniker, tillgång"
+      },
+      "/industries/finance": {
+        "title": "Finans och förmögenhet",
+        "note": "Förtroende, pris, behållning"
+      },
+      "/industries/social": {
+        "title": "Samhälle och utbildning",
+        "note": "Tillgång, genomförande, evidens"
+      },
+      "/industries/industrial": {
+        "title": "Industri och byggmaterial",
+        "note": "Handlare, specifikation, projekt"
+      },
+      "/industries/tech": {
+        "title": "Teknik och digitalt",
+        "note": "Färdplan, pris, behållning"
+      },
+      "/industries/media": {
+        "title": "Medier och underhållning",
+        "note": "Publik, innehåll, reklam"
+      },
+      "/industries/ecommerce": {
+        "title": "E-handel och shoppare",
+        "note": "Plattform, annons, korg"
+      },
+      "/register": {
+        "title": "Bli deltagare",
+        "note": "Delta i genomtänkt, betald forskning"
+      },
+      "/partners": {
+        "title": "Tillgängliga undersökningar",
+        "note": "Hitta en studie som passar din profil"
+      },
+      "/rewards": {
+        "title": "Belöningar",
+        "note": "Coins, presentkort och inlösen"
+      },
+      "/contact": {
+        "title": "Kontakta oss",
+        "note": "Prata med forskarteamet"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "En daglig marknadsöversikt"
+      },
+      "/privacy": {
+        "title": "Integritet",
+        "note": "Hur vi hanterar din information"
+      },
+      "/terms": {
+        "title": "Villkor",
+        "note": "Deltagarvillkor"
+      }
+    },
+    "header": {
+      "signIn": "Logga in",
+      "join": "Var med",
+      "workspace": "Arbetsyta",
+      "contactSales": "Kontakta sälj",
+      "helpCentre": "Hjälpcenter",
+      "menuOpen": "Öppna meny",
+      "menuClose": "Stäng meny"
+    }
+  },
+  "tr": {
+    "groups": {
+      "about": "Hakkımızda",
+      "solutions": "Çözümler",
+      "industries": "Sektörler",
+      "participants": "Katılımcılar",
+      "support": "Destek"
+    },
+    "items": {
+      "/business": {
+        "title": "Pazar araştırması",
+        "note": "Ürün, marka ve pazara giriş için araştırmalar"
+      },
+      "/china-market-insights": {
+        "title": "Çin pazarı içgörüleri",
+        "note": "Yerel bağlam ve ifade"
+      },
+      "/how-it-works": {
+        "title": "Nasıl çalışır",
+        "note": "Panel, standart, süreç"
+      },
+      "/industries/automotive": {
+        "title": "Otomotiv",
+        "note": "Araçlar, bayiler, alıcılar"
+      },
+      "/industries/travel": {
+        "title": "Seyahat ve ulaşım",
+        "note": "Destinasyonlar, rezervasyon, konaklama"
+      },
+      "/industries/consumer": {
+        "title": "Perakende ve hızlı tüketim",
+        "note": "Kategori, ambalaj, raf"
+      },
+      "/industries/healthcare": {
+        "title": "Sağlık ve yaşam bilimleri",
+        "note": "Hastalar, klinisyenler, erişim"
+      },
+      "/industries/finance": {
+        "title": "Finans ve varlık",
+        "note": "Güven, fiyat, elde tutma"
+      },
+      "/industries/social": {
+        "title": "Toplum ve eğitim",
+        "note": "Erişim, uygulama, kanıt"
+      },
+      "/industries/industrial": {
+        "title": "Sanayi ve yapı malzemeleri",
+        "note": "Bayiler, şartname, projeler"
+      },
+      "/industries/tech": {
+        "title": "Teknoloji ve dijital",
+        "note": "Yol haritası, fiyat, elde tutma"
+      },
+      "/industries/media": {
+        "title": "Medya ve eğlence",
+        "note": "İzleyici, içerik, reklam"
+      },
+      "/industries/ecommerce": {
+        "title": "E-ticaret ve alışverişçi",
+        "note": "Platform, ilan, sepet"
+      },
+      "/register": {
+        "title": "Katılımcı olarak katıl",
+        "note": "Özenli ve ücretli araştırmalara katıl"
+      },
+      "/partners": {
+        "title": "Mevcut anketler",
+        "note": "Profilinize uygun bir çalışma bulun"
+      },
+      "/rewards": {
+        "title": "Ödüller",
+        "note": "Coins, hediye kartları ve kullanımlar"
+      },
+      "/contact": {
+        "title": "Bize ulaşın",
+        "note": "Araştırma ekibiyle konuşun"
+      },
+      "/news": {
+        "title": "News Wall",
+        "note": "Günlük pazar özeti"
+      },
+      "/privacy": {
+        "title": "Gizlilik",
+        "note": "Bilgilerinizi nasıl işliyoruz"
+      },
+      "/terms": {
+        "title": "Koşullar",
+        "note": "Katılım koşulları"
+      }
+    },
+    "header": {
+      "signIn": "Giriş yap",
+      "join": "Katıl",
+      "workspace": "Çalışma alanı",
+      "contactSales": "Satışla iletişim",
+      "helpCentre": "Yardım merkezi",
+      "menuOpen": "Menüyü aç",
+      "menuClose": "Menüyü kapat"
+    }
+  }
+};

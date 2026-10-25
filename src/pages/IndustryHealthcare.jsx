@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
+import usePageTitle from '../hooks/usePageTitle';
 import healthcareImage from '../assets/industries/healthcare-hero.jpg';
 import './IndustryPage.css';
 
@@ -14,6 +15,7 @@ import './IndustryPage.css';
 export default function IndustryHealthcare() {
   const { publicCopy } = useLanguage();
   const c = publicCopy.pages.industries.healthcare;
+  usePageTitle(c.title);
 
   return (
     <main className="industry-page industry-page--healthcare">

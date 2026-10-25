@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
+import usePageTitle from '../hooks/usePageTitle';
 import techImage from '../assets/industries/tech-hero.jpg';
 import './IndustryPage.css';
 
@@ -12,6 +13,7 @@ import './IndustryPage.css';
 export default function IndustryTech() {
   const { publicCopy } = useLanguage();
   const c = publicCopy.pages.industries.tech;
+  usePageTitle(c.title);
 
   return (
     <main className="industry-page industry-page--tech">

@@ -1,4 +1,5 @@
 import { useLanguage } from '../components/LanguageContext';
+import usePageTitle from '../hooks/usePageTitle';
 import HomeFilmSection from '../components/HomeFilmSection';
 import './About.css';
 
@@ -12,6 +13,7 @@ import './About.css';
 export default function About() {
   const { language, publicCopy } = useLanguage();
   const text = publicCopy.pages.about;
+  usePageTitle(text.eyebrow);
   const approach = publicCopy.approach;
   // The human-first paragraph has its own one-piece translation in the
   // library; where it is missing (the four languages that already carry the

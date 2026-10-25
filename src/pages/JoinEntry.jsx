@@ -1,5 +1,7 @@
 import { HomeFooter } from '../components/HomeLegacySections';
+import { useLanguage } from '../components/LanguageContext';
 import HomeChoiceSection from '../components/HomeChoiceSection';
+import usePageTitle from '../hooks/usePageTitle';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import './JoinEntry.css';
 
@@ -14,6 +16,8 @@ import './JoinEntry.css';
    The two-card chooser that used to sit here was `JoinChoice`; its copy is
    kept in docs/COPY-2026-10-25-JOIN-CHOICE.md for reuse. */
 export default function JoinEntry() {
+  const { publicCopy } = useLanguage();
+  usePageTitle(publicCopy.chrome.header.signIn);
   return (
     <main className="home-atlas join-entry-page">
       <PublicSiteHeader />

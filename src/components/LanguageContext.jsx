@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
    partial regeneration must not be able to break the whole app with a missing
    named export. Each namespace falls back to an empty map. */
 import * as researchTranslations from '../constants/researchTranslations';
-import { aboutCopy, accessEntryCopy, industryCopy } from '../constants/publicPageCopy';
+import { aboutCopy, accessEntryCopy, industryCopy, chromeCopy } from '../constants/publicPageCopy';
 /* Page copy entered 2026-10-25. Each page used to carry its own `copy` map;
    the library now resolves the language once, so a page asks for
    `publicCopy.pages.about` and gets the right text or the English fallback. */
@@ -2032,6 +2032,7 @@ export function LanguageProvider({ children }) {
       navigation: { ...englishCopy.navigation, ...(publicCopyByLanguage[language]?.navigation || {}), items: { ...englishCopy.navigation.items, ...(publicCopyByLanguage[language]?.navigation?.items || {}) } },
       hero: { ...englishCopy.hero, ...(publicCopyByLanguage[language]?.hero || {}) },
       approach: { ...englishCopy.approach, ...(publicCopyByLanguage[language]?.approach || {}) },
+      chrome: pickPageCopy(chromeCopy, language),
       pages: {
         about: pickPageCopy(aboutCopy, language),
         access: pickPageCopy(accessEntryCopy, language),
