@@ -1,4 +1,6 @@
-/* Sits over the white form column, above the tabs. */
+/* White-column bar: wordmark at the left, language picker at its right edge.
+   The way back sits at the far right of the page, over the photograph, on its
+   own plate. */
 .auth-topbar {
   position: absolute;
   z-index: 20;
@@ -9,23 +11,75 @@
   align-items: center;
   justify-content: space-between;
   padding: 26px clamp(20px, 4vw, 44px);
-  pointer-events: none;
 }
 
-.auth-topbar-brand,
+@media (min-width: 1181px) {
+  /* The form column is 60% wide, so the bar stops at that edge. */
+  .auth-topbar { right: 40%; }
+}
+
+.auth-topbar-brand { display: inline-flex; align-items: center; text-decoration: none; }
+.auth-topbar-brand img { display: block; width: 178px; height: auto; }
+.auth-topbar-brand:focus-visible { outline: 2px solid #141413; outline-offset: 4px; }
+
+.auth-topbar-lang { position: relative; }
+
+.auth-lang-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 6px;
+  border: 0;
+  background: transparent;
+  color: #40503f;
+  cursor: pointer;
+  transition: color .14s ease;
+}
+
+.auth-lang-trigger:hover,
+.auth-topbar-lang.is-open .auth-lang-trigger { color: #141413; }
+.auth-lang-trigger:focus-visible { outline: 2px solid #141413; outline-offset: 2px; }
+
+.auth-lang-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 30;
+  display: grid;
+  width: 276px;
+  max-height: 300px;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  overflow-y: auto;
+  border: 1px solid rgba(20, 20, 19, .14);
+  background: #fcfdfb;
+  box-shadow: 0 18px 40px rgba(20, 24, 20, .16);
+  padding: 8px;
+}
+
+.auth-lang-menu button {
+  border: 0;
+  background: transparent;
+  color: #2b2b28;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.2;
+  padding: 8px 9px;
+  text-align: left;
+}
+
+.auth-lang-menu button:hover { background: #eef0e9; }
+.auth-lang-menu button.is-selected { color: #141413; font-weight: 800; }
+
 .auth-topbar-back {
+  position: absolute;
+  z-index: 21;
+  top: 26px;
+  right: clamp(20px, 4vw, 44px);
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  pointer-events: auto;
-  text-decoration: none;
-}
-
-.auth-topbar-brand img { display: block; width: 178px; height: auto; }
-
-.auth-topbar-back {
-  /* The bar sits over the photograph on both pages, so the way back carries its
-     own white plate instead of relying on the picture behind it. */
   padding: 9px 14px;
   border: 1px solid rgba(20, 20, 19, .12);
   background: rgba(252, 253, 251, .95);
@@ -33,14 +87,15 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: .01em;
+  text-decoration: none;
   transition: color .16s ease, border-color .16s ease;
 }
 
 .auth-topbar-back:hover { border-color: #141413; color: #141413; }
-.auth-topbar-brand:focus-visible,
-.auth-topbar-back:focus-visible { outline: 2px solid #141413; outline-offset: 4px; }
+.auth-topbar-back:focus-visible { outline: 2px solid #141413; outline-offset: 3px; }
 
-@media (max-width: 700px) {
-  .auth-topbar { padding: 18px 16px; }
+@media (max-width: 1180px) {
+  .auth-topbar { padding: 18px 110px 18px 16px; }
   .auth-topbar-brand img { width: 146px; }
+  .auth-topbar-back { top: 18px; right: 16px; }
 }

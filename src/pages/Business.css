@@ -228,6 +228,11 @@
    所以整块按 100svh 定高，顶栏脱离文档流（absolute），表单栏用上内边距把顶栏让出来 ——
    左边表单的落点不变，右边多出 96px 画面，压在照片上的文案不用再往下滑。 */
 .business-login-page { position: relative; display: flex; height: 100svh; min-height: 720px; flex-direction: column; overflow: hidden; padding: 0 !important; }
+/* 2026-10-26：桌面上一律一屏高。原来 720px 的下限在矮窗口里会把整页顶出视口，
+   滚轮一滚就是整块组件跟着上移；现在页面不滚，只有表单栏内部滚动。 */
+@media (min-width: 1181px) {
+  .business-login-page { min-height: 0; }
+}
 /* 表单在左、照片在右 —— 与 .landing-shell 的 42% / 58% 一致：两条栏目按 flex 拉伸到
    .business-login-page 的高度。照片栏那条 position:sticky!important（203 行旧规则）会脱离
    文档流把外壳顶下去，所以 262 行单独把它改回 relative。 */

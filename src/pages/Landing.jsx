@@ -979,6 +979,11 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
            右边是图。表单栏加回 96px 上内边距，落点与之前一致（面板仍在 y=108）。 */
         .landing-page--auth-only > .public-site-header { position: absolute; z-index: 20; top: 18px; right: 0; left: 0; margin: 0 auto; }
         .landing-page--auth-only .landing-shell { height: 100svh; min-height: 650px; }
+        /* 2026-10-26：与研究端一致，桌面只占一屏，页面本身不滚。 */
+        @media (min-width: 1181px) {
+          .landing-page--auth-only { height: 100svh; min-height: 0; overflow: hidden; }
+          .landing-page--auth-only .landing-shell { min-height: 0; }
+        }
         .landing-page--auth-only .landing-access { padding-top: 92px; }
         /* 2026-10-26：注册／登录页去掉整条导航、图上的文案，表单 60%、图 40%，
            照片往右裁。 */
