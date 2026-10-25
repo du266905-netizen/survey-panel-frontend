@@ -467,7 +467,7 @@ export const aboutCopy = {
 
 export const accessEntryCopy = {
   "zh-CN": {
-    "title": "你接下来想做什么，想清楚了吗？",
+    "title": "下一步，从这里开始。",
     "note": "让每一次判断都有事实依据。",
     "form": {
       "participant": "参与者",
@@ -480,7 +480,7 @@ export const accessEntryCopy = {
     }
   },
   "zh-Hant": {
-    "title": "你接下來想做什麼，想清楚了嗎？",
+    "title": "下一步，從這裡開始。",
     "note": "讓每一次判斷都有事實依據。",
     "form": {
       "participant": "參與者",
@@ -493,7 +493,7 @@ export const accessEntryCopy = {
     }
   },
   "en": {
-    "title": "Have you thought about what to do next?",
+    "title": "Your next step starts here.",
     "note": "Let every judgement rest on evidence.",
     "form": {
       "participant": "Participant",
@@ -506,7 +506,7 @@ export const accessEntryCopy = {
     }
   },
   "de": {
-    "title": "Hast du dir überlegt, was als Nächstes kommt?",
+    "title": "Ihr nächster Schritt beginnt hier.",
     "note": "Jedes Urteil ruht auf Belegen.",
     "form": {
       "participant": "Teilnehmende",
@@ -519,7 +519,7 @@ export const accessEntryCopy = {
     }
   },
   "fr": {
-    "title": "Avez-vous réfléchi à ce que vous voulez faire ensuite ?",
+    "title": "Votre prochaine étape commence ici.",
     "note": "Chaque jugement repose sur des preuves.",
     "form": {
       "participant": "Participant",
@@ -532,7 +532,7 @@ export const accessEntryCopy = {
     }
   },
   "nl": {
-    "title": "Heb je nagedacht over wat je hierna wilt doen?",
+    "title": "Je volgende stap begint hier.",
     "note": "Elk oordeel rust op bewijs.",
     "form": {
       "participant": "Deelnemer",
@@ -545,7 +545,7 @@ export const accessEntryCopy = {
     }
   },
   "da": {
-    "title": "Har du tænkt over, hvad du vil gøre nu?",
+    "title": "Dit næste skridt starter her.",
     "note": "Hver vurdering hviler på evidens.",
     "form": {
       "participant": "Deltager",
@@ -558,7 +558,7 @@ export const accessEntryCopy = {
     }
   },
   "es": {
-    "title": "¿Has pensado qué hacer ahora?",
+    "title": "Tu siguiente paso empieza aquí.",
     "note": "Cada juicio se apoya en pruebas.",
     "form": {
       "participant": "Participante",
@@ -571,7 +571,7 @@ export const accessEntryCopy = {
     }
   },
   "fi": {
-    "title": "Oletko miettinyt, mitä seuraavaksi?",
+    "title": "Seuraava askel alkaa tästä.",
     "note": "Jokainen arvio perustuu näyttöön.",
     "form": {
       "participant": "Osallistuja",
@@ -584,7 +584,7 @@ export const accessEntryCopy = {
     }
   },
   "it": {
-    "title": "Hai pensato a cosa fare adesso?",
+    "title": "Il tuo prossimo passo comincia qui.",
     "note": "Ogni giudizio si basa su prove.",
     "form": {
       "participant": "Partecipante",
@@ -597,7 +597,7 @@ export const accessEntryCopy = {
     }
   },
   "ja": {
-    "title": "次に何をするか、もう考えましたか？",
+    "title": "次の一歩は、ここから。",
     "note": "すべての判断を事実にもとづかせる。",
     "form": {
       "participant": "参加者",
@@ -610,7 +610,7 @@ export const accessEntryCopy = {
     }
   },
   "ko": {
-    "title": "다음에 무엇을 할지 생각해 보셨나요?",
+    "title": "다음 걸음은 여기에서 시작됩니다.",
     "note": "모든판단이사실에근거하도록.",
     "form": {
       "participant": "참여자",
@@ -623,7 +623,7 @@ export const accessEntryCopy = {
     }
   },
   "no": {
-    "title": "Har du tenkt på hva du vil gjøre nå?",
+    "title": "Ditt neste steg starter her.",
     "note": "Hver vurdering hviler på bevis.",
     "form": {
       "participant": "Deltaker",
@@ -636,7 +636,7 @@ export const accessEntryCopy = {
     }
   },
   "pt": {
-    "title": "Já pensou no que fazer a seguir?",
+    "title": "O seu próximo passo começa aqui.",
     "note": "Cada juízo assenta em provas.",
     "form": {
       "participant": "Participante",
@@ -649,7 +649,7 @@ export const accessEntryCopy = {
     }
   },
   "ru": {
-    "title": "Вы думали, что делать дальше?",
+    "title": "Ваш следующий шаг начинается здесь.",
     "note": "Пусть каждое суждение опирается на факты.",
     "form": {
       "participant": "Участник",
@@ -662,7 +662,7 @@ export const accessEntryCopy = {
     }
   },
   "sv": {
-    "title": "Har du tänkt på vad du vill göra härnäst?",
+    "title": "Ditt nästa steg börjar här.",
     "note": "Varje bedömning vilar på bevis.",
     "form": {
       "participant": "Deltagare",
@@ -675,7 +675,7 @@ export const accessEntryCopy = {
     }
   },
   "tr": {
-    "title": "Sırada ne yapacağını düşündün mü?",
+    "title": "Sıradaki adımınız burada başlıyor.",
     "note": "Her yargı kanıta dayansın.",
     "form": {
       "participant": "Katılımcı",
@@ -688,7 +688,7 @@ export const accessEntryCopy = {
     }
   },
   "en-GB": {
-    "title": "Have you thought about what to do next?",
+    "title": "Your next step starts here.",
     "note": "Let every judgement rest on evidence.",
     "form": {
       "participant": "Participant",
@@ -22554,7 +22554,8 @@ export const chromeCopy = {
 export const homeSlideCopy = {
   "en-US": {
     "line": "The world is wide. Your part of it can't be left out.",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "note": "Ready to join us? Together we build an open, interconnected and sustainable research ecosystem."
   },
   "en-GB": {
     "line": "The world is wide. Your part of it can't be left out.",
@@ -22619,7 +22620,7 @@ export const homeSlideCopy = {
   "ko": {
     "line": "The world is wide. Your part of it can't be left out.",
     "learnMore": "Learn more",
-    "note": "함께하시겠습니까?열려있고상호연결된지속가능한리서치생태계를함께만듭니다."
+    "note": "함께하시겠습니까? 열려 있고 서로 연결된 지속 가능한 리서치 생태계를 함께 만듭니다."
   },
   "no": {
     "line": "The world is wide. Your part of it can't be left out.",

@@ -72,8 +72,9 @@
   margin: 14px 0 24px;
   color: #565a60;
   font-family: var(--font-reading);
-  font-size: 16px;
-  line-height: 1.6;
+  /* 2026-10-26：小字抬一档（16 → 22），和 38 的标题保持层级但仍看得清。 */
+  font-size: 22px;
+  line-height: 1.45;
 }
 
 /* The chooser and the sign-in options live in one card, like a normal
