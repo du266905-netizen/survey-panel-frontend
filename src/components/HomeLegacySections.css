@@ -165,6 +165,8 @@
 /* Dark community CTA after the three reward cards, using the extracted
    typewriter and the reward-section button. */
 .home-community-cta {
+  /* The header is sticky at 100px; keep the anchor landing below it. */
+  scroll-margin-top: 100px;
   background: #141413;
   color: #FFFFFF;
   padding: clamp(80px, 9vw, 132px) clamp(24px, 5vw, 64px);
