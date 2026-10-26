@@ -3,7 +3,7 @@
    the black closing band. One sentence on the first screen at the 80 step. */
 
 .market-entry-page {
-  background: #383838;
+  background: #2B2B2B;
   color: #FFFFFF;
 }
 
@@ -105,10 +105,14 @@
   width: min(100%, 1120px);
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
-  margin: 36px auto 0;
+  margin: 32px auto 0;
   padding: 0;
   list-style: none;
 }
+
+.market-entry-page .me-methods li { text-align: center; }
+
+.market-entry-page .me-methods li a { justify-content: center; }
 
 .market-entry-page .me-methods li { border-top: 1px solid rgba(250, 249, 245, .22); }
 
@@ -126,7 +130,7 @@
 .market-entry-page .me-methods a svg { color: rgba(250, 249, 245, .5); transition: transform .2s ease, color .2s ease; }
 .market-entry-page .me-methods a:hover svg { color: #FFFFFF; transform: translateX(3px); }
 
-.market-entry-page .me-methods > .me-eyebrow { width: min(100%, 1120px); margin: 0 auto; }
+.market-entry-page .me-methods > .me-eyebrow { width: min(100%, 1120px); margin: 0 auto; text-align: center; }
 
 @media (max-width: 900px) {
   .market-entry-page .me-hero { min-height: calc(100svh - 96px); padding-top: 56px; }
@@ -139,7 +143,7 @@
    reads as an index of the workspace rather than a second hero. */
 
 .market-entry-page .me-platform {
-  background: #1F1F1F;
+  background: #222222;
   padding: clamp(72px, 8vw, 112px) clamp(24px, 5vw, 64px) clamp(64px, 7vw, 96px);
 }
 
