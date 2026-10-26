@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { HomeCommunityCta } from '../../components/HomeLegacySections';
 import { useLanguage, withLanguage } from '../../components/LanguageContext';
 import usePageTitle from '../../hooks/usePageTitle';
 import './MarketEntry.css';
@@ -21,6 +20,15 @@ const copy = {
     lede: 'Size, audience and route to market.',
     free: 'Start for free',
     action: 'Contact sales',
+    platformLabel: 'The platform',
+    platformTitle: 'One set of tools, from question to report.',
+    platform: [
+      { k: '01', title: 'Questionnaire design', body: 'Bring the decision and the people who matter; we prepare a focused questionnaire.' },
+      { k: '02', title: 'Questionnaire editor', body: 'Edit questions, add logic and preview in the editor; a revision is not a meeting.' },
+      { k: '03', title: 'AI assist', body: 'Draft with AI and check the logic; the judgement stays with people.' },
+      { k: '04', title: 'Custom research', body: 'Agree the format, participants, timing and deliverables before the work starts.' },
+      { k: '05', title: 'One workspace', body: 'The brief, the confirmed plan, progress and next steps stay in one place.' },
+    ],
     methodsLabel: 'Methods',
     methods: [
       { label: 'Qualitative', to: '/how-it-works' },
@@ -34,6 +42,15 @@ const copy = {
     lede: 'Size, audience and route to market.',
     free: 'Start for free',
     action: 'Contact sales',
+    platformLabel: 'The platform',
+    platformTitle: 'One set of tools, from question to report.',
+    platform: [
+      { k: '01', title: 'Questionnaire design', body: 'Bring the decision and the people who matter; we prepare a focused questionnaire.' },
+      { k: '02', title: 'Questionnaire editor', body: 'Edit questions, add logic and preview in the editor; a revision is not a meeting.' },
+      { k: '03', title: 'AI assist', body: 'Draft with AI and check the logic; the judgement stays with people.' },
+      { k: '04', title: 'Custom research', body: 'Agree the format, participants, timing and deliverables before the work starts.' },
+      { k: '05', title: 'One workspace', body: 'The brief, the confirmed plan, progress and next steps stay in one place.' },
+    ],
     methodsLabel: 'Methods',
     methods: [
       { label: 'Qualitative', to: '/how-it-works' },
@@ -47,6 +64,15 @@ const copy = {
     lede: '规模、受众与进入路径。',
     free: '免费开始',
     action: '联系销售',
+    platformLabel: '研究平台',
+    platformTitle: '一套工具，从问题到报告。',
+    platform: [
+      { k: '01', title: '问卷设计', body: '带来你的决策和重要的人群，我们为项目准备聚焦的问卷。' },
+      { k: '02', title: '问卷编辑器', body: '在编辑器里改题、加逻辑、预览，改一版不用等一次会议。' },
+      { k: '03', title: 'AI 辅助', body: '用 AI 起草初稿、检查逻辑，判断留给人。' },
+      { k: '04', title: '定制研究', body: '先定形式、参与者、时间与交付物，再开工。' },
+      { k: '05', title: '统一工作区', body: '需求、确认的方案、进度和下一步，都在一个工作区里。' },
+    ],
     methodsLabel: '方法',
     methods: [
       { label: '定性', to: '/how-it-works' },
@@ -60,6 +86,15 @@ const copy = {
     lede: '規模、受眾與進入路徑。',
     free: '免費開始',
     action: '聯繫銷售',
+    platformLabel: '研究平台',
+    platformTitle: '一套工具，從問題到報告。',
+    platform: [
+      { k: '01', title: '問卷設計', body: '帶來你的決策和重要的人群，我們為專案準備聚焦的問卷。' },
+      { k: '02', title: '問卷編輯器', body: '在編輯器裡改題、加邏輯、預覽，改一版不用等一次會議。' },
+      { k: '03', title: 'AI 輔助', body: '用 AI 起草初稿、檢查邏輯，判斷留給人。' },
+      { k: '04', title: '定製研究', body: '先定形式、參與者、時間與交付物，再開工。' },
+      { k: '05', title: '統一工作區', body: '需求、確認的方案、進度與下一步，都在一個工作區裡。' },
+    ],
     methodsLabel: '方法',
     methods: [
       { label: '定性', to: '/how-it-works' },
@@ -85,7 +120,7 @@ export default function MarketEntry() {
         <h1 className="me-title">{t.title}</h1>
         <p className="me-lede">{t.lede}</p>
         <div className="me-actions">
-          <Link className="me-action me-action--free" to={withLanguage('/business/register', language)}>
+          <Link className="me-action me-action--primary" to={withLanguage('/business/register', language)}>
             {t.free}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>
@@ -110,14 +145,29 @@ export default function MarketEntry() {
         </ul>
       </section>
 
-      <HomeCommunityCta
-        copy={publicCopy.home}
-        navigation={publicCopy.navigation}
-        language={language}
-        id={undefined}
-        ariaLabel={t.action}
-        actions={[{ label: t.action, to: '/contact', primary: true, arrow: false }]}
-      />
+      <section className="me-platform" aria-labelledby="me-platform-title">
+        <p className="me-eyebrow me-eyebrow--light">{t.platformLabel}</p>
+        <h2 id="me-platform-title" className="me-platform-title">{t.platformTitle}</h2>
+        <ul className="me-platform-grid">
+          {t.platform.map((item) => (
+            <li key={item.k}>
+              <span>{item.k}</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+        <div className="me-platform-actions">
+          <Link className="me-action me-action--primary" to={withLanguage('/business/register', language)}>
+            {t.free}
+            <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
+          </Link>
+          <Link className="me-action me-action--quiet" to={withLanguage('/contact', language)}>
+            {t.action}
+            <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }
