@@ -6,7 +6,7 @@ import {
   FileText, Table2, ChartSpline, AudioLines, Package,
   FolderKanban, ClipboardList, Users, Send,
   Wallet, Receipt, Gift,
-  FilePenLine, Sparkles, Route, LayoutDashboard,
+  FilePenLine, Sparkles, Route, LayoutDashboard, Eye,
 } from 'lucide-react';
 import LanguageGlobe from '../components/LanguageGlobe';
 import './IconBoard.css';
@@ -73,7 +73,7 @@ export default function IconBoard() {
     <div className="icon-board">
       <header className="icon-board-head">
         <p className="icon-board-kicker">GuanyiSearch · 图标手册</p>
-        <h1>一套网格，三十四个图标。</h1>
+        <h1>一套网格，三十五个图标。</h1>
         <p className="icon-board-intro">
           24 的网格、1.65 的描边、圆端头、只用 currentColor。公开页 16 / 20 / 23 三档尺寸，
           一个区块只用一套，不混填色、不旋转、不描内线。
@@ -197,6 +197,26 @@ export default function IconBoard() {
             { icon: Route, zh: '定制研究', en: 'Route', use: '定形式与路径' },
             { icon: LayoutDashboard, zh: '统一工作区', en: 'Layout dashboard', use: '一站式界面' },
           ].map((item) => {
+            const C = item.icon;
+            return (
+              <li key={item.zh}>
+                <span className="icon-board-cell"><C size={23} strokeWidth={1.65} /></span>
+                <strong>{item.zh}</strong>
+                <small>{item.en}</small>
+                <em>{item.use}</em>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section className="icon-board-group" key="qual">
+        <div className="icon-board-group-head">
+          <h2>定性页 · 一项</h2>
+          <p>「观察」用眼睛，深访和座谈会复用第 13、8 号</p>
+        </div>
+        <ul className="icon-board-list">
+          {[{ icon: Eye, zh: '观察', en: 'Eye', use: '入户、现场' }].map((item) => {
             const C = item.icon;
             return (
               <li key={item.zh}>

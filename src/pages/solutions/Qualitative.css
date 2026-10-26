@@ -1,0 +1,226 @@
+/* Solutions · Qualitative research — 2026-10-27.
+   Same system as market entry: one page colour for the opening and the methods,
+   a deeper grey for the process, black to close. No imagery, so the primary
+   action is the lime accent. */
+
+.qual-page {
+  background: #2B2B2B;
+  color: #FFFFFF;
+}
+
+.qual-page .qu-eyebrow {
+  margin: 0;
+  color: rgba(250, 249, 245, .56);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* ---- opening ------------------------------------------------------------ */
+
+.qual-page .qu-hero {
+  display: flex;
+  min-height: calc(82svh - 100px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px 72px;
+  text-align: center;
+}
+
+.qual-page .qu-title {
+  max-width: 1200px;
+  margin: 22px 0 0;
+  font-family: var(--font-impact);
+  font-size: clamp(44px, 5.4vw, 80px);
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.qual-page .qu-lede {
+  max-width: 720px;
+  margin: 28px 0 0;
+  color: rgba(250, 249, 245, .66);
+  font-family: var(--font-sans);
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.qual-page .qu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.qual-page .qu-action {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 26px;
+  text-decoration: none;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.qual-page .qu-action--primary {
+  border-color: var(--pub-lime);
+  background: var(--pub-lime);
+  color: #141413;
+}
+
+.qual-page .qu-action--primary:hover { border-color: var(--pub-lime-deep); background: var(--pub-lime-deep); }
+
+.qual-page .qu-action--quiet { border-color: rgba(250, 249, 245, .34); color: #FFFFFF; }
+.qual-page .qu-action--quiet:hover { border-color: #FFFFFF; background: rgba(250, 249, 245, .08); }
+
+/* ---- what we run -------------------------------------------------------- */
+
+.qual-page .qu-methods {
+  padding: 0 clamp(24px, 5vw, 64px) clamp(64px, 7vw, 96px);
+}
+
+.qual-page .qu-methods > .qu-eyebrow {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.qual-page .qu-methods ul {
+  display: grid;
+  width: min(100%, 1120px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin: 32px auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.qual-page .qu-methods li {
+  border-top: 1px solid rgba(250, 249, 245, .22);
+  padding: 24px 0 0;
+  text-align: center;
+}
+
+.qual-page .qu-methods svg { display: block; margin: 0 auto; color: #FFFFFF; }
+
+.qual-page .qu-methods h2 {
+  margin: 18px 0 0;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+
+.qual-page .qu-methods p {
+  max-width: 320px;
+  margin: 10px auto 0;
+  color: rgba(250, 249, 245, .62);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* ---- how a study runs --------------------------------------------------- */
+
+.qual-page .qu-process {
+  background: #222222;
+  padding: clamp(64px, 7vw, 96px) clamp(24px, 5vw, 64px);
+}
+
+.qual-page .qu-eyebrow--light { color: rgba(250, 249, 245, .5); }
+
+.qual-page .qu-process > .qu-eyebrow { width: min(100%, 1120px); margin: 0 auto; }
+
+.qual-page .qu-process ol {
+  display: grid;
+  width: min(100%, 1120px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  margin: 36px auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.qual-page .qu-process li {
+  border-top: 1px solid rgba(250, 249, 245, .2);
+  padding: 18px 0 0;
+}
+
+.qual-page .qu-process span {
+  color: rgba(250, 249, 245, .45);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+}
+
+.qual-page .qu-process h2 {
+  margin: 14px 0 0;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+
+.qual-page .qu-process p {
+  margin: 8px 0 0;
+  color: rgba(250, 249, 245, .62);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* ---- closing ------------------------------------------------------------ */
+
+.qual-page .qu-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #141413;
+  padding: clamp(80px, 9vw, 128px) clamp(24px, 5vw, 64px);
+  text-align: center;
+}
+
+.qual-page .qu-contact-title {
+  max-width: 1120px;
+  margin: 0;
+  font-family: var(--font-impact);
+  font-size: clamp(34px, 3.6vw, 56px);
+  font-weight: 400;
+  letter-spacing: -.028em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.qual-page .qu-contact-title span { display: inline; }
+
+.qual-page .qu-contact .qu-actions { margin-top: 40px; }
+
+@media (max-width: 900px) {
+  .qual-page .qu-hero { min-height: calc(82svh - 96px); padding: 40px 20px 56px; }
+  .qual-page .qu-title { font-size: clamp(32px, 8vw, 44px); }
+  .qual-page .qu-lede { margin-top: 18px; font-size: 16px; }
+  .qual-page .qu-actions { margin-top: 28px; }
+  .qual-page .qu-methods ul { grid-template-columns: 1fr; gap: 24px; margin-top: 24px; }
+  .qual-page .qu-methods { padding-bottom: 56px; }
+  .qual-page .qu-process { padding: 56px 20px; }
+  .qual-page .qu-process ol { grid-template-columns: 1fr; gap: 20px; margin-top: 26px; }
+  .qual-page .qu-contact { padding: 64px 16px; }
+  .qual-page .qu-contact-title { font-size: clamp(28px, 8vw, 40px); }
+  .qual-page .qu-contact-title span { display: block; }
+}
