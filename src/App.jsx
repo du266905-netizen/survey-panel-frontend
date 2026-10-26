@@ -20,7 +20,6 @@ import About from './pages/About';
 import IconBoard from './pages/IconBoard';
 import MarketEntry from './pages/solutions/MarketEntry';
 import Qualitative from './pages/solutions/Qualitative';
-import Quantitative from './pages/solutions/Quantitative';
 import Contact from './pages/Contact';
 import Rewards from './pages/Rewards';
 import HowItWorks from './pages/HowItWorks';
@@ -177,7 +176,6 @@ export default function App() {
         <Route path="/china-market-insights" element={<ChinaMarketInsights />} />
         <Route path="/solutions/market-entry" element={<PublicPage><MarketEntry /></PublicPage>} />
         <Route path="/solutions/qualitative" element={<PublicPage><Qualitative /></PublicPage>} />
-        <Route path="/solutions/quantitative" element={<PublicPage><Quantitative /></PublicPage>} />
         <Route path="/business/access" element={<BusinessAccess />} />
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
