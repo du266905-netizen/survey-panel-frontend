@@ -306,8 +306,8 @@
 /* Sign in dropdown (2026-10-26): click to open, two doors — participant and
    researcher. Each row leads with the icon the retired /join cards used
    (CircleUserRound / BriefcaseBusiness, 26px at 1.6 there, 18px inside a 36px
-   ring here), then a title and one line saying what is behind the door. The
-   research door takes the lime, the same accent the bar's CTA wears. */
+   ring here), then a title and one line saying what is behind the door. Both
+   rows are white: the fill has no job left once the icons carry the doors. */
 .psn-signin-wrap { position: relative; display: inline-flex; }
 
 /* The bar rule above styles a link; this one is a button, so drop the
@@ -374,17 +374,12 @@
 }
 .psn-signin-arrow { color: #6b7168; }
 
+/* Both rows are white. A tint on the research door was tried three ways — bone,
+   ink, lime — and each one either collided with the hover or put a third block
+   of accent next to the CTA. What tells the doors apart now is the icon, the
+   title and the line under it; the fill stays out of it. */
 .psn-signin-menu a:hover { background: #eef0e9; }
-/* The research door takes the lime the bar's CTA already wears. Everything on
-   it turns ink: the light ring, desc and arrow all need to sit on yellow. */
-.psn-signin-menu a.is-research { background: #deef24; color: #141413; }
-.psn-signin-menu a.is-research:hover { background: #c9db10; }
-.psn-signin-menu a.is-research .psn-signin-avatar { border-color: rgba(20, 20, 19, .30); color: #141413; }
-.psn-signin-menu a.is-research .psn-signin-desc { color: rgba(20, 20, 19, .68); }
-.psn-signin-menu a.is-research .psn-signin-arrow { color: rgba(20, 20, 19, .72); }
 .psn-signin-menu a:focus-visible { outline: 2px solid var(--pub-lime, #deef24); outline-offset: -2px; }
-/* A lime ring on the lime row would vanish; that row gets an ink one. */
-.psn-signin-menu a.is-research:focus-visible { outline-color: #141413; }
 
 @media (prefers-reduced-motion: reduce) {
   .psn-signin-menu { animation: none; }

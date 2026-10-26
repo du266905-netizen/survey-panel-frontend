@@ -223,7 +223,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
                     </span>
                     <ArrowUpRight className="psn-signin-arrow" aria-hidden="true" size={14} strokeWidth={1.7} />
                   </Link>
-                  <Link role="menuitem" className="is-research" to={withLanguage('/business/login', language)} onClick={() => setSignInOpen(false)}>
+                  <Link role="menuitem" to={withLanguage('/business/login', language)} onClick={() => setSignInOpen(false)}>
                     <span className="psn-signin-avatar" aria-hidden="true">
                       <BriefcaseBusiness size={18} strokeWidth={1.6} />
                     </span>
