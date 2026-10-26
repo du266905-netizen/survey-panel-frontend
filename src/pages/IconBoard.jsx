@@ -3,6 +3,9 @@ import {
   DoorOpen, Compass, UsersRound, Tag, Megaphone, Store, HeartHandshake,
   MessageSquareText, BarChart3, Layers,
   ShieldCheck, Clock3, ClipboardPenLine,
+  FileText, Table2, ChartSpline, AudioLines, Package,
+  FolderKanban, ClipboardList, Users, Send,
+  Wallet, Receipt, Gift,
 } from 'lucide-react';
 import LanguageGlobe from '../components/LanguageGlobe';
 import './IconBoard.css';
@@ -69,7 +72,7 @@ export default function IconBoard() {
     <div className="icon-board">
       <header className="icon-board-head">
         <p className="icon-board-kicker">GuanyiSearch · 图标手册</p>
-        <h1>一套网格，十八个图标。</h1>
+        <h1>一套网格，三十个图标。</h1>
         <p className="icon-board-intro">
           24 的网格、1.65 的描边、圆端头、只用 currentColor。公开页 16 / 20 / 23 三档尺寸，
           一个区块只用一套，不混填色、不旋转、不描内线。
@@ -105,6 +108,81 @@ export default function IconBoard() {
           </ul>
         </section>
       ))}
+
+      <section className="icon-board-group" key="deliverables">
+        <div className="icon-board-group-head">
+          <h2>研究端 · 交付物 · 五项</h2>
+          <p>客户最后拿到的东西，按形态分，不按行业分</p>
+        </div>
+        <ul className="icon-board-list">
+          {[
+            { icon: FileText, zh: '报告', en: 'File text', use: '结案报告、速报' },
+            { icon: Table2, zh: '数据集', en: 'Table 2', use: '交叉表、原始数据' },
+            { icon: ChartSpline, zh: '趋势', en: 'Chart spline', use: '追踪、走势' },
+            { icon: AudioLines, zh: '访谈录音', en: 'Audio lines', use: '录音、转写' },
+            { icon: Package, zh: '交付包', en: 'Package', use: '一次交付的整体' },
+          ].map((item) => {
+            const C = item.icon;
+            return (
+              <li key={item.zh}>
+                <span className="icon-board-cell"><C size={23} strokeWidth={1.65} /></span>
+                <strong>{item.zh}</strong>
+                <small>{item.en}</small>
+                <em>{item.use}</em>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section className="icon-board-group" key="flow">
+        <div className="icon-board-group-head">
+          <h2>研究端 · 流程 · 四项</h2>
+          <p>从立项到交付的四个动作，工作区侧栏用的是这一组</p>
+        </div>
+        <ul className="icon-board-list">
+          {[
+            { icon: FolderKanban, zh: '项目', en: 'Folder kanban', use: '项目列表' },
+            { icon: ClipboardList, zh: '问卷', en: 'Clipboard list', use: '填写中的问卷' },
+            { icon: Users, zh: '样本', en: 'Users', use: '参与者与配额' },
+            { icon: Send, zh: '交付', en: 'Send', use: '提交、发给客户' },
+          ].map((item) => {
+            const C = item.icon;
+            return (
+              <li key={item.zh}>
+                <span className="icon-board-cell"><C size={23} strokeWidth={1.65} /></span>
+                <strong>{item.zh}</strong>
+                <small>{item.en}</small>
+                <em>{item.use}</em>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section className="icon-board-group" key="account">
+        <div className="icon-board-group-head">
+          <h2>账户 · 三项</h2>
+          <p>钱相关的永远这三个，不要再造第四个</p>
+        </div>
+        <ul className="icon-board-list">
+          {[
+            { icon: Wallet, zh: '预算', en: 'Wallet', use: '预算、余额' },
+            { icon: Receipt, zh: '账单', en: 'Receipt', use: '报价、发票' },
+            { icon: Gift, zh: '奖励', en: 'Gift', use: 'Coins、礼品卡' },
+          ].map((item) => {
+            const C = item.icon;
+            return (
+              <li key={item.zh}>
+                <span className="icon-board-cell"><C size={23} strokeWidth={1.65} /></span>
+                <strong>{item.zh}</strong>
+                <small>{item.en}</small>
+                <em>{item.use}</em>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
 
       <section className="icon-board-rules">
         <div>
