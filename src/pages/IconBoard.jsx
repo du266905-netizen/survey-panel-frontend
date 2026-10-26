@@ -6,6 +6,7 @@ import {
   FileText, Table2, ChartSpline, AudioLines, Package,
   FolderKanban, ClipboardList, Users, Send,
   Wallet, Receipt, Gift,
+  FilePenLine, Sparkles, Route, LayoutDashboard,
 } from 'lucide-react';
 import LanguageGlobe from '../components/LanguageGlobe';
 import './IconBoard.css';
@@ -72,7 +73,7 @@ export default function IconBoard() {
     <div className="icon-board">
       <header className="icon-board-head">
         <p className="icon-board-kicker">GuanyiSearch · 图标手册</p>
-        <h1>一套网格，三十个图标。</h1>
+        <h1>一套网格，三十四个图标。</h1>
         <p className="icon-board-intro">
           24 的网格、1.65 的描边、圆端头、只用 currentColor。公开页 16 / 20 / 23 三档尺寸，
           一个区块只用一套，不混填色、不旋转、不描内线。
@@ -170,6 +171,31 @@ export default function IconBoard() {
             { icon: Wallet, zh: '预算', en: 'Wallet', use: '预算、余额' },
             { icon: Receipt, zh: '账单', en: 'Receipt', use: '报价、发票' },
             { icon: Gift, zh: '奖励', en: 'Gift', use: 'Coins、礼品卡' },
+          ].map((item) => {
+            const C = item.icon;
+            return (
+              <li key={item.zh}>
+                <span className="icon-board-cell"><C size={23} strokeWidth={1.65} /></span>
+                <strong>{item.zh}</strong>
+                <small>{item.en}</small>
+                <em>{item.use}</em>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section className="icon-board-group" key="platform">
+        <div className="icon-board-group-head">
+          <h2>研究平台 · 四项</h2>
+          <p>解决方案页页底那五条用它；问卷设计沿用第 18 号，不另造</p>
+        </div>
+        <ul className="icon-board-list">
+          {[
+            { icon: FilePenLine, zh: '问卷编辑器', en: 'File pen line', use: '改题、加逻辑' },
+            { icon: Sparkles, zh: 'AI 辅助', en: 'Sparkles', use: '起草、检查' },
+            { icon: Route, zh: '定制研究', en: 'Route', use: '定形式与路径' },
+            { icon: LayoutDashboard, zh: '统一工作区', en: 'Layout dashboard', use: '一站式界面' },
           ].map((item) => {
             const C = item.icon;
             return (

@@ -170,19 +170,16 @@
 
 .market-entry-page .me-platform-grid li {
   border-top: 1px solid rgba(250, 249, 245, .2);
-  padding: 20px 0 32px;
+  padding: 28px 0 40px;
 }
 
-.market-entry-page .me-platform-grid span {
-  color: rgba(250, 249, 245, .45);
-  font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .14em;
+.market-entry-page .me-platform-grid svg {
+  display: block;
+  color: #FFFFFF;
 }
 
 .market-entry-page .me-platform-grid h3 {
-  margin: 14px 0 0;
+  margin: 26px 0 0;
   color: #FFFFFF;
   font-family: var(--font-serif);
   font-size: 22px;

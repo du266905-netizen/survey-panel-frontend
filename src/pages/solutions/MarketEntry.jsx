@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import {
+  ArrowRight, ClipboardPenLine, FilePenLine, Sparkles, Route, LayoutDashboard,
+} from 'lucide-react';
 import { useLanguage, withLanguage } from '../../components/LanguageContext';
 import usePageTitle from '../../hooks/usePageTitle';
 import './MarketEntry.css';
@@ -23,11 +25,11 @@ const copy = {
     platformLabel: 'The platform',
     platformTitle: 'One set of tools, from question to report.',
     platform: [
-      { k: '01', title: 'Questionnaire design', body: 'Bring the decision and the people who matter; we prepare a focused questionnaire.' },
-      { k: '02', title: 'Questionnaire editor', body: 'Edit questions, add logic and preview in the editor; a revision is not a meeting.' },
-      { k: '03', title: 'AI assist', body: 'Draft with AI and check the logic; the judgement stays with people.' },
-      { k: '04', title: 'Custom research', body: 'Agree the format, participants, timing and deliverables before the work starts.' },
-      { k: '05', title: 'One workspace', body: 'The brief, the confirmed plan, progress and next steps stay in one place.' },
+      { icon: ClipboardPenLine, title: 'Questionnaire design', body: 'Bring the decision and the people who matter; we prepare a focused questionnaire.' },
+      { icon: FilePenLine, title: 'Questionnaire editor', body: 'Edit questions, add logic and preview in the editor; a revision is not a meeting.' },
+      { icon: Sparkles, title: 'AI assist', body: 'Draft with AI and check the logic; the judgement stays with people.' },
+      { icon: Route, title: 'Custom research', body: 'Agree the format, participants, timing and deliverables before the work starts.' },
+      { icon: LayoutDashboard, title: 'One workspace', body: 'The brief, the confirmed plan, progress and next steps stay in one place.' },
     ],
     methodsLabel: 'Methods',
     methods: [
@@ -45,11 +47,11 @@ const copy = {
     platformLabel: 'The platform',
     platformTitle: 'One set of tools, from question to report.',
     platform: [
-      { k: '01', title: 'Questionnaire design', body: 'Bring the decision and the people who matter; we prepare a focused questionnaire.' },
-      { k: '02', title: 'Questionnaire editor', body: 'Edit questions, add logic and preview in the editor; a revision is not a meeting.' },
-      { k: '03', title: 'AI assist', body: 'Draft with AI and check the logic; the judgement stays with people.' },
-      { k: '04', title: 'Custom research', body: 'Agree the format, participants, timing and deliverables before the work starts.' },
-      { k: '05', title: 'One workspace', body: 'The brief, the confirmed plan, progress and next steps stay in one place.' },
+      { icon: ClipboardPenLine, title: 'Questionnaire design', body: 'Bring the decision and the people who matter; we prepare a focused questionnaire.' },
+      { icon: FilePenLine, title: 'Questionnaire editor', body: 'Edit questions, add logic and preview in the editor; a revision is not a meeting.' },
+      { icon: Sparkles, title: 'AI assist', body: 'Draft with AI and check the logic; the judgement stays with people.' },
+      { icon: Route, title: 'Custom research', body: 'Agree the format, participants, timing and deliverables before the work starts.' },
+      { icon: LayoutDashboard, title: 'One workspace', body: 'The brief, the confirmed plan, progress and next steps stay in one place.' },
     ],
     methodsLabel: 'Methods',
     methods: [
@@ -67,11 +69,11 @@ const copy = {
     platformLabel: '研究平台',
     platformTitle: '一套工具，从问题到报告。',
     platform: [
-      { k: '01', title: '问卷设计', body: '带来你的决策和重要的人群，我们为项目准备聚焦的问卷。' },
-      { k: '02', title: '问卷编辑器', body: '在编辑器里改题、加逻辑、预览，改一版不用等一次会议。' },
-      { k: '03', title: 'AI 辅助', body: '用 AI 起草初稿、检查逻辑，判断留给人。' },
-      { k: '04', title: '定制研究', body: '先定形式、参与者、时间与交付物，再开工。' },
-      { k: '05', title: '统一工作区', body: '需求、确认的方案、进度和下一步，都在一个工作区里。' },
+      { icon: ClipboardPenLine, title: '问卷设计', body: '带来你的决策和重要的人群，我们为项目准备聚焦的问卷。' },
+      { icon: FilePenLine, title: '问卷编辑器', body: '在编辑器里改题、加逻辑、预览，改一版不用等一次会议。' },
+      { icon: Sparkles, title: 'AI 辅助', body: '用 AI 起草初稿、检查逻辑，判断留给人。' },
+      { icon: Route, title: '定制研究', body: '先定形式、参与者、时间与交付物，再开工。' },
+      { icon: LayoutDashboard, title: '统一工作区', body: '需求、确认的方案、进度和下一步，都在一个工作区里。' },
     ],
     methodsLabel: '方法',
     methods: [
@@ -89,11 +91,11 @@ const copy = {
     platformLabel: '研究平台',
     platformTitle: '一套工具，從問題到報告。',
     platform: [
-      { k: '01', title: '問卷設計', body: '帶來你的決策和重要的人群，我們為專案準備聚焦的問卷。' },
-      { k: '02', title: '問卷編輯器', body: '在編輯器裡改題、加邏輯、預覽，改一版不用等一次會議。' },
-      { k: '03', title: 'AI 輔助', body: '用 AI 起草初稿、檢查邏輯，判斷留給人。' },
-      { k: '04', title: '定製研究', body: '先定形式、參與者、時間與交付物，再開工。' },
-      { k: '05', title: '統一工作區', body: '需求、確認的方案、進度與下一步，都在一個工作區裡。' },
+      { icon: ClipboardPenLine, title: '問卷設計', body: '帶來你的決策和重要的人群，我們為專案準備聚焦的問卷。' },
+      { icon: FilePenLine, title: '問卷編輯器', body: '在編輯器裡改題、加邏輯、預覽，改一版不用等一次會議。' },
+      { icon: Sparkles, title: 'AI 輔助', body: '用 AI 起草初稿、檢查邏輯，判斷留給人。' },
+      { icon: Route, title: '定製研究', body: '先定形式、參與者、時間與交付物，再開工。' },
+      { icon: LayoutDashboard, title: '統一工作區', body: '需求、確認的方案、進度與下一步，都在一個工作區裡。' },
     ],
     methodsLabel: '方法',
     methods: [
@@ -149,13 +151,16 @@ export default function MarketEntry() {
         <p className="me-eyebrow me-eyebrow--light">{t.platformLabel}</p>
         <h2 id="me-platform-title" className="me-platform-title">{t.platformTitle}</h2>
         <ul className="me-platform-grid">
-          {t.platform.map((item) => (
-            <li key={item.k}>
-              <span>{item.k}</span>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </li>
-          ))}
+          {t.platform.map((item) => {
+            const Icon = item.icon;
+            return (
+              <li key={item.title}>
+                <Icon size={23} strokeWidth={1.65} aria-hidden="true" />
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </li>
+            );
+          })}
         </ul>
         <div className="me-platform-actions">
           <Link className="me-action me-action--primary" to={withLanguage('/business/register', language)}>
