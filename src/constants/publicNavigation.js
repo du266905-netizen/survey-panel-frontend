@@ -42,7 +42,7 @@ export const publicNavigation = [
         label: 'Methods',
         items: [
           { id: 'qualitative', to: '/solutions/qualitative', title: 'Qualitative', note: 'Interviews, groups and observation' },
-          { id: 'quantitative', to: '/how-it-works', title: 'Quantitative', note: 'Surveys, trackers and sizing' },
+          { id: 'quantitative', to: '/solutions/quantitative', title: 'Quantitative', note: 'Surveys, trackers and sizing' },
           { id: 'mixed', to: '/how-it-works', title: 'Mixed methods', note: 'Both, in one design' },
         ],
       },
