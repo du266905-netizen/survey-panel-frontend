@@ -1,51 +1,20 @@
 /* Reading flow: one measure, chapter rhythm, no text cards. Copy is untouched. */
-.public-site-layout,
-.china-market-page,
-.business-marketing-page {
+.public-site-layout, .business-marketing-page {
   --reading-measure: 680px;
   --reading-rule: var(--pub-hair, rgba(17,17,19,.12));
 }
 
 /* Section rhythm */
-.public-site-layout .how-platform,
-.public-site-layout .how-panelists,
-.public-site-layout .how-standards,
-.public-site-layout .how-reward,
-.public-site-layout .approach-question,
-.public-site-layout .approach-network,
-.public-site-layout .home-manifesto,
-.china-market-capabilities,
-.china-market-context,
-.china-market-route {
+.public-site-layout .how-platform, .public-site-layout .how-panelists, .public-site-layout .how-standards, .public-site-layout .how-reward, .public-site-layout .approach-question, .public-site-layout .approach-network, .public-site-layout .home-manifesto {
   padding-top: clamp(32px, 4vw, 48px);
   padding-bottom: clamp(32px, 4vw, 48px);
 }
 
 /* One reading measure for copy; headings can run a little wider. */
-.public-site-layout .how-hero > p,
-.public-site-layout .how-platform-head,
-.public-site-layout .how-standards-copy,
-.public-site-layout .how-panelist-head,
-.public-site-layout .how-reward-copy,
-.public-site-layout .approach-question-copy,
-.public-site-layout .approach-network-copy,
-.public-site-layout .legal-section-content,
-.public-site-layout .news-reading-copy,
-.china-market-context-copy,
-.business-marketing-page .business-lede {
+.public-site-layout .how-hero > p, .public-site-layout .how-platform-head, .public-site-layout .how-standards-copy, .public-site-layout .how-panelist-head, .public-site-layout .how-reward-copy, .public-site-layout .approach-question-copy, .public-site-layout .approach-network-copy, .public-site-layout .legal-section-content, .public-site-layout .news-reading-copy, .business-marketing-page .business-lede {
   max-width: var(--reading-measure);
 }
-.public-site-layout .how-standards-copy p,
-.public-site-layout .how-standard p,
-.public-site-layout .how-step p,
-.public-site-layout .how-reward-copy > p,
-.public-site-layout .approach-question-copy p,
-.public-site-layout .approach-network-copy p,
-.china-market-capabilities p,
-.china-market-context p,
-.china-market-route p,
-.public-site-layout .legal-section-content > p,
-.public-site-layout .news-reading-copy > p {
+.public-site-layout .how-standards-copy p, .public-site-layout .how-standard p, .public-site-layout .how-step p, .public-site-layout .how-reward-copy > p, .public-site-layout .approach-question-copy p, .public-site-layout .approach-network-copy p, .public-site-layout .legal-section-content > p, .public-site-layout .news-reading-copy > p {
   max-width: 66ch;
   font-family: var(--font-serif) !important;
   font-size: 16px;
@@ -53,18 +22,12 @@
 }
 
 /* Headings sit closer to their copy. */
-.public-site-layout .how-standards-copy h2,
-.public-site-layout .approach-question-copy h2,
-.public-site-layout .approach-network-copy h2,
-.china-market-section-heading h2 {
+.public-site-layout .how-standards-copy h2, .public-site-layout .approach-question-copy h2, .public-site-layout .approach-network-copy h2 {
   margin-bottom: 18px;
 }
 
 /* Remove text cards and let the sections read as chapters. */
-.public-site-layout .how-standard,
-.public-site-layout .how-step,
-.china-market-capability-grid article,
-.public-site-layout .home-manifesto-card-grid article {
+.public-site-layout .how-standard, .public-site-layout .how-step, .public-site-layout .home-manifesto-card-grid article {
   border: 0 !important;
   border-top: 1px solid var(--reading-rule) !important;
   border-radius: 0 !important;
@@ -72,18 +35,12 @@
   box-shadow: none !important;
   padding: 24px 0 !important;
 }
-.public-site-layout .how-standard-list,
-.public-site-layout .how-steps,
-.public-site-layout .home-manifesto-card-grid,
-.china-market-capability-grid {
+.public-site-layout .how-standard-list, .public-site-layout .how-steps, .public-site-layout .home-manifesto-card-grid {
   grid-template-columns: 1fr !important;
   gap: 0 !important;
 }
 .public-site-layout .how-standard-list { border: 0; }
-.public-site-layout .how-standard:first-child,
-.public-site-layout .how-step:first-child,
-.public-site-layout .home-manifesto-card-grid article:first-child,
-.china-market-capability-grid article:first-child {
+.public-site-layout .how-standard:first-child, .public-site-layout .how-step:first-child, .public-site-layout .home-manifesto-card-grid article:first-child {
   border-top: 0 !important;
   padding-top: 0 !important;
 }
@@ -108,45 +65,23 @@
 /* Avoid double section padding between adjacent chapters. */
 .public-site-layout .how-standards { padding-bottom: 56px; }
 .public-site-layout .how-panelists { padding-top: 56px; }
-.china-market-capabilities { padding-bottom: 64px; }
-.china-market-context { padding-top: 64px; }
 
 /* Fewer eyebrows: one orientation label per page, none inside chapters. */
-.public-site-layout .how-kicker,
-.public-site-layout .approach-page .home-section-label,
-.public-site-layout .approach-network-copy > p:first-child,
-.china-market-kicker,
-.business-marketing-page .business-eyebrow {
+.public-site-layout .how-kicker, .public-site-layout .approach-page .home-section-label, .public-site-layout .approach-network-copy > p:first-child, .business-marketing-page .business-eyebrow {
   display: none !important;
 }
-.public-site-layout .how-hero .how-kicker,
-.china-market-hero .china-market-kicker,
-.business-marketing-page .business-hero .business-eyebrow {
+.public-site-layout .how-hero .how-kicker, .business-marketing-page .business-hero .business-eyebrow {
   display: block !important;
 }
-.public-site-layout .how-platform-head h2,
-.public-site-layout .how-standards-copy h2,
-.public-site-layout .how-panelist-head h2,
-.public-site-layout .how-reward-copy h2,
-.public-site-layout .approach-network-copy h2,
-.china-market-section-heading h2,
-.china-market-route h2,
-.china-market-context h2 {
+.public-site-layout .how-platform-head h2, .public-site-layout .how-standards-copy h2, .public-site-layout .how-panelist-head h2, .public-site-layout .how-reward-copy h2, .public-site-layout .approach-network-copy h2 {
   margin-top: 0 !important;
 }
 
 /* Chapters may switch between the two page colours; no new colour. */
-.public-site-layout .how-platform,
-.public-site-layout .how-standards,
-.china-market-capabilities,
-.china-market-route {
+.public-site-layout .how-platform, .public-site-layout .how-standards {
   background: #FFFFFF !important;
 }
-.public-site-layout .how-panelists,
-.public-site-layout .how-reward,
-.public-site-layout .approach-network,
-.public-site-layout .approach-page .home-manifesto,
-.china-market-context {
+.public-site-layout .how-panelists, .public-site-layout .how-reward, .public-site-layout .approach-network, .public-site-layout .approach-page .home-manifesto {
   background: #FFFFFF !important;
 }
 
@@ -163,11 +98,6 @@
   text-align: center;
 }
 .public-site-layout .approach-network-copy a { margin-left: auto; margin-right: auto; }
-.china-market-section-heading {
-  max-width: 760px;
-  margin: 0 auto;
-  text-align: center;
-}
 
 /* Page-end CTA stays black; only its heading is centred, body stays left. */
 .public-site-layout .how-reward { background: #141413 !important; }
@@ -205,15 +135,9 @@
 .public-site-layout .approach-page .home-manifesto-mark { display: none !important; }
 .public-site-layout .approach-page .home-manifesto h2 { text-align: center; }
 .public-site-layout .approach-page .home-manifesto-deck { margin-left: auto; margin-right: auto; }
-.china-market-route-layout { grid-template-columns: 1fr !important; gap: 32px !important; }
-.china-market-route-layout > div:first-child { max-width: 760px; margin: 0 auto; text-align: center; }
-.china-market-route-layout > div:first-child p:last-child { text-align: left; margin-left: auto; margin-right: auto; }
 
 /* Comfort: smaller buttons; mid-page actions become light outline, not black blocks. */
-.public-site-layout .how-reward a,
-.public-site-layout .approach-network a,
-.china-market-button,
-.business-marketing-page .business-button {
+.public-site-layout .how-reward a, .public-site-layout .approach-network a, .business-marketing-page .business-button {
   min-height: 46px !important;
   padding: 0 22px !important;
   border: 1px solid #DEEF24 !important;
@@ -223,10 +147,7 @@
   font-size: 13px !important;
   font-weight: 500 !important;
 }
-.public-site-layout .how-reward a:hover,
-.public-site-layout .approach-network a:hover,
-.china-market-button:hover,
-.business-marketing-page .business-button:hover {
+.public-site-layout .how-reward a:hover, .public-site-layout .approach-network a:hover, .business-marketing-page .business-button:hover {
   border-color: #C9DB10 !important;
   background: #C9DB10 !important;
   color: #14161A !important;
@@ -243,25 +164,11 @@
 }
 
 /* Hairlines stay light on every reading row. */
-.public-site-layout .how-standard,
-.public-site-layout .how-step,
-.public-site-layout .home-manifesto-card-grid article,
-.china-market-capability-grid article {
+.public-site-layout .how-standard, .public-site-layout .how-step, .public-site-layout .home-manifesto-card-grid article {
   border-top-color: rgba(17,17,19,.12) !important;
 }
 
 /* Reading-page section titles are serif 400, the research-end weight. */
-.public-site-layout .how-hero h1,
-.public-site-layout .how-platform-head h2,
-.public-site-layout .how-panelist-head h2,
-.public-site-layout .how-standards-copy h2,
-.public-site-layout .how-reward-copy h2,
-.public-site-layout .approach-hero h1,
-.public-site-layout .approach-question-copy h2,
-.public-site-layout .approach-network-copy h2,
-.china-market-hero h1,
-.china-market-section-heading h2,
-.china-market-route h2,
-.china-market-context h2 {
+.public-site-layout .how-hero h1, .public-site-layout .how-platform-head h2, .public-site-layout .how-panelist-head h2, .public-site-layout .how-standards-copy h2, .public-site-layout .how-reward-copy h2, .public-site-layout .approach-hero h1, .public-site-layout .approach-question-copy h2, .public-site-layout .approach-network-copy h2 {
   font-weight: 400 !important;
 }

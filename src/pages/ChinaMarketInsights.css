@@ -6,7 +6,7 @@
 .china-market-page {
   position: relative;
   overflow-x: clip;
-  background: #FFFFFF;
+  background: var(--pub-white, #FFFFFF);
   color: #141413;
   font-family: var(--font-sans);
 }
@@ -26,7 +26,6 @@
 .china-market-hero h1,
 .china-market-context h2,
 .china-market-section-heading h2,
-.china-market-route h2,
 .china-market-cta h2 {
   margin: 16px 0 0;
   font-family: var(--font-serif);
@@ -36,65 +35,190 @@
 }
 
 /* Hero: text left, one rounded photo right. */
+/* First screen: photograph under the header filling the viewport, copy sitting
+   bottom-left over a scrim — the industry construction. */
 .china-market-hero {
   position: relative;
-  min-height: 0;
-  overflow: visible;
+  height: calc(100svh - 100px);
+  min-height: 460px;
+  overflow: hidden;
+  background: #141413;
+}
+.china-market-hero > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 56%;
+}
+.china-market-hero::before { display: none; }
+.china-market-hero::after {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .18) 0%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, .62) 100%);
+  content: '';
+  pointer-events: none;
+}
+.china-market-hero-copy {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  max-width: 960px;
+  padding: 0 40px 48px;
+}
+.china-market-hero .china-market-kicker { color: rgba(255, 255, 255, .72); }
+.china-market-hero h1 {
+  margin: 14px 0 0;
+  color: #FFFFFF;
+  font-family: var(--font-impact);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.04;
+}
+.china-market-hero-copy p:last-of-type {
+  max-width: 560px;
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, .84);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.china-market-walk { padding: 72px 0 0; }
+.china-market-walk .china-market-container { width: min(100% - 96px, 1280px); }
+/* 38 is allowed for a passage of prose, not for a lone line — this is the whole
+   method in one paragraph, so it qualifies. */
+.china-market-walk-body {
+  max-width: none;
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-serif);
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.32;
+}
+
+/* Same paper as the rest of the page, separated by hairlines rather than a
+   black field. Heading 22, column titles 16 — the block leads, the three
+   points follow. */
+.china-market-capabilities {
   margin: 0;
   background: transparent;
-  padding: 96px 0 0;
+  color: #141413;
+  padding: 72px 0 0;
 }
-.china-market-hero::before,
-.china-market-hero::after { display: none; }
-.china-market-hero-layout {
+.china-market-capabilities .china-market-kicker { color: #7F848A; }
+.china-market-section-heading { max-width: 680px; }
+.china-market-section-heading h2 { margin: 10px 0 0; color: #141413; font-size: 22px; font-weight: 500; letter-spacing: 0; line-height: 1.45; }
+.china-market-section-lede { max-width: 560px; margin: 8px 0 0; color: #565A60; font-size: 16px; line-height: 1.6; }
+.china-market-capability-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
-  align-items: center;
-  gap: clamp(40px, 6vw, 72px);
-  min-height: 0;
-  overflow: visible;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid rgba(17, 17, 19, .12);
+  margin-top: 0;
 }
-.china-market-hero-image {
-  position: relative;
-  z-index: 0;
-  inset: auto;
-  min-height: 480px;
-  overflow: hidden;
+.china-market-capability-grid article {
+  min-height: 0;
+  border: 0;
+  border-left: 1px solid rgba(17, 17, 19, .12);
   border-radius: 0;
+  background: transparent;
+  padding: 26px 28px 0;
+}
+.china-market-capability-grid article:first-child { border-left: 0; padding-left: 0; }
+.china-market-capability-grid article:last-child { padding-right: 0; }
+.china-market-capability-grid article > svg { color: #141413; }
+.china-market-capability-grid svg { color: #FFFFFF; }
+.china-market-capability-grid h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #141413;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  padding: 0;
+}
+.china-market-capability-grid h3 span {
+  color: #7F848A;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .12em;
+}
+.china-market-capability-grid p {
+  margin: 8px 0 0;
+  color: #565A60;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Context: warm white, one image, one statement. The plate sits inside a 1280
+   measure — ~772px at 1440 — large enough to read the people without running
+   off the viewport. */
+.china-market-context .china-market-container { width: min(100% - 96px, 1280px); }
+.china-market-context { margin: 0; background: transparent; padding: 72px 0 104px; }
+.china-market-context-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  align-items: start;
+  gap: 64px;
+}
+.china-market-context h2 {
+  margin: 16px 0 0;
+  color: #141413;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+.china-market-context-body { margin: 20px 0 0; color: #565A60; font-size: 16px; font-weight: 400; line-height: 1.75; }
+.china-market-context-body + .china-market-context-body { margin-top: 18px; }
+.china-market-context-action { margin-top: 26px; }
+.china-market-context-art {
+  width: 100%;
   background: #EDEBE4;
   margin: 0;
 }
-.china-market-hero-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 480px;
-  object-fit: cover;
-  object-position: 50% 60%;
-  filter: saturate(.88) contrast(1.02);
+.china-market-context-art img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: cover; }
+.china-market-context-art figcaption {
+  margin-top: 10px;
+  color: #7F848A;
+  font: 400 11px/1.5 var(--font-sans);
 }
-.china-market-hero-copy {
+
+/* Closing CTA: ink field, light button, hairline into the footer. */
+.china-market-cta {
   position: relative;
-  z-index: 1;
-  display: flex;
-  min-height: 0;
-  max-width: none;
-  flex-direction: column;
-  justify-content: center;
-  color: #141413;
-  padding: 0;
+  isolation: isolate;
+  overflow: visible;
+  margin: 0;
+  border-radius: 0;
+  background: #141413;
+  padding: 96px 0;
 }
-.china-market-hero .china-market-kicker { color: #7F848A; }
-.china-market-hero h1 { max-width: 720px; font-size: 56px; }
-.china-market-hero-copy > p:last-of-type {
-  max-width: 560px;
-  margin: 22px 0 0;
-  color: #565A60;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.7;
-}
-.china-market-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 32px; }
+.china-market-cta::after { display: none; }
+.china-market-cta .china-market-container { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+.china-market-cta .china-market-kicker { color: rgba(250, 249, 245, .6); }
+.china-market-cta h2 { max-width: 760px; margin: 0; color: #FFFFFF; font-family: var(--font-serif); font-size: 38px; font-weight: 400; letter-spacing: -.02em; line-height: 1.3; }
+.china-market-cta div > p:last-child { max-width: 620px; margin: 20px 0 0; color: rgba(250, 249, 245, .74); font-size: 16px; font-weight: 400; line-height: 1.7; }
 .china-market-button {
   display: inline-flex;
   width: max-content;
@@ -115,157 +239,38 @@
   transition: background .2s ease, border-color .2s ease;
 }
 .china-market-button:hover { border-color: #2B2A28; background: #2B2A28; color: #FFFDF8; }
-.china-market-link {
+.china-market-link { color: #141413; font-size: 14px; font-weight: 500; text-decoration: underline; text-decoration-color: rgba(20, 20, 19, .3); text-underline-offset: 4px; }
+
+.china-market-cta .china-market-button--light {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  border-color: #FFFFFF;
+  background: #FFFFFF;
   color: #141413;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: rgba(20, 20, 19, .3);
-  text-underline-offset: 4px;
+  box-shadow: none;
+  padding: 0 22px;
+  white-space: nowrap;
 }
-
-/* Capability field: ink, three hairline cards, Bodoni titles. */
-.china-market-capabilities {
-  margin: 96px 0 0;
-  border: 0;
-  background: #141413;
-  color: #FFFFFF;
-  padding: 96px 0;
-}
-.china-market-capabilities .china-market-kicker { color: rgba(250, 249, 245, .6); }
-.china-market-section-heading { max-width: 680px; }
-.china-market-section-heading h2 { color: #FFFFFF; font-size: 38px; font-weight: 600; letter-spacing: -.025em; line-height: 1.06; }
-.china-market-capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
-.china-market-capability-grid article {
-  min-height: 0;
-  border: 1px solid rgba(250, 249, 245, .16);
-  border-radius: 0;
-  background: transparent;
-  padding: 30px;
-}
-.china-market-capability-grid svg { color: #FFFFFF; }
-.china-market-capability-grid h3 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 28px 0 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: #FFFFFF;
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.15;
-  padding: 0;
-}
-.china-market-capability-grid h3 span {
-  color: rgba(250, 249, 245, .5);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: .12em;
-}
-.china-market-capability-grid p {
-  margin: 12px 0 0;
-  color: rgba(250, 249, 245, .74);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.65;
-}
-
-/* Context: warm white, one image, one statement. */
-.china-market-context { margin: 0; background: transparent; padding: 96px 0; }
-.china-market-context-grid {
-  display: grid;
-  grid-template-columns: minmax(0, .96fr) minmax(0, .9fr);
-  gap: clamp(40px, 6vw, 80px);
-  align-items: center;
-}
-.china-market-context-image {
-  position: relative;
-  min-height: 460px;
-  overflow: hidden;
-  border-radius: 0;
-  margin: 0;
-  background: #EDEBE4;
-}
-.china-market-context-image::after { display: none; }
-.china-market-context-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 52%; filter: saturate(.88) contrast(1.02); }
-.china-market-context h2 { max-width: 560px; color: #141413; font-size: 38px; font-weight: 600; letter-spacing: -.025em; line-height: 1.06; }
-.china-market-context p:last-child { max-width: 560px; margin: 20px 0 0; color: #565A60; font-size: 16px; font-weight: 400; line-height: 1.7; }
-
-/* Route field: ink, numbered promise, Bodoni step titles. */
-.china-market-route { margin: 0; background: #141413; color: #FFFFFF; padding: 96px 0; }
-.china-market-route-layout { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1fr); gap: clamp(48px, 8vw, 128px); }
-.china-market-route .china-market-kicker,
-.china-market-cta .china-market-kicker { color: rgba(250, 249, 245, .6); }
-.china-market-route h2 { max-width: 480px; color: #FFFFFF; font-size: 38px; font-weight: 600; letter-spacing: -.025em; line-height: 1.06; }
-.china-market-route-promise {
-  max-width: 390px;
-  border-left: 2px solid rgba(250, 249, 245, .35);
-  margin: 24px 0 0;
-  color: rgba(250, 249, 245, .74);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.6;
-  padding-left: 16px;
-}
-.china-market-route ol { display: grid; gap: 28px; margin: 0; padding: 0; list-style: none; }
-.china-market-route li { display: grid; grid-template-columns: 40px 1fr; gap: 16px; border: 0; padding: 0; }
-.china-market-route li > span { color: rgba(250, 249, 245, .5); font-size: 14px; font-weight: 500; letter-spacing: .12em; padding-top: 4px; }
-.china-market-route h3 {
-  margin: 0;
-  color: #FFFFFF;
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.15;
-}
-.china-market-route li p { margin: 8px 0 0; color: rgba(250, 249, 245, .74); font-size: 16px; font-weight: 400; line-height: 1.65; }
-
-/* Closing CTA: ink field, light button, hairline into the footer. */
-.china-market-cta {
-  position: relative;
-  isolation: isolate;
-  overflow: visible;
-  margin: 0;
-  border-radius: 0;
-  background: #141413;
-  padding: 96px 0;
-}
-.china-market-cta::after { display: none; }
-.china-market-cta .china-market-container { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
-.china-market-cta .china-market-kicker { color: rgba(250, 249, 245, .6); }
-.china-market-cta h2 { max-width: 700px; color: #FFFFFF; font-size: 56px; }
-.china-market-cta div > p:last-child { max-width: 620px; margin: 20px 0 0; color: rgba(250, 249, 245, .74); font-size: 16px; font-weight: 400; line-height: 1.7; }
-.china-market-button--light { flex: 0 0 auto; border-color: #FFFFFF; background: #FFFFFF; color: #141413; box-shadow: none; }
-.china-market-button--light:hover { border-color: #FFFFFF; background: #FFFFFF; color: #141413; }
+.china-market-cta .china-market-button--light:hover { border-color: #E9E7DF; background: #E9E7DF; color: #141413; }
 .china-market-page.has-cta .home-footer { border-top: 1px solid rgba(255, 255, 255, .16); }
 
 @media (max-width: 900px) {
   .china-market-container { width: min(100% - 40px, 1120px); }
-  .china-market-hero { padding: 64px 0 0; }
-  .china-market-hero-layout { grid-template-columns: 1fr; gap: 32px; }
-  .china-market-hero-image { order: 2; min-height: 320px; }
-  .china-market-hero-image img { min-height: 320px; }
-  .china-market-hero h1 { font-size: 56px; }
-  .china-market-capabilities { margin-top: 64px; padding: 64px 0; }
+  .china-market-hero { height: calc(100svh - 96px); min-height: 420px; }
+  .china-market-hero-copy { padding: 0 20px 32px; }
+  .china-market-hero h1 { font-size: 38px; line-height: 1.1; }
+  .china-market-walk { padding: 64px 0 40px; }
+  .china-market-walk-body { font-size: 22px; line-height: 1.45; }
+  .china-market-capabilities { padding: 64px 0; }
   .china-market-capability-grid { grid-template-columns: 1fr; gap: 12px; }
-  .china-market-context { padding: 64px 0; }
-  .china-market-context-grid { grid-template-columns: 1fr; gap: 28px; }
-  .china-market-context-image { min-height: 320px; }
-  .china-market-route { padding: 64px 0; }
-  .china-market-route-layout { grid-template-columns: 1fr; gap: 36px; }
+  .china-market-context { padding: 0 0 64px; }
+  .china-market-context-grid { grid-template-columns: 1fr; gap: 32px; }
   .china-market-cta { padding: 64px 0; }
   .china-market-cta .china-market-container { align-items: flex-start; flex-direction: column; }
   .china-market-cta h2 { font-size: 56px; }
   .china-market-button { width: auto; }
 }
 @media (max-width: 560px) {
-  .china-market-hero h1,
   .china-market-cta h2 { font-size: 56px; }
   .china-market-actions { align-items: flex-start; flex-direction: column; }
   .china-market-button { width: 100%; }

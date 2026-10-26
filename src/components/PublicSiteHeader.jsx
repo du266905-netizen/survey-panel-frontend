@@ -69,6 +69,23 @@ export default function PublicSiteHeader({ stripStart = null }) {
       setOpenMenu(null);
     }, CLOSE_DELAY);
   };
+  /* One row of a panel. Solutions items carry their own `id` so the copy can be
+     translated before the page behind them exists; the older groups key their
+     translations by route, so both are looked up. */
+  const renderNavItem = (item) => {
+    /* An item with an `id` is a new Solutions entry and must not inherit the
+       copy of the page it temporarily points at. */
+    const entry = item.id ? chrome.items?.[item.id] : chrome.items?.[item.to];
+    return (
+      <Link className="psn-item" to={withLanguage(item.to, language)} key={item.id || item.to} onClick={closeAll}>
+        <span>
+          <strong>{entry?.title || item.title}</strong>
+          <small>{entry?.note || item.note}</small>
+        </span>
+        <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
+      </Link>
+    );
+  };
   const selectLanguage = (code) => {
     closeAll();
     navigateToLanguage(code);
@@ -107,7 +124,9 @@ export default function PublicSiteHeader({ stripStart = null }) {
 
         <nav className="psn-groups" aria-label="Primary navigation">
           {publicNavigation.map((group) => {
-            const hasItems = (group.items || []).length > 0;
+            const items = group.sections ? group.sections.flatMap((section) => section.items) : (group.items || []);
+            const hasItems = items.length > 0;
+            const isWide = items.length > 5;
             const isOpen = openMenu === group.id;
             return (
               <div
@@ -137,24 +156,29 @@ export default function PublicSiteHeader({ stripStart = null }) {
                 )}
 
                 {hasItems && (
-                  <div id={`psn-panel-${group.id}`} className={`psn-panel${isOpen ? ' is-open' : ''}${group.items.length > 5 ? ' is-wide' : ''}`}>
+                  <div id={`psn-panel-${group.id}`} className={`psn-panel${isOpen ? ' is-open' : ''}${isWide ? ' is-wide' : ''}`}>
                     <div className="psn-panel-inner">
-                      <p className="psn-panel-label">{chrome.groups[group.id] || group.label}</p>
-                      {/* More than five entries flow into a second column, five rows each. */}
-                      <div
-                        className={`psn-items${group.items.length > 5 ? ' psn-items--two' : ''}`}
-                        style={group.items.length > 5 ? { gridTemplateRows: `repeat(${Math.ceil(group.items.length / 2)}, auto)` } : undefined}
-                      >
-                        {group.items.map((item) => (
-                          <Link className="psn-item" to={withLanguage(item.to, language)} key={item.to} onClick={closeAll}>
-                            <span>
-                              <strong>{chrome.items[item.to]?.title || item.title}</strong>
-                              <small>{chrome.items[item.to]?.note || item.note}</small>
-                            </span>
-                            <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
-                          </Link>
-                        ))}
-                      </div>
+                      {/* A panel with sections (Solutions) names each column instead
+                          of repeating the trigger's own word at the top. */}
+                      {!group.sections && <p className="psn-panel-label">{chrome.groups[group.id] || group.label}</p>}
+                      {group.sections ? (
+                        <div className="psn-sections">
+                          {group.sections.map((section) => (
+                            <section className="psn-section" key={section.id}>
+                              <p className="psn-section-label">{chrome.sections?.[section.id] || section.label}</p>
+                              {section.items.map(renderNavItem)}
+                            </section>
+                          ))}
+                        </div>
+                      ) : (
+                        /* More than five entries flow into a second column, five rows each. */
+                        <div
+                          className={`psn-items${isWide ? ' psn-items--two' : ''}`}
+                          style={isWide ? { gridTemplateRows: `repeat(${Math.ceil(group.items.length / 2)}, auto)` } : undefined}
+                        >
+                          {group.items.map(renderNavItem)}
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -265,22 +289,27 @@ export default function PublicSiteHeader({ stripStart = null }) {
       </div>
 
       <div className={`psn-mobile${mobileOpen ? ' is-open' : ''}`}>
-        {publicNavigation.map((group) => (
-          <div className="psn-mobile-group" key={group.id}>
-            <p>{chrome.groups[group.id] || group.label}</p>
-            {group.to ? (
-            <Link to={withLanguage(group.to, language)} onClick={closeAll}>
-              {chrome.groups[group.id] || group.label}
-              <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
-            </Link>
-          ) : (group.items || []).length ? group.items.map((item) => (
-              <Link key={item.to} to={withLanguage(item.to, language)} onClick={closeAll}>
-                {chrome.items[item.to]?.title || item.title}
-                <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
-              </Link>
-            )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}
-          </div>
-        ))}
+        {publicNavigation.map((group) => {
+          const mobileItems = group.sections
+            ? group.sections.flatMap((section) => section.items)
+            : (group.items || []);
+          return (
+            <div className="psn-mobile-group" key={group.id}>
+              <p>{chrome.groups[group.id] || group.label}</p>
+              {group.to ? (
+                <Link to={withLanguage(group.to, language)} onClick={closeAll}>
+                  {chrome.groups[group.id] || group.label}
+                  <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
+                </Link>
+              ) : mobileItems.length ? mobileItems.map((item) => (
+                <Link key={item.id || item.to} to={withLanguage(item.to, language)} onClick={closeAll}>
+                  {(item.id ? chrome.items?.[item.id] : chrome.items?.[item.to])?.title || item.title}
+                  <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
+                </Link>
+              )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}
+            </div>
+          );
+        })}
         <div className="psn-mobile-lang">
           <p>Language</p>
           <div role="listbox" aria-label="Choose language">

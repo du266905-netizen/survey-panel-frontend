@@ -19,10 +19,33 @@ export const publicNavigation = [
   {
     id: 'solutions',
     label: 'Solutions',
-    items: [
-      { to: '/business', title: 'Market research', note: 'Studies for product, brand and market entry' },
-      { to: '/china-market-insights', title: 'China market insights', note: 'Local context and expression' },
-      { to: '/how-it-works', title: 'How it works', note: 'The panel, the standard, the process' },
+    /* 2026-10-26 定稿：左栏七个研究对象（市场 → 人 → 产品 → 品牌 → 渠道 →
+       客户），右栏三个方法。页面还没建，所以每一项先指向最接近的现有页；
+       页面做好后只改这里的 `to`，组件不用动。
+       `id` 是文案键：chromeCopy 里按它取译文，缺译文时回落这里的英文。 */
+    sections: [
+      {
+        id: 'research',
+        label: 'Research',
+        items: [
+          { id: 'market-entry', to: '/business', title: 'Market entry', note: 'Size, audience and route to market' },
+          { id: 'china-insights', to: '/china-market-insights', title: 'China insights', note: 'What we see in China, and how we deliver' },
+          { id: 'audience', to: '/business', title: 'Audience understanding', note: 'Who buys, why, and how they split' },
+          { id: 'product-pricing', to: '/business', title: 'Product & pricing', note: 'Concepts, packs and price points' },
+          { id: 'brand-comms', to: '/business', title: 'Brand & communications', note: 'Brand health, advertising and campaigns' },
+          { id: 'channel-retail', to: '/business', title: 'Channel & retail', note: 'Shelf, listing and price execution' },
+          { id: 'customer-experience', to: '/business', title: 'Customer experience', note: 'Why customers leave, and what keeps them' },
+        ],
+      },
+      {
+        id: 'methods',
+        label: 'Methods',
+        items: [
+          { id: 'qualitative', to: '/how-it-works', title: 'Qualitative', note: 'Interviews, groups and observation' },
+          { id: 'quantitative', to: '/how-it-works', title: 'Quantitative', note: 'Surveys, trackers and sizing' },
+          { id: 'mixed', to: '/how-it-works', title: 'Mixed methods', note: 'Both, in one design' },
+        ],
+      },
     ],
   },
   {

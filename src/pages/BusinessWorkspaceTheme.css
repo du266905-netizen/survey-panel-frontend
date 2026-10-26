@@ -4349,7 +4349,8 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
      13   UI       buttons, inputs, small print, table values
      14   body     prose, row titles, row bodies
      16   section  section headings inside a page
-     22   panel    dialog and panel titles
+     22   panel    dialog and panel titles, standfirst paragraphs
+     32   article  article and document titles — 600 only
      38   page     page titles
      56   figure   the four figures — the only large thing on a page
      80   display  largest homepage title (italic display)
@@ -4357,6 +4358,35 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
    The 80 step was authorised by the user on 2026-10-19 for the single largest
    homepage title only; 38 / 56 remain the page / figure steps. Anything not
    on this list is a bug, not a judgement call.
+
+   The 32 step was authorised on 2026-10-26 for article and document titles,
+   at 600 and no other weight. It is not a marketing-page step: if a page
+   needs a title, that is 56, and if it needs a section heading, that is 22.
+
+   ── Part 18a · what the 38 step may and may not do ──────────────────────
+
+   38 sits close enough to the tier around it that a lone, centred line reads
+   as a caption that grew rather than a statement. The owner set the boundary
+   on 2026-10-26:
+
+     allowed   a long passage of prose (the homepage statement)
+               a passage that spans the full measure (the Anthropic reference)
+               the closing statement on a dark band
+               the research workspace banner, upright, never bold
+               inside an article body, as a lead
+
+   Measure is part of the rule, not a detail: 38 must run the full width of its
+   container and break at the edge. Capped to a 760 or 1000 reading column it
+   stops being a statement and reads as a wall of text (learned 2026-10-26 on
+   the China page, twice).
+     not       a centred transitional line above a section
+               a slogan beside an image
+               a line that stands alone with nothing around it
+               a section heading or a card title
+
+   When 38 does not apply, use 56, then the 22 standfirst, in that order.
+   Weight is 400 everywhere unless the owner asks for bold on a named slot;
+   none of the steps carries a bold variant by default.
 
    ── Part 18b · upright and italic ───────────────────────────────────────
 

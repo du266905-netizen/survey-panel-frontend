@@ -46,19 +46,7 @@
 
 /* `public-buttons.css` softens every public control to 6px. The owner asked
    for sharp corners on images and buttons; this is the override. */
-.atlas-register,
-.video-hero-cta,
-.home-auth-email button,
-.ps-button,
-.business-marketing-page .business-button,
-.join-choice-page .business-button,
-.landing-page--auth-only .public-auth-submit,
-.landing-page--auth-only .public-auth-email-cta,
-.public-site-layout .how-reward-copy a,
-.public-site-layout .approach-network-copy > a,
-.china-market-page .china-market-button,
-.marketing-unsubscribe-page a,
-.recovery-page--public .recovery-submit {
+.atlas-register, .video-hero-cta, .home-auth-email button, .ps-button, .business-marketing-page .business-button, .join-choice-page .business-button, .landing-page--auth-only .public-auth-submit, .landing-page--auth-only .public-auth-email-cta, .public-site-layout .how-reward-copy a, .public-site-layout .approach-network-copy > a, .marketing-unsubscribe-page a, .recovery-page--public .recovery-submit {
   border-radius: 0 !important;
 }
 
@@ -98,14 +86,7 @@
 /* Images are square on every public page. Wrappers that carried a 22px radius
    were zeroed in their own sheets; this catches the <img> itself and any
    figure that still clips to a corner. */
-.public-site-layout img,
-.home-atlas img,
-.china-market-page img,
-.business-marketing-page img,
-.business-public-page img,
-.join-choice-page img,
-.business-access-page img,
-.marketing-unsubscribe-page img {
+.public-site-layout img, .home-atlas img, .business-marketing-page img, .business-public-page img, .join-choice-page img, .business-access-page img, .marketing-unsubscribe-page img {
   border-radius: 0 !important;
 }
 
@@ -468,11 +449,6 @@
   background: #fff !important;
   color: #141413 !important;
 }
-.china-market-cta .china-market-button {
-  border-color: #fff !important;
-  background: #fff !important;
-  color: #141413 !important;
-}
 
 /* Homepage primaries on light surfaces, same lime as everywhere else. */
 .home-atlas .community-hub-primary-action,
@@ -496,20 +472,11 @@
 /* The reading pages' own heroes still carried 96/72. The mock the owner
    approved opens at 48/32 and lets the first section start at 56. */
 .public-site-layout .how-hero { padding: 48px 0 24px !important; }
-.china-market-hero { padding: 48px 0 32px !important; }
 .business-marketing-page .business-hero { padding: 48px 0 32px !important; }
 .public-site-layout .approach-question { padding: 56px 0 !important; }
 
 /* The rhythm sheet must beat each page's own section padding. */
-.public-site-layout .how-platform,
-.public-site-layout .how-panelists,
-.public-site-layout .how-standards,
-.public-site-layout .how-reward,
-.public-site-layout .approach-question,
-.public-site-layout .approach-network,
-.china-market-capabilities,
-.china-market-context,
-.china-market-route {
+.public-site-layout .how-platform, .public-site-layout .how-panelists, .public-site-layout .how-standards, .public-site-layout .how-reward, .public-site-layout .approach-question, .public-site-layout .approach-network {
   padding-top: clamp(32px, 4vw, 48px) !important;
   padding-bottom: clamp(32px, 4vw, 48px) !important;
 }

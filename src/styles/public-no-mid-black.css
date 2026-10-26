@@ -19,29 +19,3 @@
   border-color: #DEEF24 !important;
   color: #14161A !important;
 }
-
-.china-market-capabilities,
-.china-market-route {
-  background: #FFFFFF !important;
-  color: #141413 !important;
-}
-.china-market-capabilities h2,
-.china-market-capabilities h3,
-.china-market-capabilities p,
-.china-market-capabilities span,
-.china-market-capabilities strong,
-.china-market-route h2,
-.china-market-route h3,
-.china-market-route p,
-.china-market-route span,
-.china-market-route li,
-.china-market-route strong {
-  color: #141413 !important;
-}
-.china-market-capabilities .china-market-kicker,
-.china-market-route .china-market-kicker { color: #7F848A !important; }
-.china-market-capability-grid article {
-  background: #FFFFFF !important;
-  border-color: rgba(17,17,19,.12) !important;
-}
-.china-market-route li > span { color: #7F848A !important; }

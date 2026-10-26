@@ -20959,7 +20959,21 @@ export const chromeCopy = {
       "participants": "参与者",
       "support": "支持"
     },
+    "sections": {
+      "research": "研究方案",
+      "methods": "方法"
+    },
     "items": {
+      "market-entry": { "title": "进入市场", "note": "规模、受众与进入路径" },
+      "china-insights": { "title": "中国市场洞察", "note": "我们对中国的观察与执行" },
+      "audience": { "title": "了解受众", "note": "谁在买、为什么、怎么分群" },
+      "product-pricing": { "title": "产品与定价", "note": "概念、包装与价格点" },
+      "brand-comms": { "title": "品牌与传播", "note": "品牌健康、广告与传播" },
+      "channel-retail": { "title": "渠道与零售", "note": "货架、上架与价格执行" },
+      "customer-experience": { "title": "客户体验与留存", "note": "为什么离开、靠什么留住" },
+      "qualitative": { "title": "定性研究", "note": "深访、座谈会与观察" },
+      "quantitative": { "title": "定量研究", "note": "问卷、追踪与规模测算" },
+      "mixed": { "title": "混合研究", "note": "两种方法放在一个设计里" },
       "/business": {
         "title": "市场研究",
         "note": "针对产品、品牌与市场进入的研究"
@@ -21062,7 +21076,21 @@ export const chromeCopy = {
       "participants": "參與者",
       "support": "支援"
     },
+    "sections": {
+      "research": "研究方案",
+      "methods": "方法"
+    },
     "items": {
+      "market-entry": { "title": "進入市場", "note": "規模、受眾與進入路徑" },
+      "china-insights": { "title": "中國市場洞察", "note": "我們對中國的觀察與執行" },
+      "audience": { "title": "了解受眾", "note": "誰在買、為什麼、如何分群" },
+      "product-pricing": { "title": "產品與定價", "note": "概念、包裝與價格點" },
+      "brand-comms": { "title": "品牌與傳播", "note": "品牌健康、廣告與傳播" },
+      "channel-retail": { "title": "渠道與零售", "note": "貨架、上架與價格執行" },
+      "customer-experience": { "title": "客戶體驗與留存", "note": "為什麼離開、靠什麼留住" },
+      "qualitative": { "title": "定性研究", "note": "深訪、座談會與觀察" },
+      "quantitative": { "title": "定量研究", "note": "問卷、追蹤與規模測算" },
+      "mixed": { "title": "混合研究", "note": "兩種方法放在一個設計裡" },
       "/business": {
         "title": "市場研究",
         "note": "針對產品、品牌與市場進入的研究"

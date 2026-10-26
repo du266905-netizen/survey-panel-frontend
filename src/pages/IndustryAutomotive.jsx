@@ -69,7 +69,7 @@ export default function IndustryAutomotive() {
 
       <section className="ind-section ind-section--methods">
         <div className="ind-container">
-          <p className="ind-kicker ind-kicker--center">{c.methodsKicker}</p>
+          <p className="ind-kicker">{c.methodsKicker}</p>
           <p className="ind-methods-lead">{c.methodsLead}</p>
           <div className="ind-methods">
             {c.methods.map(([term, meaning]) => (

@@ -202,17 +202,16 @@
    Five cards, not five labels. Each one carries a judgement and its limit;
    the term alone told a buyer nothing. */
 
-.industry-page .ind-kicker--center { text-align: center; }
-
+/* 2026-10-26：原来是 1080 宽居中的 38。38 单挂一条居中句是明令禁止的用法，
+   改成左对齐的 22 standfirst，和 intro 那段同一个做法。 */
 .industry-page .ind-methods-lead {
-  max-width: 1080px;
-  margin: 16px auto 0;
+  max-width: 680px;
+  margin: 14px 0 0;
   color: var(--pub-ink);
   font-family: var(--font-serif);
-  font-size: 38px;
-  letter-spacing: -.025em;
-  line-height: 1.12;
-  text-align: center;
+  font-size: 22px;
+  letter-spacing: -.01em;
+  line-height: 1.45;
 }
 
 .industry-page .ind-methods {
@@ -328,7 +327,6 @@
   .industry-page .ind-stage-cards { grid-template-columns: 1fr; gap: 22px; }
   .industry-page .ind-methods { grid-template-columns: 1fr; }
   .industry-page .ind-cta { padding: 44px 0; }
-  .industry-page .ind-methods-lead { font-size: 22px; line-height: 1.3; }
   .industry-page .ind-cta-actions { flex-direction: column; }
   .industry-page .ind-cta-button { width: 100%; justify-content: center; }
 }
