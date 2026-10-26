@@ -25,6 +25,23 @@ export default function PublicSiteHeader({ stripStart = null }) {
   const { pathname } = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  /* 登录下拉：只有点击才展开（2026-10-26 用户要求）。 */
+  const [signInOpen, setSignInOpen] = useState(false);
+  const signInRef = useRef(null);
+
+  useEffect(() => {
+    if (!signInOpen) return undefined;
+    const onDown = (event) => {
+      if (signInRef.current && !signInRef.current.contains(event.target)) setSignInOpen(false);
+    };
+    const onKey = (event) => { if (event.key === 'Escape') setSignInOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [signInOpen]);
   const closeTimer = useRef(null);
 
   const clearTimer = () => {
@@ -173,7 +190,32 @@ export default function PublicSiteHeader({ stripStart = null }) {
             </div>
           </div>
 
-          {!user && <Link className="psn-signin" to={withLanguage('/access', language)}>{chrome.header.signIn}</Link>}
+                    {!user && (
+            <div className="psn-signin-wrap" ref={signInRef}>
+              <button
+                type="button"
+                className={`psn-signin${signInOpen ? ' is-open' : ''}`}
+                aria-expanded={signInOpen}
+                aria-haspopup="menu"
+                onClick={() => setSignInOpen((open) => !open)}
+              >
+                {chrome.header.signIn}
+                <ChevronDown aria-hidden="true" size={12} strokeWidth={1.9} />
+              </button>
+              {signInOpen && (
+                <div className="psn-signin-menu" role="menu">
+                  <Link role="menuitem" to={withLanguage('/login', language)} onClick={() => setSignInOpen(false)}>
+                    <span>{publicCopy.pages.access.form.participant}</span>
+                    <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.7} />
+                  </Link>
+                  <Link role="menuitem" className="is-research" to={withLanguage('/business/login', language)} onClick={() => setSignInOpen(false)}>
+                    <span>{publicCopy.pages.access.form.researcher}</span>
+                    <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.7} />
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
           <Link className="psn-cta" to={workspaceHref}>
             {ctaLabel}
             <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.8} />
