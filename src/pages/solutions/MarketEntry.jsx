@@ -31,6 +31,7 @@ const copy = {
       { icon: Route, title: 'Custom research', body: 'Agree the format, participants, timing and deliverables before the work starts.' },
       { icon: LayoutDashboard, title: 'One workspace', body: 'The brief, the confirmed plan, progress and next steps stay in one place.' },
     ],
+    contactTitle: ['Tell us what you have in mind, ', 'and we will work out the next step together.'],
     methodsLabel: 'Methods',
     methods: [
       { label: 'Qualitative', to: '/how-it-works' },
@@ -53,6 +54,7 @@ const copy = {
       { icon: Route, title: 'Custom research', body: 'Agree the format, participants, timing and deliverables before the work starts.' },
       { icon: LayoutDashboard, title: 'One workspace', body: 'The brief, the confirmed plan, progress and next steps stay in one place.' },
     ],
+    contactTitle: ['Tell us what you have in mind, ', 'and we will work out the next step together.'],
     methodsLabel: 'Methods',
     methods: [
       { label: 'Qualitative', to: '/how-it-works' },
@@ -75,6 +77,7 @@ const copy = {
       { icon: Route, title: '定制研究', body: '先定形式、参与者、时间与交付物，再开工。' },
       { icon: LayoutDashboard, title: '统一工作区', body: '需求、确认的方案、进度和下一步，都在一个工作区里。' },
     ],
+    contactTitle: ['告诉我们你的想法，', '我们讨论下一步怎么走。'],
     methodsLabel: '方法',
     methods: [
       { label: '定性', to: '/how-it-works' },
@@ -97,6 +100,7 @@ const copy = {
       { icon: Route, title: '定製研究', body: '先定形式、參與者、時間與交付物，再開工。' },
       { icon: LayoutDashboard, title: '統一工作區', body: '需求、確認的方案、進度與下一步，都在一個工作區裡。' },
     ],
+    contactTitle: ['告訴我們的想法，', '我們討論下一步怎麼走。'],
     methodsLabel: '方法',
     methods: [
       { label: '定性', to: '/how-it-works' },
@@ -162,7 +166,13 @@ export default function MarketEntry() {
             );
           })}
         </ul>
-        <div className="me-platform-actions">
+      </section>
+
+      <section className="me-contact" aria-labelledby="me-contact-title">
+        <h2 id="me-contact-title" className="me-contact-title">
+          {t.contactTitle.map((line) => <span key={line}>{line}</span>)}
+        </h2>
+        <div className="me-actions">
           <Link className="me-action me-action--primary" to={withLanguage('/business/register', language)}>
             {t.free}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
