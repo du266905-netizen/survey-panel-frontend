@@ -1,0 +1,259 @@
+/* Solutions · Audience — 2026-10-27.
+   Same three grounds as the market-entry page: grey hero, the methods folded
+   into that same ground, one deeper grey band for the audience plan, then the
+   black closing band. Nothing new here except the numbered list. */
+
+.audience-page {
+  background: #2B2B2B;
+  color: #FFFFFF;
+}
+
+/* ---- first screen ------------------------------------------------------- */
+
+.audience-page .au-hero {
+  display: flex;
+  min-height: calc(82svh - 100px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px 72px;
+  text-align: center;
+}
+
+.audience-page .au-eyebrow {
+  margin: 0;
+  color: rgba(250, 249, 245, .56);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.audience-page .au-title {
+  max-width: 1200px;
+  margin: 22px 0 0;
+  font-family: var(--font-impact);
+  font-size: clamp(44px, 5.4vw, 80px);
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.audience-page .au-lede {
+  max-width: 720px;
+  margin: 28px 0 0;
+  color: rgba(250, 249, 245, .66);
+  font-family: var(--font-sans);
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.audience-page .au-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 44px;
+}
+
+.audience-page .au-action {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 26px;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.audience-page .au-action--primary {
+  border-color: var(--pub-lime);
+  background: var(--pub-lime);
+  color: #141413;
+}
+
+.audience-page .au-action--primary:hover { border-color: var(--pub-lime-deep); background: var(--pub-lime-deep); }
+
+.audience-page .au-action--quiet {
+  border-color: rgba(250, 249, 245, .34);
+  color: #FFFFFF;
+}
+
+.audience-page .au-action--quiet:hover { border-color: #FFFFFF; background: rgba(250, 249, 245, .08); }
+
+/* ---- methods band ------------------------------------------------------- */
+
+.audience-page .au-methods {
+  padding: 0 clamp(24px, 5vw, 64px) clamp(56px, 6vw, 88px);
+}
+
+.audience-page .au-eyebrow--light { color: rgba(250, 249, 245, .5); }
+
+.audience-page .au-methods > .au-eyebrow {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.audience-page .au-methods ul {
+  display: grid;
+  width: min(100%, 1120px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 32px auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.audience-page .au-methods li {
+  border-top: 1px solid rgba(250, 249, 245, .22);
+  text-align: center;
+}
+
+.audience-page .au-methods a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #FFFFFF;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  padding: 22px 0;
+  text-decoration: none;
+}
+
+.audience-page .au-methods a svg { color: rgba(250, 249, 245, .5); transition: transform .2s ease, color .2s ease; }
+.audience-page .au-methods a:hover svg { color: #FFFFFF; transform: translateX(3px); }
+
+/* ---- audience plan ------------------------------------------------------
+   The five questions are the plan form's own field labels, set as an index:
+   number at 11, question at 22 in serif, one hairline per row. */
+
+.audience-page .au-scheme {
+  background: #222222;
+  padding: clamp(72px, 8vw, 112px) clamp(24px, 5vw, 64px) clamp(64px, 7vw, 96px);
+}
+
+.audience-page .au-scheme > .au-eyebrow,
+.audience-page .au-scheme-title,
+.audience-page .au-scheme-list,
+.audience-page .au-scheme-note {
+  width: min(100%, 1120px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.audience-page .au-scheme-title {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-family: var(--font-impact);
+  font-size: clamp(34px, 3.4vw, 56px);
+  font-weight: 400;
+  letter-spacing: -.028em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.audience-page .au-scheme-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+  margin-top: 56px;
+  padding: 0;
+  list-style: none;
+}
+
+.audience-page .au-scheme-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  border-top: 1px solid rgba(250, 249, 245, .2);
+  padding: 26px 0 30px;
+}
+
+.audience-page .au-scheme-index {
+  color: rgba(250, 249, 245, .38);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: .08em;
+}
+
+.audience-page .au-scheme-list p {
+  margin: 0;
+  color: #FFFFFF;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  letter-spacing: -.015em;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.audience-page .au-scheme-note {
+  max-width: 720px;
+  margin-top: 40px;
+  color: rgba(250, 249, 245, .5);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .audience-page .au-hero { min-height: calc(100svh - 96px); padding-top: 56px; }
+  .audience-page .au-lede { font-size: 16px; }
+  .audience-page .au-methods ul { grid-template-columns: 1fr; gap: 0; }
+  .audience-page .au-scheme-list { grid-template-columns: 1fr; margin-top: 36px; }
+  .audience-page .au-scheme-list p { font-size: 16px; }
+}
+
+/* Phones: 44px is the clamp floor and it breaks 为什么 in half. One step down
+   so the line breaks land on the 、 instead. */
+@media (max-width: 600px) {
+  /* keep-all: break at the 、 instead of inside 为什么. */
+  .audience-page .au-title { font-size: 32px; line-height: 1.16; word-break: keep-all; }
+}
+
+/* ---- closing greeting --------------------------------------------------- */
+
+.audience-page .au-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #141413;
+  padding: clamp(80px, 9vw, 128px) clamp(24px, 5vw, 64px);
+  text-align: center;
+}
+
+.audience-page .au-contact-title {
+  max-width: 1120px;
+  margin: 0;
+  font-family: var(--font-impact);
+  font-size: clamp(34px, 3.6vw, 56px);
+  font-weight: 400;
+  letter-spacing: -.028em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.audience-page .au-contact-title span { display: inline; }
+
+.audience-page .au-contact .au-actions { margin-top: 40px; }
+
+@media (max-width: 900px) {
+  .audience-page .au-contact { padding-right: 16px; padding-left: 16px; }
+  .audience-page .au-contact-title { font-size: clamp(28px, 8vw, 40px); }
+  .audience-page .au-contact-title span { display: block; }
+}
+
+@media (max-height: 779px) {
+  .audience-page .au-hero { padding-top: 28px; padding-bottom: 36px; }
+  .audience-page .au-title { margin-top: 14px; }
+  .audience-page .au-lede { margin-top: 16px; }
+  .audience-page .au-actions { margin-top: 26px; }
+}

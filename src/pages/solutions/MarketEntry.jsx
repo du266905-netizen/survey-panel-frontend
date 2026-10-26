@@ -41,8 +41,8 @@ const copy = {
     contactTitle: ['Tell us what you have in mind, ', 'and we will work out the next step together.'],
     methodsLabel: 'Methods',
     methods: [
-      { label: 'Qualitative', to: '/how-it-works' },
-      { label: 'Quantitative', to: '/how-it-works' },
+      { label: 'Qualitative', to: '/solutions/qualitative' },
+      { label: 'Quantitative', to: '/solutions/quantitative' },
       { label: 'Mixed methods', to: '/how-it-works' },
     ],
   },
@@ -64,8 +64,8 @@ const copy = {
     contactTitle: ['Tell us what you have in mind, ', 'and we will work out the next step together.'],
     methodsLabel: 'Methods',
     methods: [
-      { label: 'Qualitative', to: '/how-it-works' },
-      { label: 'Quantitative', to: '/how-it-works' },
+      { label: 'Qualitative', to: '/solutions/qualitative' },
+      { label: 'Quantitative', to: '/solutions/quantitative' },
       { label: 'Mixed methods', to: '/how-it-works' },
     ],
   },
@@ -87,8 +87,8 @@ const copy = {
     contactTitle: ['告诉我们你的想法，', '我们讨论下一步怎么走。'],
     methodsLabel: '方法',
     methods: [
-      { label: '定性', to: '/how-it-works' },
-      { label: '定量', to: '/how-it-works' },
+      { label: '定性', to: '/solutions/qualitative' },
+      { label: '定量', to: '/solutions/quantitative' },
       { label: '混合', to: '/how-it-works' },
     ],
   },
@@ -110,8 +110,8 @@ const copy = {
     contactTitle: ['告訴我們的想法，', '我們討論下一步怎麼走。'],
     methodsLabel: '方法',
     methods: [
-      { label: '定性', to: '/how-it-works' },
-      { label: '定量', to: '/how-it-works' },
+      { label: '定性', to: '/solutions/qualitative' },
+      { label: '定量', to: '/solutions/quantitative' },
       { label: '混合', to: '/how-it-works' },
     ],
   },
