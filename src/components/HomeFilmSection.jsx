@@ -8,7 +8,9 @@ import './HomeFilmSection.css';
 
 const VIDEO_EMBED_URL = 'https://player.mediadelivery.net/embed/763269/6a8340b7-c25b-4425-8ea0-96103d8312b5?autoplay=false&loop=false&muted=true&preload=true&responsive=true';
 
-export default function HomeFilmSection() {
+/* `poster` lets a page use its own cover; the About page passes the city
+   photograph, the homepage keeps the community still. */
+export default function HomeFilmSection({ poster = videoPoster }) {
   const [open, setOpen] = useState(false);
   return (
     <section className="home-film" aria-label="Film">
@@ -22,7 +24,7 @@ export default function HomeFilmSection() {
           />
         ) : (
           <button className="home-film-poster" type="button" onClick={() => setOpen(true)} aria-label="Play the film">
-            <img src={videoPoster} alt="" loading="lazy" decoding="async" />
+            <img src={poster} alt="" loading="lazy" decoding="async" />
             <span className="home-film-play" aria-hidden="true"><Play size={22} strokeWidth={2} fill="currentColor" /></span>
           </button>
         )}

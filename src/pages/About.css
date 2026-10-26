@@ -1,68 +1,23 @@
-/* About GuanyiSearch — 2026-10-25.
+/* About GuanyiSearch — 2026-10-27.
 
-   The film runs full bleed at the top. Below it: the page title on the left
-   with the two paragraphs on the right, then the China story across the full
-   width. Both large headings run at 38 on the same left edge. */
+   Statement first: eyebrow, the theme at 80, one paragraph, two buttons.
+   Then the film as a large frame (not full bleed), then the human-first
+   paragraph, then the China story. Centred for the statement, left-aligned
+   from the film down — the page turns from a cover into a document. */
 
 .about-page { color: var(--pub-ink); }
 
-/* ---- full-bleed film ---------------------------------------------------- */
+/* ---- statement ---------------------------------------------------------- */
 
-.about-page .ab-film { width: 100%; }
-
-.about-page .ab-film .home-film { background: transparent; padding: 0; }
-
-.about-page .ab-film .home-film-frame {
-  width: 100%;
-  height: calc(100svh - 100px);
-  min-height: 480px;
-  aspect-ratio: auto;
-  border-radius: 0;
-  background: #141a17;
-}
-
-/* ---- document block ----------------------------------------------------- */
-
-.about-page .ab-doc,
-.about-page .ab-story {
+.about-page .ab-hero {
   width: min(100% - 96px, var(--pub-container));
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.about-page .ab-doc {
-  padding: 88px 0 0;
-}
-
-/* Two equal columns, same structure on both sides: one eyebrow, one paragraph. */
-.about-page .ab-two {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 88px;
-  margin-top: 56px;
-}
-
-/* The theme line sits centred, directly above the two columns. */
-.about-page .ab-head {
-  padding: 0 0 8px;
+  margin: 0 auto;
+  padding: 104px 0 0;
   text-align: center;
 }
 
-.about-page .ab-theme {
-  max-width: 900px;
-  margin: 18px auto 0;
-  /* 2026-10-26：主题句归到 56 档，字体用 Newsreader（56/80 专用展示体）。 */
-  font-family: var(--font-impact);
-  font-size: clamp(38px, 4vw, 56px);
-  font-weight: 400;
-  letter-spacing: -.028em;
-  line-height: 1.06;
-}
-
-
-
 .about-page .ab-eyebrow {
-  margin: 0 0 16px;
+  margin: 0;
   color: var(--pub-mute);
   font-family: var(--font-sans);
   font-size: 11px;
@@ -72,29 +27,155 @@
   text-transform: uppercase;
 }
 
+.about-page .ab-theme {
+  max-width: 1040px;
+  margin: 22px auto 0;
+  /* 2026-10-27：主题句提到页首，按业主定的 80 档；56/80 用 Newsreader。 */
+  font-family: var(--font-impact);
+  font-size: clamp(56px, 5.6vw, 80px);
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+}
+
+.about-page .ab-lede {
+  max-width: 660px;
+  margin: 34px auto 0;
+  color: var(--pub-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.74;
+  text-wrap: pretty;
+}
+
+.about-page .ab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.about-page .ab-button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #141413;
+  border-radius: 0;
+  background: #141413;
+  color: #FFFDF8;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 26px;
+  text-decoration: none;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.about-page .ab-button:hover { border-color: #2B2A28; background: #2B2A28; color: #FFFDF8; }
+
+.about-page .ab-button--ghost {
+  border-color: rgba(20, 20, 19, .26);
+  background: transparent;
+  color: #141413;
+}
+
+.about-page .ab-button--ghost:hover { border-color: #141413; background: #F5F5F3; color: #141413; }
+
+/* ---- film: large frame, not full bleed ---------------------------------- */
+
+.about-page .ab-film {
+  width: min(100% - 96px, var(--pub-container));
+  margin: 72px auto 0;
+}
+
+.about-page .ab-film .home-film { background: transparent; padding: 0; }
+
+.about-page .ab-film .home-film-frame {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+}
+
+/* ---- human first -------------------------------------------------------- */
+
+.about-page .ab-manifesto {
+  display: grid;
+  width: min(100% - 96px, var(--pub-container));
+  margin: 104px auto 0;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  column-gap: 64px;
+  row-gap: 20px;
+  align-items: start;
+}
+
+/* Both labels sit in the first row, so the paragraph and the list start on the
+   same line — nothing to eyeball. */
+.about-page .ab-manifesto .ab-eyebrow { margin: 0; }
+
 .about-page .ab-body {
+  max-width: 800px;
   margin: 0;
   color: var(--pub-ink);
-  font-family: var(--font-serif);
-  font-size: clamp(17px, 1.35vw, 19px);
-  letter-spacing: -.006em;
-  line-height: 1.7;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  letter-spacing: -.008em;
+  line-height: 1.58;
+  text-wrap: pretty;
 }
+
+/* Policies and terms: three rows, hairline between, arrow at the right. */
+.about-page .ab-policy {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--pub-hair);
+  list-style: none;
+}
+
+.about-page .ab-policy li { border-bottom: 1px solid var(--pub-hair); }
+
+.about-page .ab-policy a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--pub-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 12px 0;
+  text-decoration: none;
+}
+
+.about-page .ab-policy-arrow {
+  flex: 0 0 auto;
+  color: var(--pub-mute);
+  transition: color .2s ease, transform .2s ease;
+}
+
+.about-page .ab-policy a:hover .ab-policy-arrow { color: #141413; transform: translateX(3px); }
 
 /* ---- the China story ---------------------------------------------------- */
 
 .about-page .ab-story {
-  margin-top: 96px;
-  padding-bottom: 112px;
+  width: min(100% - 96px, var(--pub-container));
+  margin: 112px auto 0;
+  padding-bottom: 0;
 }
 
 .about-page .ab-section-title {
-  margin: 0 0 32px;
-  font-family: var(--font-serif);
-  font-size: 38px;
+  max-width: 960px;
+  margin: 0 0 44px;
+  /* 区段标题不是 38 的场合（38 只给满栏陈述），按规矩退到 56。 */
+  font-family: var(--font-impact);
+  font-size: 56px;
   font-weight: 400;
-  letter-spacing: -.025em;
-  line-height: 1.12;
+  letter-spacing: -.028em;
+  line-height: 1.05;
 }
 
 .about-page .ab-points {
@@ -142,21 +223,120 @@
 }
 
 @media (max-width: 900px) {
-  .about-page .ab-doc,
-  .about-page .ab-story { width: min(100% - 48px, var(--pub-container)); }
+  .about-page .ab-hero,
+  .about-page .ab-film,
+  .about-page .ab-manifesto,
+  .about-page .ab-story { width: min(100% - 40px, var(--pub-container)); }
 
-  .about-page .ab-film .home-film-frame { height: calc(100svh - 96px); min-height: 380px; }
-
-  .about-page .ab-doc {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding-top: 48px;
-  }
-
-  .about-page .ab-right { gap: 32px; }
-  .about-page .ab-body { font-size: 16px; }
-  .about-page .ab-story { margin-top: 56px; padding-bottom: 72px; }
-  .about-page .ab-two { grid-template-columns: 1fr; gap: 32px; margin-top: 32px; }
-  .about-page .ab-section-title { font-size: 22px; margin-bottom: 28px; }
+  .about-page .ab-hero { padding-top: 64px; }
+  .about-page .ab-theme { font-size: clamp(38px, 9.2vw, 56px); }
+  .about-page .ab-lede { margin-top: 24px; font-size: 16px; }
+  .about-page .ab-actions { margin-top: 32px; }
+  .about-page .ab-film { margin-top: 48px; }
+  /* Single column: the policy label has to sit with its list, not under the
+     human-first label, so the flex order puts the paragraph back between them. */
+  .about-page .ab-manifesto { display: flex; flex-direction: column; margin-top: 64px; }
+  .about-page .ab-manifesto .ab-human-label { order: 1; margin-bottom: 14px; }
+  .about-page .ab-manifesto .ab-body { order: 2; }
+  .about-page .ab-manifesto .ab-policy-label { order: 3; margin-top: 44px; margin-bottom: 14px; }
+  .about-page .ab-manifesto .ab-policy { order: 4; max-width: none; }
+  .about-page .ab-story { margin-top: 64px; padding-bottom: 0; }
+  .about-page .ab-section-title { font-size: 32px; margin-bottom: 28px; }
   .about-page .ab-points { grid-template-columns: 1fr; gap: 28px; }
+}
+
+@media (max-width: 560px) {
+  .about-page .ab-actions { flex-direction: column; align-items: stretch; }
+  .about-page .ab-button { width: 100%; }
+}
+
+/* ---- industries ---------------------------------------------------------
+   Ten cards, two columns. The fill does the separating — no borders, no
+   shadows, no arrows; the whole card is the link. Copy comes from each
+   industry page, so the card and the page can never disagree. */
+
+.about-page .ab-industries {
+  width: min(100% - 96px, var(--pub-container));
+  margin: 120px auto 0;
+  padding-bottom: 128px;
+}
+
+.about-page .ab-ind-head { text-align: center; }
+
+.about-page .ab-ind-title {
+  max-width: 960px;
+  margin: 18px auto 0;
+  font-family: var(--font-impact);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.028em;
+  line-height: 1.05;
+}
+
+.about-page .ab-ind-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+}
+
+.about-page .ab-ind-card {
+  display: block;
+  background: #FAF9F5;
+  color: var(--pub-ink);
+  padding: 26px 28px 30px;
+  text-decoration: none;
+  transition: background .2s ease;
+}
+
+.about-page .ab-ind-card:hover { background: #FFFFFF; box-shadow: inset 0 0 0 1px var(--pub-hair); }
+.about-page .ab-ind-card:focus-visible { outline: 2px solid #141413; outline-offset: 2px; }
+
+.about-page .ab-ind-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about-page .ab-ind-arrow {
+  color: var(--pub-mute);
+  transition: color .2s ease, transform .2s ease;
+}
+
+.about-page .ab-ind-card:hover .ab-ind-arrow { color: #141413; transform: translateX(3px); }
+
+.about-page .ab-ind-num {
+  display: block;
+  color: var(--pub-faint);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+}
+
+.about-page .ab-ind-card h3 {
+  margin: 12px 0 0;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+
+.about-page .ab-ind-card p {
+  max-width: 470px;
+  margin: 12px 0 0;
+  color: var(--pub-body);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .about-page .ab-industries { width: min(100% - 40px, var(--pub-container)); margin-top: 64px; padding-bottom: 72px; }
+  .about-page .ab-ind-title { font-size: 32px; }
+  .about-page .ab-ind-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 32px; }
+  .about-page .ab-ind-card { padding: 22px 22px 26px; }
 }

@@ -456,7 +456,7 @@
 .home-global-band-inner {
   display: grid;
   width: min(100% - 80px, 1120px);
-  grid-template-columns: minmax(0, 360px) minmax(0, 640px);
+  grid-template-columns: minmax(0, 300px) minmax(0, 760px);
   justify-content: center;
   gap: clamp(32px, 4vw, 56px);
   align-items: center;
@@ -474,13 +474,14 @@
 }
 .home-global-band h2 {
   margin: 0 auto;
-  max-width: 640px;
+  max-width: 760px;
   color: #fff;
-  font-family: var(--font-reading);
-  font-size: 38px;
+  /* 2026-10-27：区段标题不用 38，按字阶退到 56（Newsreader）。 */
+  font-family: var(--font-impact);
+  font-size: 56px;
   font-weight: 400;
-  letter-spacing: -.02em;
-  line-height: 1.1;
+  letter-spacing: -.028em;
+  line-height: 1.05;
   white-space: pre-line;
 }
 .home-global-band-copy {
@@ -497,3 +498,25 @@
 @media (max-width: 900px) {
   .home-global-band-inner { width: calc(100% - 40px); grid-template-columns: minmax(0, 1fr); gap: 28px; }
 }
+
+/* 2026-10-27: the closing band is one centre axis — the typed line, then the
+   two actions, then the newsletter card. Both public pages end the same way. */
+.home-community-cta { padding: clamp(64px, 6vw, 92px) clamp(24px, 5vw, 64px); }
+.home-community-cta-inner {
+  display: flex;
+  width: min(100%, 1120px);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.home-community-cta .atlas-map-typewriter {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+.home-community-cta .atlas-map-typewriter span { white-space: normal; }
+.home-community-cta-actions { margin-top: 40px; }
+.home-community-cta-button { margin-top: 0; }

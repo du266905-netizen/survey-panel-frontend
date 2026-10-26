@@ -7,6 +7,7 @@ import { footerIdentityTranslations, globalTranslations, navigationLabels } from
 import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import AtlasTypewriter from './AtlasTypewriter';
+import NewsletterForm from './NewsletterForm';
 import './HomeLegacySections.css';
 
 function getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink) {
@@ -237,21 +238,38 @@ export function HomeGlobalBand() {
   );
 }
 
-function HomeCommunityCta({ copy, navigation, language }) {
+/* The dark closing band: typed line, two actions, newsletter card. The home
+   page and About both use it; each passes its own pair of actions. */
+export function HomeCommunityCta({
+  copy,
+  navigation,
+  language,
+  actions,
+  id = 'community',
+  ariaLabel = 'Join the community or run research with us',
+  className = '',
+}) {
+  const items = actions || [
+    { label: navigation.meetCommunity, to: '/join', primary: true, arrow: true },
+    { label: navigation.runResearch, to: '/business/access', primary: false, arrow: true },
+  ];
   return (
-    <section className="home-community-cta" id="community" aria-label="Join the community or run research with us">
+    <section className={`home-community-cta ${className}`.trim()} id={id} aria-label={ariaLabel}>
       <div className="home-community-cta-inner">
         <AtlasTypewriter begin={copy.begin} prompts={copy.prompts} />
         <div className="home-community-cta-actions">
-          <Link className="home-community-cta-button is-primary" to={withLanguage('/join', language)}>
-            {navigation.meetCommunity}
-            <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
-          </Link>
-          <Link className="home-community-cta-button is-secondary" to={withLanguage('/business/access', language)}>
-            {navigation.runResearch}
-            <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
-          </Link>
+          {items.map((item) => (
+            <Link
+              key={`${item.to}${item.label}`}
+              className={`home-community-cta-button ${item.primary ? 'is-primary' : 'is-secondary'}`}
+              to={withLanguage(item.to, language)}
+            >
+              {item.label}
+              {item.arrow ? <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" /> : null}
+            </Link>
+          ))}
         </div>
+        <NewsletterForm language={language} />
       </div>
     </section>
   );
