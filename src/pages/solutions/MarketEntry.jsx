@@ -15,6 +15,9 @@ import './MarketEntry.css';
 
    版式按业主定的：灰屏 → 更深一档的灰 → 黑。首屏 80 字，整屏就一句。 */
 
+/* 十个行业，绕着首屏那句大字转。名字和链接取行业页自己的文案。 */
+const industryKeys = ['automotive', 'travel', 'consumer', 'healthcare', 'finance', 'social', 'industrial', 'tech', 'media', 'ecommerce'];
+
 const copy = {
   'en-US': {
     group: 'Market entry',
@@ -135,6 +138,18 @@ export default function MarketEntry() {
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>
         </div>
+
+        <ul className="me-orbit" aria-label="Industries">
+          {industryKeys.map((key, index) => {
+            const industry = publicCopy.pages.industries[key];
+            if (!industry) return null;
+            return (
+              <li key={key} style={{ '--from': `${index * 10}%` }}>
+                <Link to={withLanguage(`/industries/${key}`, language)}>{industry.title}</Link>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <section className="me-methods" aria-labelledby="me-methods-title">
