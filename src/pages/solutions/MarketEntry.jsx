@@ -15,13 +15,29 @@ import './MarketEntry.css';
 
    版式按业主定的：灰屏 → 更深一档的灰 → 黑。首屏 80 字，整屏就一句。 */
 
-/* 十个行业，绕着首屏那句大字转。名字和链接取行业页自己的文案。 */
+/* 十个行业，绕着首屏那句大字转。名字和链接取行业页自己的文案。
+   轨道不是正圆：每条卡自己的半径、起始角、周期都不一样，看起来是散着的，
+   但半径都落在文字框之外，转到哪儿都不会压到标题。 */
 const industryKeys = ['automotive', 'travel', 'consumer', 'healthcare', 'finance', 'social', 'industrial', 'tech', 'media', 'ecommerce'];
+
+const orbitTracks = [
+  { rx: '532px', ry: '262px', dur: '128s' },
+  { rx: '560px', ry: '278px', dur: '112s' },
+  { rx: '544px', ry: '254px', dur: '142s' },
+  { rx: '568px', ry: '270px', dur: '120s' },
+  { rx: '524px', ry: '274px', dur: '134s' },
+  { rx: '556px', ry: '258px', dur: '118s' },
+  { rx: '540px', ry: '282px', dur: '146s' },
+  { rx: '566px', ry: '266px', dur: '124s' },
+  { rx: '548px', ry: '272px', dur: '136s' },
+  { rx: '572px', ry: '276px', dur: '116s' },
+];
 
 const copy = {
   'en-US': {
     group: 'Market entry',
     title: 'A clear brief is where good research starts.',
+    titleLines: ['A clear brief', 'is where good research starts.'],
     lede: 'Size, audience and route to market.',
     free: 'Start for free',
     action: 'Contact sales',
@@ -45,6 +61,7 @@ const copy = {
   'en-GB': {
     group: 'Market entry',
     title: 'A clear brief is where good research starts.',
+    titleLines: ['A clear brief', 'is where good research starts.'],
     lede: 'Size, audience and route to market.',
     free: 'Start for free',
     action: 'Contact sales',
@@ -68,6 +85,7 @@ const copy = {
   'zh-CN': {
     group: '进入市场',
     title: '清晰的需求，是好研究的起点。',
+    titleLines: ['清晰的需求，', '是好研究的起点。'],
     lede: '规模、受众与进入路径。',
     free: '免费开始',
     action: '联系销售',
@@ -91,6 +109,7 @@ const copy = {
   'zh-Hant': {
     group: '進入市場',
     title: '清晰的需求，是好研究的起點。',
+    titleLines: ['清晰的需求，', '是好研究的起點。'],
     lede: '規模、受眾與進入路徑。',
     free: '免費開始',
     action: '聯繫銷售',
@@ -126,7 +145,9 @@ export default function MarketEntry() {
     <main className="market-entry-page">
       <section className="me-hero">
         <p className="me-eyebrow">{t.group}</p>
-        <h1 className="me-title">{t.title}</h1>
+        <h1 className={`me-title${language.startsWith('en') ? ' me-title--en' : ''}`}>
+          {(t.titleLines || [t.title]).map((line) => <span key={line}>{line}</span>)}
+        </h1>
         <p className="me-lede">{t.lede}</p>
         <div className="me-actions">
           <Link className="me-action me-action--primary" to={withLanguage('/business/register', language)}>
@@ -143,8 +164,17 @@ export default function MarketEntry() {
           {industryKeys.map((key, index) => {
             const industry = publicCopy.pages.industries[key];
             if (!industry) return null;
+            const track = orbitTracks[index % orbitTracks.length];
             return (
-              <li key={key} style={{ '--from': `${index * 10}%` }}>
+              <li
+                key={key}
+                style={{
+                  '--from': `${index * 10}%`,
+                  '--rx': track.rx,
+                  '--ry': track.ry,
+                  animationDuration: track.dur,
+                }}
+              >
                 <Link to={withLanguage(`/industries/${key}`, language)}>{industry.title}</Link>
               </li>
             );

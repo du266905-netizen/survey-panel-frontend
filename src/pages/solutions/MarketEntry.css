@@ -32,9 +32,9 @@
   top: 50%;
   left: 50%;
   z-index: 0;
-  width: 1080px;
-  height: 380px;
-  margin: -190px 0 0 -540px;
+  width: 1240px;
+  height: 660px;
+  margin: -330px 0 0 -620px;
   padding: 0;
   list-style: none;
   pointer-events: none;
@@ -44,9 +44,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 132px;
-  height: 40px;
-  offset-path: ellipse(520px 170px at 540px 190px);
+  width: 176px;
+  min-height: 46px;
+  offset-path: ellipse(var(--rx, 548px) var(--ry, 266px) at 620px 330px);
   offset-rotate: 0deg;
   offset-distance: var(--from);
   animation: me-orbit 120s linear infinite;
@@ -65,8 +65,8 @@
   background: rgba(20, 20, 19, .42);
   color: #FFFFFF;
   font-family: var(--font-sans);
-  font-size: 13px;
-  padding: 0 8px;
+  font-size: 16px;
+  padding: 10px 10px;
   text-align: center;
   text-decoration: none;
   transition: border-color .2s ease, background .2s ease;
@@ -102,7 +102,7 @@
 }
 
 .market-entry-page .me-title {
-  max-width: 820px;
+  max-width: 600px;
   margin: 26px 0 0;
   font-family: var(--font-impact);
   font-size: clamp(38px, 4.2vw, 56px);
@@ -111,6 +111,12 @@
   line-height: 1.04;
   text-wrap: balance;
 }
+
+.market-entry-page .me-title span { display: block; }
+
+/* The English line is longer than the Chinese one; one step down keeps it out
+   of the ring without changing the Chinese setting. */
+.market-entry-page .me-title--en { font-size: clamp(32px, 3.4vw, 48px); }
 
 .market-entry-page .me-lede {
   max-width: 720px;
@@ -317,8 +323,11 @@
   .market-entry-page .me-contact-title span { display: block; }
 }
 
-/* Tall screens get a rounder ring; short laptop windows keep the flat one. */
-@media (min-height: 780px) and (min-width: 1300px) {
-  .market-entry-page .me-orbit { height: 520px; margin-top: -260px; }
-  .market-entry-page .me-orbit li { offset-path: ellipse(520px 230px at 540px 260px); }
+/* Short laptop windows: tighten the copy block so the same ring still clears
+   it. Scaling the ring down would pull the cards towards the words. */
+@media (max-height: 779px) {
+  .market-entry-page .me-hero { padding-top: 28px; padding-bottom: 36px; }
+  .market-entry-page .me-title { margin-top: 14px; }
+  .market-entry-page .me-lede { margin-top: 16px; }
+  .market-entry-page .me-actions { margin-top: 26px; }
 }
