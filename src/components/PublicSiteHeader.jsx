@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowUpRight, BriefcaseBusiness, ChevronDown, CircleUserRound, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { isBusinessRole } from '../utils/roles';
@@ -22,6 +22,15 @@ export default function PublicSiteHeader({ stripStart = null }) {
   const { user } = useAuth();
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const chrome = publicCopy.chrome;
+  /* 两个登录入口共用 /access 表单里的标签；下面那行说明只写三语
+     （zh-CN / zh-Hant / en），其余语言回落英文，与站点其它文案的回落一致。 */
+  const accessForm = publicCopy.pages.access.form;
+  const signInCopy = {
+    participant: accessForm.participant,
+    researcher: accessForm.researcher,
+    participantHint: accessForm.participantHint || 'Take part in studies',
+    researcherHint: accessForm.researcherHint || 'Commission a research project',
+  };
   const { pathname } = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -205,12 +214,24 @@ export default function PublicSiteHeader({ stripStart = null }) {
               {signInOpen && (
                 <div className="psn-signin-menu" role="menu">
                   <Link role="menuitem" to={withLanguage('/login', language)} onClick={() => setSignInOpen(false)}>
-                    <span>{publicCopy.pages.access.form.participant}</span>
-                    <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.7} />
+                    <span className="psn-signin-avatar" aria-hidden="true">
+                      <CircleUserRound size={18} strokeWidth={1.6} />
+                    </span>
+                    <span className="psn-signin-text">
+                      <span className="psn-signin-title">{signInCopy.participant}</span>
+                      <span className="psn-signin-desc">{signInCopy.participantHint}</span>
+                    </span>
+                    <ArrowUpRight className="psn-signin-arrow" aria-hidden="true" size={14} strokeWidth={1.7} />
                   </Link>
                   <Link role="menuitem" className="is-research" to={withLanguage('/business/login', language)} onClick={() => setSignInOpen(false)}>
-                    <span>{publicCopy.pages.access.form.researcher}</span>
-                    <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.7} />
+                    <span className="psn-signin-avatar" aria-hidden="true">
+                      <BriefcaseBusiness size={18} strokeWidth={1.6} />
+                    </span>
+                    <span className="psn-signin-text">
+                      <span className="psn-signin-title">{signInCopy.researcher}</span>
+                      <span className="psn-signin-desc">{signInCopy.researcherHint}</span>
+                    </span>
+                    <ArrowUpRight className="psn-signin-arrow" aria-hidden="true" size={14} strokeWidth={1.7} />
                   </Link>
                 </div>
               )}

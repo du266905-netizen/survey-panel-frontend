@@ -472,6 +472,8 @@ export const accessEntryCopy = {
     "form": {
       "participant": "参与者",
       "researcher": "研究员",
+      "participantHint": "参与调研并获得回馈",
+      "researcherHint": "发起研究、跟进项目",
       "google": "使用 Google 登录",
       "or": "或",
       "emailPlaceholder": "输入邮箱",
@@ -485,6 +487,8 @@ export const accessEntryCopy = {
     "form": {
       "participant": "參與者",
       "researcher": "研究員",
+      "participantHint": "參與調研並獲得回饋",
+      "researcherHint": "發起研究、跟進專案",
       "google": "使用 Google 登入",
       "or": "或",
       "emailPlaceholder": "輸入信箱",
@@ -498,6 +502,8 @@ export const accessEntryCopy = {
     "form": {
       "participant": "Participant",
       "researcher": "Researcher",
+      "participantHint": "Take part in studies",
+      "researcherHint": "Commission a research project",
       "google": "Sign in with Google",
       "or": "or",
       "emailPlaceholder": "Enter email",
@@ -693,6 +699,8 @@ export const accessEntryCopy = {
     "form": {
       "participant": "Participant",
       "researcher": "Researcher",
+      "participantHint": "Take part in studies",
+      "researcherHint": "Commission a research project",
       "google": "Sign in with Google",
       "or": "or",
       "emailPlaceholder": "Enter email",
