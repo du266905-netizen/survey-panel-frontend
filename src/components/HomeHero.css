@@ -21,39 +21,40 @@
   object-position: center;
 }
 
-/* Keeps the bottom-left legible without greying the whole photograph. */
+/* 2026-10-27：文字居中后，压暗改成中间重、四周轻的一层，照片仍留出细节。 */
 .home-hero-scrim {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(10, 10, 10, .58) 0%, rgba(10, 10, 10, .30) 42%, rgba(10, 10, 10, 0) 72%),
-    linear-gradient(180deg, rgba(10, 10, 10, .08) 0%, rgba(10, 10, 10, .14) 42%, rgba(10, 10, 10, .64) 100%);
+    radial-gradient(circle at 50% 48%, rgba(10, 10, 10, .62) 0%, rgba(10, 10, 10, .34) 46%, rgba(10, 10, 10, .52) 100%),
+    linear-gradient(180deg, rgba(10, 10, 10, .18) 0%, rgba(10, 10, 10, .06) 30%, rgba(10, 10, 10, .42) 100%);
   pointer-events: none;
 }
 
 .home-hero-inner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   width: calc(100% - 80px);
-  max-width: 1600px;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 48px;
-  margin: auto auto 0;
-  padding: 0 0 64px;
+  max-width: 900px;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin: auto;
+  padding: 96px 0;
+  text-align: center;
 }
 
 .home-hero-statement {
-  max-width: 1040px;
+  max-width: 680px;
   margin: 0;
   color: #fff;
   font-family: var(--font-reading);
-  font-size: 38px;
+  font-size: clamp(32px, 3.2vw, 46px);
   font-weight: 400;
-  letter-spacing: -.025em;
-  line-height: 1.12;
-  text-wrap: pretty;
+  letter-spacing: -.026em;
+  line-height: 1.1;
+  text-wrap: balance;
 }
 /* 2026-10-26：三处 38 档统一到 600。 */
 .home-hero-statement strong {
@@ -64,12 +65,76 @@
    at 38 was invisible, the size and colour do the work instead. */
 .home-hero-statement span {
   display: block;
-  max-width: 760px;
-  margin-top: 26px;
-  color: rgba(255, 255, 255, .7);
+  max-width: 640px;
+  margin: 24px auto 0;
+  color: rgba(255, 255, 255, .72);
   font-size: 22px;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.55;
+}
+
+/* ---- industries in orbit ------------------------------------------------
+   Ten cards ride one ellipse around the centred statement. Each keeps its own
+   start angle, and `offset-rotate: 0deg` keeps the label upright. Hover or
+   keyboard focus stops the ring; reduced motion lays it flat. */
+
+/* A fixed 1000 × 620 stage, centred: the ellipse never depends on the
+   viewport, so the cards cannot drift into the copy at some width. */
+.home-hero-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 1000px;
+  height: 620px;
+  margin: -310px 0 0 -500px;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.home-hero-orbit li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 148px;
+  height: 44px;
+  offset-path: ellipse(500px 300px at 500px 310px);
+  offset-rotate: 0deg;
+  offset-distance: var(--from);
+  animation: home-hero-orbit 120s linear infinite;
+  pointer-events: auto;
+}
+
+.home-hero-orbit:focus-within li { animation-play-state: paused; }
+
+.home-hero-orbit a {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, .3);
+  background: rgba(16, 16, 15, .5);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 0 10px;
+  text-align: center;
+  text-decoration: none;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.home-hero-orbit a:hover { border-color: #fff; background: rgba(16, 16, 15, .78); }
+
+@keyframes home-hero-orbit {
+  from { offset-distance: var(--from); }
+  to { offset-distance: calc(var(--from) + 100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-orbit li { animation: none; }
 }
 
 .home-hero-cta {
@@ -92,16 +157,15 @@
 .home-hero-cta:hover { background: #f5f5f3; }
 .home-hero-cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
+@media (max-width: 1100px) {
+  /* Below this the ellipse would run into the copy, so the ring goes. */
+  .home-hero-orbit { display: none; }
+}
+
 @media (max-width: 900px) {
   .home-hero { min-height: calc(100svh - 96px); }
-  .home-hero-inner {
-    width: calc(100% - 40px);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    padding-bottom: 36px;
-  }
-  .home-hero-statement { font-size: 22px; line-height: 1.3; }
+  .home-hero-inner { width: calc(100% - 40px); gap: 22px; padding: 56px 0 48px; }
+  .home-hero-statement { font-size: clamp(24px, 7.2vw, 32px); line-height: 1.12; }
   .home-hero-statement span { margin-top: 16px; font-size: 16px; }
   .home-hero-cta { height: 42px; font-size: 13px; padding: 0 18px; }
 }

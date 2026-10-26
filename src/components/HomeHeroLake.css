@@ -17,12 +17,11 @@
 /* The Chinese line carries its own pause; each half sits on its own line. */
 .home-hero--lake .home-lake-line span { display: block; }
 
-/* The water is bright in the middle; a slightly deeper foot keeps the line
-   readable without dimming the sky. */
+/* 2026-10-27：文字跟第一帧一样居中，压暗也换成中间重、四周轻。 */
 .home-hero-scrim--lake {
   background:
-    linear-gradient(180deg, rgba(8, 10, 12, 0) 38%, rgba(8, 10, 12, .46) 78%, rgba(8, 10, 12, .62) 100%),
-    linear-gradient(90deg, rgba(8, 10, 12, .34) 0%, rgba(8, 10, 12, 0) 52%);
+    radial-gradient(circle at 50% 48%, rgba(8, 10, 12, .56) 0%, rgba(8, 10, 12, .28) 46%, rgba(8, 10, 12, .5) 100%),
+    linear-gradient(180deg, rgba(8, 10, 12, .1) 0%, rgba(8, 10, 12, .04) 34%, rgba(8, 10, 12, .4) 100%);
 }
 
 .home-lake-copy { max-width: 50rem; }
