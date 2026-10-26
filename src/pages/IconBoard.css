@@ -1,0 +1,188 @@
+/* 临时页：图标手册打样。只用在这一页，不进公开页。 */
+.icon-board {
+  width: min(100% - 96px, 1120px);
+  margin: 0 auto;
+  padding: 72px 0 96px;
+  color: var(--pub-ink);
+  font-family: var(--font-sans);
+}
+
+.icon-board-kicker {
+  margin: 0;
+  color: var(--pub-mute);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.icon-board-head h1 {
+  max-width: 900px;
+  margin: 18px 0 0;
+  font-family: var(--font-impact);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.028em;
+  line-height: 1.04;
+}
+
+.icon-board-intro {
+  max-width: 720px;
+  margin: 24px 0 0;
+  color: var(--pub-body);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.icon-board-spec {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--pub-hair);
+}
+
+.icon-board-spec p {
+  margin: 0;
+  color: var(--pub-mute);
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+
+.icon-board-grid {
+  display: grid;
+  width: 96px;
+  height: 72px;
+  place-items: center;
+  border: 1px solid var(--pub-hair);
+  background-image:
+    linear-gradient(to right, rgba(20, 20, 19, .08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 20, 19, .08) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.icon-board-grid span {
+  width: 20px;
+  height: 20px;
+  border: 1px dashed rgba(20, 20, 19, .3);
+}
+
+.icon-board-group { margin-top: 64px; }
+
+.icon-board-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--pub-hair);
+}
+
+.icon-board-group-head h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+}
+
+.icon-board-group-head p {
+  margin: 0;
+  color: var(--pub-mute);
+  font-size: 13px;
+}
+
+.icon-board-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icon-board-list li {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-height: 176px;
+  border: 1px solid var(--pub-hair);
+  background: #FFFFFF;
+  padding: 22px 20px 20px;
+}
+
+.icon-board-cell {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  margin-bottom: 10px;
+  background: var(--pub-sunken);
+  color: var(--pub-ink);
+}
+
+.icon-board-list strong {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+
+.icon-board-list small {
+  color: var(--pub-faint);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+
+.icon-board-list em {
+  margin-top: 6px;
+  color: var(--pub-body);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.icon-board-rules {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 72px;
+  padding-top: 24px;
+  border-top: 1px solid var(--pub-hair);
+}
+
+.icon-board-rules p:last-child {
+  margin: 10px 0 0;
+  color: var(--pub-body);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .icon-board-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .icon-board-rules { grid-template-columns: 1fr 1fr; }
+}
+
+/* 尺寸示范条 */
+.icon-board-sizes {
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
+  margin-top: 22px;
+  padding: 22px 24px;
+  border: 1px solid var(--pub-hair);
+}
+
+.icon-board-sizes div {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  color: var(--pub-ink);
+}
+
+.icon-board-sizes span {
+  color: var(--pub-mute);
+  font-size: 11px;
+  letter-spacing: .06em;
+}

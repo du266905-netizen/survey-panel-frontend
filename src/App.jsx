@@ -17,6 +17,7 @@ import Dashboard from './pages/Dashboard';
 import DatabaseExplorer from './pages/DatabaseExplorer';
 import ForgotPassword from './pages/ForgotPassword';
 import About from './pages/About';
+import IconBoard from './pages/IconBoard';
 import Contact from './pages/Contact';
 import Rewards from './pages/Rewards';
 import HowItWorks from './pages/HowItWorks';
@@ -194,6 +195,7 @@ export default function App() {
         <Route path="/email/unsubscribe" element={<MarketingUnsubscribe />} />
         <Route path="/business/terms" element={<PublicPage><BusinessResearcherTerms /></PublicPage>} />
         <Route path="/about" element={<PublicPage><About /></PublicPage>} />
+        <Route path="/__icons" element={<IconBoard />} />
         <Route path="/rewards" element={<PublicPage><Rewards /></PublicPage>} />
         <Route path="/contact" element={<PublicPage><Contact /></PublicPage>} />
         <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
