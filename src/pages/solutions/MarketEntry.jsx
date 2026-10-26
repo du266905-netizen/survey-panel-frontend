@@ -16,9 +16,10 @@ import './MarketEntry.css';
 
 const copy = {
   'en-US': {
-    group: 'Solutions',
-    title: 'Market entry',
+    group: 'Market entry',
+    title: 'A clear brief is where good research starts.',
     lede: 'Size, audience and route to market.',
+    free: 'Start for free',
     action: 'Contact sales',
     methodsLabel: 'Methods',
     methods: [
@@ -28,9 +29,10 @@ const copy = {
     ],
   },
   'en-GB': {
-    group: 'Solutions',
-    title: 'Market entry',
+    group: 'Market entry',
+    title: 'A clear brief is where good research starts.',
     lede: 'Size, audience and route to market.',
+    free: 'Start for free',
     action: 'Contact sales',
     methodsLabel: 'Methods',
     methods: [
@@ -40,9 +42,10 @@ const copy = {
     ],
   },
   'zh-CN': {
-    group: '解决方案',
-    title: '进入市场',
-    lede: '规模、人群与进入路径。',
+    group: '进入市场',
+    title: '清晰的需求，是好研究的起点。',
+    lede: '规模、受众与进入路径。',
+    free: '免费开始',
     action: '联系销售',
     methodsLabel: '方法',
     methods: [
@@ -52,9 +55,10 @@ const copy = {
     ],
   },
   'zh-Hant': {
-    group: '解決方案',
-    title: '進入市場',
-    lede: '規模、人群與進入路徑。',
+    group: '進入市場',
+    title: '清晰的需求，是好研究的起點。',
+    lede: '規模、受眾與進入路徑。',
+    free: '免費開始',
     action: '聯繫銷售',
     methodsLabel: '方法',
     methods: [
@@ -67,8 +71,12 @@ const copy = {
 
 export default function MarketEntry() {
   const { language, publicCopy } = useLanguage();
-  const t = copy[language] || copy['en-US'];
-  usePageTitle(t.title);
+  const base = copy[language] || copy['en-US'];
+  // 标题和说明句跟导航面板用同一份译文（chromeCopy.items['market-entry']），
+  // 改一处两边一起改，不会再出现「受众 / 人群」这种对不上的情况。
+  const entry = publicCopy.chrome?.items?.['market-entry'];
+  const t = { ...base, group: entry?.title || base.group, lede: entry?.note || base.lede };
+  usePageTitle(t.group);
 
   return (
     <main className="market-entry-page">
@@ -76,10 +84,16 @@ export default function MarketEntry() {
         <p className="me-eyebrow">{t.group}</p>
         <h1 className="me-title">{t.title}</h1>
         <p className="me-lede">{t.lede}</p>
-        <Link className="me-action" to={withLanguage('/contact', language)}>
-          {t.action}
-          <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
-        </Link>
+        <div className="me-actions">
+          <Link className="me-action me-action--free" to={withLanguage('/business/register', language)}>
+            {t.free}
+            <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
+          </Link>
+          <Link className="me-action me-action--quiet" to={withLanguage('/contact', language)}>
+            {t.action}
+            <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
+          </Link>
+        </div>
       </section>
 
       <section className="me-methods" aria-labelledby="me-methods-title">

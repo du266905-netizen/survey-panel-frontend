@@ -31,12 +31,14 @@
 }
 
 .market-entry-page .me-title {
+  max-width: 1200px;
   margin: 26px 0 0;
   font-family: var(--font-impact);
-  font-size: clamp(56px, 6vw, 80px);
+  font-size: clamp(48px, 5.6vw, 80px);
   font-weight: 400;
   letter-spacing: -.03em;
-  line-height: 1.02;
+  line-height: 1.04;
+  text-wrap: balance;
 }
 
 .market-entry-page .me-lede {
@@ -48,24 +50,42 @@
   line-height: 1.5;
 }
 
+.market-entry-page .me-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 44px;
+}
+
 .market-entry-page .me-action {
   display: inline-flex;
   min-height: 50px;
   align-items: center;
   gap: 10px;
-  border: 1px solid #FFFFFF;
-  background: #FFFFFF;
-  color: #141413;
+  border: 1px solid transparent;
   font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 500;
-  margin-top: 44px;
   padding: 0 26px;
   text-decoration: none;
-  transition: background .2s ease, color .2s ease;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
 }
 
-.market-entry-page .me-action:hover { background: transparent; color: #FFFFFF; }
+.market-entry-page .me-action--free {
+  border-color: var(--pub-lime);
+  background: var(--pub-lime);
+  color: #141413;
+}
+
+.market-entry-page .me-action--free:hover { border-color: var(--pub-lime-deep); background: var(--pub-lime-deep); }
+
+.market-entry-page .me-action--quiet {
+  border-color: rgba(250, 249, 245, .34);
+  color: #FFFFFF;
+}
+
+.market-entry-page .me-action--quiet:hover { border-color: #FFFFFF; background: rgba(250, 249, 245, .08); }
 
 /* ---- methods band ------------------------------------------------------- */
 
