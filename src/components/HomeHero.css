@@ -55,9 +55,9 @@
   line-height: 1.12;
   text-wrap: pretty;
 }
-/* 2026-10-26：与湖屋句、账号卡片标题统一在 38 / 400，不再单靠 600 加粗。 */
+/* 2026-10-26：三处 38 档统一到 600。 */
 .home-hero-statement strong {
-  font-weight: 400;
+  font-weight: 600;
 }
 
 /* The supporting sentence drops a step and goes quiet: the weight contrast
