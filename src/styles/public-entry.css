@@ -44,8 +44,8 @@ body:has(.landing-page--auth-only) { background: #FFFFFF; }
   color: #141413;
   font-family: var(--font-serif);
   font-size: 38px;
-  /* 2026-10-26：与首屏大句、湖屋句统一到 600。 */
-  font-weight: 600;
+  /* 38 档默认 400；只有首页首屏那句是特批的 600。 */
+  font-weight: 400;
   letter-spacing: -.025em;
   line-height: 1.06;
 }
