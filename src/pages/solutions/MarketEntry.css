@@ -77,12 +77,12 @@
 }
 
 .market-entry-page .me-action--primary {
-  border-color: #FFFFFF;
-  background: #FFFFFF;
+  border-color: var(--pub-lime);
+  background: var(--pub-lime);
   color: #141413;
 }
 
-.market-entry-page .me-action--primary:hover { border-color: #E9E7DF; background: #E9E7DF; }
+.market-entry-page .me-action--primary:hover { border-color: var(--pub-lime-deep); background: var(--pub-lime-deep); }
 
 .market-entry-page .me-action--quiet {
   border-color: rgba(250, 249, 245, .34);
