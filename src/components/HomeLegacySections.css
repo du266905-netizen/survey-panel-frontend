@@ -479,7 +479,8 @@
   /* 2026-10-27：这一条回到 38——首页主体句就是 38，56 会压过页面自己的主句。 */
   font-family: var(--font-reading);
   font-size: 38px;
-  font-weight: 400;
+  /* 业主 2026-10-27 批准加粗：38 这一档的权重就是 600。 */
+  font-weight: 600;
   letter-spacing: -.02em;
   line-height: 1.1;
   white-space: pre-line;
