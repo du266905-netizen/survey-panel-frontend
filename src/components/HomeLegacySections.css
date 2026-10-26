@@ -456,7 +456,7 @@
 .home-global-band-inner {
   display: grid;
   width: min(100% - 80px, 1120px);
-  grid-template-columns: minmax(0, 300px) minmax(0, 760px);
+  grid-template-columns: minmax(0, 360px) minmax(0, 640px);
   justify-content: center;
   gap: clamp(32px, 4vw, 56px);
   align-items: center;
@@ -474,14 +474,14 @@
 }
 .home-global-band h2 {
   margin: 0 auto;
-  max-width: 760px;
+  max-width: 640px;
   color: #fff;
-  /* 2026-10-27：区段标题不用 38，按字阶退到 56（Newsreader）。 */
-  font-family: var(--font-impact);
-  font-size: 56px;
+  /* 2026-10-27：这一条回到 38——首页主体句就是 38，56 会压过页面自己的主句。 */
+  font-family: var(--font-reading);
+  font-size: 38px;
   font-weight: 400;
-  letter-spacing: -.028em;
-  line-height: 1.05;
+  letter-spacing: -.02em;
+  line-height: 1.1;
   white-space: pre-line;
 }
 .home-global-band-copy {
