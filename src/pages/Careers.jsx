@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Search } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import { HomeFooter } from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
@@ -60,10 +60,10 @@ const careersCopy = {
         ['people', '人才与财务'],
       ],
       items: [
-        { name: '研究员', category: 'research' },
-        { name: '客户经理', category: 'client' },
-        { name: '市场营销经理', category: 'marketing' },
-        { name: '业务拓展经理', category: 'growth' },
+        { name: '研究员', category: 'research', meta: '不限地区 · 远程办公' },
+        { name: '客户经理', category: 'client', meta: '不限地区 · 远程办公' },
+        { name: '市场营销经理', category: 'marketing', meta: '不限地区 · 远程办公' },
+        { name: '业务拓展经理', category: 'growth', meta: '不限地区 · 远程办公' },
       ],
     },
   },
@@ -106,10 +106,10 @@ const careersCopy = {
         ['people', '人才與財務'],
       ],
       items: [
-        { name: '研究員', category: 'research' },
-        { name: '客戶經理', category: 'client' },
-        { name: '市場行銷經理', category: 'marketing' },
-        { name: '業務拓展經理', category: 'growth' },
+        { name: '研究員', category: 'research', meta: '不限地區 · 遠端辦公' },
+        { name: '客戶經理', category: 'client', meta: '不限地區 · 遠端辦公' },
+        { name: '市場行銷經理', category: 'marketing', meta: '不限地區 · 遠端辦公' },
+        { name: '業務拓展經理', category: 'growth', meta: '不限地區 · 遠端辦公' },
       ],
     },
   },
@@ -152,10 +152,10 @@ const careersCopy = {
         ['people', 'People & finance'],
       ],
       items: [
-        { name: 'Researcher', category: 'research' },
-        { name: 'Account Manager', category: 'client' },
-        { name: 'Marketing Manager', category: 'marketing' },
-        { name: 'Business Development Manager', category: 'growth' },
+        { name: 'Researcher', category: 'research', meta: 'Any location · Remote' },
+        { name: 'Account Manager', category: 'client', meta: 'Any location · Remote' },
+        { name: 'Marketing Manager', category: 'marketing', meta: 'Any location · Remote' },
+        { name: 'Business Development Manager', category: 'growth', meta: 'Any location · Remote' },
       ],
     },
   },
@@ -198,10 +198,10 @@ const careersCopy = {
         ['people', 'People & finance'],
       ],
       items: [
-        { name: 'Researcher', category: 'research' },
-        { name: 'Account Manager', category: 'client' },
-        { name: 'Marketing Manager', category: 'marketing' },
-        { name: 'Business Development Manager', category: 'growth' },
+        { name: 'Researcher', category: 'research', meta: 'Any location · Remote' },
+        { name: 'Account Manager', category: 'client', meta: 'Any location · Remote' },
+        { name: 'Marketing Manager', category: 'marketing', meta: 'Any location · Remote' },
+        { name: 'Business Development Manager', category: 'growth', meta: 'Any location · Remote' },
       ],
     },
   },
@@ -300,7 +300,11 @@ export default function Careers() {
                 {visible.map((role, index) => (
                   <li key={role.name}>
                     <span className="careers-role-index">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="careers-role-name">{role.name}</span>
+                    <span className="careers-role-body">
+                      <span className="careers-role-name">{role.name}</span>
+                      <span className="careers-role-meta">{role.meta}</span>
+                    </span>
+                    <ArrowRight className="careers-role-arrow" size={18} strokeWidth={1.6} aria-hidden="true" />
                   </li>
                 ))}
               </ol>
