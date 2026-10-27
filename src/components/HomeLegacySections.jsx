@@ -4,43 +4,45 @@ import GlobalGlobe from './GlobalGlobe';
 import Logo from './Logo';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import { footerIdentityTranslations, globalTranslations, navigationLabels } from '../constants/homepageTranslations';
+import { publicNavigation } from '../constants/publicNavigation';
 import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import AtlasTypewriter from './AtlasTypewriter';
 import NewsletterForm from './NewsletterForm';
 import './HomeLegacySections.css';
 
-function getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink) {
+function buildFooterColumns(publicCopy) {
+  const chrome = publicCopy?.chrome || {};
+  const groups = chrome.groups || {};
+  const items = chrome.items || {};
+  const sections = chrome.sections || {};
+  const group = (id) => publicNavigation.find((entry) => entry.id === id);
+  const link = (item) => ({ label: items[item.id]?.title || items[item.to]?.title || item.title, to: item.to });
+  const solutions = group('solutions');
   return [
-  {
-    label: researchServicesLabel,
-    links: [
-      { label: researchServiceLink, to: '/business' },
-    ],
-  },
-  {
-    label: marketCapabilityLabel,
-    links: [
-      { label: marketCapabilityLabel, to: '/china-market-insights' },
-    ],
-  },
-  {
-    label: copy.participate,
-    links: [
-      { label: copy.surveys, to: '/partners' },
-      { label: copy.wallet, to: '/wallet' },
-      { label: copy.invite, to: '/referrals' },
-      { label: copy.news, to: '/news' },
-    ],
-  },
-  {
-    label: copy.about,
-    links: [
-      { label: copy.how, to: '/how-it-works' },
-      { label: copy.privacy, to: '/privacy' },
-      { label: copy.terms, to: '/terms' },
-    ],
-  },
+    {
+      label: groups.about || 'About us',
+      blocks: [{ links: [link({ to: '/about', title: 'About us' }), link({ to: '/how-it-works', title: 'How it works' })] }],
+    },
+    {
+      label: groups.solutions || 'Solutions',
+      blocks: (solutions?.sections || []).map((section) => ({
+        label: sections[section.id] || section.label,
+        links: section.items.map(link),
+      })),
+    },
+    {
+      label: groups.industries || 'Industries',
+      blocks: [{ links: (group('industries')?.items || []).map(link) }],
+    },
+    {
+      label: groups.participants || 'Participants',
+      blocks: [{ links: (group('participants')?.items || []).map(link) }],
+    },
+    {
+      label: groups.support || 'Support',
+      blocks: [{ links: (group('support')?.items || []).map(link) }],
+    },
   ];
 }
 
@@ -132,11 +134,7 @@ export function HomeFooter() {
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const copy = publicCopy.home.footer;
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
-  const navLabels = navigationLabels[language];
-  const marketCapabilityLabel = language === 'zh-CN' ? '中国市场洞察能力' : language === 'zh-Hant' ? '中國市場洞察能力' : (navLabels?.capability || 'China market insights capability');
-  const researchServicesLabel = language === 'zh-CN' ? '市场研究' : language === 'zh-Hant' ? '市場研究' : (navLabels?.research || 'Market research');
-  const researchServiceLink = language === 'zh-CN' ? '市场研究服务' : language === 'zh-Hant' ? '市場研究服務' : (navLabels?.services || 'Market research services');
-  const footerGroups = getFooterGroups(copy, marketCapabilityLabel, researchServicesLabel, researchServiceLink);
+  const footerColumns = buildFooterColumns(publicCopy);
   const cookieSettingsLabel = language === 'zh-CN' ? 'Cookie 设置' : language === 'zh-Hant' ? 'Cookie 設定' : 'Cookie settings';
   const openCookieSettings = (event) => {
     event.preventDefault();
@@ -156,7 +154,7 @@ export function HomeFooter() {
           <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>
           <label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">{languageLabel[language] || 'Language'}</span><select value={language} onChange={(event) => navigateToLanguage(event.target.value)} aria-label={languageLabel[language] || 'Choose language'}>{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label>
         </div>
-        <nav className="home-footer-nav" aria-label="Footer navigation">{footerGroups.map((group) => <section key={group.label}><p>{group.label}</p>{group.links.map((item) => item.href ? <a key={item.label} href={item.href}>{item.label}</a> : <Link key={item.label} to={withLanguage(item.to, language)}>{item.label}</Link>)}</section>)}</nav>
+        <nav className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column) => <section key={column.label}><p>{column.label}</p>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>)}</div>)}</section>)}</nav>
       </div>
       <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a></div></div>
     </footer>

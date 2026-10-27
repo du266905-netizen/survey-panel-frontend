@@ -186,7 +186,7 @@ export default function CustomerExperience() {
         {base.free}
         <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
       </Link>
-      <Link className="cx-action cx-action--quiet" to={withLanguage('/contact', language)}>
+      <Link className="cx-action cx-action--quiet" to={withLanguage('/business/access', language)}>
         {base.action}
         <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
       </Link>

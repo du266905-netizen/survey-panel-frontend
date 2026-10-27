@@ -72,16 +72,17 @@ export const publicNavigation = [
       { to: '/register', title: 'Join as a participant', note: 'Take part in thoughtful, paid research' },
       { to: '/partners', title: 'Available surveys', note: 'Find a study that fits your profile' },
       { to: '/rewards', title: 'Rewards', note: 'Coins, gift cards and redemptions' },
-      { to: '/contact', title: 'Contact us', note: 'Talk to the research team' },
+      { to: '/news', title: 'News Wall', note: 'A daily brief on the market' },
+      { to: '/contact', title: 'Contact us', note: 'Participant support' },
     ],
   },
   {
     id: 'support',
     label: 'Support',
     items: [
-      { to: '/news', title: 'News Wall', note: 'A daily brief on the market' },
       { to: '/privacy', title: 'Privacy', note: 'How we handle your information' },
       { to: '/terms', title: 'Terms', note: 'Participation terms' },
+      { to: '/business/terms', title: 'Researcher terms', note: 'Terms for organisations and researchers' },
     ],
   },
 ];

@@ -137,7 +137,7 @@ export default function MarketEntry() {
             {t.free}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>
-          <Link className="me-action me-action--quiet" to={withLanguage('/contact', language)}>
+          <Link className="me-action me-action--quiet" to={withLanguage('/business/access', language)}>
             {t.action}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>
@@ -185,7 +185,7 @@ export default function MarketEntry() {
             {t.free}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>
-          <Link className="me-action me-action--quiet" to={withLanguage('/contact', language)}>
+          <Link className="me-action me-action--quiet" to={withLanguage('/business/access', language)}>
             {t.action}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>

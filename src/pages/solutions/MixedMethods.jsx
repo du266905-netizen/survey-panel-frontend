@@ -189,7 +189,7 @@ export default function MixedMethods() {
         {base.free}
         <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
       </Link>
-      <Link className="mm-action mm-action--quiet" to={withLanguage('/contact', language)}>
+      <Link className="mm-action mm-action--quiet" to={withLanguage('/business/access', language)}>
         {base.action}
         <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
       </Link>

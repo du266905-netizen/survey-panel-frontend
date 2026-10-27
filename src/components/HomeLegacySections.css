@@ -114,8 +114,9 @@
    and the type sits at lighter weights with neutral rather than tinted
    greys. Ground colour stays the brand's own #17231d. */
 .home-footer { background: #17231d; color: rgba(255, 255, 255, 0.78); }
-.home-footer-main { display: grid; grid-template-columns: minmax(260px, .92fr) minmax(0, 1.08fr); gap: clamp(46px, 6vw, 96px); padding-top: clamp(56px, 6vw, 84px); padding-bottom: clamp(48px, 5vw, 72px); }
-.home-footer-brand { display: flex; flex-direction: column; align-items: flex-start; }
+.home-footer-main { display: grid; grid-template-columns: 1fr; gap: clamp(40px, 4.6vw, 64px); padding-top: clamp(56px, 6vw, 84px); padding-bottom: clamp(48px, 5vw, 72px); }
+/* 品牌一行、链接一行：五个大标题要并排，左边再留品牌块就挤不下。 */
+.home-footer-brand { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; column-gap: clamp(28px, 4vw, 64px); }
 
 /* the mark and wordmark stack; no mix-blend-mode — the artwork is a true
    transparent PNG, which is what made the old blend rule unsafe */
@@ -123,25 +124,27 @@
 .home-footer-mark { width: clamp(72px, 7.6vw, 104px); height: auto; }
 .home-footer-wordmark { width: clamp(140px, 13vw, 176px); max-width: none; }
 
-.home-footer-about { width: 100%; max-width: 58ch; font-family: var(--font-reading); border-top: 1px solid rgba(255, 255, 255, 0.18); margin-top: 26px; padding-top: 24px; }
+.home-footer-about { width: 100%; max-width: 52ch; font-family: var(--font-reading); }
 .home-footer-about p { margin: 0; color: rgba(255, 255, 255, 0.62); font-size: 14px; font-weight: 400; line-height: 1.72; }
 .home-footer-about .home-footer-about-title { margin-bottom: 16px; color: #fff; font-size: 14px; font-weight: 900; letter-spacing: .01em; line-height: 1.3; }
 
-.home-footer-language { position: relative; display: inline-flex; align-items: center; gap: 11px; min-width: 202px; margin-top: 26px; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 0; color: #fff; padding: 0 14px; transition: border-color .25s ease, background .25s ease; }
+.home-footer-language { position: relative; display: inline-flex; align-items: center; gap: 11px; min-width: 202px; margin-top: 0; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 0; color: #fff; padding: 0 14px; transition: border-color .25s ease, background .25s ease; }
 .home-footer-language:hover { border-color: rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.04); }
 .home-footer-language select { width: 100%; min-height: 46px; appearance: none; border: 0; outline: 0; color: inherit; background: transparent; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 700; padding: 0 22px 0 0; }
 .home-footer-language select option { color: #203129; background: #fff; }
 .home-footer-language > svg:last-child { position: absolute; right: 13px; pointer-events: none; opacity: .65; }
 
-.home-social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.home-social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
 .home-social-links a { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 0; color: rgba(255, 255, 255, 0.78); transition: background .25s ease, border-color .25s ease, color .25s ease; }
 .home-social-links a:hover { border-color: #fff; background: #fff; color: #17231d; }
 .home-social-links svg { width: 17px; height: 17px; }
 
-.home-footer-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 2.6vw, 40px); align-content: start; }
-.home-footer-nav section { display: grid; align-content: start; gap: 12px; }
-.home-footer-nav p { margin: 0 0 12px; color: rgba(255, 255, 255, 0.48); font-family: var(--font-sans); font-size: 16px; font-weight: 400; letter-spacing: 0; line-height: 1.45; text-transform: none; }
-.home-footer-nav a { color: rgba(255, 255, 255, 0.9); font-family: var(--font-sans); font-size: 16px; font-weight: 400; letter-spacing: -.01em; line-height: 1.4; text-decoration: none; }
+.home-footer-nav { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(18px, 2.2vw, 34px); align-content: start; border-top: 1px solid rgba(255,255,255,.14); padding-top: clamp(28px, 3vw, 40px); }
+.home-footer-nav section { display: grid; align-content: start; gap: 10px; }
+.home-footer-block { display: grid; gap: 8px; }
+.home-footer-nav p { margin: 0 0 6px; color: rgba(255, 255, 255, 0.46); font-family: var(--font-sans); font-size: 12px; font-weight: 500; letter-spacing: .06em; line-height: 1.4; text-transform: uppercase; }
+.home-footer-nav .home-footer-sublabel { margin: 14px 0 2px; color: rgba(255, 255, 255, 0.34); font-size: 11px; letter-spacing: .06em; }
+.home-footer-nav a { color: rgba(255, 255, 255, 0.82); font-family: var(--font-sans); font-size: 13px; font-weight: 400; letter-spacing: -.005em; line-height: 1.5; text-decoration: none; }
 .home-footer-nav a:hover { color: #fff; }
 
 .home-footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(255, 255, 255, 0.14); padding: 20px 0 28px; }
@@ -158,7 +161,8 @@
 @keyframes home-cart-drift { 0%, 100% { transform: translateX(-9px); } 50% { transform: translateX(18px); } }
 @keyframes home-cart-breeze { 0%, 100% { opacity: .24; transform: translateX(-12px); } 50% { opacity: .86; transform: translateX(8px); } }
 @keyframes home-cart-wheel { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-@media (max-width: 900px) { .home-continuation-container { width: min(100% - 48px, 760px); } .home-manifesto-masthead, .home-manifesto-spread, .home-global-layout, .home-footer-main { grid-template-columns: 1fr; } .home-manifesto-mark { border-top: 1px solid var(--continuation-rule); border-left: 0; padding: 22px 0 0; } .home-global-copy { border-bottom: 1px solid var(--continuation-rule); border-left: 0; padding: 0 0 26px; } .home-global-visual { order: 2; } .home-rewards-heading { grid-template-columns: 1fr; gap: 10px; } .home-rewards-heading .home-section-label { grid-row: auto; margin-top: 0; } .home-reward-grid, .home-footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } .home-reward-panel { grid-column: 1 / -1; } }
+@media (max-width: 900px) { .home-continuation-container { width: min(100% - 48px, 760px); } .home-manifesto-masthead, .home-manifesto-spread, .home-global-layout, .home-footer-main { grid-template-columns: 1fr; } .home-manifesto-mark { border-top: 1px solid var(--continuation-rule); border-left: 0; padding: 22px 0 0; } .home-global-copy { border-bottom: 1px solid var(--continuation-rule); border-left: 0; padding: 0 0 26px; } .home-global-visual { order: 2; } .home-rewards-heading { grid-template-columns: 1fr; gap: 10px; } .home-rewards-heading .home-section-label { grid-row: auto; margin-top: 0; } .home-reward-grid, .home-footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-footer-brand { grid-template-columns: 1fr; } .home-reward-panel { grid-column: 1 / -1; } }
 @media (max-width: 620px) { .home-continuation-container { width: min(100% - 36px, 560px); } .home-manifesto { padding: 56px 0; } .home-manifesto::after, .home-global-section::after, .home-rewards-section::after { inset: 13px; } .home-manifesto h1, .home-manifesto h2 { font-size: clamp(56px, 18vw, 82px); } .home-manifesto-deck { font-size: 22px; } .home-manifesto-mark { grid-template-columns: 82px minmax(0, 1fr); gap: 14px; } .home-continuation-sprout { width: 82px; } .home-manifesto-art { min-height: 360px; } .home-manifesto-card-grid, .home-reward-grid, .home-footer-nav { grid-template-columns: 1fr; } .home-manifesto-card-grid article { min-height: 0; } .home-global-layout { min-height: 0; padding: 58px 0; } .home-global-visual { min-height: 270px; } .home-globe-frame::after { transform: translateY(116px); } .home-globe-frame .landing-global-globe { width: min(86%, 300px); } .home-reward-panel { grid-column: auto; } .home-reward-card { min-height: 344px; } .home-footer-bottom { align-items: flex-start; flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .home-continuation *, .home-continuation *::before, .home-continuation *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
 
@@ -217,7 +221,7 @@
   margin-top: clamp(24px, 3vw, 36px);
   padding: 0 24px;
   border: 1px solid #FFFFFF;
-  border-radius: 0;
+  border-radius: 10px;
   background: #FFFFFF;
   color: #141413;
   font-family: var(--font-sans);
@@ -286,7 +290,7 @@
   gap: 10px;
   padding: 0 22px;
   border: 1px solid transparent;
-  border-radius: 0;
+  border-radius: 10px;
   font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 500;

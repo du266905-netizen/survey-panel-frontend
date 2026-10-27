@@ -188,7 +188,7 @@ export default function Quantitative() {
             {t.free || '免费开始'}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>
-          <Link className="qn-action qn-action--quiet" to={withLanguage('/contact', language)}>
+          <Link className="qn-action qn-action--quiet" to={withLanguage('/business/access', language)}>
             {t.action || '联系销售'}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>

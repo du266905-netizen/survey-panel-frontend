@@ -178,7 +178,7 @@ export default function ProductPricing() {
         {base.free}
         <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
       </Link>
-      <Link className="pp-action pp-action--quiet" to={withLanguage('/contact', language)}>
+      <Link className="pp-action pp-action--quiet" to={withLanguage('/business/access', language)}>
         {base.action}
         <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
       </Link>

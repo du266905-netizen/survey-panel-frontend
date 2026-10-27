@@ -155,7 +155,7 @@ export default function ChannelRetail() {
         {base.free}
         <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
       </Link>
-      <Link className="cr-action cr-action--quiet" to={withLanguage('/contact', language)}>
+      <Link className="cr-action cr-action--quiet" to={withLanguage('/business/access', language)}>
         {base.action}
         <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
       </Link>
