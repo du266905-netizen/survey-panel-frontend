@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import { solutionNavCopy } from '../constants/solutionNavCopy';
 import usePageTitle from '../hooks/usePageTitle';
 import HomeFilmSection from '../components/HomeFilmSection';
 import { HomeCommunityCta } from '../components/HomeLegacySections';
@@ -41,6 +42,20 @@ const heroUi = {
     signIn: '登入', signUp: '報名',
     policyEyebrow: '閱讀政策與條款', privacy: '隱私政策', terms: '服務條款', researcherTerms: '商業研究者條款',
   },
+  'de': { join: 'Mitmachen', contact: 'Vertrieb kontaktieren', industries: 'Branchen', industriesTitle: 'Wählen Sie den Bereich, der Sie interessiert.' },
+  'fr': { join: 'Rejoindre', contact: 'Contacter les ventes', industries: 'Secteurs', industriesTitle: 'Choisissez le secteur qui vous intéresse.' },
+  'nl': { join: 'Meedoen', contact: 'Contact opnemen met sales', industries: 'Branches', industriesTitle: 'Kies de branche die u interesseert.' },
+  'da': { join: 'Deltag', contact: 'Kontakt salg', industries: 'Brancher', industriesTitle: 'Vælg det område, der interesserer dig.' },
+  'es': { join: 'Participa', contact: 'Contactar con ventas', industries: 'Sectores', industriesTitle: 'Elige el sector que te interese.' },
+  'fi': { join: 'Liity', contact: 'Ota yhteyttä myyntiin', industries: 'Toimialat', industriesTitle: 'Valitse sinua kiinnostava toimiala.' },
+  'it': { join: 'Partecipa', contact: 'Contatta il team commerciale', industries: 'Settori', industriesTitle: 'Scegli il settore che ti interessa.' },
+  'ja': { join: '参加する', contact: '営業に問い合わせる', industries: '業界', industriesTitle: '興味のある分野を選んでください。' },
+  'ko': { join: '참여하기', contact: '영업 문의', industries: '산업', industriesTitle: '관심 있는 분야를 선택하세요.' },
+  'no': { join: 'Delta', contact: 'Kontakt salg', industries: 'Bransjer', industriesTitle: 'Velg bransjen som interesserer deg.' },
+  'pt': { join: 'Participar', contact: 'Contactar vendas', industries: 'Setores', industriesTitle: 'Escolha o setor que lhe interessa.' },
+  'ru': { join: 'Присоединиться', contact: 'Связаться с отделом продаж', industries: 'Отрасли', industriesTitle: 'Выберите отрасль, которая вам интересна.' },
+  'sv': { join: 'Delta', contact: 'Kontakta säljteamet', industries: 'Branscher', industriesTitle: 'Välj det område som intresserar dig.' },
+  'tr': { join: 'Katıl', contact: 'Satış ekibiyle iletişime geç', industries: 'Sektörler', industriesTitle: 'İlgilendiğiniz sektörü seçin.' },
 };
 
 /* Ten industry pages, in the order the copy library and the router carry them.
@@ -70,6 +85,9 @@ export default function About() {
         <p className="ab-lede">{text.body}</p>
         <div className="ab-actions">
           <Link className="ab-button" to={withLanguage('/access', language)}>{ui.join}</Link>
+          <Link className="ab-button ab-button--ghost" to={withLanguage('/careers', language)}>
+            {solutionNavCopy[language]?.__jobSearch || 'Search jobs'}
+          </Link>
           <Link className="ab-button ab-button--ghost" to={withLanguage('/contact', language)}>{ui.contact}</Link>
         </div>
       </section>
