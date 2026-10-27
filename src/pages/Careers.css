@@ -181,7 +181,7 @@
   background: transparent;
   color: #141413;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   padding: 0;
 }
@@ -199,15 +199,15 @@
   color: #565A60;
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
-  padding: 7px 0;
+  padding: 9px 0;
   text-align: left;
   transition: color .15s ease;
 }
 .careers-filters button:hover { color: #141413; }
 .careers-filters button.is-active { color: #141413; font-weight: 600; }
-.careers-filters button span { color: #A8A49C; font-size: 11px; font-weight: 400; }
+.careers-filters button span { color: #A8A49C; font-size: 12px; font-weight: 400; }
 
 .careers-roles-title {
   margin: 0 0 clamp(32px, 3.6vw, 52px);
@@ -226,8 +226,8 @@
   padding: 26px 0;
 }
 .careers-role-list li:last-child { border-bottom: 1px solid #E6E4DE; }
-.careers-role-index { color: #9A9791; font-family: var(--font-sans); font-size: 11px; letter-spacing: .08em; }
-.careers-role-name { font-family: var(--font-serif); font-size: 32px; font-weight: 400; letter-spacing: -.01em; line-height: 1.2; }
+.careers-role-index { color: #9A9791; font-family: var(--font-sans); font-size: 12px; letter-spacing: .08em; }
+.careers-role-name { font-family: var(--font-serif); font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.3; }
 .careers-roles-empty { margin: 0; color: #565A60; font-family: var(--font-sans); font-size: 16px; }
 
 @media (max-width: 900px) {
@@ -235,5 +235,5 @@
   .careers-rail { position: static; }
   .careers-filters { display: flex; flex-wrap: wrap; gap: 8px 16px; }
   .careers-filters button { width: auto; gap: 8px; }
-  .careers-role-name { font-size: 22px; }
+  .careers-filters button { font-size: 16px; }
 }
