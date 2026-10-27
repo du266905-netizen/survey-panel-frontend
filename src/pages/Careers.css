@@ -20,17 +20,22 @@
 
 .careers-body {
   margin: 0;
-  font-weight: 600;
   max-width: none;
   color: #141413;
   font-family: var(--font-serif);
   font-size: 38px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -.01em;
   line-height: 1.32;
 }
 
-.careers-body + .careers-body { margin-top: 22px; }
+.careers-lead {
+  /* Source Serif has no CJK; the Songti fallback ships one weight and Chrome
+     does not synthesise the 600. A hair of stroke is what makes the first
+     sentence actually read as bolder at 38px. */
+  font-weight: 600;
+  -webkit-text-stroke: .45px currentColor;
+}
 
 @media (max-width: 900px) {
   .careers-container { width: min(100% - 48px, 760px); }
@@ -41,10 +46,29 @@
 
 /* Full-bleed room photograph between the opening and the closing block. */
 .careers-room {
+  position: relative;
   height: calc(100svh - 100px);
-  min-height: 380px;
+  min-height: 420px;
   overflow: hidden;
   background: #d8d5cf;
+}
+/* A light veil, so the 80-step line holds on the bright patch of the wall. */
+.careers-room::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 19, .24);
+}
+.careers-room-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  text-align: center;
 }
 .careers-room img {
   display: block;
@@ -55,9 +79,9 @@
 }
 
 /* Closing block: one 80-step line, centred, then the openings button. */
-.careers-join { padding: clamp(80px, 10vw, 140px) 0 clamp(88px, 11vw, 152px); text-align: center; }
 .careers-join-title {
   margin: 0;
+  color: #FFFFFF;
   font-family: var(--font-impact);
   font-size: 80px;
   font-weight: 400;
