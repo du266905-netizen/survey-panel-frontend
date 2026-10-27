@@ -154,25 +154,70 @@
 }
 
 
-/* Open roles: 56 heading, four rows, one hairline each. */
-.careers-roles {
-  padding: 0 0 clamp(96px, 11vw, 152px);
-  scroll-margin-top: 120px;
+
+
+/* Open roles: search and department filters on the left, roles on the right. */
+.careers-roles { padding: 0 0 clamp(96px, 11vw, 152px); scroll-margin-top: 120px; }
+.careers-roles-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  column-gap: clamp(40px, 5vw, 80px);
+  align-items: start;
 }
+.careers-rail { position: sticky; top: 120px; }
+
+.careers-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #141413;
+  padding-bottom: 10px;
+  color: #7F848A;
+}
+.careers-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #141413;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0;
+}
+.careers-search input::placeholder { color: #9A9791; }
+
+.careers-filters { margin: 26px 0 0; padding: 0; list-style: none; }
+.careers-filters button {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  border: 0;
+  background: transparent;
+  color: #565A60;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 7px 0;
+  text-align: left;
+  transition: color .15s ease;
+}
+.careers-filters button:hover { color: #141413; }
+.careers-filters button.is-active { color: #141413; font-weight: 600; }
+.careers-filters button span { color: #A8A49C; font-size: 11px; font-weight: 400; }
+
 .careers-roles-title {
-  margin: 0 0 clamp(28px, 3vw, 44px);
+  margin: 0 0 clamp(24px, 3vw, 40px);
   font-family: var(--font-impact);
   font-size: 56px;
   font-weight: 400;
   letter-spacing: -.03em;
   line-height: 1.04;
 }
-.careers-role-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  max-width: 820px;
-}
+.careers-role-list { margin: 0; padding: 0; list-style: none; max-width: 820px; }
 .careers-role-list li {
   display: flex;
   align-items: baseline;
@@ -181,21 +226,14 @@
   padding: 26px 0;
 }
 .careers-role-list li:last-child { border-bottom: 1px solid #E6E4DE; }
-.careers-role-index {
-  color: #9A9791;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: .08em;
-}
-.careers-role-name {
-  font-family: var(--font-serif);
-  font-size: 32px;
-  font-weight: 400;
-  letter-spacing: -.01em;
-  line-height: 1.2;
-}
+.careers-role-index { color: #9A9791; font-family: var(--font-sans); font-size: 11px; letter-spacing: .08em; }
+.careers-role-name { font-family: var(--font-serif); font-size: 32px; font-weight: 400; letter-spacing: -.01em; line-height: 1.2; }
+.careers-roles-empty { margin: 0; color: #565A60; font-family: var(--font-sans); font-size: 16px; }
 
 @media (max-width: 900px) {
-  /* 56 stays on phones too: the heading is four characters and has the width. */
+  .careers-roles-layout { grid-template-columns: 1fr; row-gap: 40px; }
+  .careers-rail { position: static; }
+  .careers-filters { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .careers-filters button { width: auto; gap: 8px; }
   .careers-role-name { font-size: 22px; }
 }
