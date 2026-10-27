@@ -7,6 +7,7 @@ import Logo from './Logo';
 import LanguageGlobe from './LanguageGlobe';
 import { useLanguage, withLanguage } from './LanguageContext';
 import { publicNavigation } from '../constants/publicNavigation';
+import { solutionNavCopy } from '../constants/solutionNavCopy';
 import './PublicSiteHeader.css';
 
 const CLOSE_DELAY = 160;
@@ -75,12 +76,14 @@ export default function PublicSiteHeader({ stripStart = null }) {
   const renderNavItem = (item) => {
     /* An item with an `id` is a new Solutions entry and must not inherit the
        copy of the page it temporarily points at. */
-    const entry = item.id ? chrome.items?.[item.id] : chrome.items?.[item.to];
+    const key = item.id || item.to;
+    const entry = chrome.items?.[key];
+    const local = solutionNavCopy[language]?.[key];
     return (
       <Link className="psn-item" to={withLanguage(item.to, language)} key={item.id || item.to} onClick={closeAll}>
         <span>
-          <strong>{entry?.title || item.title}</strong>
-          <small>{entry?.note || item.note}</small>
+          <strong>{entry?.title || local?.title || item.title}</strong>
+          <small>{entry?.note || local?.note || item.note}</small>
         </span>
         <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
       </Link>
@@ -303,7 +306,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
                 </Link>
               ) : mobileItems.length ? mobileItems.map((item) => (
                 <Link key={item.id || item.to} to={withLanguage(item.to, language)} onClick={closeAll}>
-                  {(item.id ? chrome.items?.[item.id] : chrome.items?.[item.to])?.title || item.title}
+                  {(chrome.items?.[item.id || item.to]?.title || solutionNavCopy[language]?.[item.id || item.to]?.title || item.title)}
                   <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
                 </Link>
               )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}

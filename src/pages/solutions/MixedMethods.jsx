@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage, withLanguage } from '../../components/LanguageContext';
+import { solutionNavCopy } from '../../constants/solutionNavCopy';
 import usePageTitle from '../../hooks/usePageTitle';
 import './MixedMethods.css';
 
@@ -21,7 +22,8 @@ export default function MixedMethods() {
   const { language, publicCopy } = useLanguage();
   const base = copy[language] || copy['en-US'];
   const entry = publicCopy.chrome?.items?.['mixed'];
-  const t = { group: entry?.title || 'Mixed methods', title: entry?.note || 'Both, in one design' };
+  const local = solutionNavCopy[language]?.['mixed'];
+  const t = { group: entry?.title || local?.title || 'Mixed methods', title: entry?.note || local?.note || 'Both, in one design' };
   usePageTitle(t.group);
 
   const actions = (

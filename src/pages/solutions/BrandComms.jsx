@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage, withLanguage } from '../../components/LanguageContext';
+import { solutionNavCopy } from '../../constants/solutionNavCopy';
 import usePageTitle from '../../hooks/usePageTitle';
 import './BrandComms.css';
 
@@ -20,7 +21,8 @@ export default function BrandComms() {
   const { language, publicCopy } = useLanguage();
   const base = copy[language] || copy['en-US'];
   const entry = publicCopy.chrome?.items?.['brand-comms'];
-  const t = { group: entry?.title || 'Brand & communications', title: entry?.note || 'Brand health, advertising and campaigns' };
+  const local = solutionNavCopy[language]?.['brand-comms'];
+  const t = { group: entry?.title || local?.title || 'Brand & communications', title: entry?.note || local?.note || 'Brand health, advertising and campaigns' };
   usePageTitle(t.group);
 
   const actions = (

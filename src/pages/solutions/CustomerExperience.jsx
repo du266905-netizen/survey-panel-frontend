@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage, withLanguage } from '../../components/LanguageContext';
+import { solutionNavCopy } from '../../constants/solutionNavCopy';
 import usePageTitle from '../../hooks/usePageTitle';
 import './CustomerExperience.css';
 
@@ -18,7 +19,8 @@ export default function CustomerExperience() {
   const { language, publicCopy } = useLanguage();
   const base = copy[language] || copy['en-US'];
   const entry = publicCopy.chrome?.items?.['customer-experience'];
-  const t = { group: entry?.title || 'Customer experience', title: entry?.note || 'Why customers leave, and what keeps them' };
+  const local = solutionNavCopy[language]?.['customer-experience'];
+  const t = { group: entry?.title || local?.title || 'Customer experience', title: entry?.note || local?.note || 'Why customers leave, and what keeps them' };
   usePageTitle(t.group);
 
   const actions = (

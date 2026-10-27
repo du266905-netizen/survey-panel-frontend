@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage, withLanguage } from '../../components/LanguageContext';
+import { solutionNavCopy } from '../../constants/solutionNavCopy';
 import usePageTitle from '../../hooks/usePageTitle';
 import './ChannelRetail.css';
 
@@ -19,7 +20,8 @@ export default function ChannelRetail() {
   const { language, publicCopy } = useLanguage();
   const base = copy[language] || copy['en-US'];
   const entry = publicCopy.chrome?.items?.['channel-retail'];
-  const t = { group: entry?.title || 'Channel & retail', title: entry?.note || 'Shelf, listing and price execution' };
+  const local = solutionNavCopy[language]?.['channel-retail'];
+  const t = { group: entry?.title || local?.title || 'Channel & retail', title: entry?.note || local?.note || 'Shelf, listing and price execution' };
   usePageTitle(t.group);
 
   const actions = (

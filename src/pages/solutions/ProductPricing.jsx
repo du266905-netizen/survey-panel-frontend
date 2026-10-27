@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage, withLanguage } from '../../components/LanguageContext';
+import { solutionNavCopy } from '../../constants/solutionNavCopy';
 import usePageTitle from '../../hooks/usePageTitle';
 import './ProductPricing.css';
 
@@ -22,7 +23,8 @@ export default function ProductPricing() {
   const { language, publicCopy } = useLanguage();
   const base = copy[language] || copy['en-US'];
   const entry = publicCopy.chrome?.items?.['product-pricing'];
-  const t = { ...base, group: entry?.title || 'Product & pricing', title: entry?.note || 'Concepts, packs and price points' };
+  const local = solutionNavCopy[language]?.['product-pricing'];
+  const t = { ...base, group: entry?.title || local?.title || 'Product & pricing', title: entry?.note || local?.note || 'Concepts, packs and price points' };
   usePageTitle(t.group);
 
   const actions = (

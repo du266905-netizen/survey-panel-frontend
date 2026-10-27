@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage, withLanguage } from '../../components/LanguageContext';
+import { solutionNavCopy } from '../../constants/solutionNavCopy';
 import usePageTitle from '../../hooks/usePageTitle';
 import './Audience.css';
 
@@ -21,7 +22,8 @@ export default function Audience() {
   const base = copy[language] || copy['en-US'];
   // 眉标用导航译文；H1 就是那条 note，和下拉菜单里看到的是同一句话。
   const entry = publicCopy.chrome?.items?.['audience'];
-  const t = { ...base, group: entry?.title || 'Audience understanding', title: entry?.note || base.title };
+  const local = solutionNavCopy[language]?.['audience'];
+  const t = { ...base, group: entry?.title || local?.title || 'Audience understanding', title: entry?.note || local?.note || base.title };
   usePageTitle(t.group);
 
   const actions = (

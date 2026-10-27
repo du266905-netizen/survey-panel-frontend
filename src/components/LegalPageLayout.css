@@ -1,5 +1,5 @@
 /* Legal pages (privacy, terms, researcher terms) on the public visual system.
-   Warm-white ground, Spectral 38 hero, Bodoni 22 section titles, Inter 16 body.
+   Warm-white ground, Spectral 56 hero, Bodoni 22 section titles, Inter 16 body.
    No greige hero, no decorative rings, no section dividers. */
 
 .public-site-layout .legal-page {
@@ -35,7 +35,7 @@
   margin: 18px 0 0;
   color: var(--ps-ink);
   font-family: var(--font-serif);
-  font-size: 38px;
+  font-size: 56px;
   font-weight: 400;
   letter-spacing: -.03em;
   line-height: 1.02;
@@ -265,7 +265,7 @@
 @media (max-width: 800px) {
   .public-site-layout .legal-container { width: min(100% - 40px, 680px); }
   .public-site-layout .legal-hero { padding: 64px 0 32px; }
-  .public-site-layout .legal-hero h1 { font-size: 32px; line-height: 1.06; letter-spacing: -.02em; }
+  .public-site-layout .legal-hero h1 { font-size: 56px; line-height: 1.02; letter-spacing: -.03em; }
   .public-site-layout .legal-layout { grid-template-columns: 1fr; gap: 32px; padding-bottom: 72px; }
   .public-site-layout .legal-toc { position: static; }
   .public-site-layout .legal-toc nav { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
@@ -277,7 +277,7 @@
   .public-site-layout .legal-toc nav { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
-  .public-site-layout .legal-hero h1 { font-size: 32px; }
+  .public-site-layout .legal-hero h1 { font-size: 56px; }
   .public-site-layout .legal-hero-copy { font-size: 16px; }
   .public-site-layout .legal-meta { font-size: 9.5px; }
   .public-site-layout .legal-card-grid.is-three-up { grid-template-columns: 1fr; }

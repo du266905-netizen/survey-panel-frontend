@@ -5,25 +5,23 @@ import Logo from './Logo';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import { footerIdentityTranslations, globalTranslations, navigationLabels } from '../constants/homepageTranslations';
 import { publicNavigation } from '../constants/publicNavigation';
+import { solutionNavCopy } from '../constants/solutionNavCopy';
 import { useLanguage, withLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
 import AtlasTypewriter from './AtlasTypewriter';
 import NewsletterForm from './NewsletterForm';
 import './HomeLegacySections.css';
 
-function buildFooterColumns(publicCopy) {
+function buildFooterColumns(publicCopy, language) {
   const chrome = publicCopy?.chrome || {};
   const groups = chrome.groups || {};
   const items = chrome.items || {};
   const sections = chrome.sections || {};
   const group = (id) => publicNavigation.find((entry) => entry.id === id);
-  const link = (item) => ({ label: items[item.id]?.title || items[item.to]?.title || item.title, to: item.to });
+  const local = solutionNavCopy[language] || {};
+  const link = (item) => ({ label: items[item.id]?.title || items[item.to]?.title || local[item.id]?.title || local[item.to]?.title || item.title, to: item.to });
   const solutions = group('solutions');
   return [
-    {
-      label: groups.about || 'About us',
-      blocks: [{ links: [link({ to: '/about', title: 'About us' }), link({ to: '/how-it-works', title: 'How it works' })] }],
-    },
     {
       label: groups.solutions || 'Solutions',
       blocks: (solutions?.sections || []).map((section) => ({
@@ -134,7 +132,7 @@ export function HomeFooter() {
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   const copy = publicCopy.home.footer;
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
-  const footerColumns = buildFooterColumns(publicCopy);
+  const footerColumns = buildFooterColumns(publicCopy, language);
   const cookieSettingsLabel = language === 'zh-CN' ? 'Cookie 设置' : language === 'zh-Hant' ? 'Cookie 設定' : 'Cookie settings';
   const openCookieSettings = (event) => {
     event.preventDefault();
@@ -150,7 +148,7 @@ export function HomeFooter() {
             <img className="home-footer-mark" src={brandMarkLight} alt="" aria-hidden="true" />
             <Logo size="lg" variant="light" className="home-footer-wordmark" />
           </div>
-          <div className="home-footer-about"><p className="home-footer-about-title">{identity.title}</p><p>{identity.description}</p></div>
+          <div className="home-footer-about"><p className="home-footer-about-title"><Link to={withLanguage('/about', language)}>{identity.title}</Link></p><p>{identity.description}</p></div>
           <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>
           <label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">{languageLabel[language] || 'Language'}</span><select value={language} onChange={(event) => navigateToLanguage(event.target.value)} aria-label={languageLabel[language] || 'Choose language'}>{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label>
         </div>

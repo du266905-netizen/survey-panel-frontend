@@ -506,3 +506,20 @@
 @media (max-width: 900px) {
   .home-atlas .video-hero-foot { grid-template-columns: minmax(0, 1fr); gap: 28px; margin-top: 28px; }
 }
+
+
+/* ---- button radius, 2026-10-27 ------------------------------------------
+   One soft rectangle for every public button, the header CTA included: the
+   owner's reference is a 12px corner on a 100px-tall button. Everything that
+   had 0/3px before comes through here, so the pages do not each carry a
+   radius of their own. */
+.psn-cta,
+.home-hero-cta,
+.home-community-cta-button,
+.public-auth-submit,
+.landing-page--auth-only .public-auth-email-cta,
+.me-action, .au-action, .pp-action, .bc-action, .cr-action,
+.cx-action, .mm-action, .qu-action, .qn-action,
+.business-contact-form > .business-button {
+  border-radius: 12px !important;
+}
