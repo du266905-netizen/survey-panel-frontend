@@ -114,14 +114,14 @@
    and the type sits at lighter weights with neutral rather than tinted
    greys. Ground colour stays the brand's own #17231d. */
 .home-footer { background: #17231d; color: rgba(255, 255, 255, 0.78); }
-.home-footer-main { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); gap: clamp(32px, 4vw, 64px); align-items: start; padding-top: clamp(56px, 6vw, 84px); padding-bottom: clamp(48px, 5vw, 72px); }
+.home-footer-main { display: grid; grid-template-columns: minmax(170px, 214px) minmax(0, 1fr); gap: clamp(32px, 4vw, 64px); align-items: start; padding-top: clamp(56px, 6vw, 84px); padding-bottom: clamp(48px, 5vw, 72px); }
 /* 品牌一行、链接一行：五个大标题要并排，左边再留品牌块就挤不下。 */
 .home-footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 
 /* the mark and wordmark stack; no mix-blend-mode — the artwork is a true
    transparent PNG, which is what made the old blend rule unsafe */
 .home-footer-identity { display: grid; justify-items: start; gap: 18px; }
-.home-footer-mark { width: clamp(72px, 7.6vw, 104px); height: auto; }
+.home-footer-mark { width: clamp(96px, 9.4vw, 140px); height: auto; }
 .home-footer-wordmark { width: clamp(140px, 13vw, 176px); max-width: none; }
 
 .home-footer-about { width: 100%; max-width: none; font-family: var(--font-reading); }
@@ -141,7 +141,7 @@
 .home-social-links a:hover { border-color: #fff; background: #fff; color: #17231d; }
 .home-social-links svg { width: 17px; height: 17px; }
 
-.home-footer-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(18px, 2vw, 32px); align-content: start; padding-top: 4px; }
+.home-footer-nav { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(16px, 1.8vw, 28px); align-content: start; padding-top: 4px; }
 .home-footer-nav section { display: grid; align-content: start; gap: 10px; }
 .home-footer-block { display: grid; gap: 8px; }
 .home-footer-nav p { margin: 0 0 6px; color: rgba(255, 255, 255, 0.44); font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: .06em; line-height: 1.4; text-transform: uppercase; }

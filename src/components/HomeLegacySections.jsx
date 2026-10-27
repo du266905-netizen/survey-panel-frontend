@@ -1,7 +1,6 @@
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlobalGlobe from './GlobalGlobe';
-import Logo from './Logo';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import { footerIdentityTranslations, globalTranslations, navigationLabels } from '../constants/homepageTranslations';
 import { publicNavigation } from '../constants/publicNavigation';
@@ -22,6 +21,10 @@ function buildFooterColumns(publicCopy, language) {
   const link = (item) => ({ label: items[item.id]?.title || items[item.to]?.title || local[item.id]?.title || local[item.to]?.title || item.title, to: item.to });
   const solutions = group('solutions');
   return [
+    {
+      label: local.__company || groups.about || 'Company',
+      blocks: [{ links: [{ label: local.about?.title || items['/about']?.title || 'About us', to: '/about' }] }],
+    },
     {
       label: groups.solutions || 'Solutions',
       blocks: (solutions?.sections || []).map((section) => ({
@@ -145,8 +148,7 @@ export function HomeFooter() {
       <div className="home-continuation-container home-footer-main">
         <div className="home-footer-brand">
           <div className="home-footer-identity">
-            <img className="home-footer-mark" src={brandMarkLight} alt="" aria-hidden="true" />
-            <Logo size="lg" variant="light" className="home-footer-wordmark" />
+            <img className="home-footer-mark" src={brandMarkLight} alt="GuanyiSearch" />
           </div>
           <div className="home-footer-about"><p className="home-footer-about-title"><Link to={withLanguage('/about', language)}>{identity.title}</Link></p><p>{identity.description}</p></div>
           <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>

@@ -1,7 +1,3 @@
-/* Navigation labels for the new solution pages, in the fourteen languages
-   the chrome copy does not carry yet. Looked up after publicCopy.chrome.items
-   and before the English fallback in publicNavigation.js. */
-
 export const solutionNavCopy = {
   "de": {
     "market-entry": {
@@ -51,7 +47,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Bedingungen für Forschende",
       "note": "Bedingungen für Organisationen und Forschende"
-    }
+    },
+    "__company": "Unternehmen"
   },
   "fr": {
     "market-entry": {
@@ -101,7 +98,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Conditions pour les chercheurs",
       "note": "Conditions pour les organisations et les chercheurs"
-    }
+    },
+    "__company": "Entreprise"
   },
   "nl": {
     "market-entry": {
@@ -151,7 +149,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Voorwaarden voor onderzoekers",
       "note": "Voorwaarden voor organisaties en onderzoekers"
-    }
+    },
+    "__company": "Bedrijf"
   },
   "da": {
     "market-entry": {
@@ -201,7 +200,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Vilkår for forskere",
       "note": "Vilkår for organisationer og forskere"
-    }
+    },
+    "__company": "Virksomhed"
   },
   "es": {
     "market-entry": {
@@ -251,7 +251,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Condiciones para investigadores",
       "note": "Condiciones para organizaciones e investigadores"
-    }
+    },
+    "__company": "Empresa"
   },
   "fi": {
     "market-entry": {
@@ -301,7 +302,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Tutkijoiden ehdot",
       "note": "Ehdot organisaatioille ja tutkijoille"
-    }
+    },
+    "__company": "Yritys"
   },
   "it": {
     "market-entry": {
@@ -351,7 +353,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Condizioni per i ricercatori",
       "note": "Condizioni per organizzazioni e ricercatori"
-    }
+    },
+    "__company": "Azienda"
   },
   "ja": {
     "market-entry": {
@@ -401,7 +404,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "研究サービス規約",
       "note": "法人・研究者向けの規約"
-    }
+    },
+    "__company": "会社"
   },
   "ko": {
     "market-entry": {
@@ -451,7 +455,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "연구 서비스 약관",
       "note": "기관과 연구자를 위한 약관"
-    }
+    },
+    "__company": "회사"
   },
   "no": {
     "market-entry": {
@@ -501,7 +506,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Forskningsvilkår",
       "note": "Vilkår for organisasjoner og forskere"
-    }
+    },
+    "__company": "Selskap"
   },
   "pt": {
     "market-entry": {
@@ -551,7 +557,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Termos de investigação",
       "note": "Termos para organizações e investigadores"
-    }
+    },
+    "__company": "Empresa"
   },
   "ru": {
     "market-entry": {
@@ -601,7 +608,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Условия исследований",
       "note": "Условия для организаций и исследователей"
-    }
+    },
+    "__company": "Компания"
   },
   "sv": {
     "market-entry": {
@@ -651,7 +659,8 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Forskningsvillkor",
       "note": "Villkor för organisationer och forskare"
-    }
+    },
+    "__company": "Företag"
   },
   "tr": {
     "market-entry": {
@@ -701,6 +710,19 @@ export const solutionNavCopy = {
     "business-terms": {
       "title": "Araştırma koşulları",
       "note": "Kurumlar ve araştırmacılar için koşullar"
-    }
+    },
+    "__company": "Şirket"
+  },
+  "en-US": {
+    "__company": "Company"
+  },
+  "en-GB": {
+    "__company": "Company"
+  },
+  "zh-CN": {
+    "__company": "公司"
+  },
+  "zh-Hant": {
+    "__company": "公司"
   }
 };
