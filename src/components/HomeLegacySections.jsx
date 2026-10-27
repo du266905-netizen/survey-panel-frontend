@@ -141,7 +141,26 @@ export function HomeFooter() {
   const copy = publicCopy.home.footer;
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
   const footerColumns = buildFooterColumns(publicCopy, language);
-  const cookieSettingsLabel = language === 'zh-CN' ? 'Cookie 设置' : language === 'zh-Hant' ? 'Cookie 設定' : 'Cookie settings';
+  const cookieSettingsLabel = {
+    'zh-CN': 'Cookie 设置',
+    'zh-Hant': 'Cookie 設定',
+    'en-US': 'Cookie settings',
+    'en-GB': 'Cookie settings',
+    de: 'Cookie-Einstellungen',
+    fr: 'Paramètres des cookies',
+    nl: 'Cookie-instellingen',
+    da: 'Cookieindstillinger',
+    es: 'Configuración de cookies',
+    fi: 'Evästeasetukset',
+    it: 'Impostazioni dei cookie',
+    ja: 'Cookie 設定',
+    ko: '쿠키 설정',
+    no: 'Innstillinger for informasjonskapsler',
+    pt: 'Definições de cookies',
+    ru: 'Настройки cookie',
+    sv: 'Cookieinställningar',
+    tr: 'Çerez ayarları',
+  }[language] || 'Cookie settings';
   const openCookieSettings = (event) => {
     event.preventDefault();
     if (typeof window !== 'undefined' && typeof window.Cookiebot?.renew === 'function') {
