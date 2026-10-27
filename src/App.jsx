@@ -24,6 +24,8 @@ import Quantitative from './pages/solutions/Quantitative';
 import Audience from './pages/solutions/Audience';
 import ProductPricing from './pages/solutions/ProductPricing';
 import BrandComms from './pages/solutions/BrandComms';
+import ChannelRetail from './pages/solutions/ChannelRetail';
+import CustomerExperience from './pages/solutions/CustomerExperience';
 import Contact from './pages/Contact';
 import Rewards from './pages/Rewards';
 import HowItWorks from './pages/HowItWorks';
@@ -184,6 +186,8 @@ export default function App() {
         <Route path="/solutions/audience" element={<PublicPage><Audience /></PublicPage>} />
         <Route path="/solutions/product-pricing" element={<PublicPage><ProductPricing /></PublicPage>} />
         <Route path="/solutions/brand-comms" element={<PublicPage><BrandComms /></PublicPage>} />
+        <Route path="/solutions/channel-retail" element={<PublicPage><ChannelRetail /></PublicPage>} />
+        <Route path="/solutions/customer-experience" element={<PublicPage><CustomerExperience /></PublicPage>} />
         <Route path="/business/access" element={<BusinessAccess />} />
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />

@@ -34,8 +34,8 @@ export const publicNavigation = [
           { id: 'audience', to: '/solutions/audience', title: 'Audience understanding', note: 'Who buys, why, and how they split' },
           { id: 'product-pricing', to: '/solutions/product-pricing', title: 'Product & pricing', note: 'Concepts, packs and price points' },
           { id: 'brand-comms', to: '/solutions/brand-comms', title: 'Brand & communications', note: 'Brand health, advertising and campaigns' },
-          { id: 'channel-retail', to: '/business', title: 'Channel & retail', note: 'Shelf, listing and price execution' },
-          { id: 'customer-experience', to: '/business', title: 'Customer experience', note: 'Why customers leave, and what keeps them' },
+          { id: 'channel-retail', to: '/solutions/channel-retail', title: 'Channel & retail', note: 'Shelf, listing and price execution' },
+          { id: 'customer-experience', to: '/solutions/customer-experience', title: 'Customer experience', note: 'Why customers leave, and what keeps them' },
         ],
       },
       {
