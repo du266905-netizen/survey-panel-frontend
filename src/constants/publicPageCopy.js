@@ -20986,6 +20986,14 @@ export const chromeCopy = {
         "title": "如何运作",
         "note": "样本库、标准与流程"
       },
+      "/about": {
+        "title": "关于我们",
+        "note": "公司、团队与方法"
+      },
+      "/business/terms": {
+        "title": "研究服务条款",
+        "note": "面向机构与研究者的条款"
+      },
       "/industries/automotive": {
         "title": "汽车与交通",
         "note": "车型、经销商、购车者"
@@ -21102,6 +21110,14 @@ export const chromeCopy = {
       "/how-it-works": {
         "title": "如何運作",
         "note": "樣本庫、標準與流程"
+      },
+      "/about": {
+        "title": "關於我們",
+        "note": "公司、團隊與方法"
+      },
+      "/business/terms": {
+        "title": "研究服務條款",
+        "note": "面向機構與研究者的條款"
       },
       "/industries/automotive": {
         "title": "汽車與交通",

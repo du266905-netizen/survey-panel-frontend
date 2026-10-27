@@ -277,7 +277,7 @@
   .public-site-layout .legal-toc nav { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
-  .public-site-layout .legal-hero h1 { font-size: 28px; }
+  .public-site-layout .legal-hero h1 { font-size: 32px; }
   .public-site-layout .legal-hero-copy { font-size: 16px; }
   .public-site-layout .legal-meta { font-size: 9.5px; }
   .public-site-layout .legal-card-grid.is-three-up { grid-template-columns: 1fr; }
