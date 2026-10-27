@@ -23,6 +23,7 @@ import Qualitative from './pages/solutions/Qualitative';
 import Quantitative from './pages/solutions/Quantitative';
 import Audience from './pages/solutions/Audience';
 import ProductPricing from './pages/solutions/ProductPricing';
+import BrandComms from './pages/solutions/BrandComms';
 import Contact from './pages/Contact';
 import Rewards from './pages/Rewards';
 import HowItWorks from './pages/HowItWorks';
@@ -182,6 +183,7 @@ export default function App() {
         <Route path="/solutions/quantitative" element={<PublicPage><Quantitative /></PublicPage>} />
         <Route path="/solutions/audience" element={<PublicPage><Audience /></PublicPage>} />
         <Route path="/solutions/product-pricing" element={<PublicPage><ProductPricing /></PublicPage>} />
+        <Route path="/solutions/brand-comms" element={<PublicPage><BrandComms /></PublicPage>} />
         <Route path="/business/access" element={<BusinessAccess />} />
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
