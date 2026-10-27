@@ -28,6 +28,7 @@ import ChannelRetail from './pages/solutions/ChannelRetail';
 import CustomerExperience from './pages/solutions/CustomerExperience';
 import MixedMethods from './pages/solutions/MixedMethods';
 import Careers from './pages/Careers';
+import JobDetail from './pages/JobDetail';
 import Contact from './pages/Contact';
 import Rewards from './pages/Rewards';
 import HowItWorks from './pages/HowItWorks';
@@ -231,6 +232,7 @@ export default function App() {
         <Route path="/industries/ecommerce" element={<PublicPage><IndustryEcommerce /></PublicPage>} />
         <Route path="/news" element={<NewsRoute />} />
         <Route path="/careers" element={<Careers />} />
+        <Route path="/careers/:slug" element={<JobDetail />} />
         <Route path="/news/:articleId" element={<NewsArticleRoute />} />
         <Route path="/partners" element={<SurveyWallRoute />} />
         <Route path="/survey/complete" element={<SurveyCompleteRoute />} />

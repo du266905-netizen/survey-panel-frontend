@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 import { ArrowRight, Search } from 'lucide-react';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import { HomeFooter } from '../components/HomeLegacySections';
-import { useLanguage } from '../components/LanguageContext';
+import { Link } from 'react-router-dom';
+import { useLanguage, withLanguage } from '../components/LanguageContext';
 import usePageTitle from '../hooks/usePageTitle';
 import roomImage from '../assets/careers/room.jpg';
 import './Careers.css';
@@ -20,7 +21,7 @@ import './Careers.css';
    support functions. Only four roles exist today; the empty departments stay
    listed with a zero count so new roles drop straight in. */
 
-const careersCopy = {
+export const careersCopy = {
   'zh-CN': {
     lead: '我们深知，员工是我们最大的财富。',
     rest: '是我们能够不断突破、迈向更美好未来的核心引擎。我们相信，只有让每一位员工在工作中找到成就感与归属感，我们才能共同创造出真正有价值的成果。我们提供的是一个开放、包容、充满活力的舞台，在guanyi，你可以尽情的发展你的才华。我们提供远程和现场办公两种职位，因此您可以选择在家办公，也可以选择在我们不断扩建的办公中心之一工作。',
@@ -60,10 +61,10 @@ const careersCopy = {
         ['people', '人才与财务'],
       ],
       items: [
-        { name: '研究员', category: 'research', meta: '不限地区 · 远程办公' },
-        { name: '客户经理', category: 'client', meta: '不限地区 · 远程办公' },
-        { name: '市场营销经理', category: 'marketing', meta: '不限地区 · 远程办公' },
-        { name: '业务拓展经理', category: 'growth', meta: '不限地区 · 远程办公' },
+        { slug: 'researcher', name: '研究员', category: 'research', meta: '不限地区 · 远程办公' },
+        { slug: 'account-manager', name: '客户经理', category: 'client', meta: '不限地区 · 远程办公' },
+        { slug: 'marketing-manager', name: '市场营销经理', category: 'marketing', meta: '不限地区 · 远程办公' },
+        { slug: 'business-development-manager', name: '业务拓展经理', category: 'growth', meta: '不限地区 · 远程办公' },
       ],
     },
   },
@@ -106,10 +107,10 @@ const careersCopy = {
         ['people', '人才與財務'],
       ],
       items: [
-        { name: '研究員', category: 'research', meta: '不限地區 · 遠端辦公' },
-        { name: '客戶經理', category: 'client', meta: '不限地區 · 遠端辦公' },
-        { name: '市場行銷經理', category: 'marketing', meta: '不限地區 · 遠端辦公' },
-        { name: '業務拓展經理', category: 'growth', meta: '不限地區 · 遠端辦公' },
+        { slug: 'researcher', name: '研究員', category: 'research', meta: '不限地區 · 遠端辦公' },
+        { slug: 'account-manager', name: '客戶經理', category: 'client', meta: '不限地區 · 遠端辦公' },
+        { slug: 'marketing-manager', name: '市場行銷經理', category: 'marketing', meta: '不限地區 · 遠端辦公' },
+        { slug: 'business-development-manager', name: '業務拓展經理', category: 'growth', meta: '不限地區 · 遠端辦公' },
       ],
     },
   },
@@ -152,10 +153,10 @@ const careersCopy = {
         ['people', 'People & finance'],
       ],
       items: [
-        { name: 'Researcher', category: 'research', meta: 'Any location · Remote' },
-        { name: 'Account Manager', category: 'client', meta: 'Any location · Remote' },
-        { name: 'Marketing Manager', category: 'marketing', meta: 'Any location · Remote' },
-        { name: 'Business Development Manager', category: 'growth', meta: 'Any location · Remote' },
+        { slug: 'researcher', name: 'Researcher', category: 'research', meta: 'Any location · Remote' },
+        { slug: 'account-manager', name: 'Account Manager', category: 'client', meta: 'Any location · Remote' },
+        { slug: 'marketing-manager', name: 'Marketing Manager', category: 'marketing', meta: 'Any location · Remote' },
+        { slug: 'business-development-manager', name: 'Business Development Manager', category: 'growth', meta: 'Any location · Remote' },
       ],
     },
   },
@@ -198,10 +199,10 @@ const careersCopy = {
         ['people', 'People & finance'],
       ],
       items: [
-        { name: 'Researcher', category: 'research', meta: 'Any location · Remote' },
-        { name: 'Account Manager', category: 'client', meta: 'Any location · Remote' },
-        { name: 'Marketing Manager', category: 'marketing', meta: 'Any location · Remote' },
-        { name: 'Business Development Manager', category: 'growth', meta: 'Any location · Remote' },
+        { slug: 'researcher', name: 'Researcher', category: 'research', meta: 'Any location · Remote' },
+        { slug: 'account-manager', name: 'Account Manager', category: 'client', meta: 'Any location · Remote' },
+        { slug: 'marketing-manager', name: 'Marketing Manager', category: 'marketing', meta: 'Any location · Remote' },
+        { slug: 'business-development-manager', name: 'Business Development Manager', category: 'growth', meta: 'Any location · Remote' },
       ],
     },
   },
@@ -299,12 +300,14 @@ export default function Careers() {
               <ol className="careers-role-list">
                 {visible.map((role, index) => (
                   <li key={role.name}>
-                    <span className="careers-role-index">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="careers-role-body">
-                      <span className="careers-role-name">{role.name}</span>
-                      <span className="careers-role-meta">{role.meta}</span>
-                    </span>
-                    <ArrowRight className="careers-role-arrow" size={18} strokeWidth={1.6} aria-hidden="true" />
+                    <Link className="careers-role-row" to={withLanguage(`/careers/${role.slug}`, language)}>
+                      <span className="careers-role-index">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="careers-role-body">
+                        <span className="careers-role-name">{role.name}</span>
+                        <span className="careers-role-meta">{role.meta}</span>
+                      </span>
+                      <ArrowRight className="careers-role-arrow" size={18} strokeWidth={1.6} aria-hidden="true" />
+                    </Link>
                   </li>
                 ))}
               </ol>
