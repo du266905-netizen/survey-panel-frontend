@@ -1,0 +1,55 @@
+/* Careers — first screen, 2026-10-28.
+   Warm-white ground like the China capability page; the opening paragraph runs
+   the full container at the 38 step, flush left. */
+
+.careers-page {
+  background: #FFFFFF;
+  color: #141413;
+  font-family: var(--font-sans);
+}
+
+.careers-container { width: min(100% - 96px, 1120px); margin: 0 auto; }
+
+.careers-intro {
+  padding: clamp(56px, 7vw, 104px) 0 clamp(72px, 9vw, 132px);
+}
+
+.careers-eyebrow {
+  margin: 0;
+  color: #7F848A;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.careers-title {
+  margin: 18px 0 0;
+  font-family: var(--font-impact);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.04;
+}
+
+.careers-body {
+  margin: 40px 0 0;
+  max-width: none;
+  color: #141413;
+  font-family: var(--font-serif);
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.32;
+}
+
+.careers-body + .careers-body { margin-top: 22px; }
+
+@media (max-width: 900px) {
+  .careers-container { width: min(100% - 48px, 760px); }
+  .careers-title { font-size: 38px; }
+  .careers-body { font-size: 22px; line-height: 1.45; }
+  .careers-body { margin-top: 28px; }
+}

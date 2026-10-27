@@ -19,6 +19,28 @@ const CLOSE_DELAY = 160;
    it (about / solutions / industries / support), the real globe, English only
    for now. The four group names and their temporary pages live in
    `constants/publicNavigation.js`; the bar itself carries no page copy. */
+const jobSearchLabels = {
+  "zh-CN": "搜索职位",
+  "zh-Hant": "搜尋職位",
+  "en": "Search jobs",
+  "en-US": "Search jobs",
+  "en-GB": "Search jobs",
+  "de": "Offene Stellen",
+  "fr": "Offres d’emploi",
+  "nl": "Vacatures",
+  "da": "Ledige stillinger",
+  "es": "Empleo",
+  "fi": "Avoimet työpaikat",
+  "it": "Posizioni aperte",
+  "ja": "採用情報",
+  "ko": "채용 정보",
+  "no": "Ledige stillinger",
+  "pt": "Vagas",
+  "ru": "Вакансии",
+  "sv": "Lediga tjänster",
+  "tr": "Açık pozisyonlar"
+};
+
 export default function PublicSiteHeader({ stripStart = null }) {
   const { user } = useAuth();
   const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
@@ -286,6 +308,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
       <div className="psn-strip">
         <div className="psn-strip-inner">
           {stripStart ? <div className="psn-strip-start">{stripStart}</div> : null}
+          <Link className="psn-strip-link" to={withLanguage('/careers', language)}>{jobSearchLabels[language] || jobSearchLabels.en}</Link>
           <Link className="psn-strip-link" to={withLanguage('/business/access', language)}>{chrome.header.contactSales}</Link>
           <Link className="psn-strip-link" to={withLanguage('/how-it-works', language)}>{chrome.header.helpCentre}</Link>
         </div>
