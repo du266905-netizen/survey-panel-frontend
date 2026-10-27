@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, MapPin } from 'lucide-react';
 import { HomeFooter } from '../components/HomeLegacySections';
+import JobApplicationForm from '../components/JobApplicationForm';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import usePageTitle from '../hooks/usePageTitle';
 import { careersCopy } from './Careers';
@@ -196,6 +197,16 @@ export default function JobDetail() {
                   ))}
                 </ol>
               </section>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {role && (
+        <section className="job-apply-section" id="apply">
+          <div className="careers-container">
+            <div className="job-column">
+              <JobApplicationForm role={role.name} />
             </div>
           </div>
         </section>
