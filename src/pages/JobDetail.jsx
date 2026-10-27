@@ -24,6 +24,15 @@ const chrome = {
   'en-GB': { line: 'An equal, inclusive, and innovative high-performing organization.', back: 'Back to jobs', apply: 'Apply for this role' },
 };
 
+/* The general introduction sits on every job page, above the team mission. It
+   used to live on the careers page; the owner moved it here. */
+const generalIntro = {
+  'zh-CN': '我们深知，优秀的人才是观一（GUANYISEARCH）最宝贵的财富，也是我们连接全球商业、打破信息壁垒的核心动力。作为一家面向全球的市场调研平台，我们致力于用技术与严谨的方法论重塑行业标准。在这里，你的声音将被倾听，你的能力将被放大，我们期待与你一起，在充满不确定性的全球市场中，共同寻找确定的价值。',
+  'zh-Hant': '我們深知，優秀的人才是觀一（GUANYISEARCH）最寶貴的財富，也是我們連接全球商業、打破資訊壁壘的核心動力。作為一家面向全球的市場調研平台，我們致力於用技術與嚴謹的方法論重塑行業標準。在這裡，你的聲音將被傾聽，你的能力將被放大，我們期待與你一起，在充滿不確定性的全球市場中，共同尋找確定的價值。',
+  'en-US': 'We know that good people are GuanyiSearch’s real asset — the force that connects us to business around the world and takes down the walls between information and decision. As a global research platform, we set out to raise the standard of the work with technology and a strict method. Here your voice is heard and your ability is put to use. We are looking for people to join us in reading this uncertain world and finding what can be relied on.',
+  'en-GB': 'We know that good people are GuanyiSearch’s real asset — the force that connects us to business around the world and takes down the walls between information and decision. As a global research platform, we set out to raise the standard of the work with technology and a strict method. Here your voice is heard and your ability is put to use. We are looking for people to join us in reading this uncertain world and finding what can be relied on.',
+};
+
 const jobContent = {
   'account-manager': {
     'zh-CN': {
@@ -157,6 +166,8 @@ export default function JobDetail() {
         <section className="job-body">
           <div className="careers-container">
             <div className="job-column">
+              <p className="job-intro">{generalIntro[language] || generalIntro['en-US']}</p>
+
               <section className="job-block">
                 <h2>{body.missionTitle}</h2>
                 <p>{body.mission}</p>
