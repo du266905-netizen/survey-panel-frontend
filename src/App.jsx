@@ -26,6 +26,7 @@ import ProductPricing from './pages/solutions/ProductPricing';
 import BrandComms from './pages/solutions/BrandComms';
 import ChannelRetail from './pages/solutions/ChannelRetail';
 import CustomerExperience from './pages/solutions/CustomerExperience';
+import MixedMethods from './pages/solutions/MixedMethods';
 import Contact from './pages/Contact';
 import Rewards from './pages/Rewards';
 import HowItWorks from './pages/HowItWorks';
@@ -188,6 +189,7 @@ export default function App() {
         <Route path="/solutions/brand-comms" element={<PublicPage><BrandComms /></PublicPage>} />
         <Route path="/solutions/channel-retail" element={<PublicPage><ChannelRetail /></PublicPage>} />
         <Route path="/solutions/customer-experience" element={<PublicPage><CustomerExperience /></PublicPage>} />
+        <Route path="/solutions/mixed" element={<PublicPage><MixedMethods /></PublicPage>} />
         <Route path="/business/access" element={<BusinessAccess />} />
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
