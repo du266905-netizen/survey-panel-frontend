@@ -20,11 +20,12 @@
 
 .careers-body {
   margin: 0;
+  font-weight: 600;
   max-width: none;
   color: #141413;
   font-family: var(--font-serif);
   font-size: 38px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -.01em;
   line-height: 1.32;
 }
@@ -35,4 +36,53 @@
   .careers-container { width: min(100% - 48px, 760px); }
   .careers-body { font-size: 22px; line-height: 1.45; }
   .careers-body { margin-top: 28px; }
+}
+
+
+/* Full-bleed room photograph between the opening and the closing block. */
+.careers-room {
+  height: calc(100svh - 100px);
+  min-height: 380px;
+  overflow: hidden;
+  background: #d8d5cf;
+}
+.careers-room img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;
+}
+
+/* Closing block: one 80-step line, centred, then the openings button. */
+.careers-join { padding: clamp(80px, 10vw, 140px) 0 clamp(88px, 11vw, 152px); text-align: center; }
+.careers-join-title {
+  margin: 0;
+  font-family: var(--font-impact);
+  font-size: 80px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.04;
+}
+.careers-join-action {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  margin-top: 38px;
+  border: 1px solid var(--pub-lime);
+  background: var(--pub-lime);
+  color: #141413;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 30px;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background .2s ease, border-color .2s ease;
+}
+.careers-join-action:hover { border-color: var(--pub-lime-deep); background: var(--pub-lime-deep); }
+
+@media (max-width: 900px) {
+  .careers-join-title { font-size: 56px; }
+  .careers-room { height: calc(100svh - 96px); }
 }
