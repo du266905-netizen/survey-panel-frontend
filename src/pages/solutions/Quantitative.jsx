@@ -51,6 +51,9 @@ const copy = {
         points: ['Waves by month or by quarter', 'Same questions, so the trend holds', 'Custom to your category, not a syndicated index'],
       },
     ],
+    closing: ['Tell us what you have in mind,', 'and we will work out the next step together.'],
+    free: 'Start for free',
+    action: 'Contact sales',
   },
   'en-GB': {
     eyebrow: 'Choose the quantitative track that fits you',
@@ -122,6 +125,9 @@ const copy = {
         points: ['按月或按季度开波次', '题不变，趋势才可比', '按你的品类定制，不做行业指数'],
       },
     ],
+    closing: ['告诉我们你的想法，', '我们讨论下一步怎么走。'],
+    free: '免费开始',
+    action: '联系销售',
   },
   "de": {
   "eyebrow": "Wählen Sie den passenden quantitativen Ansatz.",
@@ -1021,17 +1027,17 @@ export default function Quantitative() {
 
       <section className="qn-contact" aria-labelledby="qn-contact-title">
         <h2 id="qn-contact-title" className="qn-contact-title">
-          {(t.closing || ['告诉我们你的想法，', '我们讨论下一步怎么走。']).map((line) => (
+          {(t.closing || []).map((line) => (
             <span key={line}>{line}</span>
           ))}
         </h2>
         <div className="qn-actions">
           <Link className="qn-action qn-action--primary" to={withLanguage('/business/register', language)}>
-            {t.free || '免费开始'}
+            {t.free || 'Start for free'}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>
           <Link className="qn-action qn-action--quiet" to={withLanguage('/business/access', language)}>
-            {t.action || '联系销售'}
+            {t.action || 'Contact sales'}
             <ArrowRight size={17} strokeWidth={1.65} aria-hidden="true" />
           </Link>
         </div>
