@@ -1218,7 +1218,8 @@
 .business-access-page.business-contact-page .business-contact-form textarea,
 .business-access-page.business-contact-page .business-contact-form input,
 .business-access-page.business-contact-page .business-contact-form select {
-  border-radius: 8px;
+  /* public-redesign 的「方角」规则在后面加载，这里必须带 !important 才能圆回来。 */
+  border-radius: 8px !important;
 }
 
 /* 提交键：黑底白字，圆角跟输入框一个家族。public-redesign 里那条把
