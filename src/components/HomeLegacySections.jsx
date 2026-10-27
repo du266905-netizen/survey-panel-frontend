@@ -23,7 +23,12 @@ function buildFooterColumns(publicCopy, language) {
   return [
     {
       label: local.__company || groups.about || 'Company',
-      blocks: [{ links: [{ label: local.about?.title || items['/about']?.title || 'About us', to: '/about' }] }],
+      blocks: [{
+        links: [
+          { label: local['/about']?.title || items['/about']?.title || 'About us', to: '/about' },
+          { label: local.__jobSearch || 'Search jobs', to: '/careers' },
+        ],
+      }],
     },
     {
       label: groups.solutions || 'Solutions',

@@ -48,7 +48,16 @@ export const solutionNavCopy = {
       "title": "Bedingungen für Forschende",
       "note": "Bedingungen für Organisationen und Forschende"
     },
-    "__company": "Unternehmen"
+    "__company": "Unternehmen",
+    "/about": {
+      "title": "Über uns",
+      "note": "Unternehmen, Team und Vorgehen"
+    },
+    "/business/terms": {
+      "title": "Bedingungen für Forschende",
+      "note": "Bedingungen für Organisationen und Forschende"
+    },
+    "__jobSearch": "Offene Stellen"
   },
   "fr": {
     "market-entry": {
@@ -99,7 +108,16 @@ export const solutionNavCopy = {
       "title": "Conditions pour les chercheurs",
       "note": "Conditions pour les organisations et les chercheurs"
     },
-    "__company": "Entreprise"
+    "__company": "Entreprise",
+    "/about": {
+      "title": "À propos",
+      "note": "Entreprise, équipe et approche"
+    },
+    "/business/terms": {
+      "title": "Conditions pour les chercheurs",
+      "note": "Conditions pour les organisations et les chercheurs"
+    },
+    "__jobSearch": "Offres d’emploi"
   },
   "nl": {
     "market-entry": {
@@ -150,7 +168,16 @@ export const solutionNavCopy = {
       "title": "Voorwaarden voor onderzoekers",
       "note": "Voorwaarden voor organisaties en onderzoekers"
     },
-    "__company": "Bedrijf"
+    "__company": "Bedrijf",
+    "/about": {
+      "title": "Over ons",
+      "note": "Bedrijf, team en aanpak"
+    },
+    "/business/terms": {
+      "title": "Voorwaarden voor onderzoekers",
+      "note": "Voorwaarden voor organisaties en onderzoekers"
+    },
+    "__jobSearch": "Vacatures"
   },
   "da": {
     "market-entry": {
@@ -201,7 +228,16 @@ export const solutionNavCopy = {
       "title": "Vilkår for forskere",
       "note": "Vilkår for organisationer og forskere"
     },
-    "__company": "Virksomhed"
+    "__company": "Virksomhed",
+    "/about": {
+      "title": "Om os",
+      "note": "Virksomhed, team og tilgang"
+    },
+    "/business/terms": {
+      "title": "Vilkår for forskere",
+      "note": "Vilkår for organisationer og forskere"
+    },
+    "__jobSearch": "Ledige stillinger"
   },
   "es": {
     "market-entry": {
@@ -252,7 +288,16 @@ export const solutionNavCopy = {
       "title": "Condiciones para investigadores",
       "note": "Condiciones para organizaciones e investigadores"
     },
-    "__company": "Empresa"
+    "__company": "Empresa",
+    "/about": {
+      "title": "Sobre nosotros",
+      "note": "Empresa, equipo y enfoque"
+    },
+    "/business/terms": {
+      "title": "Condiciones para investigadores",
+      "note": "Condiciones para organizaciones e investigadores"
+    },
+    "__jobSearch": "Empleo"
   },
   "fi": {
     "market-entry": {
@@ -303,7 +348,16 @@ export const solutionNavCopy = {
       "title": "Tutkijoiden ehdot",
       "note": "Ehdot organisaatioille ja tutkijoille"
     },
-    "__company": "Yritys"
+    "__company": "Yritys",
+    "/about": {
+      "title": "Tietoa meistä",
+      "note": "Yritys, tiimi ja lähestymistapa"
+    },
+    "/business/terms": {
+      "title": "Tutkijoiden ehdot",
+      "note": "Ehdot organisaatioille ja tutkijoille"
+    },
+    "__jobSearch": "Avoimet työpaikat"
   },
   "it": {
     "market-entry": {
@@ -354,7 +408,16 @@ export const solutionNavCopy = {
       "title": "Condizioni per i ricercatori",
       "note": "Condizioni per organizzazioni e ricercatori"
     },
-    "__company": "Azienda"
+    "__company": "Azienda",
+    "/about": {
+      "title": "Chi siamo",
+      "note": "Azienda, team e approccio"
+    },
+    "/business/terms": {
+      "title": "Condizioni per i ricercatori",
+      "note": "Condizioni per organizzazioni e ricercatori"
+    },
+    "__jobSearch": "Posizioni aperte"
   },
   "ja": {
     "market-entry": {
@@ -405,7 +468,16 @@ export const solutionNavCopy = {
       "title": "研究サービス規約",
       "note": "法人・研究者向けの規約"
     },
-    "__company": "会社"
+    "__company": "会社",
+    "/about": {
+      "title": "会社概要",
+      "note": "会社、チーム、進め方"
+    },
+    "/business/terms": {
+      "title": "研究サービス規約",
+      "note": "法人・研究者向けの規約"
+    },
+    "__jobSearch": "採用情報"
   },
   "ko": {
     "market-entry": {
@@ -456,7 +528,16 @@ export const solutionNavCopy = {
       "title": "연구 서비스 약관",
       "note": "기관과 연구자를 위한 약관"
     },
-    "__company": "회사"
+    "__company": "회사",
+    "/about": {
+      "title": "회사 소개",
+      "note": "회사, 팀, 접근 방식"
+    },
+    "/business/terms": {
+      "title": "연구 서비스 약관",
+      "note": "기관과 연구자를 위한 약관"
+    },
+    "__jobSearch": "채용 정보"
   },
   "no": {
     "market-entry": {
@@ -507,7 +588,16 @@ export const solutionNavCopy = {
       "title": "Forskningsvilkår",
       "note": "Vilkår for organisasjoner og forskere"
     },
-    "__company": "Selskap"
+    "__company": "Selskap",
+    "/about": {
+      "title": "Om oss",
+      "note": "Selskap, team og tilnærming"
+    },
+    "/business/terms": {
+      "title": "Forskningsvilkår",
+      "note": "Vilkår for organisasjoner og forskere"
+    },
+    "__jobSearch": "Ledige stillinger"
   },
   "pt": {
     "market-entry": {
@@ -558,7 +648,16 @@ export const solutionNavCopy = {
       "title": "Termos de investigação",
       "note": "Termos para organizações e investigadores"
     },
-    "__company": "Empresa"
+    "__company": "Empresa",
+    "/about": {
+      "title": "Sobre nós",
+      "note": "Empresa, equipa e abordagem"
+    },
+    "/business/terms": {
+      "title": "Termos de investigação",
+      "note": "Termos para organizações e investigadores"
+    },
+    "__jobSearch": "Vagas"
   },
   "ru": {
     "market-entry": {
@@ -609,7 +708,16 @@ export const solutionNavCopy = {
       "title": "Условия исследований",
       "note": "Условия для организаций и исследователей"
     },
-    "__company": "Компания"
+    "__company": "Компания",
+    "/about": {
+      "title": "О нас",
+      "note": "Компания, команда и подход"
+    },
+    "/business/terms": {
+      "title": "Условия исследований",
+      "note": "Условия для организаций и исследователей"
+    },
+    "__jobSearch": "Вакансии"
   },
   "sv": {
     "market-entry": {
@@ -660,7 +768,16 @@ export const solutionNavCopy = {
       "title": "Forskningsvillkor",
       "note": "Villkor för organisationer och forskare"
     },
-    "__company": "Företag"
+    "__company": "Företag",
+    "/about": {
+      "title": "Om oss",
+      "note": "Företag, team och arbetssätt"
+    },
+    "/business/terms": {
+      "title": "Forskningsvillkor",
+      "note": "Villkor för organisationer och forskare"
+    },
+    "__jobSearch": "Lediga tjänster"
   },
   "tr": {
     "market-entry": {
@@ -711,18 +828,63 @@ export const solutionNavCopy = {
       "title": "Araştırma koşulları",
       "note": "Kurumlar ve araştırmacılar için koşullar"
     },
-    "__company": "Şirket"
+    "__company": "Şirket",
+    "/about": {
+      "title": "Hakkımızda",
+      "note": "Şirket, ekip ve yaklaşım"
+    },
+    "/business/terms": {
+      "title": "Araştırma koşulları",
+      "note": "Kurumlar ve araştırmacılar için koşullar"
+    },
+    "__jobSearch": "Açık pozisyonlar"
   },
   "en-US": {
-    "__company": "Company"
+    "__company": "Company",
+    "/about": {
+      "title": "About us",
+      "note": "Company, team and approach"
+    },
+    "/business/terms": {
+      "title": "Researcher terms",
+      "note": "Terms for organisations and researchers"
+    },
+    "__jobSearch": "Search jobs"
   },
   "en-GB": {
-    "__company": "Company"
+    "__company": "Company",
+    "/about": {
+      "title": "About us",
+      "note": "Company, team and approach"
+    },
+    "/business/terms": {
+      "title": "Researcher terms",
+      "note": "Terms for organisations and researchers"
+    },
+    "__jobSearch": "Search jobs"
   },
   "zh-CN": {
-    "__company": "公司"
+    "__company": "公司",
+    "/about": {
+      "title": "关于我们",
+      "note": "公司、团队与方法"
+    },
+    "/business/terms": {
+      "title": "研究服务条款",
+      "note": "面向机构与研究者的条款"
+    },
+    "__jobSearch": "搜索职位"
   },
   "zh-Hant": {
-    "__company": "公司"
+    "__company": "公司",
+    "/about": {
+      "title": "關於我們",
+      "note": "公司、團隊與方法"
+    },
+    "/business/terms": {
+      "title": "研究服務條款",
+      "note": "面向機構與研究者的條款"
+    },
+    "__jobSearch": "搜尋職位"
   }
 };
