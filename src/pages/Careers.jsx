@@ -35,6 +35,10 @@ const careersCopy = {
         ],
       },
     ],
+    roles: {
+      title: '在招职位',
+      items: ['客户经理', '市场营销经理', '业务拓展经理', '研究员'],
+    },
     joinTitle: '成为我们的一员',
     joinNote: '我们始终如一的贯彻以人为本的理念',
     joinAction: '查看空缺职位',
@@ -59,6 +63,10 @@ const careersCopy = {
         ],
       },
     ],
+    roles: {
+      title: '在招職位',
+      items: ['客戶經理', '市場行銷經理', '業務拓展經理', '研究員'],
+    },
     joinTitle: '成為我們的一員',
     joinNote: '我們始終如一的貫徹以人為本的理念',
     joinAction: '查看空缺職位',
@@ -100,6 +108,10 @@ const careersCopy = {
         ],
       },
     ],
+    roles: {
+      title: 'Open roles',
+      items: ['Account Manager', 'Marketing Manager', 'Business Development Manager', 'Researcher'],
+    },
     joinTitle: 'Be one of us',
     joinNote: 'We have always held to a people-first principle.',
     joinAction: 'View open roles',
@@ -107,6 +119,10 @@ const careersCopy = {
   'en-GB': {
     lead: 'We know that people are our greatest asset.',
     rest: 'They are the engine behind every step forward we take. We believe good work comes from people who find a sense of achievement and belonging in what they do. That is what makes results worth having. What we offer is an open, inclusive and energetic stage. At Guanyi, you can develop your craft fully. Roles are either remote or on site, so you can work from home or from one of our growing offices.',
+    roles: {
+      title: 'Open roles',
+      items: ['Account Manager', 'Marketing Manager', 'Business Development Manager', 'Researcher'],
+    },
     joinTitle: 'Be one of us',
     joinNote: 'We have always held to a people-first principle.',
     joinAction: 'View open roles',
@@ -133,7 +149,7 @@ export default function Careers() {
         <div className="careers-room-copy">
           <h2 className="careers-join-title">{t.joinTitle}</h2>
           <p className="careers-join-note">{t.joinNote}</p>
-          <Link className="careers-join-action" to={withLanguage('/careers', language)}>{t.joinAction}</Link>
+          <a className="careers-join-action" href="#openings">{t.joinAction}</a>
         </div>
       </section>
       <section className="careers-policy">
@@ -144,6 +160,19 @@ export default function Careers() {
               {block.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </article>
           ))}
+        </div>
+      </section>
+      <section className="careers-roles" id="openings">
+        <div className="careers-container">
+          <h2 className="careers-roles-title">{t.roles.title}</h2>
+          <ol className="careers-role-list">
+            {t.roles.items.map((role, index) => (
+              <li key={role}>
+                <span className="careers-role-index">{String(index + 1).padStart(2, '0')}</span>
+                <span className="careers-role-name">{role}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
       <HomeFooter />
