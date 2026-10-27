@@ -48,7 +48,7 @@ const careersCopy = {
       title: '在招职位',
       searchPlaceholder: '搜索职位',
       all: '全部',
-      empty: '没有符合条件的职位。',
+      empty: '暂无空缺职位。',
       categories: [
         ['research', '研究'],
         ['client', '客户服务'],
@@ -94,7 +94,7 @@ const careersCopy = {
       title: '在招職位',
       searchPlaceholder: '搜尋職位',
       all: '全部',
-      empty: '沒有符合條件的職位。',
+      empty: '暫無空缺職位。',
       categories: [
         ['research', '研究'],
         ['client', '客戶服務'],
@@ -140,7 +140,7 @@ const careersCopy = {
       title: 'Open roles',
       searchPlaceholder: 'Search roles',
       all: 'All',
-      empty: 'No roles match that search.',
+      empty: 'No openings at the moment.',
       categories: [
         ['research', 'Research'],
         ['client', 'Client service'],
@@ -186,7 +186,7 @@ const careersCopy = {
       title: 'Open roles',
       searchPlaceholder: 'Search roles',
       all: 'All',
-      empty: 'No roles match that search.',
+      empty: 'No openings at the moment.',
       categories: [
         ['research', 'Research'],
         ['client', 'Client service'],
@@ -263,7 +263,9 @@ export default function Careers() {
       </section>
 
       <section className="careers-roles" id="openings">
-        <div className="careers-container careers-roles-layout">
+        <div className="careers-container">
+          <h2 className="careers-roles-title">{t.roles.title}</h2>
+          <div className="careers-roles-layout">
           <aside className="careers-rail">
             <label className="careers-search">
               <Search size={17} strokeWidth={1.7} aria-hidden="true" />
@@ -292,7 +294,6 @@ export default function Careers() {
           </aside>
 
           <div className="careers-roles-main">
-            <h2 className="careers-roles-title">{t.roles.title}</h2>
             {visible.length ? (
               <ol className="careers-role-list">
                 {visible.map((role, index) => (
@@ -305,6 +306,7 @@ export default function Careers() {
             ) : (
               <p className="careers-roles-empty">{t.roles.empty}</p>
             )}
+          </div>
           </div>
         </div>
       </section>
