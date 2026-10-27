@@ -295,6 +295,7 @@ export default function Careers() {
 
           <div className="careers-roles-main">
             {visible.length ? (
+              <div className="careers-role-scroll">
               <ol className="careers-role-list">
                 {visible.map((role, index) => (
                   <li key={role.name}>
@@ -303,6 +304,7 @@ export default function Careers() {
                   </li>
                 ))}
               </ol>
+              </div>
             ) : (
               <p className="careers-roles-empty">{t.roles.empty}</p>
             )}
