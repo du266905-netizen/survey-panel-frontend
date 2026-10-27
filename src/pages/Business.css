@@ -1175,14 +1175,14 @@
 }
 
 .business-access-page.business-contact-page .business-contact-shell {
-  /* 1240：左边放得下 80 号的三行以内，右边的表单也不至于把邮箱占位符截断。 */
-  width: min(100% - 96px, 1240px);
+  /* 1360：表单再宽一档，左边仍放得下 80 号的两行中文。 */
+  width: min(100% - 96px, 1360px);
   padding: 56px 0 112px;
 }
 
 .business-access-page.business-contact-page .business-contact-columns {
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-  column-gap: clamp(40px, 5vw, 64px);
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+  column-gap: clamp(40px, 4.5vw, 56px);
   align-items: start;
 }
 
@@ -1211,6 +1211,29 @@
 /* 图没了：表单接管右栏整列，不再跨两行。 */
 .business-access-page.business-contact-page .business-contact-form {
   grid-row: 1;
+  border-radius: 16px;
+  padding: 44px;
+}
+
+.business-access-page.business-contact-page .business-contact-form textarea,
+.business-access-page.business-contact-page .business-contact-form input,
+.business-access-page.business-contact-page .business-contact-form select {
+  border-radius: 8px;
+}
+
+/* 提交键：黑底白字，圆角跟输入框一个家族。public-redesign 里那条把
+   .business-access-page .business-button 刷成荧光黄、直角、带 !important，这里要压回去。 */
+.business-access-page.business-contact-page .business-contact-form > .business-button {
+  border: 1px solid #141413 !important;
+  border-radius: 10px !important;
+  background: #141413 !important;
+  color: #FFFFFF !important;
+  font-weight: 500 !important;
+}
+
+.business-access-page.business-contact-page .business-contact-form > .business-button:hover {
+  border-color: #2B2B2B !important;
+  background: #2B2B2B !important;
 }
 
 @media (max-width: 900px) {
@@ -1228,6 +1251,8 @@
     font-size: clamp(34px, 8.6vw, 48px);
   }
   .business-access-page.business-contact-page .business-contact-shell {
+    /* 手机上 96px 的边距太宽，收到 48。 */
+    width: calc(100% - 48px);
     padding: 36px 0 72px;
   }
 }
