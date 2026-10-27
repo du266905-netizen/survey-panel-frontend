@@ -32,7 +32,7 @@ export const publicNavigation = [
           { id: 'market-entry', to: '/solutions/market-entry', title: 'Market entry', note: 'Size, audience and route to market' },
           { id: 'china-insights', to: '/china-market-insights', title: 'China insights', note: 'What we see in China, and how we deliver' },
           { id: 'audience', to: '/solutions/audience', title: 'Audience understanding', note: 'Who buys, why, and how they split' },
-          { id: 'product-pricing', to: '/business', title: 'Product & pricing', note: 'Concepts, packs and price points' },
+          { id: 'product-pricing', to: '/solutions/product-pricing', title: 'Product & pricing', note: 'Concepts, packs and price points' },
           { id: 'brand-comms', to: '/business', title: 'Brand & communications', note: 'Brand health, advertising and campaigns' },
           { id: 'channel-retail', to: '/business', title: 'Channel & retail', note: 'Shelf, listing and price execution' },
           { id: 'customer-experience', to: '/business', title: 'Customer experience', note: 'Why customers leave, and what keeps them' },

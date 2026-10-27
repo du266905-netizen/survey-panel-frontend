@@ -143,8 +143,7 @@
 
 .audience-page .au-scheme > .au-eyebrow,
 .audience-page .au-scheme-title,
-.audience-page .au-scheme-list,
-.audience-page .au-scheme-note {
+.audience-page .au-scheme-list {
   width: min(100%, 1120px);
   margin-right: auto;
   margin-left: auto;
@@ -195,14 +194,6 @@
   text-wrap: pretty;
 }
 
-.audience-page .au-scheme-note {
-  max-width: 720px;
-  margin-top: 40px;
-  color: rgba(250, 249, 245, .5);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
-}
 
 @media (max-width: 900px) {
   .audience-page .au-hero { min-height: calc(100svh - 96px); padding-top: 56px; }

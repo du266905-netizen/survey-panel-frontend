@@ -33,7 +33,6 @@ const copy = {
       'Planned completed responses · Preferred timing',
       'Screening conditions, industry, or context to include',
     ],
-    schemeNote: 'This is a planning draft. Local verification, feasibility and delivery scope are confirmed by people before work begins.',
     contactTitle: ['Tell us what you have in mind, ', 'and we will work out the next step together.'],
   },
   'en-GB': {
@@ -56,7 +55,6 @@ const copy = {
       'Planned completed responses · Preferred timing',
       'Screening conditions, industry, or context to include',
     ],
-    schemeNote: 'This is a planning draft. Local verification, feasibility and delivery scope are confirmed by people before work begins.',
     contactTitle: ['Tell us what you have in mind, ', 'and we will work out the next step together.'],
   },
   'zh-CN': {
@@ -79,7 +77,6 @@ const copy = {
       '计划的有效样本数 · 希望的完成时间',
       '需要纳入的筛选条件、行业或背景',
     ],
-    schemeNote: '草稿仅用于规划；真实受访者的本地验证、可行性和交付范围将在人工确认后进行。',
     contactTitle: ['告诉我们你的想法，', '我们讨论下一步怎么走。'],
   },
   'zh-Hant': {
@@ -102,7 +99,6 @@ const copy = {
       '預計完成回覆數 · 希望時程',
       '要納入的篩選條件、產業或背景資訊',
     ],
-    schemeNote: '這是規劃草稿。在地驗證、可行性與交付範圍會在作業開始前由專人確認。',
     contactTitle: ['告訴我們的想法，', '我們討論下一步怎麼走。'],
   },
 };
@@ -162,7 +158,6 @@ export default function Audience() {
             </li>
           ))}
         </ol>
-        <p className="au-scheme-note">{base.schemeNote}</p>
       </section>
 
       <section className="au-contact" aria-labelledby="au-contact-title">
