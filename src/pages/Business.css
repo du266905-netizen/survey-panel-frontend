@@ -1164,3 +1164,70 @@
 /* 标签里的「Optional」原来在 grid 里被挤成独立一行（标签字与 em 各占一格），
    包一层 span 让它们回到同一行。 */
 .business-access-page.business-contact-page .business-contact-phone-label { display: block; }
+
+
+/* ---- 联系销售：2026-10-27 业主改版 ----------------------------------------
+   骨白底、不要图、左边是字、主句 80。表单保持白纸 + 发丝线，靠底色托起来。 */
+
+.business-access-page.business-contact-page {
+  /* 盖住 authenticated-palette 里给 .business-access-page 的 !important 骨白。 */
+  background: #f2f3ec !important;
+}
+
+.business-access-page.business-contact-page .business-contact-shell {
+  /* 1240：左边放得下 80 号的三行以内，右边的表单也不至于把邮箱占位符截断。 */
+  width: min(100% - 96px, 1240px);
+  padding: 56px 0 112px;
+}
+
+.business-access-page.business-contact-page .business-contact-columns {
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  column-gap: clamp(40px, 5vw, 64px);
+  align-items: start;
+}
+
+.business-access-page.business-contact-page .business-contact-intro {
+  padding-top: 6px;
+}
+
+.business-access-page.business-contact-page .business-contact-intro h1 {
+  max-width: 640px;
+  margin: 18px 0 0;
+  font-family: var(--font-impact);
+  font-size: clamp(44px, 5.4vw, 80px);
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.business-access-page.business-contact-page .business-contact-lede {
+  max-width: 460px;
+  margin-top: 26px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* 图没了：表单接管右栏整列，不再跨两行。 */
+.business-access-page.business-contact-page .business-contact-form {
+  grid-row: 1;
+}
+
+@media (max-width: 900px) {
+  .business-access-page.business-contact-page .business-contact-columns {
+    grid-template-columns: 1fr;
+    row-gap: 36px;
+  }
+  /* 单列时两栏都回自动行，否则表单会凭 grid-row:1 压到标题上面。 */
+  .business-access-page.business-contact-page .business-contact-intro,
+  .business-access-page.business-contact-page .business-contact-form {
+    grid-row: auto;
+  }
+  .business-access-page.business-contact-page .business-contact-intro h1 {
+    /* 34 号：390 宽下一行放得下 10 个汉字，断句落在「成为」后面。 */
+    font-size: clamp(34px, 8.6vw, 48px);
+  }
+  .business-access-page.business-contact-page .business-contact-shell {
+    padding: 36px 0 72px;
+  }
+}

@@ -7,7 +7,6 @@ import AuthTopBar from '../components/AuthTopBar';
 import { submitBusinessInquiry } from '../api/realApi';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 import researcherRegistrationTeam from '../assets/business/researcher-registration-team.jpg';
-import contactSalesCity from '../assets/business/contact-sales-city.jpg';
 import { HomeFooter } from '../components/HomeLegacySections';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
@@ -94,7 +93,6 @@ export default function BusinessAccess() {
           {message && <p className="business-contact-message">{message}</p>}
           <button className="business-button" type="submit" disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" size={17} /> : ws.access.send} {!submitting && <ArrowRight size={17} />}</button>
         </form>
-          <figure className="business-contact-figure"><img src={contactSalesCity} alt="" decoding="async" /></figure>
         </div>
       </section>
     </main>
