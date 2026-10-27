@@ -23,8 +23,8 @@ import './Careers.css';
 
 export const careersCopy = {
   'zh-CN': {
-    lead: '我们深知，员工是我们最大的财富。',
-    rest: '是我们能够不断突破、迈向更美好未来的核心引擎。我们相信，只有让每一位员工在工作中找到成就感与归属感，我们才能共同创造出真正有价值的成果。我们提供的是一个开放、包容、充满活力的舞台，在guanyi，你可以尽情的发展你的才华。我们提供远程和现场办公两种职位，因此您可以选择在家办公，也可以选择在我们不断扩建的办公中心之一工作。',
+    lead: '我们深知，优秀的人才是观一（GUANYISEARCH）最宝贵的财富，也是我们连接全球商业、打破信息壁垒的核心动力。',
+    rest: '作为一家面向全球的市场调研平台，我们致力于用技术与严谨的方法论重塑行业标准。在这里，你的声音将被倾听，你的能力将被放大，我们期待与你一起，在充满不确定性的全球市场中，共同寻找确定的价值。',
     joinTitle: '成为我们的一员',
     joinNote: '我们始终如一的贯彻以人为本的理念',
     joinAction: '查看空缺职位',
@@ -69,8 +69,8 @@ export const careersCopy = {
     },
   },
   'zh-Hant': {
-    lead: '我們深知，員工是我們最大的財富。',
-    rest: '是我們能夠不斷突破、邁向更美好未來的核心引擎。我們相信，只有讓每一位員工在工作中找到成就感與歸屬感，我們才能共同創造出真正有價值的成果。我們提供的是一個開放、包容、充滿活力的舞台，在guanyi，你可以盡情的發展你的才華。我們提供遠端與現場辦公兩種職位，因此您可以選擇在家辦公，也可以選擇在我們不斷擴建的辦公中心之一工作。',
+    lead: '我們深知，優秀的人才是觀一（GUANYISEARCH）最寶貴的財富，也是我們連接全球商業、打破資訊壁壘的核心動力。',
+    rest: '作為一家面向全球的市場調研平台，我們致力於用技術與嚴謹的方法論重塑行業標準。在這裡，你的聲音將被傾聽，你的能力將被放大，我們期待與你一起，在充滿不確定性的全球市場中，共同尋找確定的價值。',
     joinTitle: '成為我們的一員',
     joinNote: '我們始終如一的貫徹以人為本的理念',
     joinAction: '查看空缺職位',
@@ -115,8 +115,8 @@ export const careersCopy = {
     },
   },
   'en-US': {
-    lead: 'We know that people are our greatest asset.',
-    rest: 'They are the engine behind every step forward we take. We believe good work comes from people who find a sense of achievement and belonging in what they do. That is what makes results worth having. What we offer is an open, inclusive and energetic stage. At Guanyi, you can develop your craft fully. Roles are either remote or on site, so you can work from home or from one of our growing offices.',
+    lead: 'We know that good people are GuanyiSearch’s real asset — the force that connects us to business around the world and takes down the walls between information and decision.',
+    rest: 'As a global research platform, we set out to raise the standard of the work with technology and a strict method. Here your voice is heard and your ability is put to use. We are looking for people to join us in reading this uncertain world and finding what can be relied on.',
     joinTitle: 'Be one of us',
     joinNote: 'We have always held to a people-first principle.',
     joinAction: 'View open roles',
@@ -161,8 +161,8 @@ export const careersCopy = {
     },
   },
   'en-GB': {
-    lead: 'We know that people are our greatest asset.',
-    rest: 'They are the engine behind every step forward we take. We believe good work comes from people who find a sense of achievement and belonging in what they do. That is what makes results worth having. What we offer is an open, inclusive and energetic stage. At Guanyi, you can develop your craft fully. Roles are either remote or on site, so you can work from home or from one of our growing offices.',
+    lead: 'We know that good people are GuanyiSearch’s real asset — the force that connects us to business around the world and takes down the walls between information and decision.',
+    rest: 'As a global research platform, we set out to raise the standard of the work with technology and a strict method. Here your voice is heard and your ability is put to use. We are looking for people to join us in reading this uncertain world and finding what can be relied on.',
     joinTitle: 'Be one of us',
     joinNote: 'We have always held to a people-first principle.',
     joinAction: 'View open roles',
