@@ -539,3 +539,31 @@
     border-bottom: 0 !important;
   }
 }
+
+/* Final side-rail spacing and width: question map gets the wider column,
+   design check the narrower one. Both use the sage-bone surface, not gray. */
+.business-builder .business-builder-layout {
+  grid-template-columns: 284px minmax(0, 1fr) 224px;
+}
+.business-builder .business-builder-sidebar section.business-question-navigator,
+.business-builder .business-builder-sidebar section.business-design-checks {
+  background: #F6F7EF !important;
+  border-bottom-color: #E2E4D6 !important;
+  padding-top: 18px;
+}
+.business-builder .business-question-navigator h2,
+.business-builder .business-design-checks h2 {
+  margin: 4px 0 9px !important;
+}
+.business-builder .business-question-navigator > div {
+  margin-top: 0 !important;
+  padding-top: 9px !important;
+  border-top-color: #E2E4D6 !important;
+}
+.business-builder .business-design-checks > p,
+.business-builder .business-question-navigator > p {
+  margin-bottom: 3px !important;
+}
+@media (max-width: 1100px) {
+  .business-builder .business-builder-layout { grid-template-columns: 1fr; }
+}
