@@ -56,6 +56,7 @@ export default function BusinessAudiencePlan() {
         researchGoal: plan.researchGoal,
         audienceDescription: plan.audienceDescription,
         studyFormat: 'SURVEY',
+        serviceCategory: 'SURVEY',
         incentiveBudget: 'NEED_GUIDANCE',
         selfServiceQuestionnaire: true,
       });

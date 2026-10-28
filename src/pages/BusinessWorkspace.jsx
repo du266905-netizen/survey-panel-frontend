@@ -20,10 +20,12 @@ import {
   X,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
+import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessQuestionnaireDrafts, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../components/BusinessBalanceChip';
 import BusinessPageLoader from '../components/BusinessPageLoader';
+import BusinessProjectCategoryTabs from '../components/BusinessProjectCategoryTabs';
+import { businessProjectStatusDescriptions } from '../constants/businessProjectStatus';
 import { clearPaypalReturnFromUrl, readPaypalReturnToken } from '../components/paypalReturn';
 import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import NotificationBell from '../components/NotificationBell';
@@ -42,6 +44,7 @@ const emptyProject = {
   researchGoal: '',
   audienceDescription: '',
   studyFormat: 'SURVEY',
+  serviceCategory: 'SURVEY',
   countries: '',
   languages: '',
   targetParticipants: '',
@@ -51,18 +54,23 @@ const emptyProject = {
   additionalContext: '',
 };
 
-const projectFilters = [
-  ['ALL', 'All'],
-  ['DRAFT', 'Draft'],
-  ['SUBMITTED_FOR_REVIEW', 'In review'],
-  ['QUOTE_REQUIRED', 'Quote requested'],
-  ['QUOTE_SENT', 'Quote ready'],
-  ['CLIENT_ACCEPTED', 'Awaiting payment'],
-  ['FUNDED', 'Funded'],
-  ['RECRUITING', 'Recruiting'],
-  ['LIVE', 'Live'],
-  ['COMPLETED', 'Completed'],
-];
+const projectCategoryCopy = {
+  'zh-CN': { ALL: '全部', SURVEY: '调查', CUSTOM_RESEARCH: '定制研究', QUALITATIVE_SUPPORT: '定性研究支持' },
+  'zh-Hant': { ALL: '全部', SURVEY: '調查', CUSTOM_RESEARCH: '客製研究', QUALITATIVE_SUPPORT: '定性研究支持' },
+  'en-US': { ALL: 'All', SURVEY: 'Survey', CUSTOM_RESEARCH: 'Custom research', QUALITATIVE_SUPPORT: 'Qualitative research support' },
+  'en-GB': { ALL: 'All', SURVEY: 'Survey', CUSTOM_RESEARCH: 'Custom research', QUALITATIVE_SUPPORT: 'Qualitative research support' },
+};
+const projectCategory = (project) => {
+  if (['SURVEY', 'CUSTOM_RESEARCH', 'QUALITATIVE_SUPPORT'].includes(project.serviceCategory)) return project.serviceCategory;
+  if (project.questionnaire || project.studyFormat === 'SURVEY') return 'SURVEY';
+  if (['INTERVIEW', 'GROUP_DISCUSSION', 'USABILITY_TEST'].includes(project.studyFormat)) return 'QUALITATIVE_SUPPORT';
+  return 'CUSTOM_RESEARCH';
+};
+const legacyVisibleInProjects = (project) => {
+  if (project.status === 'DRAFT') return false;
+  if (!project.questionnaire) return true;
+  return ['PENDING_REVIEW', 'APPROVED', 'PUBLISHED'].includes(project.questionnaire.status);
+};
 
 const projectTypes = {
   questionnaire: {
@@ -72,6 +80,7 @@ const projectTypes = {
     button: 'Request design',
     icon: ClipboardList,
     format: 'SURVEY',
+    category: 'SURVEY',
   },
   research: {
     eyebrow: 'MANAGED RESEARCH',
@@ -80,6 +89,7 @@ const projectTypes = {
     button: 'Request support',
     icon: UsersRound,
     format: 'INTERVIEW',
+    category: 'QUALITATIVE_SUPPORT',
   },
 };
 
@@ -181,6 +191,7 @@ export default function BusinessWorkspace() {
   const navigate = useNavigate();
   const location = useLocation();
   const [workspace, setWorkspace] = useState({ profile: null, projects: [] });
+  const [questionnaireDrafts, setQuestionnaireDrafts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openChooser, setOpenChooser] = useState(false);
   const [openForm, setOpenForm] = useState(false);
@@ -213,9 +224,17 @@ export default function BusinessWorkspace() {
     ? copy.services.questionnaireTitle
     : briefCopy.methods.find(([value]) => value === format)?.[1] || String(format || '').replaceAll('_', ' ').toLowerCase();
   const isQuestionnaire = projectType === 'questionnaire';
+  const categoryLabels = projectCategoryCopy[language] || projectCategoryCopy['en-US'];
+  const projectPool = workspace.projects.filter((project) => project.visibleInProjects ?? legacyVisibleInProjects(project));
+  const projectCategories = [
+    { value: 'ALL', label: categoryLabels.ALL, count: projectPool.length },
+    { value: 'SURVEY', label: categoryLabels.SURVEY, count: projectPool.filter((project) => projectCategory(project) === 'SURVEY').length },
+    { value: 'CUSTOM_RESEARCH', label: categoryLabels.CUSTOM_RESEARCH, count: projectPool.filter((project) => projectCategory(project) === 'CUSTOM_RESEARCH').length },
+    { value: 'QUALITATIVE_SUPPORT', label: categoryLabels.QUALITATIVE_SUPPORT, count: projectPool.filter((project) => projectCategory(project) === 'QUALITATIVE_SUPPORT').length },
+  ];
   const visibleProjects = activeFilter === 'ALL'
-    ? workspace.projects
-    : workspace.projects.filter((project) => project.status === activeFilter);
+    ? projectPool
+    : projectPool.filter((project) => projectCategory(project) === activeFilter);
   const questionnaireProjects = workspace.projects.filter((project) => project.questionnaire);
   const resultProjects = questionnaireProjects.filter((project) => project.questionnaire?.status === 'PUBLISHED');
   const responseCount = questionnaireProjects.reduce((total, project) => total + Number(project.questionnaire?.responseCount || 0), 0);
@@ -349,6 +368,21 @@ export default function BusinessWorkspace() {
     return () => { active = false; };
   }, [location.search, ui.paymentFailed]);
 
+  useEffect(() => {
+    if (loading) return undefined;
+    let active = true;
+    getBusinessQuestionnaireDrafts()
+      .then((response) => {
+        if (!active) return;
+        setQuestionnaireDrafts(Array.isArray(response.questionnaireDrafts) ? response.questionnaireDrafts : []);
+      })
+      .catch(() => {
+        if (!active) return;
+        setQuestionnaireDrafts(workspace.projects.filter((project) => project.questionnaire?.status === 'DRAFT'));
+      });
+    return () => { active = false; };
+  }, [loading, workspace.projects]);
+
   const update = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   };
@@ -359,7 +393,7 @@ export default function BusinessWorkspace() {
       return;
     }
     setProjectType(type);
-    setForm({ ...emptyProject, studyFormat: projectTypes[type].format });
+    setForm({ ...emptyProject, studyFormat: projectTypes[type].format, serviceCategory: projectTypes[type].category });
     setEditingProject(null);
     setOpenChooser(false);
     setOpenForm(true);
@@ -380,7 +414,7 @@ export default function BusinessWorkspace() {
         title: editorStarter.title,
         researchGoal: editorStarter.researchGoal,
         audienceDescription: editorStarter.audienceDescription,
-        studyFormat: 'SURVEY', countries: '', languages: '', incentiveBudget: 'NEED_GUIDANCE', additionalContext: '', selfServiceQuestionnaire: true,
+        studyFormat: 'SURVEY', serviceCategory: 'SURVEY', countries: '', languages: '', incentiveBudget: 'NEED_GUIDANCE', additionalContext: '', selfServiceQuestionnaire: true,
       });
       setEditorStarterOpen(false);
       setEditorStarter({ title: '', researchGoal: '', audienceDescription: '' });
@@ -446,7 +480,7 @@ export default function BusinessWorkspace() {
     setProjectType(type);
     setForm({
       title: project.title || '', researchGoal: project.researchGoal || '', audienceDescription: project.audienceDescription || '',
-      studyFormat: project.studyFormat || projectTypes[type].format, countries: project.countries || '', languages: project.languages || '',
+      studyFormat: project.studyFormat || projectTypes[type].format, serviceCategory: project.serviceCategory || projectTypes[type].category, countries: project.countries || '', languages: project.languages || '',
       targetParticipants: project.targetParticipants || '', estimatedMinutes: project.estimatedMinutes || '', timeline: project.timeline || '',
       incentiveBudget: project.incentiveBudget || 'NEED_GUIDANCE', additionalContext: project.additionalContext || '',
     });
@@ -494,6 +528,7 @@ export default function BusinessWorkspace() {
     try {
       await deleteBusinessProject(project.id);
       setWorkspace((current) => ({ ...current, projects: current.projects.filter((item) => item.id !== project.id) }));
+      setQuestionnaireDrafts((current) => current.filter((item) => item.id !== project.id));
       setMessage(feedbackCopy.deleted);
     } catch (error) {
       setMessage(feedbackCopy.deleteError);
@@ -604,7 +639,7 @@ export default function BusinessWorkspace() {
           </div>
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
           <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
-          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : questionnaireProjects.length ? <div className="business-questionnaire-hub-list">{questionnaireProjects.map((project) => {
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : questionnaireDrafts.length ? <div className="business-questionnaire-hub-list">{questionnaireDrafts.map((project) => {
             const questionnaire = project.questionnaire || {};
             const status = String(questionnaire.status || project.status || 'DRAFT');
             const statusLabel = projectsCopy.statuses?.[status] || (status === 'DRAFT' ? (ui.draftBadge || 'Draft') : status);
@@ -652,22 +687,14 @@ export default function BusinessWorkspace() {
 
           {message && <p className="business-workspace-message">{message}</p>}
 
-          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : workspace.projects.length ? (
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : projectPool.length ? (
             <>
-              <div className="business-project-toolbar" role="tablist" aria-label={projectsCopy.title}>
-                {projectFilters.map(([value]) => (
-                  <button
-                    key={value}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeFilter === value}
-                    className={activeFilter === value ? 'is-active' : ''}
-                    onClick={() => setActiveFilter(value)}
-                  >
-                    {projectsCopy.filters[value]} <span>{value === 'ALL' ? workspace.projects.length : workspace.projects.filter((project) => project.status === value).length}</span>
-                  </button>
-                ))}
-              </div>
+              <BusinessProjectCategoryTabs
+                items={projectCategories}
+                value={activeFilter}
+                onChange={setActiveFilter}
+                ariaLabel={projectsCopy.title}
+              />
 
               <div className="business-project-list">
                 {visibleProjects.map((project) => {
@@ -675,10 +702,10 @@ export default function BusinessWorkspace() {
                     <article key={project.id}>
                       <div className="business-project-menu"><button type="button" onClick={() => setProjectMenuId((current) => current === project.id ? '' : project.id)} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={19} /></button>{projectMenuId === project.id && <div><button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> {projectsCopy.viewBrief}</button>{project.status === 'DRAFT' && <button type="button" onClick={() => openEditProject(project)}><Pencil size={14} /> {projectsCopy.editBrief}</button>}{project.status === 'DRAFT' && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> {projectsCopy.deleteDraft}</button>}</div>}</div>
                       <div>
-                        <span className={`business-status status-${String(project.status).toLowerCase()}`}>
+                        <span className={`business-status status-${String(project.status).toLowerCase()}`} title={businessProjectStatusDescriptions[project.status] || ''}>
                           {projectsCopy.statuses[project.status] || project.status}
                         </span>
-                        <p className="business-project-kind">{project.studyFormat === 'SURVEY' ? copy.services.questionnaireEyebrow : briefCopy.research.eyebrow}</p>
+                        <p className="business-project-kind">{categoryLabels[projectCategory(project)]}</p>
                         <h2>{project.title}</h2>
                         <p>{project.researchGoal}</p>
                       </div>
@@ -688,7 +715,7 @@ export default function BusinessWorkspace() {
                         <div><dt>{projectsCopy.updated}</dt><dd>{new Date(project.updatedAt).toLocaleDateString(language)}</dd></div>
                       </dl>
                       <div className="business-project-actions">
-                        {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{projectsCopy.openDraft} <ArrowRight size={15} /></Link>{project.questionnaire?.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}</>}
+                        {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{ui.openEditor} <ArrowRight size={15} /></Link>{project.questionnaire?.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}</>}
                         {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit} <ArrowRight size={15} /></button>}
                         {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote} <ArrowRight size={15} /></button>}
                         {project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={Boolean(payingProjectId)} aria-busy={payingProjectId === project.id}>{payingProjectId === project.id ? <><LoaderCircle className="animate-spin" size={15} /> {ws.workspace.paymentPreparing}</> : <>{ws.workspace.continueToPayment} <ArrowRight size={15} /></>}</button>}

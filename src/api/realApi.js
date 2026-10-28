@@ -179,6 +179,11 @@ export const register = async ({ email, password, displayName, verificationCode,
   };
 };
 
+export const getBusinessQuestionnaireDrafts = async () => {
+  const response = await apiClient.get('/api/business/questionnaire-drafts');
+  return response.data;
+};
+
 export const getBusinessWorkspace = async () => {
   const response = await apiClient.get('/api/business/workspace');
   return { data: response.data };

@@ -371,7 +371,7 @@ export default function BusinessAiBrief() {
         navigate(withLanguage('/business/audience-plan', language), { state: { preparedPlan: prepared } });
         return;
       }
-      const response = await createBusinessProject({ title, researchGoal: brief.goal, audienceDescription: brief.audience, studyFormat: 'INTERVIEW', countries: brief.market, targetParticipants: Number.isFinite(parsedSample) ? parsedSample : undefined, timeline: brief.timeline, incentiveBudget: 'NEED_GUIDANCE', additionalContext: '', selfServiceQuestionnaire: false });
+      const response = await createBusinessProject({ title, researchGoal: brief.goal, audienceDescription: brief.audience, studyFormat: 'INTERVIEW', serviceCategory: 'QUALITATIVE_SUPPORT', countries: brief.market, targetParticipants: Number.isFinite(parsedSample) ? parsedSample : undefined, timeline: brief.timeline, incentiveBudget: 'NEED_GUIDANCE', additionalContext: '', selfServiceQuestionnaire: false });
       clearPendingBrief();
       navigate(withLanguage('/business/workspace?view=projects', language), { state: { message: text.savedDraftMessage } });
     } catch { setError(conversationText.saveError); } finally { setSaving(false); }

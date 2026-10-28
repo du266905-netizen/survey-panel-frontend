@@ -53,6 +53,7 @@ export default function BusinessCustomQuestionnaireRequest() {
       await createBusinessProject({
         ...request,
         studyFormat: 'SURVEY',
+        serviceCategory: 'CUSTOM_RESEARCH',
         targetParticipants: request.targetParticipants ? Number(request.targetParticipants) : undefined,
         estimatedMinutes: request.estimatedMinutes ? Number(request.estimatedMinutes) : undefined,
         incentiveBudget: 'NEED_GUIDANCE',
