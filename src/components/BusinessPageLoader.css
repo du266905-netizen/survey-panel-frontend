@@ -9,7 +9,7 @@
 }
 .business-page-loader.is-full {
   min-height: 100svh;
-  background: #FBFAF4;
+  background: #ffffff;
 }
 .business-page-loader-mark {
   display: inline-flex;
