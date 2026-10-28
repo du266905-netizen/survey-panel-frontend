@@ -843,3 +843,17 @@ body:has(.business-ai-brief-page) .business-support-chat {
     left: 12px !important;
   }
 }
+
+/* The collapsed assistant is only 58px wide; the wordmark cannot fit there.
+   Hide it instead of letting it squeeze/clip, while keeping the panel toggle. */
+.business-ai-brief-page .business-ai-brief-assistant-brand {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .15s ease, visibility 0s linear 0s;
+}
+.business-ai-brief-page .business-ai-brief-assistant.is-collapsed .business-ai-brief-assistant-brand {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .15s ease, visibility 0s linear .15s;
+}
