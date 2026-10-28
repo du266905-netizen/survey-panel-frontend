@@ -187,6 +187,7 @@ export default function BusinessWorkspace() {
   const [activeFilter, setActiveFilter] = useState('ALL');
   const [form, setForm] = useState(emptyProject);
   const [submitting, setSubmitting] = useState(false);
+  const [payingProjectId, setPayingProjectId] = useState('');
   const [message, setMessage] = useState('');
   const [quoteProject, setQuoteProject] = useState(null);
   const [quoteDecision, setQuoteDecision] = useState('');
@@ -503,20 +504,22 @@ export default function BusinessWorkspace() {
   };
 
   const beginPayment = async (project) => {
-    if (submitting) return;
-    setSubmitting(true); setMessage('');
+    if (payingProjectId) return;
+    setPayingProjectId(project.id); setMessage('');
     try {
       const response = await createBusinessPayment(project.id);
-      const payment = response.data.payment;
+      const payment = response.data?.payment;
+      if (!payment) throw new Error('PAYMENT_RESPONSE_INVALID');
       setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? { ...item, latestPayment: payment } : item) }));
       if (payment.checkoutUrl) {
         window.location.assign(payment.checkoutUrl);
         return;
       }
-      setMessage(ws.workspace.paymentPreparing);
+      // A 201 without a checkout URL is not a success the user can act on.
+      setMessage(ws.workspace.paymentUnavailable);
     } catch (error) {
       setMessage(error.response?.data?.message || ws.workspace.paymentUnavailable);
-    } finally { setSubmitting(false); }
+    } finally { setPayingProjectId(''); }
   };
 
   /* Closing the introduction does NOT make this a returning visit in the same
@@ -634,7 +637,7 @@ export default function BusinessWorkspace() {
                         {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{projectsCopy.openDraft} <ArrowRight size={15} /></Link>{project.questionnaire?.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}</>}
                         {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit} <ArrowRight size={15} /></button>}
                         {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote} <ArrowRight size={15} /></button>}
-                        {project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={submitting}>{ws.workspace.continueToPayment} <ArrowRight size={15} /></button>}
+                        {project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={Boolean(payingProjectId)} aria-busy={payingProjectId === project.id}>{payingProjectId === project.id ? <><LoaderCircle className="animate-spin" size={15} /> {ws.workspace.paymentPreparing}</> : <>{ws.workspace.continueToPayment} <ArrowRight size={15} /></>}</button>}
                       </div>
                       {project.latestQuote && <p className="business-project-quote-note">{project.latestQuote.status === 'SENT'
                         ? feedbackCopy.quoteReady.replace('{version}', project.latestQuote.version)

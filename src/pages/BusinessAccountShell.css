@@ -61,3 +61,21 @@
   .business-account-page .business-workspace-rail { width: 64px; }
   .business-account-pane { padding-left: 64px; }
 }
+
+/* Account and billing page titles: 56 / Newsreader / 400, eyebrows stay. */
+.business-account-page .business-account-shell h1,
+.business-account-page .business-billing-shell h1 {
+  color: #141413 !important;
+  font-family: var(--font-impact) !important;
+  font-size: 56px !important;
+  font-weight: 400 !important;
+  letter-spacing: -.03em !important;
+  line-height: 1.02 !important;
+}
+
+@media (max-width: 800px) {
+  .business-account-page .business-account-shell h1,
+  .business-account-page .business-billing-shell h1 {
+    font-size: 38px !important;
+  }
+}
