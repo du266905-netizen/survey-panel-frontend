@@ -733,3 +733,59 @@
   font-size: 38px !important;
   font-weight: 400 !important;
 }
+
+/* AI brief: no shared rail. The assistant is the left column, starts at the
+   page edge, and carries the only back action. */
+.business-ai-brief-page .business-ai-brief-shell.has-assistant {
+  padding-left: 300px !important;
+}
+.business-ai-brief-page .business-ai-brief-shell.has-assistant.is-collapsed {
+  padding-left: 58px !important;
+}
+.business-ai-brief-page .business-ai-brief-assistant {
+  left: 0 !important;
+  width: 300px !important;
+}
+.business-ai-brief-page .business-ai-brief-assistant.is-collapsed {
+  width: 58px !important;
+}
+.business-ai-brief-page .business-ai-brief-assistant-brand {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px 16px;
+}
+.business-ai-brief-page .business-ai-brief-assistant-brand img {
+  display: block;
+  width: 52px;
+  height: 34px;
+  object-fit: contain;
+  object-position: left center;
+}
+.business-ai-brief-page .business-ai-brief-dock {
+  left: 50% !important;
+  width: min(860px, calc(100vw - 80px)) !important;
+}
+.business-ai-brief-page .business-ai-conversation.is-waiting .is-opening h1 {
+  max-width: 920px;
+  font-family: var(--font-impact) !important;
+  font-size: 56px !important;
+  font-weight: 400 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -.03em !important;
+}
+@media (max-width: 1180px) {
+  .business-ai-brief-page .business-ai-brief-shell.has-assistant,
+  .business-ai-brief-page .business-ai-brief-shell.has-assistant.is-collapsed {
+    padding-left: 0 !important;
+  }
+  .business-ai-brief-page .business-ai-brief-assistant { display: none !important; }
+}
+@media (max-width: 620px) {
+  .business-ai-brief-page .business-ai-brief-shell.has-assistant,
+  .business-ai-brief-page .business-ai-brief-shell.has-assistant.is-collapsed {
+    padding-left: 0 !important;
+  }
+  .business-ai-brief-page .business-ai-conversation.is-waiting .is-opening h1 { font-size: 38px !important; }
+  .business-ai-brief-page .business-ai-brief-dock { width: calc(100vw - 36px) !important; }
+}

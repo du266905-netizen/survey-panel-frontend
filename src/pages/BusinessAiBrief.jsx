@@ -7,12 +7,17 @@ import { useAuth } from '../components/AuthContext';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
-import '../components/BusinessRail.css';
 import './BusinessAiBriefTheme.css';
-import BusinessRail from '../components/BusinessRail';
 
 const steps = ['goal', 'route', 'audience', 'market', 'sample', 'timeline'];
 const PENDING_BRIEF_STORAGE_KEY = 'guanyisearch.business-ai-brief.pending.v2';
+const backToDashboardCopy = {
+  'zh-CN': '返回仪表盘',
+  'zh-Hant': '返回儀表板',
+  'en-US': 'Back to dashboard',
+  'en-GB': 'Back to dashboard',
+};
+
 const starterPrompts = {
   en: [
     'How do Chinese consumers feel about smartwatches that use AI health features?',
@@ -379,8 +384,8 @@ export default function BusinessAiBrief() {
 
   return <main className="business-ai-brief-page notranslate" translate="no" data-translate="no">
     <div className={`business-ai-brief-shell has-assistant${assistantOpen ? '' : ' is-collapsed'}`}>
-      <BusinessRail className="business-ai-brief-rail" activeId="ai" onSelect={handleRailSelect} />
       <aside className={`business-ai-brief-assistant${assistantOpen ? '' : ' is-collapsed'}`} aria-label={text.assistantTitle}>
+        <div className="business-ai-brief-assistant-brand"><img src="/guanyisearch-brand-mark-transparent.png" alt="GuanyiSearch" /></div>
         <header>
           <button type="button" onClick={() => setAssistantOpen((value) => !value)} aria-label={assistantOpen ? text.collapsePanel : text.showPanel} aria-expanded={assistantOpen}>
             {assistantOpen ? <PanelLeftClose size={17} /> : <PanelLeft size={17} />}
@@ -389,7 +394,7 @@ export default function BusinessAiBrief() {
         </header>
           <div className="business-ai-brief-assistant-actions">
             <button type="button" onClick={startNewChat}><Plus size={15} /> {text.startNewChat}</button>
-            <button type="button" onClick={leaveBrief}><ArrowLeft size={15} /> {text.back}</button>
+            <button type="button" onClick={leaveBrief}><ArrowLeft size={15} /> {backToDashboardCopy[language] || backToDashboardCopy['en-US']}</button>
           </div>
           <p className="business-ai-brief-assistant-section">{text.chatsLabel}</p>
           <div className="business-ai-brief-assistant-list">
@@ -407,7 +412,6 @@ export default function BusinessAiBrief() {
         <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-tools">{/* Balance and the per-project history dropdown were removed at the
               client's request: the rail already lists past conversations, and the
               balance belongs on the workspace, not in the brief header. */}
-          <div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button></div>
           <NotificationBell className="business-workspace-notification" /></div></header>
         <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={text.newBrief}>
           <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sprout size={24} className="business-ai-sprout" /></span>}{message.opening ? <h1><span><Sprout size={64} className="business-ai-opening-sprout" aria-hidden="true" /> {message.content}<span className="business-ai-title-question">{text.questionMark}</span></span></h1> : <p>{message.content}</p>}</article>)}
