@@ -359,7 +359,7 @@
 
 .business-questionnaire-create-modal textarea { min-height: 96px; resize: none; }
 .business-questionnaire-create-modal input::placeholder,
-.business-questionnaire-create-modal textarea::placeholder { color: #6f6a5f; }
+.business-questionnaire-create-modal textarea::placeholder { color: #8a8a87; }
 .business-questionnaire-create-modal input:focus,
 .business-questionnaire-create-modal textarea:focus { border-color: #141413; box-shadow: 0 0 0 3px rgba(20, 20, 19, .07); }
 
