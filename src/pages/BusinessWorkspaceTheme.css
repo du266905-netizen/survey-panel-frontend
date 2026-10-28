@@ -654,14 +654,16 @@
   height: 100svh;
   box-sizing: border-box;
   flex-direction: column;
+  overflow: hidden;
   border-right: 1px solid var(--ap-line);
   background: #fafbf9;
   padding: 16px 13px;
-  transition: width .18s ease;
+  transition: width .18s ease, border-color .18s ease;
 }
 
 .business-ai-brief-assistant.is-collapsed {
   width: 58px;
+  border-right-color: transparent;
 }
 
 .business-ai-brief-assistant > header {
@@ -672,11 +674,35 @@
   padding: 2px 4px 14px;
 }
 
+/* Fade the panel's contents instead of snapping them off: the width and the
+   content leave together. `visibility` flips after the fade, so hidden buttons
+   are not focusable. */
+.business-ai-brief-assistant > header strong,
+.business-ai-brief-assistant > .business-ai-brief-assistant-actions,
+.business-ai-brief-assistant > .business-ai-brief-assistant-section,
+.business-ai-brief-assistant > .business-ai-brief-assistant-list {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity .15s ease, transform .15s ease, visibility 0s linear 0s;
+}
+
 .business-ai-brief-assistant.is-collapsed > header strong,
 .business-ai-brief-assistant.is-collapsed > .business-ai-brief-assistant-actions,
 .business-ai-brief-assistant.is-collapsed > .business-ai-brief-assistant-section,
 .business-ai-brief-assistant.is-collapsed > .business-ai-brief-assistant-list {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-6px);
+  transition: opacity .15s ease, transform .15s ease, visibility 0s linear .15s;
+}
+
+.business-ai-brief-assistant > header strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .business-ai-brief-assistant > header strong {

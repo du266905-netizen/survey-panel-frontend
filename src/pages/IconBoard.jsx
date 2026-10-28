@@ -6,7 +6,7 @@ import {
   FileText, Table2, ChartSpline, AudioLines, Package,
   FolderKanban, ClipboardList, Users, Send,
   Wallet, Receipt, Gift,
-  FilePenLine, Sparkles, Route, LayoutDashboard, Eye,
+  FilePenLine, Sparkles, Sprout, Route, LayoutDashboard, Eye,
 } from 'lucide-react';
 import LanguageGlobe from '../components/LanguageGlobe';
 import './IconBoard.css';
@@ -187,13 +187,14 @@ export default function IconBoard() {
 
       <section className="icon-board-group" key="platform">
         <div className="icon-board-group-head">
-          <h2>研究平台 · 四项</h2>
+          <h2>研究平台 · 五项</h2>
           <p>解决方案页页底那五条用它；问卷设计沿用第 18 号，不另造</p>
         </div>
         <ul className="icon-board-list">
           {[
             { icon: FilePenLine, zh: '问卷编辑器', en: 'File pen line', use: '改题、加逻辑' },
             { icon: Sparkles, zh: 'AI 辅助', en: 'Sparkles', use: '起草、检查' },
+            { icon: Sprout, zh: '研究生长', en: 'Sprout', use: 'AI 研究引导（芽）' },
             { icon: Route, zh: '定制研究', en: 'Route', use: '定形式与路径' },
             { icon: LayoutDashboard, zh: '统一工作区', en: 'Layout dashboard', use: '一站式界面' },
           ].map((item) => {

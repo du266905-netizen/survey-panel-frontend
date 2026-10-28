@@ -9,6 +9,7 @@ import {
   Receipt,
   Wallet,
   Sparkles,
+  Sprout,
   UserRound,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -52,7 +53,7 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
       { id: 'home', label: rail.home || 'Overview', icon: LayoutDashboard },
     ] },
     { id: 'research', label: rail.research || 'Research', items: [
-      { id: 'ai', label: rail.ai || 'AI research guide', icon: Sparkles },
+      { id: 'ai', label: rail.ai || 'AI research guide', icon: Sprout },
       { id: 'questionnaires', label: rail.questionnaires || 'Questionnaire editor', icon: ClipboardList },
     ] },
     { id: 'delivery', label: rail.delivery || 'Delivery', items: [
@@ -89,7 +90,7 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
                 const isActive = activeId === item.id;
                 return (
                   <button key={item.id} className={`business-workspace-navitem${isActive ? ' is-active' : ''}`} type="button" title={item.label} aria-current={isActive ? 'page' : undefined} data-tour={`rail-${item.id}`} onClick={() => selectItem(item.id)}>
-                    <ItemIcon size={17} />
+                    {ItemIcon && <ItemIcon size={17} />}
                     <span>{item.label}</span>
                   </button>
                 );

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowLeft, ArrowRight, Info, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Send, Sparkles, Trash2, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Info, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Send, Sprout, Trash2, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -91,14 +91,6 @@ function storeAiNoticeSeen(user) {
 function projectTitle(value, fallback) {
   const compact = String(value || '').replaceAll(/\s+/g, ' ').trim();
   return !compact ? fallback : (compact.length > 62 ? `${compact.slice(0, 59)}…` : compact);
-}
-
-function conversationWhen(value, language) {
-  const time = Number(value) || 0;
-  if (!time) return '';
-  try {
-    return new Intl.DateTimeFormat(language, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(time));
-  } catch { return ''; }
 }
 
 export default function BusinessAiBrief() {
@@ -363,7 +355,6 @@ export default function BusinessAiBrief() {
               <div key={entry.id} className={entry.id === conversationId ? 'is-current' : ''}>
                 <button type="button" className="business-ai-brief-assistant-open" onClick={() => openConversation(entry)} aria-current={entry.id === conversationId ? 'true' : undefined}>
                   <strong>{entry.title}</strong>
-                  <small>{conversationWhen(entry.updatedAt, language)}</small>
                 </button>
                 <button type="button" className="business-ai-brief-assistant-delete" onClick={() => removeConversation(entry.id)} aria-label={text.deleteChat}><Trash2 size={14} /></button>
               </div>
@@ -377,7 +368,8 @@ export default function BusinessAiBrief() {
           <div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button></div>
           <NotificationBell className="business-workspace-notification" /></div></header>
         <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={text.newBrief}>
-          <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sparkles size={14} /></span>}{message.opening ? <h1>{message.content}<span className="business-ai-title-question">{text.questionMark}</span></h1> : <p>{message.content}</p>}</article>)}
+          <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sprout size={24} className="business-ai-sprout" /></span>}{message.opening ? <h1>{message.content}<span className="business-ai-title-question">{text.questionMark}</span></h1> : <p>{message.content}</p>}</article>)}
+          {guiding && <article className="is-guide is-thinking" aria-hidden="true"><span className="business-ai-guide-mark"><Sprout size={24} className="business-ai-sprout" /></span><span className="business-ai-thinking-dots"><i /><i /><i /></span></article>}
           {activeField === 'route' && (
             <section className="business-ai-route-card" aria-label={conversationText.routeTitle}>
               <p className="business-ai-route-card-title">{conversationText.routeTitle}</p>
@@ -405,7 +397,7 @@ export default function BusinessAiBrief() {
           <button className="business-ai-notice-close" type="button" onClick={closeNotice} aria-label={text.noticeClose || 'Close notice'}>
             <X size={17} />
           </button>
-          <span className="business-ai-notice-icon" aria-hidden="true"><Sparkles size={18} /></span>
+          <span className="business-ai-notice-icon" aria-hidden="true"><Info size={18} /></span>
           <p className="business-ai-notice-eyebrow">{text.assistantTitle}</p>
           <h2 id="business-ai-notice-title">{text.noticeTitle || 'About this assistant'}</h2>
           <p>{text.note}</p>

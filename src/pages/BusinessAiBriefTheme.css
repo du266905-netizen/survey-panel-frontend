@@ -348,3 +348,231 @@
 .business-ai-notice-modal > section:focus {
   outline: none;
 }
+
+
+/* ---- AI brief header and route card ------------------------------------- */
+
+/* The brief has its own header, not a shared top bar: no rule under the bell. */
+.business-ai-brief-page .business-ai-brief-header {
+  border-bottom: 0 !important;
+}
+
+/* The route card used to be a shadowed card holding three bordered boxes and
+   a pill. One hairline, flat rows, and the standard 6px / 42px action. */
+.business-ai-brief-page .business-ai-route-card {
+  max-width: 688px;
+  border: 1px solid rgba(20, 20, 19, .10) !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  padding: 18px !important;
+}
+
+.business-ai-brief-page .business-ai-route-card-title {
+  margin: 0 0 10px !important;
+  color: #141413 !important;
+  font: 500 14px/1.5 var(--font-sans) !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.business-ai-brief-page .business-ai-guide-mark {
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0;
+  color: #deef24 !important;
+}
+
+.business-ai-brief-page .business-ai-route-options {
+  gap: 0 !important;
+}
+
+.business-ai-brief-page .business-ai-route-options > button {
+  border: 0 !important;
+  border-top: 1px solid rgba(20, 20, 19, .10) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #141413 !important;
+  padding: 14px 0 !important;
+}
+
+.business-ai-brief-page .business-ai-route-options > button:first-child {
+  border-top: 0 !important;
+}
+
+.business-ai-brief-page .business-ai-route-options > button:hover,
+.business-ai-brief-page .business-ai-route-options > button.is-selected {
+  background: #faf9f5 !important;
+}
+
+.business-ai-brief-page .business-ai-route-options b {
+  font: 600 14px var(--font-sans) !important;
+}
+
+.business-ai-brief-page .business-ai-route-options small {
+  color: #6f6a5f !important;
+  font: 400 14px/1.6 var(--font-sans) !important;
+}
+
+.business-ai-brief-page .business-ai-route-options > button > i {
+  border-color: rgba(20, 20, 19, .30) !important;
+}
+
+.business-ai-brief-page .business-ai-route-options > button.is-selected > i {
+  border-color: #141413 !important;
+  box-shadow: inset 0 0 0 4px #141413 !important;
+}
+
+.business-ai-brief-page .business-ai-route-actions {
+  border-top: 1px solid rgba(20, 20, 19, .10) !important;
+  margin-top: 12px !important;
+  padding-top: 14px !important;
+}
+
+.business-ai-brief-page .business-ai-route-actions > .business-button {
+  min-height: 42px !important;
+  border: 1px solid #141413 !important;
+  border-radius: 6px !important;
+  background: #141413 !important;
+  color: #ffffff !important;
+  font: 500 14px var(--font-sans) !important;
+  padding: 0 18px !important;
+}
+
+.business-ai-brief-page .business-ai-route-actions > .business-button:disabled {
+  border-color: rgba(20, 20, 19, .14) !important;
+  background: #ffffff !important;
+  color: #6f6a5f !important;
+  opacity: 1 !important;
+}
+
+/* ---- guide thinking indicator ------------------------------------------- */
+
+.business-ai-brief-page .business-ai-thinking-dots {
+  display: inline-flex;
+  height: 28px;
+  align-items: center;
+  gap: 4px;
+}
+
+.business-ai-brief-page .business-ai-thinking-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #6f6a5f;
+  animation: business-ai-thinking 1.15s infinite ease-in-out;
+}
+
+.business-ai-brief-page .business-ai-thinking-dots i:nth-child(2) { animation-delay: .15s; }
+.business-ai-brief-page .business-ai-thinking-dots i:nth-child(3) { animation-delay: .3s; }
+
+@keyframes business-ai-thinking {
+  0%, 80%, 100% { opacity: .25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .business-ai-brief-page .business-ai-thinking-dots i {
+    animation: none;
+    opacity: .55;
+  }
+}
+
+/* The panel's own rule sets the hairline; drop it while the panel is collapsed
+   so the strip has no vertical line. */
+.business-ai-brief-page .business-ai-brief-assistant.is-collapsed {
+  border-right-color: transparent !important;
+}
+
+/* ---- flat, untimed conversation list ------------------------------------ */
+
+.business-ai-brief-page .business-ai-brief-assistant-list {
+  gap: 0;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list > div {
+  border-radius: 6px;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list > div:hover {
+  background: #faf9f5;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list > div.is-current {
+  background: transparent;
+  box-shadow: none;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-open {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #141413;
+  padding: 8px 6px;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-open::before {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(20, 20, 19, .35);
+  border-radius: 50%;
+  content: '';
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list > div.is-current .business-ai-brief-assistant-open::before {
+  border-color: #141413;
+  background: #141413;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-open > strong {
+  overflow: hidden;
+  color: #141413;
+  font: 500 13px/1.35 var(--font-sans);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list > div.is-current .business-ai-brief-assistant-open > strong {
+  font-weight: 600;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-delete {
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list > div:hover .business-ai-brief-assistant-delete,
+.business-ai-brief-page .business-ai-brief-assistant-list > div:focus-within .business-ai-brief-assistant-delete {
+  opacity: 1;
+}
+
+
+/* The sprout is the one lime mark in the conversation. */
+.business-ai-brief-page .business-ai-guide-mark .business-ai-sprout {
+  width: 24px;
+  height: 24px;
+  color: #deef24 !important;
+}
+
+/* No green type in the brief header: the conversation title and its slash
+   were still sage (#355545 / #9E AEA3). The wordmark image and the current
+   rail rule go monochrome too, so the page has no green left. */
+.business-ai-brief-page .business-ai-brief-brand > strong {
+  color: #141413 !important;
+}
+
+.business-ai-brief-page .business-ai-brief-brand > span {
+  color: #6f6a5f !important;
+}
+
+.business-ai-brief-page .business-ai-brief-wordmark {
+  filter: brightness(0);
+}
+
+.business-ai-brief-page .business-workspace-navitem.is-active {
+  box-shadow: inset 2px 0 0 #141413 !important;
+}
