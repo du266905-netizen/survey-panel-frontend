@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Send, Sparkles, Trash2 } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { ArrowLeft, ArrowRight, Info, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Send, Sparkles, Trash2, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -66,6 +67,27 @@ function writeBriefHistory(items) {
 
 function containsChinese(value) { return /[\u3400-\u9FFF]/.test(String(value || '')); }
 
+/* The two AI notices used to sit permanently above the composer. They now
+   open once as a dialog and collapse to the small info button beside the
+   composer; the flag is per account, so a second person on this browser still
+   sees them. */
+function aiNoticeStorageKey(user) {
+  const identity = String(user?.id || user?.email || '').trim().toLowerCase();
+  return identity ? `guanyi-business-ai-notice:${identity}` : '';
+}
+
+function hasSeenAiNotice(user) {
+  const key = aiNoticeStorageKey(user);
+  if (!key || typeof window === 'undefined') return false;
+  return window.localStorage.getItem(key) === 'seen';
+}
+
+function storeAiNoticeSeen(user) {
+  const key = aiNoticeStorageKey(user);
+  if (!key || typeof window === 'undefined') return;
+  window.localStorage.setItem(key, 'seen');
+}
+
 function projectTitle(value, fallback) {
   const compact = String(value || '').replaceAll(/\s+/g, ' ').trim();
   return !compact ? fallback : (compact.length > 62 ? `${compact.slice(0, 59)}…` : compact);
@@ -118,7 +140,34 @@ export default function BusinessAiBrief() {
   const [conversationId, setConversationId] = useState(() => newConversationId());
   const [history, setHistory] = useState(() => readBriefHistory());
   const [assistantOpen, setAssistantOpen] = useState(true);
+  const [noticeOpen, setNoticeOpen] = useState(false);
   const conversationEndRef = useRef(null);
+
+  const closeNotice = () => {
+    storeAiNoticeSeen(user);
+    setNoticeOpen(false);
+  };
+
+  useEffect(() => {
+    if (user && !hasSeenAiNotice(user)) setNoticeOpen(true);
+  }, [user]);
+
+  useEffect(() => {
+    if (!noticeOpen) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        storeAiNoticeSeen(user);
+        setNoticeOpen(false);
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [noticeOpen, user]);
   const title = useMemo(() => projectTitle(brief.goal, text.newBrief), [brief.goal, text.newBrief]);
   const activeField = steps[activeStep];
   const ready = activeStep >= steps.length;
@@ -341,9 +390,26 @@ export default function BusinessAiBrief() {
             </section>
           )}
           <span className="business-ai-conversation-end" ref={conversationEndRef} aria-hidden="true" /></div>
-          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-meta"><p className="business-ai-brief-note">{text.note}</p><p className="business-ai-brief-data-notice">{text.dataNotice}</p></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : (typedExample ? `${conversationText.exampleLabel} · ${typedExample}` : conversationText.exampleLabel)} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
+          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-tools"><button className="business-ai-notice-toggle" type="button" onClick={() => setNoticeOpen(true)} aria-label={text.noticeOpen || 'Open the AI notice'} title={text.noticeOpen || 'Open the AI notice'}><Info size={13} /><span>{text.noticeLabel || 'AI notice'}</span></button></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : (typedExample ? `${conversationText.exampleLabel} · ${typedExample}` : conversationText.exampleLabel)} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
         </section>
       </section>
     </div>
+    {noticeOpen && createPortal(
+      <div className="business-ai-notice-modal" role="dialog" aria-modal="true" aria-labelledby="business-ai-notice-title">
+        <section>
+          <button className="business-ai-notice-close" type="button" onClick={closeNotice} aria-label={text.noticeClose || 'Close notice'}>
+            <X size={17} />
+          </button>
+          <p className="business-ai-notice-eyebrow">{text.assistantTitle}</p>
+          <h2 id="business-ai-notice-title">{text.noticeTitle || 'About this assistant'}</h2>
+          <p>{text.note}</p>
+          <p>{text.dataNotice}</p>
+          <button className="business-ai-notice-continue" type="button" onClick={closeNotice} autoFocus>
+            {text.routeContinue || 'Continue'} <ArrowRight size={16} />
+          </button>
+        </section>
+      </div>,
+      document.body,
+    )}
   </main>;
 }

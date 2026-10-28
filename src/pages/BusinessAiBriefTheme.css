@@ -15,15 +15,15 @@
      palette so no descendant can fall back to the sage body/mute values. */
   --rs-ink: #141413;
   --rs-black: #141413;
-  --rs-body: #4a4a46;
+  --rs-body: #141413;
   --rs-mute: #6f6a5f;
-  --rs-faint: #8a857a;
+  --rs-faint: #6f6a5f;
   --rs-chip: #f4f7f2;
   --ai-ink: #141413;
-  --ai-secondary: #4a4a46;
+  --ai-secondary: #141413;
   --ai-muted: #6f6a5f;
-  --ai-faint: #8a857a;
-  --ai-bone: #f4f7f2;
+  --ai-faint: #6f6a5f;
+  --ai-bone: #faf9f5;
 }
 
 /* ---- conversation ------------------------------------------------------- */
@@ -47,7 +47,9 @@
 
 .business-ai-brief-page .business-ai-brief-assistant {
   border-right-color: rgba(20, 20, 19, .10);
-  background: #faf9f5;
+  /* Same white as the research page itself; the column is separated by its
+     hairline, not by a second fill. */
+  background: #ffffff;
 }
 
 .business-ai-brief-page .business-ai-brief-assistant > header strong {
@@ -184,4 +186,125 @@
     overflow-y: auto;
     overscroll-behavior: contain;
   }
+}
+
+
+/* ---- AI notice: dialog first, then a small info button ------------------ */
+
+.business-ai-dock-tools {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 8px;
+}
+
+.business-ai-notice-toggle {
+  display: inline-flex;
+  height: 26px;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 6px;
+  background: #ffffff;
+  color: #6f6a5f;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  padding: 0 9px;
+  transition: color .16s ease, border-color .16s ease;
+}
+
+.business-ai-notice-toggle:hover {
+  border-color: rgba(20, 20, 19, .30);
+  color: #141413;
+}
+
+.business-ai-notice-toggle:focus-visible {
+  outline: 2px solid #141413;
+  outline-offset: 2px;
+}
+
+.business-ai-notice-modal {
+  position: fixed;
+  z-index: 4100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(17, 17, 19, .46);
+}
+
+.business-ai-notice-modal > section {
+  position: relative;
+  width: min(100%, 480px);
+  max-height: calc(100svh - 40px);
+  overflow: auto;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(11, 11, 12, .18);
+  padding: 28px;
+}
+
+.business-ai-notice-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 50%;
+  background: #ffffff;
+  color: #6f6a5f;
+  cursor: pointer;
+}
+
+.business-ai-notice-close:hover { color: #141413; }
+
+.business-ai-notice-eyebrow {
+  margin: 0;
+  color: #6f6a5f !important;
+  font: 500 12px var(--font-sans) !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase;
+}
+
+.business-ai-notice-modal h2 {
+  max-width: 360px;
+  margin: 10px 0 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.25;
+}
+
+.business-ai-notice-modal p {
+  margin: 12px 0 0;
+  color: #141413;
+  font: 400 14px/1.7 var(--font-sans);
+}
+
+.business-ai-notice-continue {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #141413;
+  border-radius: 6px;
+  background: #141413;
+  color: #ffffff;
+  cursor: pointer;
+  font: 500 14px var(--font-sans);
+  margin-top: 20px;
+  padding: 0 18px;
+}
+
+.business-ai-notice-continue:hover { background: #000000; border-color: #000000; }
+.business-ai-notice-continue:focus-visible { outline: 2px solid #141413; outline-offset: 2px; }
+
+@media (max-width: 620px) {
+  .business-ai-notice-modal > section { padding: 22px; }
 }
