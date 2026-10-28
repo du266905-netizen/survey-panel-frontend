@@ -23,6 +23,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../components/BusinessBalanceChip';
+import BusinessPageLoader from '../components/BusinessPageLoader';
 import { clearPaypalReturnFromUrl, readPaypalReturnToken } from '../components/paypalReturn';
 import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import NotificationBell from '../components/NotificationBell';
@@ -603,7 +604,7 @@ export default function BusinessWorkspace() {
           </div>
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
           <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
-          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> {feedbackCopy.loadingProjects}</div> : questionnaireProjects.length ? <div className="business-questionnaire-hub-list">{questionnaireProjects.map((project) => {
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : questionnaireProjects.length ? <div className="business-questionnaire-hub-list">{questionnaireProjects.map((project) => {
             const questionnaire = project.questionnaire || {};
             const status = String(questionnaire.status || project.status || 'DRAFT');
             const statusLabel = projectsCopy.statuses?.[status] || (status === 'DRAFT' ? (ui.draftBadge || 'Draft') : status);
@@ -636,7 +637,7 @@ export default function BusinessWorkspace() {
           })}</div> : <p className="business-questionnaire-empty">{ui.noDraftsTitle}</p>}
         </section> : activeView === 'results' ? <section className="business-projects business-results-index">
           <div className="business-projects-head"><div><p className="business-eyebrow">{copy.results.eyebrow}</p><h1>{copy.results.indexTitle}</h1><p>{copy.results.indexIntro}</p></div><button className="business-button" type="button" onClick={() => selectWorkspaceView('home')}>{copy.rail.services} <ArrowRight size={16} /></button></div>
-          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> {feedbackCopy.loadingResults}</div> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><p>{copy.services.questionnaireEyebrow}</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <p className="business-results-empty-line">{copy.results.noResultsTitle}</p>}
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingResults} /> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><p>{copy.services.questionnaireEyebrow}</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <p className="business-results-empty-line">{copy.results.noResultsTitle}</p>}
         </section> : <section className="business-projects">
           <div className="business-projects-head">
             <div>
@@ -651,7 +652,7 @@ export default function BusinessWorkspace() {
 
           {message && <p className="business-workspace-message">{message}</p>}
 
-          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> {feedbackCopy.loadingProjects}</div> : workspace.projects.length ? (
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : workspace.projects.length ? (
             <>
               <div className="business-project-toolbar" role="tablist" aria-label={projectsCopy.title}>
                 {projectFilters.map(([value]) => (

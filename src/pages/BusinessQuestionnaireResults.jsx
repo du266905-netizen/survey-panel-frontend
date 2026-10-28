@@ -3,6 +3,7 @@ import { ArrowLeft, BarChart3, CheckCircle2, LoaderCircle, LockKeyhole, Triangle
 import { Link, useParams } from 'react-router-dom';
 import { getBusinessProject, getBusinessQuestionnaireResponses } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import BusinessPageLoader from '../components/BusinessPageLoader';
 import './BusinessQuestionnaire.css';
 
 const answerLabel = (value) => Array.isArray(value) ? value.join(', ') : String(value || '—');
@@ -56,7 +57,7 @@ export default function BusinessQuestionnaireResults() {
   const summary = activeQuestion && ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'RATING'].includes(activeQuestion.type) ? choiceSummary(activeQuestion, usableResponses) : null;
   const resultsLocked = project?.questionnaire?.status !== 'PUBLISHED' || !responses.length;
 
-  if (loading) return <main className="business-builder-loading"><LoaderCircle className="animate-spin" /> {copy.loading}</main>;
+  if (loading) return <BusinessPageLoader full label={copy.loading} />;
   if (error) return <main className="business-builder-loading"><strong>{error}</strong><Link to={withLanguage('/business/workspace', language)}>{copy.backToProjects}</Link></main>;
 
   if (resultsLocked) return <main className="business-results-page business-results-page--locked"><header className="business-results-header"><Link to={withLanguage('/business/workspace?view=results', language)}><ArrowLeft size={17} /> {copy.projects}</Link></header><section className="business-results-locked"><span><LockKeyhole size={24} /></span><h1>{results.noResultsTitle}</h1><p>{results.noResultsBody}</p></section></main>;
