@@ -31,7 +31,7 @@ import './BusinessRail.css';
  * own, so adding a language never means touching the rail.
  */
 
-export default function BusinessRail({ activeId, onSelect, className = '' }) {
+export default function BusinessRail({ activeId, onSelect, className = '', onReplayTour }) {
   const avatar = useBusinessAvatar();
   const { user, logout } = useAuth();
   const { language, publicCopy } = useLanguage();
@@ -75,7 +75,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
     <aside className={['business-workspace-rail', 'business-rail', className].filter(Boolean).join(' ')} aria-label={navigationLabel}>
       <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
 
-      <nav className="business-workspace-navgroups" aria-label={navigationLabel}>
+      <nav className="business-workspace-navgroups" aria-label={navigationLabel} data-tour="rail-nav">
         {groups.map((group) => {
           const expanded = !collapsedGroups.includes(group.id);
           return (
@@ -88,7 +88,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
                 const ItemIcon = item.icon;
                 const isActive = activeId === item.id;
                 return (
-                  <button key={item.id} className={`business-workspace-navitem${isActive ? ' is-active' : ''}`} type="button" title={item.label} aria-current={isActive ? 'page' : undefined} onClick={() => selectItem(item.id)}>
+                  <button key={item.id} className={`business-workspace-navitem${isActive ? ' is-active' : ''}`} type="button" title={item.label} aria-current={isActive ? 'page' : undefined} data-tour={`rail-${item.id}`} onClick={() => selectItem(item.id)}>
                     <ItemIcon size={17} />
                     <span>{item.label}</span>
                   </button>
@@ -102,7 +102,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
       <BusinessLanguagePicker />
 
       <div className="business-workspace-account">
-        <button type="button" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={rail.accountMenu || 'Account menu'} aria-expanded={accountMenuOpen}>
+        <button type="button" data-tour="rail-account" onClick={() => setAccountMenuOpen((value) => !value)} aria-label={rail.accountMenu || 'Account menu'} aria-expanded={accountMenuOpen}>
           {avatar
             ? <img className="business-workspace-account-photo" src={avatar} alt="" />
             : <UserRound size={20} />}
@@ -118,6 +118,7 @@ export default function BusinessRail({ activeId, onSelect, className = '' }) {
             <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {rail.account}</button>
             <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/billing', language)); }}><Receipt size={15} /> {billingCopy.title || 'Invoices and billing'}</button>
             <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/budget', language)); }}><Wallet size={15} /> {budgetCopy.title || 'Account budget'}</button>
+            {onReplayTour && <button type="button" onClick={() => { setAccountMenuOpen(false); onReplayTour(); }}><Sparkles size={15} /> {rail.tourReplay || 'Show the tour again'}</button>}
             <button type="button" onClick={() => { setAccountMenuOpen(false); logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {rail.signOut}</button>
           </div>
         )}

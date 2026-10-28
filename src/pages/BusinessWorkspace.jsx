@@ -27,10 +27,10 @@ import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import NotificationBell from '../components/NotificationBell';
 import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-import welcomeMarketImage from '../assets/business/welcome-market-exploration.jpg';
 import './Business.css';
 import '../components/BusinessRail.css';
 import BusinessRail from '../components/BusinessRail';
+import BusinessTour from '../components/BusinessTour';
 import './BusinessWorkspaceTheme.css';
 
 const emptyProject = {
@@ -124,6 +124,26 @@ function storeWorkspaceWelcome(user) {
   window.localStorage.setItem(key, 'seen');
 }
 
+/* The tour follows the welcome card and is stored per account for the same
+   reason the welcome flag is: one person's first visit must not silence the
+   introduction for everyone on that browser (D-15). */
+function tourStorageKey(user) {
+  const identity = String(user?.id || user?.email || '').trim().toLowerCase();
+  return identity ? `guanyi-business-tour:${identity}` : '';
+}
+
+function hasSeenBusinessTour(user) {
+  const key = tourStorageKey(user);
+  if (!key || typeof window === 'undefined') return false;
+  return window.localStorage.getItem(key) === 'seen';
+}
+
+function storeBusinessTourSeen(user) {
+  const key = tourStorageKey(user);
+  if (!key || typeof window === 'undefined') return;
+  window.localStorage.setItem(key, 'seen');
+}
+
 export default function BusinessWorkspace() {
   const { user, logout } = useAuth();
   const { language, publicCopy } = useLanguage();
@@ -179,7 +199,7 @@ export default function BusinessWorkspace() {
   const [onboardingSaving, setOnboardingSaving] = useState(false);
   const [onboardingError, setOnboardingError] = useState('');
   const [onboardingComplete, setOnboardingComplete] = useState(false);
-  const [welcomeOpen, setWelcomeOpen] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
   const [greetingIsReturning, setGreetingIsReturning] = useState(false);
 
   const selectedTypeCopy = briefCopy[projectType];
@@ -199,14 +219,14 @@ export default function BusinessWorkspace() {
   const displayName = String(user?.displayName || user?.email?.split('@')[0] || (ui.displayNameFallback)).trim();
   // True exactly when the wizard below renders. The welcome card can also be up
   // on its own, after the wizard closes.
-  const wizardOpen = !loading && Boolean(workspace.profile) && !onboardingComplete && !welcomeOpen;
+  const wizardOpen = !loading && Boolean(workspace.profile) && !onboardingComplete && !tourOpen;
 
   /* Both overlays are full-screen, but the document behind them stays
      scrollable: wheel over the (short) dialog chains to the page, and Space /
      PageDown scroll it regardless. That is what let the dashboard slide up
      under the wizard. Lock the document for as long as either overlay is up. */
   useEffect(() => {
-    if (!wizardOpen && !welcomeOpen) return undefined;
+    if (!wizardOpen) return undefined;
     const { body } = document;
     const previousOverflow = body.style.overflow;
     const previousPadding = body.style.paddingRight;
@@ -217,7 +237,7 @@ export default function BusinessWorkspace() {
       body.style.overflow = previousOverflow;
       body.style.paddingRight = previousPadding;
     };
-  }, [wizardOpen, welcomeOpen]);
+  }, [wizardOpen]);
 
   useEffect(() => {
     const requestedView = new URLSearchParams(location.search).get('view');
@@ -274,10 +294,12 @@ export default function BusinessWorkspace() {
            "Welcome back" about half the time and the time of day otherwise, so
            the page does not read as a fixed banner. */
         setGreetingIsReturning(hasSeenWelcome && Math.random() < 0.5);
-        /* A first visit walks the wizard FIRST; the welcome modal is opened from
-           saveOnboarding once the wizard is finished. Opening it here as well
-           would put the modal in front of the questions it is meant to follow. */
-        setWelcomeOpen(!hasSeenWelcome && onboarded);
+        /* The tour is the introduction now: the old single-card welcome modal
+           was removed. Every account sees it once — existing accounts included —
+           because the flag is per user, not per browser. A first visit still
+           walks the onboarding wizard first; the tour opens from saveOnboarding
+           once that is finished. */
+        if (onboarded && !hasSeenBusinessTour(user)) setTourOpen(true);
         const savedOrganizationType = organizationTypeOptions.some((option) => option.value === response.data.profile?.organizationType)
           ? response.data.profile.organizationType
           : savedOnThisDevice?.organizationType || '';
@@ -360,13 +382,13 @@ export default function BusinessWorkspace() {
       setWorkspace((current) => ({ ...current, profile: response.data.profile }));
       storeOnboarding(user, onboarding);
       setOnboardingComplete(true);
-      setWelcomeOpen(!hasSeenWorkspaceWelcome(user));
+      if (!hasSeenBusinessTour(user)) setTourOpen(true);
     } catch (error) {
       const status = error.response?.status;
       if (!status || status >= 500 || [404, 405, 501].includes(status)) {
         storeOnboarding(user, onboarding);
         setOnboardingComplete(true);
-        setWelcomeOpen(!hasSeenWorkspaceWelcome(user));
+        if (!hasSeenBusinessTour(user)) setTourOpen(true);
         setMessage(feedbackCopy.preferencesSaved);
       } else {
         /* Inside the dialog: the page-level banner sits behind the dimmed
@@ -495,12 +517,27 @@ export default function BusinessWorkspace() {
     } finally { setSubmitting(false); }
   };
 
-  const closeWelcome = () => {
+  /* Closing the introduction does NOT make this a returning visit in the same
+     session: the greeting keeps its time of day, and "Welcome back" starts on
+     the next visit, when both flags are already set. */
+  const closeTour = () => {
     storeWorkspaceWelcome(user);
-    setWelcomeOpen(false);
-    /* Closing the intro does NOT make this a returning visit: the first session
-       keeps its "Good afternoon, …" greeting, and "Welcome back" starts on the
-       next visit, when the stored flag is already set. */
+    storeBusinessTourSeen(user);
+    setTourOpen(false);
+  };
+
+  const finishTour = () => {
+    storeWorkspaceWelcome(user);
+    storeBusinessTourSeen(user);
+    setTourOpen(false);
+    navigate(withLanguage('/business/ai-brief', language));
+  };
+
+  /* Replay from the account menu. Return to the overview first: steps four to
+     nine are anchored to elements that only exist there. */
+  const replayTour = () => {
+    selectWorkspaceView('home');
+    setTourOpen(true);
   };
 
   /* 问号单独拆出来：衬线体在大字号下那个钩很怪（自定义问卷页早就这么处理了，
@@ -512,10 +549,10 @@ export default function BusinessWorkspace() {
   return (
     <main className="business-workspace">
       <div className="business-workspace-body business-workspace-body--rail">
-        <BusinessRail activeId={activeView} onSelect={handleRailSelect} />
+        <BusinessRail activeId={activeView} onSelect={handleRailSelect} onReplayTour={replayTour} />
 
         <header className="business-workspace-topbar">
-          <form className="business-workspace-searchbar" role="search" aria-label="ask a question in guanyisearch" onSubmit={submitWorkspaceQuestion}>
+          <form className="business-workspace-searchbar" role="search" aria-label="ask a question in guanyisearch" data-tour="search" onSubmit={submitWorkspaceQuestion}>
             <Search size={17} aria-hidden="true" />
             <input ref={workspaceSearchRef} type="search" value={workspaceQuery} onChange={(event) => setWorkspaceQuery(event.target.value)} placeholder="ask a question in guanyisearch" aria-label="ask a question in guanyisearch" />
             <kbd aria-hidden="true">⌘K</kbd>
@@ -525,7 +562,7 @@ export default function BusinessWorkspace() {
         </header>
 
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
-          <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, greetingIsReturning)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p><button className="business-hero-cta" type="button" onClick={() => openNewProject()}>{workspaceText[1]}<ArrowRight size={16} /></button></div></header>
+          <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, greetingIsReturning)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p><button className="business-hero-cta" type="button" data-tour="primary" onClick={() => openNewProject()}>{workspaceText[1]}<ArrowRight size={16} /></button></div></header>
           <div className="business-dashboard-actions">
             <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{workspaceText[1]}</strong><small>{workspaceText[2]}</small></div><ArrowRight size={17} /></button>
             <button type="button" onClick={() => navigate(withLanguage('/business/ai-brief', language))}><span className="is-amber"><Sparkles size={21} /></span><div><strong>{workspaceText[3]}</strong><small>{workspaceText[4]}</small></div><ArrowRight size={17} /></button>
@@ -764,11 +801,11 @@ export default function BusinessWorkspace() {
       {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label={projectsCopy.briefDialog.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.briefDialog.eyebrow}</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>{projectsCopy.briefDialog.audience}</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>{projectsCopy.briefDialog.format}</dt><dd>{studyFormatLabel(briefProject.studyFormat)}</dd></div>{briefProject.countries && <div><dt>{projectsCopy.briefDialog.market}</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>{projectsCopy.briefDialog.languages}</dt><dd>{briefProject.languages}</dd></div>}{briefProject.targetParticipants && <div><dt>{projectsCopy.briefDialog.participants}</dt><dd>{briefProject.targetParticipants}</dd></div>}{briefProject.estimatedMinutes && <div><dt>{briefProject.studyFormat === 'SURVEY' ? projectsCopy.briefDialog.completionTime : projectsCopy.briefDialog.sessionTime}</dt><dd>{projectsCopy.briefDialog.minutes.replace('{minutes}', briefProject.estimatedMinutes)}</dd></div>}{briefProject.timeline && <div><dt>{projectsCopy.briefDialog.timing}</dt><dd>{briefProject.timeline}</dd></div>}<div><dt>{projectsCopy.briefDialog.incentives}</dt><dd>{projectsCopy.briefDialog.incentiveLabels[briefProject.incentiveBudget] || projectsCopy.briefDialog.incentiveLabels.NEED_GUIDANCE}</dd></div></dl>{briefProject.additionalContext && <section><strong>{projectsCopy.briefDialog.additional}</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>{projectsCopy.briefDialog.close}</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>{projectsCopy.briefDialog.edit} <Pencil size={15} /></button>}</div></section></div>}
       {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.quote.eyebrow}</p><h2 id="business-quote-title">{projectsCopy.quote.title}</h2><p className="business-form-intro">{projectsCopy.quote.intro}</p><dl><div><dt>{projectsCopy.quote.project}</dt><dd>{quoteProject.title}</dd></div><div><dt>{projectsCopy.quote.quote}</dt><dd>{new Intl.NumberFormat(language, { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>{projectsCopy.quote.validUntil}</dt><dd>{new Intl.DateTimeFormat(language, { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>{projectsCopy.quote.scope}</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>{projectsCopy.quote.terms}</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">{projectsCopy.quote.declineQuestion}<textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder={projectsCopy.quote.declinePlaceholder} /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>{projectsCopy.quote.keepReviewing}</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.declineQuote}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>{projectsCopy.quote.decline}</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.accept} <Check size={16} /></button></>}</div></section></div>}
       {editorStarterOpen && <div className="business-project-modal business-editor-starter-modal" role="dialog" aria-modal="true" aria-labelledby="business-editor-starter-title"><form onSubmit={createEditorDraft}><button className="business-modal-close" type="button" onClick={() => setEditorStarterOpen(false)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{ui.editorStarterEyebrow}</p><h2 id="business-editor-starter-title">{ui.editorStarterTitle}</h2><p className="business-form-intro">{ui.editorStarterIntro}</p><label>{ui.editorStarterName}<input required minLength="3" value={editorStarter.title} onChange={(event) => setEditorStarter((current) => ({ ...current, title: event.target.value }))} placeholder={ui.editorStarterNamePlaceholder} /></label><label>{ui.editorStarterGoal}<textarea required minLength="20" value={editorStarter.researchGoal} onChange={(event) => setEditorStarter((current) => ({ ...current, researchGoal: event.target.value }))} placeholder={ui.editorStarterGoalPlaceholder} /></label><label>{ui.editorStarterAudience}<textarea required minLength="10" value={editorStarter.audienceDescription} onChange={(event) => setEditorStarter((current) => ({ ...current, audienceDescription: event.target.value }))} placeholder={ui.editorStarterAudiencePlaceholder} /></label><button className="business-button" type="submit" disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : ui.editorStarterSubmit} {!submitting && <ArrowRight size={16} />}</button></form></div>}
-      {welcomeOpen && <div className="business-welcome-modal" role="dialog" aria-modal="true" aria-labelledby="business-welcome-title"><section><button className="business-welcome-close" type="button" onClick={closeWelcome} aria-label={ui.welcomeDismiss}><X size={18} /></button><div className="business-welcome-copy"><p className="business-welcome-eyebrow">{ui.welcomeEyebrow}</p><h2 id="business-welcome-title">{String(ui.welcomeHeading || '').replace('{name}', displayName)}</h2><span>{ui.welcomeBody}</span><ul><li>{ui.welcomePoint1}</li><li>{ui.welcomePoint2}</li><li>{ui.welcomePoint3}</li></ul><div><button className="business-button" type="button" onClick={closeWelcome}>{ui.welcomeStart} <ArrowRight size={16} /></button></div></div><figure><img src={welcomeMarketImage} alt="" /></figure></section></div>}
+      {tourOpen && <BusinessTour open language={language} onClose={closeTour} onFinish={finishTour} />}
       {/* 引导：压在模糊工作区上的大弹窗（用户 2026-10-17，参照 YouGov）。
           背景是真工作区，答完这几问才关掉它并弹出欢迎弹窗。
           版式：顶部通栏进度条 → 字标 + 01/03 → 大标题 → 说明 → 卡片（图标砖 + 选中勾）→ 页脚按钮。 */}
-      {!loading && workspace.profile && !onboardingComplete && !welcomeOpen && (
+      {!loading && workspace.profile && !onboardingComplete && !tourOpen && (
         <div className="business-onboarding" role="dialog" aria-modal="true" aria-labelledby="business-onboarding-title">
           <section className="business-onboarding-dialog">
             {/* 字标是品牌，独占顶部一条，不和序号/正文排在一起。 */}

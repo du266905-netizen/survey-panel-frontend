@@ -187,7 +187,7 @@ const englishCopy = {
         memberEmail: "Email",
       },
       rail: { personal: 'Personal settings', services: 'Research services', projects: 'Projects', results: 'Questionnaire results', accountMenu: 'Account menu', account: 'Account', signOut: 'Sign out', clientAccount: 'Client account', navigation: 'Workspace navigation',
-        overview: 'Overview', research: 'Research', delivery: 'Delivery', home: 'Overview', ai: 'AI research guide', questionnaires: 'Questionnaire editor' },
+        overview: 'Overview', research: 'Research', delivery: 'Delivery', home: 'Overview', ai: 'AI research guide', questionnaires: 'Questionnaire editor', tourReplay: 'Show the tour again' },
       services: {
         eyebrow: 'RESEARCH SERVICES', title: 'Research with a clear next step.', intro: 'Start with the decision you need to make in a market. Choose a questionnaire when you need structured answers at scale, or tailored research when the question needs a more considered route.', viewProjects: 'View projects',
         questionnaireEyebrow: 'QUESTIONNAIRE DESIGN', questionnaireTitle: 'Custom questionnaire', questionnaireBody: 'Turn a focused question into a structured questionnaire for a defined audience. Create a private draft, build the questions, and review only real responses in your workspace.', questionnaireAction: 'Start a questionnaire brief',
@@ -721,7 +721,7 @@ const businessWorkspaceCopyByLanguage = {
       contactName: '联系人姓名', contactPlaceholder: '你的姓名', emailCode: '邮箱验证码', sendCode: '发送验证码', sendingCode: '正在发送…', resendCode: '{seconds} 秒后重发', codePlaceholder: '6 位验证码', passwordPlaceholder: '至少 8 个字符', businessTerms: 'Business 研究者条款', createWorkspace: '创建工作区',
     },
       rail: { personal: "个人设置", services: '研究服务', projects: '项目', results: '问卷结果', accountMenu: '账户菜单', account: '账户', signOut: '退出登录', clientAccount: '客户账户', navigation: '工作区导航',
-        overview: '总览', research: '研究', delivery: '交付', home: '概览', ai: 'AI 研究引导', questionnaires: '问卷编辑器' },
+        overview: '总览', research: '研究', delivery: '交付', home: '概览', ai: 'AI 研究引导', questionnaires: '问卷编辑器', tourReplay: '再看一次介绍' },
     services: {
       eyebrow: '研究服务', title: '让研究有明确的下一步。', intro: '从你需要在某个市场作出的决定开始。需要规模化的结构化回答时选择定制问卷；问题需要更审慎的路径时，选择定制研究。', viewProjects: '查看项目',
       questionnaireEyebrow: '问卷设计', questionnaireTitle: '定制问卷', questionnaireBody: '把聚焦的问题转化为面向明确对象的结构化问卷。先建立私有草稿、完善问题，再在工作区查看真实答卷。', questionnaireAction: '开始问卷简报',

@@ -5134,46 +5134,6 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 }
 
 /* =====================================================================
-   6. Welcome modal. Two things were off: the card carried
-   `transform: translateY(-28px)`, which is exactly why it sat 28px above the
-   middle of the viewport, and five of its six text sizes were not on the
-   8-step scale (10.5 / 11.5 / 12 / 42).
-   ===================================================================== */
-
-.business-welcome-modal > section { transform: none; }
-
-/* The eyebrow is a label (uppercase, tracked, sans) but it is an unclassed
-   <p>, so the workspace's "content elements read in serif" rule caught it and
-   it rendered in the reading serif. `p.class` keeps the specificity level of
-   that rule and wins on source order. */
-.business-welcome-copy > p.business-welcome-eyebrow {
-  color: #5d8a6c;
-  font-family: var(--font-sans) !important;
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-
-/* Part 18: a dialog title is content, so it is reading type — the same face
-   the add-funds and custom-questionnaire dialog titles use. */
-.business-welcome-copy h2 {
-  font-family: var(--font-reading) !important;
-  font-size: 22px;
-  font-weight: 500 !important;
-  letter-spacing: -.02em !important;
-}
-.business-welcome-copy ul { font-size: 11px; }
-.business-welcome-copy > div > .business-button { font-size: 13px; }
-
-/* Part 18 puts dialog and panel titles on the 22px step (the add-funds dialog
-   title was moved there too); 30 and 44 exist on neither scale. */
-.business-welcome-copy > span,
-.business-welcome-copy ul li { font-size: 14px !important; }
-.business-welcome-copy li::before { font-size: 9.5px; }
-.business-welcome-copy > div > .business-button { font-size: 14px; }
-
-/* =====================================================================
    8. The custom-questionnaire intro modal: on the type scale, and with room
    to breathe.
    Measured before: eyebrow 10.5, heading 42, body 12, step text 10.5, step

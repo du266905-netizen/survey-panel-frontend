@@ -64,6 +64,7 @@ export default function BusinessBalanceChip({ className = '' }) {
     <button
       type="button"
       className={`business-workspace-balance ${className}`.trim()}
+      data-tour="balance"
       onClick={() => setOpen(true)}
       aria-label={label}
     >

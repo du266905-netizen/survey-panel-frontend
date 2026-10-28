@@ -1,0 +1,190 @@
+/* First-run tour. Portalled to <body>, so the palette is written out instead of
+   relying on the workspace's scoped custom properties. Values follow the
+   locked 2026-10-21 rules: white card, ink #141413, muted #6F6A5F, 12px
+   eyebrow, 16px reading body, 22/600 panel title, 6px / 42px buttons. */
+
+.business-tour {
+  position: fixed;
+  z-index: 4000;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--font-sans);
+}
+
+.business-tour-blocker {
+  position: absolute;
+  z-index: 4000;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.business-tour-spotlight {
+  position: fixed;
+  z-index: 4001;
+  border-radius: 12px;
+  box-shadow: 0 0 0 9999px rgba(17, 17, 19, .55);
+  outline: 1px solid rgba(255, 255, 255, .35);
+  pointer-events: none;
+  transition: top .22s ease, left .22s ease, width .22s ease, height .22s ease;
+}
+
+.business-tour-card {
+  position: fixed;
+  z-index: 4002;
+  box-sizing: border-box;
+  width: min(400px, calc(100vw - 32px));
+  padding: 24px;
+  border: 1px solid rgba(20, 20, 19, .12);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(11, 11, 12, .04), 0 24px 60px rgba(11, 11, 12, .14);
+  color: #141413;
+  opacity: 0;
+  pointer-events: auto;
+  transition: opacity .18s ease;
+}
+
+.business-tour-card.is-ready { opacity: 1; }
+.business-tour-card.is-center { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.business-tour-card:focus { outline: none; }
+.business-tour-card:focus-visible { outline: 2px solid #141413; outline-offset: 3px; }
+
+.business-tour-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 50%;
+  background: #ffffff;
+  color: #6f6a5f;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease;
+}
+
+.business-tour-close:hover { background: #faf9f5; color: #141413; }
+.business-tour-close:focus-visible { outline: 2px solid #141413; outline-offset: 2px; }
+
+.business-tour-kicker {
+  margin: 0;
+  color: #6f6a5f;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.business-tour-card h2 {
+  max-width: 320px;
+  margin: 10px 0 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.25;
+}
+
+.business-tour-body {
+  max-width: 352px;
+  margin: 10px 0 0;
+  color: #141413;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.business-tour-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(20, 20, 19, .1);
+}
+
+.business-tour-count {
+  color: #6f6a5f;
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  letter-spacing: .08em;
+}
+
+.business-tour-next {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #141413;
+  border-radius: 6px;
+  background: #141413;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 18px;
+  transition: background .18s ease, border-color .18s ease;
+}
+
+.business-tour-next:hover { border-color: #000000; background: #000000; }
+.business-tour-next:focus-visible { outline: 2px solid #141413; outline-offset: 2px; }
+
+.business-tour-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+}
+
+.business-tour-card[data-side='right'] .business-tour-arrow {
+  top: var(--tour-arrow-y, 50%);
+  left: -16px;
+  border-right-color: #ffffff;
+}
+
+.business-tour-card[data-side='left'] .business-tour-arrow {
+  top: var(--tour-arrow-y, 50%);
+  right: -16px;
+  border-left-color: #ffffff;
+}
+
+.business-tour-card[data-side='bottom'] .business-tour-arrow {
+  top: -16px;
+  left: var(--tour-arrow-x, 50%);
+  border-bottom-color: #ffffff;
+}
+
+.business-tour-card[data-side='top'] .business-tour-arrow {
+  bottom: -16px;
+  left: var(--tour-arrow-x, 50%);
+  border-top-color: #ffffff;
+}
+
+@media (max-width: 720px) {
+  .business-tour-card {
+    top: auto;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    left: 12px;
+    width: auto;
+    max-width: none;
+    padding: 20px 20px 16px;
+    border-radius: 12px;
+  }
+  .business-tour-card.is-center { top: auto; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: 12px; transform: none; }
+  .business-tour-arrow { display: none; }
+  .business-tour-card h2 { max-width: none; }
+  .business-tour-body { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .business-tour-card,
+  .business-tour-spotlight { transition: none; }
+}
