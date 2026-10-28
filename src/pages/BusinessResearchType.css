@@ -684,3 +684,18 @@
 @media (max-width: 720px) {
   .business-workspace .business-project-list { grid-template-columns: 1fr; }
 }
+
+/* Project category tabs: the active rule is ink, never green. */
+.business-workspace .business-project-toolbar button {
+  color: #77746c !important;
+}
+.business-workspace .business-project-toolbar button:hover {
+  color: #24231f !important;
+}
+.business-workspace .business-project-toolbar button.is-active {
+  border-bottom-color: #141413 !important;
+  color: #141413 !important;
+}
+.business-workspace .business-project-toolbar button.is-active span {
+  color: #141413 !important;
+}
