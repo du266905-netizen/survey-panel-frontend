@@ -490,3 +490,21 @@
     overflow: visible;
   }
 }
+
+/* Side rails occupy only the upper half of the workspace and share the same
+   square cut line. The lower area stays free for later tools. */
+.business-builder-sidebar section.business-question-navigator,
+.business-builder-sidebar section.business-design-checks {
+  height: 50svh;
+  max-height: 50svh;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #e5e2da !important;
+}
+@media (max-width: 1100px) {
+  .business-builder-sidebar section.business-question-navigator,
+  .business-builder-sidebar section.business-design-checks {
+    height: auto;
+    max-height: none;
+    border-bottom: 0 !important;
+  }
+}
