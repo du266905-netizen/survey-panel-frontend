@@ -508,3 +508,34 @@
     border-bottom: 0 !important;
   }
 }
+
+/* The side rails are short, square, top-aligned table columns — not cards.
+   Grid content starts at the top; it must never stretch to fill the height. */
+.business-builder .business-builder-sidebar section.business-question-navigator,
+.business-builder .business-builder-sidebar section.business-design-checks {
+  display: grid;
+  align-content: start;
+  grid-auto-rows: max-content;
+  height: 33svh;
+  max-height: 33svh;
+  margin: 0;
+  border: 0 !important;
+  border-bottom: 1px solid #e5e2da !important;
+  border-radius: 0 !important;
+  background: #f4f3ef !important;
+  box-shadow: none !important;
+  overflow-y: auto;
+}
+.business-builder .business-builder-sidebar section.business-design-checks > p,
+.business-builder .business-builder-sidebar section.business-design-checks > h2,
+.business-builder .business-builder-sidebar section.business-design-checks > div {
+  align-self: start;
+}
+@media (max-width: 1100px) {
+  .business-builder .business-builder-sidebar section.business-question-navigator,
+  .business-builder .business-builder-sidebar section.business-design-checks {
+    height: auto;
+    max-height: none;
+    border-bottom: 0 !important;
+  }
+}
