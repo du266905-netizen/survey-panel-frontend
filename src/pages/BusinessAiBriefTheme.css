@@ -123,9 +123,15 @@
 
 .business-ai-brief-page .business-ai-composer {
   border-color: rgba(20, 20, 19, .14) !important;
+  border-radius: 12px !important;
   background: #ffffff !important;
   box-shadow: 0 10px 30px rgba(20, 20, 19, .06) !important;
   backdrop-filter: none !important;
+}
+
+.business-ai-brief-page .business-ai-composer:focus-within {
+  border-color: rgba(20, 20, 19, .35) !important;
+  box-shadow: none !important;
 }
 
 .business-ai-brief-page .business-ai-composer::before,
@@ -134,15 +140,18 @@
 }
 
 .business-ai-brief-page .business-ai-composer > textarea {
-  background: #ffffff !important;
+  background: transparent !important;
   color: var(--ai-ink) !important;
-  box-shadow: inset 0 0 0 1px rgba(20, 20, 19, .08) !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
   font-size: 14px !important;
+  min-height: 56px !important;
+  resize: none !important;
 }
 
 .business-ai-brief-page .business-ai-composer > textarea:focus {
-  background: #ffffff !important;
-  box-shadow: inset 0 0 0 1px rgba(20, 20, 19, .24) !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .business-ai-brief-page .business-ai-composer > textarea::placeholder {
@@ -154,10 +163,22 @@
 }
 
 .business-ai-brief-page .business-ai-composer > button {
-  border-color: var(--ai-ink) !important;
-  background: var(--ai-ink) !important;
+  width: 44px;
+  height: 44px;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
   box-shadow: none !important;
-  color: #ffffff !important;
+  color: var(--ai-ink) !important;
+}
+
+.business-ai-brief-page .business-ai-composer > button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.business-ai-brief-page .business-ai-composer > button:hover:not(:disabled) {
+  background: #faf9f5 !important;
 }
 
 /* The floating support button sits in the bottom-right corner. Reserve its
@@ -167,7 +188,10 @@
 }
 
 .business-ai-brief-page .business-ai-composer > button:disabled {
-  opacity: .35;
+  opacity: 1;
+  border: 0 !important;
+  background: transparent !important;
+  color: #6f6a5f !important;
 }
 
 /* On a 390px screen the example needs three lines inside the textarea; the
@@ -198,17 +222,16 @@
 }
 
 .business-ai-notice-toggle {
-  display: inline-flex;
+  display: grid;
+  width: 26px;
   height: 26px;
-  align-items: center;
-  gap: 5px;
+  place-items: center;
   border: 1px solid rgba(20, 20, 19, .14);
-  border-radius: 6px;
+  border-radius: 50%;
   background: #ffffff;
   color: #6f6a5f;
   cursor: pointer;
-  font: 500 12px var(--font-sans);
-  padding: 0 9px;
+  padding: 0;
   transition: color .16s ease, border-color .16s ease;
 }
 
@@ -261,6 +284,18 @@
 
 .business-ai-notice-close:hover { color: #141413; }
 
+.business-ai-notice-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 50%;
+  background: #ffffff;
+  color: #6f6a5f;
+  margin-bottom: 14px;
+}
+
 .business-ai-notice-eyebrow {
   margin: 0;
   color: #6f6a5f !important;
@@ -307,4 +342,9 @@
 
 @media (max-width: 620px) {
   .business-ai-notice-modal > section { padding: 22px; }
+}
+
+
+.business-ai-notice-modal > section:focus {
+  outline: none;
 }

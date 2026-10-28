@@ -637,6 +637,11 @@
 
 .business-ai-brief-shell.has-assistant {
   padding-left: 512px;
+  transition: padding-left .18s ease;
+}
+
+.business-ai-brief-shell.has-assistant.is-collapsed {
+  padding-left: 306px;
 }
 
 .business-ai-brief-assistant {
@@ -652,14 +657,26 @@
   border-right: 1px solid var(--ap-line);
   background: #fafbf9;
   padding: 16px 13px;
+  transition: width .18s ease;
+}
+
+.business-ai-brief-assistant.is-collapsed {
+  width: 58px;
 }
 
 .business-ai-brief-assistant > header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 8px;
   padding: 2px 4px 14px;
+}
+
+.business-ai-brief-assistant.is-collapsed > header strong,
+.business-ai-brief-assistant.is-collapsed > .business-ai-brief-assistant-actions,
+.business-ai-brief-assistant.is-collapsed > .business-ai-brief-assistant-section,
+.business-ai-brief-assistant.is-collapsed > .business-ai-brief-assistant-list {
+  display: none;
 }
 
 .business-ai-brief-assistant > header strong {
@@ -842,7 +859,8 @@
    below this width, so the panel steps aside. Order matters: the 800px rule
    has to win over the 1180px one. */
 @media (max-width: 1180px) {
-  .business-ai-brief-shell.has-assistant {
+  .business-ai-brief-shell.has-assistant,
+  .business-ai-brief-shell.has-assistant.is-collapsed {
     padding-left: 248px;
   }
 
@@ -856,7 +874,8 @@
 }
 
 @media (max-width: 800px) {
-  .business-ai-brief-shell.has-assistant {
+  .business-ai-brief-shell.has-assistant,
+  .business-ai-brief-shell.has-assistant.is-collapsed {
     padding-left: 64px;
   }
 }

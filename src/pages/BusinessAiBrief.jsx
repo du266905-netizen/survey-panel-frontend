@@ -142,6 +142,7 @@ export default function BusinessAiBrief() {
   const [assistantOpen, setAssistantOpen] = useState(true);
   const [noticeOpen, setNoticeOpen] = useState(false);
   const conversationEndRef = useRef(null);
+  const noticeDialogRef = useRef(null);
 
   const closeNotice = () => {
     storeAiNoticeSeen(user);
@@ -163,7 +164,11 @@ export default function BusinessAiBrief() {
     document.addEventListener('keydown', onKeyDown);
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    /* Focus the dialog itself, not the Continue button: an autoFocus ring on a
+       black button reads as a second border. */
+    const frame = window.requestAnimationFrame(() => noticeDialogRef.current?.focus());
     return () => {
+      window.cancelAnimationFrame(frame);
       document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = previousOverflow;
     };
@@ -339,14 +344,15 @@ export default function BusinessAiBrief() {
   };
 
   return <main className="business-ai-brief-page notranslate" translate="no" data-translate="no">
-    <div className={`business-ai-brief-shell${assistantOpen ? ' has-assistant' : ''}`}>
+    <div className={`business-ai-brief-shell has-assistant${assistantOpen ? '' : ' is-collapsed'}`}>
       <BusinessRail className="business-ai-brief-rail" activeId="ai" onSelect={handleRailSelect} />
-      {assistantOpen && (
-        <aside className="business-ai-brief-assistant" aria-label={text.assistantTitle}>
-          <header>
-            <strong>{text.assistantTitle}</strong>
-            <button type="button" onClick={() => setAssistantOpen(false)} aria-label={text.collapsePanel}><PanelLeftClose size={17} /></button>
-          </header>
+      <aside className={`business-ai-brief-assistant${assistantOpen ? '' : ' is-collapsed'}`} aria-label={text.assistantTitle}>
+        <header>
+          <button type="button" onClick={() => setAssistantOpen((value) => !value)} aria-label={assistantOpen ? text.collapsePanel : text.showPanel} aria-expanded={assistantOpen}>
+            {assistantOpen ? <PanelLeftClose size={17} /> : <PanelLeft size={17} />}
+          </button>
+          <strong>{text.assistantTitle}</strong>
+        </header>
           <div className="business-ai-brief-assistant-actions">
             <button type="button" onClick={startNewChat}><Plus size={15} /> {text.startNewChat}</button>
             <button type="button" onClick={leaveBrief}><ArrowLeft size={15} /> {text.back}</button>
@@ -362,11 +368,10 @@ export default function BusinessAiBrief() {
                 <button type="button" className="business-ai-brief-assistant-delete" onClick={() => removeConversation(entry.id)} aria-label={text.deleteChat}><Trash2 size={14} /></button>
               </div>
             )) : <p className="business-ai-brief-assistant-empty">{text.noChats}</p>}
-          </div>
-        </aside>
-      )}
+        </div>
+      </aside>
       <section className="business-ai-brief-surface">
-        <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-tools">{!assistantOpen && <button className="business-ai-brief-panel-toggle" type="button" onClick={() => setAssistantOpen(true)} aria-label={text.showPanel}><PanelLeft size={17} /></button>}{/* Balance and the per-project history dropdown were removed at the
+        <header className="business-ai-brief-header"><div className="business-ai-brief-brand"><img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />{hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}</div><div className="business-ai-brief-tools">{/* Balance and the per-project history dropdown were removed at the
               client's request: the rail already lists past conversations, and the
               balance belongs on the workspace, not in the brief header. */}
           <div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button></div>
@@ -390,21 +395,22 @@ export default function BusinessAiBrief() {
             </section>
           )}
           <span className="business-ai-conversation-end" ref={conversationEndRef} aria-hidden="true" /></div>
-          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-tools"><button className="business-ai-notice-toggle" type="button" onClick={() => setNoticeOpen(true)} aria-label={text.noticeOpen || 'Open the AI notice'} title={text.noticeOpen || 'Open the AI notice'}><Info size={13} /><span>{text.noticeLabel || 'AI notice'}</span></button></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : (typedExample ? `${conversationText.exampleLabel} · ${typedExample}` : conversationText.exampleLabel)} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
+          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-tools"><button className="business-ai-notice-toggle" type="button" onClick={() => setNoticeOpen(true)} aria-label={text.noticeOpen || 'Open the AI notice'} title={text.noticeOpen || 'Open the AI notice'}><Info size={14} /></button></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : (typedExample ? `${conversationText.exampleLabel} · ${typedExample}` : conversationText.exampleLabel)} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
         </section>
       </section>
     </div>
     {noticeOpen && createPortal(
       <div className="business-ai-notice-modal" role="dialog" aria-modal="true" aria-labelledby="business-ai-notice-title">
-        <section>
+        <section ref={noticeDialogRef} tabIndex={-1}>
           <button className="business-ai-notice-close" type="button" onClick={closeNotice} aria-label={text.noticeClose || 'Close notice'}>
             <X size={17} />
           </button>
+          <span className="business-ai-notice-icon" aria-hidden="true"><Sparkles size={18} /></span>
           <p className="business-ai-notice-eyebrow">{text.assistantTitle}</p>
           <h2 id="business-ai-notice-title">{text.noticeTitle || 'About this assistant'}</h2>
           <p>{text.note}</p>
           <p>{text.dataNotice}</p>
-          <button className="business-ai-notice-continue" type="button" onClick={closeNotice} autoFocus>
+          <button className="business-ai-notice-continue" type="button" onClick={closeNotice}>
             {text.routeContinue || 'Continue'} <ArrowRight size={16} />
           </button>
         </section>
