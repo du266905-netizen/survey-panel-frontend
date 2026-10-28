@@ -60,8 +60,9 @@ export default function BusinessAudiencePlan() {
         selfServiceQuestionnaire: true,
       });
       go(`/business/projects/${response.data.project.id}`);
-    } catch {
-      setError(c.failed);
+    } catch (failure) {
+      const detail = failure?.response?.data?.message;
+      setError(detail ? `${c.failed} ${detail}` : c.failed);
     } finally {
       setSaving(false);
     }
