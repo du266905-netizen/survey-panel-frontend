@@ -699,3 +699,14 @@
 .business-workspace .business-project-toolbar button.is-active span {
   color: #141413 !important;
 }
+
+/* Category tabs: both states use ink; the selected state is the rule. */
+.business-workspace .business-project-toolbar button,
+.business-workspace .business-project-toolbar button span {
+  color: #141413 !important;
+}
+.business-workspace .business-project-toolbar button:hover,
+.business-workspace .business-project-toolbar button.is-active,
+.business-workspace .business-project-toolbar button.is-active span {
+  color: #141413 !important;
+}
