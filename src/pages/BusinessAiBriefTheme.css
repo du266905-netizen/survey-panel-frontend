@@ -576,3 +576,158 @@
 .business-ai-brief-page .business-workspace-navitem.is-active {
   box-shadow: inset 2px 0 0 #141413 !important;
 }
+
+/* The current rail rule is the base lime accent. */
+.business-ai-brief-page .business-rail .business-workspace-navitem.is-active {
+  box-shadow: inset 2px 0 #deef24 !important;
+}
+
+.business-ai-dock-tools {
+  gap: 6px;
+}
+
+.business-ai-attach {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 50%;
+  background: #ffffff;
+  color: #6f6a5f;
+  cursor: pointer;
+  padding: 0;
+  transition: color .16s ease, border-color .16s ease;
+}
+
+.business-ai-attach:hover {
+  border-color: rgba(20, 20, 19, .30);
+  color: #141413;
+}
+
+.business-ai-attach:focus-visible {
+  outline: 2px solid #141413;
+  outline-offset: 2px;
+}
+
+.business-ai-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 8px;
+}
+
+.business-ai-attachment {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 6px;
+  background: #faf9f5;
+  color: #141413;
+  font: 500 12px/1.4 var(--font-sans);
+  padding: 4px 6px 4px 8px;
+}
+
+.business-ai-attachment > span {
+  overflow: hidden;
+  max-width: 220px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.business-ai-attachment > button {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #6f6a5f;
+  cursor: pointer;
+  padding: 0;
+}
+
+.business-ai-attachment > button:hover {
+  color: #141413;
+}
+
+/* The composer is one frame: text on top, attach and send inside its lower edge. */
+.business-ai-brief-page .business-ai-composer {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0 !important;
+  padding: 8px 8px 6px !important;
+}
+
+.business-ai-brief-page .business-ai-composer > textarea {
+  width: 100% !important;
+}
+
+.business-ai-brief-page .business-ai-composer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0 0;
+}
+
+.business-ai-brief-page .business-ai-composer-bar button {
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--ai-ink) !important;
+}
+
+.business-ai-brief-page .business-ai-composer-bar > button[type="submit"] {
+  width: 40px;
+  height: 40px;
+}
+
+.business-ai-brief-page .business-ai-composer-bar > button[type="submit"] svg {
+  width: 18px;
+  height: 18px;
+}
+
+.business-ai-brief-page .business-ai-composer-bar > button[type="submit"]:hover:not(:disabled) {
+  background: #faf9f5 !important;
+}
+
+.business-ai-brief-page .business-ai-composer-bar > button[type="submit"]:disabled {
+  color: var(--ai-muted) !important;
+  opacity: 1 !important;
+}
+
+.business-ai-brief-page .business-ai-composer-bar > .business-ai-attach {
+  width: 34px;
+  height: 34px;
+  color: var(--ai-muted) !important;
+}
+
+.business-ai-brief-page .business-ai-composer-bar > .business-ai-attach:hover {
+  background: #faf9f5 !important;
+  color: var(--ai-ink) !important;
+}
+
+.business-ai-brief-page .business-ai-composer-bar > .business-ai-attach svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* The opening question carries the same sprout, sized with the type. */
+.business-ai-brief-page .business-ai-conversation.is-waiting .is-opening h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .14em;
+}
+
+.business-ai-brief-page .business-ai-opening-sprout {
+  flex: 0 0 auto;
+  width: .8em;
+  height: .8em;
+  color: #deef24 !important;
+}

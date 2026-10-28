@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowLeft, ArrowRight, Info, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Send, Sprout, Trash2, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Info, LoaderCircle, Paperclip, PanelLeft, PanelLeftClose, Plus, Send, Sprout, Trash2, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject, getResearchBriefGuidance } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -50,11 +50,29 @@ function newConversationId() {
    the user actually had. There is no backend for chat history, and the research
    records themselves live in the workspace, so this is a device-local list —
    never a stand-in for real project data. */
+/* A reload used to mint a new conversation id while restoring the same pending
+   messages from sessionStorage, so every hard refresh added another copy of the
+   same chat. Exact duplicates (same title and messages) are collapsed here, and
+   the id now travels with the pending brief. */
+function historySignature(item) {
+  return `${String(item?.title || '')}\u0000${JSON.stringify(item?.messages || [])}`;
+}
+
+function uniqueBriefHistory(items) {
+  const seen = new Set();
+  return items.filter((item) => {
+    const key = historySignature(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function readBriefHistory() {
   try {
     const value = JSON.parse(localStorage.getItem(BRIEF_HISTORY_STORAGE_KEY) || '[]');
     return Array.isArray(value)
-      ? value.filter((item) => item && typeof item === 'object' && typeof item.id === 'string')
+      ? uniqueBriefHistory(value.filter((item) => item && typeof item === 'object' && typeof item.id === 'string'))
       : [];
   } catch { return []; }
 }
@@ -129,16 +147,33 @@ export default function BusinessAiBrief() {
   const [guidanceWarning, setGuidanceWarning] = useState('');
   const [exampleIndex, setExampleIndex] = useState(() => Math.floor(Math.random() * starterPrompts[language === 'zh-CN' ? 'zh' : 'en'].length));
   const [typedExample, setTypedExample] = useState('');
-  const [conversationId, setConversationId] = useState(() => newConversationId());
+  const [conversationId, setConversationId] = useState(() => requestedPrompt ? newConversationId() : String(pendingBrief?.conversationId || newConversationId()));
   const [history, setHistory] = useState(() => readBriefHistory());
   const [assistantOpen, setAssistantOpen] = useState(true);
   const [noticeOpen, setNoticeOpen] = useState(false);
+  const [attachments, setAttachments] = useState([]);
+  const attachmentInputRef = useRef(null);
   const conversationEndRef = useRef(null);
   const noticeDialogRef = useRef(null);
 
   const closeNotice = () => {
     storeAiNoticeSeen(user);
     setNoticeOpen(false);
+  };
+
+  const pickAttachments = (event) => {
+    const files = Array.from(event.target.files || []);
+    if (files.length) {
+      setAttachments((current) => [
+        ...current,
+        ...files.filter((file) => !current.some((item) => item.name === file.name && item.size === file.size)),
+      ]);
+    }
+    event.target.value = '';
+  };
+
+  const removeAttachment = (index) => {
+    setAttachments((current) => current.filter((_, itemIndex) => itemIndex !== index));
   };
 
   useEffect(() => {
@@ -190,12 +225,12 @@ export default function BusinessAiBrief() {
   const chosenRoute = routeOptions.find((option) => option.value === routeChoice);
 
   useEffect(() => {
-    try { sessionStorage.setItem(PENDING_BRIEF_STORAGE_KEY, JSON.stringify({ brief, messages, activeStep })); } catch { /* The flow still works without session storage. */ }
+    try { sessionStorage.setItem(PENDING_BRIEF_STORAGE_KEY, JSON.stringify({ conversationId, brief, messages, activeStep })); } catch { /* The flow still works without session storage. */ }
     // A conversation joins the assistant's list as soon as the user has said
     // something; an untouched opening screen is not a conversation.
     if (!messages.some((message) => message.role === 'user')) return;
     const entry = { id: conversationId, title: projectTitle(brief.goal, text.newBrief), updatedAt: Date.now(), brief, messages, activeStep };
-    const next = [entry, ...readBriefHistory().filter((item) => item.id !== conversationId)].slice(0, BRIEF_HISTORY_LIMIT);
+    const next = uniqueBriefHistory([entry, ...readBriefHistory().filter((item) => item.id !== conversationId)]).slice(0, BRIEF_HISTORY_LIMIT);
     writeBriefHistory(next);
     setHistory(next);
   }, [activeStep, brief, messages, conversationId, text.newBrief]);
@@ -368,7 +403,7 @@ export default function BusinessAiBrief() {
           <div className="business-ai-brief-actions"><button className="business-ai-brief-back" type="button" onClick={leaveBrief}><ArrowLeft size={16} /> {text.back}</button></div>
           <NotificationBell className="business-workspace-notification" /></div></header>
         <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={text.newBrief}>
-          <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sprout size={24} className="business-ai-sprout" /></span>}{message.opening ? <h1>{message.content}<span className="business-ai-title-question">{text.questionMark}</span></h1> : <p>{message.content}</p>}</article>)}
+          <div className="business-ai-conversation-log" role="log" aria-live="polite">{messages.filter((message) => !message.opening || !hasStarted).map((message) => <article key={message.id} className={`${message.role === 'user' ? 'is-user' : 'is-guide'}${message.opening ? ' is-opening' : ''}`}>{message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sprout size={24} className="business-ai-sprout" /></span>}{message.opening ? <h1><Sprout size={64} className="business-ai-opening-sprout" aria-hidden="true" /><span>{message.content}<span className="business-ai-title-question">{text.questionMark}</span></span></h1> : <p>{message.content}</p>}</article>)}
           {guiding && <article className="is-guide is-thinking" aria-hidden="true"><span className="business-ai-guide-mark"><Sprout size={24} className="business-ai-sprout" /></span><span className="business-ai-thinking-dots"><i /><i /><i /></span></article>}
           {activeField === 'route' && (
             <section className="business-ai-route-card" aria-label={conversationText.routeTitle}>
@@ -387,7 +422,7 @@ export default function BusinessAiBrief() {
             </section>
           )}
           <span className="business-ai-conversation-end" ref={conversationEndRef} aria-hidden="true" /></div>
-          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-tools"><button className="business-ai-notice-toggle" type="button" onClick={() => setNoticeOpen(true)} aria-label={text.noticeOpen || 'Open the AI notice'} title={text.noticeOpen || 'Open the AI notice'}><Info size={14} /></button></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : (typedExample ? `${conversationText.exampleLabel} · ${typedExample}` : conversationText.exampleLabel)} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
+          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-tools"><button className="business-ai-notice-toggle" type="button" onClick={() => setNoticeOpen(true)} aria-label={text.noticeOpen || 'Open the AI notice'} title={text.noticeOpen || 'Open the AI notice'}><Info size={14} /></button></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className={`business-ai-composer${attachments.length ? ' has-attachments' : ''}`} onSubmit={addReply}>{attachments.length > 0 && <div className="business-ai-attachments">{attachments.map((file, index) => <span className="business-ai-attachment" key={`${file.name}-${file.size}-${index}`}><Paperclip size={12} /><span>{file.name}</span><button type="button" onClick={() => removeAttachment(index)} aria-label={text.removeAttachment || 'Remove attachment'}><X size={12} /></button></span>)}</div>}<textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : (typedExample ? `${conversationText.exampleLabel} · ${typedExample}` : conversationText.exampleLabel)} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><div className="business-ai-composer-bar"><button className="business-ai-attach" type="button" onClick={() => attachmentInputRef.current?.click()} aria-label={text.attachFile || 'Attach a file'} title={text.attachFile || 'Attach a file'}><Paperclip size={17} /></button><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></div><input ref={attachmentInputRef} type="file" accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.png,.jpg,.jpeg" multiple hidden onChange={pickAttachments} /></form>}</div>}
         </section>
       </section>
     </div>
