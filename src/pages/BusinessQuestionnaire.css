@@ -94,3 +94,223 @@
 
 /* Preview stays a calm respondent-facing paper surface, not a heavy green overlay. */
 .business-builder-brand-mark { display: block; width: 52px; height: 52px; object-fit: contain; margin-left: -22px; margin-right: 7px; }.business-preview-modal { background: rgba(33,39,35,.16); backdrop-filter: blur(4px) saturate(102%); -webkit-backdrop-filter: blur(4px) saturate(102%); }.business-preview-shell { background: rgba(255,254,251,.97); box-shadow: 0 20px 54px rgba(23,36,28,.14), inset 0 1px rgba(255,255,255,.98); }.business-preview-shell > header { background: rgba(255,254,251,.94); }.business-preview-shell form { background: rgba(255,254,251,.88); }.business-preview-shell fieldset > input, .business-preview-shell fieldset > textarea, .business-preview-options label > input:not([type="checkbox"]):not([type="radio"]), .business-preview-options label > input[type="text"] { border-color: rgba(57,98,72,.18); background: rgba(255,255,255,.92); }.business-question-variable > div { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+
+/* Editor layout v2: structure on the left, editing in the centre, checks on the
+   right. The old right rail split into two columns; the cut respondent
+   introduction stays out of the creation flow. */
+.business-builder { background: #f4f3ef; color: #141413; }
+.business-builder-header {
+  background: #fff;
+  border-bottom: 1px solid #e5e2da;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.business-builder-header > div > span { background: #f0efe9; color: #5d5b55; }
+.business-builder-header button { border-color: #ddd9d0; color: #24231f; }
+.business-builder-header .business-builder-publish { border-color: #141413; background: #141413; color: #fff; }
+.business-builder-header .business-builder-delete { border-color: #e0c6c1; background: #fff; color: #9b4b40; }
+.business-builder-audience-status,
+.business-builder-guide,
+.business-cover-field { display: none !important; }
+
+.business-builder-layout {
+  display: grid;
+  grid-template-columns: 224px minmax(0, 1fr) 284px;
+  align-items: start;
+  width: min(100%, 1440px);
+  margin: 0 auto;
+}
+.business-builder-main {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: calc(100svh - 72px);
+  border-right: 1px solid #e5e2da;
+  border-left: 1px solid #e5e2da;
+  background: #fff;
+  padding: clamp(26px, 3vw, 42px);
+}
+.business-builder-sidebar { display: contents; }
+.business-question-navigator {
+  grid-column: 1;
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  max-height: 100svh;
+  overflow-y: auto;
+  border: 0;
+  border-right: 1px solid #e5e2da;
+  background: #f4f3ef;
+  padding: 24px 16px;
+  scrollbar-gutter: stable;
+}
+.business-design-checks {
+  grid-column: 3;
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  max-height: 100svh;
+  overflow-y: auto;
+  border: 0;
+  border-left: 1px solid #e5e2da;
+  background: #f4f3ef;
+  padding: 24px 16px;
+  scrollbar-gutter: stable;
+}
+.business-builder-sidebar section { border: 1px solid #e3e0d8; background: #fff; box-shadow: none; }
+.business-builder .business-question-card,
+.business-builder .business-audience-modules,
+.business-builder .business-study-brief,
+.business-builder .business-question-toolbar {
+  border-color: #e3e0d8 !important;
+  background: #fff !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.business-builder .business-question-card { background: #fbfaf7 !important; }
+.business-builder-title { color: #141413; font-family: var(--font-reading); font-weight: 650; }
+.business-builder .business-question-toolbar button { border-color: #141413; background: #141413; color: #fff; }
+.business-question-navigator > p,
+.business-design-checks > p { color: #77746c; }
+.business-question-navigator h2,
+.business-design-checks h2 { color: #24231f; font-family: var(--font-reading); }
+.business-question-navigator button { border-left-color: transparent; }
+.business-question-navigator button:hover { border-left-color: #141413; background: #fff; }
+
+@media (max-width: 1100px) {
+  .business-builder-layout { grid-template-columns: 1fr; }
+  .business-builder-main { grid-column: 1; border-left: 0; border-right: 0; }
+  .business-question-navigator,
+  .business-design-checks { grid-column: 1; grid-row: auto; position: static; max-height: none; border: 0; border-top: 1px solid #e5e2da; padding: 22px; }
+  .business-builder-sidebar { display: contents; }
+}
+@media (max-width: 620px) {
+  .business-builder-main { padding: 24px 18px; }
+  .business-question-navigator, .business-design-checks { padding: 18px; }
+}
+
+/* Follow-up: no green in the editor, fixed reading scale, no duplicate eyebrow. */
+.business-builder-header .business-builder-publish,
+.business-builder-header .business-builder-publish:hover {
+  border-color: #141413 !important;
+  background: #141413 !important;
+  background-image: none !important;
+  color: #fff !important;
+}
+.business-design-checks > div { color: #4a4842 !important; }
+.business-design-checks > div > span {
+  background: #f0efe9 !important;
+  color: #4a4842 !important;
+}
+.business-design-checks > div.ready > span {
+  background: #e9e7e0 !important;
+  color: #24231f !important;
+}
+.business-question-navigator button:hover,
+.business-question-navigator button:focus-visible {
+  border-left-color: #141413 !important;
+  background: #fff !important;
+}
+.business-study-brief > summary b,
+.business-audience-modules > summary b,
+.business-question-toolbar strong,
+.business-question-card-head,
+.business-question-controls label {
+  color: #24231f !important;
+}
+.business-study-brief > summary small,
+.business-audience-modules > summary small,
+.business-question-toolbar small,
+.business-question-navigator button small,
+.business-design-checks > p {
+  color: #77746c !important;
+}
+.business-builder-main > .business-eyebrow { display: none !important; }
+.business-builder-title {
+  max-width: 720px;
+  margin-top: 0 !important;
+  color: #141413 !important;
+  font: 600 38px/1.06 var(--font-reading) !important;
+  letter-spacing: -.035em !important;
+}
+.business-question-navigator h2,
+.business-design-checks h2 {
+  color: #24231f !important;
+  font: 600 18px/1.12 var(--font-reading) !important;
+  letter-spacing: -.025em !important;
+}
+.business-question-card textarea,
+.business-question-card-rich .business-question-prompt {
+  font-family: var(--font-reading) !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+@media (max-width: 700px) {
+  .business-builder-title { font-size: 28px !important; }
+}
+
+/* Primary verb returns to the brand lime; only decorative green text/icons are neutral. */
+.business-builder-header .business-builder-publish,
+.business-builder-header .business-builder-publish:hover {
+  border-color: #DEEF24 !important;
+  background: #DEEF24 !important;
+  background-image: none !important;
+  color: #141413 !important;
+}
+.business-builder-header .business-builder-publish:hover {
+  border-color: #C9DB10 !important;
+  background: #C9DB10 !important;
+}
+.business-builder-header > a,
+.business-builder-header > a:visited { color: #24231f !important; }
+
+/* Text and icons in the work area: ink / neutral gray, no green. */
+.business-question-toolbar > div,
+.business-question-toolbar > div > span,
+.business-question-toolbar strong,
+.business-question-toolbar select,
+.business-question-card textarea,
+.business-question-card-head select,
+.business-question-card-head > div > button,
+.business-question-choices input,
+.business-question-add-choice,
+.business-question-variable,
+.business-question-variable summary,
+.business-question-variable select,
+.business-question-variable input,
+.business-audience-modules > summary em,
+.business-audience-module-grid strong,
+.business-audience-module-grid button,
+.business-study-brief > summary em,
+.business-study-brief dd,
+.business-question-navigator button strong {
+  color: #24231f !important;
+}
+.business-question-toolbar > label,
+.business-question-toolbar small,
+.business-audience-modules > summary small,
+.business-audience-module-grid span,
+.business-audience-modules > footer,
+.business-study-brief > summary small,
+.business-study-brief dt,
+.business-question-card-head,
+.business-question-choices > div > span,
+.business-question-navigator button > span,
+.business-question-navigator button small,
+.business-question-navigator-empty {
+  color: #77746c !important;
+}
+.business-question-card-head select,
+.business-question-card-head > div > button,
+.business-question-toolbar select,
+.business-question-choices input {
+  border-color: #ddd9d0 !important;
+  background: #fff !important;
+}
+.business-question-card-head select,
+.business-question-toolbar select { background: #f7f6f2 !important; }
+.business-question-toolbar > div > svg,
+.business-question-card-head > div > svg,
+.business-audience-module-grid button svg { color: #24231f !important; }
