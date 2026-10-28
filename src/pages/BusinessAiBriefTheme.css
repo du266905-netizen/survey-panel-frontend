@@ -789,3 +789,12 @@
   .business-ai-brief-page .business-ai-conversation.is-waiting .is-opening h1 { font-size: 38px !important; }
   .business-ai-brief-page .business-ai-brief-dock { width: calc(100vw - 36px) !important; }
 }
+
+/* Nudge the composer to the visual centre of the conversation column. */
+.business-ai-brief-page .business-ai-dock {
+  left: 40px !important;
+  transform: none !important;
+}
+@media (max-width: 1180px) {
+  .business-ai-brief-page .business-ai-dock { left: 0 !important; }
+}
