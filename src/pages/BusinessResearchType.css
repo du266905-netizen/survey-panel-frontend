@@ -404,3 +404,156 @@
   .business-questionnaire-create-bg-body { grid-template-columns: 1fr; }
   .business-questionnaire-create-bg-body > aside { display: none; }
 }
+
+/* Questionnaire drafts: one card/form per draft, not a horizontal row. */
+.business-questionnaire-hub .business-questionnaire-hub-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  border-top: 0;
+  margin-top: 34px;
+}
+.business-workspace .business-questionnaire-hub .business-questionnaire-hub-list > article {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e3e0d8;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: none;
+  padding: 0;
+}
+.business-questionnaire-card-preview {
+  display: grid;
+  width: 100%;
+  align-content: start;
+  gap: 9px;
+  min-height: 146px;
+  border-bottom: 1px solid #ece9e1;
+  background: #f6f5f0;
+  padding: 22px 24px;
+}
+.business-questionnaire-card-preview-title {
+  display: block;
+  width: 62%;
+  height: 12px;
+  border-radius: 3px;
+  background: #d9d6ce;
+}
+.business-questionnaire-card-preview-line {
+  display: block;
+  width: 86%;
+  height: 7px;
+  border-radius: 3px;
+  background: #e3e0d8;
+}
+.business-questionnaire-card-preview-line.is-short { width: 66%; }
+.business-questionnaire-card-preview-choice {
+  display: block;
+  width: 100%;
+  height: 24px;
+  border: 1px solid #e3e0d8;
+  border-radius: 5px;
+  background: #fff;
+}
+.business-questionnaire-card-body {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 18px 20px 20px;
+}
+.business-questionnaire-card-body .business-status { position: static; margin-bottom: 10px; }
+.business-workspace .business-questionnaire-card-body h2 {
+  margin: 0;
+  color: #141413;
+  font: 600 22px/1.18 var(--font-reading);
+  letter-spacing: -.025em;
+}
+.business-questionnaire-card-body p {
+  margin: 8px 0 0;
+  color: #77746c;
+  font: 500 12px/1.4 var(--font-sans);
+}
+.business-questionnaire-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 20px;
+}
+.business-questionnaire-card-actions .business-project-open { font-size: 12px; }
+.business-questionnaire-card-actions .business-project-delete { color: #a4443b; }
+.business-questionnaire-card:hover { border-color: #c9c5bb; }
+@media (max-width: 1100px) {
+  .business-questionnaire-hub .business-questionnaire-hub-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .business-questionnaire-hub .business-questionnaire-hub-list { grid-template-columns: 1fr; }
+}
+
+/* Draft tag dot: neutral, not lime/green. */
+.business-questionnaire-card-body .business-status::before { background: #77746c !important; }
+
+/* Questionnaire cards: pale sage-bone, not neutral gray. */
+.business-questionnaire-card {
+  background: #FBFAF4;
+  border-color: #E2E4D6;
+}
+.business-questionnaire-card-preview {
+  background: #F1F3E8;
+  border-bottom-color: #E2E4D6;
+}
+.business-questionnaire-card-preview-title { background: #D8DDCB; }
+.business-questionnaire-card-preview-line { background: #E3E7D8; }
+.business-questionnaire-card-preview-choice { background: #FBFCF7; border-color: #E2E4D6; }
+.business-questionnaire-card:hover { border-color: #C9CFBA; }
+
+/* Drafts page: only the card/form area scrolls; the title, intro and CTA stay put. */
+.business-workspace--questionnaire-hub .business-workspace-body--rail {
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+.business-workspace--questionnaire-hub .business-questionnaire-hub {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  background: #FBFAF4;
+  box-sizing: border-box;
+}
+.business-workspace--questionnaire-hub .business-questionnaire-hub > .business-projects-head {
+  flex: 0 0 auto;
+}
+.business-workspace--questionnaire-hub .business-questionnaire-hub-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  align-content: start;
+  padding: 0 10px 34px 0;
+  scrollbar-gutter: stable;
+}
+@media (max-width: 720px) {
+  .business-workspace--questionnaire-hub .business-workspace-body--rail { height: 100svh; min-height: 100svh; }
+  .business-workspace--questionnaire-hub .business-questionnaire-hub { height: 100%; }
+}
+
+/* The scroll container must size its rows from the cards, never compress them. */
+.business-questionnaire-hub .business-questionnaire-hub-list {
+  grid-auto-rows: max-content;
+  align-items: start;
+}
+.business-workspace .business-questionnaire-hub .business-questionnaire-hub-list > article {
+  flex: 0 0 auto;
+  height: auto;
+}
