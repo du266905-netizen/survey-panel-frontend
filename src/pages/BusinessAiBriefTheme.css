@@ -822,3 +822,24 @@
   width: 150px;
   height: 26px;
 }
+
+/* AI page only: the support chat launcher moves to the left so it cannot sit
+   on top of the composer's attachment control. The panel follows it. */
+body:has(.business-ai-brief-page) .business-support-chat-launcher {
+  right: auto !important;
+  left: 21px !important;
+}
+body:has(.business-ai-brief-page) .business-support-chat {
+  right: auto !important;
+  left: 18px !important;
+}
+@media (max-width: 620px) {
+  body:has(.business-ai-brief-page) .business-support-chat-launcher {
+    right: auto !important;
+    left: 16px !important;
+  }
+  body:has(.business-ai-brief-page) .business-support-chat {
+    right: auto !important;
+    left: 12px !important;
+  }
+}
