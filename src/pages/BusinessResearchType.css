@@ -607,3 +607,16 @@
   box-shadow: 0 8px 22px rgba(20, 20, 19, .07);
   transform: translateY(-1px);
 }
+
+/* Give the hover lift room inside the scroll container, and replace the red
+   browser focus halo on the delete action with an ink ring. */
+.business-workspace--questionnaire-hub .business-questionnaire-hub-list {
+  padding-top: 2px;
+}
+.business-questionnaire-card-actions .business-project-delete:focus,
+.business-questionnaire-card-actions .business-project-delete:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid #141413;
+  outline-offset: 2px;
+  box-shadow: none;
+}
