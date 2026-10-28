@@ -314,3 +314,149 @@
 .business-question-toolbar > div > svg,
 .business-question-card-head > div > svg,
 .business-audience-module-grid button svg { color: #24231f !important; }
+
+/* Editor header: one language globe, one save action; the old status pill duplicated "Draft". */
+.business-builder-header .business-language-picker { position: relative; z-index: 40; }
+.business-builder-header .business-language-picker > button {
+  display: inline-flex;
+  width: auto;
+  min-height: 36px;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #ddd9d0;
+  border-radius: 6px;
+  background: #fff;
+  color: #24231f;
+  cursor: pointer;
+  font: 600 11px var(--font-sans);
+  padding: 0 9px;
+}
+.business-builder-header .business-language-picker > button:hover,
+.business-builder-header .business-language-picker > button[aria-expanded="true"] {
+  border-color: #141413;
+  background: #fff;
+  color: #141413;
+}
+.business-builder-header .business-language-picker > button > span { display: inline; color: inherit; font: inherit; }
+.business-builder-header .business-language-picker > button > svg:first-child { color: #24231f; }
+.business-builder-header .business-language-picker > button > svg:last-child { color: #77746c; }
+.business-builder-header .business-language-picker-menu {
+  top: calc(100% + 8px);
+  left: auto;
+  right: 0;
+  display: grid;
+  width: 220px;
+  max-height: min(430px, calc(100svh - 18px));
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid #e3e0d8;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(20,20,19,.12);
+  transform: none;
+}
+.business-builder-header .business-language-picker-menu > p {
+  border-bottom: 1px solid #ece9e1;
+  color: #77746c;
+  font: 600 10px var(--font-sans);
+  letter-spacing: .06em;
+  margin: 0;
+  padding: 10px 12px;
+  text-transform: uppercase;
+}
+.business-builder-header .business-language-picker-menu > div { overflow-y: auto; padding: 5px; }
+.business-builder-header .business-language-picker-menu button {
+  display: flex;
+  width: 100%;
+  min-height: 30px;
+  align-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #24231f;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  padding: 0 9px;
+  text-align: left;
+}
+.business-builder-header .business-language-picker-menu button:hover { background: #f4f3ef; }
+.business-builder-header .business-language-picker-menu button.is-selected { background: #141413; color: #fff; }
+.business-builder-header > div > span { display: none !important; }
+
+/* Remaining legacy green tokens inside question controls and helper text. */
+.business-question-advanced,
+.business-question-advanced label,
+.business-question-method-note,
+.business-question-variable,
+.business-question-variable label,
+.business-question-variable summary,
+.business-question-variable summary > span,
+.business-question-choices button,
+.business-question-choices button svg,
+.business-question-card-head button,
+.business-question-card-head button svg,
+.business-question-controls select,
+.business-question-controls label,
+.business-question-toolbar select,
+.business-audience-modules > footer,
+.business-audience-modules > footer svg,
+.business-question-navigator button,
+.business-question-navigator button * { color: #24231f !important; }
+.business-question-advanced label,
+.business-question-method-note,
+.business-question-variable label,
+.business-question-variable summary > span,
+.business-question-toolbar > label,
+.business-question-toolbar small,
+.business-audience-modules > footer,
+.business-design-checks > div,
+.business-question-navigator button small { color: #77746c !important; }
+
+/* One type scale: 38 title / 18 section or question / 13 body / 11 meta / 12 action. */
+.business-question-card-head { font-size: 11px !important; font-weight: 600 !important; letter-spacing: .06em !important; }
+.business-question-advanced,
+.business-question-advanced label,
+.business-question-method-note,
+.business-question-variable,
+.business-question-variable label,
+.business-question-variable summary,
+.business-question-controls label,
+.business-question-toolbar > label,
+.business-question-toolbar small,
+.business-design-checks > div,
+.business-question-navigator button small,
+.business-audience-modules > footer { font-size: 11px !important; }
+.business-question-card-head select,
+.business-question-controls select,
+.business-question-toolbar select,
+.business-question-choices input,
+.business-question-card textarea,
+.business-question-toolbar button { font-size: 13px !important; }
+.business-builder-header button { font-size: 12px !important; }
+.business-question-navigator button > span { font-size: 11px !important; }
+.business-question-navigator button strong { font-size: 12px !important; font-weight: 500 !important; }
+.business-question-navigator button small { letter-spacing: 0 !important; text-transform: none !important; }
+
+/* Card headings use the reading face; controls stay sans. */
+.business-study-brief > summary b,
+.business-audience-modules > summary b,
+.business-question-toolbar strong {
+  color: #24231f !important;
+  font: 600 15px/1.2 var(--font-reading) !important;
+}
+.business-question-card-head,
+.business-question-card-head select,
+.business-question-card-head button,
+.business-question-advanced,
+.business-question-variable,
+.business-question-toolbar button,
+.business-builder-header button,
+.business-builder-header .business-language-picker > button { font-family: var(--font-sans) !important; }
+
+/* Final editor ink: no green-tinted text; keep the lime primary action. */
+.business-builder-header > div > button:not(.business-builder-delete):not(.business-builder-publish),
+.business-builder-header > div > button:not(.business-builder-delete):not(.business-builder-publish) *,
+.business-design-checks > div.ready > span,
+.business-design-checks > div.ready svg { color: #141413 !important; }
+.business-builder-header .business-builder-publish,
+.business-builder-header .business-builder-publish * { color: #141413 !important; }
