@@ -798,3 +798,27 @@
 @media (max-width: 1180px) {
   .business-ai-brief-page .business-ai-dock { left: 0 !important; }
 }
+
+/* Text wordmark in the assistant column. */
+.business-ai-brief-page .business-ai-brief-assistant-brand img {
+  width: 146px;
+  height: 24px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Composer: nudge further into the greeting's optical centre. */
+.business-ai-brief-page .business-ai-dock {
+  left: 60px !important;
+}
+@media (max-width: 1180px) {
+  .business-ai-brief-page .business-ai-dock { left: 0 !important; }
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-brand {
+  padding-top: 4px;
+}
+.business-ai-brief-page .business-ai-brief-assistant-brand img {
+  width: 150px;
+  height: 26px;
+}
