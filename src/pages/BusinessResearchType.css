@@ -620,3 +620,67 @@
   outline-offset: 2px;
   box-shadow: none;
 }
+
+/* Projects use the same card rhythm as the questionnaire drafts. */
+.business-workspace .business-project-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  border-top: 0;
+  margin-top: 26px;
+}
+.business-workspace .business-project-list > article {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border: 1px solid #e3e0d8;
+  border-radius: 12px;
+  background: #FBFAF4;
+  box-shadow: none;
+  padding: 18px;
+}
+.business-workspace .business-project-list > article > div:nth-child(2) { padding-right: 28px; }
+.business-workspace .business-project-list h2 { font-size: 22px; line-height: 1.16; }
+.business-workspace .business-project-list dl {
+  display: grid;
+  gap: 7px;
+  border-top: 1px solid #e3e0d8;
+  margin: 15px 0 0;
+  padding-top: 12px;
+}
+.business-workspace .business-project-list dl div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  border-left: 0;
+  padding-left: 0;
+}
+.business-workspace .business-project-list dt { font-size: 11px; }
+.business-workspace .business-project-list dd { font-size: 11px; text-align: right; }
+.business-workspace .business-project-actions {
+  position: static;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 14px;
+  justify-content: flex-start;
+}
+.business-workspace .business-project-open { white-space: nowrap; }
+.business-workspace .business-project-quote-note {
+  position: static;
+  margin: 8px 0 0;
+  font-size: 11px;
+}
+.business-workspace .business-project-menu { position: absolute; z-index: 3; top: 11px; right: 11px; }
+.business-workspace .business-project-toolbar button { font-size: 14px; padding: 10px 12px; }
+.business-workspace .business-project-toolbar span { font-size: 11px; }
+@media (max-width: 1100px) {
+  .business-workspace .business-project-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .business-workspace .business-project-list { grid-template-columns: 1fr; }
+}

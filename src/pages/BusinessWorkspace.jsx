@@ -60,6 +60,13 @@ const projectCategoryCopy = {
   'en-US': { ALL: 'All', SURVEY: 'Survey', CUSTOM_RESEARCH: 'Custom research', QUALITATIVE_SUPPORT: 'Qualitative research support' },
   'en-GB': { ALL: 'All', SURVEY: 'Survey', CUSTOM_RESEARCH: 'Custom research', QUALITATIVE_SUPPORT: 'Qualitative research support' },
 };
+const projectViewDetailsCopy = {
+  'zh-CN': '查看详情',
+  'zh-Hant': '查看詳情',
+  'en-US': 'View details',
+  'en-GB': 'View details',
+};
+
 const projectCategory = (project) => {
   if (['SURVEY', 'CUSTOM_RESEARCH', 'QUALITATIVE_SUPPORT'].includes(project.serviceCategory)) return project.serviceCategory;
   if (project.questionnaire || project.studyFormat === 'SURVEY') return 'SURVEY';
@@ -715,10 +722,10 @@ export default function BusinessWorkspace() {
                         <div><dt>{projectsCopy.updated}</dt><dd>{new Date(project.updatedAt).toLocaleDateString(language)}</dd></div>
                       </dl>
                       <div className="business-project-actions">
-                        {project.questionnaire && <><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{ui.openEditor} <ArrowRight size={15} /></Link>{project.questionnaire?.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}</>}
+                        <button type="button" className="business-project-open" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']} <ArrowRight size={15} /></button>
                         {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit} <ArrowRight size={15} /></button>}
-                        {project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote} <ArrowRight size={15} /></button>}
-                        {project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={Boolean(payingProjectId)} aria-busy={payingProjectId === project.id}>{payingProjectId === project.id ? <><LoaderCircle className="animate-spin" size={15} /> {ws.workspace.paymentPreparing}</> : <>{ws.workspace.continueToPayment} <ArrowRight size={15} /></>}</button>}
+                        {!project.questionnaire && project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote} <ArrowRight size={15} /></button>}
+                        {!project.questionnaire && project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={Boolean(payingProjectId)} aria-busy={payingProjectId === project.id}>{payingProjectId === project.id ? <><LoaderCircle className="animate-spin" size={15} /> {ws.workspace.paymentPreparing}</> : <>{ws.workspace.continueToPayment} <ArrowRight size={15} /></>}</button>}
                       </div>
                       {project.latestQuote && <p className="business-project-quote-note">{project.latestQuote.status === 'SENT'
                         ? feedbackCopy.quoteReady.replace('{version}', project.latestQuote.version)
