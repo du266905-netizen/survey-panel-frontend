@@ -82,5 +82,29 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "guanyi-media.com"
+        }
+      ],
+      "destination": "https://www.guanyisearch.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.guanyi-media.com"
+        }
+      ],
+      "destination": "https://www.guanyisearch.com/$1",
+      "permanent": true
+    }
   ]
 }
