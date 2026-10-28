@@ -866,6 +866,28 @@ export const getAlipayCapability = async () => {
   return response.data;
 };
 
+/* PayPal balance top-up. The create call is the only browser-initiated order:
+ * it must carry the caller-generated idempotency key. The return call sends
+ * only PayPal's provider token; the backend resolves the order by (user, token). */
+export const createPaypalRecharge = async ({ amountUsd, idempotencyKey }) => {
+  const response = await apiClient.post(
+    '/api/business/account/recharge/paypal',
+    { amountUsd },
+    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
+  );
+  return response.data;
+};
+
+export const capturePaypalReturn = async (token) => {
+  const response = await apiClient.post('/api/business/account/recharge/paypal/return', { token });
+  return response.data;
+};
+
+export const getPaypalRecharge = async (orderId) => {
+  const response = await apiClient.get(`/api/business/account/recharge/paypal/${encodeURIComponent(orderId)}`);
+  return response.data;
+};
+
 export const createCryptoRecharge = async ({ amountUsd, idempotencyKey }) => {
   const response = await apiClient.post(
     '/api/business/account/recharge',

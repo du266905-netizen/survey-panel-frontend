@@ -20,9 +20,10 @@ import {
   X,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
+import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
-import BusinessBalanceChip from '../components/BusinessBalanceChip';
+import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../components/BusinessBalanceChip';
+import { clearPaypalReturnFromUrl, readPaypalReturnToken } from '../components/paypalReturn';
 import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import NotificationBell from '../components/NotificationBell';
 import Logo from '../components/Logo';
@@ -188,6 +189,7 @@ export default function BusinessWorkspace() {
   const [form, setForm] = useState(emptyProject);
   const [submitting, setSubmitting] = useState(false);
   const [payingProjectId, setPayingProjectId] = useState('');
+  const paypalReturnHandledRef = useRef('');
   const [message, setMessage] = useState('');
   const [quoteProject, setQuoteProject] = useState(null);
   const [quoteDecision, setQuoteDecision] = useState('');
@@ -324,6 +326,27 @@ export default function BusinessWorkspace() {
       });
     return () => { active = false; };
   }, [feedbackCopy.loadProjects, location.search, user]);
+
+  // PayPal appends ?token=... on return. Send only that token to the API; the
+  // backend resolves it against the signed-in user and captures the order.
+  useEffect(() => {
+    const token = readPaypalReturnToken(location.search);
+    if (!token || paypalReturnHandledRef.current === token) return undefined;
+    paypalReturnHandledRef.current = token;
+    let active = true;
+    capturePaypalReturn(token)
+      .then(() => {
+        if (!active) return;
+        clearPaypalReturnFromUrl();
+        window.dispatchEvent(new Event(BUSINESS_BALANCE_REFRESH_EVENT));
+      })
+      .catch(() => {
+        if (!active) return;
+        clearPaypalReturnFromUrl();
+        setMessage(ui.paymentFailed || 'We could not start this payment. Please try again.');
+      });
+    return () => { active = false; };
+  }, [location.search, ui.paymentFailed]);
 
   const update = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));

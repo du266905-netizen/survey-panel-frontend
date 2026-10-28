@@ -15,6 +15,7 @@ import { useLanguage } from './LanguageContext';
  * the first-paint value — the fetched amount replaces it, and a failed or missing
  * response shows a dash rather than a misleading $0.00. */
 const PLACEHOLDER_BALANCE = { amount: '$0.00', currency: 'USD' };
+export const BUSINESS_BALANCE_REFRESH_EVENT = 'guanyi:business-balance-refresh';
 
 /* The backend returns `balance` already as a 2-decimal string plus a currency
  * code (see serializeBalance in businessCryptoBalanceService.js). */
@@ -36,6 +37,7 @@ export default function BusinessBalanceChip({ className = '' }) {
   const [open, setOpen] = useState(false);
   const [balance, setBalance] = useState(null);
   const [unavailable, setUnavailable] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -53,6 +55,12 @@ export default function BusinessBalanceChip({ className = '' }) {
         if (!cancelled) setUnavailable(true);
       });
     return () => { cancelled = true; };
+  }, [refreshKey]);
+
+  useEffect(() => {
+    const refresh = () => setRefreshKey((value) => value + 1);
+    window.addEventListener(BUSINESS_BALANCE_REFRESH_EVENT, refresh);
+    return () => window.removeEventListener(BUSINESS_BALANCE_REFRESH_EVENT, refresh);
   }, []);
 
   const shown = balance ? balance.amount : (unavailable ? '\u2014' : PLACEHOLDER_BALANCE.amount);

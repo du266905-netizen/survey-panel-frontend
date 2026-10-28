@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { Lock, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
-import { createAlipayRecharge, createCryptoRecharge } from '../api/realApi';
+import { createAlipayRecharge, createCryptoRecharge, createPaypalRecharge, getPaypalRecharge } from '../api/realApi';
+import { createPaypalAttemptTracker } from './paypalAttempt';
 
 /* "Add funds" dialog, modelled on the top-up sheet the client asked for: the
  * amount first (with quick picks), then the payment routes, then the security
  * note. It replaces the old standalone payment page as the in-app entry point;
  * the balance chip in the top bar opens it.
  *
- * Crypto and Alipay rows are live; bank transfer and PayPal still carry a data-method hook
- * so the real PayPal / Cryptomus / bank URLs can be dropped in without touching
- * the layout. The SSL note and the card marks mirror what the site already
+ * Crypto, Alipay and PayPal rows are live; bank transfer and card remain
+ * placeholders until their backend routes and provider contracts exist. The SSL note and the card marks mirror what the site already
  * claims elsewhere, and no card data is collected here: the routes hand off to
  * the provider. */
 
@@ -71,6 +71,8 @@ export default function BusinessAddFundsModal({ open, onClose }) {
   const [submitting, setSubmitting] = useState('');
   const [error, setError] = useState('');
   const inputRef = useRef(null);
+  const paypalAttempt = useRef(null);
+  if (!paypalAttempt.current) paypalAttempt.current = createPaypalAttemptTracker();
 
   useEffect(() => {
     if (!open) return undefined;
@@ -78,6 +80,10 @@ export default function BusinessAddFundsModal({ open, onClose }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
+
+  useEffect(() => {
+    if (!open && paypalAttempt.current) paypalAttempt.current.reset();
+  }, [open]);
 
   if (!open) return null;
 
@@ -87,10 +93,29 @@ export default function BusinessAddFundsModal({ open, onClose }) {
    * verified trade query, so this is purely a redirect. */
   const startPayment = async (method) => {
     if (!valid || submitting) return;
+    const isPaypal = method === 'paypal';
+    // React state cannot stop a second click in the same tick. The tracker's
+    // synchronous lock does; its key also survives a retry for the same amount.
+    if (isPaypal && !paypalAttempt.current.begin()) return;
     setError('');
     setSubmitting(method);
     try {
       const amountUsd = numeric.toFixed(2);
+      if (isPaypal) {
+        const idempotencyKey = paypalAttempt.current.keyFor(amountUsd);
+        const payload = await createPaypalRecharge({ amountUsd, idempotencyKey });
+        let payment = payload?.payment;
+        // If the create response is missing the approval link, query the
+        // order once by its local order id before treating it as a failure.
+        if (!payment?.approveUrl && payment?.orderId) {
+          const queried = await getPaypalRecharge(payment.orderId);
+          payment = queried?.payment || payment;
+        }
+        if (!payment?.approveUrl) throw new Error('NO_APPROVE_URL');
+        window.location.assign(payment.approveUrl);
+        return;
+      }
+
       const payload = method === 'alipay'
         ? await createAlipayRecharge({
             amountUsd,
@@ -107,10 +132,12 @@ export default function BusinessAddFundsModal({ open, onClose }) {
       if (!checkoutUrl) throw new Error('NO_CHECKOUT_URL');
       window.location.href = checkoutUrl;
     } catch (failure) {
-      setSubmitting('');
       const code = failure?.response?.data?.code;
       if (code === 'ALIPAY_NOT_CONFIGURED') setError(ui.alipayUnavailable || 'Alipay is not available yet.');
       else setError(ui.paymentFailed || 'We could not start this payment. Please try again.');
+    } finally {
+      if (isPaypal) paypalAttempt.current.end();
+      setSubmitting('');
     }
   };
 
@@ -185,15 +212,22 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </span>
             <span className="business-funds-route-go" aria-hidden="true">›</span>
           </a>
-          <a href="#" data-method="paypal">
+          <button
+            type="button"
+            data-method="paypal"
+            onClick={() => startPayment('paypal')}
+            disabled={!valid || Boolean(submitting)}
+          >
             <span className="business-funds-route-mark is-paypal" aria-hidden="true">
               <img src="/pay/paypal-monogram.png" alt="" />
             </span>
             <span className="business-funds-route-copy">
               <strong>{ws.funds.paypal || 'PayPal'}</strong>
             </span>
-            <span className="business-funds-route-go" aria-hidden="true">›</span>
-          </a>
+            <span className="business-funds-route-go" aria-hidden="true">
+              {submitting === 'paypal' ? '…' : '›'}
+            </span>
+          </button>
           {/* PayPal and card used to share one row ("PayPal or credit card").
               The client asked for them split, so each now has its own route. */}
           <a href="#" data-method="card">
@@ -221,9 +255,9 @@ export default function BusinessAddFundsModal({ open, onClose }) {
               {submitting === 'alipay' ? '…' : '›'}
             </span>
           </button>
-          {/* Crypto and Alipay are wired: each creates a recharge order and
-              hands off to the provider cashier. Bank transfer and PayPal are
-              still placeholders (no backend route yet). */}
+          {/* Crypto, Alipay and PayPal are wired: each creates a recharge
+              order and hands off to the provider cashier. Bank transfer and
+              card are still placeholders. */}
           <button
             type="button"
             data-method="crypto"
