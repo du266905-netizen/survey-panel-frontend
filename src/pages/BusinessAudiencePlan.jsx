@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
+import './BusinessResearchType.css';
+
 
 const emptyPlan = { title: '', researchGoal: '', audienceDescription: '', countries: '', languages: '', targetParticipants: '', timeline: '', additionalContext: '' };
 

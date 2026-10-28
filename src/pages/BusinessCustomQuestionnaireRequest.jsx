@@ -11,6 +11,8 @@ import './Business.css';
 import '../components/BusinessRail.css';
 import BusinessRail from '../components/BusinessRail';
 import './BusinessWorkspaceTheme.css';
+import './BusinessResearchType.css';
+
 
 const initialRequest = {
   title: '', researchGoal: '', audienceDescription: '', countries: '', languages: '',

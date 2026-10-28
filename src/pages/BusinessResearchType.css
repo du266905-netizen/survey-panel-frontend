@@ -1,0 +1,195 @@
+/* Research end: type scale + old-sage colour cleanup only.
+   No layout, frames, eyebrows, field boxes or avatar/CTA changes.
+   Buttons keep the lime accent: ink text, 6px/42px. */
+
+/* ---- titles ------------------------------------------------------------- */
+
+.business-workspace .business-projects-head h1 {
+  color: #141413 !important;
+  font-family: var(--font-impact) !important;
+  font-size: 56px !important;
+  font-weight: 400 !important;
+  letter-spacing: -.03em !important;
+  line-height: 1.02 !important;
+}
+
+.business-custom-request-page .business-custom-request-heading h1 {
+  color: #141413 !important;
+  font-family: var(--font-reading) !important;
+  font-optical-sizing: auto !important;
+  font-size: 38px !important;
+  font-weight: 400 !important;
+  letter-spacing: -.028em !important;
+  line-height: 1.08 !important;
+}
+
+@media (max-width: 800px) {
+  .business-workspace .business-projects-head h1 { font-size: 38px !important; }
+}
+
+@media (max-width: 620px) {
+  .business-workspace .business-projects-head h1 { font-size: 38px !important; }
+  .business-custom-request-page .business-custom-request-heading h1 { font-size: 32px !important; }
+}
+
+/* ---- lime buttons ------------------------------------------------------- */
+
+.business-workspace .business-button,
+.business-workspace .business-projects-head .business-button,
+.business-workspace .business-results-index-empty > .business-button,
+.business-custom-request-page.business-custom-request-page .business-button,
+.business-custom-request-page.business-custom-request-page .business-custom-request-next,
+.business-custom-request-page.business-custom-request-page .business-custom-intro-continue,
+.business-audience-plan-page.business-audience-plan-page .business-button {
+  min-height: 42px !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: #deef24 !important;
+  background-image: none !important;
+  color: #141413 !important;
+  font: 500 14px var(--font-sans) !important;
+  padding: 0 16px !important;
+}
+
+.business-workspace .business-button:hover,
+.business-workspace .business-projects-head .business-button:hover,
+.business-workspace .business-results-index-empty > .business-button:hover,
+.business-custom-request-page.business-custom-request-page .business-button:hover,
+.business-custom-request-page.business-custom-request-page .business-custom-request-next:hover,
+.business-custom-request-page.business-custom-request-page .business-custom-intro-continue:hover,
+.business-audience-plan-page.business-audience-plan-page .business-button:hover {
+  background: #c9db10 !important;
+  color: #141413 !important;
+}
+
+/* ---- old sage on the Projects empty state (colour only) ---------------- */
+
+.business-workspace .business-projects-guide {
+  background: #ffffff !important;
+  border-color: rgba(20, 20, 19, .12) !important;
+}
+
+.business-workspace .business-projects-guide > p,
+.business-workspace .business-projects-guide li span {
+  color: #6f6a5f !important;
+}
+
+.business-workspace .business-projects-guide h2,
+.business-workspace .business-projects-guide ol {
+  color: #141413 !important;
+}
+
+.business-workspace .business-create-project-card {
+  border-color: rgba(20, 20, 19, .12) !important;
+  color: #141413 !important;
+}
+
+.business-workspace .business-create-project-card > span {
+  background: #deef24 !important;
+  color: #141413 !important;
+}
+
+.business-workspace .business-create-project-card strong {
+  color: #141413 !important;
+}
+
+.business-workspace .business-create-project-card small {
+  color: #6f6a5f !important;
+}
+
+.business-workspace .business-create-project-card:hover {
+  border-color: #141413 !important;
+  box-shadow: 8px 9px 0 rgba(20, 20, 19, .08) !important;
+}
+
+.business-workspace .business-project-kind {
+  color: #6f6a5f !important;
+}
+
+.business-workspace .business-status,
+.business-workspace .business-status.status-submitted_for_review,
+.business-workspace .business-status.status-in_review,
+.business-workspace .business-status.status-recruiting,
+.business-workspace .business-status.status-quote_required,
+.business-workspace .business-status.status-quote_sent,
+.business-workspace .business-status.status-funded,
+.business-workspace .business-status.status-live,
+.business-workspace .business-status.status-client_accepted,
+.business-workspace .business-status.status-completed {
+  border-color: rgba(20, 20, 19, .14) !important;
+  background: transparent !important;
+  color: #6f6a5f !important;
+}
+
+.business-workspace .business-workspace-message {
+  border-color: rgba(20, 20, 19, .14) !important;
+  background: #ffffff !important;
+  color: #141413 !important;
+}
+
+.business-workspace .business-project-list h2,
+.business-workspace .business-project-list dd {
+  color: #141413 !important;
+}
+
+.business-workspace .business-project-list p,
+.business-workspace .business-project-list dt {
+  color: #6f6a5f !important;
+}
+
+/* ---- old sage on the two request forms (colour only) ------------------- */
+
+.business-custom-request-page .business-custom-request-surface > header button,
+.business-custom-request-page .business-custom-request-quiet {
+  color: #141413 !important;
+}
+
+.business-custom-request-page .business-custom-request-surface > header span,
+.business-custom-request-page .business-custom-request-heading > p,
+.business-custom-request-page .business-custom-request-heading > span {
+  color: #6f6a5f !important;
+}
+
+.business-custom-request-page .business-custom-request-fields label,
+.business-custom-request-page .business-custom-request-grid > label {
+  color: #141413 !important;
+}
+
+.business-custom-request-page .business-custom-request-fields input,
+.business-custom-request-page .business-custom-request-fields textarea,
+.business-custom-request-page .business-custom-request-fields select,
+.business-custom-request-page .business-custom-request-grid input,
+.business-custom-request-page .business-custom-request-grid textarea,
+.business-custom-request-page .business-custom-request-grid select {
+  color: #141413 !important;
+}
+
+.business-custom-request-page .business-custom-request-fields input::placeholder,
+.business-custom-request-page .business-custom-request-fields textarea::placeholder,
+.business-custom-request-page .business-custom-request-grid input::placeholder,
+.business-custom-request-page .business-custom-request-grid textarea::placeholder {
+  color: #6f6a5f !important;
+}
+
+.business-custom-request-page .business-custom-request-fields input:focus,
+.business-custom-request-page .business-custom-request-fields textarea:focus,
+.business-custom-request-page .business-custom-request-fields select:focus,
+.business-custom-request-page .business-custom-request-grid input:focus,
+.business-custom-request-page .business-custom-request-grid textarea:focus,
+.business-custom-request-page .business-custom-request-grid select:focus {
+  border-color: #141413 !important;
+  box-shadow: 0 0 0 3px rgba(20, 20, 19, .08) !important;
+}
+
+
+/* Questionnaire drafts: no kicker; the top-right button is the entry, and the
+   empty state is the careers-style sentence on the page, not a card. */
+.business-questionnaire-hub .business-projects-head > div > p:first-child {
+  display: none !important;
+}
+
+.business-questionnaire-hub .business-questionnaire-empty {
+  margin: 34px 0 0;
+  color: #6f6a5f;
+  font: 400 16px/1.6 var(--font-sans);
+}
