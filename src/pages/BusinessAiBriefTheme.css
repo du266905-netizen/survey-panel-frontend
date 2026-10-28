@@ -718,16 +718,18 @@
 }
 
 /* The opening question carries the same sprout, sized with the type. */
-.business-ai-brief-page .business-ai-conversation.is-waiting .is-opening h1 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .14em;
-}
-
 .business-ai-brief-page .business-ai-opening-sprout {
-  flex: 0 0 auto;
+  display: inline-block;
   width: .8em;
   height: .8em;
+  margin-right: .06em;
   color: #deef24 !important;
+  vertical-align: -.04em;
+}
+
+/* One line, 38, regular weight. 56 wrapped and changed the texture. */
+.business-ai-brief-page .business-ai-conversation.is-waiting .is-opening h1 {
+  max-width: 900px;
+  font-size: 38px !important;
+  font-weight: 400 !important;
 }
