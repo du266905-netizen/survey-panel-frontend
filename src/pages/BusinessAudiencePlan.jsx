@@ -9,6 +9,19 @@ import './BusinessResearchType.css';
 
 const emptyPlan = { title: '', researchGoal: '', audienceDescription: '' };
 
+/* The brief asks for words, not raw characters. Latin words are whitespace
+ * tokens; for CJK text, a two-character word is the practical approximation so
+ * 10 words ≈ 20 characters, which also satisfies the backend's character floor.
+ * Punctuation and digits alone are not words. */
+const wordCount = (value) => {
+  const text = String(value || '').trim();
+  if (!text) return 0;
+  const latin = text.match(/[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*/g) || [];
+  const cjkChars = text.match(/[\u3400-\u9FFF\uF900-\uFAFF]/g) || [];
+  return latin.length + Math.ceil(cjkChars.length / 2);
+};
+const MIN_WORDS = { researchGoal: 10, audienceDescription: 5 };
+
 export default function BusinessAudiencePlan() {
   const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
@@ -18,8 +31,13 @@ export default function BusinessAudiencePlan() {
   const [error, setError] = useState('');
   const plans = publicCopy?.workspace?.business?.audiencePlan || {};
   const c = plans[language] || plans['en-US'] || {};
-  const update = (event) => setPlan((current) => ({ ...current, [event.target.name]: event.target.value }));
-  const valid = plan.title.trim().length >= 3 && plan.researchGoal.trim().length >= 20 && plan.audienceDescription.trim().length >= 10;
+  const update = (event) => {
+    setPlan((current) => ({ ...current, [event.target.name]: event.target.value }));
+    if (error) setError('');
+  };
+  const valid = plan.title.trim().length >= 3
+    && wordCount(plan.researchGoal) >= MIN_WORDS.researchGoal
+    && wordCount(plan.audienceDescription) >= MIN_WORDS.audienceDescription;
   const go = (target) => navigate(withLanguage(target, language));
   const modalTitle = c.modalTitle || (language === 'zh-Hant' ? '建立問卷' : language === 'zh-CN' ? '创建问卷' : 'Create questionnaire');
   const cancelLabel = c.cancel || (language === 'zh-Hant' || language === 'zh-CN' ? '取消' : 'Cancel');
@@ -51,10 +69,11 @@ export default function BusinessAudiencePlan() {
 
   const field = (label, name, hint, textarea = false) => (
     <label>
-      {label}
+      <span className="business-questionnaire-create-label">{label}</span>
       {textarea
         ? <textarea name={name} value={plan[name]} onChange={update} placeholder={hint} />
         : <input name={name} value={plan[name]} onChange={update} placeholder={hint} autoFocus />}
+      <span className="business-questionnaire-create-meta">{hint}</span>
     </label>
   );
 
