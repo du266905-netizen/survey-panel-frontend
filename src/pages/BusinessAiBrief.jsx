@@ -7,6 +7,7 @@ import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
 import '../components/BusinessRail.css';
+import './BusinessAiBriefTheme.css';
 import BusinessRail from '../components/BusinessRail';
 
 const steps = ['goal', 'route', 'audience', 'market', 'sample', 'timeline'];
@@ -339,8 +340,8 @@ export default function BusinessAiBrief() {
               </div>
             </section>
           )}
-          {!hasStarted && <p className="business-ai-starter-example"><span>{text.exampleLabel}</span><strong>{typedExample}</strong><i aria-hidden="true" /></p>}<span className="business-ai-conversation-end" ref={conversationEndRef} aria-hidden="true" /></div>
-          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-meta"><p className="business-ai-brief-note">{text.note}</p><p className="business-ai-brief-data-notice">{text.dataNotice}</p></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : ''} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
+          <span className="business-ai-conversation-end" ref={conversationEndRef} aria-hidden="true" /></div>
+          {(activeField !== 'route' || guidanceWarning || error) && <div className="business-ai-dock"><div className="business-ai-dock-meta"><p className="business-ai-brief-note">{text.note}</p><p className="business-ai-brief-data-notice">{text.dataNotice}</p></div>{guidanceWarning && <p className="business-ai-brief-error" role="status">{guidanceWarning}</p>}{ready && <button className="business-button business-ai-save" type="button" disabled={saving} onClick={saveBrief}>{saving ? <LoaderCircle className="animate-spin" size={16} /> : conversationText.save} {!saving && <ArrowRight size={16} />}</button>}{error && <p className="business-ai-brief-error" role="alert">{error}</p>}{activeField !== 'route' && <form className="business-ai-composer" onSubmit={addReply}><textarea value={reply} disabled={guiding} onChange={(event) => setReply(event.target.value)} placeholder={hasStarted ? conversationText.placeholders[ready ? 'done' : activeField] : (typedExample ? `${conversationText.exampleLabel} · ${typedExample}` : conversationText.exampleLabel)} aria-label={conversationText.placeholders[ready ? 'done' : activeField]} /><button type="submit" disabled={!reply.trim() || guiding} aria-label="Send">{guiding ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}</button></form>}</div>}
         </section>
       </section>
     </div>

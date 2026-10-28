@@ -2212,10 +2212,7 @@ main.business-ai-brief-page {
   white-space: normal;
 }
 
-.business-ai-brief-page .business-ai-starter-example {
-  color: var(--rs-mute);
-  font-weight: 550;
-}
+.business-ai-brief-page 
 
 .business-ai-brief-page .business-ai-conversation > header p,
 .business-ai-brief-page .business-ai-brief-summary header p,

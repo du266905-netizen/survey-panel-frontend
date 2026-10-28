@@ -1,0 +1,187 @@
+/* Neutral pass on the AI brief.
+ *
+ * The page accumulated sage/green text from several older layers:
+ *   #344E3E guide prose, #64776A notes, #7C8B81 data notice,
+ *   #4A544D assistant/rail text, #8D948D labels, #66816E "example" label.
+ * None of those belong to the locked palette. This file replaces the text with
+ * ink + warm neutrals and keeps #F4F7F2 (pale sage bone) for soft fills only.
+ *
+ * Imported after Business.css and BusinessRail.css so it wins on source order;
+ * the few !important flags are for rules that carry one themselves.
+ */
+
+.business-ai-brief-page {
+  /* The page's own theme rules read --rs-*; point them at the warm neutral
+     palette so no descendant can fall back to the sage body/mute values. */
+  --rs-ink: #141413;
+  --rs-black: #141413;
+  --rs-body: #4a4a46;
+  --rs-mute: #6f6a5f;
+  --rs-faint: #8a857a;
+  --rs-chip: #f4f7f2;
+  --ai-ink: #141413;
+  --ai-secondary: #4a4a46;
+  --ai-muted: #6f6a5f;
+  --ai-faint: #8a857a;
+  --ai-bone: #f4f7f2;
+}
+
+/* ---- conversation ------------------------------------------------------- */
+
+.business-ai-brief-page .business-ai-conversation-log .is-guide p {
+  color: var(--ai-ink);
+}
+
+.business-ai-brief-page .business-ai-conversation-log .is-user p {
+  border-color: rgba(20, 20, 19, .10);
+  background: var(--ai-bone);
+  color: var(--ai-ink);
+}
+
+.business-ai-brief-page .business-ai-brief-note,
+.business-ai-brief-page .business-ai-brief-data-notice {
+  color: var(--ai-muted) !important;
+}
+
+/* ---- assistant panel ---------------------------------------------------- */
+
+.business-ai-brief-page .business-ai-brief-assistant {
+  border-right-color: rgba(20, 20, 19, .10);
+  background: #faf9f5;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant > header strong {
+  color: var(--ai-ink);
+}
+
+.business-ai-brief-page .business-ai-brief-assistant > header button,
+.business-ai-brief-page .business-ai-brief-assistant-section,
+.business-ai-brief-page .business-ai-brief-assistant-open > small {
+  color: var(--ai-muted);
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-actions > button,
+.business-ai-brief-page .business-ai-brief-assistant-open {
+  color: var(--ai-secondary);
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-actions > button > svg,
+.business-ai-brief-page .business-ai-brief-assistant-delete {
+  color: var(--ai-faint);
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-empty {
+  color: var(--ai-muted);
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list > div:hover,
+.business-ai-brief-page .business-ai-brief-assistant-list > div.is-current {
+  background: #ffffff;
+}
+
+.business-ai-brief-page .business-ai-brief-assistant-list > div.is-current {
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 19, .14);
+}
+
+/* ---- route card --------------------------------------------------------- */
+
+.business-ai-brief-page .business-ai-route-card-title {
+  color: var(--ai-muted);
+}
+
+.business-ai-brief-page .business-ai-route-options > button {
+  color: var(--ai-ink);
+  border-color: rgba(20, 20, 19, .12);
+}
+
+.business-ai-brief-page .business-ai-route-options > button:hover {
+  border-color: rgba(20, 20, 19, .22);
+  background: #faf9f5;
+}
+
+.business-ai-brief-page .business-ai-route-options > button.is-selected {
+  border-color: var(--ai-ink);
+  background: var(--ai-bone);
+}
+
+.business-ai-brief-page .business-ai-route-options > button > i {
+  border-color: rgba(20, 20, 19, .22);
+}
+
+.business-ai-brief-page .business-ai-route-options > button.is-selected > i {
+  border-color: var(--ai-ink);
+  box-shadow: inset 0 0 0 4px var(--ai-ink);
+}
+
+.business-ai-brief-page .business-ai-route-options small {
+  color: var(--ai-muted);
+}
+
+/* ---- composer ----------------------------------------------------------- */
+
+.business-ai-brief-page .business-ai-composer {
+  border-color: rgba(20, 20, 19, .14) !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 30px rgba(20, 20, 19, .06) !important;
+  backdrop-filter: none !important;
+}
+
+.business-ai-brief-page .business-ai-composer::before,
+.business-ai-brief-page .business-ai-composer::after {
+  content: none !important;
+}
+
+.business-ai-brief-page .business-ai-composer > textarea {
+  background: #ffffff !important;
+  color: var(--ai-ink) !important;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 19, .08) !important;
+  font-size: 14px !important;
+}
+
+.business-ai-brief-page .business-ai-composer > textarea:focus {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 19, .24) !important;
+}
+
+.business-ai-brief-page .business-ai-composer > textarea::placeholder {
+  color: var(--ai-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.business-ai-brief-page .business-ai-composer > button {
+  border-color: var(--ai-ink) !important;
+  background: var(--ai-ink) !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+
+/* The floating support button sits in the bottom-right corner. Reserve its
+   width inside the dock so it can never cover the send button or the notes. */
+.business-ai-brief-page .business-ai-dock {
+  padding-right: 84px;
+}
+
+.business-ai-brief-page .business-ai-composer > button:disabled {
+  opacity: .35;
+}
+
+/* On a 390px screen the example needs three lines inside the textarea; the
+   desktop 58px box clipped it mid-sentence. */
+@media (max-width: 620px) {
+  .business-ai-brief-page .business-ai-composer > textarea {
+    min-height: 92px;
+  }
+}
+
+/* At 390 the composer's three-line example is taller than the remaining
+   conversation box; let the conversation scroll instead of clipping the
+   composer. */
+@media (max-width: 620px) {
+  .business-ai-brief-page .business-ai-conversation {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}

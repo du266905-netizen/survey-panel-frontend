@@ -346,7 +346,7 @@
 .business-rail.business-workspace-rail {
   /* !important on purpose: the base sheet pins this border to a page variable
      that is undefined outside the workspace, so it fell back to currentColor. */
-  border-right: 1px solid rgba(31, 73, 53, .13) !important;
+  border-right: 1px solid rgba(20, 20, 19, .10) !important;
   background: #ffffff !important;
   padding: 16px 13px !important;
 }
@@ -361,7 +361,7 @@
 
 .business-rail .business-workspace-navgroup-title {
   padding: 6px 10px;
-  color: #8d948d;
+  color: #6f6a5f;
   /* !important on purpose: the base sheet sets 13px on this element. */
   font-size: 11px !important;
   font-weight: 600;
@@ -373,22 +373,50 @@
   min-height: 40px;
   gap: 10px;
   border-radius: 12px;
-  color: #141a17;
+  color: #4a4a46;
   font: 500 13px var(--font-sans);
   padding: 0 10px;
 }
 
-.business-rail .business-workspace-navitem > svg { color: #141a17; }
+.business-rail .business-workspace-navitem > svg { color: #8a857a; }
 
 /* The current page and the row under the cursor share one tint; the ink keeps
    the label legible on it. */
 .business-rail .business-workspace-navitem:hover,
 .business-rail .business-workspace-navitem.is-active {
   border-color: transparent;
-  background: #e8ede5 !important;
-  color: #141a17;
+  background: #f4f7f2 !important;
+  color: #141413;
   font-weight: 600;
 }
 
 .business-rail .business-workspace-navitem:hover > svg,
-.business-rail .business-workspace-navitem.is-active > svg { color: #141a17; }
+.business-rail .business-workspace-navitem.is-active > svg { color: #141413; }
+
+
+/* The late workspace theme paints the current rail row with `var(--rs-chip)`
+   at !important. Pale sage bone (#F4F7F2) replaces the sage chip, and the
+   neutral text removes the last green cast from the rail. The lime 2px rule
+   on the current entry stays — it is the accent, not the fill. */
+.business-rail.business-workspace-rail .business-workspace-navgroup-title {
+  color: #6f6a5f !important;
+}
+
+.business-rail.business-workspace-rail .business-workspace-navitem {
+  color: #4a4a46;
+}
+
+.business-rail.business-workspace-rail .business-workspace-navitem > svg {
+  color: #8a857a;
+}
+
+.business-rail.business-workspace-rail .business-workspace-navitem:hover,
+.business-rail.business-workspace-rail .business-workspace-navitem.is-active {
+  background: #f4f7f2 !important;
+  color: #141413;
+}
+
+.business-rail.business-workspace-rail .business-workspace-navitem:hover > svg,
+.business-rail.business-workspace-rail .business-workspace-navitem.is-active > svg {
+  color: #141413;
+}
