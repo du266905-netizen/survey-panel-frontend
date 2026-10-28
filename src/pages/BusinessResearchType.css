@@ -404,27 +404,3 @@
   .business-questionnaire-create-bg-body { grid-template-columns: 1fr; }
   .business-questionnaire-create-bg-body > aside { display: none; }
 }
-
-/* Keep the create-form examples visible; the old placeholder vanished on input,
-   which made the decision/audience distinction and the word floors invisible. */
-.business-questionnaire-create-modal .business-questionnaire-create-label { display: block; }
-.business-questionnaire-create-modal .business-questionnaire-create-meta {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 6px;
-  color: #6b7a71;
-  font-size: 11px;
-  line-height: 1.45;
-}
-.business-questionnaire-create-modal .business-questionnaire-create-meta > span:first-child { max-width: 46ch; }
-.business-questionnaire-create-modal .business-questionnaire-create-meta > span:last-child {
-  flex: 0 0 auto;
-  color: #8a5a3d;
-  font-variant-numeric: tabular-nums;
-}
-.business-questionnaire-create-modal .business-questionnaire-create-meta > span:last-child.is-met { color: #42604f; }
-
-/* Hints stay visible after typing; no word-count numbers are shown in the UI. */
-.business-questionnaire-create-modal .business-questionnaire-create-meta { display: block; }

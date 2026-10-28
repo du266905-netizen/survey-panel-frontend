@@ -69,11 +69,10 @@ export default function BusinessAudiencePlan() {
 
   const field = (label, name, hint, textarea = false) => (
     <label>
-      <span className="business-questionnaire-create-label">{label}</span>
+      {label}
       {textarea
         ? <textarea name={name} value={plan[name]} onChange={update} placeholder={hint} />
         : <input name={name} value={plan[name]} onChange={update} placeholder={hint} autoFocus />}
-      <span className="business-questionnaire-create-meta">{hint}</span>
     </label>
   );
 
