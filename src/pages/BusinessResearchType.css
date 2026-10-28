@@ -597,3 +597,13 @@
 .business-workspace--questionnaire-hub .business-questionnaire-hub-list {
   padding-bottom: 20px;
 }
+
+/* Draft card hover: the hairline picks up ink and the card lifts slightly. */
+.business-workspace .business-questionnaire-hub .business-questionnaire-hub-list > article.business-questionnaire-card {
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+.business-workspace .business-questionnaire-hub .business-questionnaire-hub-list > article.business-questionnaire-card:hover {
+  border-color: #141413;
+  box-shadow: 0 8px 22px rgba(20, 20, 19, .07);
+  transform: translateY(-1px);
+}
