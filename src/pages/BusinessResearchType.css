@@ -557,3 +557,43 @@
   flex: 0 0 auto;
   height: auto;
 }
+
+/* Draft cards: compact body, one-line stats, one row of actions. */
+.business-questionnaire-card-preview {
+  min-height: 116px;
+  gap: 6px;
+  padding: 12px 16px;
+}
+.business-questionnaire-card-preview-title { height: 10px; }
+.business-questionnaire-card-preview-line { height: 6px; }
+.business-questionnaire-card-preview-choice { height: 20px; }
+.business-questionnaire-card-body {
+  padding: 14px 16px 16px;
+}
+.business-workspace .business-questionnaire-card-body h2 {
+  font-size: 22px;
+  line-height: 1.16;
+}
+.business-questionnaire-card-body p {
+  margin: 6px 0 0 !important;
+  color: #77746c !important;
+  font: 500 12px/1.35 var(--font-sans) !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  white-space: nowrap;
+}
+.business-questionnaire-card-actions {
+  flex-wrap: nowrap;
+  gap: 10px 14px;
+  padding-top: 12px;
+}
+.business-questionnaire-card-actions .business-project-open {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.business-workspace--questionnaire-hub .business-questionnaire-hub {
+  padding-bottom: 0 !important;
+}
+.business-workspace--questionnaire-hub .business-questionnaire-hub-list {
+  padding-bottom: 20px;
+}
