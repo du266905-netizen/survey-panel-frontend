@@ -193,3 +193,78 @@
   color: #6f6a5f;
   font: 400 16px/1.6 var(--font-sans);
 }
+
+/* Projects empty state: one centred explanation, like the careers empty page.
+   No left card, no right guide panel, no numbered steps. */
+.business-workspace .business-projects-head > div > p:first-child {
+  display: none !important;
+}
+
+.business-workspace .business-projects-empty {
+  display: grid;
+  max-width: 560px;
+  justify-items: center;
+  gap: 16px;
+  margin: clamp(120px, 18vh, 180px) auto 0;
+  text-align: center;
+}
+
+.business-workspace .business-projects-empty-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: #deef24;
+  color: #141413;
+  cursor: pointer;
+  padding: 0;
+}
+
+.business-workspace .business-projects-empty-icon:hover {
+  background: #c9db10;
+}
+
+.business-workspace .business-projects-empty-icon:focus-visible {
+  outline: 2px solid #141413;
+  outline-offset: 3px;
+}
+
+.business-workspace .business-projects-empty h2 {
+  margin: 2px 0 0;
+  color: #141413;
+  font: 500 22px/1.2 var(--font-reading);
+  letter-spacing: -.02em;
+}
+
+.business-workspace .business-projects-empty p {
+  margin: 0;
+  color: #6f6a5f;
+  font: 400 16px/1.6 var(--font-sans);
+}
+
+.business-workspace .business-projects-empty .business-button {
+  margin-top: 6px;
+}
+
+/* Results: same treatment as Questionnaire drafts — no kicker, the right-hand
+   link is a lime button, and the empty state is one sentence on the page. */
+.business-results-index .business-projects-head > div > p:first-child {
+  display: none !important;
+}
+
+.business-results-empty-line {
+  margin: 34px 0 0;
+  color: #6f6a5f;
+  font: 400 16px/1.6 var(--font-sans);
+}
+
+/* Keep the Results empty sentence in UI type, not the prose serif. */
+.business-workspace .business-results-index .business-results-empty-line {
+  font-family: var(--font-sans) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  color: #6f6a5f !important;
+}

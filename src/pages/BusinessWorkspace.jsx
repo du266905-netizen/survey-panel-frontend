@@ -579,8 +579,8 @@ export default function BusinessWorkspace() {
           <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
           {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> {feedbackCopy.loadingProjects}</div> : questionnaireProjects.length ? <div className="business-questionnaire-hub-list">{questionnaireProjects.map((project) => <article key={project.id}><div><span className={`business-status status-${String(project.questionnaire?.status || project.status).toLowerCase()}`}>{project.questionnaire?.status === 'DRAFT' ? (ui.draftBadge) : projectsCopy.statuses[project.status] || project.questionnaire?.status || project.status}</span><p>{project.title}</p><h2>{project.questionnaire?.title || project.title}</h2><small>{ui.questionStats}</small></div><div><Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{ui.openEditor} <ArrowRight size={15} /></Link>{project.questionnaire?.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}{project.status === 'DRAFT' && <button type="button" className="business-project-open business-project-delete" onClick={() => deleteProject(project)} disabled={submitting}><Trash2 size={15} /> {projectsCopy.deleteDraft}</button>}</div></article>)}</div> : <p className="business-questionnaire-empty">{ui.noDraftsTitle}</p>}
         </section> : activeView === 'results' ? <section className="business-projects business-results-index">
-          <div className="business-projects-head"><div><p className="business-eyebrow">{copy.results.eyebrow}</p><h1>{copy.results.indexTitle}</h1><p>{copy.results.indexIntro}</p></div><button className="business-home-project-link" type="button" onClick={() => selectWorkspaceView('home')}>{copy.rail.services} <ArrowRight size={16} /></button></div>
-          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> {feedbackCopy.loadingResults}</div> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><p>{copy.services.questionnaireEyebrow}</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <section className="business-results-index-empty"><BarChart3 size={30} /><h2>{copy.results.noResultsTitle}</h2><p>{ui.noResultsYet}</p></section>}
+          <div className="business-projects-head"><div><p className="business-eyebrow">{copy.results.eyebrow}</p><h1>{copy.results.indexTitle}</h1><p>{copy.results.indexIntro}</p></div><button className="business-button" type="button" onClick={() => selectWorkspaceView('home')}>{copy.rail.services} <ArrowRight size={16} /></button></div>
+          {loading ? <div className="business-workspace-loading"><LoaderCircle className="animate-spin" /> {feedbackCopy.loadingResults}</div> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><p>{copy.services.questionnaireEyebrow}</p><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <p className="business-results-empty-line">{copy.results.noResultsTitle}</p>}
         </section> : <section className="business-projects">
           <div className="business-projects-head">
             <div>
@@ -652,20 +652,11 @@ export default function BusinessWorkspace() {
               </div>
             </>
           ) : (
-            <div className="business-projects-empty-layout">
-              <button className="business-create-project-card" type="button" onClick={openNewProject}>
-                <span><Plus size={31} /></span>
-                <strong>{projectsCopy.prepareBrief}</strong>
-                <small>{projectsCopy.prepareBriefBody}</small>
-              </button>
-              <section className="business-projects-guide">
-                <p>{projectsCopy.getStarted}</p>
-                <h2>{projectsCopy.startDecision}</h2>
-                <ol>
-                  {projectsCopy.guide.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, '0')}</span> {step}</li>)}
-                </ol>
-              </section>
-            </div>
+            <section className="business-projects-empty">
+              <button className="business-projects-empty-icon" type="button" onClick={openNewProject} aria-label={projectsCopy.prepareBrief} title={projectsCopy.prepareBrief}><Plus size={24} /></button>
+              <h2>{projectsCopy.prepareBrief}</h2>
+              <p>{projectsCopy.startDecision}</p>
+            </section>
           )}
         </section>}
       </div>
