@@ -226,6 +226,8 @@ export default function BusinessAiBriefTurn() {
   const [docConsentChecked, setDocConsentChecked] = useState(false);
   const [docConsent, setDocConsent] = useState(false);
   const [docAnalyzing, setDocAnalyzing] = useState(false);
+  const [docResult, setDocResult] = useState(null);
+  const [docInputs, setDocInputs] = useState({ decision: '', audience: '' });
   const [docMockCase, setDocMockCase] = useState(DOCUMENT_MOCK_CASES[0].id);
   const fileInputRef = useRef(null);
   const [manualOpen, setManualOpen] = useState(false);
@@ -238,6 +240,12 @@ export default function BusinessAiBriefTurn() {
 
   useEffect(() => {
     try { sessionStorage.removeItem(OLD_PENDING_KEY); } catch { /* Restricted browser context. */ }
+  }, []);
+
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get('attach') !== 'document') return;
+    setDocConsentChecked(false);
+    setDocConsentOpen(true);
   }, []);
 
   const hasStarted = messages.some((message) => message.role === 'user');
@@ -270,6 +278,8 @@ export default function BusinessAiBriefTurn() {
     setGenerateError('');
     setGenerating(false);
     setDocAnalyzing(false);
+    setDocResult(null);
+    setDocInputs({ decision: '', audience: '' });
     setManualOpen(false);
     clearGenerationKey();
     try { localStorage.removeItem(DRAFT_KEY); } catch { /* Restricted browser context. */ }
@@ -284,6 +294,7 @@ export default function BusinessAiBriefTurn() {
     busyRef.current = true;
     setBusy(true);
     setError('');
+    if (!command) setDocResult(null);
     if (!command) setReply('');
 
     const userMessage = command ? null : { id: newId('user'), role: 'user', content: value };
@@ -395,6 +406,7 @@ export default function BusinessAiBriefTurn() {
         ? await analyzeDocumentIntake({ file, responseLanguage: language.startsWith('zh') ? 'zh' : 'en' })
         : await analyzeDocumentMock(docMockCase, language);
       if (response?.outcome === 'REFUSE') {
+        setDocResult(null);
         appendGuide(copy.documentRefused);
         return;
       }
@@ -409,9 +421,9 @@ export default function BusinessAiBriefTurn() {
         setMissing(nextMissing);
         setAssumptions([]);
         setAction(nextMissing.length ? 'ASK' : 'READY');
-        appendGuide(`${response.outcome === 'NEEDS_DETAILS' ? copy.documentNeeds : copy.documentReady}${response.summary ? `
-
-${response.summary}` : ''}`);
+        setDocResult({ outcome: response.outcome, summary: response.summary || '', draft: nextDraft, missing: nextMissing, source: response.source || null });
+        setDocInputs({ decision: '', audience: '' });
+        appendGuide(response.outcome === 'NEEDS_DETAILS' ? copy.documentNeeds : copy.documentReady);
         return;
       }
       appendGuide(copy.documentUnavailable);
@@ -426,6 +438,17 @@ ${response.summary}` : ''}`);
     const file = event.target.files?.[0] || null;
     event.target.value = '';
     analyzeDocumentFile(file);
+  };
+
+  const applyDocumentField = (field, value) => {
+    const nextValue = String(value || '').trim();
+    if (!nextValue || !docResult) return;
+    const nextDraft = { ...draft, [field]: nextValue };
+    const nextMissing = docResult.missing.filter((item) => item !== field);
+    setDraft(nextDraft);
+    setMissing(nextMissing);
+    setAction(nextMissing.length ? 'ASK' : 'READY');
+    setDocResult({ ...docResult, draft: nextDraft, missing: nextMissing });
   };
 
   const handleGenerate = async () => {
@@ -499,6 +522,8 @@ ${response.summary}` : ''}`);
     setError('');
     setGenerateError('');
     setGenerating(false);
+    setDocResult(null);
+    setDocInputs({ decision: '', audience: '' });
     setManualOpen(false);
     clearGenerationKey();
   };
@@ -601,7 +626,7 @@ ${response.summary}` : ''}`);
                 </article>
               )}
 
-              {showDraft && (
+              {showDraft && !docResult && (
                 <section className="business-ai-turn-draft" aria-label={copy.draftTitle}>
                   <header><span>{copy.draftTitle}</span></header>
                   <dl>
@@ -621,7 +646,57 @@ ${response.summary}` : ''}`);
                 </section>
               )}
 
-              {needsServiceCategory && (
+              {docResult && (
+                <section className="business-ai-doc-result" aria-label={copy.documentFrom}>
+                  <header>
+                    <span>{copy.documentFrom}</span>
+                    <em>{docResult.source?.kind || ''}</em>
+                  </header>
+                  {docResult.summary && <p>{docResult.summary}</p>}
+                  <details>
+                    <summary>{copy.documentViewExtracted}</summary>
+                    <dl>
+                      <div><dt>{copy.decision}</dt><dd>{draft.decision || copy.notSet}</dd></div>
+                      <div><dt>{copy.audience}</dt><dd>{draft.audience || copy.notSet}</dd></div>
+                      <div><dt>{copy.serviceCategory}</dt><dd>{serviceLabel(draft.serviceCategory, copy)}</dd></div>
+                      <div><dt>{copy.studyFormat}</dt><dd>{methodLabel(draft.studyFormat, copy)}</dd></div>
+                      <div><dt>{copy.market}</dt><dd>{draft.market || copy.notSet}</dd></div>
+                      <div><dt>{copy.sample}</dt><dd>{draft.sample || copy.notSet}</dd></div>
+                    </dl>
+                  </details>
+                  {docResult.missing.length > 0 && (
+                    <div className="business-ai-doc-missing">
+                      <strong>{copy.documentMissing}</strong>
+                      {docResult.missing.includes('decision') && (
+                        <label>{copy.decision}<input value={docInputs.decision} onChange={(event) => setDocInputs((current) => ({ ...current, decision: event.target.value }))} onKeyDown={(event) => { if (event.key === 'Enter') applyDocumentField('decision', docInputs.decision); }} /><button type="button" onClick={() => applyDocumentField('decision', docInputs.decision)}>{copy.documentSet}</button></label>
+                      )}
+                      {docResult.missing.includes('audience') && (
+                        <label>{copy.audience}<input value={docInputs.audience} onChange={(event) => setDocInputs((current) => ({ ...current, audience: event.target.value }))} onKeyDown={(event) => { if (event.key === 'Enter') applyDocumentField('audience', docInputs.audience); }} /><button type="button" onClick={() => applyDocumentField('audience', docInputs.audience)}>{copy.documentSet}</button></label>
+                      )}
+                      {docResult.missing.includes('serviceCategory') && (
+                        <div className="business-ai-doc-choice">
+                          <span>{copy.serviceCategory}</span>
+                          <button type="button" onClick={() => applyDocumentField('serviceCategory', 'SURVEY')}>{copy.serviceSurvey}</button>
+                          <button type="button" onClick={() => applyDocumentField('serviceCategory', 'CUSTOM_RESEARCH')}>{copy.customResearch}</button>
+                          <button type="button" onClick={() => applyDocumentField('serviceCategory', 'QUALITATIVE_SUPPORT')}>{copy.qualitativeSupport}</button>
+                        </div>
+                      )}
+                      {docResult.missing.includes('studyFormat') && (
+                        <div className="business-ai-doc-choice">
+                          <span>{copy.studyFormat}</span>
+                          <button type="button" onClick={() => applyDocumentField('studyFormat', 'SURVEY')}>{copy.methodSurvey}</button>
+                          <button type="button" onClick={() => applyDocumentField('studyFormat', 'INTERVIEW')}>{copy.methodInterview}</button>
+                          <button type="button" onClick={() => applyDocumentField('studyFormat', 'GROUP_DISCUSSION')}>{copy.methodGroup}</button>
+                          <button type="button" onClick={() => applyDocumentField('studyFormat', 'USABILITY_TEST')}>{copy.methodUsability}</button>
+                          <button type="button" onClick={() => applyDocumentField('studyFormat', 'OTHER')}>{copy.methodOther}</button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </section>
+              )}
+
+              {needsServiceCategory && !docResult && (
                 <section className="business-ai-turn-card">
                   <strong>{copy.askService}</strong>
                   <p>{copy.askServiceHint}</p>
@@ -636,7 +711,7 @@ ${response.summary}` : ''}`);
                 </section>
               )}
 
-              {action === 'ASK' && !needsServiceCategory && missing.length > 0 && (
+              {action === 'ASK' && !needsServiceCategory && !docResult && missing.length > 0 && (
                 <p className="business-ai-turn-note">{copy.askMore}: {missing.map((item) => fieldLabel(item, copy)).join(' · ')}</p>
               )}
 

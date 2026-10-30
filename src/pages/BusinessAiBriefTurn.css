@@ -480,3 +480,147 @@
   .business-ai-doc-consent { padding: 14px; }
   .business-ai-doc-consent > section { padding: 24px 20px; }
 }
+
+/* Document result in chat: summary first, extracted fields collapsed. */
+.business-ai-brief-page .business-ai-doc-result {
+  width: min(100%, 688px);
+  box-sizing: border-box;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 12px;
+  background: #FFFFFF;
+  padding: 18px;
+}
+
+.business-ai-doc-result > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #5f6862;
+  font: 500 10px var(--font-sans);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.business-ai-doc-result > header em {
+  color: #8d948d;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.business-ai-doc-result > p {
+  margin: 14px 0 0;
+  color: #141413;
+  font: 400 14px/1.65 var(--font-sans);
+}
+
+.business-ai-doc-result details {
+  border-top: 1px solid rgba(20, 26, 23, .10);
+  margin-top: 16px;
+  padding-top: 12px;
+}
+
+.business-ai-doc-result summary {
+  color: #5f6862;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+}
+
+.business-ai-doc-result dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  margin: 14px 0 0;
+}
+
+.business-ai-doc-result dt {
+  color: #8d948d;
+  font: 500 10px var(--font-sans);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.business-ai-doc-result dd {
+  margin: 3px 0 0;
+  color: #141413;
+  font: 400 13px/1.5 var(--font-sans);
+  white-space: pre-wrap;
+}
+
+.business-ai-brief-page .business-ai-doc-missing {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid rgba(20, 26, 23, .10);
+  margin-top: 16px;
+  padding-top: 15px;
+}
+
+.business-ai-doc-missing > strong {
+  color: #141413;
+  font: 500 13px/1.5 var(--font-sans);
+}
+
+.business-ai-doc-missing > label {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px;
+  color: #5f6862;
+  font: 500 12px var(--font-sans);
+}
+
+.business-ai-doc-missing > label input {
+  grid-column: 1;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(20, 26, 23, .16);
+  border-radius: 6px;
+  background: #FFFFFF;
+  color: #141413;
+  font: 400 14px var(--font-sans);
+  padding: 9px 10px;
+}
+
+.business-ai-doc-missing > label button {
+  align-self: end;
+  min-height: 36px;
+  border: 1px solid #141413;
+  border-radius: 6px;
+  background: #141413;
+  color: #FFFFFF;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  padding: 0 12px;
+}
+
+.business-ai-doc-choice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  color: #5f6862;
+  font: 500 12px var(--font-sans);
+}
+
+.business-ai-doc-choice > span {
+  width: 100%;
+  color: #5f6862;
+}
+
+.business-ai-doc-choice button {
+  border: 1px solid rgba(20, 26, 23, .18);
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  padding: 7px 11px;
+}
+
+.business-ai-doc-choice button:hover {
+  border-color: #141413;
+  background: #F4F7F2;
+}
+
+@media (max-width: 620px) {
+  .business-ai-doc-result dl { grid-template-columns: 1fr; }
+}

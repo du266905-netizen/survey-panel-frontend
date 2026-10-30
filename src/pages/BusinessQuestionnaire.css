@@ -574,3 +574,59 @@
   background: #ffffff !important;
   border-bottom-color: #e5e2da !important;
 }
+
+/* One-time, non-blocking prompt in an empty editor. */
+.business-builder-ai-hint {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto 24px;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 9px;
+  background: #F4F7F2;
+  margin: 14px 0 0;
+  padding: 12px 14px;
+}
+
+.business-builder-ai-hint-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: #141413;
+}
+
+.business-builder-ai-hint > div { display: grid; min-width: 0; gap: 2px; }
+.business-builder-ai-hint strong { color: #141413; font: 500 13px/1.4 var(--font-sans); }
+.business-builder-ai-hint span { color: #5f6862; font: 400 12px/1.5 var(--font-sans); }
+.business-builder-ai-hint > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #141413;
+  font: 500 12px var(--font-sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.business-builder-ai-hint > button {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #5f6862;
+  cursor: pointer;
+  padding: 0;
+}
+.business-builder-ai-hint > button:hover { color: #141413; }
+
+@media (max-width: 700px) {
+  .business-builder-ai-hint { grid-template-columns: 32px minmax(0, 1fr) 24px; }
+  .business-builder-ai-hint-icon { width: 32px; height: 32px; }
+  .business-builder-ai-hint > a { grid-column: 2; }
+  .business-builder-ai-hint > button { grid-column: 3; grid-row: 1 / 3; }
+}
