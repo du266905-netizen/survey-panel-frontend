@@ -107,10 +107,6 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
           {avatar
             ? <img className="business-workspace-account-photo" src={avatar} alt="" />
             : <UserRound size={20} />}
-          {/* the 17px initial badge is smaller than a favicon — a face in it
-              would be unreadable, so the picture takes the 44px circle and the
-              badge is dropped rather than shown next to it */}
-          {avatar ? null : <span className="business-workspace-account-initial">{String(user?.displayName || user?.email || 'A').trim().charAt(0).toUpperCase()}</span>}
         </button>
         {accountMenuOpen && (
           <div>

@@ -431,3 +431,21 @@
   color: #141413;
 }
 
+
+/* Footer account control: the name is already in the greeting and the account
+   menu; do not repeat its initial on a green badge. Use the same ink/paper
+   language as the active rail item. */
+.business-workspace-rail .business-workspace-account > button {
+  border: 1px solid #141413 !important;
+  background: #141413 !important;
+  color: #FFFFFF !important;
+}
+
+.business-workspace-rail .business-workspace-account > button:hover {
+  border-color: #2B2B2B !important;
+  background: #2B2B2B !important;
+}
+
+.business-workspace-rail .business-workspace-account > button svg {
+  color: #FFFFFF !important;
+}

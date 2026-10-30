@@ -67,6 +67,7 @@ import BusinessWorkspace from './pages/BusinessWorkspace';
 import BusinessAiBrief from './pages/BusinessAiBrief';
 import BusinessAudiencePlan from './pages/BusinessAudiencePlan';
 import BusinessCustomQuestionnaireRequest from './pages/BusinessCustomQuestionnaireRequest';
+import BusinessResearchSupportRequest from './pages/BusinessResearchSupportRequest';
 import BusinessAccount from './pages/BusinessAccount';
 import BusinessBilling from './pages/BusinessBilling';
 import BusinessBudget from './pages/BusinessBudget';
@@ -199,6 +200,7 @@ export default function App() {
         <Route path="/business/ai-brief" element={<BusinessRoute><BusinessAiBrief /></BusinessRoute>} />
         <Route path="/business/audience-plan" element={<BusinessRoute><BusinessAudiencePlan /></BusinessRoute>} />
         <Route path="/business/custom-questionnaire" element={<BusinessRoute><BusinessCustomQuestionnaireRequest /></BusinessRoute>} />
+        <Route path="/business/research-support" element={<BusinessRoute><BusinessResearchSupportRequest /></BusinessRoute>} />
         <Route path="/business/delivery-preview" element={<BusinessRoute><BusinessDeliveryPreview /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessQuestionnaireResults /></BusinessRoute>} />
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />

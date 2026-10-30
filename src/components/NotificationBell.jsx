@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Bell, CheckCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getNotifications, markAllNotificationsRead, markNotificationRead } from '../api/realApi';
+import './NotificationBell.css';
 
 const timeLabel = (value) => {
   const milliseconds = Date.now() - new Date(value).getTime();

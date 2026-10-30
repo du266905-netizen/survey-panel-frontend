@@ -442,6 +442,11 @@ export default function BusinessWorkspace() {
       navigate(withLanguage('/business/audience-plan', language));
       return;
     }
+    if (product.type === 'research') {
+      setOpenChooser(false);
+      navigate(withLanguage('/business/research-support', language));
+      return;
+    }
     chooseProjectType(product.type);
   };
 

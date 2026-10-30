@@ -157,7 +157,8 @@
 }
 
 .business-custom-form input,
-.business-custom-form textarea {
+.business-custom-form textarea,
+.business-custom-form select {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid rgba(20, 26, 23, .16);
@@ -176,6 +177,15 @@
 
 .business-custom-form input::placeholder,
 .business-custom-form textarea::placeholder { color: #8d948d; }
+
+.business-custom-form select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #5f6862 50%), linear-gradient(135deg, #5f6862 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+  background-repeat: no-repeat;
+  background-size: 5px 5px, 5px 5px;
+  padding-right: 34px;
+}
 
 .business-custom-form input:focus,
 .business-custom-form textarea:focus { border-color: #141413; }
