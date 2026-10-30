@@ -1,4 +1,4 @@
-.business-builder, .business-builder-loading { min-height: 100svh; background: #f7f7f3; color: #1c3428; font-family: var(--font-sans); }
+.business-builder, .business-builder-loading { min-height: 100svh; background: #FFFFFF; color: #1c3428; font-family: var(--font-sans); }
 .business-builder-loading { display: grid; place-items: center; align-content: center; gap: 12px; color: #607166; font-size: 14px; font-weight: 700; }
 .business-builder-loading a { color: #285647; font-weight: 800; }
 .business-builder-header { display: flex; min-height: 72px; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(36, 56, 46, .14); background: #fffefa; padding: 0 clamp(20px, 4vw, 56px); }
@@ -98,7 +98,7 @@
 /* Editor layout v2: structure on the left, editing in the centre, checks on the
    right. The old right rail split into two columns; the cut respondent
    introduction stays out of the creation flow. */
-.business-builder { background: #f4f3ef; color: #141413; }
+.business-builder { background: #FFFFFF; color: #141413; }
 .business-builder-header {
   background: #fff;
   border-bottom: 1px solid #e5e2da;
@@ -583,7 +583,7 @@
   gap: 12px;
   border: 1px solid rgba(20, 26, 23, .12);
   border-radius: 9px;
-  background: #F4F7F2;
+  background: #FFFFFF;
   margin: 14px 0 0;
   padding: 12px 14px;
 }

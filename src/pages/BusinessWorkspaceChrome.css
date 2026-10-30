@@ -1,7 +1,7 @@
 /* The rail is a neutral paper surface from the workspace palette, not the old
-   green-tinted sidebar. #FAF9F5 is the existing --color-paper token. */
+   green-tinted sidebar. #F5F5F3 is the existing --color-paper token. */
 #root .business-workspace .business-workspace-rail {
-  background: #FAF9F5 !important;
+  background: #F5F5F3 !important;
   border-right-color: rgba(20, 26, 23, .10) !important;
 }
 
