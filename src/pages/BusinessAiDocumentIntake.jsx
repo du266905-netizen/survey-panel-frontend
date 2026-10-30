@@ -3,6 +3,7 @@ import { AlertCircle, ArrowLeft, ArrowRight, Check, FileText, LoaderCircle, Shie
 import { useNavigate } from 'react-router-dom';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { DOCUMENT_MOCK_CASES, analyzeDocumentMock } from '../ai/documentIntakeMock';
+import { AI_DOCUMENT_MODE, analyzeDocumentIntake } from '../ai/documentIntakeClient';
 import './BusinessAiDocumentIntake.css';
 
 const MAX_BYTES = 10 * 1024 * 1024;
@@ -246,16 +247,23 @@ export default function BusinessAiDocumentIntake() {
       setError({ code: 'AI_DOCUMENT_PROCESSING_CONSENT_REQUIRED' });
       return;
     }
+    if (AI_DOCUMENT_MODE === 'api' && !file) {
+      setFileError(copy.fileInvalid);
+      return;
+    }
     setStage('analyzing');
     setError(null);
     setResult(null);
     try {
-      const response = await analyzeDocumentMock(mockCase, language);
+      const response = AI_DOCUMENT_MODE === 'api'
+        ? await analyzeDocumentIntake({ file, responseLanguage: language.startsWith('zh') ? 'zh' : 'en' })
+        : await analyzeDocumentMock(mockCase, language);
       setResult(response);
       setBrief(toFormDraft(response.draft));
       setStage('result');
     } catch (failure) {
-      setError({ code: failure.code || 'AI_DOCUMENT_ANALYSIS_UNAVAILABLE' });
+      const code = failure?.response?.data?.code || failure?.code || 'AI_DOCUMENT_ANALYSIS_UNAVAILABLE';
+      setError({ code });
       setStage('idle');
     }
   };
@@ -311,16 +319,18 @@ export default function BusinessAiDocumentIntake() {
                 </label>
               </div>
               {fileError && <p className="business-doc-inline-error" role="alert">{fileError}</p>}
-              <div className="business-doc-mock">
-                <label>
-                  {copy.mock}
-                  <select value={mockCase} onChange={(event) => setMockCase(event.target.value)}>
-                    {DOCUMENT_MOCK_CASES.map((item) => <option value={item.id} key={item.id}>{labels[item.id]}</option>)}
-                  </select>
-                </label>
-                <small>{copy.mockHint}</small>
-              </div>
-              <button type="button" className="business-doc-primary" onClick={analyze} disabled={!consent || stage === 'analyzing'} aria-busy={stage === 'analyzing'}>
+              {AI_DOCUMENT_MODE === 'mock' && (
+                <div className="business-doc-mock">
+                  <label>
+                    {copy.mock}
+                    <select value={mockCase} onChange={(event) => setMockCase(event.target.value)}>
+                      {DOCUMENT_MOCK_CASES.map((item) => <option value={item.id} key={item.id}>{labels[item.id]}</option>)}
+                    </select>
+                  </label>
+                  <small>{copy.mockHint}</small>
+                </div>
+              )}
+              <button type="button" className="business-doc-primary" onClick={analyze} disabled={!consent || (AI_DOCUMENT_MODE === 'api' && !file) || stage === 'analyzing'} aria-busy={stage === 'analyzing'}>
                 {stage === 'analyzing' ? <LoaderCircle className="animate-spin" size={16} /> : copy.analyze}
                 {stage !== 'analyzing' && <ArrowRight size={16} />}
               </button>
