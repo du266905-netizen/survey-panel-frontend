@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, LoaderCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, LoaderCircle, Paperclip, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -21,7 +21,55 @@ export default function BusinessCustomQuestionnaireRequest() {
   const [request, setRequest] = useState(() => ({ ...initialRequest, ...(preparedRequest || {}) }));
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [attachments, setAttachments] = useState([null, null]);
+  const [attachmentError, setAttachmentError] = useState('');
+  const attachmentCopy = language.startsWith('zh') ? {
+    title: '附件',
+    hint: '如果你有文件需要发送。',
+    note: '每个文件不超过 5MB，格式为 PDF 或 Word 文档。',
+    optional: '选填',
+    choose: '选择文件',
+    replace: '更换',
+    remove: '移除',
+    slot1: '附件 1',
+    slot2: '附件 2',
+    typeError: '仅支持 PDF 或 Word 文档。',
+    sizeError: '文件不能超过 5MB。',
+  } : {
+    title: 'Attachments',
+    hint: 'If you have files to send.',
+    note: 'Up to 5 MB each. PDF or Word document.',
+    optional: 'Optional',
+    choose: 'Choose file',
+    replace: 'Replace',
+    remove: 'Remove',
+    slot1: 'Attachment 1',
+    slot2: 'Attachment 2',
+    typeError: 'Only PDF or Word documents are supported.',
+    sizeError: 'Each file must be 5 MB or less.',
+  };
+  const formatSize = (bytes) => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
   const update = (event) => setRequest((current) => ({ ...current, [event.target.name]: event.target.value }));
+  const updateAttachment = (index, file) => {
+    setAttachmentError('');
+    if (!file) {
+      setAttachments((current) => current.map((item, itemIndex) => itemIndex === index ? null : item));
+      return;
+    }
+    const isDoc = /\.(pdf|doc|docx)$/i.test(file.name);
+    if (!isDoc) {
+      setAttachmentError(attachmentCopy.typeError);
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setAttachmentError(attachmentCopy.sizeError);
+      return;
+    }
+    setAttachments((current) => current.map((item, itemIndex) => itemIndex === index ? file : item));
+  };
+  const topbarLabel = language.startsWith('zh')
+    ? (language === 'zh-Hant' ? '定製調查研究' : '定制调查研究')
+    : 'CUSTOM SURVEY RESEARCH';
   const goWorkspace = () => navigate(withLanguage('/business/workspace?view=projects', language));
 
   const submit = async (event) => {
@@ -33,9 +81,18 @@ export default function BusinessCustomQuestionnaireRequest() {
     }
     setSubmitting(true);
     setError('');
+    const attachmentSummary = attachments
+      .filter(Boolean)
+      .map((file, index) => `Attachment ${index + 1}: ${file.name} (${formatSize(file.size)})`)
+      .join('\n');
+    const additionalContext = [String(request.additionalContext || '').trim(), attachmentSummary]
+      .filter(Boolean)
+      .join('\n\n')
+      .slice(0, 1800);
     try {
       await createBusinessProject({
         ...request,
+        additionalContext,
         studyFormat: 'SURVEY',
         serviceCategory: 'CUSTOM_RESEARCH',
         targetParticipants: request.targetParticipants ? Number(request.targetParticipants) : undefined,
@@ -57,14 +114,13 @@ export default function BusinessCustomQuestionnaireRequest() {
         <button type="button" onClick={goWorkspace}>
           <ArrowLeft size={16} /> {copy.back}
         </button>
-        <span>{copy.eyebrow}</span>
+        <span>{topbarLabel}</span>
       </header>
 
       <section className="business-custom-hero">
         <img src={heroImage} alt="" decoding="async" />
         <div className="business-custom-hero-copy">
           <h1>{copy.title}</h1>
-          <p>{copy.intro}</p>
         </div>
       </section>
 
@@ -72,6 +128,16 @@ export default function BusinessCustomQuestionnaireRequest() {
         <div className="business-custom-intro">
           <h2>{copy.modalTitle}</h2>
           <p>{copy.modalBody}</p>
+          {Array.isArray(copy.modalSteps) && copy.modalSteps.length > 0 && (
+            <ol className="business-custom-steps">
+              {copy.modalSteps.map((item, index) => (
+                <li key={item}>
+                  <b>{String(index + 1).padStart(2, '0')}</b>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
 
         <form id="business-custom-questionnaire-form" className="business-custom-form" onSubmit={submit}>
@@ -124,6 +190,42 @@ export default function BusinessCustomQuestionnaireRequest() {
                 <textarea name="additionalContext" value={request.additionalContext} onChange={update} placeholder={copy.contextHint} />
               </label>
             </div>
+          </section>
+
+          <section className="business-custom-attachments">
+            <div className="business-custom-section-head">
+              <h2>{attachmentCopy.title} <span>{attachmentCopy.optional}</span></h2>
+              <p>{attachmentCopy.hint}</p>
+            </div>
+            <div className="business-custom-attachment-list">
+              {[0, 1].map((index) => {
+                const file = attachments[index];
+                return (
+                  <div className="business-custom-attachment-row" key={index}>
+                    <span className="business-custom-attachment-icon"><Paperclip size={17} /></span>
+                    <span className="business-custom-attachment-label">{index === 0 ? attachmentCopy.slot1 : attachmentCopy.slot2}</span>
+                    {file ? (
+                      <span className="business-custom-attachment-file">
+                        <span>{file.name}</span>
+                        <small>{formatSize(file.size)}</small>
+                        <button type="button" onClick={() => updateAttachment(index, null)} aria-label={attachmentCopy.remove}><X size={14} /></button>
+                      </span>
+                    ) : (
+                      <label className="business-custom-attachment-pick">
+                        {attachmentCopy.choose}
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                          onChange={(event) => updateAttachment(index, event.target.files?.[0] || null)}
+                        />
+                      </label>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <p className="business-custom-attachment-note">{attachmentCopy.note}</p>
+            {attachmentError && <p className="business-custom-error" role="alert">{attachmentError}</p>}
           </section>
 
           {error && <p className="business-custom-error" role="alert">{error}</p>}
