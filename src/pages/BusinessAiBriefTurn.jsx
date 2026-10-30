@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, LoaderCircle, Paperclip, PanelLeft, PanelLeftClose, Plus, Send, Sprout, Trash2, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Trash2 } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { AI_BRIEF_MODE, MOCK_COMMANDS, MOCK_SCENARIOS, generateBriefProject, sendBriefTurn } from '../ai/aiBriefTurnClient';
-import { AI_DOCUMENT_MODE, analyzeDocumentIntake } from '../ai/documentIntakeClient';
-import { DOCUMENT_MOCK_CASES, analyzeDocumentMock } from '../ai/documentIntakeMock';
+import AiAssistantChat from '../components/ai/AiAssistantChat';
 import { getAiBriefTurnCopy } from '../constants/aiBriefTurnCopy';
 import './Business.css';
 import './BusinessAiBriefTheme.css';
@@ -16,18 +15,6 @@ const HISTORY_KEY = 'guanyisearch.business-ai-brief.history.v2';
 const GENERATION_KEY = 'guanyisearch.business-ai-brief.generation.v1';
 const OLD_PENDING_KEY = 'guanyisearch.business-ai-brief.pending.v2';
 const HISTORY_LIMIT = 20;
-const DOCUMENT_MAX_BYTES = 10 * 1024 * 1024;
-const DOCUMENT_TYPES = ['.pdf', '.docx', '.txt'];
-const DOCUMENT_CASE_LABELS = {
-  'research-brief-to-editable-draft': 'Convertible research brief',
-  'research-theme-needs-details': 'Theme needs more detail',
-  'sensitive-content-refused-before-model': 'Sensitive content refused',
-  'consent-required-before-upload': 'Consent required',
-  'unsupported-file-rejected': 'Unsupported file',
-  'unreadable-document-rejected': 'Unreadable document',
-  'analysis-unavailable-keeps-no-artifact': 'Analysis unavailable',
-};
-
 function newId(prefix) {
   const random = globalThis.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   return `${prefix}-${random}`;
@@ -204,7 +191,6 @@ export default function BusinessAiBriefTurn() {
   const location = useLocation();
   const copy = useMemo(() => getAiBriefTurnCopy(language), [language]);
   const [stored] = useState(() => loadStored());
-  const initialPrompt = String(location.state?.initialPrompt || '').trim();
 
   const [conversationId, setConversationId] = useState(() => stored?.conversationId || newId('brief'));
   const [draft, setDraft] = useState(() => stored?.draft || emptyDraft());
@@ -217,19 +203,12 @@ export default function BusinessAiBriefTurn() {
   const [missing, setMissing] = useState(() => stored?.missing || []);
   const [assumptions, setAssumptions] = useState(() => stored?.assumptions || []);
   const [history, setHistory] = useState(() => readHistory());
-  const [reply, setReply] = useState(initialPrompt);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generateError, setGenerateError] = useState('');
-  const [docConsentOpen, setDocConsentOpen] = useState(false);
-  const [docConsentChecked, setDocConsentChecked] = useState(false);
-  const [docConsent, setDocConsent] = useState(false);
-  const [docAnalyzing, setDocAnalyzing] = useState(false);
   const [docResult, setDocResult] = useState(null);
   const [docInputs, setDocInputs] = useState({ decision: '', audience: '' });
-  const [docMockCase, setDocMockCase] = useState(DOCUMENT_MOCK_CASES[0].id);
-  const fileInputRef = useRef(null);
   const [manualOpen, setManualOpen] = useState(false);
   const [manual, setManual] = useState({ decision: '', audience: '', market: '', sample: '' });
   const [assistantOpen, setAssistantOpen] = useState(true);
@@ -242,11 +221,6 @@ export default function BusinessAiBriefTurn() {
     try { sessionStorage.removeItem(OLD_PENDING_KEY); } catch { /* Restricted browser context. */ }
   }, []);
 
-  useEffect(() => {
-    if (new URLSearchParams(location.search).get('attach') !== 'document') return;
-    setDocConsentChecked(false);
-    setDocConsentOpen(true);
-  }, []);
 
   const hasStarted = messages.some((message) => message.role === 'user');
 
@@ -273,7 +247,6 @@ export default function BusinessAiBriefTurn() {
     setAction(null);
     setMissing([]);
     setAssumptions([]);
-    setReply('');
     setError('');
     setGenerateError('');
     setGenerating(false);
@@ -295,7 +268,6 @@ export default function BusinessAiBriefTurn() {
     setBusy(true);
     setError('');
     if (!command) setDocResult(null);
-    if (!command) setReply('');
 
     const userMessage = command ? null : { id: newId('user'), role: 'user', content: value };
     const nextMessages = userMessage ? [...messages, userMessage] : messages;
@@ -337,11 +309,6 @@ export default function BusinessAiBriefTurn() {
 
   const sendMessage = (text) => runTurn({ message: text });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    sendMessage(reply);
-  };
-
   const mockCommand = (key, fallback) => (AI_BRIEF_MODE === 'mock' ? MOCK_COMMANDS[key] || fallback : fallback);
 
   const handleCategory = (category) => {
@@ -370,86 +337,39 @@ export default function BusinessAiBriefTurn() {
     return messages[code] || copy.documentUnavailable;
   };
 
-  const openDocumentPicker = () => {
-    if (docAnalyzing) return;
-    if (!docConsent) {
-      setDocConsentChecked(false);
-      setDocConsentOpen(true);
-      return;
-    }
-    fileInputRef.current?.click();
-  };
-
-  const confirmDocumentConsent = () => {
-    if (!docConsentChecked) return;
-    setDocConsent(true);
-    setDocConsentOpen(false);
-    window.setTimeout(() => fileInputRef.current?.click(), 0);
-  };
-
-  const analyzeDocumentFile = async (file) => {
-    if (!file) return;
-    const name = String(file.name || '').toLowerCase();
-    if (!DOCUMENT_TYPES.some((extension) => name.endsWith(extension))) {
-      appendGuide(copy.documentUnsupported);
-      return;
-    }
-    if (file.size > DOCUMENT_MAX_BYTES) {
-      appendGuide(copy.documentTooLarge);
-      return;
-    }
-    setDocAnalyzing(true);
-    setGenerateError('');
+  const handleDocumentStart = () => {
     setMessages((current) => [...current, { id: newId('user'), role: 'user', content: copy.documentUploaded }]);
-    try {
-      const response = AI_DOCUMENT_MODE === 'api'
-        ? await analyzeDocumentIntake({ file, responseLanguage: language.startsWith('zh') ? 'zh' : 'en' })
-        : await analyzeDocumentMock(docMockCase, language);
-      if (response?.outcome === 'REFUSE') {
-        setDocResult(null);
-        appendGuide(copy.documentRefused);
-        return;
-      }
-      if (response?.outcome === 'BRIEF' || response?.outcome === 'NEEDS_DETAILS') {
-        const extracted = normalizeDraft(response.draft);
-        const nextDraft = { ...draft };
-        for (const field of ['decision', 'audience', 'serviceCategory', 'studyFormat', 'market', 'sample']) {
-          if (extracted[field] !== null && extracted[field] !== '') nextDraft[field] = extracted[field];
-        }
-        setDraft(nextDraft);
-        const nextMissing = normalizeMissing(response.missing);
-        setMissing(nextMissing);
-        setAssumptions([]);
-        setAction(nextMissing.length ? 'ASK' : 'READY');
-        setDocResult({ outcome: response.outcome, summary: response.summary || '', draft: nextDraft, missing: nextMissing, source: response.source || null });
-        setDocInputs({ decision: '', audience: '' });
-        appendGuide(response.outcome === 'NEEDS_DETAILS' ? copy.documentNeeds : copy.documentReady);
-        return;
-      }
-      appendGuide(copy.documentUnavailable);
-    } catch (failure) {
-      appendGuide(documentErrorText(failure));
-    } finally {
-      setDocAnalyzing(false);
+  };
+
+  const handleDocumentAnalyzed = (response) => {
+    if (response?.outcome === 'REFUSE') {
+      setDocResult(null);
+      appendGuide(copy.documentRefused);
+      return;
     }
+    if (response?.outcome === 'BRIEF' || response?.outcome === 'NEEDS_DETAILS') {
+      const extracted = normalizeDraft(response.draft);
+      const nextDraft = { ...draft };
+      for (const field of ['decision', 'audience', 'serviceCategory', 'studyFormat', 'market', 'sample']) {
+        if (extracted[field] !== null && extracted[field] !== '') nextDraft[field] = extracted[field];
+      }
+      setDraft(nextDraft);
+      const nextMissing = normalizeMissing(response.missing);
+      setMissing(nextMissing);
+      setAssumptions([]);
+      setAction(nextMissing.length ? 'ASK' : 'READY');
+      setDocResult({ outcome: response.outcome, summary: response.summary || '', draft: nextDraft, missing: nextMissing, source: response.source || null });
+      setDocInputs({ decision: '', audience: '' });
+      appendGuide(response.outcome === 'NEEDS_DETAILS' ? copy.documentNeeds : copy.documentReady);
+      return;
+    }
+    appendGuide(copy.documentUnavailable);
   };
 
-  const handleDocumentFile = (event) => {
-    const file = event.target.files?.[0] || null;
-    event.target.value = '';
-    analyzeDocumentFile(file);
+  const handleDocumentError = (failure) => {
+    appendGuide(documentErrorText(failure));
   };
 
-  const applyDocumentField = (field, value) => {
-    const nextValue = String(value || '').trim();
-    if (!nextValue || !docResult) return;
-    const nextDraft = { ...draft, [field]: nextValue };
-    const nextMissing = docResult.missing.filter((item) => item !== field);
-    setDraft(nextDraft);
-    setMissing(nextMissing);
-    setAction(nextMissing.length ? 'ASK' : 'READY');
-    setDocResult({ ...docResult, draft: nextDraft, missing: nextMissing });
-  };
 
   const handleGenerate = async () => {
     if (generating) return;
@@ -518,7 +438,6 @@ export default function BusinessAiBriefTurn() {
     setAction(entry.action || null);
     setMissing(Array.isArray(entry.missing) ? entry.missing : []);
     setAssumptions(Array.isArray(entry.assumptions) ? entry.assumptions : []);
-    setReply('');
     setError('');
     setGenerateError('');
     setGenerating(false);
@@ -583,21 +502,39 @@ export default function BusinessAiBriefTurn() {
           </header>
 
           <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={copy.title}>
-            <div className="business-ai-conversation-log" role="log" aria-live="polite">
-              {messages.filter((message) => !message.opening || !hasStarted).map((message, index) => (
-                message.opening ? (
-                  <article key={`${message.id}-${index}`} className="is-guide is-opening">
-                    <h1><span><Sprout size={64} className="business-ai-opening-sprout" aria-hidden="true" /> {message.content}</span></h1>
-                    <p className="business-ai-turn-opening-hint">{copy.openingHint}</p>
-                  </article>
-                ) : (
-                  <article key={`${message.id}-${index}`} className={message.role === 'user' ? 'is-user' : 'is-guide'}>
-                    {message.role === 'guide' && <span className="business-ai-guide-mark" aria-hidden="true"><Sprout size={24} className="business-ai-sprout" /></span>}
-                    <p>{message.content}</p>
-                  </article>
-                )
-              ))}
-
+            <AiAssistantChat
+              copy={copy}
+              language={language}
+              messages={messages}
+              busy={busy}
+              error={error}
+              onSend={sendMessage}
+              onDocumentStart={handleDocumentStart}
+              onDocumentAnalyzed={handleDocumentAnalyzed}
+              onDocumentError={handleDocumentError}
+              composerRef={composerRef}
+              autoOpenDocument={new URLSearchParams(location.search).get('attach') === 'document'}
+              footer={<>
+              <div className="business-ai-turn-secondary">
+                <button type="button" onClick={handleRestart}>{copy.restart}</button>
+                {AI_BRIEF_MODE !== 'mock' && (
+                  <button type="button" onClick={() => setManualOpen((value) => !value)}>{copy.manual}</button>
+                )}
+              </div>
+              {manualOpen && AI_BRIEF_MODE !== 'mock' && (
+                <form className="business-ai-turn-manual" onSubmit={handleManualSubmit}>
+                  <p>{copy.manualHint}</p>
+                  <label>{copy.manualDecision}<input value={manual.decision} onChange={(event) => setManual({ ...manual, decision: event.target.value })} /></label>
+                  <label>{copy.manualAudience}<input value={manual.audience} onChange={(event) => setManual({ ...manual, audience: event.target.value })} /></label>
+                  <div>
+                    <label>{copy.manualMarket}<input value={manual.market} onChange={(event) => setManual({ ...manual, market: event.target.value })} /></label>
+                    <label>{copy.manualSample}<input value={manual.sample} onChange={(event) => setManual({ ...manual, sample: event.target.value })} /></label>
+                  </div>
+                  <button type="submit" className="business-button" disabled={!manual.decision.trim() || !manual.audience.trim()}>{copy.manualSubmit} <ArrowRight size={16} /></button>
+                </form>
+              )}
+              </>}
+            >
               {AI_BRIEF_MODE === 'mock' && (!hasStarted || error === copy.mockUnsupported) && (
                 <section className="business-ai-turn-mock" aria-label={copy.mock}>
                   <strong>{copy.mock}</strong>
@@ -610,20 +547,6 @@ export default function BusinessAiBriefTurn() {
                     ))}
                   </div>
                 </section>
-              )}
-
-              {busy && (
-                <article className="is-guide is-thinking" aria-hidden="true">
-                  <span className="business-ai-guide-mark"><Sprout size={24} className="business-ai-sprout" /></span>
-                  <span className="business-ai-thinking-dots"><i /><i /><i /></span>
-                </article>
-              )}
-
-              {docAnalyzing && (
-                <article className="is-guide is-document-thinking">
-                  <span className="business-ai-guide-mark"><Paperclip size={20} /></span>
-                  <p>{copy.documentAnalyzing}</p>
-                </article>
               )}
 
               {showDraft && !docResult && (
@@ -730,88 +653,10 @@ export default function BusinessAiBriefTurn() {
                 </section>
               )}
 
-              <span className="business-ai-conversation-end" ref={endRef} aria-hidden="true" />
-            </div>
-
-            <div className="business-ai-dock">
-              {error && <p className="business-ai-brief-error" role="alert">{error}</p>}
-              <form className="business-ai-composer" onSubmit={handleSubmit}>
-                <textarea
-                  ref={composerRef}
-                  value={reply}
-                  disabled={busy}
-                  onChange={(event) => setReply(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent?.isComposing) {
-                      event.preventDefault();
-                      if (reply.trim() && !busy) sendMessage(reply);
-                    }
-                  }}
-                  placeholder={copy.placeholder}
-                  aria-label={copy.placeholder}
-                />
-                <div className="business-ai-composer-bar">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
-                    className="business-ai-document-input"
-                    onChange={handleDocumentFile}
-                  />
-                  <button type="button" className="business-ai-attach" onClick={openDocumentPicker} disabled={docAnalyzing} title={copy.documentTitle} aria-label={copy.documentTitle}><Paperclip size={17} /></button>
-                  <button type="submit" disabled={!reply.trim() || busy} aria-label={copy.send}>
-                    {busy ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}
-                  </button>
-                </div>
-              </form>
-              <div className="business-ai-turn-secondary">
-                <button type="button" onClick={handleRestart}>{copy.restart}</button>
-                {AI_BRIEF_MODE !== 'mock' && (
-                  <button type="button" onClick={() => setManualOpen((value) => !value)}>{copy.manual}</button>
-                )}
-              </div>
-              {manualOpen && AI_BRIEF_MODE !== 'mock' && (
-                <form className="business-ai-turn-manual" onSubmit={handleManualSubmit}>
-                  <p>{copy.manualHint}</p>
-                  <label>{copy.manualDecision}<input value={manual.decision} onChange={(event) => setManual({ ...manual, decision: event.target.value })} /></label>
-                  <label>{copy.manualAudience}<input value={manual.audience} onChange={(event) => setManual({ ...manual, audience: event.target.value })} /></label>
-                  <div>
-                    <label>{copy.manualMarket}<input value={manual.market} onChange={(event) => setManual({ ...manual, market: event.target.value })} /></label>
-                    <label>{copy.manualSample}<input value={manual.sample} onChange={(event) => setManual({ ...manual, sample: event.target.value })} /></label>
-                  </div>
-                  <button type="submit" className="business-button" disabled={!manual.decision.trim() || !manual.audience.trim()}>{copy.manualSubmit} <ArrowRight size={16} /></button>
-                </form>
-              )}
-            </div>
+            </AiAssistantChat>
           </section>
         </section>
       </div>
-      {docConsentOpen && (
-        <div className="business-ai-doc-consent" role="dialog" aria-modal="true" aria-labelledby="business-ai-doc-consent-title">
-          <section>
-            <button type="button" className="business-ai-doc-close" onClick={() => setDocConsentOpen(false)} aria-label={copy.documentCancel}><X size={18} /></button>
-            <h2 id="business-ai-doc-consent-title">{copy.documentConsentTitle}</h2>
-            <ul>{copy.documentConsentPoints.map((item) => <li key={item}>{item}</li>)}</ul>
-            <label className="business-ai-doc-check">
-              <input type="checkbox" checked={docConsentChecked} onChange={(event) => setDocConsentChecked(event.target.checked)} />
-              <span>{copy.documentConsentCheck}</span>
-            </label>
-            {AI_DOCUMENT_MODE === 'mock' && (
-              <label className="business-ai-doc-mock">
-                {copy.documentMock}
-                <select value={docMockCase} onChange={(event) => setDocMockCase(event.target.value)}>
-                  {DOCUMENT_MOCK_CASES.map((item) => <option key={item.id} value={item.id}>{DOCUMENT_CASE_LABELS[item.id] || item.id}</option>)}
-                </select>
-                <small>{copy.documentMockHint}</small>
-              </label>
-            )}
-            <div className="business-ai-doc-actions">
-              <button type="button" className="business-ai-turn-quiet" onClick={() => setDocConsentOpen(false)}>{copy.documentCancel}</button>
-              <button type="button" className="business-button" disabled={!docConsentChecked} onClick={confirmDocumentConsent}>{copy.documentChoose} <ArrowRight size={16} /></button>
-            </div>
-          </section>
-        </div>
-      )}
     </main>
   );
 }
