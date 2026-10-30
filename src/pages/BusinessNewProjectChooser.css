@@ -8,7 +8,7 @@
   --np-line: rgba(20, 26, 23, .11);
   --np-line-strong: rgba(20, 26, 23, .24);
   --np-paper: #fcfdfb;
-  --np-hover: #eef2ec;
+  --np-hover: #FFFFFF;
   display: grid;
   place-items: center;
   padding: 24px;
