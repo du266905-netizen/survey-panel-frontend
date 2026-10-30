@@ -211,6 +211,8 @@ export default function BusinessWorkspace() {
   const location = useLocation();
   const [workspace, setWorkspace] = useState({ profile: null, projects: [] });
   const [questionnaireDrafts, setQuestionnaireDrafts] = useState([]);
+  const [draftsError, setDraftsError] = useState(false);
+  const [draftsReload, setDraftsReload] = useState(0);
   const [loading, setLoading] = useState(true);
   const [openChooser, setOpenChooser] = useState(false);
   const [customSubmitted, setCustomSubmitted] = useState(() => Boolean(location.state?.customSubmitted));
@@ -398,6 +400,7 @@ export default function BusinessWorkspace() {
   useEffect(() => {
     if (loading) return undefined;
     let active = true;
+    setDraftsError(false);
     getBusinessQuestionnaireDrafts()
       .then((response) => {
         if (!active) return;
@@ -405,10 +408,12 @@ export default function BusinessWorkspace() {
       })
       .catch(() => {
         if (!active) return;
-        setQuestionnaireDrafts(workspace.projects.filter((project) => project.questionnaire?.status === 'DRAFT'));
+        const fallback = workspace.projects.filter((project) => project.questionnaire?.status === 'DRAFT');
+        setQuestionnaireDrafts(fallback);
+        setDraftsError(fallback.length === 0);
       });
     return () => { active = false; };
-  }, [loading, workspace.projects]);
+  }, [loading, workspace.projects, draftsReload]);
 
   const update = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -685,7 +690,7 @@ export default function BusinessWorkspace() {
           </div>
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
           <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
-          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : questionnaireDrafts.length ? <div className="business-questionnaire-hub-list">{questionnaireDrafts.map((project) => {
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : draftsError ? <div className="business-questionnaire-load-error" role="alert"><strong>{language.startsWith('zh') ? '草稿加载失败' : 'Could not load drafts'}</strong><p>{language.startsWith('zh') ? '这不代表草稿被删除。请重试。' : 'Your drafts are not deleted. Try again.'}</p><button type="button" onClick={() => setDraftsReload((value) => value + 1)}>{language.startsWith('zh') ? '重试' : 'Retry'}</button></div> : questionnaireDrafts.length ? <div className="business-questionnaire-hub-list">{questionnaireDrafts.map((project) => {
             const questionnaire = project.questionnaire || {};
             const status = String(questionnaire.status || project.status || 'DRAFT');
             const statusLabel = projectsCopy.statuses?.[status] || (status === 'DRAFT' ? (ui.draftBadge || 'Draft') : status);

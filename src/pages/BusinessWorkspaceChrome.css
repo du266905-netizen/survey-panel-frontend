@@ -31,3 +31,12 @@
 .business-rail.business-workspace-rail .business-workspace-navitem.is-active > svg {
   color: #141413 !important;
 }
+
+/* The late workspace theme pins the shared mark to 78x59 at two-class
+   specificity. The rail mark is intentionally larger on the dashboard; an id
+   scope keeps this override honest across every workspace route. */
+#root .business-workspace .business-workspace-rail-mark,
+#root .business-ai-brief-page .business-workspace-rail-mark {
+  width: 112px !important;
+  height: 86px !important;
+}
