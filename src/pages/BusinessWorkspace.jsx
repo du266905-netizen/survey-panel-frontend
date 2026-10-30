@@ -28,6 +28,7 @@ import BusinessPageLoader from '../components/BusinessPageLoader';
 import BusinessProjectCategoryTabs from '../components/BusinessProjectCategoryTabs';
 import { businessProjectStatusDescriptions } from '../constants/businessProjectStatus';
 import { getNewProjectChooserCopy } from '../constants/newProjectChooserCopy';
+import { getCustomSubmissionCopy } from '../constants/customSubmissionCopy';
 import { clearPaypalReturnFromUrl, readPaypalReturnToken } from '../components/paypalReturn';
 import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import NotificationBell from '../components/NotificationBell';
@@ -40,6 +41,7 @@ import BusinessTour from '../components/BusinessTour';
 import './BusinessWorkspaceTheme.css';
 import './BusinessResearchType.css';
 import './BusinessNewProjectChooser.css';
+import './BusinessCustomSubmission.css';
 
 
 const emptyProject = {
@@ -210,6 +212,7 @@ export default function BusinessWorkspace() {
   const [questionnaireDrafts, setQuestionnaireDrafts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openChooser, setOpenChooser] = useState(false);
+  const [customSubmitted, setCustomSubmitted] = useState(() => Boolean(location.state?.customSubmitted));
   const [openForm, setOpenForm] = useState(false);
   const [activeView, setActiveView] = useState('home');
   const [projectType, setProjectType] = useState('questionnaire');
@@ -237,6 +240,12 @@ export default function BusinessWorkspace() {
 
   const selectedTypeCopy = briefCopy[projectType];
   const chooserCopy = getNewProjectChooserCopy(language);
+  const customSuccessCopy = getCustomSubmissionCopy(language);
+
+  useEffect(() => {
+    if (!location.state?.customSubmitted) return;
+    navigate(withLanguage('/business/workspace?view=projects', language), { replace: true, state: {} });
+  }, []);
   const studyFormatLabel = (format) => format === 'SURVEY'
     ? copy.services.questionnaireTitle
     : briefCopy.methods.find(([value]) => value === format)?.[1] || String(format || '').replaceAll('_', ' ').toLowerCase();
@@ -420,6 +429,11 @@ export default function BusinessWorkspace() {
     setEditingProject(null);
     setForm(emptyProject);
     setOpenChooser(true);
+  };
+
+  const dismissCustomSubmitted = () => {
+    setCustomSubmitted(false);
+    navigate(withLanguage('/business/workspace?view=projects', language), { replace: true, state: {} });
   };
 
   const chooseProduct = (product) => {
@@ -771,6 +785,19 @@ export default function BusinessWorkspace() {
         </section>}
       </div>
 
+
+      {customSubmitted && (
+        <div className="business-custom-submission" role="dialog" aria-modal="true" aria-labelledby="business-custom-submission-title">
+          <section>
+            <span className="business-custom-submission-icon" aria-hidden="true"><Check size={48} strokeWidth={1.6} /></span>
+            <h2 id="business-custom-submission-title">{customSuccessCopy.title}</h2>
+            <p>{customSuccessCopy.body}</p>
+            <button type="button" onClick={dismissCustomSubmitted} autoFocus>
+              {customSuccessCopy.action} <ArrowRight size={18} strokeWidth={2} />
+            </button>
+          </section>
+        </div>
+      )}
 
       {openChooser && (
         <div className="business-project-modal business-project-modal--chooser" role="dialog" aria-modal="true" aria-labelledby="business-project-chooser-title">

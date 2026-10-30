@@ -100,7 +100,7 @@ export default function BusinessCustomQuestionnaireRequest() {
         incentiveBudget: 'NEED_GUIDANCE',
         selfServiceQuestionnaire: false,
       });
-      navigate(withLanguage('/business/workspace?view=projects', language), { state: { message: copy.saved } });
+      navigate(withLanguage('/business/workspace?view=projects', language), { state: { customSubmitted: true } });
     } catch {
       setError(copy.error);
     } finally {
