@@ -1,0 +1,179 @@
+/* New-project chooser. Colours come from the workspace/public palette only:
+   ink #141a17, muted #5f6862, line rgba(20,26,23,.11), paper #fcfdfb,
+   hover #eef2ec. No warm-white or off-palette grey. */
+
+.business-project-modal--chooser {
+  --np-ink: #141a17;
+  --np-muted: #5f6862;
+  --np-line: rgba(20, 26, 23, .11);
+  --np-line-strong: rgba(20, 26, 23, .24);
+  --np-paper: #fcfdfb;
+  --np-hover: #eef2ec;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.business-project-modal--chooser > section {
+  position: relative;
+  width: min(100%, 1120px);
+  margin: 0;
+  border: 1px solid var(--np-line);
+  border-radius: 16px;
+  background: var(--np-paper);
+  box-shadow: 0 24px 70px rgba(20, 26, 23, .16);
+  padding: 36px;
+  text-align: center;
+}
+
+.business-project-modal--chooser h2 {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  color: var(--np-ink);
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.business-project-modal--chooser .business-form-intro {
+  margin: 8px auto 0;
+  color: var(--np-muted);
+  font: 400 14px/1.6 var(--font-sans);
+}
+
+.business-product-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 24px;
+  text-align: left;
+}
+
+.business-product-list > button {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  min-height: 190px;
+  border: 1px solid var(--np-line);
+  border-radius: 10px;
+  background: var(--np-paper);
+  color: var(--np-ink);
+  cursor: pointer;
+  padding: 18px;
+  text-align: left;
+  transition: border-color .16s ease, background .16s ease;
+}
+
+.business-product-list > button:hover {
+  border-color: var(--np-line-strong);
+  background: var(--np-hover);
+}
+
+.business-product-list > button:focus-visible {
+  outline: 2px solid var(--np-ink);
+  outline-offset: 2px;
+}
+
+.business-product-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--np-line);
+  border-radius: 50%;
+  background: var(--np-paper);
+  color: var(--np-ink);
+}
+
+.business-product-list > button.is-self-service .business-product-icon {
+  border-color: var(--np-ink);
+  background: var(--np-ink);
+  color: var(--np-paper);
+}
+
+.business-product-copy {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.business-product-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.business-product-title strong {
+  color: var(--np-ink);
+  font: 500 16px/1.3 var(--font-sans);
+  letter-spacing: -.01em;
+}
+
+.business-product-copy small {
+  color: var(--np-muted);
+  font: 400 14px/1.55 var(--font-sans);
+}
+
+.business-product-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: end;
+  color: var(--np-ink);
+  font: 500 13px var(--font-sans);
+  transition: gap .16s ease;
+}
+
+.business-product-list > button:hover .business-product-action {
+  gap: 10px;
+}
+
+.business-product-note {
+  margin: 14px 0 0;
+  color: var(--np-muted);
+  font: 400 13px/1.55 var(--font-sans);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .business-product-list {
+    grid-template-columns: 1fr;
+  }
+
+  .business-product-list > button {
+    min-height: 0;
+    grid-template-columns: 36px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: 10px 12px;
+    padding: 16px;
+  }
+
+  .business-product-icon {
+    grid-row: 1 / 3;
+  }
+
+  .business-product-action {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 620px) {
+  .business-project-modal--chooser {
+    align-items: start;
+    padding: 12px;
+  }
+
+  .business-project-modal--chooser > section {
+    margin: 8px 0;
+    padding: 24px 20px;
+  }
+
+  .business-project-modal--chooser h2 {
+    font-size: 22px;
+  }
+}

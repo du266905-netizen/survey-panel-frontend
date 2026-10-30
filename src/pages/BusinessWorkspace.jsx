@@ -18,6 +18,7 @@ import {
   UserRound,
   UsersRound,
   X,
+  Zap,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessQuestionnaireDrafts, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
@@ -26,6 +27,7 @@ import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../componen
 import BusinessPageLoader from '../components/BusinessPageLoader';
 import BusinessProjectCategoryTabs from '../components/BusinessProjectCategoryTabs';
 import { businessProjectStatusDescriptions } from '../constants/businessProjectStatus';
+import { getNewProjectChooserCopy } from '../constants/newProjectChooserCopy';
 import { clearPaypalReturnFromUrl, readPaypalReturnToken } from '../components/paypalReturn';
 import BusinessLanguagePicker from '../components/BusinessLanguagePicker';
 import NotificationBell from '../components/NotificationBell';
@@ -37,6 +39,7 @@ import BusinessRail from '../components/BusinessRail';
 import BusinessTour from '../components/BusinessTour';
 import './BusinessWorkspaceTheme.css';
 import './BusinessResearchType.css';
+import './BusinessNewProjectChooser.css';
 
 
 const emptyProject = {
@@ -99,6 +102,12 @@ const projectTypes = {
     category: 'QUALITATIVE_SUPPORT',
   },
 };
+
+const chooserProducts = [
+  { key: 'customSurvey', type: 'questionnaire', icon: ClipboardList },
+  { key: 'researchSupport', type: 'research', icon: UsersRound },
+  { key: 'selfService', type: 'selfService', icon: Zap },
+];
 
 const organizationTypeOptions = [
   { value: 'BUSINESS', title: 'Business or commercial organisation', description: 'I am planning research for a company, brand, agency, retailer, or commercial team.', icon: Building2 },
@@ -207,6 +216,7 @@ export default function BusinessWorkspace() {
   const [activeFilter, setActiveFilter] = useState('ALL');
   const [form, setForm] = useState(emptyProject);
   const [submitting, setSubmitting] = useState(false);
+  const [startingSelfService, setStartingSelfService] = useState(false);
   const [payingProjectId, setPayingProjectId] = useState('');
   const paypalReturnHandledRef = useRef('');
   const [message, setMessage] = useState('');
@@ -227,6 +237,7 @@ export default function BusinessWorkspace() {
   const [greetingIsReturning, setGreetingIsReturning] = useState(false);
 
   const selectedTypeCopy = briefCopy[projectType];
+  const chooserCopy = getNewProjectChooserCopy(language);
   const studyFormatLabel = (format) => format === 'SURVEY'
     ? copy.services.questionnaireTitle
     : briefCopy.methods.find(([value]) => value === format)?.[1] || String(format || '').replaceAll('_', ' ').toLowerCase();
@@ -410,6 +421,43 @@ export default function BusinessWorkspace() {
     setEditingProject(null);
     setForm(emptyProject);
     setOpenChooser(true);
+  };
+
+  /* Self-service is a product, not a dashboard form. Create the private draft
+     with placeholders, then open the editor; the brief is completed in the
+     editor itself (the study-brief panel). */
+  const startSelfService = async () => {
+    if (startingSelfService) return;
+    setStartingSelfService(true);
+    setMessage('');
+    try {
+      const response = await createBusinessProject({
+        title: 'New questionnaire',
+        researchGoal: 'Decision to be confirmed. Use the brief editor to describe what this questionnaire should support.',
+        audienceDescription: 'Audience to be confirmed. Use the brief editor to describe who should answer.',
+        studyFormat: 'SURVEY',
+        serviceCategory: 'SURVEY',
+        countries: '',
+        languages: '',
+        incentiveBudget: 'NOT_APPLICABLE',
+        additionalContext: '',
+        selfServiceQuestionnaire: true,
+      });
+      setOpenChooser(false);
+      navigate(withLanguage(`/business/projects/${response.data.project.id}`, language), { state: { starter: true } });
+    } catch {
+      setMessage(feedbackCopy.createError);
+    } finally {
+      setStartingSelfService(false);
+    }
+  };
+
+  const chooseProduct = (product) => {
+    if (product.type === 'selfService') {
+      startSelfService();
+      return;
+    }
+    chooseProjectType(product.type);
   };
 
   const createEditorDraft = async (event) => {
@@ -645,7 +693,7 @@ export default function BusinessWorkspace() {
             <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{projectsCopy.statuses[project.status] || project.status}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
           </div>
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
-          <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
+          <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={startSelfService} disabled={startingSelfService}><Plus size={16} /> {ui.planAudience}</button></div>
           {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : questionnaireDrafts.length ? <div className="business-questionnaire-hub-list">{questionnaireDrafts.map((project) => {
             const questionnaire = project.questionnaire || {};
             const status = String(questionnaire.status || project.status || 'DRAFT');
@@ -757,24 +805,32 @@ export default function BusinessWorkspace() {
         <div className="business-project-modal business-project-modal--chooser" role="dialog" aria-modal="true" aria-labelledby="business-project-chooser-title">
           <section>
             <button className="business-modal-close" type="button" onClick={() => setOpenChooser(false)} aria-label={briefCopy.close}><X size={18} /></button>
-            <p className="business-eyebrow">{briefCopy.chooserKicker}</p>
-            <h2 id="business-project-chooser-title">{briefCopy.chooserTitle}</h2>
-            <p className="business-form-intro">{briefCopy.chooserIntro}</p>
-            <div className="business-chooser-grid">
-              {Object.entries(projectTypes).map(([typeKey, type]) => {
-                const Icon = type.icon;
-                const typeCopy = briefCopy[typeKey];
+            <h2 id="business-project-chooser-title">{chooserCopy.title}</h2>
+            <p className="business-form-intro">{chooserCopy.intro}</p>
+            <div className="business-product-list">
+              {chooserProducts.map(({ key, type, icon: Icon }) => {
+                const item = chooserCopy.products[key];
+                if (!item) return null;
                 return (
-                  <button type="button" key={typeKey} onClick={() => chooseProjectType(typeKey)}>
-                    <Icon size={22} />
-                    <span>{typeCopy.eyebrow}</span>
-                    <strong>{typeCopy.title}</strong>
-                    <small>{typeCopy.description}</small>
-                    <em>{typeCopy.action} <ArrowRight size={15} /></em>
+                  <button
+                    type="button"
+                    key={key}
+                    className={key === 'selfService' ? 'is-self-service' : ''}
+                    onClick={() => chooseProduct({ type })}
+                  >
+                    <span className="business-product-icon"><Icon size={20} /></span>
+                    <span className="business-product-copy">
+                      <span className="business-product-title">
+                        <strong>{item.title}</strong>
+                      </span>
+                      <small>{item.description}</small>
+                    </span>
+                    <span className="business-product-action">{item.action} <ArrowRight size={16} /></span>
                   </button>
                 );
               })}
             </div>
+            <p className="business-product-note">{chooserCopy.note}</p>
           </section>
         </div>
       )}
