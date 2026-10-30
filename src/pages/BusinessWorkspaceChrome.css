@@ -37,6 +37,6 @@
    scope keeps this override honest across every workspace route. */
 #root .business-workspace .business-workspace-rail-mark,
 #root .business-ai-brief-page .business-workspace-rail-mark {
-  width: 112px !important;
-  height: 86px !important;
+  width: 96px !important;
+  height: 74px !important;
 }
