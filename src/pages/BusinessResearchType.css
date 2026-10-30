@@ -531,11 +531,6 @@
   background: #FFFFFF;
   box-sizing: border-box;
 }
-.business-workspace--questionnaire-hub .business-workspace-rail-mark {
-  width: 92px;
-  height: 70px;
-}
-
 .business-workspace--questionnaire-hub .business-questionnaire-hub > .business-projects-head {
   flex: 0 0 auto;
 }
