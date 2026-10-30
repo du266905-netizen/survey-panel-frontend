@@ -39,8 +39,9 @@
 }
 
 #root .business-workspace .business-workspace-rail .business-workspace-navitem.is-active {
-  border-color: #D5D0C4 !important;
-  background: #D5D0C4 !important;
+  border-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  box-shadow: none !important;
   color: #141413 !important;
 }
 
