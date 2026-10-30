@@ -1,89 +1,33 @@
-/* Dark workspace rail: ink ground, white type, gray hover, light-gray active
-   pill with ink type. The mark turns white so it keeps its contrast. */
+/* The rail is a neutral paper surface from the workspace palette, not the old
+   green-tinted sidebar. #FAF9F5 is the existing --color-paper token. */
 #root .business-workspace .business-workspace-rail {
-  border-right: 1px solid rgba(255, 255, 255, .12) !important;
+  background: #FAF9F5 !important;
+  border-right-color: rgba(20, 26, 23, .10) !important;
+}
+
+.business-workspace-rail .business-workspace-navitem:hover {
+  border-color: rgba(20, 26, 23, .10) !important;
+  background: #FFFFFF !important;
+}
+
+.business-workspace-rail .business-workspace-navitem.is-active {
+  border-color: #141413 !important;
   background: #141413 !important;
-  color: #FFFFFF;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-rail-mark {
-  filter: brightness(0) invert(1);
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-navgroup-title {
-  color: rgba(255, 255, 255, .55) !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-navgroup-title:hover {
   color: #FFFFFF !important;
 }
 
-#root .business-workspace .business-workspace-rail .business-workspace-navitem {
-  border-color: transparent !important;
-  background: transparent !important;
-  color: rgba(255, 255, 255, .78) !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-navitem > svg {
-  color: rgba(255, 255, 255, .62) !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-navitem:hover {
-  border-color: transparent !important;
-  background: #2B2B2B !important;
+.business-workspace-rail .business-workspace-navitem.is-active > svg {
   color: #FFFFFF !important;
 }
 
-#root .business-workspace .business-workspace-rail .business-workspace-navitem:hover > svg {
-  color: #FFFFFF !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-navitem.is-active {
-  border-color: #FFFFFF !important;
+/* The late theme deliberately stripped the active fill; on the gray rail we
+   need a readable white pill rather than a transparent row with a dark border. */
+.business-rail.business-workspace-rail .business-workspace-navitem.is-active {
+  border-color: rgba(20, 26, 23, .16) !important;
   background: #FFFFFF !important;
-  box-shadow: inset 2px 0 0 #deef24 !important;
   color: #141413 !important;
 }
 
-#root .business-workspace .business-workspace-rail .business-workspace-navitem.is-active > svg {
+.business-rail.business-workspace-rail .business-workspace-navitem.is-active > svg {
   color: #141413 !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-navitem:focus-visible {
-  outline: 2px solid #deef24;
-  outline-offset: 1px;
-}
-
-#root .business-workspace .business-workspace-rail .business-language-picker > button {
-  border-color: transparent !important;
-  background: transparent !important;
-  color: rgba(255, 255, 255, .72) !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-language-picker > button:hover {
-  background: #2B2B2B !important;
-  color: #FFFFFF !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-language-picker svg {
-  color: rgba(255, 255, 255, .72) !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-account > button {
-  border-color: #EEEEEC !important;
-  background: #EEEEEC !important;
-  color: #141413 !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-account > button:hover {
-  border-color: #FFFFFF !important;
-  background: #FFFFFF !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-account > button svg {
-  color: #141413 !important;
-}
-
-#root .business-workspace .business-workspace-rail .business-workspace-account-photo {
-  border: 1px solid rgba(255, 255, 255, .32);
 }
