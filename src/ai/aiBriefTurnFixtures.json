@@ -1,0 +1,417 @@
+{
+  "version": "AiBriefTurn-v1",
+  "requiredScenarios": 6,
+  "scenarios": [
+    {
+      "id": "01-interview-needs-category",
+      "title": "访谈需要确认服务分类",
+      "required": true,
+      "request": {
+        "message": "我想做访谈",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": null,
+          "studyFormat": null,
+          "market": null,
+          "sample": null
+        }
+      },
+      "expect": {
+        "action": "ASK",
+        "reply": "听起来是访谈。访谈可能是定制研究，也可能是定性研究支持；你想按哪一种走？",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": null,
+          "studyFormat": "INTERVIEW",
+          "market": null,
+          "sample": null
+        },
+        "missing": [
+          "decision",
+          "audience",
+          "serviceCategory"
+        ],
+        "assumptions": [],
+        "replyMustInclude": [
+          "访谈",
+          "定性"
+        ],
+        "replyMustNotInclude": []
+      }
+    },
+    {
+      "id": "02-capture-multiple-fields",
+      "title": "一句话抓多个字段，不重问",
+      "required": true,
+      "request": {
+        "message": "受众是财务负责人，样本 200",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": null,
+          "serviceCategory": null,
+          "studyFormat": null,
+          "market": null,
+          "sample": null
+        }
+      },
+      "expect": {
+        "action": "ASK",
+        "reply": "已记下受众和样本。请确认服务类型。",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": "财务负责人",
+          "serviceCategory": null,
+          "studyFormat": null,
+          "market": null,
+          "sample": 200
+        },
+        "missing": [
+          "serviceCategory"
+        ],
+        "assumptions": [],
+        "replyMustInclude": [
+          "服务类型"
+        ],
+        "replyMustNotInclude": [
+          "受众是谁"
+        ]
+      }
+    },
+    {
+      "id": "03-generate-with-assumptions",
+      "title": "够了就给计划，缺的标假设",
+      "required": true,
+      "request": {
+        "message": "先出草稿",
+        "draft": {
+          "decision": "小团队年付升级",
+          "audience": "SaaS 运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": null,
+          "sample": null
+        }
+      },
+      "expect": {
+        "action": "READY",
+        "reply": "计划已准备好，可以生成。",
+        "draft": {
+          "decision": "小团队年付升级",
+          "audience": "SaaS 运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": "United States",
+          "sample": 200
+        },
+        "missing": [
+          "market",
+          "sample"
+        ],
+        "assumptions": [
+          {
+            "field": "market",
+            "value": "United States",
+            "reason": "No market was specified."
+          },
+          {
+            "field": "sample",
+            "value": "200",
+            "reason": "No sample size was specified."
+          }
+        ],
+        "replyMustInclude": [
+          "生成"
+        ],
+        "replyMustNotInclude": [
+          "决策是什么"
+        ]
+      }
+    },
+    {
+      "id": "04-question-edit-handoff",
+      "title": "改题目不重问 brief，指到编辑器",
+      "required": true,
+      "request": {
+        "message": "第三题改短",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": "运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": "美国",
+          "sample": 200
+        }
+      },
+      "expect": {
+        "action": "ANSWER",
+        "reply": "单题修改请在编辑器中完成，或使用题卡上的 AI 改写。",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": "运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": "美国",
+          "sample": 200
+        },
+        "missing": [],
+        "assumptions": [],
+        "replyMustInclude": [
+          "编辑器"
+        ],
+        "replyMustNotInclude": [
+          "决策",
+          "受众是谁"
+        ]
+      }
+    },
+    {
+      "id": "05-pricing-does-not-advance",
+      "title": "旁支问题不推进草稿",
+      "required": true,
+      "request": {
+        "message": "你们怎么收费？",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": "运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": "美国",
+          "sample": 200
+        }
+      },
+      "expect": {
+        "action": "ANSWER",
+        "reply": "报价会在范围审核后确认，样本量和市场会影响价格。",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": "运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": "美国",
+          "sample": 200
+        },
+        "missing": [],
+        "assumptions": [],
+        "replyMustInclude": [
+          "报价"
+        ],
+        "replyMustNotInclude": [
+          "受众是谁"
+        ]
+      }
+    },
+    {
+      "id": "06-restart-clears-draft",
+      "title": "重来是清空，不是继续追问",
+      "required": true,
+      "request": {
+        "message": "算了重来",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": "运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": "美国",
+          "sample": 200
+        }
+      },
+      "expect": {
+        "action": "ASK",
+        "reply": "已重新开始。你想支持什么决策？",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": null,
+          "studyFormat": null,
+          "market": null,
+          "sample": null
+        },
+        "missing": [
+          "decision",
+          "audience",
+          "serviceCategory"
+        ],
+        "assumptions": [],
+        "replyMustInclude": [
+          "重新"
+        ],
+        "replyMustNotInclude": [
+          "年付升级"
+        ]
+      }
+    },
+    {
+      "id": "07-generate-command",
+      "title": "生成是明确命令，不在旁支时偷跑",
+      "required": false,
+      "request": {
+        "command": "GENERATE",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": "运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": "美国",
+          "sample": 200
+        }
+      },
+      "expect": {
+        "action": "GENERATE",
+        "reply": "计划已准备好，可以生成。",
+        "draft": {
+          "decision": "了解年付升级意愿",
+          "audience": "运营负责人",
+          "serviceCategory": "SURVEY",
+          "studyFormat": "SURVEY",
+          "market": "美国",
+          "sample": 200
+        },
+        "missing": [],
+        "assumptions": [],
+        "replyMustInclude": [
+          "生成"
+        ],
+        "replyMustNotInclude": []
+      }
+    },
+    {
+      "id": "08-refuse-sensitive",
+      "title": "敏感信息拒绝，给安全替代",
+      "required": false,
+      "request": {
+        "message": "我的密码是 123456，帮我做问卷",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": null,
+          "studyFormat": null,
+          "market": null,
+          "sample": null
+        }
+      },
+      "expect": {
+        "action": "REFUSE",
+        "reply": "请不要提供密码、验证码、支付信息或身份证件。你可以只描述研究受众，不需要提供个人信息。",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": null,
+          "studyFormat": null,
+          "market": null,
+          "sample": null
+        },
+        "missing": [],
+        "assumptions": [],
+        "replyMustInclude": [
+          "不要",
+          "个人信息"
+        ],
+        "replyMustNotInclude": [
+          "123456"
+        ]
+      }
+    },
+    {
+      "id": "09-confirm-qualitative",
+      "title": "确认定性研究支持",
+      "required": false,
+      "request": {
+        "message": "按定性研究支持",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": null,
+          "studyFormat": "INTERVIEW",
+          "market": null,
+          "sample": null
+        }
+      },
+      "expect": {
+        "action": "READY",
+        "reply": "好，按定性研究支持准备。市场/样本没提，我先按美国、200 人给计划。",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": "QUALITATIVE_SUPPORT",
+          "studyFormat": "INTERVIEW",
+          "market": "United States",
+          "sample": 200
+        },
+        "missing": [
+          "market",
+          "sample"
+        ],
+        "assumptions": [
+          {
+            "field": "market",
+            "value": "United States",
+            "reason": "No market was specified."
+          },
+          {
+            "field": "sample",
+            "value": "200",
+            "reason": "No sample size was specified."
+          }
+        ],
+        "replyMustInclude": [
+          "定性研究支持"
+        ],
+        "replyMustNotInclude": [
+          "定制研究"
+        ]
+      }
+    },
+    {
+      "id": "10-confirm-custom",
+      "title": "确认定制研究",
+      "required": false,
+      "request": {
+        "message": "按定制研究",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": null,
+          "studyFormat": "INTERVIEW",
+          "market": null,
+          "sample": null
+        }
+      },
+      "expect": {
+        "action": "READY",
+        "reply": "好，按定制研究准备。市场/样本没提，我先按美国、200 人给计划。",
+        "draft": {
+          "decision": null,
+          "audience": null,
+          "serviceCategory": "CUSTOM_RESEARCH",
+          "studyFormat": "INTERVIEW",
+          "market": "United States",
+          "sample": 200
+        },
+        "missing": [
+          "market",
+          "sample"
+        ],
+        "assumptions": [
+          {
+            "field": "market",
+            "value": "United States",
+            "reason": "No market was specified."
+          },
+          {
+            "field": "sample",
+            "value": "200",
+            "reason": "No sample size was specified."
+          }
+        ],
+        "replyMustInclude": [
+          "定制研究"
+        ],
+        "replyMustNotInclude": [
+          "定性研究支持"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "version": "ai-brief-generate-v1",
+  "success": {
+    "status": 201,
+    "data": {
+      "project": {
+        "id": "mock-ai-brief",
+        "status": "DRAFT",
+        "serviceCategory": "SURVEY",
+        "studyFormat": "SURVEY",
+        "questionnaire": {
+          "id": "mock-ai-brief-questionnaire",
+          "status": "DRAFT",
+          "questionCount": 6
+        }
+      },
+      "editorPath": "/business/projects/mock-ai-brief",
+      "duplicate": false
+    }
+  },
+  "replay": {
+    "status": 200,
+    "data": {
+      "project": {
+        "id": "mock-ai-brief",
+        "status": "DRAFT",
+        "serviceCategory": "SURVEY",
+        "studyFormat": "SURVEY",
+        "questionnaire": {
+          "id": "mock-ai-brief-questionnaire",
+          "status": "DRAFT",
+          "questionCount": 6
+        }
+      },
+      "editorPath": "/business/projects/mock-ai-brief",
+      "duplicate": true
+    }
+  },
+  "failures": {
+    "invalid-output": {
+      "status": 502,
+      "code": "AI_BRIEF_GENERATION_INVALID_OUTPUT",
+      "message": "The generated draft was incomplete."
+    },
+    "unavailable": {
+      "status": 503,
+      "code": "AI_BRIEF_GENERATION_UNAVAILABLE",
+      "message": "Generation is temporarily unavailable."
+    },
+    "key-conflict": {
+      "status": 409,
+      "code": "AI_BRIEF_GENERATION_KEY_CONFLICT",
+      "message": "This generation key is already used by a different request."
+    }
+  }
+}

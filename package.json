@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "sync:ai-fixtures": "node scripts/sync-ai-brief-fixtures.mjs",
+    "predev": "npm run sync:ai-fixtures",
+    "prebuild": "npm run sync:ai-fixtures"
   },
   "dependencies": {
     "@fontsource-variable/bodoni-moda": "^5.3.0",

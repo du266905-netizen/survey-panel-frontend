@@ -1,0 +1,340 @@
+/* AiBriefTurn page additions. Base layout lives in Business.css and
+   BusinessAiBriefTheme.css; this file only styles the draft/action layer. */
+
+.business-ai-brief-page .business-ai-turn-opening-hint {
+  max-width: 560px;
+  margin: 18px auto 0;
+  color: var(--ai-muted);
+  font: 400 15px/1.7 var(--font-sans);
+  text-align: center;
+}
+
+.business-ai-brief-page .business-ai-conversation.is-started .business-ai-conversation-log {
+  padding-bottom: 212px;
+}
+
+.business-ai-brief-page .business-ai-turn-draft,
+.business-ai-brief-page .business-ai-turn-card,
+.business-ai-brief-page .business-ai-turn-mock {
+  width: min(100%, 688px);
+  box-sizing: border-box;
+  border: 1px solid rgba(20, 20, 19, .12);
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 18px;
+}
+
+.business-ai-brief-page .business-ai-turn-draft > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.business-ai-brief-page .business-ai-turn-draft > header span,
+.business-ai-brief-page .business-ai-turn-draft > header em {
+  color: var(--ai-muted);
+  font: 500 10px var(--font-sans);
+  font-style: normal;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.business-ai-brief-page .business-ai-turn-draft dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+  margin: 0;
+}
+
+.business-ai-brief-page .business-ai-turn-draft dl > div {
+  min-width: 0;
+}
+
+.business-ai-brief-page .business-ai-turn-draft dt {
+  margin: 0 0 4px;
+  color: var(--ai-muted);
+  font: 500 11px var(--font-sans);
+  letter-spacing: .02em;
+}
+
+.business-ai-brief-page .business-ai-turn-draft dd {
+  overflow-wrap: anywhere;
+  margin: 0;
+  color: var(--ai-ink);
+  font: 400 14px/1.55 var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-assumptions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  border-top: 1px solid rgba(20, 20, 19, .10);
+  margin-top: 16px;
+  padding-top: 12px;
+}
+
+.business-ai-brief-page .business-ai-turn-assumptions > span {
+  margin-right: 4px;
+  color: var(--ai-muted);
+  font: 500 10px var(--font-sans);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.business-ai-brief-page .business-ai-turn-assumptions > em {
+  border-radius: 4px;
+  background: var(--ai-bone);
+  color: var(--ai-ink);
+  font: 400 12px/1.5 var(--font-sans);
+  font-style: normal;
+  padding: 3px 7px;
+}
+
+.business-ai-brief-page .business-ai-turn-card > strong {
+  display: block;
+  color: var(--ai-ink);
+  font: 500 15px/1.4 var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-card > p {
+  margin: 6px 0 0;
+  color: var(--ai-muted);
+  font: 400 13px/1.6 var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-service {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.business-ai-brief-page .business-ai-turn-service > button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ai-ink);
+  cursor: pointer;
+  padding: 14px;
+  text-align: left;
+}
+
+.business-ai-brief-page .business-ai-turn-service > button:hover {
+  border-color: rgba(20, 20, 19, .4);
+  background: var(--ai-bone);
+}
+
+.business-ai-brief-page .business-ai-turn-service b {
+  font: 500 14px var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-service small {
+  color: var(--ai-muted);
+  font: 400 12px/1.5 var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.business-ai-brief-page .business-ai-turn-card-actions .business-button {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #141413;
+  border-radius: 6px;
+  background: #141413;
+  color: #ffffff;
+  font: 500 13px var(--font-sans);
+  padding: 0 16px;
+}
+
+.business-ai-brief-page .business-ai-turn-quiet {
+  border: 0;
+  background: transparent;
+  color: var(--ai-muted);
+  cursor: pointer;
+  font: 400 13px var(--font-sans);
+  padding: 8px 2px;
+}
+
+.business-ai-brief-page .business-ai-turn-quiet:hover {
+  color: var(--ai-ink);
+}
+
+.business-ai-brief-page .business-ai-turn-note {
+  width: min(100%, 688px);
+  box-sizing: border-box;
+  margin: 0;
+  color: var(--ai-muted);
+  font: 400 13px/1.6 var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-note.is-success {
+  border-left: 2px solid #141413;
+  color: var(--ai-ink);
+  padding-left: 10px;
+}
+
+.business-ai-brief-page .business-ai-turn-mock {
+  border-style: dashed;
+  background: #faf9f5;
+}
+
+.business-ai-brief-page .business-ai-turn-mock > strong {
+  display: block;
+  color: var(--ai-ink);
+  font: 500 12px var(--font-sans);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.business-ai-brief-page .business-ai-turn-mock > p {
+  margin: 5px 0 10px;
+  color: var(--ai-muted);
+  font: 400 12px/1.55 var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-mock > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.business-ai-brief-page .business-ai-turn-mock button {
+  max-width: 100%;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ai-ink);
+  cursor: pointer;
+  font: 400 12px/1.4 var(--font-sans);
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.business-ai-brief-page .business-ai-turn-mock button:hover {
+  border-color: rgba(20, 20, 19, .4);
+}
+
+.business-ai-brief-page .business-ai-turn-secondary {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.business-ai-brief-page .business-ai-turn-secondary > button {
+  border: 0;
+  background: transparent;
+  color: var(--ai-muted);
+  cursor: pointer;
+  font: 400 12px var(--font-sans);
+  padding: 4px 2px;
+}
+
+.business-ai-brief-page .business-ai-turn-secondary > button:hover {
+  color: var(--ai-ink);
+}
+
+.business-ai-brief-page .business-ai-turn-manual {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(20, 20, 19, .12);
+  border-radius: 10px;
+  background: #ffffff;
+  margin-top: 8px;
+  max-height: 42vh;
+  overflow: auto;
+  padding: 14px;
+}
+
+.business-ai-brief-page .business-ai-turn-manual > p {
+  margin: 0;
+  color: var(--ai-muted);
+  font: 400 12px/1.5 var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-manual label {
+  display: grid;
+  gap: 4px;
+  color: var(--ai-muted);
+  font: 500 11px var(--font-sans);
+}
+
+.business-ai-brief-page .business-ai-turn-manual input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(20, 20, 19, .14);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--ai-ink);
+  font: 400 13px var(--font-sans);
+  padding: 8px 9px;
+}
+
+.business-ai-brief-page .business-ai-turn-manual > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.business-ai-brief-page .business-ai-turn-manual > .business-button {
+  justify-self: start;
+  min-height: 38px;
+  border: 1px solid #141413;
+  border-radius: 6px;
+  background: #141413;
+  color: #ffffff;
+  font: 500 13px var(--font-sans);
+  padding: 0 14px;
+}
+
+@media (max-width: 620px) {
+  .business-ai-brief-page .business-ai-conversation.is-started .business-ai-conversation-log {
+    padding-bottom: 236px;
+  }
+
+  .business-ai-brief-page .business-ai-turn-draft dl,
+  .business-ai-brief-page .business-ai-turn-service,
+  .business-ai-brief-page .business-ai-turn-manual > div {
+    grid-template-columns: 1fr;
+  }
+
+  .business-ai-brief-page .business-ai-turn-draft,
+  .business-ai-brief-page .business-ai-turn-card,
+  .business-ai-brief-page .business-ai-turn-mock {
+    padding: 15px;
+  }
+
+  .business-ai-brief-page .business-ai-turn-secondary {
+    justify-content: flex-start;
+  }
+}
+
+/* Mobile: the support launcher and the AI page's own composer compete for the
+   same bottom-left corner; the compositor is the primary action, so the global
+   launcher is hidden here. It stays available on the workspace pages. */
+@media (max-width: 620px) {
+  body:has(.business-ai-brief-page) .business-support-chat-launcher,
+  body:has(.business-ai-brief-page) .business-support-chat {
+    display: none !important;
+  }
+}
+
+.business-ai-brief-page .business-ai-turn-note.is-error {
+  border-left: 2px solid #a4443b;
+  color: #a4443b;
+  padding-left: 10px;
+}
