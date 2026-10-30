@@ -65,6 +65,7 @@ import Business from './pages/Business';
 import BusinessAccess from './pages/BusinessAccess';
 import BusinessWorkspace from './pages/BusinessWorkspace';
 import BusinessAiBrief from './pages/BusinessAiBrief';
+import BusinessAiDocumentIntake from './pages/BusinessAiDocumentIntake';
 import BusinessAudiencePlan from './pages/BusinessAudiencePlan';
 import BusinessCustomQuestionnaireRequest from './pages/BusinessCustomQuestionnaireRequest';
 import BusinessAccount from './pages/BusinessAccount';
@@ -196,6 +197,7 @@ export default function App() {
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
+        <Route path="/business/ai-brief/document" element={<BusinessRoute><BusinessAiDocumentIntake /></BusinessRoute>} />
         <Route path="/business/ai-brief" element={<BusinessRoute><BusinessAiBrief /></BusinessRoute>} />
         <Route path="/business/audience-plan" element={<BusinessRoute><BusinessAudiencePlan /></BusinessRoute>} />
         <Route path="/business/custom-questionnaire" element={<BusinessRoute><BusinessCustomQuestionnaireRequest /></BusinessRoute>} />

@@ -1,0 +1,64 @@
+{
+  "version": "AI_DOCUMENT_INTAKE_V1",
+  "cases": [
+    {
+      "id": "research-brief-to-editable-draft",
+      "input": { "kind": "PDF", "responseLanguage": "zh", "confirmedProcessing": true },
+      "expect": {
+        "httpStatus": 200,
+        "outcome": "BRIEF",
+        "draft": {
+          "decision": "了解小团队对年付升级方案的接受度",
+          "audience": "SaaS 小团队运营负责人",
+          "serviceCategory": null,
+          "studyFormat": "SURVEY",
+          "market": "US",
+          "sample": null
+        },
+        "missingIncludes": ["serviceCategory"],
+        "source": { "kind": "PDF", "retained": false }
+      }
+    },
+    {
+      "id": "research-theme-needs-details",
+      "input": { "kind": "DOCX", "responseLanguage": "zh", "confirmedProcessing": true },
+      "expect": {
+        "httpStatus": 200,
+        "outcome": "NEEDS_DETAILS",
+        "missingIncludes": ["decision", "audience", "serviceCategory", "studyFormat"],
+        "source": { "kind": "DOCX", "retained": false }
+      }
+    },
+    {
+      "id": "sensitive-content-refused-before-model",
+      "input": { "kind": "TXT", "responseLanguage": "zh", "confirmedProcessing": true },
+      "expect": {
+        "httpStatus": 200,
+        "outcome": "REFUSE",
+        "hasSummary": false,
+        "hasDraft": false,
+        "modelCalls": 0
+      }
+    },
+    {
+      "id": "consent-required-before-upload",
+      "input": { "kind": "PDF", "responseLanguage": "zh", "confirmedProcessing": false },
+      "expect": { "httpStatus": 400, "code": "AI_DOCUMENT_PROCESSING_CONSENT_REQUIRED" }
+    },
+    {
+      "id": "unsupported-file-rejected",
+      "input": { "kind": "IMAGE", "responseLanguage": "zh", "confirmedProcessing": true },
+      "expect": { "httpStatus": 415, "code": "AI_DOCUMENT_UNSUPPORTED" }
+    },
+    {
+      "id": "unreadable-document-rejected",
+      "input": { "kind": "ENCRYPTED_PDF", "responseLanguage": "zh", "confirmedProcessing": true },
+      "expect": { "httpStatus": 422, "code": "AI_DOCUMENT_UNREADABLE" }
+    },
+    {
+      "id": "analysis-unavailable-keeps-no-artifact",
+      "input": { "kind": "TXT", "responseLanguage": "zh", "confirmedProcessing": true },
+      "expect": { "httpStatus": 503, "code": "AI_DOCUMENT_ANALYSIS_UNAVAILABLE", "retained": false }
+    }
+  ]
+}
