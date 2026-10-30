@@ -42,6 +42,7 @@ import './BusinessWorkspaceTheme.css';
 import './BusinessResearchType.css';
 import './BusinessNewProjectChooser.css';
 import './BusinessCustomSubmission.css';
+import './BusinessWorkspaceChrome.css';
 
 
 const emptyProject = {
