@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, LoaderCircle, Paperclip, PanelLeft, PanelLeftClose, Plus, Send, Sprout, Trash2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, LoaderCircle, Paperclip, PanelLeft, PanelLeftClose, Plus, Send, Sprout, Trash2, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { AI_BRIEF_MODE, MOCK_COMMANDS, MOCK_SCENARIOS, generateBriefProject, sendBriefTurn } from '../ai/aiBriefTurnClient';
+import { AI_DOCUMENT_MODE, analyzeDocumentIntake } from '../ai/documentIntakeClient';
+import { DOCUMENT_MOCK_CASES, analyzeDocumentMock } from '../ai/documentIntakeMock';
 import { getAiBriefTurnCopy } from '../constants/aiBriefTurnCopy';
 import './Business.css';
 import './BusinessAiBriefTheme.css';
@@ -14,6 +16,17 @@ const HISTORY_KEY = 'guanyisearch.business-ai-brief.history.v2';
 const GENERATION_KEY = 'guanyisearch.business-ai-brief.generation.v1';
 const OLD_PENDING_KEY = 'guanyisearch.business-ai-brief.pending.v2';
 const HISTORY_LIMIT = 20;
+const DOCUMENT_MAX_BYTES = 10 * 1024 * 1024;
+const DOCUMENT_TYPES = ['.pdf', '.docx', '.txt'];
+const DOCUMENT_CASE_LABELS = {
+  'research-brief-to-editable-draft': 'Convertible research brief',
+  'research-theme-needs-details': 'Theme needs more detail',
+  'sensitive-content-refused-before-model': 'Sensitive content refused',
+  'consent-required-before-upload': 'Consent required',
+  'unsupported-file-rejected': 'Unsupported file',
+  'unreadable-document-rejected': 'Unreadable document',
+  'analysis-unavailable-keeps-no-artifact': 'Analysis unavailable',
+};
 
 function newId(prefix) {
   const random = globalThis.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
@@ -209,6 +222,12 @@ export default function BusinessAiBriefTurn() {
   const [error, setError] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generateError, setGenerateError] = useState('');
+  const [docConsentOpen, setDocConsentOpen] = useState(false);
+  const [docConsentChecked, setDocConsentChecked] = useState(false);
+  const [docConsent, setDocConsent] = useState(false);
+  const [docAnalyzing, setDocAnalyzing] = useState(false);
+  const [docMockCase, setDocMockCase] = useState(DOCUMENT_MOCK_CASES[0].id);
+  const fileInputRef = useRef(null);
   const [manualOpen, setManualOpen] = useState(false);
   const [manual, setManual] = useState({ decision: '', audience: '', market: '', sample: '' });
   const [assistantOpen, setAssistantOpen] = useState(true);
@@ -250,6 +269,7 @@ export default function BusinessAiBriefTurn() {
     setError('');
     setGenerateError('');
     setGenerating(false);
+    setDocAnalyzing(false);
     setManualOpen(false);
     clearGenerationKey();
     try { localStorage.removeItem(DRAFT_KEY); } catch { /* Restricted browser context. */ }
@@ -318,6 +338,94 @@ export default function BusinessAiBriefTurn() {
       category === 'CUSTOM_RESEARCH' ? 'custom' : 'qualitative',
       category === 'CUSTOM_RESEARCH' ? copy.confirmCustomCommand : copy.confirmQualitativeCommand,
     ));
+  };
+
+  const appendGuide = (content) => {
+    setMessages((current) => [...current, { id: newId('guide'), role: 'guide', content }]);
+  };
+
+  const documentErrorText = (failure) => {
+    const code = failure?.response?.data?.code || failure?.code;
+    const messages = {
+      AI_DOCUMENT_PROCESSING_CONSENT_REQUIRED: copy.documentConsentRequired,
+      AI_DOCUMENT_INVALID: copy.documentInvalid,
+      AI_DOCUMENT_TOO_LARGE: copy.documentTooLarge,
+      AI_DOCUMENT_UNSUPPORTED: copy.documentUnsupported,
+      AI_DOCUMENT_UNREADABLE: copy.documentUnreadable,
+      AI_DOCUMENT_RATE_LIMITED: copy.documentRateLimited,
+      AI_DOCUMENT_ANALYSIS_INVALID: copy.documentUnavailable,
+      AI_DOCUMENT_ANALYSIS_UNAVAILABLE: copy.documentUnavailable,
+    };
+    return messages[code] || copy.documentUnavailable;
+  };
+
+  const openDocumentPicker = () => {
+    if (docAnalyzing) return;
+    if (!docConsent) {
+      setDocConsentChecked(false);
+      setDocConsentOpen(true);
+      return;
+    }
+    fileInputRef.current?.click();
+  };
+
+  const confirmDocumentConsent = () => {
+    if (!docConsentChecked) return;
+    setDocConsent(true);
+    setDocConsentOpen(false);
+    window.setTimeout(() => fileInputRef.current?.click(), 0);
+  };
+
+  const analyzeDocumentFile = async (file) => {
+    if (!file) return;
+    const name = String(file.name || '').toLowerCase();
+    if (!DOCUMENT_TYPES.some((extension) => name.endsWith(extension))) {
+      appendGuide(copy.documentUnsupported);
+      return;
+    }
+    if (file.size > DOCUMENT_MAX_BYTES) {
+      appendGuide(copy.documentTooLarge);
+      return;
+    }
+    setDocAnalyzing(true);
+    setGenerateError('');
+    setMessages((current) => [...current, { id: newId('user'), role: 'user', content: copy.documentUploaded }]);
+    try {
+      const response = AI_DOCUMENT_MODE === 'api'
+        ? await analyzeDocumentIntake({ file, responseLanguage: language.startsWith('zh') ? 'zh' : 'en' })
+        : await analyzeDocumentMock(docMockCase, language);
+      if (response?.outcome === 'REFUSE') {
+        appendGuide(copy.documentRefused);
+        return;
+      }
+      if (response?.outcome === 'BRIEF' || response?.outcome === 'NEEDS_DETAILS') {
+        const extracted = normalizeDraft(response.draft);
+        const nextDraft = { ...draft };
+        for (const field of ['decision', 'audience', 'serviceCategory', 'studyFormat', 'market', 'sample']) {
+          if (extracted[field] !== null && extracted[field] !== '') nextDraft[field] = extracted[field];
+        }
+        setDraft(nextDraft);
+        const nextMissing = normalizeMissing(response.missing);
+        setMissing(nextMissing);
+        setAssumptions([]);
+        setAction(nextMissing.length ? 'ASK' : 'READY');
+        appendGuide(`${response.outcome === 'NEEDS_DETAILS' ? copy.documentNeeds : copy.documentReady}${response.summary ? `
+
+${response.summary}` : ''}`);
+        return;
+      }
+      appendGuide(copy.documentUnavailable);
+    } catch (failure) {
+      appendGuide(documentErrorText(failure));
+    } finally {
+      setDocAnalyzing(false);
+    }
+  };
+
+  const handleDocumentFile = (event) => {
+    const file = event.target.files?.[0] || null;
+    event.target.value = '';
+    analyzeDocumentFile(file);
   };
 
   const handleGenerate = async () => {
@@ -486,6 +594,13 @@ export default function BusinessAiBriefTurn() {
                 </article>
               )}
 
+              {docAnalyzing && (
+                <article className="is-guide is-document-thinking">
+                  <span className="business-ai-guide-mark"><Paperclip size={20} /></span>
+                  <p>{copy.documentAnalyzing}</p>
+                </article>
+              )}
+
               {showDraft && (
                 <section className="business-ai-turn-draft" aria-label={copy.draftTitle}>
                   <header><span>{copy.draftTitle}</span></header>
@@ -561,7 +676,14 @@ export default function BusinessAiBriefTurn() {
                   aria-label={copy.placeholder}
                 />
                 <div className="business-ai-composer-bar">
-                  <button type="button" className="business-ai-attach" disabled title={copy.attachLater} aria-label={copy.attachLater}><Paperclip size={17} /></button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+                    className="business-ai-document-input"
+                    onChange={handleDocumentFile}
+                  />
+                  <button type="button" className="business-ai-attach" onClick={openDocumentPicker} disabled={docAnalyzing} title={copy.documentTitle} aria-label={copy.documentTitle}><Paperclip size={17} /></button>
                   <button type="submit" disabled={!reply.trim() || busy} aria-label={copy.send}>
                     {busy ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}
                   </button>
@@ -589,6 +711,32 @@ export default function BusinessAiBriefTurn() {
           </section>
         </section>
       </div>
+      {docConsentOpen && (
+        <div className="business-ai-doc-consent" role="dialog" aria-modal="true" aria-labelledby="business-ai-doc-consent-title">
+          <section>
+            <button type="button" className="business-ai-doc-close" onClick={() => setDocConsentOpen(false)} aria-label={copy.documentCancel}><X size={18} /></button>
+            <h2 id="business-ai-doc-consent-title">{copy.documentConsentTitle}</h2>
+            <ul>{copy.documentConsentPoints.map((item) => <li key={item}>{item}</li>)}</ul>
+            <label className="business-ai-doc-check">
+              <input type="checkbox" checked={docConsentChecked} onChange={(event) => setDocConsentChecked(event.target.checked)} />
+              <span>{copy.documentConsentCheck}</span>
+            </label>
+            {AI_DOCUMENT_MODE === 'mock' && (
+              <label className="business-ai-doc-mock">
+                {copy.documentMock}
+                <select value={docMockCase} onChange={(event) => setDocMockCase(event.target.value)}>
+                  {DOCUMENT_MOCK_CASES.map((item) => <option key={item.id} value={item.id}>{DOCUMENT_CASE_LABELS[item.id] || item.id}</option>)}
+                </select>
+                <small>{copy.documentMockHint}</small>
+              </label>
+            )}
+            <div className="business-ai-doc-actions">
+              <button type="button" className="business-ai-turn-quiet" onClick={() => setDocConsentOpen(false)}>{copy.documentCancel}</button>
+              <button type="button" className="business-button" disabled={!docConsentChecked} onClick={confirmDocumentConsent}>{copy.documentChoose} <ArrowRight size={16} /></button>
+            </div>
+          </section>
+        </div>
+      )}
     </main>
   );
 }
