@@ -29,14 +29,14 @@
 }
 
 .notification-popover header strong {
-  color: #141413;
+  color: #141413 !important;
   font: 600 14px/1.3 var(--font-sans);
   letter-spacing: -.01em;
 }
 
 .notification-popover header small {
   margin-top: 3px;
-  color: #5f6862;
+  color: #5f6862 !important;
   font: 400 12px/1.4 var(--font-sans);
 }
 
@@ -46,14 +46,14 @@
   gap: 5px;
   border: 0;
   background: transparent;
-  color: #141413;
+  color: #141413 !important;
   cursor: pointer;
   font: 500 12px var(--font-sans);
   padding: 2px 0;
   white-space: nowrap;
 }
 
-.notification-popover header button:hover { color: #5f6862; }
+.notification-popover header button:hover { color: #5f6862 !important; }
 
 .notification-list {
   max-height: min(430px, 60vh);
@@ -89,13 +89,13 @@
 }
 
 .notification-list > button strong {
-  color: #141413;
+  color: #141413 !important;
   font: 500 13px/1.4 var(--font-sans);
 }
 
 .notification-list > button em {
   flex: 0 0 auto;
-  color: #8d948d;
+  color: #8d948d !important;
   font: 400 11px var(--font-sans);
   font-style: normal;
 }
@@ -103,13 +103,13 @@
 .notification-list > button small {
   display: block;
   margin-top: 5px;
-  color: #5f6862;
+  color: #5f6862 !important;
   font: 400 12px/1.5 var(--font-sans);
 }
 
 .notification-list > p {
   margin: 0;
-  color: #5f6862;
+  color: #5f6862 !important;
   font: 400 13px/1.5 var(--font-sans);
   padding: 32px 16px;
   text-align: center;
