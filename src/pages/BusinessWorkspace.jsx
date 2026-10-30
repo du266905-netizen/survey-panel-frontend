@@ -216,7 +216,6 @@ export default function BusinessWorkspace() {
   const [activeFilter, setActiveFilter] = useState('ALL');
   const [form, setForm] = useState(emptyProject);
   const [submitting, setSubmitting] = useState(false);
-  const [startingSelfService, setStartingSelfService] = useState(false);
   const [payingProjectId, setPayingProjectId] = useState('');
   const paypalReturnHandledRef = useRef('');
   const [message, setMessage] = useState('');
@@ -423,38 +422,10 @@ export default function BusinessWorkspace() {
     setOpenChooser(true);
   };
 
-  /* Self-service is a product, not a dashboard form. Create the private draft
-     with placeholders, then open the editor; the brief is completed in the
-     editor itself (the study-brief panel). */
-  const startSelfService = async () => {
-    if (startingSelfService) return;
-    setStartingSelfService(true);
-    setMessage('');
-    try {
-      const response = await createBusinessProject({
-        title: 'New questionnaire',
-        researchGoal: 'Decision to be confirmed. Use the brief editor to describe what this questionnaire should support.',
-        audienceDescription: 'Audience to be confirmed. Use the brief editor to describe who should answer.',
-        studyFormat: 'SURVEY',
-        serviceCategory: 'SURVEY',
-        countries: '',
-        languages: '',
-        incentiveBudget: 'NOT_APPLICABLE',
-        additionalContext: '',
-        selfServiceQuestionnaire: true,
-      });
-      setOpenChooser(false);
-      navigate(withLanguage(`/business/projects/${response.data.project.id}`, language), { state: { starter: true } });
-    } catch {
-      setMessage(feedbackCopy.createError);
-    } finally {
-      setStartingSelfService(false);
-    }
-  };
-
   const chooseProduct = (product) => {
     if (product.type === 'selfService') {
-      startSelfService();
+      setOpenChooser(false);
+      navigate(withLanguage('/business/audience-plan', language));
       return;
     }
     chooseProjectType(product.type);
@@ -693,7 +664,7 @@ export default function BusinessWorkspace() {
             <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{projectsCopy.statuses[project.status] || project.status}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
           </div>
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
-          <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={startSelfService} disabled={startingSelfService}><Plus size={16} /> {ui.planAudience}</button></div>
+          <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
           {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : questionnaireDrafts.length ? <div className="business-questionnaire-hub-list">{questionnaireDrafts.map((project) => {
             const questionnaire = project.questionnaire || {};
             const status = String(questionnaire.status || project.status || 'DRAFT');
