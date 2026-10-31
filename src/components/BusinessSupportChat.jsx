@@ -112,6 +112,7 @@ const FALLBACK = {
   homeLineOne: 'Ask us about',
   homeLineTwo: 'your research.',
   senderName: 'Guanyisearch team',
+  receivedOnline: 'Thanks — your message is with the support team. They will reply here as soon as they can.',
   recentLabel: 'Recent message',
   recentEmpty: 'Nothing yet. Open Messages and ask — a researcher picks it up.',
   helpTitle: 'Common questions',
@@ -506,19 +507,25 @@ export default function BusinessSupportChat() {
   const inThread = Boolean(thread?.id) && !closed;
   const needsRating = Boolean(closed && thread?.ratingRequestedAt && !ratingSent);
 
+  /* The backend answers a first message with a system line that reads
+     "Your message has been received. Support replies are not available in this
+     chat yet." — which tells the visitor nothing they can use. It is replaced
+     here with the same fact said properly: who has it, and when they are back. */
   const threadMessages = useMemo(
-    () => (thread?.messages || []).map((m) => ({
-      id: m.id,
-      /* STAFF and system notices read as white bubbles on the left; only the
-       visitor's own words get the dark bubble on the right. */
-      from: ['STAFF', 'SYSTEM', 'BOT', 'AUTOMATION'].includes(String(m.authorType).toUpperCase())
-        || /^your message has been received/i.test(String(m.body || ''))
-        ? 'them'
-        : 'me',
-      text: m.body,
-      at: m.createdAt,
-    })),
-    [thread?.messages],
+    () => (thread?.messages || []).map((m) => {
+      const body = String(m.body || '');
+      const isReceipt = /your message has been received/i.test(body)
+        || /support replies are not available in this chat yet/i.test(body);
+      return {
+        id: m.id,
+        from: ['STAFF', 'SYSTEM', 'BOT', 'AUTOMATION'].includes(String(m.authorType).toUpperCase()) || isReceipt
+          ? 'them'
+          : 'me',
+        text: isReceipt ? (availability.online ? copy.receivedOnline : offlineLine) : body,
+        at: m.createdAt,
+      };
+    }),
+    [thread?.messages, availability.online, copy.receivedOnline, offlineLine],
   );
 
   /* The composer stays available whenever the conversation is not closed.
