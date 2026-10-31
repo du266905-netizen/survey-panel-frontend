@@ -143,10 +143,11 @@
 .business-support-chat-bubble {
   position: relative;
   border-radius: 13px;
-  font-family: var(--font-sans);
-  /* 14 = the workspace "body" step: this is prose, not a control */
+  /* reading type, so the reading serif: 14 / 400 (§1.1) */
+  font-family: var(--font-reading);
   font-size: 14px;
-  line-height: 1.5;
+  font-weight: 400;
+  line-height: 1.55;
   padding: 9px 12px;
   overflow-wrap: anywhere;
 }
@@ -389,8 +390,8 @@
 .business-support-chat-note {
   flex: none;
   margin: 0;
-  border-top: 1px solid var(--ap-line, rgba(20, 26, 23, .10));
-  background: var(--ap-ground, #f4f6f3);
+  border-top: 1px solid #E5E3DD;
+  background: #FFFFFF;
   color: var(--business-muted, #64746b);
   font-family: var(--font-sans);
   font-size: 13px;
@@ -430,3 +431,174 @@
   font-size: 11px;
   line-height: 1.45;
 }
+
+/* ── three levels: home / messages / help (2026-11-01) ─────────────────────
+   Page-white end to end: no ground, no wash, no gradient inside the panel.
+   Type is the locked research scale — 22/600 serif for the one heading,
+   14/500 and 14/400 serif for rows and prose, 11/600 and 13/400 sans for
+   labels, times and the level names. */
+
+.business-support-chat,
+.business-support-chat-thread,
+.business-support-chat-composer,
+.business-support-chat-home,
+.business-support-chat-help { background: #FFFFFF; }
+
+.business-support-chat-launcher { background: #FFFFFF; }
+
+.business-support-chat [hidden] { display: none !important; }
+
+.business-support-chat-home,
+.business-support-chat-help {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  padding: 22px 18px;
+}
+
+.business-support-chat-home-title {
+  margin: 0 0 20px;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.28;
+}
+
+.business-support-chat-home-label {
+  margin: 0 0 8px;
+  color: #8D948D;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.business-support-chat-recent {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #E5E3DD;
+  border-radius: 12px;
+  background: #FFFFFF;
+  cursor: pointer;
+  padding: 14px;
+  text-align: left;
+}
+
+.business-support-chat-recent:hover { border-color: #141413; }
+
+.business-support-chat-recent-avatar {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 10px;
+  background: #DEEF24;
+  color: #141413;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.business-support-chat-recent-body { display: grid; min-width: 0; gap: 3px; }
+
+.business-support-chat-recent-who {
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+
+.business-support-chat-recent-prev {
+  overflow: hidden;
+  color: #5F6862;
+  font-family: var(--font-reading);
+  font-size: 14px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.business-support-chat-recent-when {
+  align-self: start;
+  color: #8D948D;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.business-support-chat-recent-empty {
+  margin: 0;
+  color: #5F6862;
+  font-family: var(--font-reading);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* the help level is a list, not a chat: one rule per question */
+.business-support-chat-faq { border-top: 1px solid #E5E3DD; }
+
+.business-support-chat-faq-item { border-bottom: 1px solid #E5E3DD; }
+
+.business-support-chat-faq-item > button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 0;
+  background: none;
+  color: #141413;
+  cursor: pointer;
+  font-family: var(--font-reading);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  padding: 15px 2px;
+  text-align: left;
+}
+
+.business-support-chat-faq-item > button svg { flex: 0 0 auto; color: #8D948D; transition: transform .18s ease; }
+.business-support-chat-faq-item > button svg.is-open { transform: rotate(180deg); }
+
+.business-support-chat-faq-item > p {
+  margin: 0 0 16px;
+  color: #5F6862;
+  font-family: var(--font-reading);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* the three level names, text only */
+.business-support-chat-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid #E5E3DD;
+  background: #FFFFFF;
+}
+
+.business-support-chat-tabs button {
+  border: 0;
+  background: none;
+  color: #8D948D;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  padding: 12px 0 13px;
+}
+
+.business-support-chat-tabs button.is-active { color: #141413; }
+.business-support-chat-tabs button:hover { color: #141413; }

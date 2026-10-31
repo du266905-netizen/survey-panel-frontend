@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Paperclip, Send, X } from 'lucide-react';
+import { ChevronDown, Paperclip, Send, X } from 'lucide-react';
 import Logo from './Logo';
 import { useLanguage } from './LanguageContext';
 import {
@@ -80,6 +80,14 @@ const FALLBACK = {
     fallback: 'Thanks — a researcher will pick this up. Meanwhile you can keep working; nothing here blocks your tasks.',
   },
 
+  /* ── the three-level shell: home / messages / help ───────────────────── */
+  tabs: { home: 'Home', messages: 'Messages', help: 'Help' },
+  homeLineOne: 'Hi there.',
+  homeLineTwo: 'How can we help?',
+  recentLabel: 'Recent message',
+  recentEmpty: 'Nothing yet. Open Messages and ask — a researcher picks it up.',
+  helpTitle: 'Common questions',
+
   /* ── the flow the three reference screens describe ───────────────────── */
   backStart: 'Back to the start',
   contact: 'Contact support',
@@ -153,6 +161,8 @@ export default function BusinessSupportChat() {
 
   const [open, setOpen] = useState(false);
   const [screen, setScreen] = useState(SCREEN.welcome);
+  /* three levels: home (overview), messages (the thread), help (faq) */
+  const [tab, setTab] = useState('home');
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [pending, setPending] = useState(false);
@@ -498,7 +508,60 @@ export default function BusinessSupportChat() {
             </button>
           </header>
 
-          <div className="business-support-chat-thread" ref={threadRef} role="log" aria-live="polite">
+          {tab === 'home' && (
+            <div className="business-support-chat-home">
+              <h2 className="business-support-chat-home-title">
+                {copy.homeLineOne}
+                <br />
+                {copy.homeLineTwo}
+              </h2>
+              <p className="business-support-chat-home-label">{copy.recentLabel}</p>
+              {messages.length ? (
+                <button type="button" className="business-support-chat-recent" onClick={() => setTab('messages')}>
+                  <span className="business-support-chat-recent-avatar" aria-hidden="true">G</span>
+                  <span className="business-support-chat-recent-body">
+                    <span className="business-support-chat-recent-who">{copy.title}</span>
+                    <span className="business-support-chat-recent-prev">{messages[messages.length - 1].text}</span>
+                  </span>
+                  <span className="business-support-chat-recent-when">{clockLabel(messages[messages.length - 1].at)}</span>
+                </button>
+              ) : (
+                <p className="business-support-chat-recent-empty">{copy.recentEmpty}</p>
+              )}
+            </div>
+          )}
+
+          {tab === 'help' && (
+            <div className="business-support-chat-help">
+              <h2 className="business-support-chat-home-title">{copy.helpTitle}</h2>
+              <div className="business-support-chat-faq">
+                {faqLoading && <p className="business-support-chat-recent-empty">{copy.faqLoading}</p>}
+                {!faqLoading && !faq.length && <p className="business-support-chat-recent-empty">{copy.faqNone}</p>}
+                {faq.map((item) => (
+                  <div key={item.id} className="business-support-chat-faq-item">
+                    <button type="button" aria-expanded={openFaqId === item.id} onClick={() => toggleFaq(item)}>
+                      <span>{item.question}</span>
+                      <ChevronDown
+                        size={15}
+                        strokeWidth={1.65}
+                        aria-hidden="true"
+                        className={openFaqId === item.id ? 'is-open' : ''}
+                      />
+                    </button>
+                    {openFaqId === item.id && <p>{item.answer}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div
+            className="business-support-chat-thread"
+            ref={threadRef}
+            role="log"
+            aria-live="polite"
+            hidden={tab !== 'messages'}
+          >
             {/* Screen 1 — opening. */}
             {messages.map((message) => (
               <article key={message.id} className={`business-support-chat-line is-${message.from}`}>
@@ -515,7 +578,7 @@ export default function BusinessSupportChat() {
 
             {screen === SCREEN.welcome && !pending && (
               <div className="business-support-chat-suggestions" role="group" aria-label={copy.suggestionsLabel}>
-                <button type="button" className="business-support-chat-chip" onClick={() => setScreen(SCREEN.faq)}>
+                <button type="button" className="business-support-chat-chip" onClick={() => setTab('help')}>
                   {copy.seeFaq}
                 </button>
                 <button type="button" className="business-support-chat-chip" onClick={() => setScreen(SCREEN.handoff)}>
@@ -675,6 +738,7 @@ export default function BusinessSupportChat() {
           {showComposer ? (
             <form
               className="business-support-chat-composer"
+              hidden={tab !== 'messages'}
               onSubmit={(event) => {
                 event.preventDefault();
                 void deliver(input);
@@ -737,6 +801,22 @@ export default function BusinessSupportChat() {
               composer's else-branch without one), so the same sentence moved
               around and read as if it appeared twice. */}
           <p className="business-support-chat-note">{copy.aiNote}</p>
+
+          {/* Three levels, named. Text only: the icon book forbids icon-only
+              controls and decoration, and a badge would be one more. */}
+          <nav className="business-support-chat-tabs" aria-label={copy.title}>
+            {['home', 'messages', 'help'].map((key) => (
+              <button
+                key={key}
+                type="button"
+                className={tab === key ? 'is-active' : ''}
+                aria-current={tab === key ? 'page' : undefined}
+                onClick={() => setTab(key)}
+              >
+                {copy.tabs[key]}
+              </button>
+            ))}
+          </nav>
         </section>
       )}
 
