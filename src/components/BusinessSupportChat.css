@@ -611,7 +611,7 @@
 .business-support-chat-hero {
   position: relative;
   flex: none;
-  height: 186px;
+  height: 168px;
   overflow: hidden;
   background: #141413;
 }
@@ -651,25 +651,29 @@
   text-transform: none;
 }
 
-/* 38 is the greeting step and carries 400, not 600 (§1.1) */
+/* 22 / 600 — the panel-title step (§1.1). 38 was too loud over a photograph. */
 .business-support-chat-hero .business-support-chat-home-title {
   margin: 0;
   color: #FFFFFF;
-  font-size: 38px;
-  font-weight: 400;
-  letter-spacing: -.028em;
-  line-height: 1.06;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.25;
 }
 
 .business-support-chat-home-body { padding: 18px 18px 22px; }
 
 .business-support-chat-recent-avatar {
+  display: grid;
   width: 32px;
   height: 32px;
+  place-items: center;
   border-radius: 0;
   background: none;
-  object-fit: contain;
+  color: #141413;
 }
+
+.business-support-chat-recent-avatar svg { width: 22px; height: 22px; }
 
 .business-support-chat-recent { grid-template-columns: 32px minmax(0, 1fr) auto; }
 

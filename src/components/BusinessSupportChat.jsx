@@ -76,6 +76,18 @@ const TAB_ICONS = {
   ),
 };
 
+
+/* The support team's own mark for the recent-message row: 24 grid, 1.65 stroke,
+   round joins, no fill. */
+const TEAM_ICON = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="9.2" cy="8.4" r="3.4" />
+    <path d="M3.2 19.4c0-3.1 2.7-5.2 6-5.2s6 2.1 6 5.2" />
+    <path d="M16.4 5.6a3 3 0 0 1 0 5.8" />
+    <path d="M17.6 14.4c2 .5 3.2 1.9 3.2 3.9" />
+  </svg>
+);
+
 const FALLBACK = {
   launcher: 'Open help chat',
   close: 'Close chat',
@@ -555,7 +567,6 @@ export default function BusinessSupportChat() {
               <div className="business-support-chat-hero">
                 <img src="/chat-hero.jpg" alt="" aria-hidden="true" />
                 <div className="business-support-chat-hero-copy">
-                  <p className="business-support-chat-hero-team">{copy.senderName}</p>
                   <h2 className="business-support-chat-home-title">
                     {copy.homeLineOne}
                     <br />
@@ -567,7 +578,7 @@ export default function BusinessSupportChat() {
               <p className="business-support-chat-home-label">{copy.recentLabel}</p>
               {messages.length ? (
                 <button type="button" className="business-support-chat-recent" onClick={() => setTab('messages')}>
-                  <img className="business-support-chat-recent-avatar" src="/guanyisearch-brand-mark-transparent.png" alt="" aria-hidden="true" />
+                  <span className="business-support-chat-recent-avatar">{TEAM_ICON}</span>
                   <span className="business-support-chat-recent-body">
                     <span className="business-support-chat-recent-who">{copy.senderName}</span>
                     <span className="business-support-chat-recent-prev">{messages[messages.length - 1].text}</span>
