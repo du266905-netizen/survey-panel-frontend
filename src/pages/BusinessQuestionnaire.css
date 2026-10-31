@@ -723,3 +723,36 @@
    controls instead of reserving two blank lines. */
 .business-builder--v2 .business-question-card > textarea { min-height: 40px; padding: 4px 0; border: 0; background: transparent; color: #141413; font-size: 16px; font-weight: 500; line-height: 1.45; resize: none; }
 .business-builder--v2 .business-question-card > textarea:focus { outline: 0; box-shadow: inset 0 -1px 0 #141413; }
+
+/* Drawer: no eyebrow above a heading that already says the same thing. */
+.business-builder-drawer-body section > p { display: none; }
+.business-builder-drawer h2 { margin: 0 0 8px; color: #5f6862; font-family: var(--font-sans); font-size: 13px; font-weight: 500; letter-spacing: 0; }
+
+/* Preview: same flat language as the editor — white sheet, sans, one primary. */
+.business-preview-modal { background: rgba(20, 20, 19, .35); padding: 32px; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.business-preview-shell { width: min(100%, 720px); border: 1px solid #E5E3DD; border-radius: 16px; background: #FFFFFF; box-shadow: 0 24px 70px rgba(20, 20, 19, .18); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.business-preview-shell > header { border-bottom: 1px solid #E5E3DD; background: #FFFFFF; backdrop-filter: none; -webkit-backdrop-filter: none; padding: 14px 20px; }
+.business-preview-shell > header p { display: none; }
+.business-preview-shell > header strong { display: block; margin: 0; color: #5f6862; font-size: 12px; font-weight: 500; }
+.business-preview-shell > header button { width: 32px; height: 32px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF; color: #141413; }
+.business-preview-shell form { padding: 40px 32px; background: #FFFFFF; }
+.business-preview-shell form > p { display: none; }
+.business-preview-shell h1 { margin: 0 0 8px; color: #141413; font-family: var(--font-sans); font-size: 32px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+.business-preview-cover { margin-bottom: 28px; color: #5f6862; font-size: 14px; line-height: 1.6; }
+.business-preview-shell fieldset { border-top: 1px solid #E5E3DD; padding: 20px 0; }
+.business-preview-shell legend { color: #141413; font-size: 14px; font-weight: 500; line-height: 1.5; }
+.business-preview-shell legend em { margin-left: 6px; color: #B42318; font-size: 11px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.business-preview-shell fieldset > input,
+.business-preview-shell fieldset > textarea,
+.business-preview-options label > input:not([type="checkbox"]):not([type="radio"]),
+.business-preview-options label > input[type="text"] { min-height: 40px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF; color: #141413; font-size: 13px; }
+.business-preview-options > label { color: #141413; font-size: 14px; font-weight: 400; }
+.business-preview-options input { accent-color: #141413; }
+.business-preview-options small { color: #8d948d; font-size: 12px; }
+.business-preview-ranking label > span { background: #F5F5F3; color: #141413; font-size: 11px; }
+.business-preview-shell form > footer { border-top: 1px solid #E5E3DD; padding-top: 16px; }
+.business-preview-shell footer button { min-height: 36px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF; color: #141413; font-size: 13px; font-weight: 500; }
+.business-preview-shell footer .business-builder-publish { border-color: #141413; background: #141413; color: #FFFFFF; }
+.business-preview-error { border: 1px solid #EAD9D5; background: #FFF7F6; color: #B42318; font-size: 13px; }
+.business-preview-complete { border: 1px solid #E5E3DD; background: #F5F5F3; color: #141413; font-size: 13px; }
+.business-preview-empty { color: #8d948d; font-size: 13px; }
