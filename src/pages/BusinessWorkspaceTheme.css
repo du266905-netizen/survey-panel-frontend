@@ -5508,3 +5508,14 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-workspace-body { grid-template-columns: 288px minmax(0, 1fr); }
 #root .business-projects { max-width: none; width: 100%; padding: 40px 48px 72px; }
 #root .business-projects-head { max-width: 1280px; }
+/* Draft card title is a card title, not a page heading. */
+#root .business-workspace .business-questionnaire-card-body h2 {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: #141413;
+  font: 600 16px/1.35 var(--font-sans);
+  letter-spacing: -.01em;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
