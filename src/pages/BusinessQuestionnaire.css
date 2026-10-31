@@ -437,13 +437,40 @@
 .business-question-navigator button strong { font-size: 12px !important; font-weight: 500 !important; }
 .business-question-navigator button small { letter-spacing: 0 !important; text-transform: none !important; }
 
-/* Card headings use the reading face; controls stay sans. */
+/* Card headings inside the editor are UI chrome, not page titles.
+   2026-11-01: these were on the reading serif (15 / 600). In a 48px row that
+   sits directly above 13px helper text, the serif title and the sans meta
+   line read as two different systems fighting each other. The serif display
+   face stays on the spacious surfaces — the submission dialog at 22, the
+   workspace hero, the onboarding card — and gets out of the cramped rows. */
 .business-study-brief > summary b,
 .business-audience-modules > summary b,
 .business-question-toolbar strong {
   color: #24231f !important;
-  font: 600 15px/1.2 var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  letter-spacing: -.01em !important;
+  line-height: 1.25 !important;
 }
+.business-study-brief > summary small,
+.business-audience-modules > summary small {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+/* The measurement-method guidance was 11px in the reading serif, sitting
+   inside an otherwise all-sans control block — the clearest case of the two
+   systems fighting in one card. It is UI prose: sans, body step, one weight. */
+.business-question-method-note,
+.business-audience-modules > footer {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+}
+.business-question-add-choice { font-weight: 600 !important; }
 .business-question-card-head,
 .business-question-card-head select,
 .business-question-card-head button,
@@ -541,7 +568,12 @@
 }
 
 /* Final side-rail spacing and width: question map gets the wider column,
-   design check the narrower one. Both use the sage-bone surface, not gray. */
+   design check the narrower one. Both use the sage-bone surface, not gray.
+
+   2026-11-01: neither rail has markup any more — the builder renders only
+   .business-builder-main — and `.business-builder--v2` sets this layout to
+   `display: block` anyway, so these tracks are inert. The left gutter the
+   owner asked for lives on .business-builder-main's margin (line ~700). */
 .business-builder .business-builder-layout {
   grid-template-columns: 284px minmax(0, 1fr) 224px;
 }
@@ -666,7 +698,7 @@
 .business-builder--v2 .business-builder-badge { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: #B42318; color: #FFFFFF; font-size: 11px; font-weight: 600; }
 
 .business-builder--v2 .business-builder-layout { display: block; width: 100%; max-width: none; }
-.business-builder--v2 .business-builder-main { width: min(100%, 880px); min-height: calc(100svh - 64px); margin: 0 auto; padding: 48px 24px 120px; border-right: 0; background: #FFFFFF; }
+.business-builder--v2 .business-builder-main { width: min(100%, 880px); min-height: calc(100svh - 64px); margin-left: max(0px, calc((100% - 880px) * .68)); margin-right: auto; padding: 48px 24px 120px; border-right: 0; background: #FFFFFF; }
 
 .business-builder--v2 .business-builder-title { width: 100%; border: 0; background: transparent; color: #141413; font-size: 32px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
 .business-builder--v2 .business-eyebrow { color: #8d948d; font-size: 11px; font-weight: 500; letter-spacing: .08em; }
