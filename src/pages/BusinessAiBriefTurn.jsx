@@ -190,18 +190,18 @@ export default function BusinessAiBriefTurn() {
   const navigate = useNavigate();
   const location = useLocation();
   const copy = useMemo(() => getAiBriefTurnCopy(language), [language]);
-  const [stored] = useState(() => loadStored());
-
-  const [conversationId, setConversationId] = useState(() => stored?.conversationId || newId('brief'));
-  const [draft, setDraft] = useState(() => stored?.draft || emptyDraft());
+  /* Opening the page always starts a new conversation. The previous one stays
+     in the history list on the left, where it belongs — an empty page is the
+     contract every assistant keeps (2026-11-01). `loadStored()` is no longer
+     consulted on mount; `openConversation` is the only way back in. */
+  const [conversationId, setConversationId] = useState(() => newId('brief'));
+  const [draft, setDraft] = useState(() => emptyDraft());
   const [messages, setMessages] = useState(() => (
-    stored?.messages?.length
-      ? stored.messages
-      : [{ id: 'opening-guide', role: 'guide', opening: true, content: copy.opening }]
+    [{ id: 'opening-guide', role: 'guide', opening: true, content: copy.opening }]
   ));
-  const [action, setAction] = useState(() => stored?.action || null);
-  const [missing, setMissing] = useState(() => stored?.missing || []);
-  const [assumptions, setAssumptions] = useState(() => stored?.assumptions || []);
+  const [action, setAction] = useState(() => null);
+  const [missing, setMissing] = useState(() => []);
+  const [assumptions, setAssumptions] = useState(() => []);
   const [history, setHistory] = useState(() => readHistory());
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');

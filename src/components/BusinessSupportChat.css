@@ -694,3 +694,19 @@
 
 /* the two choices sit at the foot of the thread, not floating mid-sentence */
 .business-support-chat-suggestions.is-footer { margin-top: auto; }
+
+/* the two ways out of the home level: continue, or start clean */
+.business-support-chat-new {
+  margin-top: 14px;
+  border: 1px solid #141413;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+}
+
+.business-support-chat-new:hover { background: #141413; color: #FFFFFF; }
