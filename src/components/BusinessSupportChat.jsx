@@ -50,6 +50,32 @@ import './BusinessSupportChat.css';
  *    fallback below only guarantees the panel is never blank if a key is missing.
  */
 
+
+/* Three tabs, three icons. Drawn to the icon book: 24 × 24 viewBox, 20 units of
+   content, stroke 1.65, round caps and joins, no fill, currentColor. */
+const TAB_ICONS = {
+  home: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3.6" y="3.6" width="7.2" height="7.2" rx="1.5" />
+      <rect x="13.2" y="3.6" width="7.2" height="7.2" rx="1.5" />
+      <rect x="3.6" y="13.2" width="7.2" height="7.2" rx="1.5" />
+      <rect x="13.2" y="13.2" width="7.2" height="7.2" rx="1.5" />
+    </svg>
+  ),
+  messages: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20.4 14.6a2 2 0 0 1-2 2H9l-4.4 3.6V5.6a2 2 0 0 1 2-2h11.8a2 2 0 0 1 2 2z" />
+      <path d="M8.6 8.8h7.2M8.6 12h4.4" />
+    </svg>
+  ),
+  help: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 6.6C10.4 5.2 8.2 4.6 4.6 4.9v12.6c3.6-.3 5.8.3 7.4 1.7 1.6-1.4 3.8-2 7.4-1.7V4.9c-3.6-.3-5.8.3-7.4 1.7z" />
+      <path d="M12 6.6v12.6" />
+    </svg>
+  ),
+};
+
 const FALLBACK = {
   launcher: 'Open help chat',
   close: 'Close chat',
@@ -82,8 +108,10 @@ const FALLBACK = {
 
   /* ── the three-level shell: home / messages / help ───────────────────── */
   tabs: { home: 'Home', messages: 'Messages', help: 'Help' },
-  homeLineOne: 'Hi there.',
-  homeLineTwo: 'How can we help?',
+  teamName: 'guanyisearch team',
+  homeLineOne: 'Ask us about',
+  homeLineTwo: 'your research.',
+  senderName: 'Guanyisearch team',
   recentLabel: 'Recent message',
   recentEmpty: 'Nothing yet. Open Messages and ask — a researcher picks it up.',
   helpTitle: 'Common questions',
@@ -97,7 +125,7 @@ const FALLBACK = {
   faqLoading: 'Loading…',
   resolved: 'Yes, my issue is resolved',
   needMore: 'No, I need more help',
-  askFirst: 'Describe what you need help with and I’ll pass it to a specialist.',
+  askFirst: 'Describe what you need help with and I’ll pass it to a specialist. The more you tell us up front, the faster they can pick it up.',
   offline: 'All support specialists are currently offline. Please try again during support hours.',
   hoursAre: 'Our support hours are',
   returnOn: 'They will be back on',
@@ -163,6 +191,8 @@ export default function BusinessSupportChat() {
   const [screen, setScreen] = useState(SCREEN.welcome);
   /* three levels: home (overview), messages (the thread), help (faq) */
   const [tab, setTab] = useState('home');
+  /* the composer is not offered until the visitor asks for a person */
+  const [askSupport, setAskSupport] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [pending, setPending] = useState(false);
@@ -479,7 +509,12 @@ export default function BusinessSupportChat() {
   const threadMessages = useMemo(
     () => (thread?.messages || []).map((m) => ({
       id: m.id,
-      from: String(m.authorType).toUpperCase() === 'STAFF' ? 'them' : 'me',
+      /* STAFF and system notices read as white bubbles on the left; only the
+       visitor's own words get the dark bubble on the right. */
+      from: ['STAFF', 'SYSTEM', 'BOT', 'AUTOMATION'].includes(String(m.authorType).toUpperCase())
+        || /^your message has been received/i.test(String(m.body || ''))
+        ? 'them'
+        : 'me',
       text: m.body,
       at: m.createdAt,
     })),
@@ -489,7 +524,7 @@ export default function BusinessSupportChat() {
   /* The composer stays available whenever the conversation is not closed.
      Hiding it off-shift used to remove the one thing a visitor might still want:
      the chance to read the topics, or to leave the question for the morning. */
-  const showComposer = !closed;
+  const showComposer = !closed && (askSupport || inThread);
 
   return (
     <>
@@ -509,18 +544,25 @@ export default function BusinessSupportChat() {
           </header>
 
           {tab === 'home' && (
-            <div className="business-support-chat-home">
-              <h2 className="business-support-chat-home-title">
-                {copy.homeLineOne}
-                <br />
-                {copy.homeLineTwo}
-              </h2>
+            <div className="business-support-chat-home is-hero">
+              <div className="business-support-chat-hero">
+                <img src="/chat-hero.jpg" alt="" aria-hidden="true" />
+                <div className="business-support-chat-hero-copy">
+                  <p className="business-support-chat-hero-team">{copy.teamName}</p>
+                  <h2 className="business-support-chat-home-title">
+                    {copy.homeLineOne}
+                    <br />
+                    {copy.homeLineTwo}
+                  </h2>
+                </div>
+              </div>
+              <div className="business-support-chat-home-body">
               <p className="business-support-chat-home-label">{copy.recentLabel}</p>
               {messages.length ? (
                 <button type="button" className="business-support-chat-recent" onClick={() => setTab('messages')}>
-                  <span className="business-support-chat-recent-avatar" aria-hidden="true">G</span>
+                  <img className="business-support-chat-recent-avatar" src="/guanyisearch-brand-mark-transparent.png" alt="" aria-hidden="true" />
                   <span className="business-support-chat-recent-body">
-                    <span className="business-support-chat-recent-who">{copy.title}</span>
+                    <span className="business-support-chat-recent-who">{copy.senderName}</span>
                     <span className="business-support-chat-recent-prev">{messages[messages.length - 1].text}</span>
                   </span>
                   <span className="business-support-chat-recent-when">{clockLabel(messages[messages.length - 1].at)}</span>
@@ -528,6 +570,7 @@ export default function BusinessSupportChat() {
               ) : (
                 <p className="business-support-chat-recent-empty">{copy.recentEmpty}</p>
               )}
+              </div>
             </div>
           )}
 
@@ -577,11 +620,15 @@ export default function BusinessSupportChat() {
             )}
 
             {screen === SCREEN.welcome && !pending && (
-              <div className="business-support-chat-suggestions" role="group" aria-label={copy.suggestionsLabel}>
+              <div className="business-support-chat-suggestions is-footer" role="group" aria-label={copy.suggestionsLabel}>
                 <button type="button" className="business-support-chat-chip" onClick={() => setTab('help')}>
                   {copy.seeFaq}
                 </button>
-                <button type="button" className="business-support-chat-chip" onClick={() => setScreen(SCREEN.handoff)}>
+                <button
+                  type="button"
+                  className="business-support-chat-chip"
+                  onClick={() => { setTab('messages'); setScreen(SCREEN.handoff); setAskSupport(true); }}
+                >
                   {copy.contact}
                 </button>
               </div>
@@ -800,7 +847,7 @@ export default function BusinessSupportChat() {
               mutually exclusive branches (a footer with a conversation, the
               composer's else-branch without one), so the same sentence moved
               around and read as if it appeared twice. */}
-          <p className="business-support-chat-note">{copy.aiNote}</p>
+          {tab === 'help' && <p className="business-support-chat-note">{copy.aiNote}</p>}
 
           {/* Three levels, named. Text only: the icon book forbids icon-only
               controls and decoration, and a badge would be one more. */}
@@ -813,7 +860,8 @@ export default function BusinessSupportChat() {
                 aria-current={tab === key ? 'page' : undefined}
                 onClick={() => setTab(key)}
               >
-                {copy.tabs[key]}
+                {TAB_ICONS[key]}
+                <span>{copy.tabs[key]}</span>
               </button>
             ))}
           </nav>
