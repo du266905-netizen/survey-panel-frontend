@@ -5449,3 +5449,36 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-project-menu > div { border: 1px solid #E5E3DD; border-radius: 10px; background: #FFFFFF; box-shadow: 0 12px 32px rgba(20, 20, 19, .12); padding: 6px; }
 #root .business-project-menu > div button { border-radius: 6px; color: #141413; font-size: 13px; font-weight: 500; }
 #root .business-project-menu > div button:hover { background: #F5F5F3; }
+
+/* Sweep: page titles, start cards, chooser and support surfaces leave the
+   cream/green palette; sans type throughout, lime only for the primary CTA. */
+#root .business-workspace { background: #FFFFFF; }
+#root .business-projects h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-sans) !important; font-size: 32px !important; font-weight: 600 !important; letter-spacing: -.01em; line-height: 1.2; }
+#root .business-projects-head > div > p:last-child { color: #5f6862; font-weight: 400; }
+
+#root .business-start-card { background: #FFFFFF; border: 1px solid #E5E3DD; border-radius: 16px; box-shadow: none; }
+#root .business-start-card:hover { box-shadow: none; transform: none; }
+#root .business-start-icon { background: #F5F5F3; color: #141413; }
+#root .business-start-card > p { color: #8d948d; }
+#root .business-start-card h2 { color: #141413; font-family: var(--font-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+#root .business-start-card > span { color: #5f6862; }
+#root .business-start-card ul { color: #5f6862; }
+#root .business-start-card li::before { background: #141413; }
+
+#root .business-project-modal--chooser > section { background: #FFFFFF; border: 1px solid #E5E3DD; border-radius: 16px; box-shadow: none; }
+#root .business-project-modal--chooser h2 { color: #141413; font-family: var(--font-sans); font-size: 32px; font-weight: 600; letter-spacing: -.01em; }
+#root .business-chooser-grid button { background: #FFFFFF; border: 1px solid #E5E3DD; border-radius: 12px; }
+#root .business-chooser-grid button:hover { border-color: #141413; transform: none; }
+#root .business-chooser-grid strong { color: #141413; font-family: var(--font-sans); font-size: 22px; font-weight: 600; }
+#root .business-chooser-grid small,
+#root .business-chooser-grid button > span { color: #8d948d; }
+#root .business-chooser-grid em { color: #141413; }
+
+#root .business-support-card,
+#root .business-support-steps { background: #FFFFFF; border: 1px solid #E5E3DD; }
+#root .business-support-art { background: #F5F5F3; }
+#root .business-project-list dt { color: #8d948d; font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; }
+#root .business-project-list dd { color: #141413; font-size: 14px; font-weight: 400; text-transform: none; }
+#root .business-project-list dl div { border-left: 0; padding-left: 0; }
+#root .business-project-list dl { gap: 10px; border-top: 1px solid #E5E3DD; padding-top: 16px; }
+#root .business-status { border: 1px solid #E5E3DD; background: #F5F5F3; color: #5f6862; font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; padding: 4px 9px; }

@@ -756,3 +756,20 @@
 .business-preview-error { border: 1px solid #EAD9D5; background: #FFF7F6; color: #B42318; font-size: 13px; }
 .business-preview-complete { border: 1px solid #E5E3DD; background: #F5F5F3; color: #141413; font-size: 13px; }
 .business-preview-empty { color: #8d948d; font-size: 13px; }
+
+/* Results page: white ground, sans titles, neutral rows. */
+#root .business-results-page { background: #FFFFFF; color: #141413; }
+#root .business-results-intro h1 { color: #141413; font-family: var(--font-sans); font-size: 32px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+#root .business-results-main h2,
+#root .business-results-records h2,
+#root .business-results-empty h2 { color: #141413; font-family: var(--font-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.25; }
+#root .business-results-intro dl div { background: #F5F5F3; border-color: #E5E3DD; }
+#root .business-results-intro dd { color: #141413; }
+#root .business-results-layout,
+#root .business-results-records article,
+#root .business-results-empty { background: #FFFFFF; border-color: #E5E3DD; }
+#root .business-results-questions { background: #FAFAF8; border-color: #E5E3DD; }
+#root .business-results-questions button.is-active,
+#root .business-results-questions button:hover { border-left-color: #141413; }
+#root .business-results-distribution b { background: #141413; }
+#root .business-results-text-responses article { background: #F5F5F3; border-left-color: #141413; }
