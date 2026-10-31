@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Lock, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
-import { createAlipayRecharge, createCryptoRecharge, createPaypalRecharge, getPaypalRecharge } from '../api/realApi';
+import { createAlipayRecharge, createAirwallexRecharge, createCryptoRecharge, createPaypalRecharge, getAirwallexCapability, getPaypalRecharge } from '../api/realApi';
 import { createPaypalAttemptTracker } from './paypalAttempt';
 
 /* "Add funds" dialog, modelled on the top-up sheet the client asked for: the
@@ -9,13 +9,52 @@ import { createPaypalAttemptTracker } from './paypalAttempt';
  * note. It replaces the old standalone payment page as the in-app entry point;
  * the balance chip in the top bar opens it.
  *
- * Crypto, Alipay and PayPal rows are live; bank transfer and card remain
- * placeholders until their backend routes and provider contracts exist. The SSL note and the card marks mirror what the site already
- * claims elsewhere, and no card data is collected here: the routes hand off to
- * the provider. */
+ * Crypto, Alipay and PayPal rows are live. Card and bank transfer are Airwallex
+ * routes: they only appear when the server reports the method as enabled, and
+ * both hand off (card) or show transfer instructions (bank). No card data is
+ * collected here. See docs/AIRWALLEX-TOPUP-v1-contract.md. */
 
 const QUICK_AMOUNTS = [100, 250, 500, 1000];
 const MIN_TOP_UP = 100;
+
+/* Bank transfer is the only route where the buyer leaves the modal with a
+ * second task (send the money, quote the reference). Keep its copy next to the
+ * flow it belongs to; zh/en are the two reviewed locales, other locales fall
+ * back to English until the language library catches up. */
+const TRANSFER_COPY = {
+  zh: {
+    title: '银行电汇信息',
+    intro: '请通过网银或柜台汇款。附言/汇款用途里必须填写下面的参考号，否则我们可能无法把这笔钱记到你的账户。',
+    reference: '参考号（必填）',
+    beneficiary: '收款人',
+    bank: '开户行',
+    account: '账号 / IBAN',
+    swift: 'SWIFT / BIC',
+    amount: '汇款金额',
+    expires: '请在此时间前完成汇款',
+    copy: '复制',
+    copied: '已复制',
+    note: '电汇到账后余额会自动更新，通常需要 1–3 个工作日；这笔订单在到账前保持“待付款”。',
+    done: '完成',
+    unavailable: '这个支付方式暂不可用。',
+  },
+  en: {
+    title: 'Bank transfer details',
+    intro: 'Send the transfer from your bank. The reference below must appear in the payment reference, or we may not be able to credit your account.',
+    reference: 'Reference (required)',
+    beneficiary: 'Beneficiary',
+    bank: 'Bank',
+    account: 'Account / IBAN',
+    swift: 'SWIFT / BIC',
+    amount: 'Amount',
+    expires: 'Send before',
+    copy: 'Copy',
+    copied: 'Copied',
+    note: 'Your balance updates once the transfer arrives, usually within 1–3 business days. The order stays pending until then.',
+    done: 'Done',
+    unavailable: 'This payment method is not available right now.',
+  },
+};
 
 /* Official Cryptomus cube, pulled from their own CDN sprite
  * (cryptomus.com/public/sprites/shared-logo.*.svg). It is a single currentColor
@@ -70,9 +109,14 @@ export default function BusinessAddFundsModal({ open, onClose }) {
   const [custom, setCustom] = useState(false);
   const [submitting, setSubmitting] = useState('');
   const [error, setError] = useState('');
+  const [capability, setCapability] = useState(null);
+  const [transfer, setTransfer] = useState(null);
+  const [copied, setCopied] = useState('');
   const inputRef = useRef(null);
   const paypalAttempt = useRef(null);
   if (!paypalAttempt.current) paypalAttempt.current = createPaypalAttemptTracker();
+
+  const text = language?.startsWith('zh') ? TRANSFER_COPY.zh : TRANSFER_COPY.en;
 
   useEffect(() => {
     if (!open) return undefined;
@@ -80,6 +124,18 @@ export default function BusinessAddFundsModal({ open, onClose }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
+
+  /* Which Airwallex routes exist is a server fact, not a UI guess: an unopened
+   * method must not render a button that cannot work. A failed lookup hides the
+   * rows rather than showing them as "available". */
+  useEffect(() => {
+    if (!open) return undefined;
+    let active = true;
+    getAirwallexCapability()
+      .then((data) => { if (active) setCapability(data || null); })
+      .catch(() => { if (active) setCapability(null); });
+    return () => { active = false; };
+  }, [open]);
 
   useEffect(() => {
     if (!open && paypalAttempt.current) paypalAttempt.current.reset();
@@ -116,6 +172,25 @@ export default function BusinessAddFundsModal({ open, onClose }) {
         return;
       }
 
+      if (method === 'airwallex-card' || method === 'airwallex-bank') {
+        const payment = (await createAirwallexRecharge({
+          amountUsd: numeric.toFixed(2),
+          method: method === 'airwallex-card' ? 'card' : 'bank_transfer',
+          returnUrl: `${window.location.origin}/business/workspace?recharge=return`,
+          idempotencyKey: `airwallex:${method}:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`,
+        }))?.payment;
+        if (method === 'airwallex-bank') {
+          // The buyer stays here: the money moves bank-to-bank, and the order
+          // only becomes "paid" when the provider or finance confirms it.
+          if (!payment?.transfer?.reference) throw new Error('NO_TRANSFER_DETAILS');
+          setTransfer(payment.transfer);
+          return;
+        }
+        if (!payment?.checkoutUrl) throw new Error('NO_CHECKOUT_URL');
+        window.location.assign(payment.checkoutUrl);
+        return;
+      }
+
       const payload = method === 'alipay'
         ? await createAlipayRecharge({
             amountUsd,
@@ -134,6 +209,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
     } catch (failure) {
       const code = failure?.response?.data?.code;
       if (code === 'ALIPAY_NOT_CONFIGURED') setError(ui.alipayUnavailable || 'Alipay is not available yet.');
+      else if (code === 'AIRWALLEX_NOT_CONFIGURED' || code === 'AIRWALLEX_METHOD_UNAVAILABLE') setError(text.unavailable);
       else setError(ui.paymentFailed || 'We could not start this payment. Please try again.');
     } finally {
       if (isPaypal) paypalAttempt.current.end();
@@ -143,6 +219,15 @@ export default function BusinessAddFundsModal({ open, onClose }) {
 
   const numeric = Number(String(amount).replace(/[^0-9.]/g, ''));
   const valid = Number.isFinite(numeric) && numeric >= MIN_TOP_UP;
+  const methodEnabled = (id) => Boolean(capability?.enabled)
+    && Boolean((capability?.methods || []).find((item) => item.id === id)?.enabled);
+  const copyValue = async (field, value) => {
+    try {
+      await navigator.clipboard.writeText(String(value || ''));
+      setCopied(field);
+      window.setTimeout(() => setCopied(''), 1500);
+    } catch { /* Clipboard permission is optional. */ }
+  };
 
   return (
     <div className="business-funds-modal" role="dialog" aria-modal="true" aria-labelledby="business-funds-title">
@@ -202,16 +287,67 @@ export default function BusinessAddFundsModal({ open, onClose }) {
           </p>
         </div>
 
+        {transfer ? (
+          <section className="business-funds-transfer">
+            <header>
+              <h3>{text.title}</h3>
+              <p>{text.intro}</p>
+            </header>
+            <dl>
+              <div>
+                <dt>{text.amount}</dt>
+                <dd>{transfer.currency} {transfer.amount}</dd>
+              </div>
+              <div className="is-reference">
+                <dt>{text.reference}</dt>
+                <dd>{transfer.reference}</dd>
+                <button type="button" onClick={() => copyValue('reference', transfer.reference)}>{copied === 'reference' ? text.copied : text.copy}</button>
+              </div>
+              <div>
+                <dt>{text.beneficiary}</dt>
+                <dd>{transfer.beneficiaryName}</dd>
+              </div>
+              <div>
+                <dt>{text.bank}</dt>
+                <dd>{transfer.bankName}</dd>
+              </div>
+              <div>
+                <dt>{text.account}</dt>
+                <dd>{transfer.accountNumber}</dd>
+                <button type="button" onClick={() => copyValue('account', transfer.accountNumber)}>{copied === 'account' ? text.copied : text.copy}</button>
+              </div>
+              <div>
+                <dt>{text.swift}</dt>
+                <dd>{transfer.swiftCode}</dd>
+              </div>
+              {transfer.expiresAt ? (
+                <div>
+                  <dt>{text.expires}</dt>
+                  <dd>{new Date(transfer.expiresAt).toLocaleString(language)}</dd>
+                </div>
+              ) : null}
+            </dl>
+            <p className="business-funds-transfer-note">{text.note}</p>
+            <button type="button" className="business-funds-transfer-done" onClick={() => { setTransfer(null); onClose(); }}>{text.done}</button>
+          </section>
+        ) : (
         <div className="business-funds-routes">
-          <a href="#" data-method="bank-transfer">
-            <span className="business-funds-route-mark" aria-hidden="true">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18M12 3l9 5H3l9-5Z" /></svg>
-            </span>
-            <span className="business-funds-route-copy">
-              <strong>{ws.funds.bankTransfer}</strong>
-            </span>
-            <span className="business-funds-route-go" aria-hidden="true">›</span>
-          </a>
+          {methodEnabled('bank_transfer') && (
+            <button
+              type="button"
+              data-method="bank-transfer"
+              onClick={() => startPayment('airwallex-bank')}
+              disabled={!valid || Boolean(submitting)}
+            >
+              <span className="business-funds-route-mark" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18M12 3l9 5H3l9-5Z" /></svg>
+              </span>
+              <span className="business-funds-route-copy">
+                <strong>{ws.funds.bankTransfer}</strong>
+              </span>
+              <span className="business-funds-route-go" aria-hidden="true">{submitting === 'airwallex-bank' ? '…' : '›'}</span>
+            </button>
+          )}
           <button
             type="button"
             data-method="paypal"
@@ -230,15 +366,22 @@ export default function BusinessAddFundsModal({ open, onClose }) {
           </button>
           {/* PayPal and card used to share one row ("PayPal or credit card").
               The client asked for them split, so each now has its own route. */}
-          <a href="#" data-method="card">
-            <span className="business-funds-route-mark" aria-hidden="true">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></svg>
-            </span>
-            <span className="business-funds-route-copy">
-              <strong>{ws.funds.card || 'Credit or debit card'}</strong>
-            </span>
-            <span className="business-funds-route-go" aria-hidden="true">›</span>
-          </a>
+          {methodEnabled('card') && (
+            <button
+              type="button"
+              data-method="card"
+              onClick={() => startPayment('airwallex-card')}
+              disabled={!valid || Boolean(submitting)}
+            >
+              <span className="business-funds-route-mark" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></svg>
+              </span>
+              <span className="business-funds-route-copy">
+                <strong>{ws.funds.card || 'Credit or debit card'}</strong>
+              </span>
+              <span className="business-funds-route-go" aria-hidden="true">{submitting === 'airwallex-card' ? '…' : '›'}</span>
+            </button>
+          )}
           <button
             type="button"
             data-method="alipay"
@@ -256,8 +399,8 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </span>
           </button>
           {/* Crypto, Alipay and PayPal are wired: each creates a recharge
-              order and hands off to the provider cashier. Bank transfer and
-              card are still placeholders. */}
+              order and hands off to the provider cashier. Card and bank
+              transfer are server-gated Airwallex routes. */}
           <button
             type="button"
             data-method="crypto"
@@ -275,6 +418,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </span>
           </button>
         </div>
+        )}
 
         {error ? <p className="business-funds-error" role="alert">{error}</p> : null}
 
