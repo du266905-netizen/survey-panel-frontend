@@ -226,7 +226,6 @@ export default function BusinessQuestionnaireBuilder() {
         <Link className="business-builder-back" to="/business/workspace?view=questionnaires" aria-label={qb.headerEditorTitle}>
           <img className="business-builder-brand-wordmark" src="/guanyisearch-wordmark.png" alt="GuanyiSearch" />
         </Link>
-        <div className="business-builder-bar-title">{title || qb.untitledQuestionnaire}</div>
       </div>
       <div className="business-builder-bar-right">
         <em className={`business-builder-status${isDirty ? ' is-dirty' : ''}`}>{statusLabel}{isDirty ? ` · ${qb.headerUnsaved}` : ''}</em>

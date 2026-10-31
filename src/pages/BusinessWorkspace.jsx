@@ -250,8 +250,13 @@ export default function BusinessWorkspace() {
     navigate(withLanguage('/business/workspace?view=projects', language), { replace: true, state: {} });
   }, []);
   const studyFormatLabel = (format) => format === 'SURVEY'
-    ? copy.services.questionnaireTitle
+    ? (language.startsWith('zh') ? '在线问卷' : 'Online survey')
     : briefCopy.methods.find(([value]) => value === format)?.[1] || String(format || '').replaceAll('_', ' ').toLowerCase();
+  const workspaceStatusLabel = (status) => projectsCopy.statuses?.[status]
+    || (language.startsWith('zh')
+      ? { DRAFT: '草稿', PENDING_REVIEW: '待审核', APPROVED: '内容已通过', PUBLISHED: '已发布', ARCHIVED: '已归档' }[status]
+      : String(status || '').replaceAll('_', ' ').toLowerCase())
+    || status;
   const isQuestionnaire = projectType === 'questionnaire';
   const categoryLabels = projectCategoryCopy[language] || projectCategoryCopy['en-US'];
   const projectPool = workspace.projects.filter((project) => project.visibleInProjects ?? legacyVisibleInProjects(project));
@@ -686,7 +691,7 @@ export default function BusinessWorkspace() {
           {message && <p className="business-workspace-message">{message}</p>}
           <div className="business-dashboard-grid">
             <section className="business-dashboard-statistics"><header><div><h2>{workspaceText[7]}</h2><p>{workspaceText[8]}</p></div><button type="button" onClick={() => selectWorkspaceView('results')}>{workspaceText[9]}</button></header><div className="business-dashboard-stats"><article><span><ClipboardList size={17} /></span><small>{workspaceText[10]}</small><strong>{workspace.projects.length}</strong></article><article><span><Pencil size={17} /></span><small>{workspaceText[11]}</small><strong>{questionnaireDraftCount}</strong></article><article><span><FileText size={17} /></span><small>{workspaceText[12]}</small><strong>{planningCount}</strong></article><article><span><BarChart3 size={17} /></span><small>{workspaceText[13]}</small><strong>{responseCount}</strong></article></div></section>
-            <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{projectsCopy.statuses[project.status] || project.status}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
+            <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
           </div>
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
           <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
@@ -754,9 +759,8 @@ export default function BusinessWorkspace() {
                       <div className="business-project-menu"><button type="button" onClick={() => setProjectMenuId((current) => current === project.id ? '' : project.id)} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={19} /></button>{projectMenuId === project.id && <div><button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> {projectsCopy.viewBrief}</button>{project.status === 'DRAFT' && <button type="button" onClick={() => openEditProject(project)}><Pencil size={14} /> {projectsCopy.editBrief}</button>}{project.status === 'DRAFT' && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> {projectsCopy.deleteDraft}</button>}</div>}</div>
                       <div>
                         <span className={`business-status status-${String(project.status).toLowerCase()}`} title={businessProjectStatusDescriptions[project.status] || ''}>
-                          {projectsCopy.statuses[project.status] || project.status}
+                          {workspaceStatusLabel(project.status)}
                         </span>
-                        <p className="business-project-kind">{categoryLabels[projectCategory(project)]}</p>
                         <h2>{project.title}</h2>
                         <p>{project.researchGoal}</p>
                       </div>

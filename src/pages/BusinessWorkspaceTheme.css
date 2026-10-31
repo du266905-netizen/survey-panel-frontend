@@ -5419,3 +5419,12 @@ main.business-custom-request-page .business-workspace-rail {
   body:has(.business-onboarding) .business-support-chat-launcher,
   body:has(.business-onboarding) .support-chat-widget { display: none; }
 }
+
+/* Workspace surfaces: page white; lime is only a selection accent. */
+.business-project-filter-empty { border: 1px solid #E5E3DD; border-radius: 12px; background: #FFFFFF; color: #5f6862; }
+.business-project-filter-empty svg { color: #8d948d; }
+.business-project-filter-empty strong { color: #141413; }
+
+/* Page surfaces stay white; selection is the only place lime appears. */
+.business-workspace .business-workspace-rail { background: #FFFFFF !important; }
+.business-workspace .business-project-list article { background: #FFFFFF !important; border-color: #E5E3DD !important; }
