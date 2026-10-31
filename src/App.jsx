@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
@@ -168,11 +169,19 @@ function SurveyWallRoute() {
   );
 }
 
+/** 服务端状态统一走 TanStack Query：缓存 30 秒、失败重试一次、窗口聚焦不重拉。 */
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 30_000, refetchOnWindowFocus: false, retry: 1 },
+  },
+});
+
 export default function App() {
   const { user } = useAuth();
   const location = useLocation();
 
   return (
+    <QueryClientProvider client={queryClient}>
     <>
       <RouteScrollManager />
       <PageMotion>
@@ -394,5 +403,6 @@ export default function App() {
           the client workspace rules; the participant widget above is unrelated. */}
       {isBusinessRole(user?.role) && location.pathname !== '/' && <BusinessSupportChat />}
     </>
+    </QueryClientProvider>
   );
 }
