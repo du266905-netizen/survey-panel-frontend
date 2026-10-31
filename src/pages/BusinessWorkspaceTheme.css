@@ -5505,3 +5505,6 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-questionnaire-card-preview { background: #F5F5F3; border: 1px solid #E5E3DD; }
 #root .business-questionnaire-card-preview-line,
 #root .business-questionnaire-card-preview-title { background: #E5E3DD; }
+#root .business-custom-hero-copy h1 { font-family: var(--font-sans); font-size: 32px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+#root .business-custom-section h2,
+#root .business-custom-section-head h2 { font-family: var(--font-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
