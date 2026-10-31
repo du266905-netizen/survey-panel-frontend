@@ -125,8 +125,6 @@ const FALLBACK = {
   welcome: 'Welcome',
   homeLineTwo: 'How can I help you?',
   senderName: 'Guanyisearch team',
-  newChat: 'Start a new chat',
-  resume: 'Continue last conversation',
   receivedOnline: 'Thanks — your message is with the support team. They will reply here as soon as they can.',
   recentLabel: 'Recent message',
   recentEmpty: 'Nothing yet. Open Messages and ask — a researcher picks it up.',
@@ -209,8 +207,6 @@ export default function BusinessSupportChat() {
   const [tab, setTab] = useState('home');
   /* the composer is not offered until the visitor asks for a person */
   const [askSupport, setAskSupport] = useState(false);
-  /* a conversation already on the server, offered rather than opened */
-  const [previousThread, setPreviousThread] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [pending, setPending] = useState(false);
@@ -344,7 +340,7 @@ export default function BusinessSupportChat() {
       void loadFaq();
       try {
         const res = await getChatThread(null);
-        if (alive && res.thread?.id && !isClosed(res.thread)) setPreviousThread(res.thread);
+        if (alive && res.thread?.id) applyThread(res.thread, res.etag ?? null);
       } catch { /* no backend / not entitled — the copy still stands */ }
     })();
     return () => { alive = false; };
@@ -528,31 +524,7 @@ export default function BusinessSupportChat() {
      "Your message has been received. Support replies are not available in this
      chat yet." — which tells the visitor nothing they can use. It is replaced
      here with the same fact said properly: who has it, and when they are back. */
-  const lastPrevious = (previousThread?.messages || []).slice(-1)[0];
-  const previousPreview = lastPrevious
-    ? (/your message has been received/i.test(String(lastPrevious.body || ''))
-      ? (availability.online ? copy.receivedOnline : offlineLine)
-      : lastPrevious.body)
-    : '';
-
-  const resumeThread = () => {
-    if (!previousThread) return;
-    applyThread(previousThread, undefined);
-    setPreviousThread(null);
-    setTab('messages');
-  };
-
-  const startNewChat = () => {
-    setThread(null);
-    setPreviousThread(null);
-    setMessages([{ id: 'greeting', from: 'them', text: copy.greeting, at: new Date() }]);
-    setScreen(SCREEN.welcome);
-    setAskSupport(false);
-    setOpenFaqId(null);
-    setTab('messages');
-  };
-
-  /* "Welcome, Lin."  — the name the workspace already greets them by. */
+  /* "Welcome, Lin." — the name the workspace already greets them by. */
   const { user } = useAuth();
   const firstName = useMemo(() => {
     const raw = String(user?.displayName || user?.name || user?.username || '').trim();
@@ -614,25 +586,18 @@ export default function BusinessSupportChat() {
               </div>
               <div className="business-support-chat-home-body">
               <p className="business-support-chat-home-label">{copy.recentLabel}</p>
-              {previousThread ? (
-                <button type="button" className="business-support-chat-recent" onClick={resumeThread}>
+              {messages.length ? (
+                <button type="button" className="business-support-chat-recent" onClick={() => setTab('messages')}>
                   <span className="business-support-chat-recent-avatar">{TEAM_ICON}</span>
                   <span className="business-support-chat-recent-body">
-                    <span className="business-support-chat-recent-who">{copy.resume}</span>
-                    <span className="business-support-chat-recent-prev">
-                      {previousPreview || copy.recentEmpty}
-                    </span>
+                    <span className="business-support-chat-recent-who">{copy.senderName}</span>
+                    <span className="business-support-chat-recent-prev">{messages[messages.length - 1].text}</span>
                   </span>
-                  <span className="business-support-chat-recent-when">
-                    {clockLabel(lastPrevious?.createdAt)}
-                  </span>
+                  <span className="business-support-chat-recent-when">{clockLabel(messages[messages.length - 1].at)}</span>
                 </button>
               ) : (
                 <p className="business-support-chat-recent-empty">{copy.recentEmpty}</p>
               )}
-              <button type="button" className="business-support-chat-new" onClick={startNewChat}>
-                {copy.newChat}
-              </button>
               </div>
             </div>
           )}
