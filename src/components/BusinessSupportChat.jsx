@@ -555,7 +555,7 @@ export default function BusinessSupportChat() {
               <div className="business-support-chat-hero">
                 <img src="/chat-hero.jpg" alt="" aria-hidden="true" />
                 <div className="business-support-chat-hero-copy">
-                  <p className="business-support-chat-hero-team">{copy.teamName}</p>
+                  <p className="business-support-chat-hero-team">{copy.senderName}</p>
                   <h2 className="business-support-chat-home-title">
                     {copy.homeLineOne}
                     <br />

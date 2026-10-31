@@ -469,14 +469,15 @@
   line-height: 1.28;
 }
 
+/* a plain sentence, not an eyebrow: no caps, no tracking (§3) */
 .business-support-chat-home-label {
   margin: 0 0 8px;
   color: #8D948D;
   font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .business-support-chat-recent {
@@ -641,20 +642,21 @@
 }
 
 .business-support-chat-hero-team {
-  margin: 0 0 8px;
-  color: rgba(255, 255, 255, .78);
+  margin: 0 0 10px;
+  color: rgba(255, 255, 255, .82);
   font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
+/* 38 is the greeting step and carries 400, not 600 (§1.1) */
 .business-support-chat-hero .business-support-chat-home-title {
   margin: 0;
   color: #FFFFFF;
   font-size: 38px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -.028em;
   line-height: 1.06;
 }
