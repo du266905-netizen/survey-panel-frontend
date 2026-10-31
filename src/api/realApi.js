@@ -901,26 +901,3 @@ export const createCryptoRecharge = async ({ amountUsd, idempotencyKey }) => {
   );
   return response.data;
 };
-
-/* Airwallex balance top-up: card (hosted checkout) and bank transfer
- * (instructions + reference). The browser never sees card data and never
- * credits a balance; both calls only create an order. See
- * docs/AIRWALLEX-TOPUP-v1-contract.md for the frozen shape. */
-export const getAirwallexCapability = async () => {
-  const response = await apiClient.get('/api/business/account/airwallex/capability');
-  return response.data;
-};
-
-export const createAirwallexRecharge = async ({ amountUsd, method, returnUrl, idempotencyKey }) => {
-  const response = await apiClient.post(
-    '/api/business/account/recharge/airwallex',
-    { amountUsd, method, returnUrl },
-    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
-  );
-  return response.data;
-};
-
-export const getAirwallexRecharge = async (paymentId) => {
-  const response = await apiClient.get(`/api/business/account/recharge/airwallex/${encodeURIComponent(paymentId)}`);
-  return response.data;
-};
