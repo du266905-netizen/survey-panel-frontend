@@ -630,3 +630,96 @@
   .business-builder-ai-hint > a { grid-column: 2; }
   .business-builder-ai-hint > button { grid-column: 3; grid-row: 1 / 3; }
 }
+
+/* ── Editor v2 ─────────────────────────────────────────────────────────────
+   One flat canvas, one primary action, checks in a drawer. Everything below
+   is scoped to .business-builder--v2 and overrides the layered green/glass
+   rules above; nothing here changes behaviour. */
+.business-builder--v2 { background: #FFFFFF; color: #141413; }
+
+.business-builder--v2 .business-builder-header { position: sticky; top: 0; z-index: 40; display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding: 0 24px; background: #FFFFFF; border-bottom: 1px solid #E5E3DD; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+.business-builder--v2 .business-builder-bar-left,
+.business-builder--v2 .business-builder-bar-right { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; min-width: 0; }
+.business-builder--v2 .business-builder-bar-left { justify-content: flex-start; }
+.business-builder--v2 .business-builder-bar-right { justify-content: flex-end; }
+.business-builder--v2 .business-builder-bar-left { gap: 12px; }
+
+.business-builder--v2 .business-builder-back { display: inline-flex; align-items: center; color: #141413; text-decoration: none; }
+.business-builder--v2 .business-builder-back img { width: auto; height: 18px; }
+
+.business-builder--v2 .business-builder-bar-title { overflow: hidden; max-width: 320px; color: #141413; font-size: 13px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+
+.business-builder--v2 .business-builder-status { color: #8d948d; font-size: 12px; font-style: normal; white-space: nowrap; }
+.business-builder--v2 .business-builder-status.is-dirty { color: #5f6862; }
+
+.business-builder--v2 .business-language-picker > button { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF; color: #141413; font-size: 13px; }
+
+.business-builder--v2 .business-builder-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 34px; padding: 0 12px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF; color: #141413; font: inherit; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background .15s ease, border-color .15s ease; }
+.business-builder--v2 .business-builder-btn:hover:not(:disabled) { background: #F5F5F3; }
+.business-builder--v2 .business-builder-btn:disabled { opacity: .45; cursor: not-allowed; }
+.business-builder--v2 .business-builder-btn.is-icon { width: 34px; padding: 0; }
+.business-builder--v2 .business-builder-btn.is-danger { border-color: #EAD9D5; color: #9b4b40; }
+.business-builder--v2 .business-builder-btn.is-primary { border-color: #DEEF24; background: #DEEF24; color: #141413; font-weight: 600; }
+.business-builder--v2 .business-builder-btn.is-primary:hover:not(:disabled) { background: #D3E51B; border-color: #D3E51B; }
+
+.business-builder--v2 .business-builder-badge { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: #B42318; color: #FFFFFF; font-size: 11px; font-weight: 600; }
+
+.business-builder--v2 .business-builder-layout { display: block; width: 100%; max-width: none; }
+.business-builder--v2 .business-builder-main { width: min(100%, 880px); min-height: calc(100svh - 64px); margin: 0 auto; padding: 48px 24px 120px; border-right: 0; background: #FFFFFF; }
+
+.business-builder--v2 .business-builder-title { width: 100%; border: 0; background: transparent; color: #141413; font-size: 32px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+.business-builder--v2 .business-eyebrow { color: #8d948d; font-size: 11px; font-weight: 500; letter-spacing: .08em; }
+
+.business-builder--v2 .business-question-card,
+.business-builder--v2 .business-audience-modules,
+.business-builder--v2 .business-cover-field,
+.business-builder--v2 .business-study-brief { background: #FFFFFF; border: 1px solid #E5E3DD; border-radius: 12px; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+/* add-question row: label, select and button share one line */
+.business-builder--v2 .business-question-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 16px; padding: 14px 18px; }
+.business-builder--v2 .business-question-toolbar > div { display: flex; align-items: center; gap: 10px; }
+.business-builder--v2 .business-question-toolbar label { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.business-builder--v2 .business-question-toolbar label > span { color: #5f6862; font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.business-builder--v2 .business-question-toolbar select { height: 34px; min-width: 128px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF; color: #141413; font-size: 13px; }
+.business-builder--v2 .business-question-toolbar .business-builder-publish { height: 34px; padding: 0 14px; border: 0; border-radius: 8px; background: #141413; color: #FFFFFF; font-size: 13px; }
+
+/* checks drawer */
+.business-builder-drawer-layer { position: fixed; inset: 64px 0 0; z-index: 60; }
+.business-builder-drawer-scrim { position: absolute; inset: 0; border: 0; background: rgba(20, 20, 19, .16); cursor: default; }
+.business-builder-drawer { position: absolute; top: 0; right: 0; bottom: 0; display: flex; flex-direction: column; width: min(360px, 92vw); background: #FFFFFF; border-left: 1px solid #E5E3DD; box-shadow: -12px 0 32px rgba(20, 20, 19, .08); }
+.business-builder-drawer > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #E5E3DD; }
+.business-builder-drawer-body { display: flex; flex-direction: column; gap: 20px; padding: 16px; overflow-x: hidden; overflow-y: auto; }
+.business-builder-drawer-body > section { flex: 0 0 auto; width: 100%; min-width: 0; }
+.business-builder-drawer-body section { border: 0; padding: 0; background: transparent; }
+.business-builder-drawer-body .business-question-navigator > div { max-height: none; border-top: 1px solid #E5E3DD; }
+
+.business-builder-drawer h2 { margin: 0 0 10px; color: #141413; font-size: 16px; font-weight: 600; }
+.business-builder-drawer p { margin: 0 0 4px; color: #8d948d; font-size: 11px; letter-spacing: .08em; }
+
+.business-builder-drawer .business-question-navigator button { border-left: 2px solid transparent; color: #141413; }
+.business-builder-drawer .business-question-navigator button:hover { border-left-color: #141413; background: #F5F5F3; }
+.business-builder-drawer .business-question-navigator button strong { color: #141413; font-size: 13px; font-weight: 500; }
+.business-builder-drawer .business-question-navigator button small { color: #8d948d; font-size: 11px; letter-spacing: 0; text-transform: none; }
+.business-builder-drawer .business-question-navigator button > span { color: #8d948d; font-size: 11px; }
+
+.business-builder-drawer .business-design-checks { display: grid; gap: 10px; grid-column: auto; border: 0; border-top: 1px solid #E5E3DD; padding: 20px 0 0; }
+.business-builder-drawer .business-design-checks > div { grid-template-columns: 18px 1fr; align-items: start; color: #5f6862; font-size: 13px; }
+.business-builder-drawer .business-design-checks > div > span { width: 18px; height: 18px; background: #F5F5F3; color: #5f6862; font-size: 11px; }
+.business-builder-drawer .business-design-checks > div.ready > span { background: #F5F5F3; color: #5f6862; }
+
+@media (max-width: 1180px) {
+  .business-builder--v2 .business-builder-bar-title,
+  .business-builder--v2 .business-builder-status { display: none; }
+}
+@media (max-width: 860px) {
+  .business-builder--v2 .business-builder-header { gap: 8px; padding: 0 12px; }
+  .business-builder--v2 .business-builder-bar-right { gap: 6px; }
+  .business-builder--v2 .business-builder-btn { padding: 0 9px; font-size: 12px; }
+  .business-builder--v2 .business-builder-btn.is-icon { width: 32px; }
+}
+
+/* The prompt is the card's title, not a form field: keep it close to the
+   controls instead of reserving two blank lines. */
+.business-builder--v2 .business-question-card > textarea { min-height: 40px; padding: 4px 0; border: 0; background: transparent; color: #141413; font-size: 16px; font-weight: 500; line-height: 1.45; resize: none; }
+.business-builder--v2 .business-question-card > textarea:focus { outline: 0; box-shadow: inset 0 -1px 0 #141413; }
