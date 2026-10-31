@@ -5508,3 +5508,4 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-custom-hero-copy h1 { font-family: var(--font-sans); font-size: 32px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
 #root .business-custom-section h2,
 #root .business-custom-section-head h2 { font-family: var(--font-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+#root .business-workspace-body { grid-template-columns: 288px minmax(0, 1fr); }

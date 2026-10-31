@@ -773,3 +773,10 @@
 #root .business-results-questions button:hover { border-left-color: #141413; }
 #root .business-results-distribution b { background: #141413; }
 #root .business-results-text-responses article { background: #F5F5F3; border-left-color: #141413; }
+
+/* Title lives in the top bar; the canvas starts with the brief. */
+.business-builder--v2 .business-builder-bar-left { flex: 1 1 auto; min-width: 0; gap: 14px; }
+.business-builder--v2 .business-builder-bar-title-input { flex: 1 1 auto; min-width: 0; height: 34px; border: 0; background: transparent; color: #141413; font-family: var(--font-sans); font-size: 16px; font-weight: 500; }
+.business-builder--v2 .business-builder-bar-title-input:focus { outline: 0; box-shadow: inset 0 -1px 0 #141413; }
+.business-builder--v2 .business-builder-main { padding-top: 32px; }
+.business-builder--v2 .business-builder-back img { height: 24px; }

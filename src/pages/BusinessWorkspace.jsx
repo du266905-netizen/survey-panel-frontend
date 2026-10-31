@@ -764,11 +764,6 @@ export default function BusinessWorkspace() {
                         <h2>{project.title}</h2>
                         <p>{project.researchGoal}</p>
                       </div>
-                      <dl>
-                        <div><dt>{projectsCopy.format}</dt><dd>{studyFormatLabel(project.studyFormat)}</dd></div>
-                        <div><dt>{projectsCopy.audience}</dt><dd>{project.audienceDescription}</dd></div>
-                        <div><dt>{projectsCopy.updated}</dt><dd>{new Date(project.updatedAt).toLocaleDateString(language)}</dd></div>
-                      </dl>
                       <div className="business-project-actions">
                         <button type="button" className="business-project-open" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']} <ArrowRight size={15} /></button>
                         {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit} <ArrowRight size={15} /></button>}
