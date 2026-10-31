@@ -5428,3 +5428,24 @@ main.business-custom-request-page .business-workspace-rail {
 /* Page surfaces stay white; selection is the only place lime appears. */
 .business-workspace .business-workspace-rail { background: #FFFFFF !important; }
 .business-workspace .business-project-list article { background: #FFFFFF !important; border-color: #E5E3DD !important; }
+
+/* Brief dialog and project menu: flat white sheet, same type as the editor. */
+#root .business-project-modal { background: rgba(20, 20, 19, .35); padding: 32px; }
+#root .business-brief-dialog { width: min(100%, 680px); margin: 8vh auto 32px; border: 1px solid #E5E3DD; border-radius: 16px; background: #FFFFFF; box-shadow: 0 24px 70px rgba(20, 20, 19, .18); padding: 32px; }
+#root .business-brief-dialog > p.business-eyebrow { display: none; }
+#root .business-brief-dialog h2 { margin: 0 44px 0 0; color: #141413; font-family: var(--font-sans); font-size: 32px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+#root .business-brief-dialog > p { margin: 12px 0 0; color: #5f6862; font-size: 14px; line-height: 1.6; }
+#root .business-brief-dialog dl { gap: 10px; border-top: 1px solid #E5E3DD; border-bottom: 1px solid #E5E3DD; margin-top: 24px; padding: 18px 0; }
+#root .business-brief-dialog dl div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; }
+#root .business-brief-dialog dt,
+#root .business-brief-dialog section strong { color: #8d948d; font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; }
+#root .business-brief-dialog dd { margin: 0; color: #141413; font-size: 14px; font-weight: 400; line-height: 1.55; }
+#root .business-brief-dialog section p { color: #5f6862; font-size: 13px; }
+#root .business-brief-dialog-actions { border-top: 1px solid #E5E3DD; margin-top: 24px; padding-top: 16px; }
+#root .business-brief-dialog-actions > button { border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF; color: #141413; font-size: 13px; font-weight: 500; padding: 9px 14px; }
+#root .business-brief-dialog-actions > .business-button { border-color: #141413; background: #141413; color: #FFFFFF; }
+#root .business-modal-close { border: 1px solid #E5E3DD; border-radius: 8px; color: #141413; }
+
+#root .business-project-menu > div { border: 1px solid #E5E3DD; border-radius: 10px; background: #FFFFFF; box-shadow: 0 12px 32px rgba(20, 20, 19, .12); padding: 6px; }
+#root .business-project-menu > div button { border-radius: 6px; color: #141413; font-size: 13px; font-weight: 500; }
+#root .business-project-menu > div button:hover { background: #F5F5F3; }
