@@ -652,6 +652,16 @@
   text-transform: none;
 }
 
+/* the greeting is prose, one step under the line it introduces */
+.business-support-chat-hero-greeting {
+  margin: 0 0 6px;
+  color: rgba(255, 255, 255, .82);
+  font-family: var(--font-reading);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
 /* 22 / 600 — the panel-title step (§1.1). 38 was too loud over a photograph. */
 .business-support-chat-hero .business-support-chat-home-title {
   margin: 0;

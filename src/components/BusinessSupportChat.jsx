@@ -121,8 +121,9 @@ const FALLBACK = {
   /* ── the three-level shell: home / messages / help ───────────────────── */
   tabs: { home: 'Home', messages: 'Messages', help: 'Help' },
   teamName: 'guanyisearch team',
-  homeLineOne: 'Ask us about',
-  homeLineTwo: 'your research.',
+  greetings: ['Good morning.', 'Good afternoon.', 'Good evening.'],
+  homeLineOne: '',
+  homeLineTwo: 'How can I help you?',
   senderName: 'Guanyisearch team',
   receivedOnline: 'Thanks — your message is with the support team. They will reply here as soon as they can.',
   recentLabel: 'Recent message',
@@ -523,6 +524,12 @@ export default function BusinessSupportChat() {
      "Your message has been received. Support replies are not available in this
      chat yet." — which tells the visitor nothing they can use. It is replaced
      here with the same fact said properly: who has it, and when they are back. */
+  /* The panel greets by the visitor's own clock, like the workspace does. */
+  const greeting = useMemo(() => {
+    const hour = new Date().getHours();
+    return copy.greetings[hour < 12 ? 0 : hour < 18 ? 1 : 2] || copy.greetings[0];
+  }, [copy.greetings]);
+
   const threadMessages = useMemo(
     () => (thread?.messages || []).map((m) => {
       const body = String(m.body || '');
@@ -567,9 +574,8 @@ export default function BusinessSupportChat() {
               <div className="business-support-chat-hero">
                 <img src="/chat-hero.jpg" alt="" aria-hidden="true" />
                 <div className="business-support-chat-hero-copy">
-                  <h2 className="business-support-chat-home-title">
-                    {copy.homeLineOne} {copy.homeLineTwo}
-                  </h2>
+                  <p className="business-support-chat-hero-greeting">{greeting}</p>
+                  <h2 className="business-support-chat-home-title">{copy.homeLineTwo}</h2>
                 </div>
               </div>
               <div className="business-support-chat-home-body">
