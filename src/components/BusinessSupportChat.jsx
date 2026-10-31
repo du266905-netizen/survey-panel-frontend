@@ -568,9 +568,7 @@ export default function BusinessSupportChat() {
                 <img src="/chat-hero.jpg" alt="" aria-hidden="true" />
                 <div className="business-support-chat-hero-copy">
                   <h2 className="business-support-chat-home-title">
-                    {copy.homeLineOne}
-                    <br />
-                    {copy.homeLineTwo}
+                    {copy.homeLineOne} {copy.homeLineTwo}
                   </h2>
                 </div>
               </div>
