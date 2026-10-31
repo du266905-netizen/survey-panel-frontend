@@ -637,8 +637,9 @@
   position: absolute;
   z-index: 1;
   right: 18px;
-  bottom: 18px;
+  bottom: 20px;
   left: 18px;
+  text-align: center;
 }
 
 .business-support-chat-hero-team {
@@ -684,8 +685,8 @@
   justify-content: center;
   gap: 7px;
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: -.01em;
+  font-weight: 400;
+  letter-spacing: 0;
   padding: 11px 0 12px;
 }
 
