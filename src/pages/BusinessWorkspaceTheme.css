@@ -5453,7 +5453,7 @@ main.business-custom-request-page .business-workspace-rail {
 /* Sweep: page titles, start cards, chooser and support surfaces leave the
    cream/green palette; sans type throughout, lime only for the primary CTA. */
 #root .business-workspace { background: #FFFFFF; }
-#root .business-projects-head h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-sans) !important; font-size: 56px !important; font-weight: 600 !important; letter-spacing: -.02em; line-height: 1.04; }
+#root .business-projects-head h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-display) !important; font-size: 56px !important; font-weight: 600 !important; letter-spacing: -.02em; line-height: 1.04; }
 #root .business-projects-head > div > p:last-child { color: #5f6862; font-weight: 400; }
 
 #root .business-start-card { background: #FFFFFF; border: 1px solid #E5E3DD; border-radius: 16px; box-shadow: none; }
