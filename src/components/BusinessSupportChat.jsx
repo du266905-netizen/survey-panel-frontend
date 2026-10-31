@@ -613,12 +613,6 @@ export default function BusinessSupportChat() {
               </article>
             ))}
 
-            {screen === SCREEN.welcome && (
-              <article className="business-support-chat-line is-them">
-                <div className="business-support-chat-bubble">{copy.transferNote}</div>
-              </article>
-            )}
-
             {screen === SCREEN.welcome && !pending && (
               <div className="business-support-chat-suggestions is-footer" role="group" aria-label={copy.suggestionsLabel}>
                 <button type="button" className="business-support-chat-chip" onClick={() => setTab('help')}>
