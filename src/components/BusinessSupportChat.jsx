@@ -93,7 +93,7 @@ const FALLBACK = {
   launcher: 'Open help chat',
   close: 'Close chat',
   title: 'GuanyiSearch',
-  greeting: 'Hi there. Got a question? I’m here to help.',
+  greeting: 'Tell me what you’re trying to find out, and I’ll point you to the right place.',
   transferNote: 'If I can’t solve it, I’ll try to connect you with a support specialist.',
   typing: 'Replying',
   placeholder: 'Type a message',
