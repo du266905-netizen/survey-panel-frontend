@@ -5482,3 +5482,26 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-project-list dl div { border-left: 0; padding-left: 0; }
 #root .business-project-list dl { gap: 10px; border-top: 1px solid #E5E3DD; padding-top: 16px; }
 #root .business-status { border: 1px solid #E5E3DD; background: #F5F5F3; color: #5f6862; font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; padding: 4px 9px; }
+
+/* Research surfaces: no eyebrow labels above headings that already name the
+   page or the card. Explanations stay as body copy, not as 9px capitals. */
+#root .business-workspace .business-eyebrow,
+#root .business-builder .business-eyebrow,
+#root .business-results-page .business-eyebrow,
+#root .business-ai-brief-page .business-eyebrow,
+#root .business-custom-page .business-eyebrow,
+#root .business-billing .business-eyebrow { display: none; }
+
+/* One scale: 32 page, 22 section, 16 card title, 14 body, 13 UI, 12 label, 11 micro. */
+#root .business-workspace h1,
+#root .business-results-page h1 { font-size: 32px; line-height: 1.2; }
+#root .business-workspace h2,
+#root .business-results-page h2 { font-size: 22px; }
+#root .business-project-list h2 { font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.35; }
+#root .business-questionnaire-hub-list h3 { font-size: 16px; }
+#root .business-workspace h1,
+#root .business-workspace h2,
+#root .business-workspace h3 { font-family: var(--font-sans); }
+#root .business-questionnaire-card-preview { background: #F5F5F3; border: 1px solid #E5E3DD; }
+#root .business-questionnaire-card-preview-line,
+#root .business-questionnaire-card-preview-title { background: #E5E3DD; }

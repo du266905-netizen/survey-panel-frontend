@@ -89,7 +89,6 @@ export default function BusinessResearchSupportRequest() {
     <main className="business-custom-page">
       <header className="business-custom-topbar">
         <button type="button" onClick={goWorkspace}><ArrowLeft size={16} /> {copy.back}</button>
-        <span>{copy.eyebrow}</span>
       </header>
 
       <section className="business-custom-hero">
