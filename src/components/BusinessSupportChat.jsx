@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronDown, Paperclip, Send, X } from 'lucide-react';
+import { useAuth } from './AuthContext';
 import Logo from './Logo';
 import { useLanguage } from './LanguageContext';
 import {
@@ -121,8 +122,7 @@ const FALLBACK = {
   /* ── the three-level shell: home / messages / help ───────────────────── */
   tabs: { home: 'Home', messages: 'Messages', help: 'Help' },
   teamName: 'guanyisearch team',
-  greetings: ['Good morning.', 'Good afternoon.', 'Good evening.'],
-  homeLineOne: '',
+  welcome: 'Welcome',
   homeLineTwo: 'How can I help you?',
   senderName: 'Guanyisearch team',
   receivedOnline: 'Thanks — your message is with the support team. They will reply here as soon as they can.',
@@ -524,11 +524,14 @@ export default function BusinessSupportChat() {
      "Your message has been received. Support replies are not available in this
      chat yet." — which tells the visitor nothing they can use. It is replaced
      here with the same fact said properly: who has it, and when they are back. */
-  /* The panel greets by the visitor's own clock, like the workspace does. */
-  const greeting = useMemo(() => {
-    const hour = new Date().getHours();
-    return copy.greetings[hour < 12 ? 0 : hour < 18 ? 1 : 2] || copy.greetings[0];
-  }, [copy.greetings]);
+  /* "Welcome, Lin." — the name the workspace already greets them by. */
+  const { user } = useAuth();
+  const firstName = useMemo(() => {
+    const raw = String(user?.displayName || user?.name || user?.username || '').trim();
+    if (!raw) return '';
+    return raw.includes('@') ? raw.split('@')[0] : raw.split(/\s+/)[0];
+  }, [user]);
+  const welcomeLine = firstName ? `${copy.welcome}, ${firstName}.` : `${copy.welcome}.`;
 
   const threadMessages = useMemo(
     () => (thread?.messages || []).map((m) => {
@@ -574,8 +577,11 @@ export default function BusinessSupportChat() {
               <div className="business-support-chat-hero">
                 <img src="/chat-hero.jpg" alt="" aria-hidden="true" />
                 <div className="business-support-chat-hero-copy">
-                  <p className="business-support-chat-hero-greeting">{greeting}</p>
-                  <h2 className="business-support-chat-home-title">{copy.homeLineTwo}</h2>
+                  <h2 className="business-support-chat-home-title">
+                    {welcomeLine}
+                    <br />
+                    {copy.homeLineTwo}
+                  </h2>
                 </div>
               </div>
               <div className="business-support-chat-home-body">
