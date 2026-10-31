@@ -4395,6 +4395,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
      32   article  article and document titles — 600 only
      38   page     page titles
      56   figure   the four figures — the only large thing on a page
+     64   title    research workspace page titles (authorised 2026-11-01)
      80   display  largest homepage title (italic display)
 
    The 80 step was authorised by the user on 2026-10-19 for the single largest
@@ -5453,7 +5454,7 @@ main.business-custom-request-page .business-workspace-rail {
 /* Sweep: page titles, start cards, chooser and support surfaces leave the
    cream/green palette; sans type throughout, lime only for the primary CTA. */
 #root .business-workspace { background: #FFFFFF; }
-#root .business-projects h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-sans) !important; font-size: 32px !important; font-weight: 600 !important; letter-spacing: -.01em; line-height: 1.2; }
+#root .business-projects h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-sans) !important; font-size: 64px !important; font-weight: 600 !important; letter-spacing: -.03em; line-height: 1.02; }
 #root .business-projects-head > div > p:last-child { color: #5f6862; font-weight: 400; }
 
 #root .business-start-card { background: #FFFFFF; border: 1px solid #E5E3DD; border-radius: 16px; box-shadow: none; }
@@ -5494,7 +5495,7 @@ main.business-custom-request-page .business-workspace-rail {
 
 /* One scale: 32 page, 22 section, 16 card title, 14 body, 13 UI, 12 label, 11 micro. */
 #root .business-workspace h1,
-#root .business-results-page h1 { font-size: 32px; line-height: 1.2; }
+#root .business-results-page h1 { font-size: 64px; line-height: 1.02; letter-spacing: -.03em; }
 #root .business-workspace h2,
 #root .business-results-page h2 { font-size: 22px; }
 #root .business-project-list h2 { font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.35; }
@@ -5509,3 +5510,5 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-custom-section h2,
 #root .business-custom-section-head h2 { font-family: var(--font-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
 #root .business-workspace-body { grid-template-columns: 288px minmax(0, 1fr); }
+#root .business-projects { max-width: none; width: 100%; padding: 40px 48px 72px; }
+#root .business-projects-head { max-width: 1280px; }
