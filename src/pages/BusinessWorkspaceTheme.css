@@ -5453,7 +5453,7 @@ main.business-custom-request-page .business-workspace-rail {
 /* Sweep: page titles, start cards, chooser and support surfaces leave the
    cream/green palette; sans type throughout, lime only for the primary CTA. */
 #root .business-workspace { background: #FFFFFF; }
-#root .business-projects h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-sans) !important; font-size: 56px !important; font-weight: 600 !important; letter-spacing: -.02em; line-height: 1.04; }
+#root .business-projects-head h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-sans) !important; font-size: 38px !important; font-weight: 600 !important; letter-spacing: -.02em; line-height: 1.08; }
 #root .business-projects-head > div > p:last-child { color: #5f6862; font-weight: 400; }
 
 #root .business-start-card { background: #FFFFFF; border: 1px solid #E5E3DD; border-radius: 16px; box-shadow: none; }
@@ -5492,16 +5492,13 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-custom-page .business-eyebrow,
 #root .business-billing .business-eyebrow { display: none; }
 
-/* One scale: 32 page, 22 section, 16 card title, 14 body, 13 UI, 12 label, 11 micro. */
-#root .business-workspace h1,
-#root .business-results-page h1 { font-size: 56px; line-height: 1.04; letter-spacing: -.02em; }
-#root .business-workspace h2,
-#root .business-results-page h2 { font-size: 22px; }
+/* One scale: 38 page, 22 section, 16 card title, 14 body, 13 UI, 12 label, 11 micro.
+   Only page-heading selectors are touched: the dashboard greeting keeps its own
+   display treatment. */
+#root .business-projects-head h1,
+#root .business-results-intro h1 { font-size: 38px; line-height: 1.08; letter-spacing: -.02em; }
 #root .business-project-list h2 { font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.35; }
 #root .business-questionnaire-hub-list h3 { font-size: 16px; }
-#root .business-workspace h1,
-#root .business-workspace h2,
-#root .business-workspace h3 { font-family: var(--font-sans); }
 #root .business-questionnaire-card-preview { background: #F5F5F3; border: 1px solid #E5E3DD; }
 #root .business-questionnaire-card-preview-line,
 #root .business-questionnaire-card-preview-title { background: #E5E3DD; }
