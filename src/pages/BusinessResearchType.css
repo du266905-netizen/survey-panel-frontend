@@ -6,9 +6,9 @@
 
 .business-workspace .business-projects-head h1 {
   color: #141413 !important;
-  font-family: var(--font-display) !important;
+  font-family: var(--font-impact) !important;
   font-size: 56px !important;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
   letter-spacing: -.03em !important;
   line-height: 1.02 !important;
 }
