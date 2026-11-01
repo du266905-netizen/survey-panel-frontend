@@ -1,0 +1,285 @@
+/* Bank transfer — the manual channel's instruction and claim page.
+ *
+ * Sizes come from the Part 18 scale only: 22 title, 16 form heading, 14 prose,
+ * 13 controls/values, 12 hints, 11 the small action labels. Nothing off-scale,
+ * so the token gate stays quiet.
+ *
+ * The card language is the funds modal's (BusinessWorkspaceTheme.css,
+ * .business-funds-*): white sheet, 16 radius, 52-high input, ink primary.
+ */
+
+.bank-transfer-page {
+  min-height: 100vh;
+  padding-bottom: 72px;
+  background: #fafaf7;
+  color: #141a17;
+}
+
+.bank-transfer-topbar {
+  width: min(600px, 100% - 48px);
+  margin: 0 auto;
+  padding: 24px 0 0;
+}
+
+.bank-transfer-topbar > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: -6px;
+  padding: 6px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #5f6862;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.bank-transfer-topbar > button:hover {
+  background: rgba(20, 26, 23, .05);
+  color: #141a17;
+}
+
+.bank-transfer-sheet {
+  width: min(600px, 100% - 48px);
+  margin: 0 auto;
+  padding-top: 26px;
+}
+
+.bank-transfer-sheet > h1 {
+  margin: 0;
+  font-family: var(--font-reading, 'Source Serif 4'), 'Songti SC', STSong, SimSun, serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.25;
+}
+
+.bank-transfer-intro {
+  margin: 8px 0 0;
+  max-width: 58ch;
+  color: #5f6862;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* ---- the account itself -------------------------------------------------- */
+
+.bank-transfer-card {
+  margin-top: 24px;
+  padding: 28px 32px 24px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.bank-transfer-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+  color: #8d948d;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.bank-transfer-chip {
+  padding: 2px 7px;
+  border: 1px solid rgba(20, 26, 23, .18);
+  border-radius: 6px;
+  color: #141a17;
+  font-size: 11px;
+  letter-spacing: .06em;
+}
+
+.bank-transfer-rows {
+  margin: 0;
+}
+
+.bank-transfer-row {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr) auto;
+  gap: 0 16px;
+  align-items: center;
+  padding: 9px 0;
+  border-top: 1px solid rgba(20, 26, 23, .1);
+}
+
+.bank-transfer-row:first-child {
+  border-top: 0;
+}
+
+.bank-transfer-row > dt {
+  color: #5f6862;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.bank-transfer-row > dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.bank-transfer-row-action > button {
+  padding: 4px 8px;
+  border: 1px solid rgba(20, 26, 23, .18);
+  border-radius: 7px;
+  background: #fff;
+  color: #5f6862;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  cursor: pointer;
+}
+
+.bank-transfer-row-action > button:hover {
+  border-color: #141a17;
+  color: #141a17;
+}
+
+.bank-transfer-hint {
+  margin: 14px 0 0;
+  color: #5f6862;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* ---- the claim ----------------------------------------------------------- */
+
+.bank-transfer-form > h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.bank-transfer-form-intro {
+  margin: 4px 0 18px;
+  color: #5f6862;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.bank-transfer-field {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.bank-transfer-field .is-optional {
+  color: #8d948d;
+  font-weight: 400;
+}
+
+.bank-transfer-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  margin-top: 7px;
+  padding: 0 16px;
+  border: 1px solid rgba(20, 26, 23, .18);
+  border-radius: 11px;
+  background: #fff;
+}
+
+.bank-transfer-input:focus-within {
+  border-color: #141a17;
+}
+
+.bank-transfer-input > span {
+  color: #5f6862;
+  font-size: 16px;
+}
+
+.bank-transfer-input > input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.bank-transfer-input > input::placeholder {
+  color: #8d948d;
+  font-weight: 400;
+}
+
+.bank-transfer-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.bank-transfer-error {
+  margin: 0 0 12px;
+  color: #b42318;
+  font-size: 13px;
+}
+
+.bank-transfer-preview {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(20, 26, 23, .14);
+  border-radius: 9px;
+  background: #fafaf7;
+  color: #5f6862;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.bank-transfer-submit {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 11px;
+  background: #141a17;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bank-transfer-submit:hover {
+  background: #000;
+}
+
+.bank-transfer-foot {
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(20, 26, 23, .1);
+  color: #5f6862;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media (max-width: 720px) {
+  .bank-transfer-topbar,
+  .bank-transfer-sheet {
+    width: calc(100% - 32px);
+  }
+
+  .bank-transfer-card {
+    padding: 22px 20px;
+  }
+
+  .bank-transfer-row {
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+  }
+
+  .bank-transfer-pair {
+    grid-template-columns: 1fr;
+  }
+}
