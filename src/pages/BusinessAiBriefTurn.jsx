@@ -179,6 +179,9 @@ export default function BusinessAiBriefTurn() {
   const busyRef = useRef(false);
   const endRef = useRef(null);
   const composerRef = useRef(null);
+  /* 服务端已有的那份草稿指纹。turn 成功时后端会原子写入 turn 的 draft，
+     前端若紧接着再 PATCH 一次就是和它抢写；指纹相同就跳过。 */
+  const serverDraftRef = useRef('');
 
   useEffect(() => {
     try { sessionStorage.removeItem(OLD_PENDING_KEY); } catch { /* Restricted browser context. */ }
@@ -187,12 +190,17 @@ export default function BusinessAiBriefTurn() {
 
   const hasStarted = messages.some((message) => message.role === 'user');
 
-  /* 草稿存服务端：会话、消息、草稿都在库里，浏览器不再留任何研究内容。 */
+  /* 只保存“用户手改出来的”草稿。turn 返回的那份已经由后端写过了，
+     再 PATCH 一次就是拿旧值盖新值，必须跳过（2026-11-01 后端确认的竞态）。 */
   useEffect(() => {
     if (!hasStarted || !conversationId) return;
     const payload = { draft, action, missing, assumptions };
+    const signature = JSON.stringify(payload);
+    if (signature === serverDraftRef.current) return;
     const timer = window.setTimeout(() => {
-      void saveDraft({ id: conversationId, payload }).catch(() => { /* 草稿失败不该打断对话 */ });
+      void saveDraft({ id: conversationId, payload })
+        .then(() => { serverDraftRef.current = signature; })
+        .catch(() => { /* 草稿失败不该打断对话 */ });
     }, 600);
     return () => window.clearTimeout(timer);
   }, [action, assumptions, conversationId, draft, hasStarted, missing]);
@@ -267,6 +275,13 @@ export default function BusinessAiBriefTurn() {
       setAction(response.action || null);
       setMissing(normalizeMissing(response.missing));
       setAssumptions(nextAssumptions);
+      /* 后端已在同一事务里写过这份 draft，记下指纹，别让防抖再去覆盖。 */
+      serverDraftRef.current = JSON.stringify({
+        draft: { ...normalizeDraft(response.draft), assumptions: nextAssumptions },
+        action: response.action || null,
+        missing: normalizeMissing(response.missing),
+        assumptions: nextAssumptions,
+      });
       setMessages([...nextMessages, { id: newId('guide'), role: 'guide', content: String(response.reply || '') }]);
     } catch (failure) {
       if (turnId !== latestTurnRef.current) return;
@@ -423,10 +438,21 @@ export default function BusinessAiBriefTurn() {
       if (mapped.length) setMessages(mapped);
       const payload = data.draft?.payload;
       if (payload && typeof payload === 'object') {
-        setDraft(normalizeDraft(payload.draft ?? payload));
-        setAction(typeof payload.action === 'string' ? payload.action : null);
-        setMissing(Array.isArray(payload.missing) ? payload.missing : []);
-        setAssumptions(normalizeAssumptions(payload.assumptions));
+        const restoredDraft = normalizeDraft(payload.draft ?? payload);
+        const restoredAction = typeof payload.action === 'string' ? payload.action : null;
+        const restoredMissing = Array.isArray(payload.missing) ? payload.missing : [];
+        const restoredAssumptions = normalizeAssumptions(payload.assumptions);
+        setDraft(restoredDraft);
+        setAction(restoredAction);
+        setMissing(restoredMissing);
+        setAssumptions(restoredAssumptions);
+        /* 刚从服务端读回来的草稿，别再原样写回去。 */
+        serverDraftRef.current = JSON.stringify({
+          draft: restoredDraft,
+          action: restoredAction,
+          missing: restoredMissing,
+          assumptions: restoredAssumptions,
+        });
       }
     } catch { /* 打不开就停在新会话，不把页面搞死 */ }
     setError('');
