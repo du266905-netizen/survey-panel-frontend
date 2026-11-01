@@ -79,7 +79,12 @@ export default function ChatwootWidget() {
       })
       .catch(() => { /* 客服窗口加载失败不该影响页面本身 */ });
 
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+      /* 离开研究端就把气泡收起来。它在 body 上，不随组件卸载消失，
+         不收就会出现“首页也挂着客服按钮”。 */
+      window.$chatwoot?.hide?.();
+    };
   }, [userId, user?.displayName, user?.username, user?.email, user?.role]);
 
   /* 退出登录：清掉身份，别再让下一个人用上一个人的会话。 */

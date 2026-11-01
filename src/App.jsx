@@ -407,7 +407,10 @@ export default function App() {
       {/* 客服窗口两套实现，用一个环境变量切换：
           VITE_SUPPORT_CHAT=chatwoot 走 Chatwoot，默认仍用自建的那套。
           旧的 BusinessSupportChat 先留着，跑一周对比再决定删不删。 */}
-      {isBusinessRole(user?.role) && location.pathname !== '/' && (
+      {/* 客服窗口只属于研究端：/business/* 之外一律不挂载。
+          Chatwoot 的气泡是它自己插进 body 的，React 卸载组件并不会把它收走，
+          所以组件在卸载时还要负责把气泡藏起来（见 ChatwootWidget）。 */}
+      {isBusinessRole(user?.role) && location.pathname.startsWith('/business') && (
         SUPPORT_CHAT === 'chatwoot' ? <ChatwootWidget /> : <BusinessSupportChat />
       )}
     </>
