@@ -73,8 +73,8 @@
   font-family: var(--font-reading, 'Source Serif 4'), 'Songti SC', 'STSong', 'SimSun', serif;
   font-size: 22px;
   font-weight: 400;
-  letter-spacing: -.01em;
-  line-height: 1.4;
+  letter-spacing: -.02em;
+  line-height: 1.3;
 }
 
 /* The account details stay in view while the claim is filled in. */
@@ -295,7 +295,7 @@
   background: #141a17;
   color: #fff;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
 }
 
