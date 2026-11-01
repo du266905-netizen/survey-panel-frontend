@@ -46,5 +46,6 @@ export const deleteConversation = async (id) => {
   await apiClient.delete(`${BASE}/${encodeURIComponent(id)}`);
 };
 
-/** 接口上线前，前端用它判断走哪条路；后端就绪后把环境变量打开即可。 */
-export const conversationsApiEnabled = import.meta.env.VITE_AI_CONVERSATIONS === '1';
+/** 后端已上线（2026-11-01 契约核对通过），默认就走接口；
+ *  需要临时退回纯本地调试时，才设 VITE_AI_CONVERSATIONS=0。 */
+export const conversationsApiEnabled = import.meta.env.VITE_AI_CONVERSATIONS !== '0';

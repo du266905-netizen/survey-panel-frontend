@@ -4,17 +4,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { AI_BRIEF_MODE, MOCK_COMMANDS, MOCK_SCENARIOS, generateBriefProject, sendBriefTurn } from '../ai/aiBriefTurnClient';
+import { createConversation, deleteConversation as deleteRemoteConversation, getConversation, saveDraft } from '../api/aiConversations';
+import { useConversationList } from '../hooks/useAiConversations';
 import AiAssistantChat from '../components/ai/AiAssistantChat';
 import { getAiBriefTurnCopy } from '../constants/aiBriefTurnCopy';
 import './Business.css';
 import './BusinessAiBriefTheme.css';
 import './BusinessAiBriefTurn.css';
 
-const DRAFT_KEY = 'guanyisearch.business-ai-brief.draft.v3';
-const HISTORY_KEY = 'guanyisearch.business-ai-brief.history.v2';
 const GENERATION_KEY = 'guanyisearch.business-ai-brief.generation.v1';
 const OLD_PENDING_KEY = 'guanyisearch.business-ai-brief.pending.v2';
-const HISTORY_LIMIT = 20;
 function newId(prefix) {
   const random = globalThis.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   return `${prefix}-${random}`;
@@ -110,44 +109,6 @@ function normalizeDraft(value) {
   };
 }
 
-function loadStored() {
-  try {
-    const value = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
-    if (!value || typeof value !== 'object') return null;
-    const messages = Array.isArray(value.messages)
-      ? value.messages.filter((item) => item && typeof item.content === 'string' && ['user', 'guide'].includes(item.role))
-      : [];
-    return {
-      conversationId: typeof value.conversationId === 'string' ? value.conversationId : '',
-      draft: normalizeDraft(value.draft),
-      messages,
-      action: typeof value.action === 'string' ? value.action : null,
-      missing: Array.isArray(value.missing) ? value.missing.filter((item) => typeof item === 'string') : [],
-      assumptions: normalizeAssumptions(value.assumptions),
-    };
-  } catch {
-    return null;
-  }
-}
-
-function readHistory() {
-  try {
-    const value = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-    if (!Array.isArray(value)) return [];
-    return value
-      .filter((item) => item && typeof item.id === 'string' && Array.isArray(item.messages))
-      .slice(0, HISTORY_LIMIT);
-  } catch {
-    return [];
-  }
-}
-
-function writeHistory(items) {
-  try {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(items.slice(0, HISTORY_LIMIT)));
-  } catch { /* Restricted browser context. */ }
-}
-
 function truncate(value, limit = 62) {
   const compact = String(value || '').replaceAll(/\s+/g, ' ').trim();
   if (!compact) return '';
@@ -194,7 +155,8 @@ export default function BusinessAiBriefTurn() {
      in the history list on the left, where it belongs — an empty page is the
      contract every assistant keeps (2026-11-01). `loadStored()` is no longer
      consulted on mount; `openConversation` is the only way back in. */
-  const [conversationId, setConversationId] = useState(() => newId('brief'));
+  /* 会话 id 由后端在第一条消息时创建；在此之前页面不产生任何服务端记录。 */
+  const [conversationId, setConversationId] = useState(() => null);
   const [draft, setDraft] = useState(() => emptyDraft());
   const [messages, setMessages] = useState(() => (
     [{ id: 'opening-guide', role: 'guide', opening: true, content: copy.opening }]
@@ -202,7 +164,8 @@ export default function BusinessAiBriefTurn() {
   const [action, setAction] = useState(() => null);
   const [missing, setMissing] = useState(() => []);
   const [assumptions, setAssumptions] = useState(() => []);
-  const [history, setHistory] = useState(() => readHistory());
+  const conversationList = useConversationList();
+  const history = conversationList.data || [];
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [generating, setGenerating] = useState(false);
@@ -224,15 +187,15 @@ export default function BusinessAiBriefTurn() {
 
   const hasStarted = messages.some((message) => message.role === 'user');
 
+  /* 草稿存服务端：会话、消息、草稿都在库里，浏览器不再留任何研究内容。 */
   useEffect(() => {
-    if (!hasStarted) return;
-    const payload = { conversationId, draft, messages, action, missing, assumptions, updatedAt: Date.now() };
-    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(payload)); } catch { /* Restricted browser context. */ }
-    const entry = { ...payload, title: titleFor(draft, messages, copy) };
-    const next = [entry, ...readHistory().filter((item) => item.id !== conversationId)].slice(0, HISTORY_LIMIT);
-    writeHistory(next);
-    setHistory(next);
-  }, [action, assumptions, conversationId, copy, draft, hasStarted, messages, missing]);
+    if (!hasStarted || !conversationId) return;
+    const payload = { draft, action, missing, assumptions };
+    const timer = window.setTimeout(() => {
+      void saveDraft({ id: conversationId, payload }).catch(() => { /* 草稿失败不该打断对话 */ });
+    }, 600);
+    return () => window.clearTimeout(timer);
+  }, [action, assumptions, conversationId, draft, hasStarted, missing]);
 
   useEffect(() => {
     if (!hasStarted) return;
@@ -241,7 +204,7 @@ export default function BusinessAiBriefTurn() {
   }, [busy, hasStarted, messages.length]);
 
   const resetLocal = () => {
-    setConversationId(newId('brief'));
+    setConversationId(null);
     setDraft(emptyDraft());
     setMessages([{ id: 'opening-guide', role: 'guide', opening: true, content: copy.opening }]);
     setAction(null);
@@ -255,7 +218,6 @@ export default function BusinessAiBriefTurn() {
     setDocInputs({ decision: '', audience: '' });
     setManualOpen(false);
     clearGenerationKey();
-    try { localStorage.removeItem(DRAFT_KEY); } catch { /* Restricted browser context. */ }
   };
 
   const turnSeqRef = useRef(0);
@@ -273,10 +235,23 @@ export default function BusinessAiBriefTurn() {
     const nextMessages = userMessage ? [...messages, userMessage] : messages;
     if (userMessage) setMessages(nextMessages);
 
+    /* 第一条消息时才建会话：空会话不进列表，也不浪费一个 id。 */
+    let activeConversationId = conversationId;
+    if (!activeConversationId) {
+      try {
+        const created = await createConversation();
+        activeConversationId = created?.id || null;
+        if (activeConversationId) setConversationId(activeConversationId);
+      } catch { /* 建不出来就退回纯内存对话，至少别白屏 */ }
+    }
+
     const turnId = ++turnSeqRef.current;
     latestTurnRef.current = turnId;
 
     const request = {
+      /* 会话 id：后端在 turn 里把这一问一答写进会话，刷新才读得到。
+         后端尚未接收该字段时它是无害的多余参数。 */
+      conversationId: activeConversationId || undefined,
       draft: toApiDraft(draft),
       responseLanguage: language.startsWith('zh') ? 'zh' : 'en',
     };
@@ -431,13 +406,29 @@ export default function BusinessAiBriefTurn() {
     sendMessage(parts.join('; '));
   };
 
-  const openConversation = (entry) => {
+  const openConversation = async (entry) => {
     setConversationId(entry.id);
-    setDraft(normalizeDraft(entry.draft));
-    setMessages(entry.messages?.length ? entry.messages : [{ id: 'opening-guide', role: 'guide', opening: true, content: copy.opening }]);
-    setAction(entry.action || null);
-    setMissing(Array.isArray(entry.missing) ? entry.missing : []);
-    setAssumptions(Array.isArray(entry.assumptions) ? entry.assumptions : []);
+    setDraft(emptyDraft());
+    setMessages([{ id: 'opening-guide', role: 'guide', opening: true, content: copy.opening }]);
+    setAction(null);
+    setMissing([]);
+    setAssumptions([]);
+    try {
+      const data = await getConversation(entry.id);
+      const mapped = (data.messages || []).map((m) => ({
+        id: m.id,
+        role: String(m.role).toUpperCase() === 'USER' ? 'user' : 'guide',
+        content: m.content,
+      }));
+      if (mapped.length) setMessages(mapped);
+      const payload = data.draft?.payload;
+      if (payload && typeof payload === 'object') {
+        setDraft(normalizeDraft(payload.draft ?? payload));
+        setAction(typeof payload.action === 'string' ? payload.action : null);
+        setMissing(Array.isArray(payload.missing) ? payload.missing : []);
+        setAssumptions(normalizeAssumptions(payload.assumptions));
+      }
+    } catch { /* 打不开就停在新会话，不把页面搞死 */ }
     setError('');
     setGenerateError('');
     setGenerating(false);
@@ -447,10 +438,11 @@ export default function BusinessAiBriefTurn() {
     clearGenerationKey();
   };
 
-  const removeConversation = (id) => {
-    const next = readHistory().filter((item) => item.id !== id);
-    writeHistory(next);
-    setHistory(next);
+  const removeConversation = async (id) => {
+    try {
+      await deleteRemoteConversation(id);
+      await conversationList.refetch();
+    } catch { /* 删不掉就留着，别假装删了 */ }
     if (id === conversationId) resetLocal();
   };
 
