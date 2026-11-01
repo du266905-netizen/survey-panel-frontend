@@ -6,6 +6,7 @@ import { createCryptoRecharge } from '../api/realApi';
 import PayPalCheckout from './PayPalCheckout';
 import { PAYPAL_COPY } from '../constants/paypalCheckoutCopy';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
+import CryptomusMark from './CryptomusMark';
 
 
 /* "Add funds" dialog, modelled on the top-up sheet the client asked for: the
@@ -20,45 +21,6 @@ import { MIN_TOP_UP } from '../constants/fundsLimits';
  * and no card data is collected here. */
 
 const QUICK_AMOUNTS = [100, 250, 500, 1000];
-
-/* Official Cryptomus cube, pulled from their own CDN sprite
- * (cryptomus.com/public/sprites/shared-logo.*.svg). It is a single currentColor
- * path, so it inherits whatever colour we set. */
-function CryptomusMark({ size = 13 }) {
-  return (
-    <svg width={size * 0.89} height={size} viewBox="0 0 32 36" fill="currentColor" aria-hidden="true">
-      <path d="M30.611 8.507 16.935.61a2.01 2.01 0 0 0-2.005 0L1.254 8.507A2.01 2.01 0 0 0 .25 10.245v15.791c0 .713.384 1.378 1.004 1.738L14.93 35.67a2.03 2.03 0 0 0 2.008 0l13.677-7.896a2.01 2.01 0 0 0 1.004-1.738V10.245c0-.713-.385-1.378-1.004-1.738zM16.242 17.16a.62.62 0 0 1-.62 0L2.328 9.487l13.296-7.675a.64.64 0 0 1 .62 0l13.295 7.675zm-1.312 1.197q.146.084.312.142v15.743l-13.296-7.67a.62.62 0 0 1-.311-.537V10.684z" />
-    </svg>
-  );
-}
-
-/* Official marks, served from public/pay/. Each sits in an equal-sized box so
- * the row stays even despite wildly different aspect ratios (Visa is 3.1:1,
- * Mastercard 1.3:1). Cryptomus stays inline — it is a single currentColor path
- * taken from their own CDN sprite. */
-const CARD_MARKS = [
-  { src: '/pay/visa.svg', alt: 'Visa' },
-  { src: '/pay/mastercard.png', alt: 'Mastercard' },
-  // UnionPay third, PayPal fourth, at the client's instruction.
-  { src: '/pay/unionpay.webp', alt: 'UnionPay' },
-  { src: '/pay/paypal.svg', alt: 'PayPal' },
-  { src: '/pay/amex.svg', alt: 'American Express' },
-];
-
-function CardMarks() {
-  return (
-    <span className="business-funds-cards">
-      {CARD_MARKS.map((mark) => (
-        <span className="business-funds-cardbox" key={mark.alt}>
-          <img src={mark.src} alt={mark.alt} loading="lazy" />
-        </span>
-      ))}
-      <span className="business-funds-cardbox is-cryptomus" title="Cryptomus">
-        <CryptomusMark size={14} />
-      </span>
-    </span>
-  );
-}
 
 export default function BusinessAddFundsModal({ open, onClose }) {
   const { language, publicCopy } = useLanguage();

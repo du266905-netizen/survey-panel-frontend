@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Bitcoin, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
+import { ArrowRight, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
 import PayPalCheckout from '../components/PayPalCheckout';
+import CryptomusMark from '../components/CryptomusMark';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { createCryptoRecharge, getBusinessAccountBalance } from '../api/realApi';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
@@ -26,9 +27,8 @@ import './BusinessAddFunds.css';
 
 const QUICK_AMOUNTS = [100, 250, 500, 1000];
 
-/* Card marks live in public/pay — they were already on the site, in the sheet's
- * footer. Kept at one height so Visa (3.1:1) and Mastercard (1.3:1) sit on the
- * same line without one looking like a stamp. */
+/* Card marks live in public/pay, the same set the sheet used. Each sits in an
+ * equal box because the logos range from 3.1:1 to 1.3:1. */
 const CARD_MARKS = [
   { src: '/pay/visa.svg', alt: 'Visa' },
   { src: '/pay/mastercard.png', alt: 'Mastercard' },
@@ -156,26 +156,42 @@ export default function BusinessAddFunds() {
             <h2 className="business-add-funds-block-title">{ui.howToPay || 'How would you like to pay'}</h2>
 
             <div className="business-add-funds-options">
-              <button
-                type="button"
-                className={`business-add-funds-option${cardOpen ? ' is-open' : ''}`}
-                onClick={() => setCardOpen((value) => !value)}
-                disabled={!valid || Boolean(submitting)}
-                aria-expanded={cardOpen}
-              >
-                <span className="business-add-funds-option-mark" aria-hidden="true"><CreditCard size={19} /></span>
-                <span className="business-add-funds-option-copy">
-                  <strong>{ws.funds.card || 'Credit or debit card'}</strong>
-                </span>
-                <span className="business-add-funds-option-brands" aria-hidden="true">
-                  {CARD_MARKS.map((mark) => (
-                    <span className="business-add-funds-brand" key={mark.src}>
-                      <img src={mark.src} alt="" loading="lazy" />
-                    </span>
-                  ))}
-                </span>
-                <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
-              </button>
+              {/* The hosted card fields belong to this row, not to the end of the
+                  list: opening the card option expands it in place. */}
+              <div className={`business-add-funds-group${cardOpen ? ' is-open' : ''}`}>
+                <button
+                  type="button"
+                  className="business-add-funds-option"
+                  onClick={() => setCardOpen((value) => !value)}
+                  disabled={!valid || Boolean(submitting)}
+                  aria-expanded={cardOpen}
+                >
+                  <span className="business-add-funds-option-mark" aria-hidden="true"><CreditCard size={19} /></span>
+                  <span className="business-add-funds-option-copy">
+                    <strong>{ws.funds.card || 'Credit or debit card'}</strong>
+                  </span>
+                  <span className="business-add-funds-option-brands" aria-hidden="true">
+                    {CARD_MARKS.map((mark) => (
+                      <span className="business-add-funds-brand" key={mark.src}>
+                        <img src={mark.src} alt="" loading="lazy" />
+                      </span>
+                    ))}
+                  </span>
+                  <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
+                </button>
+
+                {cardOpen && (
+                  <div className="business-add-funds-cardpanel">
+                    <PayPalCheckout
+                      amountUsd={valid ? numeric.toFixed(2) : ''}
+                      disabled={!valid}
+                      copy={PAYPAL_COPY}
+                      onPaid={() => { setCardOpen(false); setError(''); }}
+                      onError={(message) => setError(message)}
+                    />
+                  </div>
+                )}
+              </div>
 
               <button
                 type="button"
@@ -183,7 +199,9 @@ export default function BusinessAddFunds() {
                 onClick={startCrypto}
                 disabled={!valid || Boolean(submitting)}
               >
-                <span className="business-add-funds-option-mark" aria-hidden="true"><Bitcoin size={19} /></span>
+                <span className="business-add-funds-option-mark is-cryptomus" aria-hidden="true">
+                  <CryptomusMark size={17} />
+                </span>
                 <span className="business-add-funds-option-copy">
                   <strong>{ws.funds.crypto || 'Cryptocurrency'}</strong>
                 </span>
@@ -214,18 +232,6 @@ export default function BusinessAddFunds() {
                 <span className="business-add-funds-option-go" aria-hidden="true" />
               </button>
             </div>
-
-            {cardOpen && (
-              <div className="business-add-funds-cardpanel">
-                <PayPalCheckout
-                  amountUsd={valid ? numeric.toFixed(2) : ''}
-                  disabled={!valid}
-                  copy={PAYPAL_COPY}
-                  onPaid={() => { setCardOpen(false); setError(''); }}
-                  onError={(message) => setError(message)}
-                />
-              </div>
-            )}
 
             {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
           </section>

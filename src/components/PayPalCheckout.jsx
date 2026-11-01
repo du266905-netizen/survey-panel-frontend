@@ -166,7 +166,17 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
           }).render(buttonsRef.current);
         }
 
-        const cardFields = paypal.CardFields?.({ ...cardHandlers });
+        /* Hosted fields: PayPal owns what is inside the iframes, but the SDK
+         * still accepts a style block for the inputs. Only size and colour are
+         * passed — enough to stop the block towering, nothing that pretends we
+         * control their form. */
+        const cardFields = paypal.CardFields?.({
+          ...cardHandlers,
+          style: {
+            input: { 'font-size': '14px', 'color': '#141a17' },
+            '.invalid': { color: '#b42318' },
+          },
+        });
         if (cardFields?.isEligible?.()) {
           cardFieldsRef.current = cardFields;
           setCardEligible(true);
