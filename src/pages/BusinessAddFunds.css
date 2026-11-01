@@ -10,68 +10,62 @@
 .business-add-funds-page {
   min-height: 100vh;
   padding-bottom: 88px;
-  background: #efede4;
+  background: #fff;
   color: #141a17;
 }
 
-/* ---- hero ---------------------------------------------------------------- */
+/* No photograph. The page starts with the mark and a way back, then the title —
+   the way an account screen in this product starts. */
 
-.business-add-funds-hero {
-  position: relative;
-  width: 100%;
-  height: clamp(420px, 56vh, 620px);
-  overflow: hidden;
-  background: #141413;
+.business-add-funds-top {
+  border-bottom: 1px solid rgba(20, 26, 23, .1);
+  background: #fff;
 }
 
-.business-add-funds-hero img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 52%;
-}
-
-.business-add-funds-hero::after {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(95% 75% at 50% 55%, rgba(12, 16, 13, .34) 0%, rgba(12, 16, 13, .14) 100%),
-    linear-gradient(180deg, rgba(20, 26, 23, .18) 0%, rgba(20, 26, 23, .34) 100%);
-  content: '';
-}
-
-/* Centred like the careers hero: the picture carries the mood, the words sit in
-   the middle of it, and nothing else competes for the eye. */
-.business-add-funds-hero-brand {
-  position: absolute;
-  z-index: 2;
-  top: 26px;
-  right: 0;
-  left: 0;
+.business-add-funds-top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
   width: min(1120px, 100% - 64px);
+  min-height: 68px;
   margin: 0 auto;
 }
 
-.business-add-funds-hero-brand > img {
+.business-add-funds-top-inner > img {
   height: 22px;
   width: auto;
 }
 
-.business-add-funds-hero-copy {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  padding: 40px 24px 0;
-  text-align: center;
+/* Green, because that is the one colour this product uses for "go back". */
+.business-add-funds-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-right: -8px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #315a45;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
-.business-add-funds-hero-copy > h1 {
+.business-add-funds-back:hover {
+  background: rgba(49, 90, 69, .08);
+}
+
+.business-add-funds-head {
+  width: min(1120px, 100% - 64px);
+  margin: 0 auto;
+  padding: 40px 0 0;
+}
+
+.business-add-funds-head > h1 {
   margin: 0;
-  color: #fff;
   font-family: 'Newsreader', 'Songti SC', 'STSong', 'SimSun', serif;
   font-size: 56px;
   font-weight: 500;
@@ -79,14 +73,12 @@
   line-height: 1.02;
 }
 
-.business-add-funds-hero-copy > p {
-  max-width: 46ch;
-  margin: 18px 0 0;
-  color: rgba(255, 255, 255, .82);
+.business-add-funds-head > p {
+  max-width: 52ch;
+  margin: 12px 0 0;
+  color: #5f6862;
   font-family: Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0;
   line-height: 1.5;
 }
 
@@ -98,7 +90,7 @@
   gap: 40px;
   width: min(1120px, 100% - 64px);
   margin: 0 auto;
-  padding-top: 44px;
+  padding-top: 36px;
   align-items: start;
 }
 
@@ -410,7 +402,8 @@
 }
 
 @media (max-width: 980px) {
-  .business-add-funds-hero-copy,
+  .business-add-funds-top-inner,
+  .business-add-funds-head,
   .business-add-funds-grid {
     width: calc(100% - 40px);
   }
@@ -426,7 +419,7 @@
     order: -1;
   }
 
-  .business-add-funds-hero-copy > h1 {
+  .business-add-funds-head > h1 {
     font-size: 38px;
   }
 

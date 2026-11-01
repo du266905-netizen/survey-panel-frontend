@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
 import Logo from '../components/Logo';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
@@ -8,7 +8,6 @@ import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { createCryptoRecharge, getBusinessAccountBalance } from '../api/realApi';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
 import { PAYPAL_COPY } from '../constants/paypalCheckoutCopy';
-import heroImage from '../assets/business/add-funds-hero.jpg';
 import './BusinessAddFunds.css';
 
 /* The add-funds page.
@@ -109,18 +108,19 @@ export default function BusinessAddFunds() {
 
   return (
     <main className="business-add-funds-page">
-      <section className="business-add-funds-hero">
-        <img src={heroImage} alt="" decoding="async" />
-        {/* 站点上没有导航条，品牌标记就落在图上左上角，和招聘页 logo 的位置一致：
-            它先回答“这是同一个站点”，然后才轮到标题。 */}
-        <div className="business-add-funds-hero-brand">
-          <Logo size="sm" variant="light" />
+      <header className="business-add-funds-top">
+        <div className="business-add-funds-top-inner">
+          <Logo size="sm" />
+          <button type="button" className="business-add-funds-back" onClick={() => navigate(withLanguage('/business/account', language))}>
+            <ArrowLeft size={16} /> {ui.backToAccount || 'Back'}
+          </button>
         </div>
-        <div className="business-add-funds-hero-copy">
-          <h1>{ui.addFunds || 'Add funds'}</h1>
-          <p>{ui.addFundsSubtitle || ws.funds.subtitle}</p>
-        </div>
-      </section>
+      </header>
+
+      <div className="business-add-funds-head">
+        <h1>{ui.addFunds || 'Add funds'}</h1>
+        <p>{ui.addFundsSubtitle || ws.funds.subtitle}</p>
+      </div>
 
       <div className="business-add-funds-grid">
         <div className="business-add-funds-main">

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { BANK_TRANSFER_ACCOUNT } from '../constants/bankTransferAccount';
 import './BusinessBankTransfer.css';
@@ -134,40 +135,22 @@ export default function BusinessBankTransfer() {
 
   return (
     <main className="bank-transfer-page">
-      <header className="bank-transfer-topbar">
-        <button type="button" onClick={() => navigate(withLanguage('/business/account', language))}>
-          <ArrowLeft size={16} /> {copy.back}
-        </button>
+      <header className="bank-transfer-top">
+        <div className="bank-transfer-top-inner">
+          <Logo size="sm" />
+          <button type="button" className="bank-transfer-back" onClick={() => navigate(withLanguage('/business/add-funds', language))}>
+            <ArrowLeft size={16} /> {copy.back}
+          </button>
+        </div>
       </header>
 
-      <div className="bank-transfer-sheet">
+      <div className="bank-transfer-head">
         <h1>{copy.title}</h1>
         <p className="bank-transfer-intro">{copy.intro}</p>
+      </div>
 
-        <section className="bank-transfer-card">
-          <div className="bank-transfer-card-head">
-            <span>{copy.sendTo}</span>
-            <span className="bank-transfer-chip">{account.currency}</span>
-          </div>
-
-          <dl className="bank-transfer-rows">
-            {rows.map((row) => (
-              <div className="bank-transfer-row" key={row.key}>
-                <dt>{row.label}</dt>
-                <dd>{row.value}</dd>
-                <div className="bank-transfer-row-action">
-                  {row.copyValue ? (
-                    <button type="button" onClick={() => handleCopy(row.key, row.copyValue)}>
-                      {copiedKey === row.key ? copy.copied : copy.copy}
-                    </button>
-                  ) : null}
-                </div>
-              </div>
-            ))}
-          </dl>
-
-          <p className="bank-transfer-hint">{copy.hint}</p>
-        </section>
+      <div className="bank-transfer-grid">
+        <div className="bank-transfer-main">
 
         <form className="bank-transfer-card bank-transfer-form" onSubmit={submit} noValidate>
           <h2>{copy.formTitle}</h2>
@@ -250,6 +233,34 @@ export default function BusinessBankTransfer() {
 
           <p className="bank-transfer-foot">{copy.foot}</p>
         </form>
+        </div>
+
+        <aside className="bank-transfer-rail">
+        <section className="bank-transfer-card">
+                  <div className="bank-transfer-card-head">
+                    <span>{copy.sendTo}</span>
+                    <span className="bank-transfer-chip">{account.currency}</span>
+                  </div>
+
+                  <dl className="bank-transfer-rows">
+                    {rows.map((row) => (
+                      <div className="bank-transfer-row" key={row.key}>
+                        <dt>{row.label}</dt>
+                        <dd>{row.value}</dd>
+                        <div className="bank-transfer-row-action">
+                          {row.copyValue ? (
+                            <button type="button" onClick={() => handleCopy(row.key, row.copyValue)}>
+                              {copiedKey === row.key ? copy.copied : copy.copy}
+                            </button>
+                          ) : null}
+                        </div>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <p className="bank-transfer-hint">{copy.hint}</p>
+                </section>
+        </aside>
       </div>
     </main>
   );
