@@ -91,8 +91,8 @@
 
 .business-add-funds-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 48px;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 40px;
   width: min(1120px, 100% - 64px);
   margin: 0 auto;
   padding-top: 44px;
@@ -365,7 +365,7 @@
 .business-add-funds-marks {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
   margin-top: 12px;
 }
 
