@@ -10,7 +10,7 @@
 .business-add-funds-page {
   min-height: 100vh;
   padding-bottom: 88px;
-  background: #fafaf7;
+  background: #efede4;
   color: #141a17;
 }
 
@@ -29,15 +29,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 62%;
+  object-position: 50% 52%;
 }
 
 .business-add-funds-hero::after {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(95% 75% at 50% 55%, rgba(12, 16, 13, .46) 0%, rgba(12, 16, 13, .24) 100%),
-    linear-gradient(180deg, rgba(20, 26, 23, .30) 0%, rgba(20, 26, 23, .46) 100%);
+    radial-gradient(95% 75% at 50% 55%, rgba(12, 16, 13, .34) 0%, rgba(12, 16, 13, .14) 100%),
+    linear-gradient(180deg, rgba(20, 26, 23, .18) 0%, rgba(20, 26, 23, .34) 100%);
   content: '';
 }
 
@@ -81,10 +81,13 @@
 
 .business-add-funds-hero-copy > p {
   max-width: 46ch;
-  margin: 16px 0 0;
-  color: rgba(255, 255, 255, .78);
-  font-size: 14px;
-  line-height: 1.6;
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, .82);
+  font-family: Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
 }
 
 /* ---- two columns --------------------------------------------------------- */
