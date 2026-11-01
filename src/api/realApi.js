@@ -857,15 +857,6 @@ export const getBusinessAccountBalance = async () => {
  * Alipay (AI 网页应用收款) and crypto (Cryptomus) are separate backends lines.
  * Both create a recharge order and hand back a checkout URL to redirect to. */
 
-export const createAlipayRecharge = async ({ amountUsd, description, returnUrl, idempotencyKey }) => {
-  const response = await apiClient.post(
-    '/api/business/account/recharge/alipay',
-    { amountUsd, description, returnUrl },
-    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
-  );
-  return response.data;
-};
-
 export const getAlipayCapability = async () => {
   const response = await apiClient.get('/api/business/account/alipay/capability');
   return response.data;

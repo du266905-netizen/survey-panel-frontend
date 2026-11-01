@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Lock, X } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
-import { createAlipayRecharge, createCryptoRecharge, createPaypalRecharge, getPaypalRecharge } from '../api/realApi';
-import { createPaypalAttemptTracker } from './paypalAttempt';
+import { createCryptoRecharge } from '../api/realApi';
+import PayPalCheckout from './PayPalCheckout';
+
 
 /* "Add funds" dialog, modelled on the top-up sheet the client asked for: the
  * amount first (with quick picks), then the payment routes, then the security
@@ -69,10 +70,9 @@ export default function BusinessAddFundsModal({ open, onClose }) {
   const [touched, setTouched] = useState(false);
   const [custom, setCustom] = useState(false);
   const [submitting, setSubmitting] = useState('');
+  const [cardOpen, setCardOpen] = useState(false);
   const [error, setError] = useState('');
   const inputRef = useRef(null);
-  const paypalAttempt = useRef(null);
-  if (!paypalAttempt.current) paypalAttempt.current = createPaypalAttemptTracker();
 
   useEffect(() => {
     if (!open) return undefined;
@@ -82,7 +82,6 @@ export default function BusinessAddFundsModal({ open, onClose }) {
   }, [open, onClose]);
 
   useEffect(() => {
-    if (!open && paypalAttempt.current) paypalAttempt.current.reset();
   }, [open]);
 
   if (!open) return null;
@@ -91,52 +90,24 @@ export default function BusinessAddFundsModal({ open, onClose }) {
    * hand the buyer to the provider's cashier. Nothing is credited here — the
    * backend only credits on a signature-verified async notification or a
    * verified trade query, so this is purely a redirect. */
+  /* 只剩加密货币需要跳转收银台；银行卡交给 PayPal 的托管组件，
+     银行电汇仍是人工确认，都不走这个函数。 */
   const startPayment = async (method) => {
-    if (!valid || submitting) return;
-    const isPaypal = method === 'paypal';
-    // React state cannot stop a second click in the same tick. The tracker's
-    // synchronous lock does; its key also survives a retry for the same amount.
-    if (isPaypal && !paypalAttempt.current.begin()) return;
+    if (!valid || submitting || method !== 'crypto') return;
     setError('');
     setSubmitting(method);
     try {
       const amountUsd = numeric.toFixed(2);
-      if (isPaypal) {
-        const idempotencyKey = paypalAttempt.current.keyFor(amountUsd);
-        const payload = await createPaypalRecharge({ amountUsd, idempotencyKey });
-        let payment = payload?.payment;
-        // If the create response is missing the approval link, query the
-        // order once by its local order id before treating it as a failure.
-        if (!payment?.approveUrl && payment?.orderId) {
-          const queried = await getPaypalRecharge(payment.orderId);
-          payment = queried?.payment || payment;
-        }
-        if (!payment?.approveUrl) throw new Error('NO_APPROVE_URL');
-        window.location.assign(payment.approveUrl);
-        return;
-      }
-
-      const payload = method === 'alipay'
-        ? await createAlipayRecharge({
-            amountUsd,
-            description: ui.addFunds || 'Account top-up',
-            returnUrl: `${window.location.origin}/business/workspace`,
-            idempotencyKey: `alipay:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`,
-          })
-        : await createCryptoRecharge({
-            amountUsd,
-            idempotencyKey: `crypto:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`,
-          });
-
+      const payload = await createCryptoRecharge({
+        amountUsd,
+        idempotencyKey: `crypto:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`,
+      });
       const checkoutUrl = payload?.payment?.checkoutUrl;
       if (!checkoutUrl) throw new Error('NO_CHECKOUT_URL');
       window.location.href = checkoutUrl;
-    } catch (failure) {
-      const code = failure?.response?.data?.code;
-      if (code === 'ALIPAY_NOT_CONFIGURED') setError(ui.alipayUnavailable || 'Alipay is not available yet.');
-      else setError(ui.paymentFailed || 'We could not start this payment. Please try again.');
+    } catch {
+      setError(ui.paymentFailed || 'We could not start this payment. Please try again.');
     } finally {
-      if (isPaypal) paypalAttempt.current.end();
       setSubmitting('');
     }
   };
@@ -212,48 +183,22 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </span>
             <span className="business-funds-route-go" aria-hidden="true">›</span>
           </a>
+          {/* PayPal 不再是独立一行：它的官方组件（Buttons + CardFields）
+              就是“信用卡 / 银行卡”这一条的实现，合并成一行。 */}
           <button
             type="button"
-            data-method="paypal"
-            onClick={() => startPayment('paypal')}
+            data-method="card"
+            onClick={() => setCardOpen((value) => !value)}
             disabled={!valid || Boolean(submitting)}
+            aria-expanded={cardOpen}
           >
-            <span className="business-funds-route-mark is-paypal" aria-hidden="true">
-              <img src="/pay/paypal-monogram.png" alt="" />
-            </span>
-            <span className="business-funds-route-copy">
-              <strong>{ws.funds.paypal || 'PayPal'}</strong>
-            </span>
-            <span className="business-funds-route-go" aria-hidden="true">
-              {submitting === 'paypal' ? '…' : '›'}
-            </span>
-          </button>
-          {/* PayPal and card used to share one row ("PayPal or credit card").
-              The client asked for them split, so each now has its own route. */}
-          <a href="#" data-method="card">
             <span className="business-funds-route-mark" aria-hidden="true">
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></svg>
             </span>
             <span className="business-funds-route-copy">
               <strong>{ws.funds.card || 'Credit or debit card'}</strong>
             </span>
-            <span className="business-funds-route-go" aria-hidden="true">›</span>
-          </a>
-          <button
-            type="button"
-            data-method="alipay"
-            onClick={() => startPayment('alipay')}
-            disabled={!valid || Boolean(submitting)}
-          >
-            <span className="business-funds-route-mark is-alipay" aria-hidden="true">
-              <img src="/pay/alipay.png" alt="" />
-            </span>
-            <span className="business-funds-route-copy">
-              <strong>{ws.funds.alipay}</strong>
-            </span>
-            <span className="business-funds-route-go" aria-hidden="true">
-              {submitting === 'alipay' ? '…' : '›'}
-            </span>
+            <span className="business-funds-route-go" aria-hidden="true">{cardOpen ? '⌃' : '›'}</span>
           </button>
           {/* Crypto, Alipay and PayPal are wired: each creates a recharge
               order and hands off to the provider cashier. Bank transfer and
@@ -276,6 +221,18 @@ export default function BusinessAddFundsModal({ open, onClose }) {
           </button>
         </div>
 
+        {cardOpen && (
+          <div className="business-funds-cardpanel">
+            <PayPalCheckout
+              amountUsd={valid ? numeric.toFixed(2) : ''}
+              disabled={!valid}
+              copy={PAYPAL_COPY}
+              onPaid={() => { setCardOpen(false); setError(''); onClose(); }}
+              onError={(message) => setError(message)}
+            />
+          </div>
+        )}
+
         {error ? <p className="business-funds-error" role="alert">{error}</p> : null}
 
         <footer className="business-funds-secure">
@@ -290,5 +247,17 @@ export default function BusinessAddFundsModal({ open, onClose }) {
     </div>
   );
 }
+
+/** PayPal 托管组件自己的文案；卡字段附近必须有隐私告知（PayPal 要求）。 */
+const PAYPAL_COPY = {
+  loading: 'Loading PayPal…',
+  unavailable: 'PayPal is not available right now. Use bank transfer, or contact us and we will send a payment link.',
+  cardUnavailable: 'Card entry is not enabled for this account yet — you can still pay with PayPal.',
+  privacy: 'Card details are entered in PayPal’s secure fields and never on this site. See',
+  privacyLink: 'PayPal’s privacy statement',
+  startFailed: 'We could not start the PayPal payment. Please try again.',
+  captureFailed: 'PayPal did not complete the payment. Nothing was added to your balance.',
+  cancelled: 'PayPal payment cancelled.',
+};
 
 export { MIN_TOP_UP };
