@@ -60,6 +60,7 @@ import WorkerMonitor from './pages/WorkerMonitor';
 import AgentPrecheck from './pages/AgentPrecheck';
 import SupportChatWidget from './components/SupportChatWidget';
 import BusinessSupportChat from './components/BusinessSupportChat';
+import ChatwootWidget from './components/ChatwootWidget';
 import { isAdminRole, isPanelistRole } from './utils/roles';
 import { isBusinessRole } from './utils/roles';
 import Business from './pages/Business';
@@ -175,6 +176,8 @@ const queryClient = new QueryClient({
     queries: { staleTime: 30_000, refetchOnWindowFocus: false, retry: 1 },
   },
 });
+
+const SUPPORT_CHAT = import.meta.env.VITE_SUPPORT_CHAT || 'local';
 
 export default function App() {
   const { user } = useAuth();
@@ -401,7 +404,12 @@ export default function App() {
       {isPanelistRole(user?.role) && location.pathname !== '/' && <SupportChatWidget />}
       {/* The research side's own help chat. Wording, sizes and colours follow
           the client workspace rules; the participant widget above is unrelated. */}
-      {isBusinessRole(user?.role) && location.pathname !== '/' && <BusinessSupportChat />}
+      {/* 客服窗口两套实现，用一个环境变量切换：
+          VITE_SUPPORT_CHAT=chatwoot 走 Chatwoot，默认仍用自建的那套。
+          旧的 BusinessSupportChat 先留着，跑一周对比再决定删不删。 */}
+      {isBusinessRole(user?.role) && location.pathname !== '/' && (
+        SUPPORT_CHAT === 'chatwoot' ? <ChatwootWidget /> : <BusinessSupportChat />
+      )}
     </>
     </QueryClientProvider>
   );
