@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Plus, Wallet } from 'lucide-react';
-import BusinessAddFundsModal from './BusinessAddFundsModal';
+import { useNavigate } from 'react-router-dom';
 import { getBusinessAccountBalance } from '../api/realApi';
-import { useLanguage } from './LanguageContext';
+import { useLanguage, withLanguage } from './LanguageContext';
 
 /* Account balance, shown in the research top bar just left of the notification
  * bell. Two lines: the label and amount on the left, the top-up action on the
@@ -31,10 +31,10 @@ function formatAmount(value, currency = 'USD') {
 
 export default function BusinessBalanceChip({ className = '' }) {
   const { language, publicCopy } = useLanguage();
+  const navigate = useNavigate();
   const uiMap = publicCopy?.workspace?.business?.workspaceUi || {};
   const ui = uiMap[language] || uiMap['en-US'] || {};
 
-  const [open, setOpen] = useState(false);
   const [balance, setBalance] = useState(null);
   const [unavailable, setUnavailable] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -73,7 +73,7 @@ export default function BusinessBalanceChip({ className = '' }) {
       type="button"
       className={`business-workspace-balance ${className}`.trim()}
       data-tour="balance"
-      onClick={() => setOpen(true)}
+      onClick={() => navigate(withLanguage('/business/add-funds', language))}
       aria-label={label}
     >
       <span className="business-workspace-balance-figure">
@@ -93,7 +93,6 @@ export default function BusinessBalanceChip({ className = '' }) {
         <span className="business-workspace-balance-add-label">{ui.addFunds || 'Add funds'}</span>
       </span>
     </button>
-    <BusinessAddFundsModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
