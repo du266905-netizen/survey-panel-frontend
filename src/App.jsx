@@ -59,7 +59,6 @@ import WorkerDetail from './pages/WorkerDetail';
 import WorkerMonitor from './pages/WorkerMonitor';
 import AgentPrecheck from './pages/AgentPrecheck';
 import SupportChatWidget from './components/SupportChatWidget';
-import BusinessSupportChat from './components/BusinessSupportChat';
 import ChatwootWidget from './components/ChatwootWidget';
 import { isAdminRole, isPanelistRole } from './utils/roles';
 import { isBusinessRole } from './utils/roles';
@@ -176,8 +175,6 @@ const queryClient = new QueryClient({
     queries: { staleTime: 30_000, refetchOnWindowFocus: false, retry: 1 },
   },
 });
-
-const SUPPORT_CHAT = import.meta.env.VITE_SUPPORT_CHAT || 'local';
 
 export default function App() {
   const { user } = useAuth();
@@ -402,17 +399,9 @@ export default function App() {
       </Routes>
       </PageMotion>
       {isPanelistRole(user?.role) && location.pathname !== '/' && <SupportChatWidget />}
-      {/* The research side's own help chat. Wording, sizes and colours follow
-          the client workspace rules; the participant widget above is unrelated. */}
-      {/* 客服窗口两套实现，用一个环境变量切换：
-          VITE_SUPPORT_CHAT=chatwoot 走 Chatwoot，默认仍用自建的那套。
-          旧的 BusinessSupportChat 先留着，跑一周对比再决定删不删。 */}
-      {/* 客服窗口只属于研究端：/business/* 之外一律不挂载。
-          Chatwoot 的气泡是它自己插进 body 的，React 卸载组件并不会把它收走，
-          所以组件在卸载时还要负责把气泡藏起来（见 ChatwootWidget）。 */}
-      {isBusinessRole(user?.role) && location.pathname.startsWith('/business') && (
-        SUPPORT_CHAT === 'chatwoot' ? <ChatwootWidget /> : <BusinessSupportChat />
-      )}
+      {/* 研究端的客服窗口由 Chatwoot 提供（2026-11-01 替掉自建那套）。
+          只属于研究端：/business/* 之外不挂载；气泡挂在 body 上，卸载时自己收。 */}
+      {isBusinessRole(user?.role) && location.pathname.startsWith('/business') && <ChatwootWidget />}
     </>
     </QueryClientProvider>
   );
