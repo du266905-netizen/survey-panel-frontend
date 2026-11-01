@@ -8,7 +8,7 @@ import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { createCryptoRecharge, getBusinessAccountBalance } from '../api/realApi';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
 import { PAYPAL_COPY } from '../constants/paypalCheckoutCopy';
-import heroImage from '../assets/home/hero-window.jpg';
+import heroImage from '../assets/business/add-funds-hero.jpg';
 import './BusinessAddFunds.css';
 
 /* The add-funds page.
