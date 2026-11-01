@@ -144,13 +144,13 @@ export default function BusinessBankTransfer() {
         </div>
       </header>
 
-      <div className="bank-transfer-head">
-        <h1>{copy.title}</h1>
-        <p className="bank-transfer-intro">{copy.intro}</p>
-      </div>
-
       <div className="bank-transfer-grid">
         <div className="bank-transfer-main">
+          <div className="bank-transfer-head">
+            <h1>{copy.title}</h1>
+            <p className="bank-transfer-intro">{copy.intro}</p>
+          </div>
+
 
         <form className="bank-transfer-card bank-transfer-form" onSubmit={submit} noValidate>
           <h2>{copy.formTitle}</h2>
