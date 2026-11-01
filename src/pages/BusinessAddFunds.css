@@ -29,24 +29,44 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 58%;
+  object-position: 50% 22%;
 }
 
 .business-add-funds-hero::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(20, 26, 23, .16) 10%, rgba(20, 26, 23, .62) 100%);
+  background:
+    radial-gradient(90% 70% at 50% 52%, rgba(12, 16, 13, .62) 0%, rgba(12, 16, 13, .38) 100%),
+    linear-gradient(180deg, rgba(20, 26, 23, .34) 0%, rgba(20, 26, 23, .58) 100%);
   content: '';
+}
+
+/* Centred like the careers hero: the picture carries the mood, the words sit in
+   the middle of it, and nothing else competes for the eye. */
+.business-add-funds-hero-brand {
+  position: absolute;
+  z-index: 2;
+  top: 26px;
+  right: 0;
+  left: 0;
+  width: min(1120px, 100% - 64px);
+  margin: 0 auto;
+}
+
+.business-add-funds-hero-brand > img {
+  height: 22px;
+  width: auto;
 }
 
 .business-add-funds-hero-copy {
   position: absolute;
   z-index: 1;
-  right: 0;
-  bottom: clamp(24px, 4vw, 52px);
-  left: 0;
-  width: min(100% - 64px, 1120px);
-  margin: 0 auto;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  padding: 0 24px;
+  text-align: center;
 }
 
 .business-add-funds-hero-copy > h1 {
@@ -60,9 +80,9 @@
 }
 
 .business-add-funds-hero-copy > p {
-  max-width: 54ch;
-  margin: 12px 0 0;
-  color: rgba(255, 255, 255, .82);
+  max-width: 46ch;
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, .78);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -194,7 +214,7 @@
 
 .business-add-funds-option {
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) auto auto;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
   align-items: center;
   gap: 14px;
   width: 100%;
@@ -254,32 +274,6 @@
   font-size: 13px;
   font-weight: 400;
   line-height: 1.5;
-}
-
-.business-add-funds-option-brands {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-/* Equal boxes, the same trick the sheet uses: the logos range from 3.1:1 to
-   1.3:1, so their own width cannot be the unit. */
-.business-add-funds-brand {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 30px;
-  border: 1px solid rgba(20, 26, 23, .12);
-  border-radius: 7px;
-  background: #fff;
-}
-
-.business-add-funds-brand > img {
-  width: auto;
-  height: auto;
-  max-width: 36px;
-  max-height: 18px;
-  object-fit: contain;
 }
 
 .business-add-funds-option-go {
@@ -362,13 +356,47 @@
   font-variant-numeric: tabular-nums;
 }
 
+.business-add-funds-rail-secure {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(20, 26, 23, .1);
+}
+
+.business-add-funds-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.business-add-funds-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 28px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 7px;
+  background: #fff;
+  color: #141a17;
+}
+
+.business-add-funds-mark > img {
+  width: auto;
+  height: auto;
+  max-width: 34px;
+  max-height: 17px;
+  object-fit: contain;
+}
+
+.business-add-funds-mark.is-cryptomus > svg {
+  display: block;
+}
+
 .business-add-funds-rail-note {
   display: grid;
   grid-template-columns: 14px minmax(0, 1fr);
   gap: 8px;
-  margin: 20px 0 0;
-  padding-top: 16px;
-  border-top: 1px solid rgba(20, 26, 23, .1);
+  margin: 0;
   color: #8d948d;
   font-size: 12px;
   line-height: 1.6;

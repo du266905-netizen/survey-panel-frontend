@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
+import Logo from '../components/Logo';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { createCryptoRecharge, getBusinessAccountBalance } from '../api/realApi';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
 import { PAYPAL_COPY } from '../constants/paypalCheckoutCopy';
-import heroImage from '../assets/business/add-funds-hero.jpg';
+import heroImage from '../assets/home/hero-window.jpg';
 import './BusinessAddFunds.css';
 
 /* The add-funds page.
@@ -27,13 +28,16 @@ import './BusinessAddFunds.css';
 
 const QUICK_AMOUNTS = [100, 250, 500, 1000];
 
-/* Card marks live in public/pay, the same set the sheet used. Each sits in an
- * equal box because the logos range from 3.1:1 to 1.3:1. */
+/* The six marks beside the security note, the same set the sheet carried in its
+ * footer: four card schemes, PayPal, and the Cryptomus cube (drawn inline, it
+ * ships as a single currentColor path). They sit in equal boxes because the
+ * logos range from 3.1:1 to 1.3:1. */
 const CARD_MARKS = [
   { src: '/pay/visa.svg', alt: 'Visa' },
   { src: '/pay/mastercard.png', alt: 'Mastercard' },
   { src: '/pay/amex.svg', alt: 'American Express' },
   { src: '/pay/unionpay.webp', alt: 'UnionPay' },
+  { src: '/pay/paypal.svg', alt: 'PayPal' },
 ];
 
 function readBalance(payload) {
@@ -107,6 +111,11 @@ export default function BusinessAddFunds() {
     <main className="business-add-funds-page">
       <section className="business-add-funds-hero">
         <img src={heroImage} alt="" decoding="async" />
+        {/* 站点上没有导航条，品牌标记就落在图上左上角，和招聘页 logo 的位置一致：
+            它先回答“这是同一个站点”，然后才轮到标题。 */}
+        <div className="business-add-funds-hero-brand">
+          <Logo size="sm" variant="light" />
+        </div>
         <div className="business-add-funds-hero-copy">
           <h1>{ui.addFunds || 'Add funds'}</h1>
           <p>{ui.addFundsSubtitle || ws.funds.subtitle}</p>
@@ -170,13 +179,6 @@ export default function BusinessAddFunds() {
                   <span className="business-add-funds-option-copy">
                     <strong>{ws.funds.card || 'Credit or debit card'}</strong>
                   </span>
-                  <span className="business-add-funds-option-brands" aria-hidden="true">
-                    {CARD_MARKS.map((mark) => (
-                      <span className="business-add-funds-brand" key={mark.src}>
-                        <img src={mark.src} alt="" loading="lazy" />
-                      </span>
-                    ))}
-                  </span>
                   <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
                 </button>
 
@@ -205,7 +207,6 @@ export default function BusinessAddFunds() {
                 <span className="business-add-funds-option-copy">
                   <strong>{ws.funds.crypto || 'Cryptocurrency'}</strong>
                 </span>
-                <span className="business-add-funds-option-brands" aria-hidden="true" />
                 <span className="business-add-funds-option-go" aria-hidden="true">
                   {submitting === 'crypto' ? '…' : <ArrowRight size={15} />}
                 </span>
@@ -216,7 +217,6 @@ export default function BusinessAddFunds() {
                 <span className="business-add-funds-option-copy">
                   <strong>{ws.funds.bankTransfer || 'Bank transfer'}</strong>
                 </span>
-                <span className="business-add-funds-option-brands" aria-hidden="true" />
                 <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
               </button>
 
@@ -228,7 +228,6 @@ export default function BusinessAddFunds() {
                 <span className="business-add-funds-option-copy">
                   <strong>{ui.paymentLink || 'Payment link'}</strong>
                 </span>
-                <span className="business-add-funds-option-brands" aria-hidden="true" />
                 <span className="business-add-funds-option-go" aria-hidden="true" />
               </button>
             </div>
@@ -247,10 +246,22 @@ export default function BusinessAddFunds() {
               <span>{amountLabel}</span>
             </div>
 
-            <p className="business-add-funds-rail-note">
-              <Lock size={14} aria-hidden="true" />
-              <span>{ui.securePaymentBody || ws.funds.secureBody}</span>
-            </p>
+            <div className="business-add-funds-rail-secure">
+              <p className="business-add-funds-rail-note">
+                <Lock size={14} aria-hidden="true" />
+                <span>{ui.securePaymentBody || ws.funds.secureBody}</span>
+              </p>
+              <div className="business-add-funds-marks" aria-hidden="true">
+                {CARD_MARKS.map((mark) => (
+                  <span className="business-add-funds-mark" key={mark.src}>
+                    <img src={mark.src} alt="" loading="lazy" />
+                  </span>
+                ))}
+                <span className="business-add-funds-mark is-cryptomus">
+                  <CryptomusMark size={15} />
+                </span>
+              </div>
+            </div>
           </div>
         </aside>
       </div>
