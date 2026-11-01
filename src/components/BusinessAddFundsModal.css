@@ -27,3 +27,14 @@
 .business-funds-privacy a { color: #141413; text-decoration: underline; }
 
 .business-funds-paypal .is-disabled { opacity: .5; pointer-events: none; }
+
+/* 暂不可用的渠道：整行压暗，不给点击反馈，别让人以为是坏掉了 */
+.business-funds-routes button[disabled] { cursor: not-allowed; opacity: .55; }
+.business-funds-route-copy small {
+  display: block;
+  margin-top: 3px;
+  color: #8D948D;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 400;
+}

@@ -174,15 +174,24 @@ export default function BusinessAddFundsModal({ open, onClose }) {
         </div>
 
         <div className="business-funds-routes">
-          <a href="#" data-method="bank-transfer">
+          {/* 电汇要走线下汇款指令，这条链路还没接：明确标成暂不可用，
+              不摆一个点不动的 href="#"。 */}
+          <button
+            type="button"
+            data-method="bank-transfer"
+            disabled
+            aria-disabled="true"
+            title="Bank transfer is not available from this screen yet."
+          >
             <span className="business-funds-route-mark" aria-hidden="true">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18M12 3l9 5H3l9-5Z" /></svg>
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18" /><path d="M5 10V8l7-4 7 4v2" /><path d="M6 10v8" /><path d="M10 10v8" /><path d="M14 10v8" /><path d="M18 10v8" /><path d="M3 20h18" /></svg>
             </span>
             <span className="business-funds-route-copy">
               <strong>{ws.funds.bankTransfer}</strong>
+              <small>Not available from this screen yet.</small>
             </span>
-            <span className="business-funds-route-go" aria-hidden="true">›</span>
-          </a>
+            <span className="business-funds-route-go" aria-hidden="true">—</span>
+          </button>
           {/* PayPal 不再是独立一行：它的官方组件（Buttons + CardFields）
               就是“信用卡 / 银行卡”这一条的实现，合并成一行。 */}
           <button
@@ -251,7 +260,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
 /** PayPal 托管组件自己的文案；卡字段附近必须有隐私告知（PayPal 要求）。 */
 const PAYPAL_COPY = {
   loading: 'Loading PayPal…',
-  unavailable: 'PayPal is not available right now. Use bank transfer, or contact us and we will send a payment link.',
+  unavailable: 'PayPal is not available right now. Please try again later, or reach us from the help chat.',
   cardUnavailable: 'Card entry is not enabled for this account yet — you can still pay with PayPal.',
   privacy: 'Card details are entered in PayPal’s secure fields and never on this site. See',
   privacyLink: 'PayPal’s privacy statement',
