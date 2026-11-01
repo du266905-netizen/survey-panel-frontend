@@ -1,52 +1,104 @@
 /* Add funds — the top-up flow as a page.
  *
- * The sheet's styles are nested under .business-funds-modal (see the note at the
- * top of that block in BusinessWorkspaceTheme.css), so a page outside the modal
- * inherits nothing from them. Everything this page needs is written here, at the
- * same measures: 52-high field, 11 radius, 38-high quick picks, 19 icons.
+ * The sheet's styles are nested under .business-funds-modal, so a page outside
+ * the modal inherits none of them; everything this page needs is written here.
  *
- * Type stays on the Part 18 scale: 22 page title, 14 prose, 13 controls,
- * 12 hints, 11 labels.
+ * Type stays on the Part 18 scale: 38 hero title, 22 rail figure, 16 option
+ * names, 14 prose, 13 controls, 12 hints, 11 labels. No off-scale sizes.
  */
 
 .business-add-funds-page {
   min-height: 100vh;
-  padding: 56px 0 80px;
+  padding-bottom: 88px;
   background: #fafaf7;
   color: #141a17;
 }
 
+/* ---- hero ---------------------------------------------------------------- */
+
+.business-add-funds-hero {
+  position: relative;
+  width: 100%;
+  height: clamp(300px, 38vh, 420px);
+  overflow: hidden;
+  background: #141413;
+}
+
+.business-add-funds-hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;
+}
+
+.business-add-funds-hero::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 26, 23, .16) 10%, rgba(20, 26, 23, .62) 100%);
+  content: '';
+}
+
+.business-add-funds-hero-copy {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: clamp(24px, 4vw, 52px);
+  left: 0;
+  width: min(100% - 64px, 1120px);
+  margin: 0 auto;
+}
+
+.business-add-funds-hero-copy > h1 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-reading, 'Source Serif 4'), 'Songti SC', STSong, SimSun, serif;
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+}
+
+.business-add-funds-hero-copy > p {
+  max-width: 54ch;
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, .82);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ---- two columns --------------------------------------------------------- */
+
 .business-add-funds-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 56px;
-  width: min(940px, 100% - 64px);
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 48px;
+  width: min(1120px, 100% - 64px);
   margin: 0 auto;
+  padding-top: 44px;
   align-items: start;
 }
 
-.business-add-funds-main > h1 {
-  margin: 0;
-  font-family: var(--font-reading, 'Source Serif 4'), 'Songti SC', STSong, SimSun, serif;
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.25;
+.business-add-funds-main {
+  display: grid;
+  gap: 14px;
 }
 
-.business-add-funds-lead {
-  margin: 8px 0 0;
-  max-width: 52ch;
+.business-add-funds-block {
+  padding: 26px 28px 24px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.business-add-funds-block-title {
+  margin: 0 0 14px;
   color: #5f6862;
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 /* ---- amount -------------------------------------------------------------- */
-
-.business-add-funds-amount {
-  margin-top: 32px;
-}
 
 .business-add-funds-amount > label {
   display: block;
@@ -128,82 +180,118 @@
   font-size: 12px;
 }
 
-/* ---- routes -------------------------------------------------------------- */
+/* ---- the four routes: cards, not hairlines -------------------------------- */
 
-.business-add-funds-routes {
+.business-add-funds-options {
   display: grid;
-  gap: 7px;
-  margin-top: 30px;
-  padding-top: 22px;
-  border-top: 1px solid rgba(20, 26, 23, .1);
+  gap: 10px;
 }
 
-.business-add-funds-routes > h3 {
-  margin: 0 0 4px;
-  color: #5f6862;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.business-add-funds-routes > button {
-  display: flex;
+.business-add-funds-option {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 13px;
+  gap: 14px;
   width: 100%;
-  padding: 11px 4px;
-  border: 0;
-  border-bottom: 1px solid rgba(20, 26, 23, .08);
-  background: transparent;
+  padding: 16px 18px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 14px;
+  background: #fff;
   color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
-  transition: background .15s ease;
+  transition: border-color .15s ease, background .15s ease;
 }
 
-.business-add-funds-routes > button:hover:not(:disabled) {
-  background: rgba(20, 26, 23, .03);
+.business-add-funds-option:hover:not(:disabled) {
+  border-color: rgba(20, 26, 23, .42);
 }
 
-.business-add-funds-routes > button:disabled {
+.business-add-funds-option.is-open {
+  border-color: #141a17;
+}
+
+.business-add-funds-option:disabled {
   cursor: default;
-  opacity: .45;
+  opacity: .5;
 }
 
-.business-add-funds-route-mark {
+.business-add-funds-option-mark {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  flex: none;
-  border-radius: 9px;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
   background: #f1f3f0;
   color: #141a17;
 }
 
-.business-add-funds-route-copy {
-  flex: 1 1 auto;
+.business-add-funds-option-copy {
+  display: grid;
+  gap: 3px;
   min-width: 0;
 }
 
-.business-add-funds-route-copy > strong {
-  display: block;
-  font-size: 14px;
+.business-add-funds-option-copy > strong {
+  font-size: 16px;
   font-weight: 600;
+  letter-spacing: -.01em;
 }
 
-.business-add-funds-route-go {
-  flex: none;
-  color: #8d948d;
-  font-size: 14px;
+/* Description slot: empty for now — see the note in the component. */
+.business-add-funds-option-copy > small {
+  color: #5f6862;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
 }
+
+.business-add-funds-option-brands {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Equal boxes, the same trick the sheet uses: the logos range from 3.1:1 to
+   1.3:1, so their own width cannot be the unit. */
+.business-add-funds-brand {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 25px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.business-add-funds-brand > img {
+  width: auto;
+  height: auto;
+  max-width: 27px;
+  max-height: 14px;
+  object-fit: contain;
+}
+
+.business-add-funds-option-go {
+  display: grid;
+  place-items: center;
+  color: #8d948d;
+}
+
+/* ---- hosted card fields --------------------------------------------------- */
 
 .business-add-funds-cardpanel {
-  margin-top: 18px;
-  padding: 22px;
+  margin-top: 14px;
+  padding: 18px;
   border: 1px solid rgba(20, 26, 23, .12);
   border-radius: 14px;
   background: #fff;
+}
+
+.business-add-funds-cardpanel > div {
+  margin: 0 auto;
+  max-width: 420px;
 }
 
 .business-add-funds-error {
@@ -213,7 +301,7 @@
   line-height: 1.55;
 }
 
-/* ---- the rail ------------------------------------------------------------ */
+/* ---- the rail ------------------------------------------------------------- */
 
 .business-add-funds-rail {
   position: sticky;
@@ -221,9 +309,9 @@
 }
 
 .business-add-funds-rail-card {
-  padding: 22px 22px 20px;
+  padding: 26px 26px 22px;
   border: 1px solid rgba(20, 26, 23, .12);
-  border-radius: 14px;
+  border-radius: 16px;
   background: #fff;
 }
 
@@ -237,11 +325,12 @@
 }
 
 .business-add-funds-rail-balance {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   font-family: var(--font-reading, 'Source Serif 4'), 'Songti SC', STSong, SimSun, serif;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 38px;
+  font-weight: 400;
   letter-spacing: -.02em;
+  line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
 
@@ -250,8 +339,8 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 16px;
-  padding-top: 14px;
+  margin-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid rgba(20, 26, 23, .1);
   color: #5f6862;
   font-size: 13px;
@@ -259,6 +348,7 @@
 
 .business-add-funds-rail-row > span:last-child {
   color: #141a17;
+  font-size: 16px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
@@ -267,7 +357,7 @@
   display: grid;
   grid-template-columns: 14px minmax(0, 1fr);
   gap: 8px;
-  margin: 18px 0 0;
+  margin: 20px 0 0;
   padding-top: 16px;
   border-top: 1px solid rgba(20, 26, 23, .1);
   color: #8d948d;
@@ -279,19 +369,36 @@
   margin-top: 2px;
 }
 
-@media (max-width: 900px) {
-  .business-add-funds-page {
-    padding: 32px 0 56px;
+@media (max-width: 980px) {
+  .business-add-funds-hero-copy,
+  .business-add-funds-grid {
+    width: calc(100% - 40px);
   }
 
   .business-add-funds-grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    width: calc(100% - 32px);
+    gap: 20px;
+    padding-top: 28px;
   }
 
   .business-add-funds-rail {
     position: static;
     order: -1;
+  }
+
+  .business-add-funds-hero-copy > h1 {
+    font-size: 32px;
+  }
+
+  .business-add-funds-block {
+    padding: 22px 20px;
+  }
+
+  .business-add-funds-option {
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+  }
+
+  .business-add-funds-option-brands {
+    display: none;
   }
 }
