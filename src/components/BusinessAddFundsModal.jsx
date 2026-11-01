@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Lock, X } from 'lucide-react';
-import { useLanguage } from './LanguageContext';
+import { useNavigate } from 'react-router-dom';
+import { useLanguage, withLanguage } from './LanguageContext';
 import { createCryptoRecharge } from '../api/realApi';
 import PayPalCheckout from './PayPalCheckout';
 
@@ -10,10 +11,11 @@ import PayPalCheckout from './PayPalCheckout';
  * note. It replaces the old standalone payment page as the in-app entry point;
  * the balance chip in the top bar opens it.
  *
- * Crypto, Alipay and PayPal rows are live; bank transfer and card remain
- * placeholders until their backend routes and provider contracts exist. The SSL note and the card marks mirror what the site already
- * claims elsewhere, and no card data is collected here: the routes hand off to
- * the provider. */
+ * Crypto and card are wired and hand off to the provider. Bank transfer leaves
+ * this sheet for its own page: the customer pays through their own bank and
+ * files a claim there, so the flow has to survive a reload and a return visit.
+ * The SSL note and the card marks mirror what the site already claims elsewhere,
+ * and no card data is collected here. */
 
 const QUICK_AMOUNTS = [100, 250, 500, 1000];
 const MIN_TOP_UP = 100;
@@ -59,6 +61,7 @@ function CardMarks() {
 
 export default function BusinessAddFundsModal({ open, onClose }) {
   const { language, publicCopy } = useLanguage();
+  const navigate = useNavigate();
   const uiMap = publicCopy?.workspace?.business?.workspaceUi || {};
   const ui = uiMap[language] || uiMap['en-US'] || {};
   // Copy that used to be hardcoded English in this file now comes from the
@@ -174,23 +177,23 @@ export default function BusinessAddFundsModal({ open, onClose }) {
         </div>
 
         <div className="business-funds-routes">
-          {/* 电汇要走线下汇款指令，这条链路还没接：明确标成暂不可用，
-              不摆一个点不动的 href="#"。 */}
+          {/* 电汇不在这张单里完成：它要一张能刷新、能回访的页面，所以直接跳走，
+              金额带过去，客户回来还能照着填。 */}
           <button
             type="button"
             data-method="bank-transfer"
-            disabled
-            aria-disabled="true"
-            title="Bank transfer is not available from this screen yet."
+            onClick={() => {
+              onClose?.();
+              navigate(withLanguage(`/business/add-funds/bank-transfer${valid ? `?amount=${numeric}` : ''}`, language));
+            }}
           >
             <span className="business-funds-route-mark" aria-hidden="true">
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18" /><path d="M5 10V8l7-4 7 4v2" /><path d="M6 10v8" /><path d="M10 10v8" /><path d="M14 10v8" /><path d="M18 10v8" /><path d="M3 20h18" /></svg>
             </span>
             <span className="business-funds-route-copy">
               <strong>{ws.funds.bankTransfer}</strong>
-              <small>Not available from this screen yet.</small>
             </span>
-            <span className="business-funds-route-go" aria-hidden="true">—</span>
+            <span className="business-funds-route-go" aria-hidden="true">›</span>
           </button>
           {/* PayPal 不再是独立一行：它的官方组件（Buttons + CardFields）
               就是“信用卡 / 银行卡”这一条的实现，合并成一行。 */}
