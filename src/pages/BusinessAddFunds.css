@@ -8,6 +8,9 @@
  */
 
 .business-add-funds-page {
+  /* The page speaks sans by default: buttons, option names, inputs, values.
+     Only the opening line below is serif. */
+  font-family: var(--font-sans, Inter, sans-serif);
   min-height: 100vh;
   padding-bottom: 88px;
   background: #fff;

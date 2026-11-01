@@ -18,7 +18,7 @@ const copyByLanguage = {
   'zh-CN': {
     back: '返回充值',
     title: '银行转账付款',
-    intro: '请用公司账户完成转账，然后在下方填写这笔付款。我们人工核对后入账，通常下个工作日到账。',
+    intro: '转账完成后，在下方填写这笔付款。',
     sendTo: '收款信息',
     accountName: '账户名称',
     iban: 'IBAN',
@@ -53,7 +53,7 @@ const copyByLanguage = {
 const en = {
   back: 'Back to add funds',
   title: 'Pay by bank transfer',
-  intro: 'Send the transfer from your business account, then tell us about it below. We match it by hand and top up your balance — usually the next business day.',
+  intro: 'Send the transfer, then fill in the details below.',
   sendTo: 'Send to',
   accountName: 'Account name',
   iban: 'IBAN',

@@ -9,6 +9,8 @@
  */
 
 .bank-transfer-page {
+  /* Sans by default — see the note on the add-funds page. */
+  font-family: var(--font-sans, Inter, sans-serif);
   min-height: 100vh;
   padding-bottom: 80px;
   background: #fff;
