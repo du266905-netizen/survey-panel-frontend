@@ -65,6 +65,10 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
   const submitRef = useRef(null);
 
   const mountedRef = useRef(false);
+  /* CardFields 实例先建、后渲染：容器要等 cardEligible 为真才进 DOM，
+     所以实例存在 ref 里，由下一个 effect 负责 render。 */
+  const cardFieldsRef = useRef(null);
+  const cardRenderedRef = useRef(false);
   const keyRef = useRef(newIdempotencyKey());
   const amountRef = useRef(amountUsd);
 
@@ -141,11 +145,8 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
 
         const cardFields = paypal.CardFields?.({ ...handlers });
         if (cardFields?.isEligible?.()) {
-          cardFields.NameField().render(nameRef.current);
-          cardFields.NumberField().render(numberRef.current);
-          cardFields.ExpiryField().render(expiryRef.current);
-          cardFields.CVVField().render(cvvRef.current);
-          cardFields.SubmitButton().render(submitRef.current);
+          /* 只判断资格并保存实例；容器还没进 DOM，这里 render 会拿到 null。 */
+          cardFieldsRef.current = cardFields;
           setCardEligible(true);
         }
 
@@ -156,6 +157,22 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
 
     return () => { alive = false; };
   }, [config, handlers]);
+
+  /* 第二个 effect：cardEligible 已经让五个容器进入 DOM，ref 有值了再渲染。
+     只执行一次，之后任何重渲染都不再碰它。 */
+  useEffect(() => {
+    if (!cardEligible || cardRenderedRef.current) return;
+    const cardFields = cardFieldsRef.current;
+    const hosts = [nameRef.current, numberRef.current, expiryRef.current, cvvRef.current, submitRef.current];
+    if (!cardFields || hosts.some((node) => !node)) return;
+
+    cardFields.NameField().render(hosts[0]);
+    cardFields.NumberField().render(hosts[1]);
+    cardFields.ExpiryField().render(hosts[2]);
+    cardFields.CVVField().render(hosts[3]);
+    cardFields.SubmitButton().render(hosts[4]);
+    cardRenderedRef.current = true;
+  }, [cardEligible]);
 
   if (unavailable) return <p className="business-funds-note">{unavailable}</p>;
 
