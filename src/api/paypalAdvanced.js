@@ -14,8 +14,21 @@ import { apiClient } from './client';
 const BASE = '/api/business/account/recharge/paypal/advanced';
 
 export const getPaypalAdvancedConfig = async () => {
-  const { data } = await apiClient.get(`${BASE}/config`);
-  return data?.paypal ?? null;
+  try {
+    const { data } = await apiClient.get(`${BASE}/config`);
+    /* 契约是 { paypal: { clientId, currency, intent } }；这里同时容忍
+       直接返回 config 或裸对象，免得形状差一层就表现成“不可用”。 */
+    const config = data?.paypal ?? data?.config ?? data;
+    return config?.clientId ? config : null;
+  } catch (error) {
+    /* 把状态码带出去：面板要能区分“没登录”“没配置”“服务出错”，
+       而不是统统说一句“暂不可用”。不记录任何令牌或响应体。 */
+    const status = error?.response?.status ?? 0;
+    const code = error?.response?.data?.code || error?.code || '';
+    error.paypalStatus = status;
+    error.paypalCode = code;
+    throw error;
+  }
 };
 
 export const createPaypalAdvancedOrder = async ({ amountUsd, fundingSource, idempotencyKey }) => {

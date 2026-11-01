@@ -134,7 +134,18 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
         }
         setConfig(next);
       })
-      .catch(() => { if (alive) setUnavailable(copyRef.current.unavailable); });
+      .catch((error) => {
+        if (!alive) return;
+        /* 三种失败原因分开说，并留一行可查的线索（不含任何凭据）。 */
+        const status = error?.paypalStatus ?? 0;
+        const reason = status === 401 || status === 403
+          ? copyRef.current.sessionExpired
+          : status === 404
+            ? copyRef.current.notConfigured
+            : copyRef.current.unavailable;
+        console.warn('[paypal-config]', status, error?.paypalCode || '');
+        setUnavailable(reason);
+      });
     return () => { alive = false; };
   }, []);
 
@@ -163,7 +174,18 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
         mountedRef.current = true;
         setReady(true);
       })
-      .catch(() => { if (alive) setUnavailable(copyRef.current.unavailable); });
+      .catch((error) => {
+        if (!alive) return;
+        /* 三种失败原因分开说，并留一行可查的线索（不含任何凭据）。 */
+        const status = error?.paypalStatus ?? 0;
+        const reason = status === 401 || status === 403
+          ? copyRef.current.sessionExpired
+          : status === 404
+            ? copyRef.current.notConfigured
+            : copyRef.current.unavailable;
+        console.warn('[paypal-config]', status, error?.paypalCode || '');
+        setUnavailable(reason);
+      });
 
     return () => { alive = false; };
   }, [config, buttonHandlers, cardHandlers]);
