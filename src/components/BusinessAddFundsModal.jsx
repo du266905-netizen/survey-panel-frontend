@@ -260,13 +260,15 @@ export default function BusinessAddFundsModal({ open, onClose }) {
 /** PayPal 托管组件自己的文案；卡字段附近必须有隐私告知（PayPal 要求）。 */
 const PAYPAL_COPY = {
   loading: 'Loading PayPal…',
-  unavailable: 'PayPal is not available right now. Please try again later, or reach us from the help chat.',
-  cardUnavailable: 'Card entry is not enabled for this account yet — you can still pay with PayPal.',
-  privacy: 'Card details are entered in PayPal’s secure fields and never on this site. See',
+  /* 这一行叫「Credit or debit card」，所以失败与引导文案先说卡，再说处理方。
+     只有隐私那一句必须点名 PayPal —— 卡确实是在他们的托管字段里输的。 */
+  unavailable: 'Card payment is temporarily unavailable. Please try again later, or reach us from the help chat.',
+  cardUnavailable: 'Card entry is not enabled for this account yet.',
+  privacy: 'Card details are entered in PayPal’s secure fields, never on this site. See',
   privacyLink: 'PayPal’s privacy statement',
-  startFailed: 'We could not start the PayPal payment. Please try again.',
-  captureFailed: 'PayPal did not complete the payment. Nothing was added to your balance.',
-  cancelled: 'PayPal payment cancelled.',
+  startFailed: 'We could not start the card payment. Please try again.',
+  captureFailed: 'We could not complete the payment. Nothing was added to your balance.',
+  cancelled: 'Payment cancelled.',
   payWithCard: 'Pay with card',
   paying: 'Processing…',
   cardFailed: 'We could not complete the card payment. Check the details and try again. Nothing was charged to your balance.',
