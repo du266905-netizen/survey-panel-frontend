@@ -18,7 +18,7 @@
 /* Same opening as the add-funds page: the mark, a way back, then the title. */
 
 .bank-transfer-top {
-  border-bottom: 1px solid rgba(20, 26, 23, .1);
+  background: #fff;
 }
 
 .bank-transfer-top-inner {
@@ -57,27 +57,22 @@
   background: rgba(20, 26, 23, .06);
 }
 
-/* Title in the left column, rail level with it. */
+/* No display title: the page opens on one line that says what it is for. */
 .bank-transfer-head {
-  margin: 0 0 22px;
-}
-
-.bank-transfer-head > h1 {
-  margin: 0;
-  font-family: 'Newsreader', 'Songti SC', 'STSong', 'SimSun', serif;
-  font-size: 56px;
-  font-weight: 500;
-  letter-spacing: -.03em;
-  line-height: 1.02;
+  width: min(1120px, 100% - 64px);
+  margin: 0 auto;
+  padding-top: 44px;
 }
 
 .bank-transfer-intro {
-  max-width: 54ch;
-  margin: 12px 0 0;
-  color: #5f6862;
+  max-width: 52ch;
+  margin: 0;
+  color: #141a17;
   font-family: Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.35;
 }
 
 /* The account details stay in view while the claim is filled in. */
@@ -88,7 +83,7 @@
   gap: 40px;
   width: min(1120px, 100% - 64px);
   margin: 0 auto;
-  padding-top: 40px;
+  padding-top: 28px;
   align-items: start;
 }
 
@@ -317,6 +312,7 @@
 
 @media (max-width: 980px) {
   .bank-transfer-top-inner,
+  .bank-transfer-head,
   .bank-transfer-grid {
     width: calc(100% - 32px);
   }

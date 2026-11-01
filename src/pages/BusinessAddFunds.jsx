@@ -117,13 +117,12 @@ export default function BusinessAddFunds() {
         </div>
       </header>
 
+      <div className="business-add-funds-head">
+        <p>{ui.addFundsSubtitle || ws.funds.subtitle}</p>
+      </div>
+
       <div className="business-add-funds-grid">
         <div className="business-add-funds-main">
-          <div className="business-add-funds-head">
-            <h1>{ui.addFunds || 'Add funds'}</h1>
-            <p>{ui.addFundsSubtitle || ws.funds.subtitle}</p>
-          </div>
-
           <section className="business-add-funds-block business-add-funds-amount">
             <label htmlFor="business-add-funds-input">{ui.amountLabel || ws.funds.amountLabel}</label>
             <div className={`business-add-funds-input${touched && !valid ? ' is-invalid' : ''}`}>
