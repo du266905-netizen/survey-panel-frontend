@@ -144,7 +144,9 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
             ? copyRef.current.notConfigured
             : copyRef.current.unavailable;
         console.warn('[paypal-config]', status, error?.paypalCode || '');
-        setUnavailable(reason);
+        /* 临时诊断：把状态码写进可见文案，这样不用开控制台也能看出是哪一类失败。
+           定位完成后删掉这一段，只留 reason。 */
+        setUnavailable(status ? `${reason} (HTTP ${status})` : reason);
       });
     return () => { alive = false; };
   }, []);
@@ -184,7 +186,9 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
             ? copyRef.current.notConfigured
             : copyRef.current.unavailable;
         console.warn('[paypal-config]', status, error?.paypalCode || '');
-        setUnavailable(reason);
+        /* 临时诊断：把状态码写进可见文案，这样不用开控制台也能看出是哪一类失败。
+           定位完成后删掉这一段，只留 reason。 */
+        setUnavailable(status ? `${reason} (HTTP ${status})` : reason);
       });
 
     return () => { alive = false; };
