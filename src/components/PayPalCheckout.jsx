@@ -7,16 +7,18 @@ import {
 } from '../api/paypalAdvanced';
 
 /**
- * PayPal 的官方结账组件：Buttons + CardFields。
+ * PayPal 官方结账组件：Buttons + CardFields。
  *
- * 规矩（2026-11-01 冻结契约）：
- *   - 只加载官方 SDK，卡号/CVV 由 PayPal 托管字段渲染，平台不接触；
- *   - 创建订单用应用生成的幂等键，返回的 paypalOrderId 直接交给 SDK；
- *   - onApprove 只回传 order id，捕获动作在服务端完成；
- *   - CardFields 不可用时不降级成自建卡输入框，明确说“暂不可用”。
+ * 冻结契约（2026-11-01 / 11-02）：
+ *   - 只加载官方 SDK；卡号、有效期、CVV 由 PayPal 托管字段渲染，平台不接触、不读取、不校验；
+ *   - 建单时用 `fundingSource` 声明用的是哪个组件（`paypal` / `card`），
+ *     不带任何 3DS 参数或服务商 payload；
+ *   - 批准后只把 SDK 的 `orderID` 交给服务端 capture；
+ *   - 卡字段的提交用平台自己的普通按钮调 `cardFields.submit()`，
+ *     官方 v5 没有 `SubmitButton()`；
+ *   - CardFields 不可用时只留 PayPal 按钮或“暂不可用”，绝不回退到自建卡输入框。
  *
- * 生命周期：SDK 组件**只挂载一次**。金额变化只换幂等键，不重建 Buttons /
- * CardFields —— 重建会把已经输入一半的卡字段清掉，也会留下旧实例。
+ * 生命周期：SDK 组件只挂载一次；金额变化只换幂等键，不重建 iframe。
  */
 
 const SDK_ID = 'paypal-advanced-sdk';
@@ -54,25 +56,24 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
   const [config, setConfig] = useState(null);
   const [ready, setReady] = useState(false);
   const [cardEligible, setCardEligible] = useState(false);
+  const [busy, setBusy] = useState(false);
   const [unavailable, setUnavailable] = useState('');
 
-  /* 各字段独立的 ref —— 之前把它们塞在一个对象里当 ref 传，节点永远拿不到。 */
+  /* 四个托管字段各有自己的宿主节点。 */
   const buttonsRef = useRef(null);
   const nameRef = useRef(null);
   const numberRef = useRef(null);
   const expiryRef = useRef(null);
   const cvvRef = useRef(null);
-  const submitRef = useRef(null);
 
   const mountedRef = useRef(false);
-  /* CardFields 实例先建、后渲染：容器要等 cardEligible 为真才进 DOM，
-     所以实例存在 ref 里，由下一个 effect 负责 render。 */
   const cardFieldsRef = useRef(null);
   const cardRenderedRef = useRef(false);
-  const keyRef = useRef(newIdempotencyKey());
+
+  /* 钱包和卡各一把幂等键：同一笔金额重试复用，换金额才整体换新。 */
+  const keysRef = useRef({ paypal: newIdempotencyKey(), card: newIdempotencyKey() });
   const amountRef = useRef(amountUsd);
 
-  /* 回调放 ref 里：SDK 只挂载一次，但仍然要调用最新的 handler。 */
   const paidRef = useRef(onPaid);
   const errorRef = useRef(onError);
   const copyRef = useRef(copy);
@@ -80,16 +81,16 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
   errorRef.current = onError;
   copyRef.current = copy;
 
-  /* 金额变了只换幂等键：同一笔金额重试复用同一把键，换金额就是新订单。 */
   useEffect(() => {
     amountRef.current = amountUsd;
-    keyRef.current = newIdempotencyKey();
+    keysRef.current = { paypal: newIdempotencyKey(), card: newIdempotencyKey() };
   }, [amountUsd]);
 
-  const createOrder = useCallback(async () => {
+  const createOrderFor = useCallback((fundingSource) => async () => {
     const payment = await createPaypalAdvancedOrder({
       amountUsd: amountRef.current,
-      idempotencyKey: keyRef.current,
+      fundingSource,
+      idempotencyKey: keysRef.current[fundingSource],
     });
     if (!payment?.paypalOrderId) throw new Error('no paypal order id');
     return payment.paypalOrderId;
@@ -98,19 +99,29 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
   const onApprove = useCallback(async (data) => {
     try {
       const payment = await capturePaypalAdvancedOrder(data.orderID);
-      keyRef.current = newIdempotencyKey();
+      keysRef.current = { paypal: newIdempotencyKey(), card: newIdempotencyKey() };
       paidRef.current?.(payment);
     } catch {
       errorRef.current?.(copyRef.current.captureFailed);
     }
   }, []);
 
-  const handlers = useMemo(() => ({
-    createOrder,
+  const onSdkError = useCallback(() => errorRef.current?.(copyRef.current.startFailed), []);
+  const onCancel = useCallback(() => errorRef.current?.(copyRef.current.cancelled), []);
+
+  const buttonHandlers = useMemo(() => ({
+    createOrder: createOrderFor('paypal'),
     onApprove,
-    onError: () => errorRef.current?.(copyRef.current.startFailed),
-    onCancel: () => errorRef.current?.(copyRef.current.cancelled),
-  }), [createOrder, onApprove]);
+    onError: onSdkError,
+    onCancel,
+  }), [createOrderFor, onApprove, onSdkError, onCancel]);
+
+  const cardHandlers = useMemo(() => ({
+    createOrder: createOrderFor('card'),
+    onApprove,
+    onError: onSdkError,
+    onCancel,
+  }), [createOrderFor, onApprove, onSdkError, onCancel]);
 
   useEffect(() => {
     let alive = true;
@@ -127,7 +138,7 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
     return () => { alive = false; };
   }, []);
 
-  /* 只初始化一次：config 到手之后挂载，之后无论父组件怎么重渲染都不重建。 */
+  /* 第一段：建实例、判断资格，让宿主节点先进 DOM。 */
   useEffect(() => {
     if (!config || mountedRef.current) return undefined;
     let alive = true;
@@ -139,13 +150,12 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
         if (buttonsRef.current && !buttonsRef.current.childElementCount) {
           paypal.Buttons({
             style: { layout: 'vertical', shape: 'rect', label: 'paypal', height: 44 },
-            ...handlers,
+            ...buttonHandlers,
           }).render(buttonsRef.current);
         }
 
-        const cardFields = paypal.CardFields?.({ ...handlers });
+        const cardFields = paypal.CardFields?.({ ...cardHandlers });
         if (cardFields?.isEligible?.()) {
-          /* 只判断资格并保存实例；容器还没进 DOM，这里 render 会拿到 null。 */
           cardFieldsRef.current = cardFields;
           setCardEligible(true);
         }
@@ -156,23 +166,36 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
       .catch(() => { if (alive) setUnavailable(copyRef.current.unavailable); });
 
     return () => { alive = false; };
-  }, [config, handlers]);
+  }, [config, buttonHandlers, cardHandlers]);
 
-  /* 第二个 effect：cardEligible 已经让五个容器进入 DOM，ref 有值了再渲染。
-     只执行一次，之后任何重渲染都不再碰它。 */
+  /* 第二段：宿主节点已在 DOM 里，再渲染四个托管字段，只做一次。 */
   useEffect(() => {
     if (!cardEligible || cardRenderedRef.current) return;
     const cardFields = cardFieldsRef.current;
-    const hosts = [nameRef.current, numberRef.current, expiryRef.current, cvvRef.current, submitRef.current];
+    const hosts = [nameRef.current, numberRef.current, expiryRef.current, cvvRef.current];
     if (!cardFields || hosts.some((node) => !node)) return;
 
     cardFields.NameField().render(hosts[0]);
     cardFields.NumberField().render(hosts[1]);
     cardFields.ExpiryField().render(hosts[2]);
     cardFields.CVVField().render(hosts[3]);
-    cardFields.SubmitButton().render(hosts[4]);
     cardRenderedRef.current = true;
   }, [cardEligible]);
+
+  /* 提交由平台自己的按钮发起；这里不读、不校验任何卡数据。 */
+  const submitCard = async () => {
+    const cardFields = cardFieldsRef.current;
+    if (!cardFields?.submit || busy) return;
+    setBusy(true);
+    errorRef.current?.('');
+    try {
+      await cardFields.submit();
+    } catch {
+      errorRef.current?.(copyRef.current.cardFailed);
+    } finally {
+      setBusy(false);
+    }
+  };
 
   if (unavailable) return <p className="business-funds-note">{unavailable}</p>;
 
@@ -190,7 +213,14 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
             <div ref={expiryRef} />
             <div ref={cvvRef} />
           </div>
-          <div ref={submitRef} />
+          <button
+            type="button"
+            className="business-funds-card-submit"
+            onClick={submitCard}
+            disabled={disabled || busy}
+          >
+            {busy ? copy.paying : copy.payWithCard}
+          </button>
         </>
       )}
 

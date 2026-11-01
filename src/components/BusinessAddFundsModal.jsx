@@ -267,6 +267,9 @@ const PAYPAL_COPY = {
   startFailed: 'We could not start the PayPal payment. Please try again.',
   captureFailed: 'PayPal did not complete the payment. Nothing was added to your balance.',
   cancelled: 'PayPal payment cancelled.',
+  payWithCard: 'Pay with card',
+  paying: 'Processing…',
+  cardFailed: 'We could not complete the card payment. Check the details and try again. Nothing was charged to your balance.',
 };
 
 export { MIN_TOP_UP };

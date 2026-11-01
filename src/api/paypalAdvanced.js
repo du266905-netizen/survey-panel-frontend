@@ -18,10 +18,12 @@ export const getPaypalAdvancedConfig = async () => {
   return data?.paypal ?? null;
 };
 
-export const createPaypalAdvancedOrder = async ({ amountUsd, idempotencyKey }) => {
+export const createPaypalAdvancedOrder = async ({ amountUsd, fundingSource, idempotencyKey }) => {
   const { data } = await apiClient.post(
     `${BASE}/orders`,
-    { amountUsd },
+    /* fundingSource 只声明用哪个官方组件（paypal / card），
+       不携带任何卡数据、3DS 参数或服务商 payload。 */
+    { amountUsd, fundingSource },
     { headers: idempotencyKey ? { 'X-Idempotency-Key': idempotencyKey } : undefined },
   );
   return data?.payment ?? null;
