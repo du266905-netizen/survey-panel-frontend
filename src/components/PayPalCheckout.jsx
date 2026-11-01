@@ -138,7 +138,9 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
         if (!alive) return;
         /* 三种失败原因分开说，并留一行可查的线索（不含任何凭据）。 */
         const status = error?.paypalStatus ?? 0;
-        const reason = status === 401 || status === 403
+        const reason = error?.paypalCode === 'CLIENT_ID_MISSING'
+          ? copyRef.current.notConfigured
+          : status === 401 || status === 403
           ? copyRef.current.sessionExpired
           : status === 404
             ? copyRef.current.notConfigured
@@ -180,7 +182,9 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
         if (!alive) return;
         /* 三种失败原因分开说，并留一行可查的线索（不含任何凭据）。 */
         const status = error?.paypalStatus ?? 0;
-        const reason = status === 401 || status === 403
+        const reason = error?.paypalCode === 'CLIENT_ID_MISSING'
+          ? copyRef.current.notConfigured
+          : status === 401 || status === 403
           ? copyRef.current.sessionExpired
           : status === 404
             ? copyRef.current.notConfigured
