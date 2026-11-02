@@ -159,8 +159,8 @@ export default function BusinessAddFunds() {
       <header className="business-add-funds-top">
         <div className="business-add-funds-top-inner">
           <Logo size="sm" />
-          <button type="button" className="business-add-funds-back" onClick={() => navigate(withLanguage('/business/account', language))}>
-            <ArrowLeft size={16} /> {ui.backToAccount || 'Back'}
+          <button type="button" className="business-add-funds-back" onClick={() => navigate(withLanguage('/business/workspace', language))}>
+            <ArrowLeft size={16} /> {language.startsWith('zh') ? '返回仪表盘' : 'Back to dashboard'}
           </button>
         </div>
       </header>
