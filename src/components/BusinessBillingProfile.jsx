@@ -19,7 +19,6 @@ import './BusinessBillingProfile.css';
 const copyByLanguage = {
   'zh-CN': {
     title: '账单信息',
-    intro: '用于发票抬头与税务处理，与付款方式无关。',
     company: '公司名称',
     country: '国家 / 地区',
     address: '地址',
@@ -39,7 +38,6 @@ const copyByLanguage = {
 
 const en = {
   title: 'Billing details',
-  intro: 'Used on the invoice and for tax. Independent of how you pay.',
   company: 'Company name',
   country: 'Country or region',
   address: 'Address',
@@ -133,7 +131,6 @@ export default function BusinessBillingProfile({ billing, embedded = false }) {
       <div className="billing-profile-head">
         <div className="billing-profile-head-text">
           <h2>{copy.title}</h2>
-          <p>{copy.intro}</p>
         </div>
         {saved ? (
           <span className="billing-profile-saved"><Check size={14} aria-hidden="true" /> {copy.saved}</span>
