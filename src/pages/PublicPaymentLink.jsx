@@ -42,7 +42,8 @@ const copyByLanguage = {
     revokedNote: '这个链接已被撤销。',
     missing: '链接无效，或已经被删除。',
     loading: '加载中…',
-    secure: '由 guanyisearch 提供服务',
+    secureBefore: '由',
+    secureAfter: '提供服务',
     payer: '付款账户名称',
     date: '转账日期',
     amountSent: '转账金额',
@@ -74,7 +75,8 @@ const en = {
   revokedNote: 'This link has been cancelled.',
   missing: 'This link is not valid, or it has been removed.',
   loading: 'Loading…',
-  secure: 'Provided by guanyisearch',
+  secureBefore: 'Provided by',
+  secureAfter: '',
   payer: 'Name on the sending account',
   date: 'Transfer date',
   amountSent: 'Amount you sent',
@@ -169,7 +171,11 @@ export default function PublicPaymentLink() {
     return (
       <main className="pay-link-page">
         <p className="pay-link-title">{copy.missing}</p>
-        <p className="pay-link-foot"><img className="pay-link-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" /></p>
+        <p className="pay-link-foot">
+        {copy.secureBefore}
+        <img className="pay-link-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />
+        {copy.secureAfter}
+      </p>
       </main>
     );
   }
@@ -344,7 +350,11 @@ export default function PublicPaymentLink() {
         </div>
       ) : null}
 
-      <p className="pay-link-foot"><img className="pay-link-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" /></p>
+      <p className="pay-link-foot">
+        {copy.secureBefore}
+        <img className="pay-link-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />
+        {copy.secureAfter}
+      </p>
     </main>
 
     {dialog ? (
