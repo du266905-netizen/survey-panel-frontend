@@ -4,6 +4,7 @@ import {
   ClipboardList,
   FileText,
   LayoutDashboard,
+  LifeBuoy,
   LogOut,
   Receipt,
   Settings,
@@ -128,6 +129,17 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
             );
           })}
         </div>
+
+        {/* Help sits outside the settings group: it is a destination, not a
+            setting, and it opens the public help centre. */}
+        <button
+          type="button"
+          className="business-workspace-navitem business-workspace-navitem-help"
+          onClick={() => navigate('/help')}
+        >
+          <LifeBuoy size={17} />
+          <span>{language && language.startsWith('zh') ? '帮助中心' : 'Help centre'}</span>
+        </button>
       </nav>
 
       <BusinessLanguagePicker />
