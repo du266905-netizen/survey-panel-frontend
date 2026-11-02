@@ -90,6 +90,7 @@ export function useBillingProfile() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [errorKey, setErrorKey] = useState('');
+  const [errorDetail, setErrorDetail] = useState('');
   /* What the server already has, so coming back to the page does not re-save
      the same values, and typing does not save on every keystroke. */
   const storedRef = useRef(JSON.stringify(EMPTY));
@@ -124,10 +125,15 @@ export function useBillingProfile() {
           storedRef.current = serialized;
           setSaved(true);
           setErrorKey('');
+          setErrorDetail('');
         })
         .catch((error) => {
           /* A missing endpoint is not a customer-facing failure. */
           if (error?.response?.status === 404) return;
+          const data = error?.response?.data;
+          /* The server's own words beat "try again": without them a rejected
+             payload looks identical to a network blip. */
+          setErrorDetail(String(data?.message || data?.code || error?.response?.status || error?.message || '').slice(0, 200));
           setErrorKey('failed');
         })
         .finally(() => setSaving(false));
@@ -142,14 +148,14 @@ export function useBillingProfile() {
     setSaved(false);
   };
 
-  return { profile, update, saving, saved, errorKey };
+  return { profile, update, saving, saved, errorKey, errorDetail };
 }
 
 export default function BusinessBillingProfile({ billing, embedded = false }) {
   const { language } = useLanguage();
   const copy = copyByLanguage[language] || en;
   const countries = useMemo(() => countryOptionsFor(language), [language]);
-  const { profile, update, saving, saved, errorKey } = billing;
+  const { profile, update, saving, saved, errorKey, errorDetail } = billing;
 
   return (
     <div className={`billing-profile${embedded ? ' is-embedded' : ''}`}>
@@ -214,7 +220,12 @@ export default function BusinessBillingProfile({ billing, embedded = false }) {
         <input type="email" value={profile.billingEmail} onChange={update('billingEmail')} autoComplete="email" />
       </label>
 
-      {errorKey ? <p className="billing-profile-error" role="alert">{copy[errorKey]}</p> : null}
+      {errorKey ? (
+        <p className="billing-profile-error" role="alert">
+          {copy[errorKey]}
+          {errorDetail ? <span className="billing-profile-error-detail"> ({errorDetail})</span> : null}
+        </p>
+      ) : null}
     </div>
   );
 }

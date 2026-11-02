@@ -989,7 +989,12 @@ export const getBillingProfile = async () => {
 };
 
 export const saveBillingProfile = async (profile) => {
-  const response = await apiClient.put('/api/business/account/billing-profile', profile);
+  /* Optional fields left blank are omitted rather than sent as "": a schema
+     that types `taxIdType` as an enum rejects the empty string outright. */
+  const payload = Object.fromEntries(
+    Object.entries(profile).filter(([, value]) => String(value ?? '').trim() !== ''),
+  );
+  const response = await apiClient.put('/api/business/account/billing-profile', payload);
   return response.data;
 };
 
