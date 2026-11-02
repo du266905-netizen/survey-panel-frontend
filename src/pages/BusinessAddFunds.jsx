@@ -31,7 +31,6 @@ const QUICK_AMOUNTS = [100, 250, 500, 1000];
 const pageCopy = {
   'zh-CN': {
     cryptoContinue: '继续',
-    gate: '先填完账单信息，再选付款方式。',
     linkPurpose: '用途',
     linkPurposeHint: '付给人看的一句话，例如：研究额度充值',
     linkExpiry: '有效期（天）',
@@ -46,7 +45,6 @@ const pageCopy = {
 };
 const pageCopyEn = {
   cryptoContinue: 'Continue',
-  gate: 'Fill in the billing details first, then pick how to pay.',
   linkPurpose: 'What it is for',
   linkPurposeHint: 'One line the payer will read, e.g. research credits',
   linkExpiry: 'Valid for (days)',
@@ -115,10 +113,6 @@ export default function BusinessAddFunds() {
       .catch(() => { /* not signed in, or the endpoint is not deployed: show a dash */ });
     return () => { cancelled = true; };
   }, []);
-
-  /* The server refuses a top-up without a billing profile (409), so the page
-     says so before the customer picks a route instead of after. */
-  const billingReady = Boolean(billing.profile.companyName.trim() && billing.profile.country);
 
   const numeric = Number(String(amount).replace(/[^0-9.]/g, ''));
   const valid = Number.isFinite(numeric) && numeric >= MIN_TOP_UP;
@@ -206,7 +200,6 @@ export default function BusinessAddFunds() {
 
           <section className="business-add-funds-block">
             <h2 className="business-add-funds-block-title">{ui.howToPay || 'How would you like to pay'}</h2>
-            {!billingReady ? <p className="business-add-funds-gate">{copy.gate}</p> : null}
 
             <div className="business-add-funds-options">
               {/* The hosted card fields belong to this row, not to the end of the
@@ -216,7 +209,7 @@ export default function BusinessAddFunds() {
                   type="button"
                   className="business-add-funds-option"
                   onClick={() => setOpenMethod((current) => (current === 'card' ? '' : 'card'))}
-                  disabled={!valid || !billingReady || Boolean(submitting)}
+                  disabled={!valid || Boolean(submitting)}
                   aria-expanded={openMethod === 'card'}
                 >
                   <span className="business-add-funds-option-mark" aria-hidden="true"><CreditCard size={19} /></span>
@@ -248,7 +241,7 @@ export default function BusinessAddFunds() {
                   type="button"
                   className="business-add-funds-option"
                   onClick={() => setOpenMethod((current) => (current === 'crypto' ? '' : 'crypto'))}
-                  disabled={!valid || !billingReady || Boolean(submitting)}
+                  disabled={!valid || Boolean(submitting)}
                   aria-expanded={openMethod === 'crypto'}
                 >
                   <span className="business-add-funds-option-mark is-cryptomus" aria-hidden="true">
@@ -275,7 +268,7 @@ export default function BusinessAddFunds() {
 
               </div>
 
-              <button type="button" className="business-add-funds-option" onClick={goBankTransfer} disabled={!valid || !billingReady}>
+              <button type="button" className="business-add-funds-option" onClick={goBankTransfer} disabled={!valid}>
                 <span className="business-add-funds-option-mark" aria-hidden="true"><Landmark size={19} /></span>
                 <span className="business-add-funds-option-copy">
                   <strong>{ws.funds.bankTransfer || 'Bank transfer'}</strong>
@@ -291,7 +284,7 @@ export default function BusinessAddFunds() {
                   type="button"
                   className="business-add-funds-option"
                   onClick={() => setOpenMethod((current) => (current === 'link' ? '' : 'link'))}
-                  disabled={!valid || !billingReady}
+                  disabled={!valid}
                   aria-expanded={openMethod === 'link'}
                 >
                   <span className="business-add-funds-option-mark" aria-hidden="true"><Link2 size={19} /></span>
