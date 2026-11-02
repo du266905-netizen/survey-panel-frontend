@@ -161,6 +161,8 @@ export default function BusinessAddFunds() {
             </p>
           </section>
 
+          <BusinessBillingProfile />
+
           <section className="business-add-funds-block">
             <h2 className="business-add-funds-block-title">{ui.howToPay || 'How would you like to pay'}</h2>
 
@@ -235,7 +237,6 @@ export default function BusinessAddFunds() {
             {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
           </section>
 
-          <BusinessBillingProfile />
         </div>
 
         <aside className="business-add-funds-rail">

@@ -27,6 +27,7 @@ const copyByLanguage = {
     city: '城市',
     postal: '邮编',
     vat: '税号 / VAT',
+    taxType: '税号类型',
     optional: '选填',
     email: '开票邮箱',
     save: '保存',
@@ -46,6 +47,7 @@ const en = {
   city: 'City',
   postal: 'Postal code',
   vat: 'Tax or VAT number',
+  taxType: 'Tax ID type',
   optional: 'optional',
   email: 'Invoice email',
   save: 'Save',
@@ -55,12 +57,23 @@ const en = {
   failed: 'Could not save just now. Payments are not affected.',
 };
 
+/* Tax identifiers are country-shaped: an SG company gives a GST number, an EU
+ * company a VAT number. One list, chosen by type, is enough for an invoice. */
+const TAX_TYPES = [
+  { value: 'VAT', label: 'VAT' },
+  { value: 'GST', label: 'GST' },
+  { value: 'ABN', label: 'ABN' },
+  { value: 'EIN', label: 'EIN' },
+  { value: 'OTHER', label: 'Other' },
+];
+
 const EMPTY = {
   companyName: '',
   country: '',
   addressLine1: '',
   city: '',
   postalCode: '',
+  taxIdType: '',
   vatNumber: '',
   billingEmail: '',
 };
@@ -114,11 +127,17 @@ export default function BusinessBillingProfile() {
   return (
     <form className="billing-profile" onSubmit={submit} noValidate>
       <div className="billing-profile-head">
-        <h2>{copy.title}</h2>
-        <p>{copy.intro}</p>
+        <div className="billing-profile-head-text">
+          <h2>{copy.title}</h2>
+          <p>{copy.intro}</p>
+        </div>
         {saved ? (
           <span className="billing-profile-saved"><Check size={14} aria-hidden="true" /> {copy.saved}</span>
-        ) : null}
+        ) : (
+          <button className="billing-profile-save" type="submit" disabled={saving}>
+            {saving ? copy.saving : copy.save}
+          </button>
+        )}
       </div>
 
       <label className="billing-profile-field">
@@ -154,20 +173,26 @@ export default function BusinessBillingProfile() {
 
       <div className="billing-profile-pair">
         <label className="billing-profile-field">
+          {copy.taxType} <span className="is-optional">{copy.optional}</span>
+          <select value={profile.taxIdType} onChange={update('taxIdType')}>
+            <option value="">—</option>
+            {TAX_TYPES.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </label>
+        <label className="billing-profile-field">
           {copy.vat} <span className="is-optional">{copy.optional}</span>
           <input value={profile.vatNumber} onChange={update('vatNumber')} autoComplete="off" />
         </label>
-        <label className="billing-profile-field">
-          {copy.email} <span className="is-optional">{copy.optional}</span>
-          <input type="email" value={profile.billingEmail} onChange={update('billingEmail')} autoComplete="email" />
-        </label>
       </div>
 
-      {error ? <p className="billing-profile-error" role="alert">{error}</p> : null}
+      <label className="billing-profile-field">
+        {copy.email} <span className="is-optional">{copy.optional}</span>
+        <input type="email" value={profile.billingEmail} onChange={update('billingEmail')} autoComplete="email" />
+      </label>
 
-      <button className="billing-profile-save" type="submit" disabled={saving}>
-        {saving ? copy.saving : copy.save}
-      </button>
+      {error ? <p className="billing-profile-error" role="alert">{error}</p> : null}
     </form>
   );
 }
