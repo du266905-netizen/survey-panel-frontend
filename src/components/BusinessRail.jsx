@@ -134,8 +134,8 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
             setting, and it opens the public help centre. */}
         <button
           type="button"
-          className="business-workspace-navitem business-workspace-navitem-help"
-          onClick={() => navigate('/help')}
+          className={`business-workspace-navitem business-workspace-navitem-help${activeId === 'help' ? ' is-active' : ''}`}
+          onClick={() => navigate(withLanguage('/business/help', language))}
         >
           <LifeBuoy size={17} />
           <span>{language && language.startsWith('zh') ? '帮助中心' : 'Help centre'}</span>

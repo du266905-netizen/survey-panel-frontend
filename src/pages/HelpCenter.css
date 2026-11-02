@@ -114,6 +114,7 @@ body:has(.hc) { background: #FFFFFF; }
   max-width: 640px;
   margin: 18px 0 0;
   color: #5F6862;
+  font-family: var(--font-reading);
   font-size: 16px;
   line-height: 1.7;
 }
@@ -253,6 +254,7 @@ body:has(.hc) { background: #FFFFFF; }
 .hc-summary {
   margin: 12px 0 0;
   color: #5F6862;
+  font-family: var(--font-reading);
   font-size: 16px;
   line-height: 1.65;
 }
@@ -284,6 +286,7 @@ body:has(.hc) { background: #FFFFFF; }
 .hc-body p {
   margin: 0 0 16px;
   color: #141413;
+  font-family: var(--font-reading);
   font-size: 16px;
   line-height: 1.75;
 }
