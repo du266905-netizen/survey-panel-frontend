@@ -52,7 +52,15 @@ const loadSdk = ({ clientId, currency, intent }) => {
   return sdkPromise;
 };
 
-export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, copy }) {
+/* The three calls are injectable: the same component serves a signed-in
+ * top-up and a public payment link, and the only difference is which endpoint
+ * each step hits. */
+export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, copy, endpoints }) {
+  const api = endpoints || {
+    getConfig: getPaypalAdvancedConfig,
+    createOrder: createPaypalAdvancedOrder,
+    capture: capturePaypalAdvancedOrder,
+  };
   const [config, setConfig] = useState(null);
   const [ready, setReady] = useState(false);
   const [cardEligible, setCardEligible] = useState(false);
@@ -87,7 +95,7 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
   }, [amountUsd]);
 
   const createOrderFor = useCallback((fundingSource) => async () => {
-    const payment = await createPaypalAdvancedOrder({
+    const payment = await api.createOrder({
       amountUsd: amountRef.current,
       fundingSource,
       idempotencyKey: keysRef.current[fundingSource],
@@ -98,7 +106,7 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
 
   const onApprove = useCallback(async (data) => {
     try {
-      const payment = await capturePaypalAdvancedOrder(data.orderID);
+      const payment = await api.capture(data.orderID);
       keysRef.current = { paypal: newIdempotencyKey(), card: newIdempotencyKey() };
       paidRef.current?.(payment);
     } catch {
@@ -125,7 +133,7 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
 
   useEffect(() => {
     let alive = true;
-    getPaypalAdvancedConfig()
+    api.getConfig()
       .then((next) => {
         if (!alive) return;
         if (!next?.clientId) {

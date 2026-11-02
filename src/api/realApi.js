@@ -929,6 +929,55 @@ export const getPublicPaymentLink = async (token) => {
   return response.data;
 };
 
+/* --- Paying a link ---------------------------------------------------------
+ * Same providers as a signed-in top-up, but every call is scoped to the token
+ * instead of the session: the payer may have no account here. */
+
+export const getLinkPaypalConfig = async (token) => {
+  const response = await apiClient.get(`/api/payment-links/${encodeURIComponent(token)}/paypal/advanced/config`);
+  return response.data;
+};
+
+export const createLinkPaypalOrder = async (token, { fundingSource, idempotencyKey }) => {
+  const response = await apiClient.post(
+    `/api/payment-links/${encodeURIComponent(token)}/paypal/advanced/orders`,
+    { fundingSource },
+    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
+  );
+  return response.data?.payment || response.data;
+};
+
+export const captureLinkPaypalOrder = async (token, paypalOrderId) => {
+  const response = await apiClient.post(
+    `/api/payment-links/${encodeURIComponent(token)}/paypal/advanced/orders/${encodeURIComponent(paypalOrderId)}/capture`,
+    {},
+  );
+  return response.data?.payment || response.data;
+};
+
+export const createLinkCryptoPayment = async (token, idempotencyKey) => {
+  const response = await apiClient.post(
+    `/api/payment-links/${encodeURIComponent(token)}/crypto`,
+    {},
+    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
+  );
+  return response.data?.payment || response.data;
+};
+
+export const getLinkBankAccount = async (token) => {
+  const response = await apiClient.get(`/api/payment-links/${encodeURIComponent(token)}/bank-transfer/account`);
+  return response.data;
+};
+
+export const createLinkBankClaim = async (token, body, idempotencyKey) => {
+  const response = await apiClient.post(
+    `/api/payment-links/${encodeURIComponent(token)}/bank-transfer/claims`,
+    body,
+    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
+  );
+  return response.data;
+};
+
 export const revokePaymentLink = async (id) => {
   const response = await apiClient.post(`/api/business/payment-links/${encodeURIComponent(id)}/revoke`, {});
   return response.data;
