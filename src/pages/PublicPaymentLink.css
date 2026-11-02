@@ -10,7 +10,7 @@
   justify-items: center;
   align-content: start;
   min-height: 100vh;
-  padding: 96px 24px 64px;
+  padding: 72px 24px 64px;
   background: #fff;
   color: #141a17;
   font-family: var(--font-sans, Inter, sans-serif);
@@ -19,7 +19,18 @@
 
 .pay-link-page > * {
   width: 100%;
-  max-width: 520px;
+  max-width: 560px;
+}
+
+/* One card holds the whole page: amount, expiry, channels. */
+.pay-link-card {
+  display: grid;
+  justify-items: stretch;
+  border: 1px solid #e5e3dd;
+  border-radius: 20px;
+  background: #FFFFFF;
+  box-shadow: 0 18px 44px rgba(20, 26, 23, .06);
+  padding: 36px 32px 30px;
 }
 
 .pay-link-eyebrow {
@@ -113,8 +124,8 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 56px;
-  padding-top: 18px;
+  margin-top: 34px;
+  padding-top: 24px;
   border-top: 1px solid rgba(20, 26, 23, .1);
   color: #8d948d;
   font-size: 12px;

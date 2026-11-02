@@ -203,6 +203,7 @@ export default function PublicPaymentLink() {
   return (
     <>
     <main className="pay-link-page">
+      <section className="pay-link-card">
       <p className="pay-link-eyebrow">{copy.title}</p>
       <p className="pay-link-amount">{amount}</p>
 
@@ -365,6 +366,8 @@ export default function PublicPaymentLink() {
           ) : null}
         </div>
       ) : null}
+
+      </section>
 
       <p className="pay-link-foot">
         {copy.secureBefore}

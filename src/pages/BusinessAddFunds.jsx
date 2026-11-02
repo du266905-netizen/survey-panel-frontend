@@ -40,7 +40,7 @@ const pageCopy = {
     linkCopy: '复制链接',
     linkHint: '任何拿到链接的人都能打开这一页；金额与用途生成后不可修改。',
     linkCreated: '付款链接已创建',
-    linkCreatedBody: '把链接发给付款方，金额和用途已经固定。',
+    linkCreatedBody: '把链接发给付款方，24 小时内有效，金额已经固定。',
     linkCreatedDone: '完成',
     linkFailed: '生成失败，请稍后再试。',
     needBilling: '请先填完账单信息。',
@@ -58,7 +58,7 @@ const pageCopyEn = {
   linkCopy: 'Copy link',
   linkHint: 'Anyone with the link can open this page. Amount and purpose are fixed once created.',
   linkCreated: 'Payment link created',
-  linkCreatedBody: 'Send the link to whoever is paying. Amount and purpose are already fixed.',
+  linkCreatedBody: 'Send the link to whoever is paying. It stays valid for 24 hours; the amount is fixed.',
   linkCreatedDone: 'Done',
   linkFailed: 'Could not create the link. Try again in a moment.',
   needBilling: 'Add the billing details first.',
@@ -103,8 +103,6 @@ export default function BusinessAddFunds() {
   const [submitting, setSubmitting] = useState('');
   const [openMethod, setOpenMethod] = useState('');
   const billing = useBillingProfile();
-  const [linkPurpose, setLinkPurpose] = useState('');
-  const [linkDays, setLinkDays] = useState('30');
   const [linkResult, setLinkResult] = useState('');
   const [linkModal, setLinkModal] = useState(false);
   const [linkBusy, setLinkBusy] = useState(false);
@@ -326,23 +324,6 @@ export default function BusinessAddFunds() {
                         </>
                       ) : (
                         <>
-                          <label className="business-add-funds-linkfield">
-                            {copy.linkPurpose}
-                            <input
-                              value={linkPurpose}
-                              onChange={(event) => setLinkPurpose(event.target.value)}
-                              placeholder={copy.linkPurposeHint}
-                              maxLength={120}
-                            />
-                          </label>
-                          <label className="business-add-funds-linkfield">
-                            {copy.linkExpiry}
-                            <select value={linkDays} onChange={(event) => setLinkDays(event.target.value)}>
-                              <option value="7">7</option>
-                              <option value="14">14</option>
-                              <option value="30">30</option>
-                            </select>
-                          </label>
                           {/* A link inherits the account's billing profile, so the
                               profile is collected here too — otherwise the button
                               below stays disabled with nothing on screen to fix. */}
@@ -355,11 +336,13 @@ export default function BusinessAddFunds() {
                               setLinkError('');
                               setLinkBusy(true);
                               try {
-                                const expiresAt = new Date(Date.now() + Number(linkDays) * 86400000).toISOString();
+                                /* One day, set by us: a link is for topping up, and 24h
+                                   is long enough for the payer to open it. */
+                                const expiresAt = new Date(Date.now() + 24 * 3600 * 1000).toISOString();
                                 const payload = await createPaymentLink({
                                   amountCents: Math.round(numeric * 100),
                                   currency: 'USD',
-                                  purpose: linkPurpose.trim(),
+                                  purpose: '余额充值',
                                   expiresAt,
                                 }, `link:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`);
                                 setLinkResult(payload?.url || '');
