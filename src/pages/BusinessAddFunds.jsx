@@ -174,7 +174,6 @@ export default function BusinessAddFunds() {
               {(ui.minTopUp || ws.funds.minTopUp || '').replace('{amount}', `US$${MIN_TOP_UP}`)}
             </p>
 
-            <BusinessBillingProfile embedded />
           </section>
 
           <section className="business-add-funds-block">
@@ -198,17 +197,6 @@ export default function BusinessAddFunds() {
                   <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
                 </button>
 
-                {openMethod === 'card' && (
-                  <div className="business-add-funds-cardpanel">
-                    <PayPalCheckout
-                      amountUsd={valid ? numeric.toFixed(2) : ''}
-                      disabled={!valid}
-                      copy={PAYPAL_COPY}
-                      onPaid={() => { setOpenMethod(''); setError(''); }}
-                      onError={(message) => setError(message)}
-                    />
-                  </div>
-                )}
               </div>
 
               <div className={`business-add-funds-group${openMethod === 'crypto' ? ' is-open' : ''}`}>
@@ -230,14 +218,6 @@ export default function BusinessAddFunds() {
                   </span>
                 </button>
 
-                {openMethod === 'crypto' && (
-                  <div className="business-add-funds-panel">
-                    <p>{copy.cryptoNote}</p>
-                    <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting)}>
-                      {submitting === 'crypto' ? copy.opening : copy.cryptoContinue}
-                    </button>
-                  </div>
-                )}
               </div>
 
               <button type="button" className="business-add-funds-option" onClick={goBankTransfer} disabled={!valid}>
@@ -259,6 +239,34 @@ export default function BusinessAddFunds() {
                 <span className="business-add-funds-option-go" aria-hidden="true" />
               </button>
             </div>
+
+
+            {openMethod ? (
+              <div className="business-add-funds-expanded">
+                <BusinessBillingProfile embedded />
+
+                {openMethod === 'card' ? (
+                  <div className="business-add-funds-cardpanel">
+                    <PayPalCheckout
+                      amountUsd={valid ? numeric.toFixed(2) : ''}
+                      disabled={!valid}
+                      copy={PAYPAL_COPY}
+                      onPaid={() => { setOpenMethod(''); setError(''); }}
+                      onError={(message) => setError(message)}
+                    />
+                  </div>
+                ) : null}
+
+                {openMethod === 'crypto' ? (
+                  <div className="business-add-funds-panel">
+                    <p>{copy.cryptoNote}</p>
+                    <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting)}>
+                      {submitting === 'crypto' ? copy.opening : copy.cryptoContinue}
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
 
             {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
           </section>

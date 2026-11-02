@@ -275,6 +275,21 @@
 
 /* ---- hosted card fields --------------------------------------------------- */
 
+.business-add-funds-expanded {
+  margin-top: 12px;
+  padding: 22px 22px 20px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 14px;
+  background: #fbfbf8;
+}
+
+/* Inside the expanded region the profile is a section, not a card. */
+.business-add-funds-expanded .billing-profile {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
 .business-add-funds-panel {
   display: flex;
   align-items: center;
