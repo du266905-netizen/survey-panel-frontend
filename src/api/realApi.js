@@ -935,7 +935,10 @@ export const getPublicPaymentLink = async (token) => {
 
 export const getLinkPaypalConfig = async (token) => {
   const response = await apiClient.get(`/api/payment-links/${encodeURIComponent(token)}/paypal/advanced/config`);
-  return response.data;
+  /* The public route nests the keys under `paypal`; the signed-in route returns
+     them flat. The checkout component reads `clientId` off the top level, so
+     unwrap here rather than teaching it two shapes. */
+  return response.data?.paypal || response.data;
 };
 
 export const createLinkPaypalOrder = async (token, { fundingSource, idempotencyKey }) => {
