@@ -30,12 +30,12 @@ const QUICK_AMOUNTS = [100, 250, 500, 1000];
 
 const pageCopy = {
   'zh-CN': {
-    cryptoContinue: '前往 Cryptomus',
+    cryptoContinue: '继续',
     opening: '正在打开…',
   },
 };
 const pageCopyEn = {
-  cryptoContinue: 'Continue to Cryptomus',
+  cryptoContinue: 'Continue',
   opening: 'Opening…',
 };
 
