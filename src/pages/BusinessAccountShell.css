@@ -157,3 +157,28 @@
   background: #FAF9F5;
   color: #141413;
 }
+
+/* The app shell paints a cream gradient behind every authenticated page, so a
+   plain `background: #fff` on the section never won. These are id-scoped and
+   opaque: page white, cards white, edges #E5E3DD — nothing else. */
+#root .business-account-page {
+  background: #FFFFFF !important;
+}
+
+#root .business-account-page .business-account-details,
+#root .business-account-page .business-account-settings,
+#root .business-account-page .business-billing-card {
+  border: 1px solid #E5E3DD;
+  background: #FFFFFF !important;
+}
+
+#root .business-account-page .business-account-details dl div {
+  border: 1px solid #E5E3DD;
+  background: #FFFFFF !important;
+}
+
+#root .business-account-page .business-account-person > span {
+  border: 1px solid #E5E3DD;
+  background: #FFFFFF !important;
+  color: #141413;
+}
