@@ -15,7 +15,11 @@
       content="Cross-regional market research that turns real voices into clearer decisions. Explore thoughtful studies, share your perspective, and keep every next step visible."
     />
     <title>guanyisearch — Cross-Regional Market Research</title>
-  </head>
+    <!-- The 56 titles paint in Newsreader; preloading stops the swap from
+       resizing them a frame after first paint. -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/newsreader-latin.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/newsreader-latin-ext.woff2" crossorigin>
+</head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
