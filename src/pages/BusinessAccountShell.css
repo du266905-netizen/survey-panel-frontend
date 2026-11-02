@@ -22,7 +22,7 @@
   display: flex;
   min-height: 100svh;
   flex-direction: column;
-  padding-left: 248px;
+  padding-left: 216px;
 }
 
 /* Top bar: the way back and the bell, exactly the AI page's pair. */
@@ -78,4 +78,32 @@
   .business-account-page .business-billing-shell h1 {
     font-size: 38px !important;
   }
+}
+
+
+/* The three settings pages had kept the older green skin: a sage pill, sage
+ * icon circles and a green back control. They now use the same ink neutrals as
+ * the rest of the workspace, and the eyebrow that sat above every title is gone
+ * (RULES §3). */
+.business-account-page .business-budget-planning-note {
+  border-color: rgba(20, 26, 23, .12);
+  background: #f6f5ef;
+  color: #5f6862;
+}
+
+.business-account-page .business-account-pane > header > button {
+  color: #141a17;
+}
+
+.business-account-page .business-billing-empty-icon,
+.business-account-page .business-budget-empty-icon {
+  border-color: rgba(20, 26, 23, .12);
+  background: #f4f4ef;
+  color: #141a17;
+}
+
+.business-account-page .business-account-shell h1,
+.business-account-page .business-billing-shell h1,
+.business-account-page .business-budget-shell h1 {
+  color: #141a17;
 }

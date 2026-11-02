@@ -63,7 +63,6 @@ export default function BusinessBilling() {
 
       <section className="business-billing-shell">
       <div>
-        <p className="business-eyebrow">{ws.account?.eyebrow}</p>
         <h1>{text.title}</h1>
         <p className="business-billing-intro">{text.intro}</p>
       </div>

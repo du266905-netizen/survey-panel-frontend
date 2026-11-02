@@ -127,7 +127,6 @@ export default function BusinessAccount() {
 
       <section className="business-account-shell">
       <div>
-        <p className="business-eyebrow">{ws.account.eyebrow}</p>
         <h1>{ws.account.title}</h1>
         <p>{ws.account.intro}</p>
       </div>

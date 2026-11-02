@@ -163,7 +163,6 @@ export default function BusinessBudget() {
 
       <section className="business-budget-shell">
         <div>
-          <p className="business-eyebrow">{ws.account?.eyebrow}</p>
           <h1>{text.title}</h1>
           <p className="business-budget-intro">{text.intro}</p>
           {/* D-02 = B: budgets are plans in this version. Saying so here stops a
