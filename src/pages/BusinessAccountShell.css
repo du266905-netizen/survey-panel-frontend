@@ -15,14 +15,14 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 216px;
+  width: 288px;
 }
 
 .business-account-pane {
   display: flex;
   min-height: 100svh;
   flex-direction: column;
-  padding-left: 216px;
+  padding-left: 288px;
 }
 
 /* Top bar: the way back and the bell, exactly the AI page's pair. */
@@ -59,6 +59,7 @@
 
 @media (max-width: 800px) {
   .business-account-page .business-workspace-rail { width: 64px; }
+  .business-account-pane { padding-left: 64px; }
   .business-account-pane { padding-left: 64px; }
 }
 
@@ -105,5 +106,54 @@
 .business-account-page .business-account-shell h1,
 .business-account-page .business-billing-shell h1,
 .business-account-page .business-budget-shell h1 {
+  color: #141a17;
+}
+
+
+/* The settings pages were left on the old sage palette: page, type, cards and
+ * icon circles all carried a green cast. They now share the workspace's ink and
+ * paper, so moving between the rail's sections does not change the weather. */
+.business-account-page {
+  background: #fff;
+  color: #141a17;
+}
+
+.business-account-page .business-account-details,
+.business-account-page .business-account-settings,
+.business-account-page .business-billing-card {
+  border-color: rgba(20, 26, 23, .12);
+  background: #fff;
+}
+
+.business-account-page .business-account-details dl div {
+  border-color: rgba(20, 26, 23, .10);
+  background: #fafaf7;
+}
+
+.business-account-page .business-account-person > span {
+  background: #f4f4ef;
+  color: #141a17;
+}
+
+.business-account-page .business-account-details dt,
+.business-account-page .business-account-settings > p,
+.business-account-page .business-account-person small,
+.business-account-page .business-account-settings > span,
+.business-account-page .business-account-details dd,
+.business-account-page .business-account-settings label {
+  color: #5f6862;
+}
+
+.business-account-page .business-account-details dd,
+.business-account-page .business-account-person strong,
+.business-account-page .business-account-settings h2 {
+  color: #141a17;
+}
+
+.business-account-page > header button { color: #141a17; }
+
+.business-account-page .business-billing-empty-icon,
+.business-account-page .business-budget-row-icon {
+  background: #f4f4ef;
   color: #141a17;
 }
