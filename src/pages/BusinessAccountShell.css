@@ -114,7 +114,7 @@
  * icon circles all carried a green cast. They now share the workspace's ink and
  * paper, so moving between the rail's sections does not change the weather. */
 .business-account-page {
-  background: #fff;
+  background: #faf9f5;
   color: #141a17;
 }
 
@@ -127,7 +127,7 @@
 
 .business-account-page .business-account-details dl div {
   border-color: rgba(20, 26, 23, .10);
-  background: #fafaf7;
+  background: #f4f2ec;
 }
 
 .business-account-page .business-account-person > span {
