@@ -12,10 +12,9 @@ import './BusinessBillingProfile.css';
  * neither changes when the customer switches between PayPal, crypto or a bank
  * transfer. See INTEGRATION-TASKS §8.
  *
- * The endpoint is not deployed yet. Until it is, the card still renders and
- * still validates, but a failed save says so plainly instead of pretending.
- * It deliberately does not block the payment routes: doing that before the
- * backend exists would lock every customer out of a working checkout. */
+ * The state lives in `useBillingProfile` (called once per page) so the fields
+ * can be rendered inside whichever payment panel is open without losing what
+ * was typed when the customer switches route. */
 
 const copyByLanguage = {
   'zh-CN': {
@@ -26,8 +25,8 @@ const copyByLanguage = {
     address: '地址',
     city: '城市',
     postal: '邮编',
-    vat: '税号 / VAT',
     taxType: '税号类型',
+    vat: '税号 / VAT',
     optional: '选填',
     email: '开票邮箱',
     save: '保存',
@@ -46,8 +45,8 @@ const en = {
   address: 'Address',
   city: 'City',
   postal: 'Postal code',
-  vat: 'Tax or VAT number',
   taxType: 'Tax ID type',
+  vat: 'Tax or VAT number',
   optional: 'optional',
   email: 'Invoice email',
   save: 'Save',
@@ -78,15 +77,11 @@ const EMPTY = {
   billingEmail: '',
 };
 
-export default function BusinessBillingProfile({ embedded = false }) {
-  const { language } = useLanguage();
-  const copy = copyByLanguage[language] || en;
-  const countries = useMemo(() => countryOptionsFor(language), [language]);
-
+export function useBillingProfile() {
   const [profile, setProfile] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [error, setError] = useState('');
+  const [errorKey, setErrorKey] = useState('');
 
   useEffect(() => {
     let cancelled = false;
@@ -109,20 +104,29 @@ export default function BusinessBillingProfile({ embedded = false }) {
   const submit = async (event) => {
     event.preventDefault();
     if (!profile.companyName.trim() || !profile.country) {
-      setError(copy.required);
+      setErrorKey('required');
       return;
     }
-    setError('');
+    setErrorKey('');
     setSaving(true);
     try {
       await saveBillingProfile(profile);
       setSaved(true);
     } catch {
-      setError(copy.failed);
+      setErrorKey('failed');
     } finally {
       setSaving(false);
     }
   };
+
+  return { profile, update, submit, saving, saved, errorKey };
+}
+
+export default function BusinessBillingProfile({ billing, embedded = false }) {
+  const { language } = useLanguage();
+  const copy = copyByLanguage[language] || en;
+  const countries = useMemo(() => countryOptionsFor(language), [language]);
+  const { profile, update, submit, saving, saved, errorKey } = billing;
 
   return (
     <form className={`billing-profile${embedded ? ' is-embedded' : ''}`} onSubmit={submit} noValidate>
@@ -192,7 +196,7 @@ export default function BusinessBillingProfile({ embedded = false }) {
         <input type="email" value={profile.billingEmail} onChange={update('billingEmail')} autoComplete="email" />
       </label>
 
-      {error ? <p className="billing-profile-error" role="alert">{error}</p> : null}
+      {errorKey ? <p className="billing-profile-error" role="alert">{copy[errorKey]}</p> : null}
     </form>
   );
 }

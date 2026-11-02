@@ -275,18 +275,14 @@
 
 /* ---- hosted card fields --------------------------------------------------- */
 
-.business-add-funds-expanded {
-  margin-top: 12px;
-  padding: 22px 22px 20px;
-  border: 1px solid rgba(20, 26, 23, .12);
-  border-radius: 14px;
-  background: #fbfbf8;
+/* The form of the route that is open: no frame of its own, it sits in the row. */
+.business-add-funds-panel-wrap {
+  padding: 4px 0 8px;
 }
 
-/* Inside the expanded region the profile is a section, not a card. */
-.business-add-funds-expanded .billing-profile {
+.business-add-funds-panel-wrap .billing-profile.is-embedded {
   margin-top: 0;
-  padding-top: 0;
+  padding: 16px 0 0;
   border-top: 0;
 }
 

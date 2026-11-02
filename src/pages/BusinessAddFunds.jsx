@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, CreditCard, Landmark, Link2, Lock } from 'lucide
 import Logo from '../components/Logo';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
-import BusinessBillingProfile from '../components/BusinessBillingProfile';
+import BusinessBillingProfile, { useBillingProfile } from '../components/BusinessBillingProfile';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { createCryptoRecharge, getBusinessAccountBalance } from '../api/realApi';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
@@ -78,6 +78,7 @@ export default function BusinessAddFunds() {
   const [touched, setTouched] = useState(false);
   const [submitting, setSubmitting] = useState('');
   const [openMethod, setOpenMethod] = useState('');
+  const billing = useBillingProfile();
   const [error, setError] = useState('');
   const [balance, setBalance] = useState(null);
 
@@ -197,6 +198,21 @@ export default function BusinessAddFunds() {
                   <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
                 </button>
 
+                {openMethod === 'card' ? (
+                  <div className="business-add-funds-panel-wrap">
+                    <BusinessBillingProfile billing={billing} embedded />
+                    <div className="business-add-funds-cardpanel">
+                      <PayPalCheckout
+                        amountUsd={valid ? numeric.toFixed(2) : ''}
+                        disabled={!valid}
+                        copy={PAYPAL_COPY}
+                        onPaid={() => { setOpenMethod(''); setError(''); }}
+                        onError={(message) => setError(message)}
+                      />
+                    </div>
+                  </div>
+                ) : null}
+
               </div>
 
               <div className={`business-add-funds-group${openMethod === 'crypto' ? ' is-open' : ''}`}>
@@ -217,6 +233,18 @@ export default function BusinessAddFunds() {
                     {submitting === 'crypto' ? '…' : <ArrowRight size={15} />}
                   </span>
                 </button>
+
+                {openMethod === 'crypto' ? (
+                  <div className="business-add-funds-panel-wrap">
+                    <BusinessBillingProfile billing={billing} embedded />
+                    <div className="business-add-funds-panel">
+                      <p>{copy.cryptoNote}</p>
+                      <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting)}>
+                        {submitting === 'crypto' ? copy.opening : copy.cryptoContinue}
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
 
               </div>
 
@@ -240,33 +268,6 @@ export default function BusinessAddFunds() {
               </button>
             </div>
 
-
-            {openMethod ? (
-              <div className="business-add-funds-expanded">
-                <BusinessBillingProfile embedded />
-
-                {openMethod === 'card' ? (
-                  <div className="business-add-funds-cardpanel">
-                    <PayPalCheckout
-                      amountUsd={valid ? numeric.toFixed(2) : ''}
-                      disabled={!valid}
-                      copy={PAYPAL_COPY}
-                      onPaid={() => { setOpenMethod(''); setError(''); }}
-                      onError={(message) => setError(message)}
-                    />
-                  </div>
-                ) : null}
-
-                {openMethod === 'crypto' ? (
-                  <div className="business-add-funds-panel">
-                    <p>{copy.cryptoNote}</p>
-                    <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting)}>
-                      {submitting === 'crypto' ? copy.opening : copy.cryptoContinue}
-                    </button>
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
 
             {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
           </section>
