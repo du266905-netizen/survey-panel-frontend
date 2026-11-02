@@ -27,11 +27,11 @@ const copyByLanguage = {
     taxType: '税号类型',
     vat: '税号 / VAT',
     optional: '选填',
-    email: '开票邮箱',
+    email: '邮箱',
     save: '保存',
     saving: '正在保存…',
     saved: '已保存',
-    required: '请填写公司名称并选择国家。',
+    required: '请填完公司名称、国家、地址和邮箱。',
     failed: '暂时无法保存，稍后再试。你的付款不受影响。',
   },
 };
@@ -46,11 +46,11 @@ const en = {
   taxType: 'Tax ID type',
   vat: 'Tax or VAT number',
   optional: 'optional',
-  email: 'Invoice email',
+  email: 'Email',
   save: 'Save',
   saving: 'Saving…',
   saved: 'Saved',
-  required: 'Add a company name and a country.',
+  required: 'Fill in company, country, address and email.',
   failed: 'Could not save just now. Payments are not affected.',
 };
 
@@ -63,6 +63,13 @@ const TAX_TYPES = [
   { value: 'EIN', label: 'EIN' },
   { value: 'OTHER', label: 'Other' },
 ];
+
+/* Tax identifiers are the only optional part: everyone can raise an invoice
+ * with a company, a country and an address, but only some customers reclaim
+ * tax. */
+const REQUIRED_KEYS = ['companyName', 'country', 'addressLine1', 'city', 'postalCode', 'billingEmail'];
+
+const isComplete = (profile) => REQUIRED_KEYS.every((key) => String(profile[key] || '').trim());
 
 const EMPTY = {
   companyName: '',
@@ -104,7 +111,7 @@ export function useBillingProfile() {
      hook into PayPal's own button, and this way it does not need to. */
   useEffect(() => {
     if (!loaded) return undefined;
-    if (!profile.companyName.trim() || !profile.country) return undefined;
+    if (!isComplete(profile)) return undefined;
     const serialized = JSON.stringify(profile);
     if (serialized === storedRef.current) return undefined;
 
@@ -169,17 +176,17 @@ export default function BusinessBillingProfile({ billing, embedded = false }) {
       </label>
 
       <label className="billing-profile-field">
-        {copy.address} <span className="is-optional">{copy.optional}</span>
+        {copy.address}
         <input value={profile.addressLine1} onChange={update('addressLine1')} autoComplete="street-address" />
       </label>
 
       <div className="billing-profile-pair">
         <label className="billing-profile-field">
-          {copy.city} <span className="is-optional">{copy.optional}</span>
+          {copy.city}
           <input value={profile.city} onChange={update('city')} autoComplete="address-level2" />
         </label>
         <label className="billing-profile-field">
-          {copy.postal} <span className="is-optional">{copy.optional}</span>
+          {copy.postal}
           <input value={profile.postalCode} onChange={update('postalCode')} autoComplete="postal-code" />
         </label>
       </div>
@@ -201,7 +208,7 @@ export default function BusinessBillingProfile({ billing, embedded = false }) {
       </div>
 
       <label className="billing-profile-field">
-        {copy.email} <span className="is-optional">{copy.optional}</span>
+        {copy.email}
         <input type="email" value={profile.billingEmail} onChange={update('billingEmail')} autoComplete="email" />
       </label>
 
