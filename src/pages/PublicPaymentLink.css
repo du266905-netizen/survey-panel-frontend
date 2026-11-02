@@ -100,8 +100,11 @@
 }
 
 .pay-link-wordmark {
-  width: 128px;
+  display: block;
+  width: 132px;
   height: auto;
+  margin: 0 auto;
+  opacity: .92;
 }
 
 .pay-link-foot {
