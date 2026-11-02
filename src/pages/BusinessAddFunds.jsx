@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, CreditCard, Landmark, Link2, Lock } from 'lucide
 import Logo from '../components/Logo';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
-import BusinessBillingProfile, { useBillingProfile } from '../components/BusinessBillingProfile';
+import BusinessBillingProfile, { isBillingComplete, useBillingProfile } from '../components/BusinessBillingProfile';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { createCryptoRecharge, createPaymentLink, getBusinessAccountBalance } from '../api/realApi';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
@@ -31,6 +31,7 @@ const QUICK_AMOUNTS = [100, 250, 500, 1000];
 const pageCopy = {
   'zh-CN': {
     cryptoContinue: '继续',
+    methodTitle: '付款方式',
     linkPurpose: '用途',
     linkPurposeHint: '付给人看的一句话，例如：研究额度充值',
     linkExpiry: '有效期（天）',
@@ -45,6 +46,7 @@ const pageCopy = {
 };
 const pageCopyEn = {
   cryptoContinue: 'Continue',
+  methodTitle: 'Payment method',
   linkPurpose: 'What it is for',
   linkPurposeHint: 'One line the payer will read, e.g. research credits',
   linkExpiry: 'Valid for (days)',
@@ -113,6 +115,10 @@ export default function BusinessAddFunds() {
       .catch(() => { /* not signed in, or the endpoint is not deployed: show a dash */ });
     return () => { cancelled = true; };
   }, []);
+
+  /* The action button is what the profile unlocks; the rows stay free so the
+     fields are reachable in the first place. */
+  const billingReady = isBillingComplete(billing.profile);
 
   const numeric = Number(String(amount).replace(/[^0-9.]/g, ''));
   const valid = Number.isFinite(numeric) && numeric >= MIN_TOP_UP;
@@ -199,7 +205,7 @@ export default function BusinessAddFunds() {
           </section>
 
           <section className="business-add-funds-block">
-            <h2 className="business-add-funds-block-title">{ui.howToPay || 'How would you like to pay'}</h2>
+            <h2 className="business-add-funds-block-title">{copy.methodTitle}</h2>
 
             <div className="business-add-funds-options">
               {/* The hosted card fields belong to this row, not to the end of the
@@ -225,11 +231,12 @@ export default function BusinessAddFunds() {
                     <div className="business-add-funds-cardpanel">
                       <PayPalCheckout
                         amountUsd={valid ? numeric.toFixed(2) : ''}
-                        disabled={!valid}
+                        disabled={!valid || !billingReady}
                         copy={PAYPAL_COPY}
                         onPaid={() => { setOpenMethod(''); setError(''); }}
                         onError={(message) => setError(message)}
                       />
+                      {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
                     </div>
                   </div>
                 ) : null}
@@ -259,9 +266,10 @@ export default function BusinessAddFunds() {
                   <div className="business-add-funds-panel-wrap">
                     <BusinessBillingProfile billing={billing} embedded />
                     <div className="business-add-funds-panel">
-                      <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting)}>
+                      <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting) || !billingReady}>
                         {submitting === 'crypto' ? copy.opening : copy.cryptoContinue}
                       </button>
+                      {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
                     </div>
                   </div>
                 ) : null}
@@ -331,7 +339,7 @@ export default function BusinessAddFunds() {
                           <button
                             className="business-add-funds-continue"
                             type="button"
-                            disabled={linkBusy}
+                            disabled={linkBusy || !billingReady}
                             onClick={async () => {
                               setLinkError('');
                               setLinkBusy(true);
@@ -363,7 +371,6 @@ export default function BusinessAddFunds() {
             </div>
 
 
-            {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
           </section>
 
         </div>

@@ -69,7 +69,9 @@ const TAX_TYPES = [
  * tax. */
 const REQUIRED_KEYS = ['companyName', 'country', 'addressLine1', 'city', 'postalCode', 'billingEmail'];
 
-const isComplete = (profile) => REQUIRED_KEYS.every((key) => String(profile[key] || '').trim());
+export const isBillingComplete = (profile) => REQUIRED_KEYS.every((key) => String(profile[key] || '').trim());
+
+const isComplete = isBillingComplete;
 
 const EMPTY = {
   companyName: '',
