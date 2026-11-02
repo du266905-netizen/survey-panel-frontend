@@ -10,6 +10,7 @@ import {
   Wallet,
   Sparkles,
   Sprout,
+  ChevronDown,
   UserRound,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +39,7 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
   const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(true);
 
   // `publicCopy.workspace.business.rail` is deep-merged with the English base
   // in LanguageContext, so these strings are translated in every locale that
@@ -93,11 +95,20 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
             settings, so they live under one labelled group, collapsed by default
             like the rest of the rail's groups once were. */}
         <div className="business-workspace-navgroup business-workspace-navgroup-settings">
-          <div className="business-workspace-navgroup-title">
+          <button
+            className="business-workspace-navgroup-title"
+            type="button"
+            aria-expanded={settingsOpen}
+            onClick={() => setSettingsOpen((value) => !value)}
+          >
             <Settings size={17} aria-hidden="true" />
             <span>{rail.settings || 'Settings'}</span>
-          </div>
-          {[
+            <ChevronDown
+              size={13}
+              style={{ marginLeft: 'auto', transform: settingsOpen ? 'none' : 'rotate(-90deg)', transition: 'transform .16s ease' }}
+            />
+          </button>
+          {settingsOpen && [
             { id: 'personal', label: rail.account || 'Account', icon: UserRound, path: '/business/account' },
             { id: 'billing', label: billingCopy.title || 'Invoices and billing', icon: Receipt, path: '/business/billing' },
             { id: 'budget', label: budgetCopy.title || 'Account budget', icon: Wallet, path: '/business/budget' },
