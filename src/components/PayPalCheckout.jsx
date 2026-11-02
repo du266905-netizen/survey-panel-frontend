@@ -99,7 +99,6 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, o
   }, [amountUsd]);
 
   const createOrderFor = useCallback((fundingSource) => async () => {
-    processingRef.current?.();
     try {
       const payment = await api.createOrder({
         amountUsd: amountRef.current,

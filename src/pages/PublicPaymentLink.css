@@ -290,8 +290,38 @@
 
 /* Only a completed payment gets the lime disc; everything else stays neutral. */
 .pay-link-dialog-card.is-failed .pay-link-dialog-icon,
-.pay-link-dialog-card.is-cancelled .pay-link-dialog-icon,
-.pay-link-dialog-card.is-inProgress .pay-link-dialog-icon,
+.pay-link-dialog-card.is-claim .pay-link-dialog-icon {
+  background: #e5e3dd;
+  color: #141413;
+}
+
+.pay-link-dialog-card.is-processing .pay-link-dialog-icon {
+  position: relative;
+  background: transparent;
+  box-shadow: none;
+}
+
+.pay-link-dialog-card.is-processing .pay-link-dialog-icon::after {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 3px solid #e5e3dd;
+  border-top-color: #141413;
+  border-radius: 50%;
+  animation: pay-link-spin .85s linear infinite;
+}
+
+@keyframes pay-link-spin {
+  to { transform: rotate(360deg); }
+}
+
+.pay-link-dialog-slow {
+  max-width: 390px;
+  margin: 10px auto 0;
+  color: #8d948d;
+  font: 400 12px/1.6 var(--font-sans);
+}
+
 .pay-link-dialog-card.is-claim .pay-link-dialog-icon {
   background: #e5e3dd;
   color: #141413;

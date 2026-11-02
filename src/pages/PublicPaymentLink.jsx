@@ -53,6 +53,8 @@ const copyByLanguage = {
     cryptoFailed: '无法开始这笔付款，请稍后再试。',
     paidByCard: '付款已收到。',
     dialog: {
+      processing: { title: '正在确认付款', body: '正在等待支付服务商确认，通常几秒钟。', action: '' },
+      processingSlow: { note: '还在确认。完成后会发邮件通知你，可以关掉这个页面。', action: '关闭' },
       success: { title: '付款成功', body: '感谢你的付款。我们核对后会将金额添加到你的账户。', action: '完成' },
       failed: { title: '付款未完成', body: '本次未产生扣款，可以重新发起。连续失败请联系我们。', action: '重试' },
       claim: { title: '转账申报已提交', body: '银行转账通常 2–5 个工作日到账，到账后我们核对并入账。', action: '完成' },
@@ -86,6 +88,8 @@ const en = {
   cryptoFailed: 'Could not start this payment. Try again in a moment.',
   paidByCard: 'Payment received.',
   dialog: {
+    processing: { title: 'Confirming your payment', body: 'Waiting for the provider to confirm. This usually takes a few seconds.', action: '' },
+    processingSlow: { note: 'Still confirming. We will email you when it is done — you can close this page.', action: 'Close' },
     success: { title: 'Payment successful', body: 'Thanks for your payment. We will add the amount to your account once it is verified.', action: 'Done' },
     failed: { title: 'Payment not completed', body: 'You have not been charged. Try again, or contact us if it keeps failing.', action: 'Try again' },
     claim: { title: 'Claim submitted', body: 'Bank transfers usually take 2–5 business days to arrive. We credit the payment once it is matched.', action: 'Done' },
@@ -110,6 +114,7 @@ const endpointFor = () => `link:${Date.now()}:${Math.random().toString(36).slice
 /* One disc, one sentence, one action — the shape the custom-request confirmation
  * already uses after a form is sent successfully. */
 function dialogMark(kind) {
+  if (kind === 'processing') return null;
   if (kind === 'success') return <Check size={44} strokeWidth={1.7} />;
   if (kind === 'failed') return <X size={44} strokeWidth={1.7} />;
   if (kind === 'claim') return <Clock size={40} strokeWidth={1.7} />;
@@ -135,6 +140,16 @@ export default function PublicPaymentLink() {
   const [dialog, setDialog] = useState(null);
 
   const settle = (kind, detail) => setDialog({ kind, detail });
+
+  /* Confirming may not resolve on its own (provider hiccup). After fifteen
+     seconds the payer is allowed to leave; the result follows by email. */
+  useEffect(() => {
+    if (dialog?.kind !== 'processing' || dialog.slow) return undefined;
+    const timer = window.setTimeout(() => {
+      setDialog((current) => (current?.kind === 'processing' ? { ...current, slow: true } : current));
+    }, 15000);
+    return () => window.clearTimeout(timer);
+  }, [dialog]);
 
   useEffect(() => {
     let cancelled = false;
@@ -224,6 +239,7 @@ export default function PublicPaymentLink() {
                 disabled={false}
                 copy={PAYPAL_COPY}
                 endpoints={endpoints}
+                onProcessing={() => settle('processing')}
                 onApiError={() => settle('failed')}
                 onPaid={() => {
                   setLink((current) => ({ ...current, status: 'paid' }));
@@ -363,11 +379,18 @@ export default function PublicPaymentLink() {
             <span className="pay-link-dialog-icon" aria-hidden="true">{dialogMark(dialog.kind)}</span>
             <h2 id="pay-link-dialog-title">{dialogCopy.title}</h2>
             <p>{dialogBody}</p>
-            {dialogCopy.action ? (
-              <button type="button" onClick={() => setDialog(null)} autoFocus>
-                {dialogCopy.action} <ArrowRight size={18} strokeWidth={2} />
-              </button>
-            ) : null}
+            {dialog.kind === 'processing' && dialog.slow ? <p className="pay-link-dialog-slow">{copy.dialog.processingSlow.note}</p> : null}
+            {dialog.kind === 'processing'
+              ? (dialog.slow ? (
+                <button type="button" onClick={() => setDialog(null)} autoFocus>
+                  {copy.dialog.processingSlow.action} <ArrowRight size={18} strokeWidth={2} />
+                </button>
+              ) : null)
+              : (dialogCopy.action ? (
+                <button type="button" onClick={() => setDialog(null)} autoFocus>
+                  {dialogCopy.action} <ArrowRight size={18} strokeWidth={2} />
+                </button>
+              ) : null)}
           </section>
         </div>
       ) : null}
