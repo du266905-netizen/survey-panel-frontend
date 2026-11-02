@@ -105,6 +105,7 @@ export default function BusinessAddFunds() {
   const billing = useBillingProfile();
   const [linkResult, setLinkResult] = useState('');
   const [linkModal, setLinkModal] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [linkBusy, setLinkBusy] = useState(false);
   const [linkError, setLinkError] = useState('');
   const [error, setError] = useState('');
@@ -126,6 +127,29 @@ export default function BusinessAddFunds() {
   const billingReady = isBillingComplete(billing.profile);
 
   const numeric = Number(String(amount).replace(/[^0-9.]/g, ''));
+
+  /* A link is created for one amount. Changing the amount makes the old link
+     wrong, so it must not stay on screen as if it were current. */
+  useEffect(() => {
+    setLinkResult('');
+    setLinkModal(false);
+    setCopied(false);
+  }, [amount]);
+
+  const copyText = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const field = document.createElement('textarea');
+      field.value = text;
+      document.body.appendChild(field);
+      field.select();
+      const done = document.execCommand('copy');
+      field.remove();
+      return done;
+    }
+  };
   const valid = Number.isFinite(numeric) && numeric >= MIN_TOP_UP;
   const amountLabel = Number.isFinite(numeric) && numeric > 0 ? `$${numeric.toFixed(2)}` : '—';
 
@@ -316,9 +340,9 @@ export default function BusinessAddFunds() {
                           <button
                             className="business-add-funds-continue"
                             type="button"
-                            onClick={() => navigator.clipboard?.writeText(linkResult)}
+                            onClick={async () => setCopied(await copyText(linkResult))}
                           >
-                            {copy.linkCopy}
+                            {copied ? (language.startsWith('zh') ? '已复制' : 'Copied') : copy.linkCopy}
                           </button>
                           <p className="business-add-funds-linkhint">{copy.linkHint}</p>
                         </>
@@ -412,9 +436,9 @@ export default function BusinessAddFunds() {
               <button
                 type="button"
                 className="business-add-funds-continue"
-                onClick={() => navigator.clipboard?.writeText(linkResult)}
+                onClick={async () => setCopied(await copyText(linkResult))}
               >
-                {copy.linkCopy}
+                {copied ? (language.startsWith('zh') ? '已复制' : 'Copied') : copy.linkCopy}
               </button>
               <button type="button" className="business-add-funds-linkcreated-done" onClick={() => setLinkModal(false)}>
                 {copy.linkCreatedDone}
