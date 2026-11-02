@@ -2658,9 +2658,14 @@ main.business-ai-brief-page {
 
 /* --- recent projects: a plain hairline list ------------------------------- */
 
+/* Three rows tall, the rest scrolls: the card no longer grows with the number
+   of projects (measured row: 95px at 1440 — 3 × 95 = 285). */
 .business-workspace .business-dashboard-recent > div:not(.business-dashboard-empty) {
   gap: 0;
   margin-top: 18px;
+  max-height: 285px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .business-workspace .business-dashboard-recent > div > button {

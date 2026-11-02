@@ -274,7 +274,7 @@ export default function BusinessWorkspace() {
   const responseCount = questionnaireProjects.reduce((total, project) => total + Number(project.questionnaire?.responseCount || 0), 0);
   const questionnaireDraftCount = questionnaireProjects.filter((project) => project.questionnaire?.status === 'DRAFT').length;
   const planningCount = workspace.projects.filter((project) => ['SUBMITTED_FOR_REVIEW', 'QUOTE_REQUIRED', 'QUOTE_SENT', 'CLIENT_ACCEPTED'].includes(project.status)).length;
-  const recentProjects = [...workspace.projects].sort((first, second) => new Date(second.updatedAt || 0) - new Date(first.updatedAt || 0)).slice(0, 3);
+  const recentProjects = [...workspace.projects].sort((first, second) => new Date(second.updatedAt || 0) - new Date(first.updatedAt || 0));
   const displayName = String(user?.displayName || user?.email?.split('@')[0] || (ui.displayNameFallback)).trim();
   // True exactly when the wizard below renders. The welcome card can also be up
   // on its own, after the wizard closes.
