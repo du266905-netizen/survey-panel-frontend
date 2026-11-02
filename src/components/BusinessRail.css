@@ -494,3 +494,44 @@
     padding: 0 6px;
   }
 }
+
+
+/* ---- the rail as one flat list -------------------------------------------
+ * The group headings are gone, so the gaps that used to separate them must go
+ * too: every row sits on the same rhythm. Settings is a row like any other —
+ * gear, word, chevron — not a heading. */
+
+.business-workspace-navgroups {
+  gap: 0;
+}
+
+.business-workspace-navgroup {
+  margin-top: 0;
+  padding-top: 0;
+  gap: 2px;
+}
+
+.business-workspace-navgroup + .business-workspace-navgroup {
+  margin-top: 2px;
+}
+
+.business-workspace-navgroup-settings {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(20, 26, 23, .1);
+}
+
+.business-workspace-navgroup-settings .business-workspace-navgroup-title,
+.business-workspace-rail .business-workspace-navgroup-title {
+  min-height: 38px;
+  padding: 0 10px;
+  color: #141a17;
+  font: 450 13.5px var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.business-workspace-navgroup-settings .business-workspace-navgroup-title:hover {
+  background: #f4f4ef;
+  border-radius: 9px;
+}
