@@ -152,47 +152,63 @@ export default function HelpCenter() {
           ) : null}
         </div>
       ) : (
-        <main className="hc-landing">
-          <h1>{copyFor(lang, '帮助中心', 'Help centre')}</h1>
-          <p>
-            {copyFor(
-              lang,
-              '付款、账单与账户问题的说明，按主题归档。',
-              'Straight answers on payments, billing, and your account.',
-            )}
-          </p>
+        <div className="hc-shell is-home">
+          <main className="hc-main hc-index">
+            <h1>{copyFor(lang, '帮助中心', 'Help centre')}</h1>
+            <p className="hc-lede">
+              {copyFor(
+                lang,
+                '付款、账单与账户问题的说明，按主题归档。',
+                'Straight answers on payments, billing, and your account.',
+              )}
+            </p>
 
-          {results ? (
-            <section className="hc-results">
-              <p className="hc-count">
-                {copyFor(lang, `${results.length} 篇`, `${results.length} articles`)}
-              </p>
-              <ul>
-                {results.map((item) => {
-                  const entry = t(item, lang);
+            {results ? (
+              <section className="hc-results">
+                <p className="hc-count">
+                  {copyFor(lang, `${results.length} 篇`, `${results.length} articles`)}
+                </p>
+                <ul>
+                  {results.map((item) => {
+                    const entry = t(item, lang);
+                    return (
+                      <li key={item.slug}>
+                        <button type="button" onClick={() => navigate(`/help/${item.slug}`)}>
+                          <strong>{entry.title}</strong>
+                          <small>{entry.summary}</small>
+                          <ArrowRight size={15} aria-hidden="true" />
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+                {results.length === 0 ? (
+                  <p className="hc-empty">
+                    {copyFor(lang, '没有匹配的文章。换个说法，或直接找客服。', 'No articles match. Try another phrase, or contact support.')}
+                  </p>
+                ) : null}
+              </section>
+            ) : (
+              <div className="hc-index-groups">
+                {CATEGORIES.filter((item) => ARTICLES.some((entry) => entry.category === item.id)).map((group) => {
+                  const items = ARTICLES.filter((entry) => entry.category === group.id);
                   return (
-                    <li key={item.slug}>
-                      <button type="button" onClick={() => navigate(`/help/${item.slug}`)}>
-                        <strong>{entry.title}</strong>
-                        <small>{entry.summary}</small>
-                        <ArrowRight size={15} aria-hidden="true" />
-                      </button>
-                    </li>
+                    <section key={group.id} className="hc-index-group">
+                      <h2>{t(group, lang)}</h2>
+                      <ul>
+                        {items.map((entry) => (
+                          <li key={entry.slug}>
+                            <Link to={`/help/${entry.slug}`}>{t(entry, lang).title}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
                   );
                 })}
-              </ul>
-              {results.length === 0 ? (
-                <p className="hc-empty">
-                  {copyFor(lang, '没有匹配的文章。换个说法，或直接找客服。', 'No articles match. Try another phrase, or contact support.')}
-                </p>
-              ) : null}
-            </section>
-          ) : (
-            <Link className="hc-cta" to={`/help/${ARTICLES[0].slug}`}>
-              {copyFor(lang, '浏览帮助文章', 'Browse the articles')}
-            </Link>
-          )}
-        </main>
+              </div>
+            )}
+          </main>
+        </div>
       )}
     </div>
   );
