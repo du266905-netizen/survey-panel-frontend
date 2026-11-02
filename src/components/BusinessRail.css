@@ -461,3 +461,83 @@
 .business-workspace-rail .business-workspace-account > button svg {
   color: #FFFFFF !important;
 }
+
+
+/* ---- collapsed rail: icons only, names on hover --------------------------- */
+
+.business-workspace-navitem {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  justify-self: center;
+  padding: 0;
+}
+
+.business-workspace-navitem > span:not(.business-workspace-navitem-label) {
+  display: none;
+}
+
+.business-workspace-navgroup {
+  justify-items: center;
+  gap: 4px;
+  margin-top: 18px;
+}
+
+.business-workspace-navgroup-settings {
+  position: relative;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(20, 26, 23, .1);
+}
+
+.business-workspace-navitem-chevron {
+  position: absolute;
+  right: 2px;
+  bottom: 4px;
+  color: #8d948d;
+}
+
+.business-workspace-settings-pop {
+  position: absolute;
+  z-index: 40;
+  top: 50%;
+  left: calc(100% + 12px);
+  display: grid;
+  gap: 2px;
+  min-width: 208px;
+  padding: 8px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(20, 26, 23, .16);
+  transform: translateY(-50%);
+}
+
+.business-workspace-settings-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #141a17;
+  font: 400 13px var(--font-sans);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.business-workspace-settings-item:hover {
+  background: #f4f4ef;
+}
+
+.business-workspace-settings-item.is-active {
+  background: #f4f4ef;
+}
+
+.business-workspace-settings-item > svg {
+  color: #8d948d;
+}
