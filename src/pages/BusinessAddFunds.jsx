@@ -336,6 +336,10 @@ export default function BusinessAddFunds() {
                               <option value="30">30</option>
                             </select>
                           </label>
+                          {/* A link inherits the account's billing profile, so the
+                              profile is collected here too — otherwise the button
+                              below stays disabled with nothing on screen to fix. */}
+                          <BusinessBillingProfile billing={billing} embedded />
                           <button
                             className="business-add-funds-continue"
                             type="button"
@@ -361,6 +365,7 @@ export default function BusinessAddFunds() {
                           >
                             {linkBusy ? copy.linkCreating : copy.linkCreate}
                           </button>
+                          {!billingReady ? <p className="business-add-funds-linkhint">{copy.needBilling}</p> : null}
                           {linkError ? <p className="business-add-funds-error">{linkError}</p> : null}
                         </>
                       )}
