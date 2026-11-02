@@ -1,20 +1,32 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Search } from 'lucide-react';
+import {
+  ArrowLeft, ArrowRight, ChevronRight, CreditCard, FolderOpen,
+  BarChart3, Search, Sparkles, UserRound, Users,
+} from 'lucide-react';
 import { ARTICLES, CATEGORIES, findArticle } from '../help/content';
 import { useLanguage } from '../components/LanguageContext';
 import './HelpCenter.css';
 
 /* Public help centre.
  *
- * Three columns, the shape used by the Claude support centre and most
- * product docs: every article stands in the left rail, the article sits in
- * the middle, and the sections of that article on the right. The rails stay
- * put; only the middle column moves, so a reader never loses their place.
+ * The shape is the one Claude's support centre uses: a standing left rail of
+ * category rows that open to their articles, a wide reading column with a
+ * rail of section links on the right. The two rails stay put; only the middle
+ * column scrolls far.
  */
 
 const t = (entry, lang) => entry[lang] || entry.en;
 const copyFor = (lang, zh, en) => (lang === 'zh' ? zh : en);
+
+const ICONS = {
+  start: Sparkles,
+  projects: FolderOpen,
+  recruiting: Users,
+  results: BarChart3,
+  payments: CreditCard,
+  account: UserRound,
+};
 
 function Blocks({ blocks }) {
   return blocks.map((block, index) => {
@@ -39,6 +51,8 @@ export default function HelpCenter() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
+  const [openExtra, setOpenExtra] = useState([]);
+  const [closedIds, setClosedIds] = useState([]);
 
   const article = slug ? findArticle(slug) : null;
   const copy = article ? t(article, lang) : null;
@@ -57,6 +71,64 @@ export default function HelpCenter() {
       return `${text.title} ${text.summary}`.toLowerCase().includes(needle);
     });
   }, [query, lang]);
+
+  /* The category holding the open article starts expanded; the rest stay
+     closed until someone opens them by hand. */
+  const isOpen = (groupId) => !closedIds.includes(groupId)
+    && (Boolean(article && article.category === groupId) || openExtra.includes(groupId));
+
+  const toggle = (groupId) => {
+    if (isOpen(groupId)) {
+      setClosedIds((current) => [...current, groupId]);
+      setOpenExtra((current) => current.filter((id) => id !== groupId));
+    } else {
+      setOpenExtra((current) => [...current, groupId]);
+      setClosedIds((current) => current.filter((id) => id !== groupId));
+    }
+  };
+
+  const rail = (
+    <nav className="hc-side" aria-label={copyFor(lang, '全部文章', 'All articles')}>
+      {CATEGORIES.map((group) => {
+        const items = ARTICLES.filter((entry) => entry.category === group.id);
+        if (!items.length) return null;
+        const Icon = ICONS[group.id] || FolderOpen;
+        const open = isOpen(group.id);
+        return (
+          <section key={group.id} className={`hc-group${open ? ' is-open' : ''}`}>
+            <button
+              type="button"
+              className="hc-group-title"
+              onClick={() => toggle(group.id)}
+              aria-expanded={open}
+            >
+              <Icon size={18} aria-hidden="true" />
+              <span>{t(group, lang)}</span>
+              <ChevronRight size={16} className="hc-group-chevron" aria-hidden="true" />
+            </button>
+            {open ? (
+              <ul>
+                {items.map((entry) => {
+                  const active = Boolean(article && entry.slug === article.slug);
+                  return (
+                    <li key={entry.slug}>
+                      <Link
+                        to={`/help/${entry.slug}`}
+                        className={active ? 'is-active' : ''}
+                        aria-current={active ? 'page' : undefined}
+                      >
+                        {t(entry, lang).title}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+          </section>
+        );
+      })}
+    </nav>
+  );
 
   return (
     <div className="hc">
@@ -78,33 +150,7 @@ export default function HelpCenter() {
       </header>
 
       <div className={`hc-shell${article ? (sections.length ? '' : ' is-two') : ' is-home'}`}>
-        {article ? <nav className="hc-side" aria-label={copyFor(lang, '全部文章', 'All articles')}>
-          {CATEGORIES.map((group) => {
-            const items = ARTICLES.filter((entry) => entry.category === group.id);
-            if (!items.length) return null;
-            return (
-              <section key={group.id} className="hc-group">
-                <h2>{t(group, lang)}</h2>
-                <ul>
-                  {items.map((entry) => {
-                    const active = Boolean(article && entry.slug === article.slug);
-                    return (
-                      <li key={entry.slug}>
-                        <Link
-                          to={`/help/${entry.slug}`}
-                          className={active ? 'is-active' : ''}
-                          aria-current={active ? 'page' : undefined}
-                        >
-                          {t(entry, lang).title}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            );
-          })}
-        </nav> : null}
+        {article ? rail : null}
 
         <main className="hc-main">
           {article ? (
@@ -117,6 +163,9 @@ export default function HelpCenter() {
 
               <h1>{copy.title}</h1>
               <p className="hc-summary">{copy.summary}</p>
+              <p className="hc-meta">
+                {copyFor(lang, '持续更新', 'Kept up to date')}
+              </p>
 
               <div className="hc-body">
                 <Blocks blocks={copy.blocks} />
@@ -171,9 +220,11 @@ export default function HelpCenter() {
               <div className="hc-cards">
                 {CATEGORIES.filter((item) => ARTICLES.some((entry) => entry.category === item.id)).map((group) => {
                   const items = ARTICLES.filter((entry) => entry.category === group.id);
+                  const Icon = ICONS[group.id] || FolderOpen;
                   return (
                     <article key={group.id} className="hc-card">
                       <header>
+                        <Icon size={18} aria-hidden="true" />
                         <h2>{t(group, lang)}</h2>
                         <span>{items.length}</span>
                       </header>
