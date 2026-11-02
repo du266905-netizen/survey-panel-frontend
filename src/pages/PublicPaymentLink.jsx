@@ -29,7 +29,8 @@ import './PublicPaymentLink.css';
 const copyByLanguage = {
   'zh-CN': {
     title: '余额充值',
-    forWhat: '用途',
+    amountLabel: '充值金额',
+    methodLabel: '支付方式',
     expires: '有效期至',
     status: { active: '待付款', paid: '已支付', expired: '已过期', revoked: '已撤销' },
     card: '信用卡 / 借记卡',
@@ -64,7 +65,8 @@ const copyByLanguage = {
 
 const en = {
   title: 'Account top-up',
-  forWhat: 'For',
+  amountLabel: 'Amount',
+  methodLabel: 'Payment method',
   expires: 'Valid until',
   status: { active: 'Awaiting payment', paid: 'Paid', expired: 'Expired', revoked: 'Cancelled' },
   card: 'Credit or debit card',
@@ -204,14 +206,20 @@ export default function PublicPaymentLink() {
     <>
     <main className="pay-link-page">
       <section className="pay-link-card">
-      <p className="pay-link-eyebrow">{copy.title}</p>
-      <p className="pay-link-amount">{amount}</p>
+      <h1 className="pay-link-formtitle">{copy.title}</h1>
 
-      {link.expiresAt && status === 'active' ? (
-        <p className="pay-link-expiry">
-          {copy.expires} {new Date(link.expiresAt).toLocaleDateString(language === 'zh-CN' ? 'zh-CN' : 'en-GB')}
-        </p>
-      ) : null}
+      <dl className="pay-link-summary">
+        <div>
+          <dt>{copy.amountLabel}</dt>
+          <dd className="pay-link-figure">{amount}</dd>
+        </div>
+        {link.expiresAt && status === 'active' ? (
+          <div>
+            <dt>{copy.expires}</dt>
+            <dd>{new Date(link.expiresAt).toLocaleDateString(language === 'zh-CN' ? 'zh-CN' : 'en-GB')}</dd>
+          </div>
+        ) : null}
+      </dl>
 
       {status !== 'active' ? (
         <>
@@ -223,6 +231,8 @@ export default function PublicPaymentLink() {
       ) : null}
 
       {status === 'active' ? (
+        <>
+        <p className="pay-link-methodlabel">{copy.methodLabel}</p>
         <div className="pay-link-channels">
           <button
             type="button"
@@ -365,6 +375,7 @@ export default function PublicPaymentLink() {
             </div>
           ) : null}
         </div>
+        </>
       ) : null}
 
       </section>
