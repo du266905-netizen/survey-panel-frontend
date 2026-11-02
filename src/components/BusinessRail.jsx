@@ -38,7 +38,7 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
   const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const [collapsedGroups, setCollapsedGroups] = useState([]);
+  const [settingsOpen, setSettingsOpen] = useState(['personal', 'billing', 'budget'].includes(activeId));
 
   // `publicCopy.workspace.business.rail` is deep-merged with the English base
   // in LanguageContext, so these strings are translated in every locale that
@@ -68,24 +68,15 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
     onSelect?.(id);
   };
 
-  const toggleGroup = (id) => setCollapsedGroups((current) => (
-    current.includes(id) ? current.filter((value) => value !== id) : [...current, id]
-  ));
-
   return (
     <aside className={['business-workspace-rail', 'business-rail', className].filter(Boolean).join(' ')} aria-label={navigationLabel}>
       <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
 
       <nav className="business-workspace-navgroups" aria-label={navigationLabel} data-tour="rail-nav">
         {groups.map((group) => {
-          const expanded = !collapsedGroups.includes(group.id);
           return (
             <div className="business-workspace-navgroup" key={group.id}>
-              <button className="business-workspace-navgroup-title" type="button" aria-expanded={expanded} onClick={() => toggleGroup(group.id)}>
-                <span>{group.label}</span>
-                <ChevronDown size={14} />
-              </button>
-              {expanded && group.items.map((item) => {
+              {group.items.map((item) => {
                 const ItemIcon = item.icon;
                 const isActive = activeId === item.id;
                 return (
@@ -98,6 +89,35 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
             </div>
           );
         })}
+
+        {/* The account destinations used to hide behind the avatar; they are
+            settings, so they live under one labelled group, collapsed by default
+            like the rest of the rail's groups once were. */}
+        <div className="business-workspace-navgroup business-workspace-navgroup-settings">
+          <button className="business-workspace-navgroup-title" type="button" aria-expanded={settingsOpen} onClick={() => setSettingsOpen((value) => !value)}>
+            <span>{rail.settings || 'Settings'}</span>
+            <ChevronDown size={14} style={{ transform: settingsOpen ? 'none' : 'rotate(-90deg)' }} />
+          </button>
+          {settingsOpen && [
+            { id: 'personal', label: rail.account || 'Account', icon: UserRound, path: '/business/account' },
+            { id: 'billing', label: billingCopy.title || 'Invoices and billing', icon: Receipt, path: '/business/billing' },
+            { id: 'budget', label: budgetCopy.title || 'Account budget', icon: Wallet, path: '/business/budget' },
+          ].map((item) => {
+            const ItemIcon = item.icon;
+            const isActive = activeId === item.id;
+            return (
+              <button
+                key={item.id}
+                className={`business-workspace-navitem${isActive ? ' is-active' : ''}`}
+                type="button"
+                onClick={() => { navigate(withLanguage(item.path, language)); }}
+              >
+                <ItemIcon size={17} />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </nav>
 
       <BusinessLanguagePicker />
@@ -112,9 +132,6 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
           <div>
             <strong>{user?.displayName || rail.clientAccount}</strong>
             <span>{user?.email}</span>
-            <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/account', language)); }}><UserRound size={15} /> {rail.account}</button>
-            <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/billing', language)); }}><Receipt size={15} /> {billingCopy.title || 'Invoices and billing'}</button>
-            <button type="button" onClick={() => { setAccountMenuOpen(false); navigate(withLanguage('/business/budget', language)); }}><Wallet size={15} /> {budgetCopy.title || 'Account budget'}</button>
             {onReplayTour && <button type="button" onClick={() => { setAccountMenuOpen(false); onReplayTour(); }}><Sparkles size={15} /> {rail.tourReplay || 'Show the tour again'}</button>}
             <button type="button" onClick={() => { setAccountMenuOpen(false); logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {rail.signOut}</button>
           </div>

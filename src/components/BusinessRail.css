@@ -40,6 +40,18 @@
   gap: 2px;
 }
 
+/* One group now carries a label — Settings. The others are just lists, so the
+   spacing between them does the separating that the eyebrows used to do. */
+.business-workspace-navgroup {
+  margin-top: 14px;
+}
+
+.business-workspace-navgroup-settings {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(20, 26, 23, .1);
+}
+
 .business-workspace-navgroup-title {
   display: flex;
   width: 100%;
