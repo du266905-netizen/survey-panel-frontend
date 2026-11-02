@@ -51,6 +51,16 @@ const copyByLanguage = {
     claimFailed: '提交失败，请稍后再试。',
     cryptoFailed: '无法开始这笔付款，请稍后再试。',
     paidByCard: '付款已收到。',
+    dialog: {
+      processing: { title: '正在确认付款…', body: '先别关这个页面，通常几秒钟。' },
+      success: { title: '付款已收到', body: '不用再付一次，可以关掉这个页面。' },
+      failed: { title: '付款没有完成', body: '没有扣款。可以重新试一次，或者从右下角的客服找我们。' },
+      cancelled: { title: '你取消了这次付款', body: '没有扣款，重新选一个付款方式就行。' },
+      inProgress: { title: '这笔链接还有一笔付款没结束', body: '等那一笔完成或超时之后再试。一直不行就找客服，我们手工处理。' },
+      claim: { title: '申报已收到', body: '我们核对到账后入账，通常一个工作日内。' },
+      retry: '再试一次',
+      close: '关闭',
+    },
   },
 };
 
@@ -78,6 +88,16 @@ const en = {
   claimFailed: 'Could not file the claim. Try again in a moment.',
   cryptoFailed: 'Could not start this payment. Try again in a moment.',
   paidByCard: 'Payment received.',
+  dialog: {
+    processing: { title: 'Confirming your payment…', body: 'Keep this page open — it usually takes a few seconds.' },
+    success: { title: 'Payment received', body: 'Nothing else to do. You can close this page.' },
+    failed: { title: 'The payment did not complete', body: 'You have not been charged. Try again, or reach us from the chat bubble.' },
+    cancelled: { title: 'You cancelled the payment', body: 'Nothing was charged. Pick a payment method again when you are ready.' },
+    inProgress: { title: 'This link already has a payment in progress', body: 'Wait for that one to finish or expire, then try again. If it stays stuck, contact us and we will sort it out.' },
+    claim: { title: 'Claim received', body: 'We match it against the transfer and credit it within one business day.' },
+    retry: 'Try again',
+    close: 'Close',
+  },
 };
 
 function money(amountCents, currency = 'USD', language = 'en') {
@@ -108,6 +128,11 @@ export default function PublicPaymentLink() {
   const [bank, setBank] = useState(null);
   const [bankDone, setBankDone] = useState(false);
   const [form, setForm] = useState({ payerName: '', transferDate: '', last4: '', note: '' });
+  /* The outcome of one attempt. `kind` is one of: processing, success, failed,
+   * cancelled, inProgress, claim. */
+  const [dialog, setDialog] = useState(null);
+
+  const settle = (kind, detail) => setDialog({ kind, detail });
 
   useEffect(() => {
     let cancelled = false;
@@ -194,8 +219,22 @@ export default function PublicPaymentLink() {
                 disabled={false}
                 copy={PAYPAL_COPY}
                 endpoints={endpoints}
-                onPaid={() => { setLink((current) => ({ ...current, status: 'paid' })); setChannel(''); }}
-                onError={(message) => setError(message)}
+                onProcessing={() => settle('processing')}
+                onApiError={(failure) => {
+                  const code = failure?.response?.data?.code;
+                  if (code === 'PAYMENT_LINK_CHECKOUT_IN_PROGRESS') settle('inProgress');
+                  else if (code === 'BILLING_PROFILE_REQUIRED') settle('failed', failure?.response?.data?.message);
+                  else settle('failed');
+                }}
+                onPaid={() => {
+                  setLink((current) => ({ ...current, status: 'paid' }));
+                  setChannel('');
+                  settle('success');
+                }}
+                onError={(message) => {
+                  setError(message);
+                  settle(message === copy.cancelled ? 'cancelled' : 'failed', message === copy.cancelled ? '' : message);
+                }}
               />
               {error ? <p className="pay-link-error" role="alert">{error}</p> : null}
             </div>
@@ -219,12 +258,15 @@ export default function PublicPaymentLink() {
                 onClick={async () => {
                   setError('');
                   setBusy(true);
+                  settle('processing');
                   try {
                     const payment = await createLinkCryptoPayment(token, endpointFor());
                     if (!payment?.checkoutUrl) throw new Error('NO_URL');
                     window.location.href = payment.checkoutUrl;
-                  } catch {
+                  } catch (failure) {
+                    const code = failure?.response?.data?.code;
                     setError(copy.cryptoFailed);
+                    settle(code === 'PAYMENT_LINK_CHECKOUT_IN_PROGRESS' ? 'inProgress' : 'failed', copy.cryptoFailed);
                   } finally {
                     setBusy(false);
                   }
@@ -265,6 +307,7 @@ export default function PublicPaymentLink() {
                         note: form.note || undefined,
                       }, endpointFor());
                       setBankDone(true);
+                      settle('claim');
                     } catch {
                       setError(copy.claimFailed);
                     } finally {
@@ -310,6 +353,20 @@ export default function PublicPaymentLink() {
       ) : null}
 
       <p className="pay-link-foot">{copy.secure}</p>
+
+      {dialog ? (
+        <div className="pay-link-dialog" role="dialog" aria-modal="true" aria-labelledby="pay-link-dialog-title">
+          <div className={`pay-link-dialog-card is-${dialog.kind}`}>
+            <span className="pay-link-dialog-mark" aria-hidden="true" />
+            <h2 id="pay-link-dialog-title">{copy.dialog[dialog.kind].title}</h2>
+            <p>{copy.dialog[dialog.kind].body}</p>
+            {dialog.detail ? <p className="pay-link-dialog-detail">{dialog.detail}</p> : null}
+            <button className="pay-link-continue" type="button" onClick={() => setDialog(null)}>
+              {dialog.kind === 'success' || dialog.kind === 'claim' ? copy.dialog.close : copy.dialog.retry}
+            </button>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }

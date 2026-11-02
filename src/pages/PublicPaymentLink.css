@@ -233,3 +233,96 @@
   font-size: 13px;
   line-height: 1.5;
 }
+
+/* --- one attempt, one outcome -------------------------------------------- */
+
+.pay-link-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(20, 26, 23, .4);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.pay-link-dialog-card {
+  width: min(440px, 100%);
+  border: 1px solid #e5e3dd;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(20, 26, 23, .18);
+  padding: 30px 28px 26px;
+  text-align: center;
+}
+
+.pay-link-dialog-mark {
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 0 auto 16px;
+  border-radius: 999px;
+  background: #8d948d;
+  box-shadow: 0 0 0 5px rgba(141, 148, 141, .14);
+}
+
+.pay-link-dialog-card.is-success .pay-link-dialog-mark {
+  background: #deef24;
+  box-shadow: 0 0 0 5px rgba(222, 239, 36, .26);
+}
+
+.pay-link-dialog-card.is-failed .pay-link-dialog-mark,
+.pay-link-dialog-card.is-inProgress .pay-link-dialog-mark {
+  background: #b42318;
+  box-shadow: 0 0 0 5px rgba(180, 35, 24, .12);
+}
+
+.pay-link-dialog-card.is-claim .pay-link-dialog-mark {
+  background: #141413;
+  box-shadow: 0 0 0 5px rgba(20, 20, 19, .08);
+}
+
+.pay-link-dialog-card.is-processing .pay-link-dialog-mark {
+  animation: pay-link-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes pay-link-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .45; transform: scale(.8); }
+}
+
+.pay-link-dialog-card h2 {
+  margin: 0;
+  color: #141413;
+  font-family: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, 'Songti SC', 'STSong', 'SimSun', serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.3;
+}
+
+.pay-link-dialog-card > p {
+  margin: 10px 0 0;
+  color: #5f6862;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pay-link-dialog-card > .pay-link-dialog-detail {
+  margin-top: 8px;
+  color: #8d948d;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.pay-link-dialog-card .pay-link-continue {
+  margin-top: 22px;
+}
+
+/* Confirming is the only state with nothing to press: the capture is in flight. */
+.pay-link-dialog-card.is-processing .pay-link-continue {
+  display: none;
+}
+

@@ -55,7 +55,7 @@ const loadSdk = ({ clientId, currency, intent }) => {
 /* The three calls are injectable: the same component serves a signed-in
  * top-up and a public payment link, and the only difference is which endpoint
  * each step hits. */
-export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, copy, endpoints }) {
+export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, onProcessing, onApiError, copy, endpoints }) {
   const api = endpoints || {
     getConfig: getPaypalAdvancedConfig,
     createOrder: createPaypalAdvancedOrder,
@@ -84,9 +84,13 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
 
   const paidRef = useRef(onPaid);
   const errorRef = useRef(onError);
+  const processingRef = useRef(onProcessing);
+  const apiErrorRef = useRef(onApiError);
   const copyRef = useRef(copy);
   paidRef.current = onPaid;
   errorRef.current = onError;
+  processingRef.current = onProcessing;
+  apiErrorRef.current = onApiError;
   copyRef.current = copy;
 
   useEffect(() => {
@@ -95,16 +99,24 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, c
   }, [amountUsd]);
 
   const createOrderFor = useCallback((fundingSource) => async () => {
-    const payment = await api.createOrder({
-      amountUsd: amountRef.current,
-      fundingSource,
-      idempotencyKey: keysRef.current[fundingSource],
-    });
-    if (!payment?.paypalOrderId) throw new Error('no paypal order id');
-    return payment.paypalOrderId;
+    processingRef.current?.();
+    try {
+      const payment = await api.createOrder({
+        amountUsd: amountRef.current,
+        fundingSource,
+        idempotencyKey: keysRef.current[fundingSource],
+      });
+      if (!payment?.paypalOrderId) throw new Error('no paypal order id');
+      return payment.paypalOrderId;
+    } catch (failure) {
+      /* The page shows what actually happened; the SDK would only say "startFailed". */
+      apiErrorRef.current?.(failure);
+      throw failure;
+    }
   }, []);
 
   const onApprove = useCallback(async (data) => {
+    processingRef.current?.();
     try {
       const payment = await api.capture(data.orderID);
       keysRef.current = { paypal: newIdempotencyKey(), card: newIdempotencyKey() };
