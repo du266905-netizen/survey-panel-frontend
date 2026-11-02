@@ -55,9 +55,6 @@ export default function BusinessBilling() {
     <BusinessRail activeId="billing" onSelect={handleRailSelect} />
     <div className="business-account-pane">
       <header>
-        <button type="button" onClick={() => navigate(withLanguage('/business/workspace', language))}>
-          <ArrowLeft size={17} /> {ws.account?.backToProjects}
-        </button>
         <NotificationBell />
       </header>
 

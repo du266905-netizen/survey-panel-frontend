@@ -119,9 +119,6 @@ export default function BusinessAccount() {
     <BusinessRail activeId="personal" onSelect={handleRailSelect} />
     <div className="business-account-pane">
       <header>
-        <button type="button" onClick={() => navigate(withLanguage('/business/workspace', language))}>
-          <ArrowLeft size={17} /> {ws.account.backToProjects}
-        </button>
         <NotificationBell />
       </header>
 
@@ -156,7 +153,6 @@ export default function BusinessAccount() {
         </section>
 
         <aside className="business-account-settings">
-          <p>{ws.account.settingsEyebrow}</p>
           <h2>{ws.account.displayName}</h2>
           <span>{ws.account.displayNameHelp}</span>
           <label>{ws.account.nameLabel}

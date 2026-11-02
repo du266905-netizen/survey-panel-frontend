@@ -653,3 +653,15 @@
   justify-content: flex-start;
   gap: 10px;
 }
+
+/* The workspace shell re-capitalises every group title; this one is a row, in
+   the same sentence case and size as the rows around it. */
+#root .business-workspace .business-workspace-navgroup-title,
+#root .business-ai-brief-page .business-workspace-navgroup-title {
+  color: #141413 !important;
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 450 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}

@@ -182,3 +182,29 @@
   background: #FFFFFF !important;
   color: #141413;
 }
+
+/* Field labels: small caps stay, the 900 weight and the green cast do not. */
+.business-account-page .business-account-details dt,
+.business-account-page .business-budget-table th {
+  color: #5F6862;
+  font-weight: 500;
+  letter-spacing: .06em;
+}
+
+/* The three settings pages open with the same 56 Newsreader title as every
+   other page in the workspace. */
+.business-account-page .business-account-shell h1,
+.business-account-page .business-billing-shell h1,
+.business-account-page .business-budget-shell h1 {
+  font-family: 'Newsreader', 'Songti SC', 'STSong', 'SimSun', serif;
+  font-size: 56px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+  margin: 0 0 12px;
+}
+
+/* Only the bell is left in this bar, so it sits at the end. */
+.business-account-page .business-account-pane > header {
+  justify-content: flex-end;
+}

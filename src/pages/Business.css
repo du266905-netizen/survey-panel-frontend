@@ -1251,3 +1251,20 @@
     padding: 36px 0 72px;
   }
 }
+
+/* The four home shortcuts are row titles: 14 serif at 500, the reading weight,
+   not the 670-750 the old theme stacked on them. */
+.business-workspace-home .business-dashboard-actions strong {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+
+#root .business-workspace .business-dashboard-actions strong,
+#root .business-workspace .business-dashboard-actions button strong {
+  font-family: var(--font-serif) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: -.01em;
+}
