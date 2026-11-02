@@ -1268,3 +1268,30 @@
   font-weight: 500 !important;
   letter-spacing: -.01em;
 }
+
+/* Projects filter tabs: the 790 weight is gone — they read as 14/500 like every
+   other row title in the workspace, and the active one is ink, not green. */
+#root .business-workspace .business-project-toolbar button {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #5F6862;
+}
+
+#root .business-workspace .business-project-toolbar button.is-active,
+#root .business-workspace .business-project-toolbar button:hover {
+  color: #141413;
+  border-bottom-color: #141413;
+}
+
+/* The settings pages' title, at the scale every other page title uses. */
+#root .business-account-page .business-budget-shell > div > h1,
+#root .business-account-page .business-account-shell > div > h1,
+#root .business-account-page .business-billing-shell > div > h1 {
+  font-family: 'Newsreader', 'Songti SC', 'STSong', 'SimSun', serif !important;
+  font-size: 56px !important;
+  font-weight: 500 !important;
+  letter-spacing: -.03em !important;
+  line-height: 1.02 !important;
+  margin: 0 0 12px !important;
+}
