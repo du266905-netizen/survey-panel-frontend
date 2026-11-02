@@ -5,27 +5,30 @@ import { ARTICLES, CATEGORIES, findArticle } from '../help/content';
 import { useLanguage } from '../components/LanguageContext';
 import './HelpCenter.css';
 
-/* Public help centre: search, categories, article.
+/* Public help centre.
  *
- * The layout follows the researcher help centres of comparable products —
- * search first, categories as cards, one article per page with a short
- * breadcrumb — and uses the same paper/ink palette as the public pay page. */
+ * Three columns, the shape used by the Claude support centre and most
+ * product docs: every article stands in the left rail, the article sits in
+ * the middle, and the sections of that article on the right. The rails stay
+ * put; only the middle column moves, so a reader never loses their place.
+ */
 
 const t = (entry, lang) => entry[lang] || entry.en;
+const copyFor = (lang, zh, en) => (lang === 'zh' ? zh : en);
 
 function Blocks({ blocks }) {
   return blocks.map((block, index) => {
     const key = `${index}-${block.h || block.p ? 'text' : 'list'}`;
-    if (block.h) return <h2 key={key}>{block.h}</h2>;
+    if (block.h) return <h2 key={key} id={`section-${index}`}>{block.h}</h2>;
     if (block.p) return <p key={key}>{block.p}</p>;
     if (block.steps) {
       return (
-        <ol key={key} className="help-steps">
+        <ol key={key} className="hc-steps">
           {block.steps.map((step) => <li key={step}>{step}</li>)}
         </ol>
       );
     }
-    if (block.note) return <p key={key} className="help-note">{block.note}</p>;
+    if (block.note) return <p key={key} className="hc-note">{block.note}</p>;
     return null;
   });
 }
@@ -38,140 +41,171 @@ export default function HelpCenter() {
   const [query, setQuery] = useState('');
 
   const article = slug ? findArticle(slug) : null;
+  const copy = article ? t(article, lang) : null;
   const category = article ? CATEGORIES.find((item) => item.id === article.category) : null;
 
-  const matches = useMemo(() => {
+  const sections = useMemo(
+    () => (copy ? copy.blocks.map((block, index) => ({ ...block, index })).filter((block) => block.h) : []),
+    [copy],
+  );
+
+  const results = useMemo(() => {
     const needle = query.trim().toLowerCase();
     if (!needle) return null;
     return ARTICLES.filter((item) => {
-      const copy = t(item, lang);
-      return `${copy.title} ${copy.summary}`.toLowerCase().includes(needle);
+      const text = t(item, lang);
+      return `${text.title} ${text.summary}`.toLowerCase().includes(needle);
     });
   }, [query, lang]);
 
-  const related = useMemo(() => {
-    if (!article) return [];
-    return ARTICLES.filter((item) => item.category === article.category && item.slug !== article.slug);
-  }, [article]);
-
-  if (article) {
-    const copy = t(article, lang);
-    return (
-      <main className="help-page">
-        <header className="help-top">
-          <Link to="/help" className="help-back">
-            <ArrowLeft size={16} aria-hidden="true" />
-            {lang === 'zh' ? '帮助中心' : 'Help centre'}
-          </Link>
-        </header>
-
-        <article className="help-article">
-          <p className="help-eyebrow">{t(category, lang)}</p>
-          <h1>{copy.title}</h1>
-          <p className="help-summary">{copy.summary}</p>
-          <div className="help-body">
-            <Blocks blocks={copy.blocks} />
-          </div>
-
-          {related.length ? (
-            <aside className="help-related">
-              <h2>{lang === 'zh' ? '相关文章' : 'Related articles'}</h2>
-              <ul>
-                {related.map((item) => (
-                  <li key={item.slug}>
-                    <Link to={`/help/${item.slug}`}>{t(item, lang).title}</Link>
-                  </li>
-                ))}
-              </ul>
-            </aside>
-          ) : null}
-
-          <p className="help-foot">
-            {lang === 'zh'
-              ? '仍然没有解决？使用页面右下角的客服，或发邮件给我们。'
-              : 'Still stuck? Use the chat in the bottom-right corner, or email us.'}
-          </p>
-        </article>
-      </main>
-    );
-  }
-
   return (
-    <main className="help-page">
-      <header className="help-top">
-        <Link to="/" className="help-brand">
+    <div className="hc">
+      <header className="hc-top">
+        <Link to="/" className="hc-brand">
           <img src="/guanyisearch-wordmark.png" alt="guanyisearch" />
         </Link>
-      </header>
-
-      <section className="help-hero">
-        <h1>{lang === 'zh' ? '帮助中心' : 'Help centre'}</h1>
-        <label className="help-search">
-          <Search size={18} aria-hidden="true" />
+        <label className="hc-search">
+          <Search size={16} aria-hidden="true" />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder={lang === 'zh' ? '搜索问题，例如：付款失败' : 'Search, for example: payment failed'}
-            aria-label={lang === 'zh' ? '搜索帮助文章' : 'Search help articles'}
+            placeholder={copyFor(lang, '搜索', 'Search')}
+            aria-label={copyFor(lang, '搜索帮助文章', 'Search help articles')}
           />
+          <kbd aria-hidden="true">⌘K</kbd>
         </label>
-      </section>
+      </header>
 
-      {matches ? (
-        <section className="help-results">
-          <p className="help-count">
-            {lang === 'zh' ? `${matches.length} 篇结果` : `${matches.length} results`}
-          </p>
-          <ul>
-            {matches.map((item) => {
-              const copy = t(item, lang);
-              return (
-                <li key={item.slug}>
-                  <button type="button" onClick={() => navigate(`/help/${item.slug}`)}>
-                    <strong>{copy.title}</strong>
-                    <small>{copy.summary}</small>
-                    <ArrowRight size={16} aria-hidden="true" />
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          {matches.length === 0 ? (
-            <p className="help-empty">
-              {lang === 'zh' ? '没有匹配的文章。换个说法试试，或直接联系客服。' : 'No articles match. Try another phrase, or contact support.'}
-            </p>
-          ) : null}
-        </section>
-      ) : (
-        <section className="help-categories">
-          {CATEGORIES.filter((item) => ARTICLES.some((entry) => entry.category === item.id)).map((item) => {
-            const items = ARTICLES.filter((entry) => entry.category === item.id);
+      <div className={`hc-shell${article ? (sections.length ? '' : ' is-two') : ' is-home'}`}>
+        {article ? <nav className="hc-side" aria-label={copyFor(lang, '全部文章', 'All articles')}>
+          {CATEGORIES.map((group) => {
+            const items = ARTICLES.filter((entry) => entry.category === group.id);
+            if (!items.length) return null;
             return (
-              <article key={item.id} className="help-card">
-                <header>
-                  <h2>{t(item, lang)}</h2>
-                  <span>{items.length}</span>
-                </header>
-                <p>{lang === 'zh' ? item.zhNote : item.enNote}</p>
+              <section key={group.id} className="hc-group">
+                <h2>{t(group, lang)}</h2>
                 <ul>
-                  {items.map((entry) => (
-                    <li key={entry.slug}>
-                      <Link to={`/help/${entry.slug}`}>{t(entry, lang).title}</Link>
-                    </li>
-                  ))}
+                  {items.map((entry) => {
+                    const active = Boolean(article && entry.slug === article.slug);
+                    return (
+                      <li key={entry.slug}>
+                        <Link
+                          to={`/help/${entry.slug}`}
+                          className={active ? 'is-active' : ''}
+                          aria-current={active ? 'page' : undefined}
+                        >
+                          {t(entry, lang).title}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
-              </article>
+              </section>
             );
           })}
-        </section>
-      )}
+        </nav> : null}
 
-      <footer className="help-foot">
-        {lang === 'zh'
-          ? '没有找到答案？页面右下角的客服，工作日 10:00–19:00。'
-          : 'No answer here? Use the chat in the bottom-right corner, weekdays 10:00–19:00.'}
-      </footer>
-    </main>
+        <main className="hc-main">
+          {article ? (
+            <>
+              <nav className="hc-crumbs" aria-label="Breadcrumb">
+                <Link to="/help">{copyFor(lang, '帮助中心', 'Help centre')}</Link>
+                <span aria-hidden="true">/</span>
+                <span>{t(category, lang)}</span>
+              </nav>
+
+              <h1>{copy.title}</h1>
+              <p className="hc-summary">{copy.summary}</p>
+
+              <div className="hc-body">
+                <Blocks blocks={copy.blocks} />
+              </div>
+
+              <footer className="hc-article-foot">
+                <Link to="/help" className="hc-back">
+                  <ArrowLeft size={15} aria-hidden="true" />
+                  {copyFor(lang, '全部文章', 'All articles')}
+                </Link>
+                <p>
+                  {copyFor(
+                    lang,
+                    '仍然没有解决？用右下角的客服找我们。',
+                    'Still stuck? Use the chat in the bottom-right corner.',
+                  )}
+                </p>
+              </footer>
+            </>
+          ) : results ? (
+            <section className="hc-results">
+              <h1>{copyFor(lang, '搜索结果', 'Search results')}</h1>
+              <p className="hc-count">
+                {copyFor(lang, `${results.length} 篇`, `${results.length} articles`)}
+              </p>
+              <ul>
+                {results.map((item) => {
+                  const entry = t(item, lang);
+                  return (
+                    <li key={item.slug}>
+                      <button type="button" onClick={() => navigate(`/help/${item.slug}`)}>
+                        <strong>{entry.title}</strong>
+                        <small>{entry.summary}</small>
+                        <ArrowRight size={15} aria-hidden="true" />
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+              {results.length === 0 ? (
+                <p className="hc-empty">
+                  {copyFor(lang, '没有匹配的文章。换个说法，或直接找客服。', 'No articles match. Try another phrase, or contact support.')}
+                </p>
+              ) : null}
+            </section>
+          ) : (
+            <section className="hc-home">
+              <h1>{copyFor(lang, '帮助中心', 'Help centre')}</h1>
+              <p className="hc-summary">
+                {copyFor(lang, '先按主题找，找不到再用上面的搜索。', 'Browse by topic, or use search above.')}
+              </p>
+              <div className="hc-cards">
+                {CATEGORIES.filter((item) => ARTICLES.some((entry) => entry.category === item.id)).map((group) => {
+                  const items = ARTICLES.filter((entry) => entry.category === group.id);
+                  return (
+                    <article key={group.id} className="hc-card">
+                      <header>
+                        <h2>{t(group, lang)}</h2>
+                        <span>{items.length}</span>
+                      </header>
+                      <p>{lang === 'zh' ? group.zhNote : group.enNote}</p>
+                      <ul>
+                        {items.map((entry) => (
+                          <li key={entry.slug}>
+                            <Link to={`/help/${entry.slug}`}>{t(entry, lang).title}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+        </main>
+
+        {article && sections.length ? (
+          <aside className="hc-toc" aria-label={copyFor(lang, '本页内容', 'On this page')}>
+            <p className="hc-toc-title">{copyFor(lang, '本页内容', 'On this page')}</p>
+            <ul>
+              {sections.map((section) => (
+                <li key={section.index}>
+                  <a href={`#section-${section.index}`}>{section.h}</a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        ) : null}
+      </div>
+    </div>
   );
 }
