@@ -28,6 +28,19 @@ import './BusinessAddFunds.css';
 
 const QUICK_AMOUNTS = [100, 250, 500, 1000];
 
+const pageCopy = {
+  'zh-CN': {
+    cryptoNote: '接下来会跳到 Cryptomus 完成付款，这里的金额会带过去。',
+    cryptoContinue: '前往 Cryptomus',
+    opening: '正在打开…',
+  },
+};
+const pageCopyEn = {
+  cryptoNote: 'You will finish this payment on Cryptomus. The amount goes with you.',
+  cryptoContinue: 'Continue to Cryptomus',
+  opening: 'Opening…',
+};
+
 /* The six marks beside the security note, the same set the sheet carried in its
  * footer: four card schemes, PayPal, and the Cryptomus cube (drawn inline, it
  * ships as a single currentColor path). They sit in equal boxes because the
@@ -58,12 +71,13 @@ export default function BusinessAddFunds() {
   const ui = uiMap[language] || uiMap['en-US'] || {};
   const workspaceStaticMap = publicCopy?.workspace?.business?.workspaceStatic || {};
   const ws = workspaceStaticMap[language] || workspaceStaticMap['en-GB'] || {};
+  const copy = pageCopy[language] || pageCopyEn;
 
   const [amount, setAmount] = useState(String(MIN_TOP_UP));
   const [custom, setCustom] = useState(false);
   const [touched, setTouched] = useState(false);
   const [submitting, setSubmitting] = useState('');
-  const [cardOpen, setCardOpen] = useState(false);
+  const [openMethod, setOpenMethod] = useState('');
   const [error, setError] = useState('');
   const [balance, setBalance] = useState(null);
 
@@ -159,9 +173,9 @@ export default function BusinessAddFunds() {
             <p className="business-add-funds-min">
               {(ui.minTopUp || ws.funds.minTopUp || '').replace('{amount}', `US$${MIN_TOP_UP}`)}
             </p>
-          </section>
 
-          <BusinessBillingProfile />
+            <BusinessBillingProfile embedded />
+          </section>
 
           <section className="business-add-funds-block">
             <h2 className="business-add-funds-block-title">{ui.howToPay || 'How would you like to pay'}</h2>
@@ -169,13 +183,13 @@ export default function BusinessAddFunds() {
             <div className="business-add-funds-options">
               {/* The hosted card fields belong to this row, not to the end of the
                   list: opening the card option expands it in place. */}
-              <div className={`business-add-funds-group${cardOpen ? ' is-open' : ''}`}>
+              <div className={`business-add-funds-group${openMethod === 'card' ? ' is-open' : ''}`}>
                 <button
                   type="button"
                   className="business-add-funds-option"
-                  onClick={() => setCardOpen((value) => !value)}
+                  onClick={() => setOpenMethod((current) => (current === 'card' ? '' : 'card'))}
                   disabled={!valid || Boolean(submitting)}
-                  aria-expanded={cardOpen}
+                  aria-expanded={openMethod === 'card'}
                 >
                   <span className="business-add-funds-option-mark" aria-hidden="true"><CreditCard size={19} /></span>
                   <span className="business-add-funds-option-copy">
@@ -184,35 +198,47 @@ export default function BusinessAddFunds() {
                   <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
                 </button>
 
-                {cardOpen && (
+                {openMethod === 'card' && (
                   <div className="business-add-funds-cardpanel">
                     <PayPalCheckout
                       amountUsd={valid ? numeric.toFixed(2) : ''}
                       disabled={!valid}
                       copy={PAYPAL_COPY}
-                      onPaid={() => { setCardOpen(false); setError(''); }}
+                      onPaid={() => { setOpenMethod(''); setError(''); }}
                       onError={(message) => setError(message)}
                     />
                   </div>
                 )}
               </div>
 
-              <button
-                type="button"
-                className="business-add-funds-option"
-                onClick={startCrypto}
-                disabled={!valid || Boolean(submitting)}
-              >
-                <span className="business-add-funds-option-mark is-cryptomus" aria-hidden="true">
-                  <CryptomusMark size={17} />
-                </span>
-                <span className="business-add-funds-option-copy">
-                  <strong>{ws.funds.crypto || 'Cryptocurrency'}</strong>
-                </span>
-                <span className="business-add-funds-option-go" aria-hidden="true">
-                  {submitting === 'crypto' ? '…' : <ArrowRight size={15} />}
-                </span>
-              </button>
+              <div className={`business-add-funds-group${openMethod === 'crypto' ? ' is-open' : ''}`}>
+                <button
+                  type="button"
+                  className="business-add-funds-option"
+                  onClick={() => setOpenMethod((current) => (current === 'crypto' ? '' : 'crypto'))}
+                  disabled={!valid || Boolean(submitting)}
+                  aria-expanded={openMethod === 'crypto'}
+                >
+                  <span className="business-add-funds-option-mark is-cryptomus" aria-hidden="true">
+                    <CryptomusMark size={17} />
+                  </span>
+                  <span className="business-add-funds-option-copy">
+                    <strong>{ws.funds.crypto || 'Cryptocurrency'}</strong>
+                  </span>
+                  <span className="business-add-funds-option-go" aria-hidden="true">
+                    {submitting === 'crypto' ? '…' : <ArrowRight size={15} />}
+                  </span>
+                </button>
+
+                {openMethod === 'crypto' && (
+                  <div className="business-add-funds-panel">
+                    <p>{copy.cryptoNote}</p>
+                    <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting)}>
+                      {submitting === 'crypto' ? copy.opening : copy.cryptoContinue}
+                    </button>
+                  </div>
+                )}
+              </div>
 
               <button type="button" className="business-add-funds-option" onClick={goBankTransfer} disabled={!valid}>
                 <span className="business-add-funds-option-mark" aria-hidden="true"><Landmark size={19} /></span>

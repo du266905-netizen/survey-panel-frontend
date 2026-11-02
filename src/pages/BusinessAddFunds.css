@@ -275,6 +275,49 @@
 
 /* ---- hosted card fields --------------------------------------------------- */
 
+.business-add-funds-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 10px;
+  padding: 16px 18px;
+  border: 1px solid rgba(20, 26, 23, .12);
+  border-radius: 14px;
+  background: #fafaf7;
+}
+
+.business-add-funds-panel > p {
+  margin: 0;
+  color: #5f6862;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* The one hand-off button: it is what takes the customer to the provider. */
+.business-add-funds-continue {
+  flex: none;
+  height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #141a17;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.business-add-funds-continue:hover:not(:disabled) {
+  background: #000;
+}
+
+.business-add-funds-continue:disabled {
+  cursor: default;
+  opacity: .6;
+}
+
 .business-add-funds-cardpanel {
   margin-top: 10px;
   padding: 16px;

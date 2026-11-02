@@ -13,6 +13,16 @@
   font-family: var(--font-sans, Inter, sans-serif);
 }
 
+/* Inside another card the profile gives up its own frame, so the page reads as
+   two blocks instead of four. */
+.billing-profile.is-embedded {
+  padding: 26px 0 0;
+  border: 0;
+  border-top: 1px solid rgba(20, 26, 23, .1);
+  border-radius: 0;
+  margin-top: 24px;
+}
+
 .billing-profile-head {
   display: flex;
   align-items: flex-start;

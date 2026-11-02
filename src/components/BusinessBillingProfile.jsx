@@ -78,7 +78,7 @@ const EMPTY = {
   billingEmail: '',
 };
 
-export default function BusinessBillingProfile() {
+export default function BusinessBillingProfile({ embedded = false }) {
   const { language } = useLanguage();
   const copy = copyByLanguage[language] || en;
   const countries = useMemo(() => countryOptionsFor(language), [language]);
@@ -125,7 +125,7 @@ export default function BusinessBillingProfile() {
   };
 
   return (
-    <form className="billing-profile" onSubmit={submit} noValidate>
+    <form className={`billing-profile${embedded ? ' is-embedded' : ''}`} onSubmit={submit} noValidate>
       <div className="billing-profile-head">
         <div className="billing-profile-head-text">
           <h2>{copy.title}</h2>
