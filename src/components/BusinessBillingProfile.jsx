@@ -1,0 +1,173 @@
+import { useEffect, useMemo, useState } from 'react';
+import { Check } from 'lucide-react';
+import { getBillingProfile, saveBillingProfile } from '../api/realApi';
+import { countryOptionsFor } from '../constants/panelProfileOptions';
+import { useLanguage } from './LanguageContext';
+import './BusinessBillingProfile.css';
+
+/* The billing profile: who the invoice is made out to.
+ *
+ * It is the merchant's own record, not the payment provider's — the country
+ * decides the tax treatment and the company name goes on the invoice, and
+ * neither changes when the customer switches between PayPal, crypto or a bank
+ * transfer. See INTEGRATION-TASKS §8.
+ *
+ * The endpoint is not deployed yet. Until it is, the card still renders and
+ * still validates, but a failed save says so plainly instead of pretending.
+ * It deliberately does not block the payment routes: doing that before the
+ * backend exists would lock every customer out of a working checkout. */
+
+const copyByLanguage = {
+  'zh-CN': {
+    title: '账单信息',
+    intro: '用于发票抬头与税务处理，与付款方式无关。',
+    company: '公司名称',
+    country: '国家 / 地区',
+    address: '地址',
+    city: '城市',
+    postal: '邮编',
+    vat: '税号 / VAT',
+    optional: '选填',
+    email: '开票邮箱',
+    save: '保存',
+    saving: '正在保存…',
+    saved: '已保存',
+    required: '请填写公司名称并选择国家。',
+    failed: '暂时无法保存，稍后再试。你的付款不受影响。',
+  },
+};
+
+const en = {
+  title: 'Billing details',
+  intro: 'Used on the invoice and for tax. Independent of how you pay.',
+  company: 'Company name',
+  country: 'Country or region',
+  address: 'Address',
+  city: 'City',
+  postal: 'Postal code',
+  vat: 'Tax or VAT number',
+  optional: 'optional',
+  email: 'Invoice email',
+  save: 'Save',
+  saving: 'Saving…',
+  saved: 'Saved',
+  required: 'Add a company name and a country.',
+  failed: 'Could not save just now. Payments are not affected.',
+};
+
+const EMPTY = {
+  companyName: '',
+  country: '',
+  addressLine1: '',
+  city: '',
+  postalCode: '',
+  vatNumber: '',
+  billingEmail: '',
+};
+
+export default function BusinessBillingProfile() {
+  const { language } = useLanguage();
+  const copy = copyByLanguage[language] || en;
+  const countries = useMemo(() => countryOptionsFor(language), [language]);
+
+  const [profile, setProfile] = useState(EMPTY);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+    getBillingProfile()
+      .then((payload) => {
+        if (cancelled || !payload) return;
+        const next = payload.profile || payload;
+        setProfile({ ...EMPTY, ...next });
+      })
+      .catch(() => { /* endpoint not deployed yet: start empty */ });
+    return () => { cancelled = true; };
+  }, []);
+
+  const update = (key) => (event) => {
+    const { value } = event.target;
+    setProfile((current) => ({ ...current, [key]: value }));
+    setSaved(false);
+  };
+
+  const submit = async (event) => {
+    event.preventDefault();
+    if (!profile.companyName.trim() || !profile.country) {
+      setError(copy.required);
+      return;
+    }
+    setError('');
+    setSaving(true);
+    try {
+      await saveBillingProfile(profile);
+      setSaved(true);
+    } catch {
+      setError(copy.failed);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <form className="billing-profile" onSubmit={submit} noValidate>
+      <div className="billing-profile-head">
+        <h2>{copy.title}</h2>
+        <p>{copy.intro}</p>
+        {saved ? (
+          <span className="billing-profile-saved"><Check size={14} aria-hidden="true" /> {copy.saved}</span>
+        ) : null}
+      </div>
+
+      <label className="billing-profile-field">
+        {copy.company}
+        <input value={profile.companyName} onChange={update('companyName')} autoComplete="organization" />
+      </label>
+
+      <label className="billing-profile-field">
+        {copy.country}
+        <select value={profile.country} onChange={update('country')}>
+          <option value="">—</option>
+          {countries.map((option) => (
+            <option key={option.value} value={option.value}>{option.label}</option>
+          ))}
+        </select>
+      </label>
+
+      <label className="billing-profile-field">
+        {copy.address} <span className="is-optional">{copy.optional}</span>
+        <input value={profile.addressLine1} onChange={update('addressLine1')} autoComplete="street-address" />
+      </label>
+
+      <div className="billing-profile-pair">
+        <label className="billing-profile-field">
+          {copy.city} <span className="is-optional">{copy.optional}</span>
+          <input value={profile.city} onChange={update('city')} autoComplete="address-level2" />
+        </label>
+        <label className="billing-profile-field">
+          {copy.postal} <span className="is-optional">{copy.optional}</span>
+          <input value={profile.postalCode} onChange={update('postalCode')} autoComplete="postal-code" />
+        </label>
+      </div>
+
+      <div className="billing-profile-pair">
+        <label className="billing-profile-field">
+          {copy.vat} <span className="is-optional">{copy.optional}</span>
+          <input value={profile.vatNumber} onChange={update('vatNumber')} autoComplete="off" />
+        </label>
+        <label className="billing-profile-field">
+          {copy.email} <span className="is-optional">{copy.optional}</span>
+          <input type="email" value={profile.billingEmail} onChange={update('billingEmail')} autoComplete="email" />
+        </label>
+      </div>
+
+      {error ? <p className="billing-profile-error" role="alert">{error}</p> : null}
+
+      <button className="billing-profile-save" type="submit" disabled={saving}>
+        {saving ? copy.saving : copy.save}
+      </button>
+    </form>
+  );
+}

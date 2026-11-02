@@ -884,6 +884,19 @@ export const getPaypalRecharge = async (orderId) => {
   return response.data;
 };
 
+/* Billing profile: the name, country and tax details that go on an invoice.
+ * It belongs to the account, not to a payment method (INTEGRATION-TASKS §8),
+ * so it is read and written outside any checkout. */
+export const getBillingProfile = async () => {
+  const response = await apiClient.get('/api/business/account/billing-profile');
+  return response.data;
+};
+
+export const saveBillingProfile = async (profile) => {
+  const response = await apiClient.put('/api/business/account/billing-profile', profile);
+  return response.data;
+};
+
 export const createCryptoRecharge = async ({ amountUsd, idempotencyKey }) => {
   const response = await apiClient.post(
     '/api/business/account/recharge',

@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CreditCard, Landmark, Link2, Lock } from 'lucide
 import Logo from '../components/Logo';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
+import BusinessBillingProfile from '../components/BusinessBillingProfile';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { createCryptoRecharge, getBusinessAccountBalance } from '../api/realApi';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
@@ -233,6 +234,8 @@ export default function BusinessAddFunds() {
 
             {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
           </section>
+
+          <BusinessBillingProfile />
         </div>
 
         <aside className="business-add-funds-rail">
