@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   LogOut,
   Receipt,
-  Settings,
   Wallet,
   Sparkles,
   Sprout,
@@ -39,7 +38,7 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
   const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(['personal', 'billing', 'budget'].includes(activeId));
 
   // `publicCopy.workspace.business.rail` is deep-merged with the English base
   // in LanguageContext, so these strings are translated in every locale that
@@ -81,8 +80,9 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
                 const ItemIcon = item.icon;
                 const isActive = activeId === item.id;
                 return (
-                  <button key={item.id} className={`business-workspace-navitem${isActive ? ' is-active' : ''}`} type="button" title={item.label} aria-label={item.label} aria-current={isActive ? 'page' : undefined} data-tour={`rail-${item.id}`} onClick={() => selectItem(item.id)}>
-                    {ItemIcon && <ItemIcon size={19} />}
+                  <button key={item.id} className={`business-workspace-navitem${isActive ? ' is-active' : ''}`} type="button" title={item.label} aria-current={isActive ? 'page' : undefined} data-tour={`rail-${item.id}`} onClick={() => selectItem(item.id)}>
+                    {ItemIcon && <ItemIcon size={17} />}
+                    <span>{item.label}</span>
                   </button>
                 );
               })}
@@ -94,41 +94,29 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
             settings, so they live under one labelled group, collapsed by default
             like the rest of the rail's groups once were. */}
         <div className="business-workspace-navgroup business-workspace-navgroup-settings">
-          <button
-            className={`business-workspace-navitem${['personal', 'billing', 'budget'].includes(activeId) ? ' is-active' : ''}`}
-            type="button"
-            title={rail.settings || 'Settings'}
-            aria-label={rail.settings || 'Settings'}
-            aria-expanded={settingsOpen}
-            onClick={() => setSettingsOpen((value) => !value)}
-          >
-            <Settings size={19} />
-            <ChevronDown className="business-workspace-navitem-chevron" size={12} />
+          <button className="business-workspace-navgroup-title" type="button" aria-expanded={settingsOpen} onClick={() => setSettingsOpen((value) => !value)}>
+            <span>{rail.settings || 'Settings'}</span>
+            <ChevronDown size={14} style={{ transform: settingsOpen ? 'none' : 'rotate(-90deg)' }} />
           </button>
-          {settingsOpen && (
-            <div className="business-workspace-settings-pop" role="menu">
-              {[
-                { id: 'personal', label: rail.account || 'Account', icon: UserRound, path: '/business/account' },
-                { id: 'billing', label: billingCopy.title || 'Invoices and billing', icon: Receipt, path: '/business/billing' },
-                { id: 'budget', label: budgetCopy.title || 'Account budget', icon: Wallet, path: '/business/budget' },
-              ].map((item) => {
-                const ItemIcon = item.icon;
-                const isActive = activeId === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    className={`business-workspace-settings-item${isActive ? ' is-active' : ''}`}
-                    type="button"
-                    role="menuitem"
-                    onClick={() => { setSettingsOpen(false); navigate(withLanguage(item.path, language)); }}
-                  >
-                    <ItemIcon size={16} />
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
+          {settingsOpen && [
+            { id: 'personal', label: rail.account || 'Account', icon: UserRound, path: '/business/account' },
+            { id: 'billing', label: billingCopy.title || 'Invoices and billing', icon: Receipt, path: '/business/billing' },
+            { id: 'budget', label: budgetCopy.title || 'Account budget', icon: Wallet, path: '/business/budget' },
+          ].map((item) => {
+            const ItemIcon = item.icon;
+            const isActive = activeId === item.id;
+            return (
+              <button
+                key={item.id}
+                className={`business-workspace-navitem${isActive ? ' is-active' : ''}`}
+                type="button"
+                onClick={() => { navigate(withLanguage(item.path, language)); }}
+              >
+                <ItemIcon size={17} />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </div>
       </nav>
 
