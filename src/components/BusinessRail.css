@@ -461,3 +461,17 @@
 .business-workspace-rail .business-workspace-account > button svg {
   color: #FFFFFF !important;
 }
+
+/* On a narrow window the labelled rail would eat the page, so it falls back to
+   icons; the names live in the tooltips and the settings flyout. */
+@media (max-width: 860px) {
+  .business-rail .business-workspace-navitem > span,
+  .business-rail .business-workspace-navgroup-title > span {
+    display: none;
+  }
+
+  .business-rail .business-workspace-navitem {
+    justify-content: center;
+    padding: 0 6px;
+  }
+}

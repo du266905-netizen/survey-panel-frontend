@@ -43,7 +43,7 @@
 .business-workspace-header > a { width: 174px; }
 .business-workspace-logout { display: inline-flex; align-items: center; gap: 7px; border: 0; background: transparent; color: #4c6055; cursor: pointer; font-family: var(--font-sans); font-size: 12px; font-weight: 800; }
 .business-workspace-logout:hover { color: #1f4a35; }
-.business-workspace-body.business-workspace-body--rail { grid-template-columns: 74px minmax(0, 1fr); min-height: 100svh; }
+.business-workspace-body.business-workspace-body--rail { grid-template-columns: 248px minmax(0, 1fr); min-height: 100svh; }
 .business-workspace-rail { display: flex !important; align-content: initial !important; align-items: center; flex-direction: column; gap: 9px; border-right: 1px solid rgba(36, 56, 46, .14) !important; background: #f1f4f0 !important; padding: 18px 11px !important; }
 .business-workspace-rail-mark { display: block; width: 42px; height: 32px; object-fit: contain; object-position: center; margin: 2px 0 10px; }
 .business-workspace-rail a { position: relative; display: grid !important; width: 44px; height: 44px; place-items: center; border: 1px solid transparent; border-radius: 10px; color: #64756b !important; margin: 0 !important; text-decoration: none; }
@@ -558,7 +558,7 @@
 /* Keep GuanyiSearch's original application proportions: an upper-left G and icon rail. */
 .business-workspace { background: #fff; padding: 0; }
 .business-workspace-shell { display: contents; }
-.business-workspace-body.business-workspace-body--rail { grid-template-columns: 74px minmax(0, 1fr); min-height: 100svh; }
+.business-workspace-body.business-workspace-body--rail { grid-template-columns: 248px minmax(0, 1fr); min-height: 100svh; }
 .business-workspace-rail { align-items: center !important; gap: 9px; border-right: 1px solid rgba(36, 56, 46, .14) !important; background: #f1f4f0 !important; padding: 18px 11px !important; }
 .business-workspace-rail-mark { display: block; width: 42px; height: 32px; object-fit: contain; object-position: center; margin: 2px 0 10px; }
 .business-workspace-rail > button { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #64756b; cursor: pointer; padding: 0; }
@@ -752,7 +752,7 @@
 
 /* AI brief: a focused conversation inside the existing research workspace, not a second dashboard. */
 .business-ai-brief-page { min-height: 100svh; background: #fbfcfa; }
-.business-ai-brief-shell { display: grid; grid-template-columns: 74px minmax(0, 1fr); min-height: 100svh; }
+.business-ai-brief-shell { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100svh; }
 .business-ai-brief-rail { min-height: 100%; }
 .business-ai-brief-surface { min-width: 0; }
 .business-ai-brief-header { display: flex; min-height: 74px; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--workspace-line); padding: 0 clamp(22px, 4vw, 58px); }
@@ -767,8 +767,8 @@
 
 /* Phase 19 refinement: the body owns scrolling; the rail remains a fixed application control. */
 .business-ai-brief-page { min-height: 100svh; overflow-x: clip; }
-.business-ai-brief-shell { display: block; min-height: 100svh; padding-left: 74px; }
-.business-ai-brief-rail { position: fixed; z-index: 10; inset: 0 auto 0 0; width: 74px; height: 100svh; min-height: 0; box-sizing: border-box; }
+.business-ai-brief-shell { display: block; min-height: 100svh; padding-left: 248px; }
+.business-ai-brief-rail { position: fixed; z-index: 10; inset: 0 auto 0 0; width: 248px; height: 100svh; min-height: 0; box-sizing: border-box; }
 .business-ai-brief-surface { min-height: 100svh; }
 .business-ai-brief-header { position: relative; min-height: 78px; padding: 0 clamp(26px, 4vw, 62px); }
 .business-ai-brief-wordmark { display: block; width: 122px; height: 30px; object-fit: contain; object-position: left center; }
