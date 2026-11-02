@@ -111,6 +111,7 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, o
     } catch (failure) {
       /* The page shows what actually happened; the SDK would only say "startFailed". */
       apiErrorRef.current?.(failure);
+      keysRef.current[fundingSource] = newIdempotencyKey();
       throw failure;
     }
   }, []);
@@ -122,12 +123,26 @@ export default function PayPalCheckout({ amountUsd, disabled, onPaid, onError, o
       keysRef.current = { paypal: newIdempotencyKey(), card: newIdempotencyKey() };
       paidRef.current?.(payment);
     } catch {
+      rotateKeys();
       errorRef.current?.(copyRef.current.captureFailed);
     }
   }, []);
 
-  const onSdkError = useCallback(() => errorRef.current?.(copyRef.current.startFailed), []);
-  const onCancel = useCallback(() => errorRef.current?.(copyRef.current.cancelled), []);
+  /* A finished attempt rotates the idempotency keys: a retry of the same click
+     keeps its key, but the next deliberate click must be a new attempt. */
+  const rotateKeys = useCallback(() => {
+    keysRef.current = { paypal: newIdempotencyKey(), card: newIdempotencyKey() };
+  }, []);
+
+  const onSdkError = useCallback(() => {
+    rotateKeys();
+    errorRef.current?.(copyRef.current.startFailed);
+  }, [rotateKeys]);
+
+  const onCancel = useCallback(() => {
+    rotateKeys();
+    errorRef.current?.(copyRef.current.cancelled);
+  }, [rotateKeys]);
 
   const buttonHandlers = useMemo(() => ({
     createOrder: createOrderFor('paypal'),

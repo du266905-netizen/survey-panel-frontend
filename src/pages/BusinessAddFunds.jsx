@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
 import Logo from '../components/Logo';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
@@ -39,6 +39,9 @@ const pageCopy = {
     linkCreating: '正在生成…',
     linkCopy: '复制链接',
     linkHint: '任何拿到链接的人都能打开这一页；金额与用途生成后不可修改。',
+    linkCreated: '付款链接已创建',
+    linkCreatedBody: '把链接发给付款方，金额和用途已经固定。',
+    linkCreatedDone: '完成',
     linkFailed: '生成失败，请稍后再试。',
     needBilling: '请先填完账单信息。',
     opening: '正在打开…',
@@ -54,6 +57,9 @@ const pageCopyEn = {
   linkCreating: 'Creating…',
   linkCopy: 'Copy link',
   linkHint: 'Anyone with the link can open this page. Amount and purpose are fixed once created.',
+  linkCreated: 'Payment link created',
+  linkCreatedBody: 'Send the link to whoever is paying. Amount and purpose are already fixed.',
+  linkCreatedDone: 'Done',
   linkFailed: 'Could not create the link. Try again in a moment.',
   needBilling: 'Add the billing details first.',
   opening: 'Opening…',
@@ -100,6 +106,7 @@ export default function BusinessAddFunds() {
   const [linkPurpose, setLinkPurpose] = useState('');
   const [linkDays, setLinkDays] = useState('30');
   const [linkResult, setLinkResult] = useState('');
+  const [linkModal, setLinkModal] = useState(false);
   const [linkBusy, setLinkBusy] = useState(false);
   const [linkError, setLinkError] = useState('');
   const [error, setError] = useState('');
@@ -356,6 +363,7 @@ export default function BusinessAddFunds() {
                                   expiresAt,
                                 }, `link:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`);
                                 setLinkResult(payload?.url || '');
+                                setLinkModal(true);
                               } catch (error) {
                                 setLinkError(error?.response?.data?.code === 'BILLING_PROFILE_REQUIRED' ? copy.needBilling : copy.linkFailed);
                               } finally {
@@ -409,6 +417,29 @@ export default function BusinessAddFunds() {
           </div>
         </aside>
       </div>
+
+      {linkResult && linkModal ? (
+        <div className="business-add-funds-linkoverlay" role="dialog" aria-modal="true" aria-labelledby="business-add-funds-linkcreated">
+          <section>
+            <span className="business-add-funds-linkcreated-icon" aria-hidden="true"><Check size={44} strokeWidth={1.7} /></span>
+            <h2 id="business-add-funds-linkcreated">{copy.linkCreated}</h2>
+            <p>{copy.linkCreatedBody}</p>
+            <code className="business-add-funds-linkcreated-url">{linkResult}</code>
+            <div className="business-add-funds-linkcreated-actions">
+              <button
+                type="button"
+                className="business-add-funds-continue"
+                onClick={() => navigator.clipboard?.writeText(linkResult)}
+              >
+                {copy.linkCopy}
+              </button>
+              <button type="button" className="business-add-funds-linkcreated-done" onClick={() => setLinkModal(false)}>
+                {copy.linkCreatedDone}
+              </button>
+            </div>
+          </section>
+        </div>
+      ) : null}
     </main>
   );
 }
