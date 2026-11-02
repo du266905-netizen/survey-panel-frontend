@@ -1,32 +1,21 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import {
-  ArrowLeft, ArrowRight, ChevronRight, CreditCard, FolderOpen,
-  BarChart3, Search, Sparkles, UserRound, Users,
-} from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import { ARTICLES, CATEGORIES, findArticle } from '../help/content';
 import { useLanguage } from '../components/LanguageContext';
 import './HelpCenter.css';
 
-/* Public help centre.
+/* Public help centre, in two surfaces:
  *
- * The shape is the one Claude's support centre uses: a standing left rail of
- * category rows that open to their articles, a wide reading column with a
- * rail of section links on the right. The two rails stay put; only the middle
- * column scrolls far.
+ *   /help          a landing: the title at 56, one line under it, one way in
+ *   /help/:slug    the docs frame: category rail, article, section rail
+ *
+ * The rail carries no icons — a bold group title and the articles under it is
+ * all the structure a reader needs, and it keeps the left edge quiet.
  */
 
 const t = (entry, lang) => entry[lang] || entry.en;
 const copyFor = (lang, zh, en) => (lang === 'zh' ? zh : en);
-
-const ICONS = {
-  start: Sparkles,
-  projects: FolderOpen,
-  recruiting: Users,
-  results: BarChart3,
-  payments: CreditCard,
-  account: UserRound,
-};
 
 function Blocks({ blocks }) {
   return blocks.map((block, index) => {
@@ -51,8 +40,6 @@ export default function HelpCenter() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
-  const [openExtra, setOpenExtra] = useState([]);
-  const [closedIds, setClosedIds] = useState([]);
 
   const article = slug ? findArticle(slug) : null;
   const copy = article ? t(article, lang) : null;
@@ -72,70 +59,16 @@ export default function HelpCenter() {
     });
   }, [query, lang]);
 
-  /* The category holding the open article starts expanded; the rest stay
-     closed until someone opens them by hand. */
-  const isOpen = (groupId) => !closedIds.includes(groupId)
-    && (Boolean(article && article.category === groupId) || openExtra.includes(groupId));
-
-  const toggle = (groupId) => {
-    if (isOpen(groupId)) {
-      setClosedIds((current) => [...current, groupId]);
-      setOpenExtra((current) => current.filter((id) => id !== groupId));
-    } else {
-      setOpenExtra((current) => [...current, groupId]);
-      setClosedIds((current) => current.filter((id) => id !== groupId));
-    }
-  };
-
-  const rail = (
-    <nav className="hc-side" aria-label={copyFor(lang, '全部文章', 'All articles')}>
-      {CATEGORIES.map((group) => {
-        const items = ARTICLES.filter((entry) => entry.category === group.id);
-        if (!items.length) return null;
-        const Icon = ICONS[group.id] || FolderOpen;
-        const open = isOpen(group.id);
-        return (
-          <section key={group.id} className={`hc-group${open ? ' is-open' : ''}`}>
-            <button
-              type="button"
-              className="hc-group-title"
-              onClick={() => toggle(group.id)}
-              aria-expanded={open}
-            >
-              <Icon size={18} aria-hidden="true" />
-              <span>{t(group, lang)}</span>
-              <ChevronRight size={16} className="hc-group-chevron" aria-hidden="true" />
-            </button>
-            {open ? (
-              <ul>
-                {items.map((entry) => {
-                  const active = Boolean(article && entry.slug === article.slug);
-                  return (
-                    <li key={entry.slug}>
-                      <Link
-                        to={`/help/${entry.slug}`}
-                        className={active ? 'is-active' : ''}
-                        aria-current={active ? 'page' : undefined}
-                      >
-                        {t(entry, lang).title}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : null}
-          </section>
-        );
-      })}
-    </nav>
-  );
-
   return (
     <div className="hc">
       <header className="hc-top">
-        <Link to="/" className="hc-brand">
-          <img src="/guanyisearch-wordmark.png" alt="guanyisearch" />
-        </Link>
+        <div className="hc-brand">
+          <Link to="/">
+            <img src="/guanyisearch-wordmark.png" alt="guanyisearch" />
+          </Link>
+          <span className="hc-brand-rule" aria-hidden="true" />
+          <Link to="/help" className="hc-brand-title">{copyFor(lang, '帮助中心', 'Help centre')}</Link>
+        </div>
         <label className="hc-search">
           <Search size={16} aria-hidden="true" />
           <input
@@ -149,45 +82,88 @@ export default function HelpCenter() {
         </label>
       </header>
 
-      <div className={`hc-shell${article ? (sections.length ? '' : ' is-two') : ' is-home'}`}>
-        {article ? rail : null}
+      {article ? (
+        <div className={`hc-shell${sections.length ? '' : ' is-two'}`}>
+          <nav className="hc-side" aria-label={copyFor(lang, '全部文章', 'All articles')}>
+            {CATEGORIES.map((group) => {
+              const items = ARTICLES.filter((entry) => entry.category === group.id);
+              if (!items.length) return null;
+              return (
+                <section key={group.id} className="hc-group">
+                  <h2>{t(group, lang)}</h2>
+                  <ul>
+                    {items.map((entry) => {
+                      const active = Boolean(article && entry.slug === article.slug);
+                      return (
+                        <li key={entry.slug}>
+                          <Link
+                            to={`/help/${entry.slug}`}
+                            className={active ? 'is-active' : ''}
+                            aria-current={active ? 'page' : undefined}
+                          >
+                            {t(entry, lang).title}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              );
+            })}
+          </nav>
 
-        <main className="hc-main">
-          {article ? (
-            <>
-              <nav className="hc-crumbs" aria-label="Breadcrumb">
-                <Link to="/help">{copyFor(lang, '帮助中心', 'Help centre')}</Link>
-                <span aria-hidden="true">/</span>
-                <span>{t(category, lang)}</span>
-              </nav>
+          <main className="hc-main">
+            <nav className="hc-crumbs" aria-label="Breadcrumb">
+              <Link to="/help">{copyFor(lang, '帮助中心', 'Help centre')}</Link>
+              <span aria-hidden="true">/</span>
+              <span>{t(category, lang)}</span>
+            </nav>
 
-              <h1>{copy.title}</h1>
-              <p className="hc-summary">{copy.summary}</p>
-              <p className="hc-meta">
-                {copyFor(lang, '持续更新', 'Kept up to date')}
+            <h1>{copy.title}</h1>
+            <p className="hc-summary">{copy.summary}</p>
+            <p className="hc-meta">{copyFor(lang, '持续更新', 'Kept up to date')}</p>
+
+            <div className="hc-body">
+              <Blocks blocks={copy.blocks} />
+            </div>
+
+            <footer className="hc-article-foot">
+              <p>
+                {copyFor(
+                  lang,
+                  '仍然没有解决？用右下角的客服找我们。',
+                  'Still stuck? Use the chat in the bottom-right corner.',
+                )}
               </p>
+            </footer>
+          </main>
 
-              <div className="hc-body">
-                <Blocks blocks={copy.blocks} />
-              </div>
+          {sections.length ? (
+            <aside className="hc-toc" aria-label={copyFor(lang, '本页内容', 'On this page')}>
+              <p className="hc-toc-title">{copyFor(lang, '本页内容', 'On this page')}</p>
+              <ul>
+                {sections.map((section) => (
+                  <li key={section.index}>
+                    <a href={`#section-${section.index}`}>{section.h}</a>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          ) : null}
+        </div>
+      ) : (
+        <main className="hc-landing">
+          <h1>{copyFor(lang, '帮助中心', 'Help centre')}</h1>
+          <p>
+            {copyFor(
+              lang,
+              '付款、账单与账户问题的说明，按主题归档。',
+              'Straight answers on payments, billing, and your account.',
+            )}
+          </p>
 
-              <footer className="hc-article-foot">
-                <Link to="/help" className="hc-back">
-                  <ArrowLeft size={15} aria-hidden="true" />
-                  {copyFor(lang, '全部文章', 'All articles')}
-                </Link>
-                <p>
-                  {copyFor(
-                    lang,
-                    '仍然没有解决？用右下角的客服找我们。',
-                    'Still stuck? Use the chat in the bottom-right corner.',
-                  )}
-                </p>
-              </footer>
-            </>
-          ) : results ? (
+          {results ? (
             <section className="hc-results">
-              <h1>{copyFor(lang, '搜索结果', 'Search results')}</h1>
               <p className="hc-count">
                 {copyFor(lang, `${results.length} 篇`, `${results.length} articles`)}
               </p>
@@ -212,51 +188,12 @@ export default function HelpCenter() {
               ) : null}
             </section>
           ) : (
-            <section className="hc-home">
-              <h1>{copyFor(lang, '帮助中心', 'Help centre')}</h1>
-              <p className="hc-summary">
-                {copyFor(lang, '先按主题找，找不到再用上面的搜索。', 'Browse by topic, or use search above.')}
-              </p>
-              <div className="hc-cards">
-                {CATEGORIES.filter((item) => ARTICLES.some((entry) => entry.category === item.id)).map((group) => {
-                  const items = ARTICLES.filter((entry) => entry.category === group.id);
-                  const Icon = ICONS[group.id] || FolderOpen;
-                  return (
-                    <article key={group.id} className="hc-card">
-                      <header>
-                        <Icon size={18} aria-hidden="true" />
-                        <h2>{t(group, lang)}</h2>
-                        <span>{items.length}</span>
-                      </header>
-                      <p>{lang === 'zh' ? group.zhNote : group.enNote}</p>
-                      <ul>
-                        {items.map((entry) => (
-                          <li key={entry.slug}>
-                            <Link to={`/help/${entry.slug}`}>{t(entry, lang).title}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
+            <Link className="hc-cta" to={`/help/${ARTICLES[0].slug}`}>
+              {copyFor(lang, '浏览帮助文章', 'Browse the articles')}
+            </Link>
           )}
         </main>
-
-        {article && sections.length ? (
-          <aside className="hc-toc" aria-label={copyFor(lang, '本页内容', 'On this page')}>
-            <p className="hc-toc-title">{copyFor(lang, '本页内容', 'On this page')}</p>
-            <ul>
-              {sections.map((section) => (
-                <li key={section.index}>
-                  <a href={`#section-${section.index}`}>{section.h}</a>
-                </li>
-              ))}
-            </ul>
-          </aside>
-        ) : null}
-      </div>
+      )}
     </div>
   );
 }

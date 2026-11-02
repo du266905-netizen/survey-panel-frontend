@@ -1,9 +1,11 @@
-/* Public help centre, modelled on Claude's support centre.
+/* Public help centre.
  *
- * Full-bleed frame: a 64px bar, a 320px rail of category rows that open to
- * their articles, a wide reading column, and a 220px rail of section links.
- * Type stays on the Part 18 scale: 38 the title, 22 a section, 16 the prose,
- * 16 the rail row, 14 the article links, 13 the breadcrumb.
+ * Two surfaces: a landing with the title at 56 and one way in, and the docs
+ * frame — category rail, article, section rail. The rail carries no icons:
+ * a bold group title with its articles beneath is the whole structure.
+ *
+ * Type stays on the Part 18 scale: 56 the landing title, 38 the article
+ * title, 22 a section, 16 the prose and the rail rows, 14 the breadcrumb.
  */
 
 body:has(.hc) { background: #FFFFFF; }
@@ -33,10 +35,32 @@ body:has(.hc) { background: #FFFFFF; }
   padding: 0 28px;
 }
 
+.hc-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
 .hc-brand img {
   display: block;
-  width: 128px;
+  width: 112px;
   height: auto;
+}
+
+.hc-brand-rule {
+  width: 1px;
+  height: 18px;
+  background: #E5E3DD;
+}
+
+.hc-brand-title {
+  color: #141413;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .hc-search {
@@ -74,22 +98,62 @@ body:has(.hc) { background: #FFFFFF; }
   white-space: nowrap;
 }
 
-/* --- frame --------------------------------------------------------------- */
+/* --- landing ------------------------------------------------------------- */
+
+.hc-landing {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-height: calc(100vh - 64px);
+  padding: 48px 24px 96px;
+  text-align: center;
+}
+
+.hc-landing h1 {
+  margin: 0;
+  font-family: var(--font-reading);
+  font-size: 56px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+}
+
+.hc-landing > p {
+  margin: 16px 0 0;
+  max-width: 460px;
+  color: #5F6862;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.hc-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 30px;
+  border: 1px solid #141413;
+  border-radius: 6px;
+  background: #141413;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 24px;
+  text-decoration: none;
+}
+
+.hc-cta:hover { background: #2B2B2B; border-color: #2B2B2B; }
+
+/* --- docs frame ---------------------------------------------------------- */
 
 .hc-shell {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr) 240px;
+  grid-template-columns: 300px minmax(0, 1fr) 240px;
 }
 
-.hc-shell.is-two { grid-template-columns: 320px minmax(0, 1fr); }
+.hc-shell.is-two { grid-template-columns: 300px minmax(0, 1fr); }
 
-.hc-shell.is-home {
-  grid-template-columns: minmax(0, 1fr);
-  width: min(100%, 900px);
-  margin: 0 auto;
-}
-
-/* --- left rail ----------------------------------------------------------- */
+/* --- category rail ------------------------------------------------------- */
 
 .hc-side {
   position: sticky;
@@ -98,42 +162,23 @@ body:has(.hc) { background: #FFFFFF; }
   height: calc(100vh - 64px);
   overflow-y: auto;
   border-right: 1px solid #E5E3DD;
-  padding: 18px 16px 40px;
+  padding: 28px 20px 40px;
   scrollbar-width: thin;
 }
 
-.hc-group + .hc-group { margin-top: 2px; }
+.hc-group + .hc-group { margin-top: 30px; }
 
-.hc-group-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
+.hc-group h2 {
+  margin: 0 0 8px;
   color: #141413;
-  cursor: pointer;
-  font: 400 16px/1.3 var(--font-sans);
-  padding: 12px 14px;
-  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.01em;
 }
-
-.hc-group-title:hover { background: #FAF9F5; }
-
-.hc-group-title svg:first-child { color: #5F6862; flex: 0 0 auto; }
-
-.hc-group-chevron {
-  margin-left: auto;
-  color: #8D948D;
-  transition: transform .16s ease;
-}
-
-.hc-group.is-open .hc-group-chevron { transform: rotate(90deg); }
 
 .hc-group ul {
-  margin: 2px 0 10px;
-  padding: 0 0 0 44px;
+  margin: 0;
+  padding: 0;
   list-style: none;
   display: grid;
   gap: 2px;
@@ -141,24 +186,29 @@ body:has(.hc) { background: #FFFFFF; }
 
 .hc-group a {
   display: block;
-  border-radius: 6px;
+  margin: 0 -10px;
+  border-radius: 8px;
   color: #5F6862;
-  font-size: 14px;
-  line-height: 1.45;
-  padding: 6px 8px;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 8px 10px;
   text-decoration: none;
 }
 
-.hc-group a:hover { color: #141413; background: #FAF9F5; }
+.hc-group a:hover { background: #FAF9F5; color: #141413; }
 
-.hc-group a.is-active { color: #141413; font-weight: 600; }
+.hc-group a.is-active {
+  background: #FAF9F5;
+  color: #141413;
+  font-weight: 500;
+}
 
 /* --- reading column ------------------------------------------------------ */
 
 .hc-main {
   min-width: 0;
   max-width: 860px;
-  padding: 40px 56px 120px;
+  padding: 44px 56px 120px;
 }
 
 .hc-crumbs {
@@ -166,7 +216,7 @@ body:has(.hc) { background: #FFFFFF; }
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
   color: #8D948D;
   font-size: 14px;
 }
@@ -268,30 +318,17 @@ body:has(.hc) { background: #FFFFFF; }
   margin-top: 64px;
   border-top: 1px solid #E5E3DD;
   padding-top: 20px;
-  display: grid;
-  gap: 10px;
 }
-
-.hc-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #141413;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.hc-back:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .hc-article-foot p { margin: 0; color: #8D948D; font-size: 13px; }
 
-/* --- right rail ---------------------------------------------------------- */
+/* --- section rail -------------------------------------------------------- */
 
 .hc-toc {
   position: sticky;
   top: 64px;
   align-self: start;
-  margin: 40px 28px 0 0;
+  margin: 44px 28px 0 0;
   border-left: 1px solid #E5E3DD;
   padding: 0 0 0 20px;
 }
@@ -320,72 +357,16 @@ body:has(.hc) { background: #FFFFFF; }
 
 .hc-toc a:hover { color: #141413; }
 
-/* --- home and search ----------------------------------------------------- */
+/* --- search results on the landing -------------------------------------- */
 
-.hc-cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 30px;
+.hc-results {
+  width: min(100%, 640px);
+  margin-top: 34px;
+  text-align: left;
 }
-
-.hc-card {
-  border: 1px solid #E5E3DD;
-  border-radius: 14px;
-  background: #FFFFFF;
-  padding: 22px 22px 18px;
-}
-
-.hc-card header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.hc-card header svg { color: #5F6862; }
-
-.hc-card h2 {
-  margin: 0;
-  font-family: var(--font-reading);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.3;
-}
-
-.hc-card header span {
-  margin-left: auto;
-  color: #8D948D;
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-}
-
-.hc-card > p {
-  margin: 8px 0 12px;
-  color: #5F6862;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.hc-card ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 7px;
-}
-
-.hc-card ul a {
-  color: #141413;
-  font-size: 14px;
-  line-height: 1.5;
-  text-decoration: none;
-}
-
-.hc-card ul a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .hc-results ul {
-  margin: 22px 0 0;
+  margin: 8px 0 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid #E5E3DD;
@@ -432,7 +413,7 @@ body:has(.hc) { background: #FFFFFF; }
 
 @media (max-width: 1240px) {
   .hc-shell { grid-template-columns: 280px minmax(0, 1fr); }
-  .hc-shell.is-home { grid-template-columns: minmax(0, 1fr); }
+  .hc-shell.is-two { grid-template-columns: 280px minmax(0, 1fr); }
   .hc-toc { display: none; }
   .hc-main { padding: 36px 40px 96px; }
 }
@@ -445,11 +426,12 @@ body:has(.hc) { background: #FFFFFF; }
     height: auto;
     border-right: 0;
     border-bottom: 1px solid #E5E3DD;
-    padding: 12px 16px 16px;
+    padding: 20px 16px 24px;
   }
   .hc-main { padding: 28px 20px 80px; }
   .hc-main h1 { font-size: 32px; }
-  .hc-cards { grid-template-columns: 1fr; }
+  .hc-landing h1 { font-size: 38px; }
   .hc-top { padding: 0 16px; }
   .hc-search { width: min(180px, 38vw); }
+  .hc-brand img { width: 96px; }
 }
