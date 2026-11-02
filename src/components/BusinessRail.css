@@ -621,3 +621,35 @@
 .business-rail {
   padding: 16px 12px 16px !important;
 }
+
+/* The settings rows are part of the same list: same metrics selected or not,
+   and the label above them is a label, not a switch. No divider either — the
+   rail is one column of rows. */
+.business-rail .business-workspace-navitem,
+.business-rail .business-workspace-navitem.is-active {
+  font-size: 14px !important;
+  font-weight: 450 !important;
+  color: #141413 !important;
+  min-height: 36px;
+}
+
+.business-rail .business-workspace-navgroup-settings {
+  margin-top: 6px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.business-rail .business-workspace-navgroup-title {
+  cursor: default;
+}
+
+.business-rail .business-workspace-navgroup-title:hover {
+  background: transparent;
+}
+
+/* Two children, left aligned: the label sits with the icons, not across from
+   them. */
+.business-rail .business-workspace-navgroup-title {
+  justify-content: flex-start;
+  gap: 10px;
+}
