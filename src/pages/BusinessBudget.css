@@ -29,7 +29,7 @@
 .business-budget-shell p.business-budget-intro {
   max-width: 66ch;
   margin: 12px 0 0;
-  color: #5d6e64;
+  color: #5F6862;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -42,7 +42,7 @@
   margin: 14px 0 0;
   border: 1px solid rgba(17, 17, 19, .12);
   border-radius: 999px;
-  background: #f8faf6;
+  background: #FAF9F5;
   color: #4b5f53;
   font-size: 13px;
   line-height: 1.5;
@@ -73,7 +73,7 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  color: #141a17;
+  color: #141413;
   font: 700 14px var(--font-sans);
 }
 
@@ -103,11 +103,11 @@
   transition: transform .2s ease;
 }
 
-.business-budget-switch input:checked + i { border-color: #141a17; background: #141a17; }
+.business-budget-switch input:checked + i { border-color: #141413; background: #141413; }
 
 .business-budget-switch input:checked + i::after { transform: translateX(18px); }
 
-.business-budget-switch input:focus-visible + i { outline: 2px solid #141a17; outline-offset: 2px; }
+.business-budget-switch input:focus-visible + i { outline: 2px solid #141413; outline-offset: 2px; }
 
 .business-budget-shell .business-budget-create {
   display: inline-flex;
@@ -143,7 +143,7 @@
 }
 
 .business-budget-table td {
-  color: #141a17;
+  color: #141413;
   font-size: 14px;
   padding: 16px clamp(12px, 2vw, 20px);
   border-bottom: 1px solid rgba(17, 17, 19, .08);
@@ -175,9 +175,9 @@
   text-transform: uppercase;
 }
 
-.business-budget-status.is-active { background: #e8ede5; color: #141a17; }
+.business-budget-status.is-active { background: #e8ede5; color: #141413; }
 
-.business-budget-status.is-ended { background: #eeeeec; color: #6b7a71; }
+.business-budget-status.is-ended { background: #eeeeec; color: #5F6862; }
 
 .business-budget-actions { display: inline-flex; align-items: center; gap: 10px; }
 
@@ -194,7 +194,7 @@
   text-underline-offset: 3px;
 }
 
-.business-budget-edit:hover { color: #141a17; }
+.business-budget-edit:hover { color: #141413; }
 
 .business-budget-end {
   border: 0;
@@ -232,13 +232,13 @@
   place-items: center;
   border: 1px solid rgba(17, 17, 19, .14);
   border-radius: 50%;
-  background: #f1f4f0;
+  background: #FAF9F5;
   color: #315f49;
 }
 
 .business-budget-empty strong { display: block; font-size: 14px; font-weight: 700; }
 
-.business-budget-empty small { display: block; margin-top: 6px; color: #5d6e64; font-size: 13px; font-weight: 500; }
+.business-budget-empty small { display: block; margin-top: 6px; color: #5F6862; font-size: 13px; font-weight: 500; }
 
 /* =====================================================================
    The two dialogs.
@@ -277,18 +277,18 @@
 
 .business-budget-modal h2 {
   margin: 0;
-  color: #141a17;
+  color: #141413;
   font-family: var(--font-reading);
   font-size: 22px;
   font-weight: 500;
   letter-spacing: -.015em;
 }
 
-.business-budget-modal p { margin: 14px 0 0; color: #5d6e64; font-size: 14px; line-height: 1.6; }
+.business-budget-modal p { margin: 14px 0 0; color: #5F6862; font-size: 14px; line-height: 1.6; }
 
 .business-budget-modal ul { display: grid; gap: 8px; margin: 12px 0 0; padding-left: 18px; }
 
-.business-budget-modal li { color: #141a17; font-size: 14px; line-height: 1.6; }
+.business-budget-modal li { color: #141413; font-size: 14px; line-height: 1.6; }
 
 .business-budget-modal-note {
   border-radius: 8px;
@@ -320,7 +320,7 @@
   padding: 0 18px;
 }
 
-.business-budget-modal-actions > button:not(.business-button):hover { border-color: #141a17; background: #f1f4f0; }
+.business-budget-modal-actions > button:not(.business-button):hover { border-color: #141413; background: #FAF9F5; }
 
 .business-budget-modal .business-button { min-height: 40px; font-size: 13px; }
 
@@ -349,12 +349,12 @@
   border: 1px solid rgba(17, 17, 19, .18);
   border-radius: 9px;
   background: #ffffff;
-  color: #141a17;
+  color: #141413;
   font: 600 14px var(--font-sans);
   padding: 0 12px;
 }
 
-.business-budget-field input:focus-visible { outline: 2px solid #141a17; outline-offset: 1px; }
+.business-budget-field input:focus-visible { outline: 2px solid #141413; outline-offset: 1px; }
 
 .business-budget-choices { display: grid; gap: 10px; }
 
@@ -362,11 +362,11 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #141a17;
+  color: #141413;
   font-size: 14px;
 }
 
-.business-budget-choices input[type='radio'] { accent-color: #141a17; width: 16px; height: 16px; }
+.business-budget-choices input[type='radio'] { accent-color: #141413; width: 16px; height: 16px; }
 
 .business-budget-choices input[type='date'] { flex: 1; }
 
@@ -374,7 +374,7 @@
 
 .business-budget-section {
   margin: 24px 0 0 !important;
-  color: #141a17 !important;
+  color: #141413 !important;
   font-size: 16px !important;
   font-weight: 600;
 }
@@ -399,7 +399,7 @@
 }
 
 .business-budget-members td {
-  color: #141a17;
+  color: #141413;
   font-size: 14px;
   padding: 12px;
   border-bottom: 1px solid rgba(17, 17, 19, .08);
@@ -419,7 +419,7 @@
   overflow: hidden;
 }
 
-.business-budget-bar > i { display: block; height: 100%; background: #141a17; }
+.business-budget-bar > i { display: block; height: 100%; background: #141413; }
 
 @media (max-width: 760px) {
   .business-budget-pair { grid-template-columns: minmax(0, 1fr); }

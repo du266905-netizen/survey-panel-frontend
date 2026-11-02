@@ -47,7 +47,7 @@
   padding: 8px 2px;
 }
 
-.business-account-pane > header > button:hover { color: #141a17; }
+.business-account-pane > header > button:hover { color: #141413; }
 
 /* The content column: the account page's own shell, pulled up under the bar. */
 .business-account-pane .business-account-shell,
@@ -87,26 +87,26 @@
  * the rest of the workspace, and the eyebrow that sat above every title is gone
  * (RULES §3). */
 .business-account-page .business-budget-planning-note {
-  border-color: rgba(20, 26, 23, .12);
-  background: #f6f5ef;
-  color: #5f6862;
+  border-color: #E5E3DD;
+  background: #FAF9F5;
+  color: #5F6862;
 }
 
 .business-account-page .business-account-pane > header > button {
-  color: #141a17;
+  color: #141413;
 }
 
 .business-account-page .business-billing-empty-icon,
 .business-account-page .business-budget-empty-icon {
-  border-color: rgba(20, 26, 23, .12);
-  background: #f4f4ef;
-  color: #141a17;
+  border-color: #E5E3DD;
+  background: #FAF9F5;
+  color: #141413;
 }
 
 .business-account-page .business-account-shell h1,
 .business-account-page .business-billing-shell h1,
 .business-account-page .business-budget-shell h1 {
-  color: #141a17;
+  color: #141413;
 }
 
 
@@ -114,25 +114,25 @@
  * icon circles all carried a green cast. They now share the workspace's ink and
  * paper, so moving between the rail's sections does not change the weather. */
 .business-account-page {
-  background: #faf9f5;
-  color: #141a17;
+  background: #FFFFFF;
+  color: #141413;
 }
 
 .business-account-page .business-account-details,
 .business-account-page .business-account-settings,
 .business-account-page .business-billing-card {
-  border-color: rgba(20, 26, 23, .12);
+  border-color: #E5E3DD;
   background: #fff;
 }
 
 .business-account-page .business-account-details dl div {
-  border-color: rgba(20, 26, 23, .10);
-  background: #f4f2ec;
+  border-color: #E5E3DD;
+  background: #FAF9F5;
 }
 
 .business-account-page .business-account-person > span {
-  background: #f4f4ef;
-  color: #141a17;
+  background: #FAF9F5;
+  color: #141413;
 }
 
 .business-account-page .business-account-details dt,
@@ -141,19 +141,19 @@
 .business-account-page .business-account-settings > span,
 .business-account-page .business-account-details dd,
 .business-account-page .business-account-settings label {
-  color: #5f6862;
+  color: #5F6862;
 }
 
 .business-account-page .business-account-details dd,
 .business-account-page .business-account-person strong,
 .business-account-page .business-account-settings h2 {
-  color: #141a17;
+  color: #141413;
 }
 
-.business-account-page > header button { color: #141a17; }
+.business-account-page > header button { color: #141413; }
 
 .business-account-page .business-billing-empty-icon,
 .business-account-page .business-budget-row-icon {
-  background: #f4f4ef;
-  color: #141a17;
+  background: #FAF9F5;
+  color: #141413;
 }

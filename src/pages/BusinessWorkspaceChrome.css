@@ -1,17 +1,17 @@
 /* The rail is page white; only the selected item carries the lime accent. */
 #root .business-workspace .business-workspace-rail {
   background: #FFFFFF !important;
-  border-right-color: rgba(20, 26, 23, .10) !important;
+  border-right-color: #E5E3DD !important;
 }
 
 .business-workspace-rail .business-workspace-navitem:hover {
-  border-color: rgba(20, 26, 23, .10) !important;
+  border-color: #E5E3DD !important;
   background: #FFFFFF !important;
 }
 
 .business-workspace-rail .business-workspace-navitem.is-active {
   border-color: transparent !important;
-  background: rgba(20, 26, 23, .07) !important;
+  background: #FAF9F5 !important;
   color: #141413 !important;
 }
 
@@ -23,7 +23,7 @@
    need a readable white pill rather than a transparent row with a dark border. */
 .business-rail.business-workspace-rail .business-workspace-navitem.is-active {
   border-color: transparent !important;
-  background: rgba(20, 26, 23, .07) !important;
+  background: #FAF9F5 !important;
   color: #141413 !important;
 }
 

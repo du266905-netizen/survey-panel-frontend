@@ -10,7 +10,7 @@
  */
 
 /* The section keeps the account page's look: eyebrow, display title, then a
-   #fffefa card with a hairline. Only the tab pair and the empty rows are new. */
+   #ffffff card with a hairline. Only the tab pair and the empty rows are new. */
 .business-billing-shell { width: 100%; }
 
 /* The base sheet's eyebrow is 10px; Part 18 and the account page both use 11. */
@@ -36,7 +36,7 @@
 p.business-billing-intro {
   max-width: 62ch;
   margin: 10px 0 0;
-  color: #5d6e64;
+  color: #5F6862;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -44,7 +44,7 @@ p.business-billing-intro {
 .business-billing-tabs {
   display: flex;
   gap: clamp(18px, 3vw, 40px);
-  border-bottom: 1px solid rgba(36, 56, 46, .13);
+  border-bottom: 1px solid rgba(20, 26, 23, .13);
   padding: 0 clamp(20px, 3vw, 34px);
 }
 
@@ -52,15 +52,15 @@ p.business-billing-intro {
   position: relative;
   border: 0;
   background: transparent;
-  color: #6b7a71;
+  color: #5F6862;
   cursor: pointer;
   font: 700 13px var(--font-sans);
   padding: 20px 2px 16px;
 }
 
-.business-billing-tabs > button:hover { color: #141a17; }
+.business-billing-tabs > button:hover { color: #141413; }
 
-.business-billing-tabs > button.is-active { color: #141a17; font-weight: 800; }
+.business-billing-tabs > button.is-active { color: #141413; font-weight: 800; }
 
 /* The active marker is ink, not the reference's blue: the research workspace
    speaks in ink, sage and lime. */
@@ -70,7 +70,7 @@ p.business-billing-intro {
   bottom: -1px;
   left: 0;
   height: 2px;
-  background: #141a17;
+  background: #141413;
   content: '';
 }
 
@@ -90,15 +90,15 @@ p.business-billing-intro {
   width: 38px;
   height: 38px;
   place-items: center;
-  border: 1px solid rgba(36, 56, 46, .14);
+  border: 1px solid #E5E3DD;
   border-radius: 50%;
-  background: #f1f4f0;
+  background: #FAF9F5;
   color: #315f49;
 }
 
 .business-billing-empty p {
   margin: 2px 0 0;
-  color: #141a17;
+  color: #141413;
   font-size: 14px;
   font-weight: 700;
 }
@@ -107,7 +107,7 @@ p.business-billing-intro {
   display: block;
   max-width: 66ch;
   margin-top: 6px;
-  color: #5d6e64;
+  color: #5F6862;
   font-size: 13px;
   line-height: 1.6;
 }
@@ -123,7 +123,7 @@ p.business-billing-intro {
 
 .business-billing-month > strong {
   min-width: 11ch;
-  color: #141a17;
+  color: #141413;
   font-size: 13px;
   font-weight: 800;
   letter-spacing: .01em;
@@ -134,11 +134,11 @@ p.business-billing-intro {
   width: 30px;
   height: 30px;
   place-items: center;
-  border: 1px solid rgba(36, 56, 46, .18);
+  border: 1px solid rgba(20, 26, 23, .18);
   border-radius: 8px;
   background: #fff;
   color: #285647;
   cursor: pointer;
 }
 
-.business-billing-month > button:hover { border-color: #141a17; background: #f1f4f0; }
+.business-billing-month > button:hover { border-color: #141413; background: #FAF9F5; }
