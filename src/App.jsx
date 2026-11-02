@@ -74,6 +74,7 @@ import BusinessBilling from './pages/BusinessBilling';
 import BusinessBankTransfer from './pages/BusinessBankTransfer';
 import BusinessAddFunds from './pages/BusinessAddFunds';
 import PublicPaymentLink from './pages/PublicPaymentLink';
+import HelpCenter from './pages/HelpCenter';
 import BusinessBudget from './pages/BusinessBudget';
 import BusinessQuestionnaireBuilder from './pages/BusinessQuestionnaireBuilder';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
@@ -221,6 +222,8 @@ export default function App() {
         <Route path="/business/add-funds/bank-transfer" element={<BusinessRoute><BusinessBankTransfer /></BusinessRoute>} />
         {/* Public: the payer may not have an account here at all. */}
         <Route path="/pay/:token" element={<PublicPaymentLink />} />
+        <Route path="/help" element={<HelpCenter />} />
+        <Route path="/help/:slug" element={<HelpCenter />} />
         <Route path="/business/budget" element={<BusinessRoute><BusinessBudget /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireBuilder /></BusinessRoute>} />
         <Route path="/business/s/:publicId" element={<PublicBusinessQuestionnaire />} />
