@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   LogOut,
   Receipt,
+  Settings,
   Wallet,
   Sparkles,
   Sprout,
@@ -95,8 +96,9 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
             like the rest of the rail's groups once were. */}
         <div className="business-workspace-navgroup business-workspace-navgroup-settings">
           <button className="business-workspace-navgroup-title" type="button" aria-expanded={settingsOpen} onClick={() => setSettingsOpen((value) => !value)}>
+            <Settings size={17} aria-hidden="true" />
             <span>{rail.settings || 'Settings'}</span>
-            <ChevronDown size={14} style={{ transform: settingsOpen ? 'none' : 'rotate(-90deg)' }} />
+            <ChevronDown size={14} style={{ transform: settingsOpen ? 'none' : 'rotate(-90deg)', marginLeft: 'auto' }} />
           </button>
           {settingsOpen && [
             { id: 'personal', label: rail.account || 'Account', icon: UserRound, path: '/business/account' },

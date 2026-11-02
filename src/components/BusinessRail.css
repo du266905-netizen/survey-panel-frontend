@@ -52,6 +52,25 @@
   border-top: 1px solid rgba(20, 26, 23, .1);
 }
 
+/* Settings reads like the reference: a gear on the label, then indented rows
+   under it, the current one carrying a pill. */
+.business-workspace-navgroup-settings .business-workspace-navgroup-title {
+  gap: 10px;
+  color: #141a17;
+  font-weight: 450;
+}
+
+.business-workspace-navgroup-settings .business-workspace-navitem {
+  margin-left: 24px;
+  padding-left: 10px;
+  border-radius: 9px;
+}
+
+.business-workspace-navgroup-settings .business-workspace-navitem.is-active {
+  background: #f2f2ec;
+  border-color: transparent;
+}
+
 .business-workspace-navgroup-title {
   display: flex;
   width: 100%;
