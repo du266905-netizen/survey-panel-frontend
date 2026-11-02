@@ -30,13 +30,11 @@ const QUICK_AMOUNTS = [100, 250, 500, 1000];
 
 const pageCopy = {
   'zh-CN': {
-    cryptoNote: '接下来会跳到 Cryptomus 完成付款，这里的金额会带过去。',
     cryptoContinue: '前往 Cryptomus',
     opening: '正在打开…',
   },
 };
 const pageCopyEn = {
-  cryptoNote: 'You will finish this payment on Cryptomus. The amount goes with you.',
   cryptoContinue: 'Continue to Cryptomus',
   opening: 'Opening…',
 };
@@ -238,7 +236,6 @@ export default function BusinessAddFunds() {
                   <div className="business-add-funds-panel-wrap">
                     <BusinessBillingProfile billing={billing} embedded />
                     <div className="business-add-funds-panel">
-                      <p>{copy.cryptoNote}</p>
                       <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting)}>
                         {submitting === 'crypto' ? copy.opening : copy.cryptoContinue}
                       </button>

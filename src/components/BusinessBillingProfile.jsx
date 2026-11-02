@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Check } from 'lucide-react';
 import { getBillingProfile, saveBillingProfile } from '../api/realApi';
 import { countryOptionsFor } from '../constants/panelProfileOptions';
@@ -77,21 +77,55 @@ const EMPTY = {
 
 export function useBillingProfile() {
   const [profile, setProfile] = useState(EMPTY);
+  const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [errorKey, setErrorKey] = useState('');
+  /* What the server already has, so coming back to the page does not re-save
+     the same values, and typing does not save on every keystroke. */
+  const storedRef = useRef(JSON.stringify(EMPTY));
 
   useEffect(() => {
     let cancelled = false;
     getBillingProfile()
       .then((payload) => {
         if (cancelled || !payload) return;
-        const next = payload.profile || payload;
-        setProfile({ ...EMPTY, ...next });
+        const next = { ...EMPTY, ...(payload.profile || payload) };
+        storedRef.current = JSON.stringify(next);
+        setProfile(next);
       })
-      .catch(() => { /* endpoint not deployed yet: start empty */ });
+      .catch(() => { /* endpoint not deployed yet: start empty */ })
+      .finally(() => { if (!cancelled) setLoaded(true); });
     return () => { cancelled = true; };
   }, []);
+
+  /* There is no save button: the profile belongs to the account, so it is
+     written as soon as it is complete and has changed. The card route cannot
+     hook into PayPal's own button, and this way it does not need to. */
+  useEffect(() => {
+    if (!loaded) return undefined;
+    if (!profile.companyName.trim() || !profile.country) return undefined;
+    const serialized = JSON.stringify(profile);
+    if (serialized === storedRef.current) return undefined;
+
+    const timer = window.setTimeout(() => {
+      setSaving(true);
+      saveBillingProfile(profile)
+        .then(() => {
+          storedRef.current = serialized;
+          setSaved(true);
+          setErrorKey('');
+        })
+        .catch((error) => {
+          /* A missing endpoint is not a customer-facing failure. */
+          if (error?.response?.status === 404) return;
+          setErrorKey('failed');
+        })
+        .finally(() => setSaving(false));
+    }, 900);
+
+    return () => window.clearTimeout(timer);
+  }, [profile, loaded]);
 
   const update = (key) => (event) => {
     const { value } = event.target;
@@ -99,46 +133,24 @@ export function useBillingProfile() {
     setSaved(false);
   };
 
-  const submit = async (event) => {
-    event.preventDefault();
-    if (!profile.companyName.trim() || !profile.country) {
-      setErrorKey('required');
-      return;
-    }
-    setErrorKey('');
-    setSaving(true);
-    try {
-      await saveBillingProfile(profile);
-      setSaved(true);
-    } catch {
-      setErrorKey('failed');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  return { profile, update, submit, saving, saved, errorKey };
+  return { profile, update, saving, saved, errorKey };
 }
 
 export default function BusinessBillingProfile({ billing, embedded = false }) {
   const { language } = useLanguage();
   const copy = copyByLanguage[language] || en;
   const countries = useMemo(() => countryOptionsFor(language), [language]);
-  const { profile, update, submit, saving, saved, errorKey } = billing;
+  const { profile, update, saving, saved, errorKey } = billing;
 
   return (
-    <form className={`billing-profile${embedded ? ' is-embedded' : ''}`} onSubmit={submit} noValidate>
+    <div className={`billing-profile${embedded ? ' is-embedded' : ''}`}>
       <div className="billing-profile-head">
         <div className="billing-profile-head-text">
           <h2>{copy.title}</h2>
         </div>
-        {saved ? (
+        {saved && !saving ? (
           <span className="billing-profile-saved"><Check size={14} aria-hidden="true" /> {copy.saved}</span>
-        ) : (
-          <button className="billing-profile-save" type="submit" disabled={saving}>
-            {saving ? copy.saving : copy.save}
-          </button>
-        )}
+        ) : null}
       </div>
 
       <label className="billing-profile-field">
@@ -194,6 +206,6 @@ export default function BusinessBillingProfile({ billing, embedded = false }) {
       </label>
 
       {errorKey ? <p className="billing-profile-error" role="alert">{copy[errorKey]}</p> : null}
-    </form>
+    </div>
   );
 }
