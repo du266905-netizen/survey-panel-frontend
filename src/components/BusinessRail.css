@@ -535,3 +535,89 @@
   background: #f4f4ef;
   border-radius: 9px;
 }
+
+/* The measured rules that keep winning are the 11px eyebrow set in the base
+   sheets; these have to outrank them. */
+.business-rail .business-workspace-navgroup-title {
+  min-height: 34px;
+  padding: 0 10px;
+  color: #141a17 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.business-rail .business-workspace-navitem {
+  min-height: 34px;
+  font-size: 13px;
+}
+
+/* Settings rows are indented, so their width has to shrink with the indent —
+   otherwise the highlight runs past the rail's own border. */
+.business-rail .business-workspace-navgroup-settings .business-workspace-navitem {
+  width: calc(100% - 24px);
+  margin-left: 24px;
+  padding-left: 8px;
+}
+
+.business-workspace-navgroups {
+  gap: 0;
+}
+
+.business-workspace-navgroup {
+  gap: 1px;
+}
+
+.business-workspace-navgroup-settings {
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+/* Last word on the settings row colour: the base sheets pin it to the eyebrow
+   grey (111,106,95) with !important. */
+.business-workspace-rail.business-rail .business-workspace-navgroup-title,
+.business-workspace-rail.business-rail .business-workspace-navgroup-title > span {
+  color: #141a17 !important;
+}
+
+/* Closer to the reference: rows carry the weight of a list, the current one is a
+   filled pill that spans the rail's content width, and the settings children
+   step in by one icon, not by half a column. */
+.business-rail .business-workspace-navitem,
+.business-rail .business-workspace-navgroup-title {
+  min-height: 36px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 14px !important;
+  font-weight: 450 !important;
+}
+
+.business-rail .business-workspace-navitem:hover,
+.business-rail .business-workspace-navgroup-title:hover {
+  background: #f4f4ef;
+}
+
+.business-rail .business-workspace-navitem.is-active {
+  border: 0;
+  background: #f2f2ec;
+}
+
+.business-rail .business-workspace-navgroup-settings .business-workspace-navitem {
+  width: calc(100% - 18px);
+  margin-left: 18px;
+  padding-left: 7px;
+}
+
+.business-rail .business-workspace-navgroups {
+  gap: 2px;
+}
+
+.business-rail .business-workspace-navgroup {
+  gap: 2px;
+}
+
+.business-rail {
+  padding: 16px 12px 16px !important;
+}

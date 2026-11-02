@@ -10,20 +10,20 @@
 }
 
 .business-workspace-rail .business-workspace-navitem.is-active {
-  border-color: #141413 !important;
-  background: #141413 !important;
-  color: #FFFFFF !important;
+  border-color: transparent !important;
+  background: rgba(20, 26, 23, .07) !important;
+  color: #141413 !important;
 }
 
 .business-workspace-rail .business-workspace-navitem.is-active > svg {
-  color: #FFFFFF !important;
+  color: #141413 !important;
 }
 
 /* The late theme deliberately stripped the active fill; on the gray rail we
    need a readable white pill rather than a transparent row with a dark border. */
 .business-rail.business-workspace-rail .business-workspace-navitem.is-active {
-  border-color: rgba(20, 26, 23, .16) !important;
-  background: #FFFFFF !important;
+  border-color: transparent !important;
+  background: rgba(20, 26, 23, .07) !important;
   color: #141413 !important;
 }
 
