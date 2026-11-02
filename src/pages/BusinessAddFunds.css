@@ -102,6 +102,12 @@
   background: #fff;
 }
 
+.business-add-funds-gate {
+  margin: -6px 0 14px;
+  color: #8d948d;
+  font-size: 12px;
+}
+
 .business-add-funds-block-title {
   margin: 0 0 14px;
   color: #5f6862;
@@ -289,6 +295,45 @@
 /* The one hand-off button: it is what takes the customer to the provider. */
 .business-add-funds-panel {
   margin-top: 12px;
+}
+
+.business-add-funds-linkfield {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.business-add-funds-linkfield > input,
+.business-add-funds-linkfield > select {
+  display: block;
+  width: 100%;
+  height: 46px;
+  margin-top: 6px;
+  padding: 0 14px;
+  border: 1px solid rgba(20, 26, 23, .18);
+  border-radius: 11px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+}
+
+.business-add-funds-linkurl {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(20, 26, 23, .14);
+  border-radius: 9px;
+  background: #fff;
+  color: #5f6862;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.business-add-funds-linkhint {
+  margin: 10px 0 0;
+  color: #8d948d;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .business-add-funds-continue {

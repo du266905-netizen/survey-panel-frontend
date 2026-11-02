@@ -32,7 +32,7 @@ const copyByLanguage = {
     saving: '正在保存…',
     saved: '已保存',
     required: '请填完公司名称、国家、地址和邮箱。',
-    failed: '暂时无法保存，稍后再试。你的付款不受影响。',
+    failed: '暂时无法保存，请稍后再试。',
   },
 };
 
@@ -51,7 +51,7 @@ const en = {
   saving: 'Saving…',
   saved: 'Saved',
   required: 'Fill in company, country, address and email.',
-  failed: 'Could not save just now. Payments are not affected.',
+  failed: 'Could not save just now. Try again in a moment.',
 };
 
 /* Tax identifiers are country-shaped: an SG company gives a GST number, an EU

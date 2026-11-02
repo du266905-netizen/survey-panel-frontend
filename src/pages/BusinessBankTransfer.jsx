@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { BANK_TRANSFER_ACCOUNT } from '../constants/bankTransferAccount';
+import { createBankTransferClaim, getBankTransferAccount } from '../api/realApi';
 import './BusinessBankTransfer.css';
 
 /* Bank transfer is the manual channel: the customer sends the money through
@@ -42,11 +43,14 @@ const copyByLanguage = {
     note: '附言',
     notePlaceholder: '你在转账时写的那句话',
     submit: '我已转账',
+    submittedShort: '已提交',
     errAmount: '请填写转账金额。',
     errPayer: '请填写付款账户名称。',
     errDate: '请选择转账日期。',
     foot: '与银行流水核对上之前不会入账，余额按实际到账金额增加——银行手续费与换汇成本会在到账前扣除。若 2 个工作日内仍未匹配，我们会发邮件联系你。',
-    preview: '预览版：提交还没接线，点了不会真的发出。',
+    needBilling: '请先在充值页填好账单信息（公司名称、国家、地址、邮箱），再提交转账申报。',
+    submitFailed: '提交失败，请稍后再试。',
+    submitted: '已收到你的申报。核对到账后会入账，余额不会在这里变化。',
   },
 };
 
@@ -77,11 +81,14 @@ const en = {
   note: 'Reference',
   notePlaceholder: 'What you wrote in the transfer note',
   submit: "I've sent the transfer",
+  submittedShort: 'Filed',
   errAmount: 'Enter the amount you sent.',
   errPayer: 'Enter the name on the sending account.',
   errDate: 'Choose the transfer date.',
   foot: 'Nothing is credited until we match the payment to a bank statement, so the balance goes up by the amount that actually arrives — bank and conversion fees are taken before it reaches us. If we cannot find it within 2 business days, we will email you.',
-  preview: 'Preview: nothing is sent yet — this form has no endpoint behind it.',
+  needBilling: 'Add your billing details first (company, country, address, email), then file the claim.',
+  submitFailed: 'Could not file the claim. Try again in a moment.',
+  submitted: 'Claim received. The balance moves once the transfer is matched.',
 };
 
 /* The clipboard wants the raw value, not what the eye reads. */
@@ -98,7 +105,11 @@ export default function BusinessBankTransfer() {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const copy = copyByLanguage[language] || en;
-  const account = BANK_TRANSFER_ACCOUNT;
+  /* The account comes from the server. The constant stays only as the
+   * first-paint value until the endpoint is deployed; once it is, the constant
+   * is deleted and this becomes a plain fetch. */
+  const [account, setAccount] = useState(BANK_TRANSFER_ACCOUNT);
+  const claimKeyRef = useRef('');
 
   const [amount, setAmount] = useState(() => new URLSearchParams(window.location.search).get('amount') || '');
   const [payer, setPayer] = useState('');
@@ -107,7 +118,19 @@ export default function BusinessBankTransfer() {
   const [note, setNote] = useState('');
   const [copiedKey, setCopiedKey] = useState('');
   const [error, setError] = useState('');
-  const [previewing, setPreviewing] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    getBankTransferAccount()
+      .then((payload) => {
+        if (cancelled || !payload) return;
+        setAccount((current) => ({ ...current, ...payload }));
+      })
+      .catch(() => { /* not deployed yet: keep the first-paint values */ });
+    return () => { cancelled = true; };
+  }, []);
 
   const rows = useMemo(() => ([
     { key: 'accountName', label: copy.accountName, value: account.accountName, copyValue: account.accountName },
@@ -124,13 +147,36 @@ export default function BusinessBankTransfer() {
     window.setTimeout(() => setCopiedKey((current) => (current === key ? '' : current)), 1600);
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     if (!amount.trim() || Number(String(amount).replace(/,/g, '')) <= 0) { setError(copy.errAmount); return; }
     if (!payer.trim()) { setError(copy.errPayer); return; }
     if (!date) { setError(copy.errDate); return; }
     setError('');
-    setPreviewing(true);
+
+    /* One key per claim: a double click or a retry after a timeout must land on
+       the same record, not two. A new key is only minted once it is accepted. */
+    if (!claimKeyRef.current) {
+      claimKeyRef.current = `bank:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`;
+    }
+
+    setBusy(true);
+    try {
+      await createBankTransferClaim({
+        amountUsd: String(amount).replace(/,/g, ''),
+        payerName: payer.trim(),
+        transferDate: date,
+        last4: last4 || undefined,
+        note: note || undefined,
+      }, claimKeyRef.current);
+      claimKeyRef.current = '';
+      setSubmitted(true);
+    } catch (error) {
+      const code = error?.response?.data?.code;
+      setError(code === 'BILLING_PROFILE_REQUIRED' ? copy.needBilling : copy.submitFailed);
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -226,9 +272,11 @@ export default function BusinessBankTransfer() {
           </label>
 
           {error ? <p className="bank-transfer-error" role="alert">{error}</p> : null}
-          {previewing ? <p className="bank-transfer-preview" role="status">{copy.preview}</p> : null}
+          {submitted ? <p className="bank-transfer-preview" role="status">{copy.submitted}</p> : null}
 
-          <button className="bank-transfer-submit" type="submit">{copy.submit}</button>
+          <button className="bank-transfer-submit" type="submit" disabled={busy || submitted}>
+            {submitted ? copy.submittedShort : copy.submit}
+          </button>
 
           <p className="bank-transfer-foot">{copy.foot}</p>
         </form>

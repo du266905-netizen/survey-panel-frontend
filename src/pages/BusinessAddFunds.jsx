@@ -6,7 +6,7 @@ import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
 import BusinessBillingProfile, { useBillingProfile } from '../components/BusinessBillingProfile';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-import { createCryptoRecharge, getBusinessAccountBalance } from '../api/realApi';
+import { createCryptoRecharge, createPaymentLink, getBusinessAccountBalance } from '../api/realApi';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
 import { PAYPAL_COPY } from '../constants/paypalCheckoutCopy';
 import './BusinessAddFunds.css';
@@ -31,11 +31,31 @@ const QUICK_AMOUNTS = [100, 250, 500, 1000];
 const pageCopy = {
   'zh-CN': {
     cryptoContinue: '继续',
+    gate: '先填完账单信息，再选付款方式。',
+    linkPurpose: '用途',
+    linkPurposeHint: '付给人看的一句话，例如：研究额度充值',
+    linkExpiry: '有效期（天）',
+    linkCreate: '生成链接',
+    linkCreating: '正在生成…',
+    linkCopy: '复制链接',
+    linkHint: '任何拿到链接的人都能打开这一页；金额与用途生成后不可修改。',
+    linkFailed: '生成失败，请稍后再试。',
+    needBilling: '请先填完账单信息。',
     opening: '正在打开…',
   },
 };
 const pageCopyEn = {
   cryptoContinue: 'Continue',
+  gate: 'Fill in the billing details first, then pick how to pay.',
+  linkPurpose: 'What it is for',
+  linkPurposeHint: 'One line the payer will read, e.g. research credits',
+  linkExpiry: 'Valid for (days)',
+  linkCreate: 'Create link',
+  linkCreating: 'Creating…',
+  linkCopy: 'Copy link',
+  linkHint: 'Anyone with the link can open this page. Amount and purpose are fixed once created.',
+  linkFailed: 'Could not create the link. Try again in a moment.',
+  needBilling: 'Add the billing details first.',
   opening: 'Opening…',
 };
 
@@ -77,6 +97,11 @@ export default function BusinessAddFunds() {
   const [submitting, setSubmitting] = useState('');
   const [openMethod, setOpenMethod] = useState('');
   const billing = useBillingProfile();
+  const [linkPurpose, setLinkPurpose] = useState('');
+  const [linkDays, setLinkDays] = useState('30');
+  const [linkResult, setLinkResult] = useState('');
+  const [linkBusy, setLinkBusy] = useState(false);
+  const [linkError, setLinkError] = useState('');
   const [error, setError] = useState('');
   const [balance, setBalance] = useState(null);
 
@@ -90,6 +115,10 @@ export default function BusinessAddFunds() {
       .catch(() => { /* not signed in, or the endpoint is not deployed: show a dash */ });
     return () => { cancelled = true; };
   }, []);
+
+  /* The server refuses a top-up without a billing profile (409), so the page
+     says so before the customer picks a route instead of after. */
+  const billingReady = Boolean(billing.profile.companyName.trim() && billing.profile.country);
 
   const numeric = Number(String(amount).replace(/[^0-9.]/g, ''));
   const valid = Number.isFinite(numeric) && numeric >= MIN_TOP_UP;
@@ -177,6 +206,7 @@ export default function BusinessAddFunds() {
 
           <section className="business-add-funds-block">
             <h2 className="business-add-funds-block-title">{ui.howToPay || 'How would you like to pay'}</h2>
+            {!billingReady ? <p className="business-add-funds-gate">{copy.gate}</p> : null}
 
             <div className="business-add-funds-options">
               {/* The hosted card fields belong to this row, not to the end of the
@@ -186,7 +216,7 @@ export default function BusinessAddFunds() {
                   type="button"
                   className="business-add-funds-option"
                   onClick={() => setOpenMethod((current) => (current === 'card' ? '' : 'card'))}
-                  disabled={!valid || Boolean(submitting)}
+                  disabled={!valid || !billingReady || Boolean(submitting)}
                   aria-expanded={openMethod === 'card'}
                 >
                   <span className="business-add-funds-option-mark" aria-hidden="true"><CreditCard size={19} /></span>
@@ -218,7 +248,7 @@ export default function BusinessAddFunds() {
                   type="button"
                   className="business-add-funds-option"
                   onClick={() => setOpenMethod((current) => (current === 'crypto' ? '' : 'crypto'))}
-                  disabled={!valid || Boolean(submitting)}
+                  disabled={!valid || !billingReady || Boolean(submitting)}
                   aria-expanded={openMethod === 'crypto'}
                 >
                   <span className="business-add-funds-option-mark is-cryptomus" aria-hidden="true">
@@ -245,7 +275,7 @@ export default function BusinessAddFunds() {
 
               </div>
 
-              <button type="button" className="business-add-funds-option" onClick={goBankTransfer} disabled={!valid}>
+              <button type="button" className="business-add-funds-option" onClick={goBankTransfer} disabled={!valid || !billingReady}>
                 <span className="business-add-funds-option-mark" aria-hidden="true"><Landmark size={19} /></span>
                 <span className="business-add-funds-option-copy">
                   <strong>{ws.funds.bankTransfer || 'Bank transfer'}</strong>
@@ -256,13 +286,87 @@ export default function BusinessAddFunds() {
               {/* Payment links are issued by a human, outside this page; the row
                   is here so the range of ways to pay reads as complete. It has
                   no action until the link mechanism exists. */}
-              <button type="button" className="business-add-funds-option" disabled>
-                <span className="business-add-funds-option-mark" aria-hidden="true"><Link2 size={19} /></span>
-                <span className="business-add-funds-option-copy">
-                  <strong>{ui.paymentLink || 'Payment link'}</strong>
-                </span>
-                <span className="business-add-funds-option-go" aria-hidden="true" />
-              </button>
+              <div className={`business-add-funds-group${openMethod === 'link' ? ' is-open' : ''}`}>
+                <button
+                  type="button"
+                  className="business-add-funds-option"
+                  onClick={() => setOpenMethod((current) => (current === 'link' ? '' : 'link'))}
+                  disabled={!valid || !billingReady}
+                  aria-expanded={openMethod === 'link'}
+                >
+                  <span className="business-add-funds-option-mark" aria-hidden="true"><Link2 size={19} /></span>
+                  <span className="business-add-funds-option-copy">
+                    <strong>{ui.paymentLink || 'Payment link'}</strong>
+                  </span>
+                  <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
+                </button>
+
+                {openMethod === 'link' ? (
+                  <div className="business-add-funds-panel-wrap">
+                    <div className="business-add-funds-panel">
+                      {linkResult ? (
+                        <>
+                          <p className="business-add-funds-linkurl">{linkResult}</p>
+                          <button
+                            className="business-add-funds-continue"
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(linkResult)}
+                          >
+                            {copy.linkCopy}
+                          </button>
+                          <p className="business-add-funds-linkhint">{copy.linkHint}</p>
+                        </>
+                      ) : (
+                        <>
+                          <label className="business-add-funds-linkfield">
+                            {copy.linkPurpose}
+                            <input
+                              value={linkPurpose}
+                              onChange={(event) => setLinkPurpose(event.target.value)}
+                              placeholder={copy.linkPurposeHint}
+                              maxLength={120}
+                            />
+                          </label>
+                          <label className="business-add-funds-linkfield">
+                            {copy.linkExpiry}
+                            <select value={linkDays} onChange={(event) => setLinkDays(event.target.value)}>
+                              <option value="7">7</option>
+                              <option value="14">14</option>
+                              <option value="30">30</option>
+                            </select>
+                          </label>
+                          <button
+                            className="business-add-funds-continue"
+                            type="button"
+                            disabled={linkBusy}
+                            onClick={async () => {
+                              setLinkError('');
+                              setLinkBusy(true);
+                              try {
+                                const expiresAt = new Date(Date.now() + Number(linkDays) * 86400000).toISOString();
+                                const payload = await createPaymentLink({
+                                  amountCents: Math.round(numeric * 100),
+                                  currency: 'USD',
+                                  purpose: linkPurpose.trim(),
+                                  expiresAt,
+                                }, `link:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`);
+                                setLinkResult(payload?.url || '');
+                              } catch (error) {
+                                setLinkError(error?.response?.data?.code === 'BILLING_PROFILE_REQUIRED' ? copy.needBilling : copy.linkFailed);
+                              } finally {
+                                setLinkBusy(false);
+                              }
+                            }}
+                          >
+                            {linkBusy ? copy.linkCreating : copy.linkCreate}
+                          </button>
+                          {linkError ? <p className="business-add-funds-error">{linkError}</p> : null}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
             </div>
 
 

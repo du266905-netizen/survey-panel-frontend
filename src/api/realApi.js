@@ -887,6 +887,53 @@ export const getPaypalRecharge = async (orderId) => {
 /* Billing profile: the name, country and tax details that go on an invoice.
  * It belongs to the account, not to a payment method (INTEGRATION-TASKS §8),
  * so it is read and written outside any checkout. */
+/* --- Bank transfer: the manual channel ------------------------------------
+ * The account details come from the server so a moved account does not need a
+ * redeploy; the claim is the customer saying "I sent it", and only finance can
+ * turn that into a balance. */
+
+export const getBankTransferAccount = async () => {
+  const response = await apiClient.get('/api/business/account/bank-transfer/account');
+  return response.data;
+};
+
+export const createBankTransferClaim = async ({ amountUsd, payerName, transferDate, last4, note }, idempotencyKey) => {
+  const response = await apiClient.post(
+    '/api/business/account/bank-transfer/claims',
+    { amountUsd, payerName, transferDate, last4, note },
+    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
+  );
+  return response.data;
+};
+
+export const listBankTransferClaims = async (limit = 20) => {
+  const response = await apiClient.get('/api/business/account/bank-transfer/claims', { params: { limit } });
+  return response.data;
+};
+
+/* --- Payment links ---------------------------------------------------------
+ * A link is an immutable snapshot plus an unguessable token. The public read
+ * carries no auth and no customer identity. */
+
+export const createPaymentLink = async ({ amountCents, currency, purpose, expiresAt }, idempotencyKey) => {
+  const response = await apiClient.post(
+    '/api/business/payment-links',
+    { amountCents, currency, purpose, expiresAt },
+    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
+  );
+  return response.data;
+};
+
+export const getPublicPaymentLink = async (token) => {
+  const response = await apiClient.get(`/api/payment-links/${encodeURIComponent(token)}`);
+  return response.data;
+};
+
+export const revokePaymentLink = async (id) => {
+  const response = await apiClient.post(`/api/business/payment-links/${encodeURIComponent(id)}/revoke`, {});
+  return response.data;
+};
+
 export const getBillingProfile = async () => {
   const response = await apiClient.get('/api/business/account/billing-profile');
   return response.data;

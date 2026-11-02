@@ -1,0 +1,118 @@
+/* The payment-link page a payer opens.
+ *
+ * It sits outside the app shell: no rail, no navigation, one column of facts
+ * and one sentence about what to do next. Sizes stay on the Part 18 scale
+ * (56 the amount, 22 the purpose, 14 prose, 13 meta, 11 the label).
+ */
+
+.pay-link-page {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  min-height: 100vh;
+  padding: 96px 24px 64px;
+  background: #fff;
+  color: #141a17;
+  font-family: var(--font-sans, Inter, sans-serif);
+  text-align: center;
+}
+
+.pay-link-page > * {
+  width: 100%;
+  max-width: 520px;
+}
+
+.pay-link-eyebrow {
+  margin: 0 0 10px;
+  color: #8d948d;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.pay-link-amount {
+  margin: 0;
+  font-family: 'Newsreader', 'Songti SC', 'STSong', 'SimSun', serif;
+  font-size: 56px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  line-height: 1.02;
+  font-variant-numeric: tabular-nums;
+}
+
+.pay-link-purpose {
+  display: grid;
+  gap: 4px;
+  margin-top: 22px;
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: -.01em;
+}
+
+.pay-link-purpose > span {
+  color: #8d948d;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.pay-link-expiry {
+  margin-top: 14px;
+  color: #5f6862;
+  font-size: 13px;
+}
+
+.pay-link-status {
+  justify-self: center;
+  width: auto;
+  margin-top: 26px;
+  padding: 5px 11px;
+  border: 1px solid rgba(20, 26, 23, .16);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.pay-link-status.is-paid {
+  border-color: #315a45;
+  color: #315a45;
+}
+
+.pay-link-note {
+  margin-top: 16px;
+  color: #5f6862;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pay-link-muted {
+  margin-top: 0;
+  color: #8d948d;
+  font-size: 14px;
+}
+
+.pay-link-title {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.pay-link-foot {
+  margin-top: 56px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(20, 26, 23, .1);
+  color: #8d948d;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .pay-link-page {
+    padding-top: 56px;
+  }
+
+  .pay-link-amount {
+    font-size: 38px;
+  }
+}
