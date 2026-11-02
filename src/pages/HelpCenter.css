@@ -71,7 +71,7 @@ body:has(.help-page) { background: #FFFFFF; }
   outline: 0;
   background: transparent;
   color: #141413;
-  font: 400 15px var(--font-sans);
+  font: 400 16px var(--font-sans);
 }
 
 .help-search input::placeholder { color: #8D948D; }
@@ -161,7 +161,7 @@ body:has(.help-page) { background: #FFFFFF; }
 
 .help-results li strong {
   font-family: var(--font-reading);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -.01em;
 }
@@ -308,7 +308,7 @@ body:has(.help-page) { background: #FFFFFF; }
 
 .help-related a {
   color: #141413;
-  font-size: 15px;
+  font-size: 14px;
   text-decoration: none;
 }
 
