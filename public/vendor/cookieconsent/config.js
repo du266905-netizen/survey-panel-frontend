@@ -12,11 +12,11 @@
   var zh = {
     consentModal: {
       title: '本网站的 Cookie',
-      description: '我们使用 Cookie 让网站和服务正常工作。这些 Cookie 是必要的，会自动设置。<br><br>我们还希望使用一些可选的 Cookie，用来：<ul><li>让访问更贴近你的需要</li><li>根据你的使用方式改进网站</li><li>支持我们的市场沟通</li></ul>你可以接受或拒绝这些可选 Cookie，也可以在「Cookie 设置」里逐项选择。详情见 <a href="/legal/guanyisearch-cookie-notice-2026-09-zh.pdf" target="_blank" rel="noopener">Cookie 政策</a>。',
+      description: '我们使用 Cookie 让网站和服务正常工作。这些 Cookie 是必要的，会自动设置。<br><br>我们还希望使用一些可选的 Cookie，用来：<ul><li>让访问更贴近你的需要</li><li>根据你的使用方式改进网站</li><li>支持我们的市场沟通</li></ul>你可以接受或拒绝这些可选 Cookie，也可以在「Cookie 设置」里逐项选择。详情见下方链接。',
       acceptAllBtn: '全部接受',
       acceptNecessaryBtn: '全部拒绝',
       showPreferencesBtn: 'Cookie 设置',
-      footer: '<a href="/legal/guanyisearch-cookie-notice-2026-09-zh.pdf" target="_blank" rel="noopener">Cookie 政策</a>'
+      footer: '<a href="/legal/guanyisearch-cookie-notice-2026-09-zh.pdf" target="_blank" rel="noopener">Cookie 政策</a><a href="/privacy">隐私政策</a>'
     },
     preferencesModal: {
       title: 'Cookie 偏好',
@@ -35,11 +35,11 @@
   var en = {
     consentModal: {
       title: 'Cookies on this website',
-      description: 'We use cookies to help keep our website and services working properly. These cookies are necessary and are set automatically.<br><br>We would also like to use some optional cookies that:<ul><li>make your visit more personal</li><li>improve our website based on how you use it</li><li>support our marketing</li></ul>You can accept or reject these cookies, or choose which types to accept under Cookie settings. Read the <a href="/legal/guanyisearch-cookie-notice-2026-09-en.pdf" target="_blank" rel="noopener">cookie notice</a> for detail.',
+      description: 'We use cookies to help keep our website and services working properly. These cookies are necessary and are set automatically.<br><br>We would also like to use some optional cookies that:<ul><li>make your visit more personal</li><li>improve our website based on how you use it</li><li>support our marketing</li></ul>You can accept or reject these cookies, or choose which types to accept under Cookie settings. See the links below for detail.',
       acceptAllBtn: 'Accept all',
       acceptNecessaryBtn: 'Reject all',
       showPreferencesBtn: 'Cookie settings',
-      footer: '<a href="/legal/guanyisearch-cookie-notice-2026-09-en.pdf" target="_blank" rel="noopener">View our cookie policy</a>'
+      footer: '<a href="/legal/guanyisearch-cookie-notice-2026-09-en.pdf" target="_blank" rel="noopener">Cookie policy</a><a href="/privacy">Privacy policy</a>'
     },
     preferencesModal: {
       title: 'Cookie preferences',
