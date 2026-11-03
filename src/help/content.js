@@ -15,6 +15,10 @@
 
 import { WORKSPACE } from './articles/workspace.js';
 import { METHODS } from './articles/methods.js';
+import { METHODS_EXTRAS } from './articles/methods-extras.js';
+import { PROJECT_EXTRAS } from './articles/project-extras.js';
+import { RESULTS_EXTRAS } from './articles/results-extras.js';
+import { ACCOUNT_EXTRAS } from './articles/account-extras.js';
 import { RESEARCH } from './articles/research.js';
 import { PAYMENTS_CORE } from './articles/payments-core.js';
 import { PAYMENTS_BILLING } from './articles/payments-billing.js';
@@ -74,11 +78,15 @@ export const CATEGORIES = [
 
 export const ARTICLES = [
   ...WORKSPACE,
+  ...PROJECT_EXTRAS,
   ...METHODS,
+  ...METHODS_EXTRAS,
   ...RESEARCH,
+  ...RESULTS_EXTRAS,
   ...PAYMENTS_CORE,
   ...PAYMENTS_BILLING,
   ...ACCOUNT,
+  ...ACCOUNT_EXTRAS,
 ];
 
 export const findArticle = (slug) => ARTICLES.find((article) => article.slug === slug);
