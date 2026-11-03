@@ -52,7 +52,7 @@ body:has(.hc) { background: #141413; }
 .hc-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   min-width: 0;
 }
 
@@ -312,19 +312,19 @@ body:has(.hc) { background: #141413; }
 .hc-back {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 18px;
-  border: 0;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 2px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 8px;
   background: transparent;
-  color: var(--ps-muted);
+  color: rgba(255, 255, 255, .72);
   cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
   padding: 0;
 }
 
-.hc-back:hover { color: var(--ps-ink); }
+.hc-back:hover { border-color: rgba(255, 255, 255, .34); color: #FFFFFF; }
 
 /* --- reading column ------------------------------------------------------ */
 

@@ -110,6 +110,25 @@ export default function HelpCenter() {
     <div className="hc">
       <header className="hc-top">
         <div className="hc-brand">
+          <button
+            type="button"
+            className="hc-back"
+            aria-label={copyFor(lang, '返回', 'Back')}
+            title={copyFor(lang, '返回', 'Back')}
+            onClick={() => {
+              let sameOrigin = false;
+              try {
+                sameOrigin = new URL(document.referrer).origin === window.location.origin;
+              } catch {
+                sameOrigin = false;
+              }
+              if (sameOrigin) navigate(-1);
+              else navigate(isBusinessRole(user?.role) ? '/business/workspace' : '/');
+            }}
+          >
+            <ArrowLeft size={18} aria-hidden="true" />
+          </button>
+
           <Link to="/">
             <img src="/guanyisearch-wordmark.png" alt="guanyisearch" />
           </Link>
@@ -194,23 +213,6 @@ export default function HelpCenter() {
         </nav>
 
         <main className="hc-main">
-          <button
-            type="button"
-            className="hc-back"
-            onClick={() => {
-              let sameOrigin = false;
-              try {
-                sameOrigin = new URL(document.referrer).origin === window.location.origin;
-              } catch {
-                sameOrigin = false;
-              }
-              if (sameOrigin) navigate(-1);
-              else navigate(isBusinessRole(user?.role) ? '/business/workspace' : '/');
-            }}
-          >
-            <ArrowLeft size={14} aria-hidden="true" />
-            {copyFor(lang, '返回', 'Back')}
-          </button>
 
           <div className="hc-head">
             <h1>{copy.title}</h1>
