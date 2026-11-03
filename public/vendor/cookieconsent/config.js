@@ -11,12 +11,12 @@
 (function () {
   var zh = {
     consentModal: {
-      title: '我们只用必要的 Cookie',
-      description: '必要的 Cookie 用于保持登录状态和完成支付，无法关闭。分析类 Cookie 目前没有启用；将来启用时，只有你同意后才会运行。',
-      acceptAllBtn: '全部接受',
-      acceptNecessaryBtn: '仅必要',
-      showPreferencesBtn: '偏好设置',
-      footer: '<a href="/privacy">隐私政策</a>'
+      title: '本网站的 Cookie',
+      description: '我们使用 Cookie 让网站和服务正常工作。这些 Cookie 是必要的，会自动设置。<br><br>我们还希望使用一些可选的 Cookie，用来：<ul><li>让访问更贴近你的需要</li><li>根据你的使用方式改进网站</li><li>支持我们的市场沟通</li></ul>你可以接受或拒绝这些可选 Cookie，也可以在「管理 Cookie」里逐项选择。详情见 <a href="/privacy#cookies">Cookie 说明</a>。',
+      acceptAllBtn: '接受可选 Cookie',
+      acceptNecessaryBtn: '拒绝可选 Cookie',
+      showPreferencesBtn: '管理 Cookie',
+      footer: '<a href="/privacy#cookies">Cookie 说明</a>'
     },
     preferencesModal: {
       title: 'Cookie 偏好',
@@ -34,12 +34,12 @@
 
   var en = {
     consentModal: {
-      title: 'We only use the cookies we need',
-      description: 'Necessary cookies keep you signed in and complete payments, and cannot be switched off. Analytics cookies are not in use today; if we add them, they run only after you agree.',
-      acceptAllBtn: 'Accept all',
-      acceptNecessaryBtn: 'Necessary only',
-      showPreferencesBtn: 'Preferences',
-      footer: '<a href="/privacy">Privacy policy</a>'
+      title: 'Cookies on this website',
+      description: 'We use cookies to help keep our website and services working properly. These cookies are necessary and are set automatically.<br><br>We would also like to use some optional cookies that:<ul><li>make your visit more personal</li><li>improve our website based on how you use it</li><li>support our marketing</li></ul>You can accept or decline these cookies, or choose which types to accept under Manage cookies. Read the <a href="/privacy#cookies">cookie notice</a> for detail.',
+      acceptAllBtn: 'Accept optional cookies',
+      acceptNecessaryBtn: 'Decline optional cookies',
+      showPreferencesBtn: 'Manage cookies',
+      footer: '<a href="/privacy#cookies">Cookie notice</a>'
     },
     preferencesModal: {
       title: 'Cookie preferences',
