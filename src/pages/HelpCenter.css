@@ -182,8 +182,8 @@ body:has(.hc) { background: #FFFFFF; }
   align-items: stretch;
   gap: 26px;
   height: 48px;
-  border-bottom: 1px solid #E5E3DD;
-  background: #F4F2EC;
+  border-bottom: 0;
+  background: #2B2B2B;
   padding: 0 24px;
   overflow-x: auto;
   scrollbar-width: none;
@@ -195,7 +195,7 @@ body:has(.hc) { background: #FFFFFF; }
   position: relative;
   display: flex;
   align-items: center;
-  color: var(--ps-body);
+  color: rgba(255, 255, 255, .7);
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 500;
@@ -213,11 +213,11 @@ body:has(.hc) { background: #FFFFFF; }
   content: '';
 }
 
-.hc-nav a:hover { color: var(--ps-ink); }
+.hc-nav a:hover { color: #FFFFFF; }
 
-.hc-nav a.is-active { color: var(--ps-ink); }
+.hc-nav a.is-active { color: #FFFFFF; }
 
-.hc-nav a.is-active::after { background: var(--ps-ink); }
+.hc-nav a.is-active::after { background: #FFFFFF; }
 
 /* --- shared ------------------------------------------------------------ */
 
