@@ -49,13 +49,44 @@
 #cc-main .cm__desc br { line-height: 1.7; }
 
 /* Layout and type: a card, not a form. */
-#cc-main .cm {
-  max-width: 456px;
-  border-radius: 12px;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, .18);
+#cc-main .cm { box-shadow: none; }
+
+/* Bar: full width, text left, three actions right. */
+#cc-main .cm--bar {
+  max-width: none;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 0;
+  background: #FFFFFF;
 }
 
-#cc-main .cm__body { border: 1px solid #141413; border-radius: 12px; }
+#cc-main .cm--bar .cm__body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  max-width: none;
+  padding: 22px 40px;
+  border: 0;
+  border-top: 1px solid #141413;
+}
+
+#cc-main .cm--bar .cm__links { align-items: flex-start; }
+
+#cc-main .cm--bar .cm__texts { flex: 1 1 auto; max-width: 880px; }
+
+#cc-main .cm--bar .cm__btns {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+#cc-main .cm--bar .cm__btn-group { flex-direction: row; }
+
+#cc-main .cm--bar .cm__btn { min-width: 132px; white-space: nowrap; }
 
 #cc-main .cm__title {
   font-family: 'InterV', var(--font-sans, 'Inter'), sans-serif;
@@ -119,4 +150,20 @@
 @media (max-width: 640px) {
   #cc-main .cm { max-width: none; }
   #cc-main .cm__btn-group { flex-direction: column; }
+}
+
+#cc-main .cm--bar .cm__footer {
+  border-top: 1px solid #E5E3DD;
+  padding: 9px 40px 11px;
+  justify-content: flex-end;
+}
+
+#cc-main .cm--bar .cm__footer a { margin-left: auto; }
+
+@media (max-width: 860px) {
+  #cc-main .cm--bar .cm__body { flex-direction: column; align-items: flex-start; gap: 16px; padding: 18px 20px; }
+  #cc-main .cm--bar .cm__btns { width: 100%; }
+  #cc-main .cm--bar .cm__btn-group { width: 100%; }
+  #cc-main .cm--bar .cm__btn { flex: 1; min-width: 0; }
+  #cc-main .cm--bar .cm__footer { padding: 8px 20px 10px; }
 }
