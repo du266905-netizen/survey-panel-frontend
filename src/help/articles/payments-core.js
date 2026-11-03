@@ -54,8 +54,8 @@ export const PAYMENTS_CORE = [
       blocks: [
         { p: 'A top-up adds money to your account balance, which pays for research projects. Everything is priced and settled in US dollars, and one top-up starts at US$100. What follows covers the amount, what to prepare, the three channels, when money lands, and what to do when it does not.' },
         { h: 'Amount and billing details' },
-        { p: 'Type any amount, or use the US$100, 250, 500, and 1000 presets as a shortcut; a preset can still be edited afterwards. The payment options stay unavailable below the US$100 minimum.' },
-        { p: 'Before a first top-up, complete the billing details: company name, country or region, address, city, postal code, and email, all six. Until they are complete the methods still open, but the pay button stays unavailable and the page says which part is missing. The same panel appears on the Add funds page and under Account → Billing details; both edit one record.' },
+        { p: 'Type any amount, or use the US$100, 250, 500, and 1000 presets as a shortcut; a preset can still be edited afterwards. The payment options stay closed below the US$100 minimum.' },
+        { p: 'Before a first top-up, complete the billing details: company name, country or region, address, city, postal code, and email, all six. Until they are complete the methods still open, but the pay button stays disabled and the page says which part is missing. The same panel appears on the Add funds page and under Account → Billing details; both edit one record.' },
         { h: 'Three ways to pay' },
         { p: 'All three channels use the same amount, and switching between them does not change the number already entered. The amount and currency are shown once more before the payment starts.' },
         { p: 'Choosing card expands an embedded form for the number, expiry, and security code, with fields provided by the payment provider. Cryptocurrency opens a hosted checkout showing the coin, network, address, and amount to send. Bank transfer lists the beneficiary, account, bank, and reference to use at your bank.' },
@@ -114,7 +114,7 @@ export const PAYMENTS_CORE = [
         { p: '部分发卡行会要求额外验证，页面跳转到发卡行的验证页，输入短信验证码或银行密码后回到本站。验证由发卡行完成，验证码与验证结果都留在发卡行一侧。验证超时或中途关闭页面，本次付款按未完成处理，不产生扣款。' },
         { p: '提交后页面显示处理中，通常在几秒内返回结果。成功时余额立即更新，充值记录里出现一笔已入账的充值，发票按这笔入账金额开具；失败时页面给出原因类别，记录里留下一条未完成的充值，不产生扣款。' },
         { h: '卡信息填在哪里' },
-        { p: '卡号、有效期和安全码填在支付服务商提供的表单里，提交后页面只显示结果。刷新或重新进入后需要重新填写，因此提交前先核对持卡人姓名与金额。' },
+        { p: '卡号、有效期和安全码填在支付服务商提供的加密表单里，传输走银行级的加密通道，字段由服务商托管。本站既不读取也不保留任何信用卡信息，提交后页面只显示结果，刷新或重新进入后需要重新填写，因此提交前先核对持卡人姓名与金额。' },
         { p: '每次付款都从一张空表单开始，上一次填写的内容需要重新输入。换卡或换金额时，也按同样的流程重新填写。' },
         { h: '卡为什么被拒' },
         { p: '发卡行自己的授权检查、可用额度不足、账单地址与卡登记地址不一致、未开通境外交易，是最常见的四类原因。安全码输错、卡已过期、单笔金额超过发卡行限额，也会以同样的方式被拒。' },
@@ -143,7 +143,7 @@ export const PAYMENTS_CORE = [
         { p: 'Visa, Mastercard, American Express, and JCB all work, and credit and debit cards use the same entry point. The charge is in US dollars, and the amount on screen is the amount submitted to the issuer; whether the issuer converts it into your statement currency is the issuer’s decision.' },
         { p: 'The merchant name on the statement may be the payment provider rather than this site, so check the amount and date when reconciling. Any currency-conversion fee appears separately on your statement, and the posting date can differ by a day between statements; the issuer’s date is the one that counts.' },
         { h: 'Starting a card payment' },
-        { p: 'Enter an amount on the Add funds page and choose Credit or debit card; the embedded form expands below. If the billing details are incomplete, the billing panel opens above the form and the pay button stays unavailable until all six fields are filled. The form stays on this page apart from an issuer verification step.' },
+        { p: 'Enter an amount on the Add funds page and choose Credit or debit card; the embedded form expands below. If the billing details are incomplete, the billing panel opens above the form and the pay button stays disabled until all six fields are filled. The form stays on this page apart from an issuer verification step.' },
         {
           steps: [
             'Enter an amount, or pick one of US$100, 250, 500, and 1000.',
@@ -157,7 +157,7 @@ export const PAYMENTS_CORE = [
         { p: 'Some issuers ask for an extra check, and the page moves to the issuer’s verification screen before returning you here after the code or password is entered. The issuer runs that step, and the code and the result stay with the issuer. If the check times out or the page is closed, the attempt ends as unfinished and nothing is charged.' },
         { p: 'The page shows processing and usually returns a result within seconds. On success the balance updates at once, a credited top-up appears in the history, and the invoice follows that credited amount; on failure the page gives a reason, the history keeps an unfinished entry, and nothing is charged.' },
         { h: 'Where the card details go' },
-        { p: 'The number, expiry, and security code are entered in a form provided by the payment provider, and after submission the page shows only the result. A refresh or a return later means typing them again, so check the cardholder name and the amount before submitting.' },
+        { p: 'The number, expiry, and security code are entered in the payment provider’s encrypted form, over a bank-grade encrypted channel, with the fields held on the provider’s side. This site neither reads nor retains any card information; after submission the page shows only the result. A refresh or a return later means typing them again, so check the cardholder name and the amount before submitting.' },
         { p: 'Each payment starts from an empty form, and the details from the previous one are typed again. Changing the card or the amount follows the same route.' },
         { h: 'Why a card is declined' },
         { p: 'The issuer’s own checks, an insufficient limit, a billing address that differs from the one on file, and cross-border payments being switched off account for most declines. A mistyped security code, an expired card, and a single payment above the issuer’s limit fail the same way.' },
@@ -185,10 +185,10 @@ export const PAYMENTS_CORE = [
       title: '用加密货币付款',
       summary: '跳转到收款页之后要核对什么、什么时候算到账、出错时怎么处理。',
       blocks: [
-        { p: '加密货币适合不方便走银行或卡通道的付款，也适合没有当地银行卡的付款方。收款由托管收款页完成，支持主流币种与网络。下面说明收款页上要核对什么、确认要多久，以及少付、多付、过期各自怎么处理。' },
+        { p: '我们支持加密货币，是因为确实有客户习惯用它付款：跨境的团队、没有当地银行卡的付款方、或者本来就把资金放在链上的机构。尊重客户的支付习惯，比要求所有人改用同一种方式更实际。收款由托管收款页完成，支持主流币种与网络；下面说明收款页上要核对什么、确认要多久，以及少付、多付、过期各自怎么处理。' },
         { h: '什么时候用加密货币' },
         { p: '付款方没有可用的卡，或者跨境汇款成本较高时，加密货币更直接。充值金额仍以美元计，收款页会按当时的行情给出应付的币种数量；实际到账按链上收到的数量处理，与页面数量不一致时按少付或多付处理。' },
-        { p: '转账本身在收款服务商的托管页完成，本站负责把你送到那里并记录结果。跳转之后地址栏会变成收款服务商的域名，这是正常现象。' },
+        { p: '转账本身在收款服务商的托管页完成，本站负责把你送到那里并记录结果。跳转之后地址栏会变成收款服务商的域名，这是正常现象。收款与清算由具备资质的服务商处理，其内置反洗钱与交易监控机制按所在地监管要求运行；我们只在入账层面处理结果，不接触你的钱包、私钥或提币权限。' },
         {
           steps: [
             '在充值页输入金额，选择「加密货币」。',
@@ -217,10 +217,10 @@ export const PAYMENTS_CORE = [
       title: 'Paying with cryptocurrency',
       summary: 'What to check on the checkout page, when the payment counts, and how to handle the cases that go wrong.',
       blocks: [
-        { p: 'Crypto suits payments that cannot go through a bank or a card, and payers who have no local card. Settlement runs through a hosted checkout that supports the major coins and networks. What follows covers what to check on that page, how long confirmation takes, and what underpayment, overpayment, and expiry each mean.' },
+        { p: 'We support cryptocurrency because real clients pay this way: cross-border teams, payers without a local card, and organisations that already hold funds on chain. Respecting how a client pays is more practical than insisting everyone switch. Settlement runs through a hosted checkout that supports the major coins and networks; what follows covers what to check there, how long confirmation takes, and what underpayment, overpayment, and expiry each mean.' },
         { h: 'When crypto is the right route' },
         { p: 'When the payer has no usable card, or a cross-border transfer would cost more than it should, crypto is the more direct route. The top-up is still priced in US dollars, and the checkout quotes the coin amount at the rate at that moment; settlement follows the amount that actually arrives on chain, so a difference from the quote is handled as an underpayment or an overpayment.' },
-        { p: 'The transfer itself happens on the provider’s hosted checkout, and this site sends you there and records the result. After the redirect the address bar shows the provider’s domain, which is expected.' },
+        { p: 'The transfer itself happens on the provider’s hosted checkout, and this site sends you there and records the result. After the redirect the address bar shows the provider’s domain, which is expected. Collection and settlement sit with a licensed provider whose anti-money-laundering and transaction monitoring run to the rules of its jurisdiction; we only handle the result, and never touch your wallet, keys, or withdrawal rights.' },
         {
           steps: [
             'Enter an amount on the Add funds page and choose Cryptocurrency.',
@@ -386,7 +386,7 @@ export const PAYMENTS_CORE = [
         { p: 'A payment link hands a fixed top-up to someone else to pay, such as a client, a procurement team, or a colleague. The link carries the amount and the purpose only, so the payer opens a payment page while your balance and history stay in the account, and the amount, currency, and lifetime are fixed when it is created.' },
         { h: 'When a link is the right tool' },
         { p: 'A link is the direct route when the payer has no account here, or when you would rather not pay first and get reimbursed. It is made for a single payment: one link covers one top-up, and a second payment needs a new link.' },
-        { p: 'All six billing fields must be complete; otherwise the create button is unavailable and the page asks for the missing part. The amount follows the US$100 minimum and is fixed at creation, so to change it, revoke the link and create another.' },
+        { p: 'All six billing fields must be complete; otherwise the create button is disabled and the page asks for the missing part. The amount follows the US$100 minimum and is fixed at creation, so to change it, revoke the link and create another.' },
         { h: 'Creating a link' },
         {
           steps: [

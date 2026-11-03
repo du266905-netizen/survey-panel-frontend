@@ -47,17 +47,19 @@ export const START_EXTRAS = [
     title: '更新日志',
     summary: '我们持续发布新版本，这里记录每次更新带来的变化。',
     blocks: [
-      { p: '我们把产品更新发布得比较频繁：研究流程、问卷编辑器、结果视图与计费都在持续迭代。这个页面用来记录每一次更新带来的新功能、体验改进与问题修复，方便你在上线前后对照。' },
-      { p: '更新按批次汇总，只写会影响你使用方式的变化：新增了什么、调整了什么、改进了哪里。内部实现的改动不在这里展开，你看到的是可以感知的部分。' },
-      { p: '如果你发现实际操作与帮助中心的说明不一致，把页面与操作时间发给右下角的客服，我们会核对，并在下一次更新说明里更正。' },
+      { p: '我们每天都会看用户怎么使用这套工具：哪些步骤被反复询问、哪些页面停留最久、哪些反馈反复出现。产品更新是从这些观察里长出来的，而不是按一份排期清单做出来的。' },
+      { p: '每一次发布都围绕三件事：让研究流程更短，让数据更可复核，让协作更省心。新功能、体验调整与问题修复会汇总在这一页，按批次记录，只写会影响你使用方式的部分，读得完、对得上。' },
+      { p: '我们同样重视你的判断。如果某个流程与你习惯的做法不同，或者帮助中心的说明与实际页面不一致，把页面与操作时间发给右下角的客服。你的意见会进入下一轮排期，而不只是留在一条记录里。' },
+      { p: '更新不会打断进行中的项目：已发布的问卷、已回收的数据与已开出的发票不受影响，变化只发生在你下次打开页面时。需要保留某一版的导出结果时，按导出时间另存即可。' },
     ],
   }, {
     title: 'What’s new',
     summary: 'We ship often. This page records what each release changed.',
     blocks: [
-      { p: 'We release product updates frequently: the research flow, the questionnaire editor, the results views and billing all keep moving. This page records what each release brought — new capability, experience improvements, and fixes — so you can compare before and after.' },
-      { p: 'Releases are summarised in batches and only cover what changes the way you work: what was added, what was adjusted, what got better. Internal changes are not expanded here; what you read is what you can notice.' },
-      { p: 'If what you see in the product disagrees with this help centre, send the page and the time to the chat in the bottom-right corner. We check it and correct the note in the next release summary.' },
+      { p: 'We watch how the product is actually used every day: which steps keep getting asked about, which pages hold people longest, which pieces of feedback keep returning. Releases grow out of those observations rather than a release calendar.' },
+      { p: 'Each release works on three things: a shorter path through the research flow, data that can be checked, and less friction when several people work together. New capability, experience changes and fixes are recorded here in batches, limited to what changes the way you work.' },
+      { p: 'Your judgement matters as much as our reading of the data. If a step differs from the way you would do it, or this help centre disagrees with the screen in front of you, send the page and the time to the chat in the bottom-right corner. What you send goes into the next round of work, not just into a record.' },
+      { p: 'Updates do not interrupt a study in flight: published questionnaires, collected data and issued invoices are untouched, and a change only appears the next time you open the page. Keep an export if you need to hold a particular version.' },
     ],
   }),
 ];
