@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowRight, Check, Copy, Menu, Search } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Copy, Menu, Search } from 'lucide-react';
 import { ARTICLES, CATEGORIES, findArticle } from '../help/content';
+import LanguageGlobe from '../components/LanguageGlobe';
 import { useLanguage } from '../components/LanguageContext';
 import './HelpCenter.css';
 
@@ -38,7 +39,7 @@ function Blocks({ blocks }) {
 }
 
 export default function HelpCenter() {
-  const { language } = useLanguage();
+  const { language, navigateToLanguage } = useLanguage();
   const lang = language.startsWith('zh') ? 'zh' : 'en';
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -99,6 +100,7 @@ export default function HelpCenter() {
           <span className="hc-brand-rule" aria-hidden="true" />
           <Link to="/help" className="hc-brand-title">{copyFor(lang, '帮助中心', 'Help centre')}</Link>
         </div>
+        <div className="hc-tools">
         <label className="hc-search">
           <Search size={16} aria-hidden="true" />
           <input
@@ -110,6 +112,17 @@ export default function HelpCenter() {
           />
           <kbd aria-hidden="true">⌘K</kbd>
         </label>
+        <button
+          type="button"
+          className="hc-lang"
+          onClick={() => navigateToLanguage(lang === 'zh' ? 'en-US' : 'zh-CN')}
+          aria-label={copyFor(lang, 'Switch to English', '切换到中文')}
+          title={copyFor(lang, 'Switch to English', '切换到中文')}
+        >
+          <LanguageGlobe aria-hidden="true" size={17} strokeWidth={1.7} />
+          <span>{lang === 'zh' ? '中文' : 'EN'}</span>
+        </button>
+        </div>
       </header>
 
       <nav className="hc-nav" aria-label={copyFor(lang, '分类', 'Categories')}>
@@ -152,6 +165,11 @@ export default function HelpCenter() {
           </nav>
 
           <main className="hc-main">
+            <Link className="hc-back" to="/help">
+              <ArrowLeft size={14} aria-hidden="true" />
+              {copyFor(lang, '全部文章', 'All articles')}
+            </Link>
+
             <div className="hc-head">
               <div>
                 <h1>{copy.title}</h1>

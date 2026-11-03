@@ -14,6 +14,7 @@
  */
 
 import { WORKSPACE } from './articles/workspace.js';
+import { METHODS } from './articles/methods.js';
 import { RESEARCH } from './articles/research.js';
 import { PAYMENTS_CORE } from './articles/payments-core.js';
 import { PAYMENTS_BILLING } from './articles/payments-billing.js';
@@ -42,6 +43,13 @@ export const CATEGORIES = [
     enNote: 'Samples, quotas, and participant quality.',
   },
   {
+    id: 'methods',
+    zh: '问卷方法',
+    en: 'Question design',
+    zhNote: '出题、筛选题、逻辑、受众与配额、交叉表。',
+    enNote: 'Writing questions, screening, logic, audiences, crosstabs.',
+  },
+  {
     id: 'results',
     zh: '结果与报告',
     en: 'Results',
@@ -66,6 +74,7 @@ export const CATEGORIES = [
 
 export const ARTICLES = [
   ...WORKSPACE,
+  ...METHODS,
   ...RESEARCH,
   ...PAYMENTS_CORE,
   ...PAYMENTS_BILLING,
