@@ -200,7 +200,6 @@ export default function HelpCenter() {
           </div>
 
           <p className="hc-summary">{copy.summary}</p>
-          <p className="hc-meta">{copyFor(lang, '持续更新', 'Kept up to date')}</p>
 
           <div className="hc-body">
             <Blocks blocks={copy.blocks} />
