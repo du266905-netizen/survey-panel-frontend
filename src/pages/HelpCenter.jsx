@@ -154,7 +154,6 @@ export default function HelpCenter() {
           <main className="hc-main">
             <div className="hc-head">
               <div>
-                <p className="hc-eyebrow">{t(category, lang)}</p>
                 <h1>{copy.title}</h1>
               </div>
               <button type="button" className="hc-copy" onClick={copyPage}>
@@ -230,7 +229,7 @@ export default function HelpCenter() {
             ) : (
               groups.map((group) => (
                 <section key={group.id} className="hc-index-group">
-                  <p className="hc-eyebrow">{t(group, lang)}</p>
+                  <h2 className="hc-index-group-title">{t(group, lang)}</h2>
                   <ul>
                     {group.items.map((entry) => {
                       const entryCopy = t(entry, lang);
