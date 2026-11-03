@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Check, Copy, Menu, Search } from 'lucide-react';
 import { ARTICLES, CATEGORIES, findArticle } from '../help/content';
+import { SOURCES } from '../help/sources';
 import LanguageGlobe from '../components/LanguageGlobe';
 import { useLanguage } from '../components/LanguageContext';
 import './HelpCenter.css';
@@ -205,6 +206,19 @@ export default function HelpCenter() {
           <div className="hc-body">
             <Blocks blocks={copy.blocks} />
           </div>
+
+          {SOURCES[article.slug] ? (
+            <section className="hc-sources">
+              <h2>{copyFor(lang, '参考来源', 'Sources')}</h2>
+              <ul>
+                {SOURCES[article.slug].map((source) => (
+                  <li key={source.url}>
+                    <a href={source.url} target="_blank" rel="noreferrer noopener">{source.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           <footer className="hc-article-foot">
             <p>
