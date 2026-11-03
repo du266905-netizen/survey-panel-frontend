@@ -152,12 +152,16 @@
   #cc-main .cm__btn-group { flex-direction: column; }
 }
 
+/* The links live inside the white block: no band, no rule, just the foot of it. */
 #cc-main .cm--bar .cm__footer {
   display: flex;
   justify-content: flex-end;
-  border-top: 1px solid #E5E3DD;
-  padding: 9px 40px 11px;
+  border-top: 0;
+  background: #FFFFFF;
+  padding: 0 40px 18px;
 }
+
+#cc-main .cm--bar .cm__body { padding-bottom: 10px; }
 
 #cc-main .cm--bar .cm__footer .cm__links {
   width: auto;
