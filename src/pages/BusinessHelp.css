@@ -16,14 +16,14 @@
   text-align: center;
 }
 
-.business-help-hero h1 {
+.business-account-page .business-help-hero h1 {
   margin: 0;
-  color: #141413;
-  font-family: var(--font-reading);
-  font-size: 56px;
-  font-weight: 500;
-  letter-spacing: -.03em;
-  line-height: 1.02;
+  color: #141413 !important;
+  font-family: var(--font-reading) !important;
+  font-size: 56px !important;
+  font-weight: 500 !important;
+  letter-spacing: -.03em !important;
+  line-height: 1.02 !important;
 }
 
 .business-help-hero p {

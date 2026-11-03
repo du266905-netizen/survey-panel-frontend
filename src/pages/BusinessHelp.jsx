@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
 import BusinessRail from '../components/BusinessRail';
-import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { ARTICLES } from '../help/content';
 import './BusinessHelp.css';
@@ -28,10 +27,6 @@ export default function BusinessHelp() {
     <main className="business-account-page">
       <BusinessRail activeId="help" onSelect={handleRailSelect} />
       <div className="business-account-pane">
-        <header>
-          <NotificationBell />
-        </header>
-
         <section className="business-help-shell">
           <div className="business-help-hero">
             <h1>{zh ? '帮助中心' : 'Help centre'}</h1>
