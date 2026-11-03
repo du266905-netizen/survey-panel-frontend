@@ -71,10 +71,10 @@ body:has(.hc) { background: #141413; }
 
 .hc-brand-title {
   color: #FFFFFF;
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.02em;
+  font-weight: 400;
+  letter-spacing: -.01em;
   line-height: 1.1;
   text-decoration: none;
   white-space: nowrap;
@@ -272,7 +272,7 @@ body:has(.hc) { background: #141413; }
   margin: 0 0 10px 10px;
   color: var(--ps-ink);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.4;
@@ -292,7 +292,7 @@ body:has(.hc) { background: #141413; }
   border-radius: 8px;
   color: var(--ps-body);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.45;
   padding: 8px 10px;
