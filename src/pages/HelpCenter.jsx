@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import { Check, Copy, Menu, Search } from 'lucide-react';
+import { ArrowLeft, Check, Copy, Menu, Search } from 'lucide-react';
 import { ARTICLES, CATEGORIES, findArticle } from '../help/content';
 import LanguageGlobe from '../components/LanguageGlobe';
 import { useLanguage } from '../components/LanguageContext';
+import { useAuth } from '../components/AuthContext';
+import { isBusinessRole } from '../utils/roles';
 import './HelpCenter.css';
 
 /* Public help centre, on the Claude Code docs frame:
@@ -41,6 +43,7 @@ function Blocks({ blocks }) {
 
 export default function HelpCenter() {
   const { language, navigateToLanguage } = useLanguage();
+  const { user } = useAuth();
   const lang = language.startsWith('zh') ? 'zh' : 'en';
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -191,6 +194,24 @@ export default function HelpCenter() {
         </nav>
 
         <main className="hc-main">
+          <button
+            type="button"
+            className="hc-back"
+            onClick={() => {
+              let sameOrigin = false;
+              try {
+                sameOrigin = new URL(document.referrer).origin === window.location.origin;
+              } catch {
+                sameOrigin = false;
+              }
+              if (sameOrigin) navigate(-1);
+              else navigate(isBusinessRole(user?.role) ? '/business/workspace' : '/');
+            }}
+          >
+            <ArrowLeft size={14} aria-hidden="true" />
+            {copyFor(lang, '返回', 'Back')}
+          </button>
+
           <div className="hc-head">
             <h1>{copy.title}</h1>
             <button type="button" className="hc-copy" onClick={copyPage}>

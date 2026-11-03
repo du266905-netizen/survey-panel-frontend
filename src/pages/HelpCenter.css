@@ -307,6 +307,25 @@ body:has(.hc) { background: #141413; }
   font-weight: 500;
 }
 
+/* --- back ----------------------------------------------------------------- */
+
+.hc-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  border: 0;
+  background: transparent;
+  color: var(--ps-muted);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0;
+}
+
+.hc-back:hover { color: var(--ps-ink); }
+
 /* --- reading column ------------------------------------------------------ */
 
 .hc-main {
