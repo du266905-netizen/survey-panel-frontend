@@ -3,6 +3,7 @@ import { Lock, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage, withLanguage } from './LanguageContext';
 import { createCryptoRecharge } from '../api/realApi';
+import { loadPaymentChannels } from '../api/paymentChannels';
 import PayPalCheckout from './PayPalCheckout';
 import { PAYPAL_COPY } from '../constants/paypalCheckoutCopy';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
@@ -37,8 +38,20 @@ export default function BusinessAddFundsModal({ open, onClose }) {
   const [custom, setCustom] = useState(false);
   const [submitting, setSubmitting] = useState('');
   const [cardOpen, setCardOpen] = useState(false);
+  const [cardEnabled, setCardEnabled] = useState(false);
   const [error, setError] = useState('');
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    let alive = true;
+    loadPaymentChannels().then((methods) => {
+      if (!alive) return;
+      setCardEnabled(methods.card);
+      if (!methods.card) setCardOpen(false);
+    });
+    return () => { alive = false; };
+  }, [open]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -158,6 +171,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </span>
             <span className="business-funds-route-go" aria-hidden="true">›</span>
           </button>
+          {cardEnabled ? (
           {/* PayPal 不再是独立一行：它的官方组件（Buttons + CardFields）
               就是“信用卡 / 银行卡”这一条的实现，合并成一行。 */}
           <button
@@ -175,6 +189,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             </span>
             <span className="business-funds-route-go" aria-hidden="true">{cardOpen ? '⌃' : '›'}</span>
           </button>
+          ) : null}
           {/* Crypto, Alipay and PayPal are wired: each creates a recharge
               order and hands off to the provider cashier. Bank transfer and
               card are still placeholders. */}
@@ -196,7 +211,7 @@ export default function BusinessAddFundsModal({ open, onClose }) {
           </button>
         </div>
 
-        {cardOpen && (
+        {cardEnabled && cardOpen && (
           <div className="business-funds-cardpanel">
             <PayPalCheckout
               amountUsd={valid ? numeric.toFixed(2) : ''}
@@ -206,6 +221,14 @@ export default function BusinessAddFundsModal({ open, onClose }) {
               onError={(message) => setError(message)}
             />
           </div>
+        )}
+
+        {cardEnabled ? null : (
+          <p className="business-funds-note">
+            {String(language).startsWith('zh')
+              ? '卡片通道升级中，期间可使用银行转账或加密货币。'
+              : 'Card payments are being upgraded. Bank transfer and cryptocurrency are available meanwhile.'}
+          </p>
         )}
 
         {error ? <p className="business-funds-error" role="alert">{error}</p> : null}

@@ -5544,6 +5544,8 @@ main.business-custom-request-page .business-workspace-rail {
 
 .business-funds-card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
+.business-funds-routes + .business-funds-note { margin: 12px 0 0; }
+
 .business-funds-note {
   margin: 0;
   color: #5F6862;

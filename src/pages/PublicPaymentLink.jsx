@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArrowRight, Check, Clock, CreditCard, Landmark, X } from 'lucide-react';
+import { loadPaymentChannels } from '../api/paymentChannels';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
 import { PAYPAL_COPY } from '../constants/paypalCheckoutCopy';
@@ -131,6 +132,17 @@ export default function PublicPaymentLink() {
   const [link, setLink] = useState(null);
   const [state, setState] = useState('loading');
   const [channel, setChannel] = useState('');
+  const [cardEnabled, setCardEnabled] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    loadPaymentChannels().then((methods) => {
+      if (!alive) return;
+      setCardEnabled(methods.card);
+      if (!methods.card) setChannel('');
+    });
+    return () => { alive = false; };
+  }, []);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const [bank, setBank] = useState(null);
@@ -234,6 +246,7 @@ export default function PublicPaymentLink() {
         <>
         <p className="pay-link-methodlabel">{copy.methodLabel}</p>
         <div className="pay-link-channels">
+          {cardEnabled ? (
           <button
             type="button"
             className={`pay-link-channel${channel === 'card' ? ' is-open' : ''}`}
@@ -243,7 +256,8 @@ export default function PublicPaymentLink() {
             <strong>{copy.card}</strong>
             <ArrowRight size={15} aria-hidden="true" />
           </button>
-          {channel === 'card' ? (
+          ) : null}
+          {cardEnabled && channel === 'card' ? (
             <div className="pay-link-panel">
               <PayPalCheckout
                 amountUsd={(link.amountCents / 100).toFixed(2)}
