@@ -113,11 +113,7 @@ export default function HelpCenter() {
           </nav>
 
           <main className="hc-main">
-            <nav className="hc-crumbs" aria-label="Breadcrumb">
-              <Link to="/help">{copyFor(lang, '帮助中心', 'Help centre')}</Link>
-              <span aria-hidden="true">/</span>
-              <span>{t(category, lang)}</span>
-            </nav>
+            <p className="hc-eyebrow">{t(category, lang)}</p>
 
             <h1>{copy.title}</h1>
             <p className="hc-summary">{copy.summary}</p>
@@ -152,35 +148,9 @@ export default function HelpCenter() {
           ) : null}
         </div>
       ) : (
-        <div className="hc-shell is-two">
-          <nav className="hc-side" aria-label={copyFor(lang, '全部文章', 'All articles')}>
-            {CATEGORIES.map((group) => {
-              const items = ARTICLES.filter((entry) => entry.category === group.id);
-              if (!items.length) return null;
-              return (
-                <section key={group.id} className="hc-group">
-                  <h2>{t(group, lang)}</h2>
-                  <ul>
-                    {items.map((entry) => (
-                      <li key={entry.slug}>
-                        <Link to={`/help/${entry.slug}`}>{t(entry, lang).title}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              );
-            })}
-          </nav>
-
+        <div className="hc-shell is-index">
           <main className="hc-main hc-index">
-            <h1>{copyFor(lang, '帮助中心', 'Help centre')}</h1>
-            <p className="hc-lede">
-              {copyFor(
-                lang,
-                '付款、账单与账户问题的说明，按主题归档。',
-                'Straight answers on payments, billing, and your account.',
-              )}
-            </p>
+            <h1 className="hc-sr-only">{copyFor(lang, '全部文章', 'All articles')}</h1>
 
             {results ? (
               <section className="hc-results">
@@ -208,9 +178,28 @@ export default function HelpCenter() {
                 ) : null}
               </section>
             ) : (
-              <Link className="hc-index-cta" to={`/help/${ARTICLES[0].slug}`}>
-                {copyFor(lang, '浏览帮助文章', 'Browse the articles')}
-              </Link>
+              CATEGORIES.map((group) => {
+                const items = ARTICLES.filter((entry) => entry.category === group.id);
+                if (!items.length) return null;
+                return (
+                  <section key={group.id} className="hc-index-group">
+                    <p className="hc-eyebrow">{t(group, lang)}</p>
+                    <ul>
+                      {items.map((entry) => {
+                        const entryCopy = t(entry, lang);
+                        return (
+                          <li key={entry.slug}>
+                            <Link to={`/help/${entry.slug}`}>
+                              <strong>{entryCopy.title}</strong>
+                              <small>{entryCopy.summary}</small>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
+                );
+              })
             )}
           </main>
         </div>
