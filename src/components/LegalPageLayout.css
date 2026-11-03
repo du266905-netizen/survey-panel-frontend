@@ -296,3 +296,6 @@
   padding: 9px 14px;
 }
 .public-site-layout .legal-cookie-reset:hover { background: var(--ps-sage-bone); }
+
+.public-site-layout .legal-cookie-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.public-site-layout .legal-cookie-links .legal-cookie-reset { margin: 0; display: inline-flex; align-items: center; text-decoration: none; }

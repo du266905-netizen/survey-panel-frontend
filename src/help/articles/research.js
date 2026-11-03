@@ -12,7 +12,7 @@ export const RESEARCH = [
       { h: '页面怎么组织' },
       { p: '顶部一行是样本量、完成率与收集时间，中间按问卷顺序排列各题的题块，右侧是题目列表，点一下跳到对应题块。每个题块从上到下是题干、选项文字、每个选项的人数与百分比，最后一行是这道题的分母。' },
       { p: '题目顺序与编辑器一致，同事说「第 7 题」时，两边指的是同一道题。多选题的每个选项各自带百分比，页面上会注明可以多选；量表题按选项顺序排列，两端与中点的文字照问卷原样显示。' },
-      { p: '开放题统一排在各题之后，按提交时间排列，可以按关键词搜索。页面顶部与题块上都会标出数据仍在变化；问卷结束后这个标记消失，数字固定下来。' },
+      { p: '开放题统一排在各题之后，按提交时间排列，可以按关键词搜索。问卷还在收集时，页面上的数字会随着新提交变化；问卷结束后页面变为只读，数字固定下来。' },
       {
         steps: [
           '顶部先看样本量与完成率。',
@@ -54,7 +54,7 @@ export const RESEARCH = [
       { h: 'How the page is organised' },
       { p: 'The top row carries the sample size, the completion rate, and the collection time. The middle lists one block per question in questionnaire order, and the right-hand list jumps to any of them. Inside a block, from the top: the question, the option wording, the count and percentage per option, and the base for that question.' },
       { p: 'The order matches the editor, so a question number from a colleague points to the same place. Multiple-choice options each carry a percentage and the block says the question allows more than one answer; scale options keep their order, with both ends and the midpoint worded as in the questionnaire.' },
-      { p: 'Open answers sit after the closed questions, in the order they arrived, and can be searched. A marker at the top and on each block says the data is still changing; once the questionnaire closes the marker goes and the numbers hold.' },
+      { p: 'Open answers sit after the closed questions, in the order they arrived, and can be searched. While the questionnaire collects, the numbers on the page move with each new submission; once it closes the page is read-only and the numbers hold.' },
       {
         steps: [
           'Top: sample size and completion rate.',
@@ -163,12 +163,12 @@ export const RESEARCH = [
       { p: 'A blank can mean the question was skipped by a branch, shown but left unanswered, or answered with an empty option. The first two need different treatment, or the base comes out wrong. Look at the blank rate per question, and when one stands out, go back to its logic and required setting.' },
       { h: 'Before numbers leave the team' },
       { p: 'Confirm four things: which export the numbers came from, the base behind each figure, whether the quotas are full, and whether any text identifies a person. Remove or replace names, phone numbers, company names, and job titles, keeping what the conclusion needs.' },
-      { p: 'Round percentages the same way throughout a document and keep one base per table; where the base changes, say so in the header. Weighting, significance tests, crosstabs, and charts happen after export and their method belongs in the material.' },
+      { p: 'Round percentages the same way throughout a document and keep one base per table; where the base changes, say so in the header. Weighting, significance tests, crosstabs, and charts happen after export, with the method stated in the material.' },
       { p: 'Deliver through a one-to-one channel rather than a group chat or a shared document. Name the file for what the recipient will do with it, add the date the data was taken, and when only the conclusion is needed, leave the raw file out.' },
       { h: 'Repeat exports and archiving' },
       { p: 'A large export takes a while to produce, so do not select it twice. If you need to run it again, move or rename the earlier file so that two versions do not sit side by side under the same name.' },
       { p: 'Put the project name, questionnaire status, and export time in the filename, for example project_closed_20260301_1040. Keep one project’s exports in one folder, where the names sort in order.' },
-      { p: 'Save a separate copy for an external recipient rather than editing the original; keep the archive folder apart from the working one and open it now and then to confirm it still reads. For long-term retention, file the export with the report that cites it.' },
+      { p: 'Save a separate copy for an external recipient rather than editing the original; keep the archive folder apart from the working one and open it now and then to confirm it still opens. For long-term retention, file the export with the report that cites it.' },
       { note: 'An export can contain free text that identifies a person. Decide how much of it to keep by what the recipient will do with the file.' },
     ],
   }),

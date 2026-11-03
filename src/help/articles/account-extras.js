@@ -12,9 +12,9 @@ export const ACCOUNT_EXTRAS = [
     summary: '哪些事情会发邮件、收不到时先查什么、收票地址怎么设、共用邮箱的风险，以及退订与重新订阅。',
     blocks: [
       { p: '通知邮件不多，但每一封都对应一件已经发生的事。付款有了结果、发票已经开出、密码被重设，各有一封对应的邮件。' },
-      { p: '弄清哪些事情会发信、发到哪个地址、收不到时先查什么，可以省掉很多来回确认。下面按这四条展开，最后说退订与留档。' },
+      { p: '弄清哪些事情会发信、发到哪个地址、收不到时先查什么，可以省掉很多来回确认。下面逐条展开，最后说退订与留档。' },
       { h: '哪些邮件会发出' },
-      { p: '账户相关的邮件有三类：付款结果、发票，以及密码重设。付款有了结果时发出付款结果，发票开出之后发出发票，申请重设密码时发出重设邮件。' },
+      { p: '账户相关的邮件有三类：付款结果、发票，以及密码重设。付款有结果时发一封付款结果，发票开出之后发一封发票，申请重设密码时发一封重设邮件。' },
       { p: '每一封都对应一件已经发生的事，因此可以用它来确认操作是否完成。没有收到不等于没有发生，先到页面上看状态，再查邮件。' },
       { p: '密码重设属于账户邮件，只发到登录邮箱；付款结果与发票属于财务邮件，可以发到另外设置的收票地址。两类邮件的收件人不同，排查时先分清少的是哪一类。' },
       { h: '收件地址怎么设' },
@@ -60,9 +60,9 @@ export const ACCOUNT_EXTRAS = [
     summary: 'Which events send mail, what to check when it does not arrive, setting an invoice address, the risk in a shared mailbox, and unsubscribing.',
     blocks: [
       { p: 'There are only a few notification emails, and each one follows something that has already happened. A payment has a result, an invoice has been issued, or a password has been reset.' },
-      { p: 'Knowing which events send mail, which address they go to, and what to check when one does not arrive saves a lot of back and forth. What follows takes those four in turn, then unsubscribing and keeping a record.' },
+      { p: 'Knowing which events send mail, which address they go to, and what to check when one does not arrive saves a lot of back and forth. What follows takes them in turn, then unsubscribing and keeping a record.' },
       { h: 'Which mail goes out' },
-      { p: 'Three kinds of account email go out: payment results, invoices, and password resets. A payment result follows a payment that has a result, an invoice follows one being issued, and a reset message follows a request.' },
+      { p: 'Three kinds of account email go out: payment results, invoices, and password resets. Each follows the event it records: a payment reaching an outcome, an invoice being issued, and a request to reset a password.' },
       { p: 'Each one confirms that something has already happened, so it can be used to check that an action completed. Not receiving it does not mean it did not happen; look at the page first, then the mailbox.' },
       { p: 'A password reset is account mail and goes only to the sign-in address, while payment results and invoices are billing mail and can go to a separate invoice address. The two have different recipients, so establish which kind is missing first.' },
       { h: 'Where each message is sent' },
@@ -91,7 +91,7 @@ export const ACCOUNT_EXTRAS = [
       { p: 'Changing the address goes further: the old one stops receiving and the new one applies from the next message. Both affect later mail, so confirm which kind you are changing before you act.' },
       { h: 'Keeping the record' },
       { p: 'Keep payment results and invoices, since they are the evidence for checking an amount against a date. Save a copy wherever finance archives its records rather than leaving them in an inbox.' },
-      { p: 'Note address changes and unsubscribes too: when, to what, and who confirmed it. When mail goes missing later, that record answers the first question faster than a search through the mailbox.' },
+      { p: 'Note address changes and unsubscribes too: when it happened, what changed, and who confirmed it. When mail goes missing later, that record answers the first question faster than a search through the mailbox.' },
       { p: 'For a reconciliation, the time, amount, and currency in the message are more reliable than memory. When an amount does not match, put the message beside the billing page and the invoice, agree on the currency and the credited amount first, then discuss the difference.' },
       {
         steps: [
