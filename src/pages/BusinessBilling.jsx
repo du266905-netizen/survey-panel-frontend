@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CalendarRange, ChevronLeft, ChevronRight, Receipt } from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { listInvoices } from '../api/billing';
 import BusinessRail from '../components/BusinessRail';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -37,6 +38,26 @@ export default function BusinessBilling() {
   const ws = workspaceStaticMap[language] || workspaceStaticMap['en-GB'] || {};
 
   const [tab, setTab] = useState('invoices');
+  const [invoices, setInvoices] = useState([]);
+  const [invoiceState, setInvoiceState] = useState('loading');
+  const [invoiceError, setInvoiceError] = useState('');
+
+  useEffect(() => {
+    let alive = true;
+    setInvoiceState('loading');
+    listInvoices({ limit: 20 })
+      .then(({ items }) => {
+        if (!alive) return;
+        setInvoices(items);
+        setInvoiceState('ready');
+      })
+      .catch((error) => {
+        if (!alive) return;
+        setInvoiceError(error?.response?.status === 401 ? 'auth' : 'failed');
+        setInvoiceState('error');
+      });
+    return () => { alive = false; };
+  }, []);
   const [month, setMonth] = useState(() => new Date());
 
   const monthLabel = useMemo(
@@ -88,13 +109,53 @@ export default function BusinessBilling() {
 
         <div className="business-billing-panel" role="tabpanel">
       {tab === 'invoices' ? (
-        <div className="business-billing-empty">
-          <span className="business-billing-empty-icon" aria-hidden="true"><Receipt size={17} /></span>
-          <div>
-            <p>{text.emptyInvoices}</p>
-            <small>{text.invoicesHint}</small>
+        invoiceState === 'loading' ? (
+          <p className="business-billing-note">{text.loadingInvoices || 'Loading invoices…'}</p>
+        ) : invoiceState === 'error' ? (
+          <p className="business-billing-note is-error">
+            {invoiceError === 'auth'
+              ? (text.invoiceAuth || 'Sign in again to see invoices.')
+              : (text.invoiceFailed || 'Invoices could not be loaded. Try again shortly.')}
+          </p>
+        ) : invoices.length === 0 ? (
+          <div className="business-billing-empty">
+            <span className="business-billing-empty-icon" aria-hidden="true"><Receipt size={17} /></span>
+            <div>
+              <p>{text.emptyInvoices}</p>
+              <small>{text.invoicesHint}</small>
+            </div>
           </div>
-        </div>
+        ) : (
+          <table className="business-billing-table">
+            <thead>
+              <tr>
+                <th>{text.colNumber || 'Invoice'}</th>
+                <th>{text.colIssued || 'Issued'}</th>
+                <th>{text.colAmount || 'Amount'}</th>
+                <th>{text.colStatus || 'Status'}</th>
+                <th aria-label={text.colDownload || 'Download'} />
+              </tr>
+            </thead>
+            <tbody>
+              {invoices.map((invoice) => (
+                <tr key={invoice.id}>
+                  <td>{invoice.number}</td>
+                  <td>{invoice.issuedAt ? new Date(invoice.issuedAt).toLocaleDateString(language) : '—'}</td>
+                  <td>{new Intl.NumberFormat(language, { style: 'currency', currency: invoice.currency || 'USD' })
+                    .format((invoice.amountCents || 0) / 100)}</td>
+                  <td>{invoice.status}</td>
+                  <td>
+                    {invoice.pdfUrl ? (
+                      <a href={invoice.pdfUrl} target="_blank" rel="noreferrer noopener">
+                        {text.download || 'PDF'}
+                      </a>
+                    ) : null}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )
       ) : (
         <>
             <div className="business-billing-month">

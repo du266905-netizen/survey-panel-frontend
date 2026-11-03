@@ -142,3 +142,45 @@ p.business-billing-intro {
 }
 
 .business-billing-month > button:hover { border-color: #141413; background: #FAF9F5; }
+
+.business-billing-note {
+  margin: 0;
+  color: #5F6862;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 18px 0;
+}
+
+.business-billing-note.is-error { color: #B42318; }
+
+.business-billing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+.business-billing-table th {
+  color: #8D948D;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-align: left;
+  text-transform: uppercase;
+  padding: 10px 12px 10px 0;
+  border-bottom: 1px solid #E5E3DD;
+}
+
+.business-billing-table td {
+  color: #141413;
+  padding: 12px 12px 12px 0;
+  border-bottom: 1px solid #E5E3DD;
+  vertical-align: middle;
+}
+
+.business-billing-table a {
+  color: #141413;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
