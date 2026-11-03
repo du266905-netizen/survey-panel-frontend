@@ -282,3 +282,17 @@
   .public-site-layout .legal-meta { font-size: 9.5px; }
   .public-site-layout .legal-card-grid.is-three-up { grid-template-columns: 1fr; }
 }
+
+.public-site-layout .legal-cookie-reset {
+  margin-top: 18px;
+  border: 1px solid var(--ps-rule);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ps-ink);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 14px;
+}
+.public-site-layout .legal-cookie-reset:hover { background: var(--ps-sage-bone); }
