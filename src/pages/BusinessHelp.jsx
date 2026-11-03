@@ -3,6 +3,7 @@ import { CreditCard, FolderOpen, BarChart3, UserRound } from 'lucide-react';
 import BusinessRail from '../components/BusinessRail';
 import NotificationBell from '../components/NotificationBell';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import { ARTICLES } from '../help/content';
 import './BusinessHelp.css';
 
 /* Help, inside the workspace.
@@ -67,7 +68,7 @@ export default function BusinessHelp() {
                 ? '付款、账单与账户问题的说明，按主题归档。'
                 : 'Straight answers on payments, billing, and your account.'}
             </p>
-            <Link className="business-help-cta" to="/help">
+            <Link className="business-help-cta" to={`/help/${ARTICLES[0].slug}`}>
               {zh ? '浏览帮助文章' : 'Browse the articles'}
             </Link>
           </div>
@@ -82,7 +83,7 @@ export default function BusinessHelp() {
                   <h2>{copy.title}</h2>
                   <p>{copy.body}</p>
                   {tile.ready ? (
-                    <Link to="/help">{zh ? '查看' : 'Open'}</Link>
+                    <Link to={`/help/${ARTICLES[0].slug}`}>{zh ? '查看' : 'Open'}</Link>
                   ) : (
                     <span>{zh ? '整理中' : 'In progress'}</span>
                   )}

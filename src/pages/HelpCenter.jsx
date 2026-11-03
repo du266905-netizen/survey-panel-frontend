@@ -152,7 +152,26 @@ export default function HelpCenter() {
           ) : null}
         </div>
       ) : (
-        <div className="hc-shell is-home">
+        <div className="hc-shell is-two">
+          <nav className="hc-side" aria-label={copyFor(lang, '全部文章', 'All articles')}>
+            {CATEGORIES.map((group) => {
+              const items = ARTICLES.filter((entry) => entry.category === group.id);
+              if (!items.length) return null;
+              return (
+                <section key={group.id} className="hc-group">
+                  <h2>{t(group, lang)}</h2>
+                  <ul>
+                    {items.map((entry) => (
+                      <li key={entry.slug}>
+                        <Link to={`/help/${entry.slug}`}>{t(entry, lang).title}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              );
+            })}
+          </nav>
+
           <main className="hc-main hc-index">
             <h1>{copyFor(lang, '帮助中心', 'Help centre')}</h1>
             <p className="hc-lede">
@@ -189,23 +208,9 @@ export default function HelpCenter() {
                 ) : null}
               </section>
             ) : (
-              <div className="hc-index-groups">
-                {CATEGORIES.filter((item) => ARTICLES.some((entry) => entry.category === item.id)).map((group) => {
-                  const items = ARTICLES.filter((entry) => entry.category === group.id);
-                  return (
-                    <section key={group.id} className="hc-index-group">
-                      <h2>{t(group, lang)}</h2>
-                      <ul>
-                        {items.map((entry) => (
-                          <li key={entry.slug}>
-                            <Link to={`/help/${entry.slug}`}>{t(entry, lang).title}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </section>
-                  );
-                })}
-              </div>
+              <Link className="hc-index-cta" to={`/help/${ARTICLES[0].slug}`}>
+                {copyFor(lang, '浏览帮助文章', 'Browse the articles')}
+              </Link>
             )}
           </main>
         </div>
