@@ -10,8 +10,10 @@
 .business-help-hero {
   display: grid;
   justify-items: center;
+  align-content: center;
+  min-height: calc(100vh - 150px);
+  padding: 40px 0 64px;
   text-align: center;
-  padding: 24px 0 8px;
 }
 
 .business-help-hero h1 {
@@ -52,51 +54,6 @@
 
 .business-help-cta:hover { background: #2B2B2B; border-color: #2B2B2B; }
 
-.business-help-tiles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 44px 56px;
-  margin-top: 72px;
-}
-
-.business-help-tiles article { min-width: 0; }
-
-.business-help-tiles svg { color: #5F6862; }
-
-.business-help-tiles h2 {
-  margin: 14px 0 0;
-  color: #141413;
-  font-family: var(--font-reading);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.3;
-}
-
-.business-help-tiles p {
-  margin: 8px 0 0;
-  color: #5F6862;
-  font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.65;
-}
-
-.business-help-tiles a,
-.business-help-tiles span {
-  display: inline-block;
-  margin-top: 12px;
-  color: #141413;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.business-help-tiles a:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-.business-help-tiles span { color: #8D948D; font-weight: 400; }
-
 @media (max-width: 760px) {
   .business-help-hero h1 { font-size: 38px; }
-  .business-help-tiles { grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
 }
