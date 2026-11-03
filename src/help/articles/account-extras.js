@@ -13,7 +13,7 @@ export const ACCOUNT_EXTRAS = [
     blocks: [
       { p: '通知邮件不多，但每一封都对应一件已经发生的事：付款有了结果、发票已经开出、密码被重设。弄清哪些事情会发信、发到哪个地址、收不到时先查什么，可以省掉很多来回确认。' },
       { h: '哪些事情会发邮件' },
-      { p: '目前会发出的邮件有三类：付款结果、发票，以及密码重设。付款有了结果时发出付款结果，发票开出之后发出发票，申请重设密码时发出重设邮件。项目进度、问卷结束这类提醒不在这三类里。' },
+      { p: '账户相关的邮件有三类：付款结果、发票，以及密码重设。付款有了结果时发出付款结果，发票开出之后发出发票，申请重设密码时发出重设邮件。每一封都对应一件已经发生的事，因此可以用它来确认操作是否完成。' },
       { h: '账户邮件与财务邮件的区别' },
       { p: '密码重设属于账户邮件，只能发到登录邮箱；付款结果与发票属于财务邮件，可以发到另外设置的收票地址。两类邮件的收件人不同，改了一处不一定影响另一处。排查收不到的问题时，先分清少的是哪一类。' },
       { h: '收件地址从哪里来' },
@@ -58,7 +58,7 @@ export const ACCOUNT_EXTRAS = [
     blocks: [
       { p: 'There are only a few notification emails, and each one follows something that has already happened: a payment has a result, an invoice has been issued, a password has been reset. Knowing which events send mail, which address they go to, and what to check when one does not arrive saves a lot of back and forth.' },
       { h: 'Which events send mail' },
-      { p: 'Three kinds of email go out at present: payment results, invoices, and password resets. A payment result follows a payment that has a result, an invoice follows one being issued, and a reset message follows a request. Reminders about a project or a questionnaire closing are not part of this set.' },
+      { p: 'Three kinds of account email go out: payment results, invoices, and password resets. A payment result follows a payment that has a result, an invoice follows one being issued, and a reset message follows a request. Each one confirms that something has already happened, so it can be used to check that an action completed.' },
       { h: 'Account mail and billing mail' },
       { p: 'A password reset is account mail and can only go to the sign-in address, while payment results and invoices are billing mail and can go to a separate invoice address. The two have different recipients, so changing one does not necessarily change the other. When something does not arrive, establish which kind is missing first.' },
       { h: 'Where the address comes from' },

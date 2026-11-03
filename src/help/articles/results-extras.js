@@ -28,8 +28,8 @@ export const RESULTS_EXTRAS = [
       { p: '默认展示总体，分组放在右侧作为可切换的视角。默认就按人群拆开，会让读者以为总体没有意义，也会把小样本的分组当成结论。' },
       { h: '进度与实时' },
       { p: '收集中的问卷要显示「数据仍在变化」和时间戳，导出与截图都带上生成时间。结束后状态改为只读，并明确标注不会再变。' },
-      { h: '这里不做什么' },
-      { p: '不做显著性检验，不做加权，不做自动结论。这三件事要么需要口径声明，要么需要研究者判断，放在页面里会制造虚假的权威感。' },
+      { h: '分析放在哪里做' },
+      { p: '显著性检验、加权与结论撰写放在分析阶段完成，因为每一项都要附口径声明，也需要研究者的判断。结果页保持为描述性的视图，读者看到的数字与他们能复核的口径一致。' },
       { h: '一套好的结果页的判断标准' },
       {
         steps: [
@@ -63,8 +63,8 @@ export const RESULTS_EXTRAS = [
       { p: 'Show the total by default and offer groups as a switch. Splitting by audience on load implies the total is meaningless and invites small-group readings to be mistaken for findings.' },
       { h: 'Live versus closed' },
       { p: 'A live questionnaire says so, with a timestamp, and every export and screenshot carries its generation time. A closed one is read-only and labelled as final.' },
-      { h: 'What this page does not do' },
-      { p: 'No significance testing, no weighting, no automatic conclusions. Each needs either a stated method or a researcher’s judgement, and putting them on the page manufactures authority the numbers do not have.' },
+      { h: 'Where analysis happens' },
+      { p: 'Significance testing, weighting, and the writing of conclusions belong to the analysis stage, because each one carries a stated method and needs a researcher’s judgement. The page stays descriptive, so what a reader sees is what they can check.' },
       { h: 'How to judge a results page' },
       {
         steps: [

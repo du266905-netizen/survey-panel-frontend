@@ -171,7 +171,7 @@ export const METHODS = [
 
   article('survey-logic', 'methods', {
     title: '用逻辑控制答题路径',
-    summary: '条件从哪来、不同题型怎么设、不满足条件的人去哪，以及循环不支持时怎么改结构。',
+    summary: '条件从哪来、不同题型怎么设、不满足条件的人去哪，以及需要重复提问时怎么组织结构。',
     blocks: [
       { p: '逻辑让不同的人看到不同的题目，而不是所有人都走同一条路。它按条件生效，条件只读前面已经答过的内容。下面说明逻辑的用途、各类题型的设法、分支的检查，以及与配额一起使用时的注意事项。' },
       { h: '逻辑用来做什么' },
@@ -188,8 +188,8 @@ export const METHODS = [
       { p: '条件只能引用前面已经答过的题，因为后面的答案在跳转发生时还不存在。引用时写清是哪道题的哪个选项，不要只写选项文字，两道题的选项可能用词相同。前面的题被改过之后，引用它的条件要重新检查一遍。' },
       { h: '不满足条件的人去哪' },
       { p: '不满足条件时，默认做法是跳过这道题继续往下，而不是结束问卷。需要直接结束时，把条件接上结束页，并在结束页写明结束原因。两种做法的结果差别很大：跳过只是少看一道题，结束则意味着这个人不再贡献任何数据。' },
-      { h: '循环不在支持范围内' },
-      { p: '问卷不支持循环，也就是让一个人重复回答同一组题直到某个条件成立。需要重复时，把重复的次数写进题干，或者为最多可能出现的那几轮各建一组题。结构上更简单的做法是把「还会不会再买」这类问题单独问一次，而不是让同一组题反复出现。' },
+      { h: '需要重复提问时' },
+      { p: '让同一个人重复回答同一组题，要用「按次数展开」来设计：把重复的次数写进题干，或者为最多可能出现的那几轮各建一组题。多数情况下更简单的做法，是把「还会不会再买」这类问题单独问一次，而不是让整组题反复出现。' },
       { h: '在预览里走完每条分支' },
       { p: '预览可以按不同答案组合走一遍，看到每个人实际经过的题目。每条分支至少走一次，重点看结束页出现的位置和跳转后的第一道题。走不通的分支通常意味着条件写反了，或者引用了不存在的前置答案。' },
       { h: '发布之后改逻辑' },
@@ -211,7 +211,7 @@ export const METHODS = [
     ],
   }, {
     title: 'Branching with logic',
-    summary: 'Where conditions come from, how they work on each question type, where respondents go when a condition fails, and why loops are not supported.',
+    summary: 'Where conditions come from, how they work on each question type, where respondents go when a condition fails, and how to structure a set that has to repeat.',
     blocks: [
       { p: 'Logic sends different respondents down different paths instead of showing everyone the same questionnaire. It works through conditions, and a condition only reads answers already given. What follows covers what logic is for, how it applies to each question type, how to verify branches, and what changes when quotas are involved.' },
       { h: 'What logic is for' },
@@ -228,8 +228,8 @@ export const METHODS = [
       { p: 'A condition can only point at a question answered earlier, because later answers do not exist at the moment the jump is evaluated. Identify the question and the option rather than quoting the option text alone, since two questions can share the same wording. After an earlier question is edited, recheck every condition that points at it.' },
       { h: 'Where respondents go when a condition fails' },
       { p: 'When a condition does not hold, the default is to skip that question and carry on rather than end the questionnaire. To end it instead, route the condition to the closing page and say there why it ended. The two outcomes differ a lot: a skip means one question is unseen, an ending means that person contributes nothing further.' },
-      { h: 'Loops are not supported' },
-      { p: 'Loops are not supported, meaning a respondent cannot be sent round the same set of questions until a condition changes. Where repetition is needed, put the number of repeats in the question text, or build one set of questions for each round that can realistically occur. A simpler structure asks once whether there will be another purchase, instead of repeating the same block.' },
+      { h: 'When a set repeats' },
+      { p: 'Repeating a set for the same respondent is designed as a fixed number of rounds: put the number of repeats in the question text, or build one set of questions for each round that can realistically occur. Most studies are simpler if a question like “will you buy again” is asked once rather than repeating the whole block.' },
       { h: 'Walking every branch in preview' },
       { p: 'Preview lets you take different combinations of answers and see the questions each respondent actually passes through. Walk every branch at least once, watching where the closing page appears and which question follows a jump. A branch that cannot be completed usually means a condition is inverted or points at an answer that does not exist.' },
       { h: 'Changing logic after launch' },
