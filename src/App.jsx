@@ -49,6 +49,7 @@ import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
 import Privacy from './pages/Privacy';
 import RouteScrollManager from './components/RouteScrollManager';
+import CookieNotice from './components/CookieNotice';
 import PageMotion from './components/PageMotion';
 import PublicSiteLayout from './components/PublicSiteLayout';
 import Terms from './pages/Terms';
@@ -189,6 +190,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
     <>
       <RouteScrollManager />
+      <CookieNotice />
       <PageMotion>
       <Routes>
         <Route path="/login" element={<PublicEntry><Landing initialAuthMode="login" authOnly /></PublicEntry>} />
