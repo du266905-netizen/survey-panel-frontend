@@ -39,9 +39,9 @@ body:has(.hc) { background: #FFFFFF; }
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  height: 80px;
-  border-bottom: 1px solid #E5E3DD;
-  background: rgba(255, 255, 255, .94);
+  height: 72px;
+  border-bottom: 0;
+  background: #141413;
   backdrop-filter: saturate(1.4) blur(8px);
   -webkit-backdrop-filter: saturate(1.4) blur(8px);
   padding: 0 24px;
@@ -58,18 +58,19 @@ body:has(.hc) { background: #FFFFFF; }
   display: block;
   width: 132px;
   height: auto;
+  filter: invert(1);
 }
 
 .hc-brand-rule {
   width: 1px;
   height: 18px;
-  background: #E5E3DD;
+  background: rgba(255, 255, 255, .22);
 }
 
 .hc-brand-title {
-  color: var(--ps-ink);
+  color: #FFFFFF;
   font-family: var(--font-reading);
-  font-size: 38px;
+  font-size: 22px;
   font-weight: 600;
   letter-spacing: -.02em;
   line-height: 1.1;
@@ -122,10 +123,10 @@ body:has(.hc) { background: #FFFFFF; }
   align-items: center;
   gap: 6px;
   height: 38px;
-  border: 1px solid #E5E3DD;
+  border: 1px solid rgba(255, 255, 255, .18);
   border-radius: 10px;
-  background: #FFFFFF;
-  color: var(--ps-body);
+  background: rgba(255, 255, 255, .08);
+  color: rgba(255, 255, 255, .8);
   cursor: pointer;
   font-family: var(--font-sans);
   font-size: 13px;
@@ -134,7 +135,7 @@ body:has(.hc) { background: #FFFFFF; }
   white-space: nowrap;
 }
 
-.hc-lang:hover { border-color: #D8D5CD; color: var(--ps-ink); }
+.hc-lang:hover { border-color: rgba(255, 255, 255, .4); color: #FFFFFF; }
 
 .hc-search {
   display: flex;
@@ -142,30 +143,30 @@ body:has(.hc) { background: #FFFFFF; }
   gap: 8px;
   width: min(360px, 42vw);
   height: 38px;
-  border: 1px solid #E5E3DD;
+  border: 1px solid rgba(255, 255, 255, .18);
   border-radius: 10px;
-  background: #FFFFFF;
-  color: var(--ps-muted);
+  background: rgba(255, 255, 255, .08);
+  color: rgba(255, 255, 255, .6);
   padding: 0 10px 0 12px;
 }
 
-.hc-search:focus-within { border-color: var(--ps-ink); }
+.hc-search:focus-within { border-color: rgba(255, 255, 255, .45); }
 
 .hc-search input {
   width: 100%;
   border: 0;
   outline: 0;
   background: transparent;
-  color: var(--ps-ink);
+  color: #FFFFFF;
   font: 400 14px var(--font-sans);
 }
 
-.hc-search input::placeholder { color: var(--ps-muted); }
+.hc-search input::placeholder { color: rgba(255, 255, 255, .55); }
 
 .hc-search kbd {
-  border: 1px solid #E5E3DD;
+  border: 1px solid rgba(255, 255, 255, .22);
   border-radius: 4px;
-  color: var(--ps-muted);
+  color: rgba(255, 255, 255, .6);
   font: 500 11px var(--font-sans);
   padding: 1px 5px;
   white-space: nowrap;
@@ -175,14 +176,14 @@ body:has(.hc) { background: #FFFFFF; }
 
 .hc-nav {
   position: sticky;
-  top: 80px;
+  top: 72px;
   z-index: 19;
   display: flex;
   align-items: stretch;
   gap: 26px;
   height: 48px;
   border-bottom: 1px solid #E5E3DD;
-  background: #FFFFFF;
+  background: #F4F2EC;
   padding: 0 24px;
   overflow-x: auto;
   scrollbar-width: none;
@@ -254,9 +255,9 @@ body:has(.hc) { background: #FFFFFF; }
 
 .hc-side {
   position: sticky;
-  top: 128px;
+  top: 120px;
   align-self: start;
-  height: calc(100vh - 128px);
+  height: calc(100vh - 120px);
   overflow-y: auto;
   border-right: 1px solid #E5E3DD;
   padding: 36px 20px 64px;
@@ -267,13 +268,12 @@ body:has(.hc) { background: #FFFFFF; }
 
 .hc-group h2 {
   margin: 0 0 10px 10px;
-  color: var(--ps-muted);
+  color: var(--ps-ink);
   font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .14em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
   line-height: 1.4;
-  text-transform: uppercase;
 }
 
 .hc-group ul {
@@ -374,7 +374,7 @@ body:has(.hc) { background: #FFFFFF; }
   font-weight: 600;
   letter-spacing: -.02em;
   line-height: 1.25;
-  scroll-margin-top: 142px;
+  scroll-margin-top: 134px;
 }
 
 .hc-body h2:first-child { margin-top: 0; }
@@ -446,7 +446,7 @@ body:has(.hc) { background: #FFFFFF; }
 
 .hc-toc {
   position: sticky;
-  top: 128px;
+  top: 120px;
   align-self: start;
   margin: 44px 24px 0 0;
   padding: 0;
