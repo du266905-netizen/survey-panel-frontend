@@ -111,7 +111,7 @@ body:has(.hc) { background: #FFFFFF; }
 
 .hc-index h1 {
   margin: 0;
-  font-family: var(--font-reading);
+  font-family: var(--font-impact);
   font-size: 56px;
   font-weight: 500;
   letter-spacing: -.03em;
