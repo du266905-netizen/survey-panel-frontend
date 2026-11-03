@@ -1,17 +1,20 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowRight, Search } from 'lucide-react';
+import { ArrowRight, Check, Copy, Menu, Search } from 'lucide-react';
 import { ARTICLES, CATEGORIES, findArticle } from '../help/content';
 import { useLanguage } from '../components/LanguageContext';
 import './HelpCenter.css';
 
-/* Public help centre, in two surfaces:
+/* Public help centre, built on the Claude Code docs frame:
  *
- *   /help          a landing: the title at 56, one line under it, one way in
- *   /help/:slug    the docs frame: category rail, article, section rail
+ *   bar      wordmark, doc title, search
+ *   nav      the categories as tabs, the current one underlined
+ *   rail     groups of articles, the open one filled
+ *   column   eyebrow, 56 title, one line, the prose
+ *   toc      "On this page" for the sections below
  *
- * The rail carries no icons — a bold group title and the articles under it is
- * all the structure a reader needs, and it keeps the left edge quiet.
+ * There is one entry page and it lives in the workspace (`/business/help`).
+ * `/help` is the public table of contents, not a second landing.
  */
 
 const t = (entry, lang) => entry[lang] || entry.en;
@@ -40,6 +43,7 @@ export default function HelpCenter() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
+  const [copied, setCopied] = useState(false);
 
   const article = slug ? findArticle(slug) : null;
   const copy = article ? t(article, lang) : null;
@@ -50,6 +54,14 @@ export default function HelpCenter() {
     [copy],
   );
 
+  // Only categories that actually carry articles earn a tab and a rail group.
+  const groups = useMemo(
+    () => CATEGORIES
+      .map((group) => ({ ...group, items: ARTICLES.filter((entry) => entry.category === group.id) }))
+      .filter((group) => group.items.length),
+    [],
+  );
+
   const results = useMemo(() => {
     const needle = query.trim().toLowerCase();
     if (!needle) return null;
@@ -58,6 +70,24 @@ export default function HelpCenter() {
       return `${text.title} ${text.summary}`.toLowerCase().includes(needle);
     });
   }, [query, lang]);
+
+  const copyPage = async () => {
+    if (!copy) return;
+    const lines = [copy.title, copy.summary];
+    copy.blocks.forEach((block) => {
+      if (block.h) lines.push(`## ${block.h}`);
+      else if (block.p) lines.push(block.p);
+      else if (block.steps) block.steps.forEach((step, index) => lines.push(`${index + 1}. ${step}`));
+      else if (block.note) lines.push(`> ${block.note}`);
+    });
+    try {
+      await navigator.clipboard.writeText(lines.join('\n\n'));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      /* clipboard blocked: leave the label alone */
+    }
+  };
 
   return (
     <div className="hc">
@@ -82,40 +112,57 @@ export default function HelpCenter() {
         </label>
       </header>
 
+      <nav className="hc-nav" aria-label={copyFor(lang, '分类', 'Categories')}>
+        <Link to="/help" className={article ? '' : 'is-active'}>{copyFor(lang, '全部文章', 'All articles')}</Link>
+        {groups.map((group) => (
+          <Link
+            key={group.id}
+            to={`/help/${group.items[0].slug}`}
+            className={article && article.category === group.id ? 'is-active' : ''}
+          >
+            {t(group, lang)}
+          </Link>
+        ))}
+      </nav>
+
       {article ? (
         <div className={`hc-shell${sections.length ? '' : ' is-two'}`}>
           <nav className="hc-side" aria-label={copyFor(lang, '全部文章', 'All articles')}>
-            {CATEGORIES.map((group) => {
-              const items = ARTICLES.filter((entry) => entry.category === group.id);
-              if (!items.length) return null;
-              return (
-                <section key={group.id} className="hc-group">
-                  <h2>{t(group, lang)}</h2>
-                  <ul>
-                    {items.map((entry) => {
-                      const active = Boolean(article && entry.slug === article.slug);
-                      return (
-                        <li key={entry.slug}>
-                          <Link
-                            to={`/help/${entry.slug}`}
-                            className={active ? 'is-active' : ''}
-                            aria-current={active ? 'page' : undefined}
-                          >
-                            {t(entry, lang).title}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-              );
-            })}
+            {groups.map((group) => (
+              <section key={group.id} className="hc-group">
+                <h2>{t(group, lang)}</h2>
+                <ul>
+                  {group.items.map((entry) => {
+                    const active = entry.slug === article.slug;
+                    return (
+                      <li key={entry.slug}>
+                        <Link
+                          to={`/help/${entry.slug}`}
+                          className={active ? 'is-active' : ''}
+                          aria-current={active ? 'page' : undefined}
+                        >
+                          {t(entry, lang).title}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            ))}
           </nav>
 
           <main className="hc-main">
-            <p className="hc-eyebrow">{t(category, lang)}</p>
+            <div className="hc-head">
+              <div>
+                <p className="hc-eyebrow">{t(category, lang)}</p>
+                <h1>{copy.title}</h1>
+              </div>
+              <button type="button" className="hc-copy" onClick={copyPage}>
+                {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
+                {copied ? copyFor(lang, '已复制', 'Copied') : copyFor(lang, '复制本页', 'Copy page')}
+              </button>
+            </div>
 
-            <h1>{copy.title}</h1>
             <p className="hc-summary">{copy.summary}</p>
             <p className="hc-meta">{copyFor(lang, '持续更新', 'Kept up to date')}</p>
 
@@ -136,7 +183,10 @@ export default function HelpCenter() {
 
           {sections.length ? (
             <aside className="hc-toc" aria-label={copyFor(lang, '本页内容', 'On this page')}>
-              <p className="hc-toc-title">{copyFor(lang, '本页内容', 'On this page')}</p>
+              <p className="hc-toc-title">
+                <Menu size={15} aria-hidden="true" />
+                {copyFor(lang, '本页内容', 'On this page')}
+              </p>
               <ul>
                 {sections.map((section) => (
                   <li key={section.index}>
@@ -178,28 +228,24 @@ export default function HelpCenter() {
                 ) : null}
               </section>
             ) : (
-              CATEGORIES.map((group) => {
-                const items = ARTICLES.filter((entry) => entry.category === group.id);
-                if (!items.length) return null;
-                return (
-                  <section key={group.id} className="hc-index-group">
-                    <p className="hc-eyebrow">{t(group, lang)}</p>
-                    <ul>
-                      {items.map((entry) => {
-                        const entryCopy = t(entry, lang);
-                        return (
-                          <li key={entry.slug}>
-                            <Link to={`/help/${entry.slug}`}>
-                              <strong>{entryCopy.title}</strong>
-                              <small>{entryCopy.summary}</small>
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </section>
-                );
-              })
+              groups.map((group) => (
+                <section key={group.id} className="hc-index-group">
+                  <p className="hc-eyebrow">{t(group, lang)}</p>
+                  <ul>
+                    {group.items.map((entry) => {
+                      const entryCopy = t(entry, lang);
+                      return (
+                        <li key={entry.slug}>
+                          <Link to={`/help/${entry.slug}`}>
+                            <strong>{entryCopy.title}</strong>
+                            <small>{entryCopy.summary}</small>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              ))
             )}
           </main>
         </div>
