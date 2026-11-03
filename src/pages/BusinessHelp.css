@@ -26,13 +26,14 @@
   line-height: 1.02 !important;
 }
 
-.business-help-hero p {
+.business-account-page .business-help-hero p {
   max-width: 560px;
   margin: 18px 0 0;
-  color: #5F6862;
-  font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.7;
+  color: #5F6862 !important;
+  font-family: var(--font-sans) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.7 !important;
 }
 
 .business-help-cta {
