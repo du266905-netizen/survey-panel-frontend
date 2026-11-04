@@ -127,7 +127,6 @@ export default function BusinessAddFunds() {
   const copy = pageCopy[language] || pageCopyEn;
 
   const [amount, setAmount] = useState(String(MIN_TOP_UP));
-  const [custom, setCustom] = useState(false);
   const [touched, setTouched] = useState(false);
   const [method, setMethod] = useState('bank');
   const [channels, setChannels] = useState({ card: false, crypto: true, bankTransfer: true });
@@ -316,8 +315,8 @@ export default function BusinessAddFunds() {
                   <button
                     key={value}
                     type="button"
-                    className={`business-topup-amount${!custom && Number(amount) === value ? ' is-active' : ''}`}
-                    onClick={() => { setAmount(String(value)); setCustom(false); setTouched(true); setError(''); }}
+                    className={`business-topup-amount${Number(amount) === value ? ' is-active' : ''}`}
+                    onClick={() => { setAmount(String(value)); setTouched(true); setError(''); }}
                   >
                     <strong>{money.format(value)}</strong>
                   </button>
@@ -332,9 +331,8 @@ export default function BusinessAddFunds() {
                     ref={inputRef}
                     inputMode="decimal"
                     placeholder={copy.customPlaceholder}
-                    value={custom ? amount : ''}
-                    onFocus={() => setCustom(true)}
-                    onChange={(event) => { setAmount(event.target.value); setCustom(true); setTouched(true); }}
+                    value={amount}
+                    onChange={(event) => { setAmount(event.target.value); setTouched(true); }}
                     onBlur={() => setTouched(true)}
                   />
                 </span>
@@ -435,13 +433,15 @@ export default function BusinessAddFunds() {
           <aside className="business-topup-summary">
             {/* The account rail the page always had: balance first, then what
                 this top-up adds, then the lock and the accepted marks. */}
+            {/* The big figure is what this click adds: it has to answer the
+                amount the payer just chose, not the balance they already had. */}
             <div>
-              <div className="business-topup-label">{copy.rowBalance}</div>
-              <div className="business-topup-balance">{balance || '—'}</div>
+              <div className="business-topup-label">{copy.rowAmount}</div>
+              <div className="business-topup-balance">{amountLabel}</div>
             </div>
 
             <dl className="business-topup-rows">
-              <div><dt>{copy.rowAmount}</dt><dd>{amountLabel}</dd></div>
+              <div><dt>{copy.rowBalance}</dt><dd>{balance || '—'}</dd></div>
               <div><dt>{copy.methodTitle}</dt><dd>{methodLabel}</dd></div>
               <div><dt>{copy.rowDue}</dt><dd>{amountLabel}</dd></div>
             </dl>
