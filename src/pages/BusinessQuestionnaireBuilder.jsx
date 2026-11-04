@@ -252,6 +252,13 @@ export default function BusinessQuestionnaireBuilder() {
             <Trash2 size={16} />
           </button>
         )}
+        <button
+          className="business-builder-btn"
+          type="button"
+          onClick={() => navigate(withLanguage(`/business/projects/${projectId}/studio`, language))}
+        >
+          {language === 'zh-CN' ? '新版编辑器' : 'New editor'} <ArrowRight size={15} />
+        </button>
         {['DRAFT', 'ARCHIVED'].includes(questionnaire.status) && (
           <button className="business-builder-btn is-primary" type="button" onClick={() => save({ publish: true })} disabled={saving || !questions.length}>
             {saving ? <LoaderCircle className="animate-spin" size={15} /> : null}{qb.headerRequestReview}<ArrowRight size={15} />
