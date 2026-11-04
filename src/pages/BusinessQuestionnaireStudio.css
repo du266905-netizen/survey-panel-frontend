@@ -563,3 +563,45 @@
   .sq-card-head { flex-wrap: wrap; }
   .sq-prompt { flex-basis: 100%; order: 10; }
 }
+
+/* ---- published state, cover note, and the narrow confirm dialog ---- */
+
+.sq-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FAF9F5;
+  color: #141413;
+  font-size: 13px;
+  padding: 9px 12px;
+}
+
+.sq-banner span { flex: 1 1 auto; }
+
+.sq-page.is-locked .sq-cards,
+.sq-page.is-locked .sq-add-question,
+.sq-page.is-locked .sq-group-head .sq-icon { pointer-events: none; opacity: .55; }
+
+.sq-cover { display: grid; gap: 6px; margin-bottom: 16px; }
+
+.sq-cover > span {
+  color: #8D948D;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.sq-cover textarea {
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  color: #141413;
+  font: 400 13px var(--font-sans);
+  padding: 9px 10px;
+  resize: vertical;
+}
+
+.sq-modal-card.is-narrow { width: min(100%, 460px); }

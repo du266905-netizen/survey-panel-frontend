@@ -2,9 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   AlertCircle, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Database, Eye, GripVertical,
-  LayoutDashboard, ListChecks, LoaderCircle, MoreHorizontal, Plus, Send, Settings2, Star, Trash2, X,
+  Archive, LayoutDashboard, ListChecks, LoaderCircle, MoreHorizontal, Plus, Send, Settings2, Star, Trash2, X,
 } from 'lucide-react';
-import { getBusinessProject, publishBusinessQuestionnaire, saveBusinessQuestionnaire } from '../api/realApi';
+import {
+  archiveBusinessQuestionnaire, deleteBusinessProject, duplicateBusinessQuestionnaire,
+  getBusinessProject, publishBusinessQuestionnaire, saveBusinessQuestionnaire,
+} from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessQuestionnaireStudio.css';
 
@@ -54,7 +57,13 @@ const copy = {
     remove: '删除', moveUp: '上移', moveDown: '下移',
     promptPlaceholder: '问题', type: '题型', options: '选项',
     save: '保存', publish: '发布', publishing: '发布中…', saved: '已保存', saveFailed: '保存失败，请稍后再试。',
-    untitled: '未命名问卷', preview: '预览', previewTitle: '受访者看到的顺序', close: '关闭',
+    untitled: '未命名问卷', preview: '预览',
+    archived: '已归档', copyDraft: '复制为新草稿', archive: '归档', deleteDraft: '删除草稿',
+    deleteConfirm: '删除这份草稿？删除后不可恢复。',
+    locked: '已发布：结构已锁定。如需修改，复制为新草稿。',
+    coverTitle: '封面说明', coverPlaceholder: '受访者打开问卷时先看到的一段话',
+    sensitiveTitle: '这份问卷会收集敏感信息', sensitiveBody: '包含收入、性别、健康等字段时，发布前需要确认用途与告知已就位。',
+    sensitiveConfirm: '确认并发布', sensitiveCancel: '再检查一下', previewTitle: '受访者看到的顺序', close: '关闭',
     next: '下一步', prev: '上一步', finish: '完成',
     other: '其他', requiredMark: '必答', optionalMark: '选填',
   },
@@ -72,7 +81,13 @@ const copy = {
     remove: 'Delete', moveUp: 'Move up', moveDown: 'Move down',
     promptPlaceholder: 'Question', type: 'Type', options: 'Options',
     save: 'Save', publish: 'Publish', publishing: 'Publishing…', saved: 'Saved', saveFailed: 'Could not save. Try again.',
-    untitled: 'Untitled questionnaire', preview: 'Preview', previewTitle: 'What the respondent sees', close: 'Close',
+    untitled: 'Untitled questionnaire', preview: 'Preview',
+    archived: 'Archived', copyDraft: 'Copy as a new draft', archive: 'Archive', deleteDraft: 'Delete draft',
+    deleteConfirm: 'Delete this draft? This cannot be undone.',
+    locked: 'Published: the structure is locked. Copy it to a new draft to change it.',
+    coverTitle: 'Cover note', coverPlaceholder: 'What respondents read before the first question',
+    sensitiveTitle: 'This survey asks for sensitive information', sensitiveBody: 'Income, gender or health fields need a stated purpose and notice before publishing.',
+    sensitiveConfirm: 'Confirm and publish', sensitiveCancel: 'Check again', previewTitle: 'What the respondent sees', close: 'Close',
     next: 'Next', prev: 'Back', finish: 'Done',
     other: 'Other', requiredMark: 'Required', optionalMark: 'Optional',
   },
@@ -146,20 +161,33 @@ export default function BusinessQuestionnaireStudio() {
   const [error, setError] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewStep, setPreviewStep] = useState(0);
+  const [cover, setCover] = useState('');
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [sensitiveOpen, setSensitiveOpen] = useState(false);
   const optionRefs = useRef({});
 
   const load = useCallback(async () => {
     try {
       const response = await getBusinessProject(projectId);
       const next = response.data.project;
+      if (!next.questionnaire) {
+        navigate(withLanguage('/business/workspace', language));
+        return;
+      }
       setProject(next);
+      setCover(next.questionnaire?.coverDescription || '');
       setQuestions((next.questionnaire?.questions || []).map(normalize));
     } catch {
       setError(text.saveFailed);
     }
-  }, [projectId, text.saveFailed]);
+  }, [projectId, text.saveFailed, navigate, language]);
 
   useEffect(() => { load(); }, [load]);
+
+  const status = project?.questionnaire?.status || 'DRAFT';
+  const readOnly = status !== 'DRAFT' && status !== 'ARCHIVED';
+  const hasSensitive = questions.some((question) => question.section === 'PROFILE'
+    && /(income|salary|gender|sex|ethnic|race|religion|health|disab)/i.test(question.prompt));
 
   const typeLabel = (type) => TYPE_LABEL[type]?.[language] || TYPE_LABEL[type]?.en || type;
   const sectionLabel = (section) => {
@@ -277,15 +305,19 @@ export default function BusinessQuestionnaireStudio() {
 
   const minutes = Math.max(1, Math.round(questions.length * 0.75));
 
-  const save = async ({ publish = false } = {}) => {
+  const save = async ({ publish = false, acknowledged = false } = {}) => {
     if (saving) return;
+    if (publish && hasSensitive && !acknowledged) {
+      setSensitiveOpen(true);
+      return;
+    }
     setSaving(publish ? 'publish' : 'save');
     setError('');
     setMessage('');
     try {
       await saveBusinessQuestionnaire(projectId, {
         title: project?.questionnaire?.title || project?.title || text.untitled,
-        coverDescription: project?.questionnaire?.coverDescription || '',
+        coverDescription: cover || '',
         collectionMode: project?.questionnaire?.collectionMode || 'AUDIENCE_SOURCING',
         isCollecting: Boolean(project?.questionnaire?.isCollecting),
         questions: questions.map((question, index) => ({
@@ -298,12 +330,49 @@ export default function BusinessQuestionnaireStudio() {
           logic: question.logic,
         })),
       });
-      if (publish) await publishBusinessQuestionnaire(projectId, { sensitiveDataAcknowledged: true });
+      if (publish) await publishBusinessQuestionnaire(projectId, { sensitiveDataAcknowledged: acknowledged });
       await load();
       setMessage(text.saved);
     } catch (failure) {
       setError(failure?.response?.data?.message || text.saveFailed);
     } finally {
+      setSaving('');
+    }
+  };
+
+  const archive = async () => {
+    setMoreOpen(false);
+    setSaving('archive');
+    try {
+      await archiveBusinessQuestionnaire(projectId);
+      await load();
+      setMessage(text.archived);
+    } catch (failure) {
+      setError(failure?.response?.data?.message || text.saveFailed);
+    } finally { setSaving(''); }
+  };
+
+  const duplicate = async () => {
+    setMoreOpen(false);
+    setSaving('duplicate');
+    try {
+      const response = await duplicateBusinessQuestionnaire(projectId);
+      navigate(withLanguage(`/business/projects/${response.data.project.id}`, language));
+    } catch (failure) {
+      setError(failure?.response?.data?.message || text.saveFailed);
+      setSaving('');
+    }
+  };
+
+  const removeDraft = async () => {
+    setMoreOpen(false);
+    if (!window.confirm(text.deleteConfirm)) return;
+    setSaving('delete');
+    try {
+      await deleteBusinessProject(projectId);
+      navigate(withLanguage('/business/workspace?view=questionnaires', language));
+    } catch (failure) {
+      setError(failure?.response?.data?.message || text.saveFailed);
       setSaving('');
     }
   };
@@ -316,7 +385,7 @@ export default function BusinessQuestionnaireStudio() {
   const previewList = previewOpen ? questions : [];
 
   return (
-    <main className="sq-page">
+    <main className={`sq-page${readOnly ? ' is-locked' : ''}`}>
       <header className="sq-top">
         <button type="button" className="sq-icon" onClick={() => navigate(withLanguage(`/business/projects/${projectId}`, language))} aria-label={text.back}>
           <ArrowLeft size={17} aria-hidden="true" />
@@ -339,6 +408,22 @@ export default function BusinessQuestionnaireStudio() {
             {saving === 'publish' ? <LoaderCircle size={15} className="sq-spin" /> : <Send size={15} aria-hidden="true" />}
             {saving === 'publish' ? text.publishing : text.publish}
           </button>
+          <div className="sq-menu-wrap">
+            <button type="button" className="sq-icon" aria-label={text.menu} onClick={() => setMoreOpen((open) => !open)}>
+              <MoreHorizontal size={17} aria-hidden="true" />
+            </button>
+            {moreOpen ? (
+              <div className="sq-menu">
+                <button type="button" onClick={duplicate}><Copy size={14} aria-hidden="true" /> {text.copyDraft}</button>
+                {['PUBLISHED', 'PENDING_REVIEW', 'APPROVED'].includes(status) ? (
+                  <button type="button" onClick={archive}><Archive size={14} aria-hidden="true" /> {text.archive}</button>
+                ) : null}
+                {status === 'DRAFT' ? (
+                  <button type="button" onClick={removeDraft}><Trash2 size={14} aria-hidden="true" /> {text.deleteDraft}</button>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
         </div>
       </header>
 
@@ -354,6 +439,26 @@ export default function BusinessQuestionnaireStudio() {
         </nav>
 
         <section className="sq-canvas">
+          {readOnly ? (
+            <div className="sq-banner">
+              <AlertCircle size={15} aria-hidden="true" />
+              <span>{text.locked}</span>
+              <button type="button" className="sq-btn" onClick={duplicate}>{text.copyDraft}</button>
+            </div>
+          ) : null}
+
+          <label className="sq-cover">
+            <span>{text.coverTitle}</span>
+            <textarea
+              rows={2}
+              maxLength={600}
+              value={cover}
+              disabled={readOnly}
+              placeholder={text.coverPlaceholder}
+              onChange={(event) => { setCover(event.target.value); setMessage(''); }}
+            />
+          </label>
+
           {questions.length === 0 ? (
             <div className="sq-empty">
               <p>{text.addQuestion}</p>
@@ -582,6 +687,26 @@ export default function BusinessQuestionnaireStudio() {
           </section>
         </aside>
       </div>
+
+      {sensitiveOpen ? (
+        <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.sensitiveTitle}>
+          <button type="button" className="sq-modal-scrim" aria-label={text.close} onClick={() => setSensitiveOpen(false)} />
+          <section className="sq-modal-card is-narrow">
+            <header><strong>{text.sensitiveTitle}</strong></header>
+            <div className="sq-modal-body"><p className="sq-preview-empty">{text.sensitiveBody}</p></div>
+            <footer>
+              <button type="button" className="sq-btn" onClick={() => setSensitiveOpen(false)}>{text.sensitiveCancel}</button>
+              <button
+                type="button"
+                className="sq-btn is-primary"
+                onClick={() => { setSensitiveOpen(false); save({ publish: true, acknowledged: true }); }}
+              >
+                {text.sensitiveConfirm}
+              </button>
+            </footer>
+          </section>
+        </div>
+      ) : null}
 
       {previewOpen ? (
         <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.previewTitle}>
