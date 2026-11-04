@@ -151,11 +151,17 @@ export function useBillingProfile() {
   return { profile, update, saving, saved, errorKey, errorDetail };
 }
 
-export default function BusinessBillingProfile({ billing, embedded = false }) {
+export default function BusinessBillingProfile({ billing, embedded = false, highlightMissing = false }) {
   const { language } = useLanguage();
   const copy = copyByLanguage[language] || en;
   const countries = useMemo(() => countryOptionsFor(language), [language]);
   const { profile, update, saving, saved, errorKey, errorDetail } = billing;
+
+  /* When the payer presses "agree and pay" before the profile is complete, the
+     dialog asks for these fields by pointing at them. The component does not
+     decide that on its own: it only paints what the caller says is missing. */
+  const missing = (key) => highlightMissing && !String(profile[key] || '').trim();
+  const fieldClass = (key) => `billing-profile-field${missing(key) ? ' is-missing' : ''}`;
 
   return (
     <div className={`billing-profile${embedded ? ' is-embedded' : ''}`}>
@@ -168,12 +174,12 @@ export default function BusinessBillingProfile({ billing, embedded = false }) {
         ) : null}
       </div>
 
-      <label className="billing-profile-field">
+      <label className={fieldClass('companyName')}>
         {copy.company}
         <input value={profile.companyName} onChange={update('companyName')} autoComplete="organization" />
       </label>
 
-      <label className="billing-profile-field">
+      <label className={fieldClass('country')}>
         {copy.country}
         <select value={profile.country} onChange={update('country')}>
           <option value="">—</option>
@@ -183,17 +189,17 @@ export default function BusinessBillingProfile({ billing, embedded = false }) {
         </select>
       </label>
 
-      <label className="billing-profile-field">
+      <label className={fieldClass('addressLine1')}>
         {copy.address}
         <input value={profile.addressLine1} onChange={update('addressLine1')} autoComplete="street-address" />
       </label>
 
       <div className="billing-profile-pair">
-        <label className="billing-profile-field">
+        <label className={fieldClass('city')}>
           {copy.city}
           <input value={profile.city} onChange={update('city')} autoComplete="address-level2" />
         </label>
-        <label className="billing-profile-field">
+        <label className={fieldClass('postalCode')}>
           {copy.postal}
           <input value={profile.postalCode} onChange={update('postalCode')} autoComplete="postal-code" />
         </label>
@@ -215,7 +221,7 @@ export default function BusinessBillingProfile({ billing, embedded = false }) {
         </label>
       </div>
 
-      <label className="billing-profile-field">
+      <label className={fieldClass('billingEmail')}>
         {copy.email}
         <input type="email" value={profile.billingEmail} onChange={update('billingEmail')} autoComplete="email" />
       </label>

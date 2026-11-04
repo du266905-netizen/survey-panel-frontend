@@ -9,12 +9,12 @@
  *       22 dialog title and the amount.
  */
 
-.business-funds-screen {
+.business-topup-screen {
   min-height: 100svh;
   background: #FFFFFF;
 }
 
-.business-funds-dialog {
+.business-topup-dialog {
   position: fixed;
   z-index: 200;
   inset: 0;
@@ -23,7 +23,7 @@
   padding: clamp(16px, 3vw, 40px);
 }
 
-.business-funds-scrim {
+.business-topup-scrim {
   position: absolute;
   inset: 0;
   border: 0;
@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 
-.business-funds-card {
+.business-topup-card {
   position: relative;
   display: grid;
   width: min(100%, 1060px);
@@ -48,7 +48,7 @@
 
 /* ---- left: what to add, how to pay, who is paying ---- */
 
-.business-funds-main {
+.business-topup-main {
   min-width: 0;
   min-height: 0;
   overflow-y: auto;
@@ -59,14 +59,14 @@
   padding: clamp(18px, 2.4vw, 26px) clamp(20px, 3vw, 34px) clamp(24px, 3vw, 34px);
 }
 
-.business-funds-top {
+.business-topup-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
 }
 
-.business-funds-back {
+.business-topup-back {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -78,9 +78,9 @@
   padding: 4px 0;
 }
 
-.business-funds-back:hover { color: #141413; }
+.business-topup-back:hover { color: #141413; }
 
-.business-funds-close {
+.business-topup-close {
   display: grid;
   width: 32px;
   height: 32px;
@@ -92,9 +92,9 @@
   cursor: pointer;
 }
 
-.business-funds-close:hover { border-color: #141413; background: #FAF9F5; }
+.business-topup-close:hover { border-color: #141413; background: #FAF9F5; }
 
-.business-funds-title {
+.business-topup-title {
   margin: 18px 0 0;
   color: #141413;
   font-family: var(--font-reading);
@@ -103,7 +103,7 @@
   letter-spacing: -.02em;
 }
 
-.business-funds-subtitle {
+.business-topup-subtitle {
   max-width: 54ch;
   margin: 8px 0 0;
   color: #5F6862;
@@ -111,13 +111,13 @@
   line-height: 1.6;
 }
 
-.business-funds-section {
+.business-topup-section {
   margin-top: 26px;
   border-top: 1px solid #E5E3DD;
   padding-top: 20px;
 }
 
-.business-funds-label {
+.business-topup-label {
   margin: 0 0 12px;
   color: #8D948D;
   font: 500 11px var(--font-sans);
@@ -127,13 +127,13 @@
 
 /* Four amount cards, the way a plan picker reads: the number, then what it
    buys. */
-.business-funds-amounts {
+.business-topup-amounts {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 
-.business-funds-amount {
+.business-topup-amount {
   display: grid;
   gap: 2px;
   border: 1px solid #E5E3DD;
@@ -145,18 +145,18 @@
   text-align: left;
 }
 
-.business-funds-amount:hover { border-color: #8D948D; }
+.business-topup-amount:hover { border-color: #8D948D; }
 
-.business-funds-amount strong {
+.business-topup-amount strong {
   font: 600 14px var(--font-sans);
   font-variant-numeric: tabular-nums;
 }
 
-.business-funds-amount small { color: #5F6862; font-size: 11px; }
+.business-topup-amount small { color: #5F6862; font-size: 11px; }
 
-.business-funds-amount.is-active { border-color: #141413; box-shadow: inset 0 0 0 1px #141413; }
+.business-topup-amount.is-active { border-color: #141413; box-shadow: inset 0 0 0 1px #141413; }
 
-.business-funds-custom {
+.business-topup-custom {
   display: grid;
   gap: 8px;
   margin-top: 14px;
@@ -166,7 +166,7 @@
   text-transform: uppercase;
 }
 
-.business-funds-input {
+.business-topup-input {
   display: flex;
   height: 42px;
   align-items: center;
@@ -178,13 +178,13 @@
   text-transform: none;
 }
 
-.business-funds-input:focus-within { border-color: #141413; }
+.business-topup-input:focus-within { border-color: #141413; }
 
-.business-funds-input.is-invalid { border-color: #B42318; }
+.business-topup-input.is-invalid { border-color: #B42318; }
 
-.business-funds-input i { color: #5F6862; font-size: 13px; font-style: normal; }
+.business-topup-input i { color: #5F6862; font-size: 13px; font-style: normal; }
 
-.business-funds-input input {
+.business-topup-input input {
   width: 100%;
   border: 0;
   outline: 0;
@@ -193,13 +193,13 @@
   font: 500 13px var(--font-sans);
 }
 
-.business-funds-hint { margin: 10px 0 0; color: #8D948D; font-size: 11px; }
+.business-topup-hint { margin: 10px 0 0; color: #8D948D; font-size: 11px; }
 
 /* ---- the routes: one row each, a radio at the end ---- */
 
-.business-funds-methods { display: grid; gap: 8px; }
+.business-topup-methods { display: grid; gap: 8px; }
 
-.business-funds-method {
+.business-topup-method {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -211,11 +211,11 @@
   text-align: left;
 }
 
-.business-funds-method:hover { border-color: #8D948D; }
+.business-topup-method:hover { border-color: #8D948D; }
 
-.business-funds-method.is-active { border-color: #141413; box-shadow: inset 0 0 0 1px #141413; }
+.business-topup-method.is-active { border-color: #141413; box-shadow: inset 0 0 0 1px #141413; }
 
-.business-funds-method-mark {
+.business-topup-method-mark {
   display: grid;
   width: 34px;
   height: 34px;
@@ -227,9 +227,9 @@
   color: #141413;
 }
 
-.business-funds-method-copy { display: grid; gap: 2px; min-width: 0; }
+.business-topup-method-copy { display: grid; gap: 2px; min-width: 0; }
 
-.business-funds-method-copy strong {
+.business-topup-method-copy strong {
   color: #141413;
   font-family: var(--font-reading);
   font-size: 14px;
@@ -237,9 +237,9 @@
   letter-spacing: -.01em;
 }
 
-.business-funds-method-copy small { color: #5F6862; font-size: 11px; }
+.business-topup-method-copy small { color: #5F6862; font-size: 11px; }
 
-.business-funds-radio {
+.business-topup-radio {
   width: 16px;
   height: 16px;
   flex: 0 0 auto;
@@ -248,23 +248,34 @@
   border-radius: 50%;
 }
 
-.business-funds-method.is-active .business-funds-radio {
+.business-topup-method.is-active .business-topup-radio {
   border-color: #141413;
   background: radial-gradient(circle, #141413 0 4.5px, transparent 5px);
 }
 
-.business-funds-note {
-  margin: 12px 0 0;
-  color: #5F6862;
-  font-size: 13px;
-  line-height: 1.6;
+/* The card row stays visible while the channel is closed, but reads as
+   unavailable: muted copy, no hover, no radio. */
+.business-topup-method:disabled {
+  background: #FAF9F5;
+  cursor: not-allowed;
 }
 
-.business-funds-cardpanel { margin-top: 14px; }
+.business-topup-method:disabled:hover { border-color: #E5E3DD; }
+
+.business-topup-method:disabled .business-topup-method-copy strong { color: #8D948D; }
+
+.business-topup-method:disabled .business-topup-method-mark {
+  background: #FFFFFF;
+  color: #8D948D;
+}
+
+.business-topup-method:disabled .business-topup-radio { border-color: #E5E3DD; }
+
+.business-topup-cardpanel { margin-top: 14px; }
 
 /* ---- right: the order, and the only button ---- */
 
-.business-funds-summary {
+.business-topup-summary {
   display: flex;
   min-height: 0;
   flex-direction: column;
@@ -275,19 +286,18 @@
   padding: clamp(20px, 2.4vw, 28px) clamp(18px, 2.4vw, 28px) clamp(18px, 2.4vw, 24px);
 }
 
-.business-funds-total {
-  margin: 0;
+.business-topup-balance {
+  margin: 8px 0 0;
   color: #141413;
   font-family: var(--font-reading);
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 38px;
+  font-weight: 400;
   letter-spacing: -.02em;
+  line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
 
-.business-funds-total-note { margin: 4px 0 0; color: #5F6862; font-size: 13px; }
-
-.business-funds-rows {
+.business-topup-rows {
   display: grid;
   gap: 10px;
   margin: 0;
@@ -295,11 +305,11 @@
   padding-top: 16px;
 }
 
-.business-funds-rows > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.business-topup-rows > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 
-.business-funds-rows dt { color: #5F6862; font-size: 13px; }
+.business-topup-rows dt { color: #5F6862; font-size: 13px; }
 
-.business-funds-rows dd {
+.business-topup-rows dd {
   margin: 0;
   color: #141413;
   font-size: 13px;
@@ -308,7 +318,7 @@
   white-space: nowrap;
 }
 
-.business-funds-legal {
+.business-topup-legal {
   display: flex;
   align-items: flex-start;
   gap: 7px;
@@ -318,9 +328,9 @@
   line-height: 1.55;
 }
 
-.business-funds-legal svg { flex: 0 0 auto; margin-top: 2px; }
+.business-topup-legal svg { flex: 0 0 auto; margin-top: 2px; }
 
-.business-funds-error {
+.business-topup-error {
   margin: 0;
   border-radius: 8px;
   background: #FAF9F5;
@@ -330,9 +340,51 @@
   padding: 9px 11px;
 }
 
-.business-funds-gap { flex: 1 1 auto; min-height: 18px; }
+.business-topup-gap { flex: 1 1 auto; min-height: 14px; }
 
-.business-funds-cta {
+/* ---- the lock and the marks the account rail always carried ---- */
+
+.business-topup-secure {
+  display: grid;
+  gap: 10px;
+  border-top: 1px solid #E5E3DD;
+  padding-top: 14px;
+}
+
+.business-topup-secure p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  color: #8D948D;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.business-topup-secure svg { flex: 0 0 auto; margin-top: 2px; }
+
+.business-topup-marks { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.business-topup-mark {
+  display: grid;
+  width: 42px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid #E5E3DD;
+  border-radius: 7px;
+  background: #FFFFFF;
+}
+
+.business-topup-mark img { max-width: 32px; max-height: 16px; object-fit: contain; }
+
+.business-topup-fineprint {
+  margin: 0;
+  color: #8D948D;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.business-topup-cta {
   display: inline-flex;
   width: 100%;
   min-height: 42px;
@@ -342,11 +394,11 @@
   font-size: 13px;
 }
 
-.business-funds-cta:disabled { opacity: .45; cursor: not-allowed; }
+.business-topup-cta:disabled { opacity: .45; cursor: not-allowed; }
 
 /* ---- the created link replaces the order, since it is now the deliverable ---- */
 
-.business-funds-linkurl {
+.business-topup-linkurl {
   margin: 0;
   border: 1px solid #E5E3DD;
   border-radius: 10px;
@@ -357,9 +409,50 @@
   padding: 10px 12px;
 }
 
-.business-funds-linkacts { display: grid; gap: 10px; margin-top: auto; }
+/* ---- the created link, in its own smaller dialog on top ---- */
 
-.business-funds-secondary {
+.business-topup-overlay {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 32px);
+}
+
+.business-topup-overlay-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(20, 20, 19, .5);
+  cursor: pointer;
+}
+
+.business-topup-linkmodal {
+  position: relative;
+  display: grid;
+  width: min(100%, 520px);
+  gap: 14px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 28px 70px rgba(20, 20, 19, .3);
+  padding: clamp(22px, 3vw, 30px);
+}
+
+.business-topup-linkmodal h3 {
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+.business-topup-linkmodal p { margin: 0; color: #5F6862; font-size: 13px; line-height: 1.6; }
+
+.business-topup-linkactions { display: grid; gap: 10px; margin-top: 4px; }
+
+.business-topup-secondary {
   min-height: 40px;
   border: 1px solid #E5E3DD;
   /* The account area squares its buttons (3px, forced by the theme); a pill
@@ -371,24 +464,24 @@
   font: 500 13px var(--font-sans);
 }
 
-.business-funds-secondary:hover { border-color: #141413; background: #FAF9F5; }
+.business-topup-secondary:hover { border-color: #141413; background: #FAF9F5; }
 
 /* Narrow: the options scroll, the order and its button stay pinned to the
    bottom of the sheet, the way a checkout band does on a laptop. */
 @media (max-width: 1024px) {
-  .business-funds-card {
+  .business-topup-card {
     display: flex;
     max-height: 94svh;
     flex-direction: column;
     grid-template-columns: none;
   }
 
-  .business-funds-main {
+  .business-topup-main {
     flex: 1 1 auto;
     overflow-y: auto;
   }
 
-  .business-funds-summary {
+  .business-topup-summary {
     flex: 0 0 auto;
     max-height: 46svh;
     border-top: 1px solid #E5E3DD;
@@ -396,11 +489,15 @@
     overflow-y: auto;
   }
 
-  .business-funds-amounts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .business-topup-amounts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   /* The band keeps the number that matters and the button; the other rows are
-     already on screen in the options above. */
-  .business-funds-rows > div:not(:last-of-type) { display: none; }
-  .business-funds-summary { gap: 12px; padding-top: 16px; }
-  .business-funds-gap { min-height: 4px; }
+     already on screen in the options above. The balance steps down so the
+     options keep most of the sheet. */
+  .business-topup-rows > div:not(:last-of-type) { display: none; }
+  .business-topup-summary { gap: 10px; padding-top: 14px; }
+  .business-topup-gap { min-height: 4px; }
+  .business-topup-balance { margin-top: 4px; font-size: 22px; }
+  .business-topup-secure { gap: 6px; padding-top: 10px; }
+  .business-topup-fineprint { display: none; }
 }

@@ -135,3 +135,18 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* The dialog points here when "agree and pay" is pressed too early: the field
+   that is still empty is the one outlined, not the whole form. */
+.billing-profile-field.is-missing { color: #B42318; }
+
+.billing-profile-field.is-missing > input,
+.billing-profile-field.is-missing > select {
+  border-color: #B42318;
+}
+
+.billing-profile-field.is-missing > input:focus,
+.billing-profile-field.is-missing > select:focus {
+  border-color: #B42318;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, .10);
+}
