@@ -130,6 +130,7 @@ const englishCopy = {
       billing: {
         eyebrow: "CLIENT WORKSPACE",
         title: "Invoices and billing",
+        detailTitle: "Invoice",
         intro: "Invoices and monthly statements for this workspace appear here.",
         tabInvoices: "Invoices",
         tabStatements: "Monthly statements",
@@ -1062,6 +1063,7 @@ const businessBillingCopyByLanguage = {
   'zh-CN': {
     eyebrow: "客户工作区",
     title: "发票与账单",
+    detailTitle: "发票",
     intro: "此工作区的发票和月度报表会显示在这里。",
     tabInvoices: "发票",
     tabStatements: "月度报表",
@@ -1105,6 +1107,7 @@ const businessBillingCopyByLanguage = {
   'zh-Hant': {
     eyebrow: "客戶工作區",
     title: "發票與帳單",
+    detailTitle: "發票",
     intro: "此工作區的發票和每月報表會顯示在這裡。",
     tabInvoices: "發票",
     tabStatements: "每月報表",

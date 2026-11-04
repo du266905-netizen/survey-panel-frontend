@@ -11,6 +11,7 @@ import './BusinessBilling.css';
 import './BusinessInvoiceDetail.css';
 
 const FALLBACK_COPY = {
+  detailTitle: 'Invoice',
   back: 'Back to invoices',
   billedTo: 'Billed to',
   paymentMethod: 'Payment method',
@@ -125,21 +126,22 @@ export default function BusinessInvoiceDetail() {
         ) : (
           <>
             <div className="business-invoice-heading">
-              <h1>{invoice.number}</h1>
+              <h1>{text.detailTitle}</h1>
               <span className={`business-invoice-status is-${invoice.status || 'void'}`}>
                 {statusKey ? text[statusKey] : invoice.status}
               </span>
             </div>
 
-            <p className="business-invoice-meta">
-              <span>{text.issued} {date.format(new Date(invoice.issuedAt))}</span>
-              {invoice.paidAt ? <span>{text.paid} {date.format(new Date(invoice.paidAt))}</span> : null}
-              <span>{text.total} <strong>{money.format((invoice.amountCents || 0) / 100)}</strong></span>
-            </p>
+            {/* The number is a field on the document, not the page's name: it
+                sits at reading size beside the dates, the way it does on paper. */}
+            <dl className="business-invoice-meta">
+              <div><dt>{text.colNumber}</dt><dd>{invoice.number}</dd></div>
+              <div><dt>{text.issued}</dt><dd>{date.format(new Date(invoice.issuedAt))}</dd></div>
+            </dl>
 
             <div className="business-billing-card business-invoice-card">
-              <div className="business-invoice-grid">
-                <div className="business-invoice-block">
+              <div className="business-invoice-top">
+                <div className="business-invoice-billed">
                   <h2>{text.billedTo}</h2>
                   <p className="business-invoice-address">
                     <strong>{profile.companyName || '—'}</strong>
@@ -156,13 +158,17 @@ export default function BusinessInvoiceDetail() {
                   </p>
                 </div>
 
-                <div className="business-invoice-block">
-                  <h2>{text.paymentMethod}</h2>
-                  <p className="business-invoice-address">
-                    <span>{methodKey ? text[methodKey] : (invoice.paymentMethod || '—')}</span>
-                    {invoice.paidAt ? <span>{text.paid} {date.format(new Date(invoice.paidAt))}</span> : null}
-                  </p>
-                </div>
+                {/* How it was paid, beside what was paid, so the sheet answers
+                    both questions without repeating them in the strip. */}
+                <dl className="business-invoice-payment">
+                  <div>
+                    <dt>{text.paymentMethod}</dt>
+                    <dd>{methodKey ? text[methodKey] : (invoice.paymentMethod || '—')}</dd>
+                  </div>
+                  {invoice.paidAt ? (
+                    <div><dt>{text.paid}</dt><dd>{date.format(new Date(invoice.paidAt))}</dd></div>
+                  ) : null}
+                </dl>
               </div>
 
               <div className="business-invoice-lines">
@@ -170,8 +176,8 @@ export default function BusinessInvoiceDetail() {
                   <thead>
                     <tr>
                       <th>{text.description}</th>
-                      <th>{text.quantity}</th>
-                      <th>{text.total}</th>
+                      <th className="is-number">{text.quantity}</th>
+                      <th className="is-number">{text.total}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -194,7 +200,7 @@ export default function BusinessInvoiceDetail() {
                 </table>
               </div>
 
-              <div className="business-invoice-actions">
+              <div className="business-invoice-footer">
                 {invoice.pdfUrl ? (
                   <a
                     className="business-button business-invoice-download"
