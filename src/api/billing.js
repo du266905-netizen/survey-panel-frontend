@@ -29,15 +29,19 @@ export const listBudgets = async ({ limit = 20, cursor } = {}) => {
 const idemKey = () =>
   (globalThis.crypto?.randomUUID?.() || `idem-${Date.now()}-${Math.random().toString(16).slice(2)}`);
 
-export const createBudget = async ({ name, amountCents, startsAt, endsAt }) => {
+/* Both writes come back as { budget } (and echo { duplicate: true } when the
+   same key arrives twice). Callers only ever want the budget, so unwrap here.
+   A caller that retries a failed submit passes the same key back in; a fresh
+   key on retry would let the server create the row twice. */
+export const createBudget = async ({ name, amountCents, startsAt, endsAt }, { key } = {}) => {
   const { data } = await apiClient.post(BUDGETS,
     { name, amountCents, startsAt, ...(endsAt ? { endsAt } : {}) },
-    { headers: { 'X-Idempotency-Key': idemKey() } });
-  return data;
+    { headers: { 'X-Idempotency-Key': key || idemKey() } });
+  return data?.budget ?? data;
 };
 
-export const updateBudget = async (id, patch) => {
+export const updateBudget = async (id, patch, { key } = {}) => {
   const { data } = await apiClient.patch(`${BUDGETS}/${encodeURIComponent(id)}`, patch,
-    { headers: { 'X-Idempotency-Key': idemKey() } });
-  return data;
+    { headers: { 'X-Idempotency-Key': key || idemKey() } });
+  return data?.budget ?? data;
 };

@@ -184,3 +184,39 @@ p.business-billing-intro {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* ---- a failed list can be retried; a long list can be extended ---- */
+
+.business-billing-retry {
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #141413;
+  cursor: pointer;
+  font: 600 13px var(--font-sans);
+  min-height: 36px;
+  padding: 0 16px;
+}
+
+.business-billing-retry:hover { border-color: #141413; background: #FAF9F5; }
+
+.business-billing-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.business-billing-more > button {
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #141413;
+  cursor: pointer;
+  font: 600 13px var(--font-sans);
+  min-height: 36px;
+  padding: 0 16px;
+}
+
+.business-billing-more > button:hover { border-color: #141413; background: #FAF9F5; }
+
+.business-billing-more > button:disabled { opacity: .45; cursor: not-allowed; }

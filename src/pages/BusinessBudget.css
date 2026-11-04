@@ -1,11 +1,11 @@
 /* Account budget — the section's own content inside the account shell.
  *
- * Same look as the account and invoices sections: eyebrow, 38px reading title, a
- * white surface at radius 10 with a hairline, ink for the current state and lime
- * for the one action that moves work forward. Amounts are tabular so a column of
- * them lines up.
+ * Same look as the account and invoices sections: 56px display title, a white
+ * surface at radius 10 with a hairline, ink for state and lime for the one
+ * action that moves work forward. Amounts are tabular so a column of them
+ * lines up.
  *
- * Type: Part 18 — 11 label / 13 UI / 14 body / 22 dialog title / 38 page.
+ * Type: Part 18 — 11 label / 13 UI / 14 body / 22 dialog title / 56 page.
  */
 
 .business-budget-shell {
@@ -34,16 +34,16 @@
   line-height: 1.6;
 }
 
-/* The "planning only" notice: a quiet pill under the intro, so nobody reads the
-   switch as a spending cap. */
+/* The "tracked, not enforced" notice: a quiet pill under the intro, so nobody
+   reads the table as a spending cap. */
 .business-budget-planning-note {
   display: inline-flex;
   align-items: center;
   margin: 14px 0 0;
-  border: 1px solid rgba(17, 17, 19, .12);
+  border: 1px solid #E5E3DD;
   border-radius: 999px;
   background: #FAF9F5;
-  color: #4b5f53;
+  color: #5F6862;
   font-size: 13px;
   line-height: 1.5;
   padding: 8px 15px;
@@ -51,12 +51,12 @@
 
 .business-budget-card {
   margin-top: clamp(24px, 3.2vw, 34px);
-  border: 1px solid rgba(17, 17, 19, .16);
+  border: 1px solid #E5E3DD;
   border-radius: 10px;
   background: #ffffff;
 }
 
-/* ---- the switch row ---- */
+/* ---- the toolbar row: one action, right aligned ---- */
 
 .business-budget-head {
   display: flex;
@@ -65,49 +65,32 @@
   justify-content: space-between;
   gap: 16px;
   padding: clamp(16px, 2.4vw, 22px) clamp(18px, 3vw, 28px);
-  border-bottom: 1px solid rgba(17, 17, 19, .10);
+  border-bottom: 1px solid #E5E3DD;
 }
 
-.business-budget-switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
+/* Running totals, so the toolbar says what the page is currently tracking
+   rather than holding an empty half. */
+.business-budget-total {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: 0;
+  color: #8D948D;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.business-budget-total strong {
+  margin-left: 7px;
   color: #141413;
-  font: 700 14px var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
 }
-
-.business-budget-switch input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-
-.business-budget-switch i {
-  position: relative;
-  display: block;
-  width: 42px;
-  height: 24px;
-  border: 1px solid rgba(17, 17, 19, .22);
-  border-radius: 999px;
-  background: #ececeb;
-  transition: background .2s ease, border-color .2s ease;
-}
-
-.business-budget-switch i::after {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 1px 2px rgba(11, 11, 12, .18);
-  content: '';
-  transition: transform .2s ease;
-}
-
-.business-budget-switch input:checked + i { border-color: #141413; background: #141413; }
-
-.business-budget-switch input:checked + i::after { transform: translateX(18px); }
-
-.business-budget-switch input:focus-visible + i { outline: 2px solid #141413; outline-offset: 2px; }
 
 .business-budget-shell .business-budget-create {
   display: inline-flex;
@@ -117,7 +100,17 @@
   gap: 8px;
   padding: 0 16px;
   font-size: 13px;
-  font-weight: 800;
+}
+
+/* A write that failed after the page had already rendered. */
+.business-budget-notice {
+  margin: 0;
+  border-bottom: 1px solid #E5E3DD;
+  background: #FAF9F5;
+  color: #B42318;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 12px clamp(18px, 3vw, 28px);
 }
 
 /* ---- the table ---- */
@@ -127,91 +120,142 @@
 .business-budget-table table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 780px;
+  min-width: 640px;
+  /* Values are read as values: 13 / Inter, the same as the invoice table.
+     The name keeps the 14 reading face so the row still has a title. */
+  font-family: var(--font-sans);
+  font-size: 13px;
 }
 
 .business-budget-table th {
-  color: #637c6b;
+  color: #8D948D;
   font-size: 11px;
-  font-weight: 900;
-  letter-spacing: .1em;
+  font-weight: 500;
+  letter-spacing: .06em;
   text-transform: uppercase;
   text-align: left;
   white-space: nowrap;
   padding: 14px clamp(12px, 2vw, 20px);
-  border-bottom: 1px solid rgba(17, 17, 19, .10);
+  border-bottom: 1px solid #E5E3DD;
 }
 
 .business-budget-table td {
   color: #141413;
-  font-size: 14px;
+  font-size: 13px;
   padding: 16px clamp(12px, 2vw, 20px);
-  border-bottom: 1px solid rgba(17, 17, 19, .08);
+  border-bottom: 1px solid #E5E3DD;
   vertical-align: middle;
 }
 
-.business-budget-table tbody tr:last-child td { border-bottom: 0; }
+/* The period is a month, plus an end day when the budget stops early: two
+   lines in one column instead of two columns that both say "November". */
+.business-budget-period { display: block; }
 
-.business-budget-table td.is-number { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.business-budget-period-end { display: block; color: #5F6862; font-size: 13px; }
 
-/* The switch-off row: one quiet line, at data-row height so the card does not
-   jump when the switch is flipped. */
-.business-budget-off td {
-  color: #637c6b;
-  font-size: 14px;
-  padding: 22px clamp(12px, 2vw, 20px);
+/* Remaining is the first column to go when the pane is narrow: it is the one
+   number the other three already determine. */
+@media (max-width: 1180px) {
+  .business-budget-table .is-remaining { display: none; }
+  /* Tighter cells buy the name column enough room to stay on one line. */
+  .business-budget-table th,
+  .business-budget-table td { padding-right: 12px; padding-left: 12px; }
+  .business-budget-table th:first-child,
+  .business-budget-table td:first-child { min-width: 120px; }
 }
 
-.business-budget-share { margin-left: 8px; color: #637c6b; font-size: 13px; }
+/* Dates and money are read as single values; letting them wrap turns one row
+   into three lines at 1024. The table already scrolls horizontally when the
+   card is narrower than its columns. */
+.business-budget-table td:not(:first-child) { white-space: nowrap; }
+
+.business-budget-table td:first-child {
+  font-family: var(--font-reading);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.business-budget-empty td { white-space: normal; }
+
+.business-budget-table tbody tr:last-child td { border-bottom: 0; }
+
+.business-budget-table th.is-number { text-align: right; }
+
+.business-budget-table td.is-number { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+
+.business-budget-share { margin-left: 8px; color: #5F6862; font-size: 13px; }
 
 .business-budget-status {
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: .06em;
   padding: 4px 10px;
   text-transform: uppercase;
 }
 
-.business-budget-status.is-active { background: #e8ede5; color: #141413; }
+.business-budget-status.is-active { border: 1px solid #141413; background: #ffffff; color: #141413; }
 
-.business-budget-status.is-ended { background: #eeeeec; color: #5F6862; }
+.business-budget-status.is-scheduled { border: 1px solid #E5E3DD; background: #FAF9F5; color: #5F6862; }
+
+.business-budget-status.is-ended { border: 1px solid #E5E3DD; background: #FAF9F5; color: #5F6862; }
 
 .business-budget-actions { display: inline-flex; align-items: center; gap: 10px; }
 
-.business-budget-actions > i { color: #c9cfcb; font-style: normal; }
+.business-budget-actions > i { color: #E5E3DD; font-style: normal; }
 
 .business-budget-edit {
   border: 0;
   background: transparent;
-  color: #285647;
+  color: #141413;
   cursor: pointer;
-  font: 800 13px var(--font-sans);
+  font: 600 13px var(--font-sans);
   padding: 4px 0;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-
-.business-budget-edit:hover { color: #141413; }
 
 .business-budget-end {
   border: 0;
   background: transparent;
-  color: #8a3b32;
+  color: #B42318;
   cursor: pointer;
-  font: 800 13px var(--font-sans);
+  font: 600 13px var(--font-sans);
   padding: 4px 0;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.business-budget-none { color: #a1a6ac; }
+.business-budget-none { color: #8D948D; }
 
-/* ---- empty state: an icon, the line, and what will appear ---- */
+/* ---- loading, failure, empty: three different rows ---- */
 
 .business-budget-empty td { padding: clamp(20px, 3vw, 30px) clamp(12px, 2vw, 20px); }
+
+.business-budget-note {
+  margin: 0;
+  color: #5F6862;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.business-budget-note.is-error { color: #B42318; }
+
+.business-budget-retry {
+  margin-top: 10px;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #141413;
+  cursor: pointer;
+  font: 600 13px var(--font-sans);
+  min-height: 36px;
+  padding: 0 16px;
+}
+
+.business-budget-retry:hover { border-color: #141413; background: #FAF9F5; }
 
 /* Scoped to the wrapper on purpose: this used to be `td > span`, which matched
    both the icon and the text span, so the text was laid out inside a 38px column
@@ -230,15 +274,35 @@
   width: 38px;
   height: 38px;
   place-items: center;
-  border: 1px solid rgba(17, 17, 19, .14);
+  border: 1px solid #E5E3DD;
   border-radius: 50%;
   background: #FAF9F5;
-  color: #315f49;
+  color: #141413;
 }
 
-.business-budget-empty strong { display: block; font-size: 14px; font-weight: 700; }
+.business-budget-empty strong { display: block; font-size: 14px; font-weight: 600; }
 
-.business-budget-empty small { display: block; margin-top: 6px; color: #5F6862; font-size: 13px; font-weight: 500; }
+.business-budget-empty small { display: block; margin-top: 6px; color: #5F6862; font-size: 13px; font-weight: 400; }
+
+.business-budget-more {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #E5E3DD;
+  padding: 14px;
+}
+
+.business-budget-more > button {
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #141413;
+  cursor: pointer;
+  font: 600 13px var(--font-sans);
+  min-height: 36px;
+  padding: 0 16px;
+}
+
+.business-budget-more > button:hover { border-color: #141413; background: #FAF9F5; }
 
 /* =====================================================================
    The two dialogs.
@@ -269,7 +333,7 @@
   width: min(100%, 760px);
   max-height: calc(100svh - 56px);
   overflow-y: auto;
-  border: 1px solid rgba(17, 17, 19, .16);
+  border: 1px solid #E5E3DD;
   border-radius: 10px;
   background: #ffffff;
   padding: clamp(22px, 3vw, 32px);
@@ -280,8 +344,8 @@
   color: #141413;
   font-family: var(--font-reading);
   font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -.015em;
+  font-weight: 600;
+  letter-spacing: -.02em;
 }
 
 .business-budget-modal p { margin: 14px 0 0; color: #5F6862; font-size: 14px; line-height: 1.6; }
@@ -292,8 +356,8 @@
 
 .business-budget-modal-note {
   border-radius: 8px;
-  background: #f5f5f3;
-  color: #637c6b !important;
+  background: #FAF9F5;
+  color: #5F6862 !important;
   font-size: 13px !important;
   padding: 12px 14px;
 }
@@ -305,17 +369,17 @@
   justify-content: flex-end;
   gap: 14px;
   margin-top: 22px;
-  border-top: 1px solid rgba(17, 17, 19, .10);
+  border-top: 1px solid #E5E3DD;
   padding-top: 18px;
 }
 
 .business-budget-modal-actions > button:not(.business-button) {
-  border: 1px solid rgba(17, 17, 19, .18);
+  border: 1px solid #E5E3DD;
   border-radius: 999px;
   background: #ffffff;
-  color: #285647;
+  color: #141413;
   cursor: pointer;
-  font: 800 13px var(--font-sans);
+  font: 600 13px var(--font-sans);
   min-height: 40px;
   padding: 0 18px;
 }
@@ -324,7 +388,9 @@
 
 .business-budget-modal .business-button { min-height: 40px; font-size: 13px; }
 
-/* ---- the create dialog's fields ---- */
+.business-budget-modal .business-button:disabled { opacity: .45; cursor: not-allowed; }
+
+/* ---- the create / edit dialog's fields ---- */
 
 .business-budget-pair {
   display: grid;
@@ -337,93 +403,54 @@
 
 .business-budget-field > label,
 .business-budget-field-label {
-  color: #637c6b;
+  color: #8D948D;
   font-size: 11px;
-  font-weight: 900;
-  letter-spacing: .1em;
+  font-weight: 600;
+  letter-spacing: .12em;
   text-transform: uppercase;
 }
 
 .business-budget-field input {
   min-height: 40px;
-  border: 1px solid rgba(17, 17, 19, .18);
+  border: 1px solid #E5E3DD;
   border-radius: 9px;
   background: #ffffff;
   color: #141413;
-  font: 600 14px var(--font-sans);
+  font: 400 14px var(--font-sans);
   padding: 0 12px;
 }
 
 .business-budget-field input:focus-visible { outline: 2px solid #141413; outline-offset: 1px; }
 
-.business-budget-choices { display: grid; gap: 10px; }
-
-.business-budget-choices > label {
+/* The fixed period on an existing budget: same box as an input, so the two
+   dialogs keep one grid, but plainly not editable. */
+.business-budget-fixed {
   display: flex;
   align-items: center;
-  gap: 9px;
-  color: #141413;
+  min-height: 40px;
+  margin: 0;
+  border: 1px dashed #E5E3DD;
+  border-radius: 9px;
+  background: #FAF9F5;
+  color: #5F6862;
   font-size: 14px;
+  padding: 0 12px;
 }
 
-.business-budget-choices input[type='radio'] { accent-color: #141413; width: 16px; height: 16px; }
+.business-budget-field-hint { color: #5F6862; font-size: 13px; line-height: 1.5; }
 
-.business-budget-choices input[type='date'] { flex: 1; }
-
-.business-budget-choices input[type='date']:disabled { opacity: .45; }
-
-.business-budget-section {
-  margin: 24px 0 0 !important;
-  color: #141413 !important;
-  font-size: 16px !important;
-  font-weight: 600;
-}
-
-/* ---- the per-member limit table ---- */
-
-.business-budget-members {
-  width: 100%;
-  margin-top: 12px;
-  border-collapse: collapse;
-}
-
-.business-budget-members th {
-  color: #637c6b;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  text-align: left;
+.business-budget-form-error {
+  margin: 16px 0 0 !important;
+  border-radius: 8px;
+  background: #FAF9F5;
+  color: #B42318 !important;
+  font-size: 13px !important;
   padding: 10px 12px;
-  border-bottom: 1px solid rgba(17, 17, 19, .10);
 }
-
-.business-budget-members td {
-  color: #141413;
-  font-size: 14px;
-  padding: 12px;
-  border-bottom: 1px solid rgba(17, 17, 19, .08);
-  vertical-align: middle;
-}
-
-.business-budget-members td.is-number { font-variant-numeric: tabular-nums; white-space: nowrap; }
-
-.business-budget-bar {
-  display: inline-block;
-  width: min(38%, 160px);
-  height: 6px;
-  margin: 0 8px 0 10px;
-  border-radius: 999px;
-  background: #ececeb;
-  vertical-align: middle;
-  overflow: hidden;
-}
-
-.business-budget-bar > i { display: block; height: 100%; background: #141413; }
 
 @media (max-width: 760px) {
   .business-budget-pair { grid-template-columns: minmax(0, 1fr); }
-  .business-budget-head { align-items: flex-start; flex-direction: column; }
+  .business-budget-head { justify-content: flex-start; }
+  .business-budget-total { flex-direction: column; gap: 6px; }
   .business-budget-modal { padding: 16px; }
-  .business-budget-members { display: block; overflow-x: auto; }
 }

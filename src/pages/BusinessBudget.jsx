@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
-import { ArrowLeft, Plus, Wallet } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Plus, Wallet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { createBudget, listBudgets, updateBudget } from '../api/billing';
 import BusinessRail from '../components/BusinessRail';
 import NotificationBell from '../components/NotificationBell';
-import { useAuth } from '../components/AuthContext';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
 import './BusinessAccountShell.css';
@@ -14,74 +14,119 @@ import './BusinessBudget.css';
  * rendering a raw key, the same shape the other account pages use. */
 const FALLBACK_COPY = {
   title: 'Account budget',
-  intro: 'An account budget caps what this workspace can spend over a period. You can also cap each team member within that period.',
+  intro: 'An account budget caps what this workspace can spend over a period.',
   create: 'Create a budget',
-  colName: 'Budget name', colStart: 'Start date', colEnd: 'End date',
-  colAmount: 'Budget amount', colSpent: 'Spent', colStatus: 'Status', colActions: 'Actions',
-  empty: 'No budgets yet.', emptyOff: 'No budget items.',
-  emptyHint: 'A budget appears here once you create one.', noEndDate: 'No end date',
-  planningNote: 'Budgets are planning only for now: they do not limit spending yet.',
+  colName: 'Budget name', colPeriod: 'Period', colStart: 'Start date', colEnd: 'End date',
+  colAmount: 'Budget amount', colSpent: 'Spent', colRemaining: 'Remaining',
+  colStatus: 'Status', colActions: 'Actions',
+  empty: 'No budgets yet.', emptyHint: 'A budget appears here once you create one.',
+  planningNote: 'Spending is tracked against each budget; it does not block a purchase yet.',
+  loading: 'Loading budgets…', loadFailed: 'Budgets could not be loaded.',
+  retry: 'Try again', loadMore: 'Load more', saveFailed: "That didn't save. Try again.",
+  noEndDate: 'No end date', startMonth: 'Start month',
+  endHint: 'Leave the end date empty to cover the whole month.',
   endTitle: 'End this budget now?', endIntro: 'If you end this budget now:',
   endPoint1: 'Research already in progress is not affected.',
-  endPoint2: 'Your team can no longer use this budget.',
-  endNote: 'You can create a new budget or turn off the account budget at any time.',
+  endPoint2: 'This budget stops collecting spending.',
+  endNote: 'You can create a new budget at any time.',
   endKeep: 'Keep the budget', endConfirm: 'End the budget',
   edit: 'Edit', editBudget: 'Edit budget',
-  statusActive: 'Active', statusEnded: 'Ended', save: 'Save budget', cancel: 'Cancel', end: 'End',
-  disableTitle: 'Turn off the account budget?',
-  disableIntro: 'If you turn off the account budget:',
-  disablePoint1: 'Nothing caps what you spend over a period.',
-  disablePoint2: 'Everyone on the team can spend without a budget limit.',
-  disableNote: 'You can turn budget limits back on at any time.',
-  disableKeep: 'Keep the account budget',
-  disableConfirm: 'Turn off the account budget',
-  newBudget: 'New budget',
-  now: 'Now', anyEnd: 'None', pickDate: 'Choose a date',
-  memberLimits: 'Budget limits', memberName: 'Name', memberEmail: 'Email',
+  statusActive: 'Active', statusEnded: 'Ended', statusScheduled: 'Not started',
+  save: 'Save budget', cancel: 'Cancel', end: 'End',
+  newBudget: 'New budget', anyEnd: 'None', pickDate: 'Choose a date',
 };
 
-/* Local calendar day, not the UTC one: toISOString() is a day behind for
-   everyone east of Greenwich in the morning (and west of it in the evening). */
-const today = () => {
-  const now = new Date();
-  const pad = (value) => String(value).padStart(2, '0');
-  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+const pad2 = (value) => String(value).padStart(2, '0');
+
+/* Budget periods are UTC months on the server: startsAt must be the first
+   instant of a UTC month. Deriving the month from local time would put a
+   November budget on 31 October for anyone west of Greenwich, so every
+   boundary in this file is computed in UTC and the date inputs are formatted
+   back with timeZone: 'UTC'. */
+const utcMonthOf = (value) => {
+  const date = new Date(value);
+  return `${date.getUTCFullYear()}-${pad2(date.getUTCMonth() + 1)}`;
+};
+const currentMonth = () => utcMonthOf(new Date());
+const monthStartIso = (month) => `${month}-01T00:00:00.000Z`;
+const monthEndIso = (month) => {
+  const [year, monthNumber] = month.split('-').map(Number);
+  return new Date(Date.UTC(year, monthNumber, 1)).toISOString();
+};
+const daysInMonth = (month) => {
+  const [year, monthNumber] = month.split('-').map(Number);
+  return new Date(Date.UTC(year, monthNumber, 0)).getUTCDate();
 };
 
-/* The frontend is complete; the store is not. `POST /api/business/budgets` does
-   not exist yet, so budgets live in this component's state: the dialogs, the
-   table, the percentage and the "end" action all work, and everything is gone on
-   reload. When the endpoint lands, replace the state writes with the call and
-   read the list from the response — nothing else in this file changes. */
+/* endsAt is exclusive: ending on day D means "up to the first instant of D+1",
+   so spending on D is still counted. The last day of the month therefore maps
+   to the month boundary, which the server accepts (endsAt <= next month). */
+const endIsoFromDay = (month, day) => {
+  const [year, monthNumber] = month.split('-').map(Number);
+  return new Date(Date.UTC(year, monthNumber - 1, Number(day) + 1)).toISOString();
+};
+const dayFromEndIso = (month, endsAt) => {
+  if (!endsAt || Date.parse(endsAt) === Date.parse(monthEndIso(month))) return '';
+  const date = new Date(Date.parse(endsAt) - 86400000);
+  return `${date.getUTCFullYear()}-${pad2(date.getUTCMonth() + 1)}-${pad2(date.getUTCDate())}`;
+};
+
+const newKey = () => (globalThis.crypto?.randomUUID?.()
+  || `idem-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+
+/* Budgets live on the account, one per UTC month, and the server owns the
+   list: amount and end date are writable, the month and the owner are not.
+   `spentCents` is aggregated from the ledger on every read, so nothing here
+   keeps its own running total. */
 export default function BusinessBudget() {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { language, publicCopy } = useLanguage();
   const text = { ...FALLBACK_COPY, ...(publicCopy?.workspace?.business?.budget || {}) };
-  const workspaceStaticMap = publicCopy?.workspace?.business?.workspaceStatic || {};
-  const ws = workspaceStaticMap[language] || workspaceStaticMap['en-GB'] || {};
 
-  const [enabled, setEnabled] = useState(true);
+  const [listState, setListState] = useState('loading'); // loading | ready | error
   const [budgets, setBudgets] = useState([]);
-  const [newOpen, setNewOpen] = useState(false);
-  const [disableOpen, setDisableOpen] = useState(false);
+  const [nextCursor, setNextCursor] = useState(null);
+  const [notice, setNotice] = useState('');
+
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(null);   // the budget being edited, or null when creating
   const [endTarget, setEndTarget] = useState(null); // the budget awaiting "end this budget?"
-  const [draft, setDraft] = useState({ name: '', amount: '', start: today(), end: '' });
-  const [startMode, setStartMode] = useState('now');
-  const [endMode, setEndMode] = useState('none');
+  const [draft, setDraft] = useState({ name: '', amount: '', month: currentMonth(), endDay: '' });
+  const [draftKey, setDraftKey] = useState(newKey);
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const money = useMemo(
     () => new Intl.NumberFormat(language, { style: 'currency', currency: 'USD' }),
     [language],
   );
-  const date = useMemo(
-    () => new Intl.DateTimeFormat(language, { dateStyle: 'medium' }),
+  const shortDate = useMemo(
+    () => new Intl.DateTimeFormat(language, { month: 'numeric', day: 'numeric', timeZone: 'UTC' }),
+    [language],
+  );
+  const monthLabel = useMemo(
+    () => new Intl.DateTimeFormat(language, { month: 'long', year: 'numeric', timeZone: 'UTC' }),
     [language],
   );
 
-  const memberName = user?.displayName || user?.email?.split('@')[0] || '';
-  const memberEmail = user?.email || '';
+  /* Kept free of `text`: depending on the copy object would give this callback
+     a new identity on every render, and the effect below would refetch in a
+     loop. The notice carries a reason, the render localises it. */
+  const load = useCallback(async ({ cursor, append = false } = {}) => {
+    if (!append) setListState('loading');
+    setNotice('');
+    try {
+      const { items, nextCursor: next } = await listBudgets({ limit: 20, cursor });
+      setBudgets((current) => (append ? [...current, ...items] : items));
+      setNextCursor(next);
+      setListState('ready');
+    } catch {
+      if (append) setNotice('loadFailed');
+      else setListState('error');
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
 
   const handleRailSelect = (id) => {
     if (id === 'home') { navigate(withLanguage('/business/workspace', language)); return; }
@@ -89,70 +134,116 @@ export default function BusinessBudget() {
     navigate(withLanguage(`/business/workspace?view=${id}`, language));
   };
 
-  /* Turning budget control on is a request to budget something, so with no
-     budgets yet it opens the create dialog straight away; with budgets already
-     there it only flips the switch. Turning it off asks first: the dialog says
-     what stops working and reminds you that it is reversible. */
-  const toggleEnabled = (next) => {
-    if (next) {
-      setEnabled(true);
-      if (budgets.length === 0) setNewOpen(true);
-      return;
-    }
-    setDisableOpen(true);
-  };
-
   const openCreate = () => {
     setEditing(null);
-    setStartMode('now');
-    setEndMode('none');
-    setDraft({ name: '', amount: '', start: today(), end: '' });
-    setNewOpen(true);
+    setDraft({ name: '', amount: '', month: currentMonth(), endDay: '' });
+    setDraftKey(newKey());
+    setFormError('');
+    setDialogOpen(true);
   };
 
   const openEdit = (budget) => {
+    const month = utcMonthOf(budget.startsAt);
     setEditing(budget);
-    setStartMode(budget.start ? 'date' : 'now');
-    setEndMode(budget.end ? 'date' : 'none');
-    setDraft({ name: budget.name, amount: String(budget.amount), start: budget.start || today(), end: budget.end || '' });
-    setNewOpen(true);
+    setDraft({
+      name: budget.name,
+      amount: String((budget.amountCents || 0) / 100),
+      month,
+      endDay: dayFromEndIso(month, budget.endsAt),
+    });
+    setDraftKey(newKey());
+    setFormError('');
+    setDialogOpen(true);
   };
 
-  const closeDraft = () => {
-    setNewOpen(false);
+  const closeDialog = () => {
+    setDialogOpen(false);
     setEditing(null);
-    setDraft({ name: '', amount: '', start: today(), end: '' });
-    setStartMode('now');
-    setEndMode('none');
+    setFormError('');
+    setSaving(false);
   };
 
-  const saveDraft = (event) => {
+  const draftMonth = editing ? utcMonthOf(editing.startsAt) : draft.month;
+  const lastDay = draftMonth ? daysInMonth(draftMonth) : 31;
+  const amountCents = Math.round(Number(draft.amount) * 100);
+  const canSave = draft.name.trim().length > 0
+    && Number.isFinite(amountCents) && amountCents > 0
+    /* A cleared month input yields '', which would post a malformed startsAt. */
+    && Boolean(editing || /^\d{4}-\d{2}$/.test(draft.month));
+
+  const saveDraft = async (event) => {
     event.preventDefault();
-    const amount = Number(draft.amount);
-    if (!draft.name.trim() || !Number.isFinite(amount) || amount <= 0) return;
-    setEnabled(true);
-    const fields = {
-      name: draft.name.trim(),
-      start: startMode === 'date' ? draft.start : today(),
-      end: endMode === 'date' ? draft.end : '',
-      amount,
-    };
-    setBudgets((current) => (editing
-      ? current.map((budget) => (budget.id === editing.id ? { ...budget, ...fields } : budget))
-      : [...current, { id: `b-${current.length + 1}`, ...fields, spent: 0, status: 'active' }]));
-    closeDraft();
+    if (!canSave || saving) return;
+    setSaving(true);
+    setFormError('');
+    try {
+      if (editing) {
+        /* Only the amount and the end date are writable: the month is fixed by
+           the record, so moving a budget to another period is a new budget. */
+        await updateBudget(editing.id, {
+          amountCents,
+          endsAt: draft.endDay ? endIsoFromDay(draftMonth, draft.endDay.slice(8, 10)) : monthEndIso(draftMonth),
+        }, { key: draftKey });
+      } else {
+        await createBudget({
+          name: draft.name.trim(),
+          amountCents,
+          startsAt: monthStartIso(draft.month),
+          ...(draft.endDay ? { endsAt: endIsoFromDay(draft.month, draft.endDay.slice(8, 10)) } : {}),
+        }, { key: draftKey });
+      }
+      closeDialog();
+      await load();
+    } catch {
+      setFormError(text.saveFailed);
+      setSaving(false);
+    }
   };
 
-  const endBudget = (id) => setBudgets((current) => current.map((budget) => (
-    budget.id === id ? { ...budget, status: 'ended' } : budget
-  )));
+  /* "End now" is a PATCH of endsAt to this instant: the server refuses an end
+     before the start, so the action only shows for a budget that has begun. */
+  const endBudget = async () => {
+    if (!endTarget) return;
+    const target = endTarget;
+    setEndTarget(null);
+    setNotice('');
+    try {
+      await updateBudget(target.id, { endsAt: new Date().toISOString() });
+      await load();
+    } catch {
+      setNotice('saveFailed');
+    }
+  };
 
-  /* An <input type="date"> yields YYYY-MM-DD, which Date() reads as UTC midnight;
-     west of Greenwich that renders as the previous day. Anchor it to local time. */
-  const renderDate = (value, fallback) => (value ? date.format(new Date(`${value}T00:00:00`)) : fallback);
+  const now = Date.now();
+  const rows = budgets.map((budget) => {
+    const month = utcMonthOf(budget.startsAt);
+    const started = Date.parse(budget.startsAt) <= now;
+    const ended = Date.parse(budget.endsAt) <= now;
+    const spent = (budget.spentCents || 0) / 100;
+    const amount = (budget.amountCents || 0) / 100;
+    return {
+      ...budget,
+      month,
+      started,
+      ended,
+      amount,
+      spent,
+      share: budget.amountCents > 0 ? Math.round(((budget.spentCents || 0) / budget.amountCents) * 100) : 0,
+      endsFullMonth: Date.parse(budget.endsAt) === Date.parse(monthEndIso(month)),
+    };
+  });
+
+  /* The toolbar totals only the budgets that are running right now: a past or
+     a not-yet-started month would make the number mean two things at once. */
+  const activeTotal = rows.reduce((total, budget) => (
+    budget.started && !budget.ended
+      ? { amount: total.amount + budget.amount, spent: total.spent + budget.spent }
+      : total
+  ), { amount: 0, spent: 0 });
 
   return <main className="business-account-page">
-    <BusinessRail onSelect={handleRailSelect} />
+    <BusinessRail activeId="budget" onSelect={handleRailSelect} />
     <div className="business-account-pane">
       <header>
         <NotificationBell />
@@ -162,44 +253,56 @@ export default function BusinessBudget() {
         <div>
           <h1>{text.title}</h1>
           <p className="business-budget-intro">{text.intro}</p>
-          {/* D-02 = B: budgets are plans in this version. Saying so here stops a
-              client reading the switch as a spending cap. */}
+          {/* Budgets are tracked against the ledger but do not stop a purchase:
+              saying so here keeps a client from reading the table as a cap. */}
           <p className="business-budget-planning-note">{text.planningNote}</p>
         </div>
 
         <div className="business-budget-card">
           <div className="business-budget-head">
-            <label className="business-budget-switch">
-              <span>{text.title}</span>
-              <input type="checkbox" checked={enabled} onChange={(event) => toggleEnabled(event.target.checked)} />
-              <i aria-hidden="true" />
-            </label>
+            {activeTotal.amount > 0 ? (
+              <p className="business-budget-total">
+                <span>{text.colAmount} <strong>{money.format(activeTotal.amount)}</strong></span>
+                <span>{text.colSpent} <strong>{money.format(activeTotal.spent)}</strong></span>
+              </p>
+            ) : <span />}
             <button className="business-button business-budget-create" type="button" onClick={openCreate}>
               <Plus size={15} /> {text.create}
             </button>
           </div>
+
+          {notice ? (
+            <p className="business-budget-notice" role="status">
+              {notice === 'saveFailed' ? text.saveFailed : text.loadFailed}
+            </p>
+          ) : null}
 
           <div className="business-budget-table">
             <table>
               <thead>
                 <tr>
                   <th scope="col">{text.colName}</th>
-                  <th scope="col">{text.colStart}</th>
-                  <th scope="col">{text.colEnd}</th>
-                  <th scope="col">{text.colAmount}</th>
-                  <th scope="col">{text.colSpent}</th>
+                  <th scope="col">{text.colPeriod}</th>
+                  <th scope="col" className="is-number">{text.colAmount}</th>
+                  <th scope="col" className="is-number">{text.colSpent}</th>
+                  <th scope="col" className="is-number is-remaining">{text.colRemaining}</th>
                   <th scope="col">{text.colStatus}</th>
                   <th scope="col">{text.colActions}</th>
                 </tr>
               </thead>
               <tbody>
-                {/* Switch off: nothing is being applied, and the body says so
-                    instead of listing rows that are not in force. */}
-                {!enabled ? (
-                  <tr className="business-budget-off">
-                    <td colSpan={7}>{text.emptyOff || 'No budget items.'}</td>
+                {listState === 'loading' ? (
+                  <tr className="business-budget-empty">
+                    <td colSpan={7}><p className="business-budget-note">{text.loading}</p></td>
                   </tr>
-                ) : budgets.length === 0 ? (
+                ) : listState === 'error' ? (
+                  <tr className="business-budget-empty">
+                    <td colSpan={7}>
+                      <p className="business-budget-note is-error">{text.loadFailed}</p>
+                      <button className="business-budget-retry" type="button" onClick={() => load()}>{text.retry}</button>
+                    </td>
+                  </tr>
+                ) : rows.length === 0 ? (
                   <tr className="business-budget-empty">
                     <td colSpan={7}>
                       <div className="business-budget-empty-inner">
@@ -211,58 +314,55 @@ export default function BusinessBudget() {
                       </div>
                     </td>
                   </tr>
-                ) : budgets.map((budget) => {
-                  const share = budget.amount > 0 ? Math.round((budget.spent / budget.amount) * 100) : 0;
-                  return (
-                    <tr key={budget.id}>
-                      <td>{budget.name}</td>
-                      <td>{renderDate(budget.start, text.noEndDate)}</td>
-                      <td>{renderDate(budget.end, text.noEndDate)}</td>
-                      <td className="is-number">{money.format(budget.amount)}</td>
-                      <td className="is-number">{money.format(budget.spent)} <span className="business-budget-share">{share}%</span></td>
-                      <td>
-                        <span className={`business-budget-status is-${budget.status}`}>
-                          {budget.status === 'active' ? text.statusActive : text.statusEnded}
+                ) : rows.map((budget) => (
+                  <tr key={budget.id}>
+                    <td>{budget.name}</td>
+                    <td>
+                      <span className="business-budget-period">{monthLabel.format(new Date(budget.startsAt))}</span>
+                      {budget.endsFullMonth ? null : (
+                        <small className="business-budget-period-end">
+                          – {shortDate.format(new Date(budget.endsAt))}
+                        </small>
+                      )}
+                    </td>
+                    <td className="is-number">{money.format(budget.amount)}</td>
+                    <td className="is-number">
+                      {money.format(budget.spent)}
+                      <span className="business-budget-share">{budget.share}%</span>
+                    </td>
+                    <td className="is-number is-remaining">{money.format((budget.remainingCents || 0) / 100)}</td>
+                    <td>
+                      <span className={`business-budget-status is-${budget.ended ? 'ended' : budget.started ? 'active' : 'scheduled'}`}>
+                        {budget.ended ? text.statusEnded : budget.started ? text.statusActive : text.statusScheduled}
+                      </span>
+                    </td>
+                    <td>
+                      {budget.ended ? <span className="business-budget-none">—</span> : (
+                        <span className="business-budget-actions">
+                          <button type="button" className="business-budget-edit" onClick={() => openEdit(budget)}>{text.edit}</button>
+                          {budget.started ? (
+                            <>
+                              <i aria-hidden="true">|</i>
+                              <button type="button" className="business-budget-end" onClick={() => setEndTarget(budget)}>{text.end}</button>
+                            </>
+                          ) : null}
                         </span>
-                      </td>
-                      <td>
-                        {budget.status === 'active' ? (
-                          <span className="business-budget-actions">
-                            <button type="button" className="business-budget-edit" onClick={() => openEdit(budget)}>{text.edit}</button>
-                            <i aria-hidden="true">|</i>
-                            <button type="button" className="business-budget-end" onClick={() => setEndTarget(budget)}>{text.end}</button>
-                          </span>
-                        ) : <span className="business-budget-none">—</span>}
-                      </td>
-                    </tr>
-                  );
-                })}
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
+
+          {nextCursor ? (
+            <div className="business-budget-more">
+              <button type="button" onClick={() => load({ cursor: nextCursor, append: true })}>{text.loadMore}</button>
+            </div>
+          ) : null}
         </div>
       </section>
     </div>
-
-    {disableOpen && (
-      <div className="business-budget-modal" role="dialog" aria-modal="true" aria-labelledby="budget-disable-title">
-        <section>
-          <h2 id="budget-disable-title">{text.disableTitle}</h2>
-          <p>{text.disableIntro}</p>
-          <ul>
-            <li>{text.disablePoint1}</li>
-            <li>{text.disablePoint2}</li>
-          </ul>
-          <p className="business-budget-modal-note">{text.disableNote}</p>
-          <div className="business-budget-modal-actions">
-            <button type="button" onClick={() => setDisableOpen(false)}>{text.disableKeep}</button>
-            <button className="business-button" type="button" onClick={() => { setEnabled(false); setDisableOpen(false); }}>
-              {text.disableConfirm}
-            </button>
-          </div>
-        </section>
-      </div>
-    )}
 
     {endTarget && (
       <div className="business-budget-modal" role="dialog" aria-modal="true" aria-labelledby="budget-end-title">
@@ -276,15 +376,13 @@ export default function BusinessBudget() {
           <p className="business-budget-modal-note">{text.endNote}</p>
           <div className="business-budget-modal-actions">
             <button type="button" onClick={() => setEndTarget(null)}>{text.endKeep}</button>
-            <button className="business-button" type="button" onClick={() => { endBudget(endTarget.id); setEndTarget(null); }}>
-              {text.endConfirm}
-            </button>
+            <button className="business-button" type="button" onClick={endBudget}>{text.endConfirm}</button>
           </div>
         </section>
       </div>
     )}
 
-    {newOpen && (
+    {dialogOpen && (
       <div className="business-budget-modal" role="dialog" aria-modal="true" aria-labelledby="budget-new-title">
         <section>
           <h2 id="budget-new-title">{editing ? text.editBudget : text.newBudget}</h2>
@@ -292,83 +390,71 @@ export default function BusinessBudget() {
             <div className="business-budget-pair">
               <div className="business-budget-field">
                 <label htmlFor="budget-name">{text.colName}</label>
-                <input id="budget-name" value={draft.name} onChange={(event) => setDraft((d) => ({ ...d, name: event.target.value }))} maxLength={80} />
+                {/* Update only takes amountCents and endsAt: a name field here
+                    would look editable and save nothing, so an existing budget
+                    shows its name the same way it shows its month. */}
+                {editing ? (
+                  <p className="business-budget-fixed">{editing.name}</p>
+                ) : (
+                  <input
+                    id="budget-name"
+                    value={draft.name}
+                    maxLength={180}
+                    onChange={(event) => setDraft((current) => ({ ...current, name: event.target.value }))}
+                  />
+                )}
               </div>
               <div className="business-budget-field">
                 <label htmlFor="budget-amount">{text.colAmount}</label>
-                <input id="budget-amount" type="number" min="1" step="1" value={draft.amount} onChange={(event) => setDraft((d) => ({ ...d, amount: event.target.value }))} />
+                <input
+                  id="budget-amount"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  inputMode="decimal"
+                  value={draft.amount}
+                  onChange={(event) => setDraft((current) => ({ ...current, amount: event.target.value }))}
+                />
               </div>
             </div>
 
             <div className="business-budget-pair business-budget-dates">
               <div className="business-budget-field">
-                <span className="business-budget-field-label">{text.colStart}</span>
-                <div className="business-budget-choices">
-                  <label>
-                    <input type="radio" name="budget-start" checked={startMode === 'now'} onChange={() => setStartMode('now')} />
-                    <span>{text.now}</span>
-                  </label>
-                  <label>
-                    <input type="radio" name="budget-start" checked={startMode === 'date'} onChange={() => setStartMode('date')} />
-                    <input
-                      type="date"
-                      aria-label={text.pickDate}
-                      disabled={startMode !== 'date'}
-                      value={draft.start}
-                      onChange={(event) => setDraft((d) => ({ ...d, start: event.target.value }))}
-                    />
-                  </label>
-                </div>
+                <label htmlFor="budget-month">{text.startMonth}</label>
+                {/* The period is fixed for an existing budget: the server only
+                    accepts an amount or an end date on update, so the month is
+                    shown as text rather than offered as a control that would
+                    silently do nothing. */}
+                {editing ? (
+                  <p className="business-budget-fixed">{monthLabel.format(new Date(monthStartIso(draftMonth)))}</p>
+                ) : (
+                  <input
+                    id="budget-month"
+                    type="month"
+                    value={draft.month}
+                    onChange={(event) => setDraft((current) => ({ ...current, month: event.target.value, endDay: '' }))}
+                  />
+                )}
               </div>
               <div className="business-budget-field">
-                <span className="business-budget-field-label">{text.colEnd}</span>
-                <div className="business-budget-choices">
-                  <label>
-                    <input type="radio" name="budget-end" checked={endMode === 'none'} onChange={() => setEndMode('none')} />
-                    <span>{text.anyEnd}</span>
-                  </label>
-                  <label>
-                    <input type="radio" name="budget-end" checked={endMode === 'date'} onChange={() => setEndMode('date')} />
-                    <input
-                      type="date"
-                      aria-label={text.pickDate}
-                      disabled={endMode !== 'date'}
-                      value={draft.end}
-                      onChange={(event) => setDraft((d) => ({ ...d, end: event.target.value }))}
-                    />
-                  </label>
-                </div>
+                <label htmlFor="budget-end">{text.colEnd}</label>
+                <input
+                  id="budget-end"
+                  type="date"
+                  min={`${draftMonth}-01`}
+                  max={`${draftMonth}-${pad2(lastDay)}`}
+                  value={draft.endDay}
+                  onChange={(event) => setDraft((current) => ({ ...current, endDay: event.target.value }))}
+                />
+                <small className="business-budget-field-hint">{text.endHint}</small>
               </div>
             </div>
 
-            {/* One row today: the workspace owner. Per-member sub-limits are out of
-                scope for this version (D-04 = B) — the members themselves, with roles
-                that decide who may manage budgets, come with the team feature. */}
-            <p className="business-budget-section">{text.memberLimits}</p>
-            <table className="business-budget-members">
-              <thead>
-                <tr>
-                  <th scope="col">{text.memberName}</th>
-                  <th scope="col">{text.memberEmail}</th>
-                  <th scope="col">{text.colSpent}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{memberName}</td>
-                  <td>{memberEmail}</td>
-                  <td className="is-number">
-                    {money.format(0)}
-                    <span className="business-budget-bar" aria-hidden="true"><i style={{ width: '0%' }} /></span>
-                    <span className="business-budget-share">0%</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            {formError ? <p className="business-budget-form-error" role="alert">{formError}</p> : null}
 
             <div className="business-budget-modal-actions">
-              <button type="button" onClick={closeDraft}>{text.cancel}</button>
-              <button className="business-button" type="submit" disabled={!draft.name.trim() || !(Number(draft.amount) > 0)}>
+              <button type="button" onClick={closeDialog}>{text.cancel}</button>
+              <button className="business-button" type="submit" disabled={!canSave || saving}>
                 {text.save}
               </button>
             </div>
