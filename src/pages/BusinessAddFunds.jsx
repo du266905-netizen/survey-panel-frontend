@@ -1,81 +1,107 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Check, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
-import Logo from '../components/Logo';
+import { ArrowLeft, ArrowRight, CreditCard, Landmark, Link2, Lock, X } from 'lucide-react';
+import BusinessRail from '../components/BusinessRail';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
 import BusinessBillingProfile, { isBillingComplete, useBillingProfile } from '../components/BusinessBillingProfile';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { createCryptoRecharge, createPaymentLink, getBusinessAccountBalance } from '../api/realApi';
+import { loadPaymentChannels } from '../api/paymentChannels';
 import { MIN_TOP_UP } from '../constants/fundsLimits';
 import { PAYPAL_COPY } from '../constants/paypalCheckoutCopy';
 import './BusinessAddFunds.css';
 
-/* The add-funds page.
+/* The add-funds dialog.
  *
- * Same job as the sheet it replaces — amount, then a route — but as a page: a
- * reload keeps the amount, the hosted card fields get real height, and the bank
- * transfer step stays inside one flow instead of jumping between two layouts.
+ * A top-up is a decision about one number, so it opens over the workspace as a
+ * single sheet: the choices on the left (amount, route, billing details), the
+ * order on the right (what is being added, what it costs today, one button).
+ * The right column never scrolls away from the button, so the action stays in
+ * sight while the billing fields are filled in below.
  *
- * The right rail is deliberately not a calculator: it shows the balance as it
- * is now and what is about to be added. It does not print a "balance after",
- * because fees, refunds and partial credits would make that number a promise we
- * cannot keep.
- *
- * Each route has an empty description slot. The wording for those four lines is
- * a business decision (what we promise about timing, fees and whose cashier it
- * is), so the slot renders only when copy arrives. */
-
+ * Nothing is credited here. Crypto hands off to the provider's cashier, bank
+ * transfer continues on its own page (it must survive a reload), and a payment
+ * link is created server-side and copied out. */
 const QUICK_AMOUNTS = [100, 250, 500, 1000];
 
 const pageCopy = {
   'zh-CN': {
-    cryptoContinue: '继续',
+    back: '返回',
+    close: '关闭',
+    amountSection: '充值金额',
+    amountOnce: '一次性充值',
+    customAmount: '自定义金额',
     methodTitle: '付款方式',
-    linkPurpose: '用途',
-    linkPurposeHint: '付给人看的一句话，例如：研究额度充值',
-    linkExpiry: '有效期（天）',
-    linkCreate: '生成链接',
-    linkCreating: '正在生成…',
+    methodCard: '银行卡',
+    methodCrypto: '加密货币',
+    methodBank: '银行转账',
+    methodLink: '付款链接',
+    methodLinkHint: '生成后发给付款方，24 小时内有效',
+    methodCryptoHint: '在托管页完成付款',
+    methodBankHint: '按收款信息汇款，我们人工核验',
+    summaryLabel: '本次充值',
+    oneTime: '一次性充值',
+    rowBalance: '当前余额',
+    rowAmount: '充值金额',
+    rowDue: '应付金额',
+    legal: '付款在所选通道的托管页完成；余额以服务端核验的结果为准。',
+    ctaCrypto: '前往付款',
+    ctaBank: '查看收款信息',
+    ctaLink: '生成付款链接',
+    ctaCard: '在下方完成卡片支付',
+    needBilling: '先填完账单信息再继续。',
+    linkTitle: '付款链接已创建',
+    linkBody: '把链接发给付款方，金额已经固定，24 小时内有效。',
     linkCopy: '复制链接',
-    linkHint: '任何拿到链接的人都能打开这一页；金额与用途生成后不可修改。',
-    linkCreated: '付款链接已创建',
-    linkCreatedBody: '把链接发给付款方，24 小时内有效，金额已经固定。',
-    linkCreatedDone: '完成',
+    linkCopied: '已复制',
+    linkDone: '完成',
     linkFailed: '生成失败，请稍后再试。',
-    needBilling: '请先填完账单信息。',
+    cardNote: '卡片通道升级中，可用银行转账或加密货币。',
+    paymentFailed: '暂时无法发起这笔付款，请稍后再试。',
     opening: '正在打开…',
+    creating: '正在生成…',
+    customPlaceholder: '输入金额',
   },
 };
-const pageCopyEn = {
-  cryptoContinue: 'Continue',
-  methodTitle: 'Payment method',
-  linkPurpose: 'What it is for',
-  linkPurposeHint: 'One line the payer will read, e.g. research credits',
-  linkExpiry: 'Valid for (days)',
-  linkCreate: 'Create link',
-  linkCreating: 'Creating…',
-  linkCopy: 'Copy link',
-  linkHint: 'Anyone with the link can open this page. Amount and purpose are fixed once created.',
-  linkCreated: 'Payment link created',
-  linkCreatedBody: 'Send the link to whoever is paying. It stays valid for 24 hours; the amount is fixed.',
-  linkCreatedDone: 'Done',
-  linkFailed: 'Could not create the link. Try again in a moment.',
-  needBilling: 'Add the billing details first.',
-  opening: 'Opening…',
-};
 
-/* The six marks beside the security note, the same set the sheet carried in its
- * footer: four card schemes, PayPal, and the Cryptomus cube (drawn inline, it
- * ships as a single currentColor path). They sit in equal boxes because the
- * logos range from 3.1:1 to 1.3:1. */
-const CARD_MARKS = [
-  { src: '/pay/visa.svg', alt: 'Visa' },
-  { src: '/pay/mastercard.png', alt: 'Mastercard' },
-  { src: '/pay/amex.svg', alt: 'American Express' },
-  { src: '/pay/unionpay.webp', alt: 'UnionPay' },
-  { src: '/pay/paypal.svg', alt: 'PayPal' },
-];
+const pageCopyEn = {
+  back: 'Back',
+  close: 'Close',
+  amountSection: 'Amount',
+  amountOnce: 'one-time top-up',
+  customAmount: 'Custom amount',
+  methodTitle: 'Payment method',
+  methodCard: 'Card',
+  methodCrypto: 'Cryptocurrency',
+  methodBank: 'Bank transfer',
+  methodLink: 'Payment link',
+  methodLinkHint: 'Send it to whoever is paying; valid for 24 hours',
+  methodCryptoHint: 'Paid on the provider’s hosted page',
+  methodBankHint: 'Transfer to our account; we verify it by hand',
+  summaryLabel: 'This top-up',
+  oneTime: 'One-time top-up',
+  rowBalance: 'Current balance',
+  rowAmount: 'Top-up amount',
+  rowDue: 'Amount due',
+  legal: 'The payment completes on the chosen route’s hosted page. The balance follows what the server verifies.',
+  ctaCrypto: 'Continue to payment',
+  ctaBank: 'View bank details',
+  ctaLink: 'Create payment link',
+  ctaCard: 'Complete the card payment below',
+  needBilling: 'Add the billing details first.',
+  linkTitle: 'Payment link created',
+  linkBody: 'Send it to whoever is paying. The amount is fixed and the link lasts 24 hours.',
+  linkCopy: 'Copy link',
+  linkCopied: 'Copied',
+  linkDone: 'Done',
+  linkFailed: 'Could not create the link. Try again in a moment.',
+  cardNote: 'Card payments are being upgraded. Bank transfer and cryptocurrency are available meanwhile.',
+  paymentFailed: 'We could not start this payment. Please try again.',
+  opening: 'Opening…',
+  creating: 'Creating…',
+  customPlaceholder: 'Enter an amount',
+};
 
 function readBalance(payload) {
   const raw = payload?.balance;
@@ -100,41 +126,98 @@ export default function BusinessAddFunds() {
   const [amount, setAmount] = useState(String(MIN_TOP_UP));
   const [custom, setCustom] = useState(false);
   const [touched, setTouched] = useState(false);
+  const [method, setMethod] = useState('crypto');
+  const [channels, setChannels] = useState({ card: false, crypto: true, bankTransfer: true });
   const [submitting, setSubmitting] = useState('');
-  const [openMethod, setOpenMethod] = useState('');
-  const billing = useBillingProfile();
-  const [linkResult, setLinkResult] = useState('');
-  const [linkModal, setLinkModal] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [linkBusy, setLinkBusy] = useState(false);
-  const [linkError, setLinkError] = useState('');
   const [error, setError] = useState('');
   const [balance, setBalance] = useState(null);
+  const [linkUrl, setLinkUrl] = useState('');
+  const [linkBusy, setLinkBusy] = useState(false);
+  const [linkError, setLinkError] = useState('');
+  const [copied, setCopied] = useState(false);
+  const billing = useBillingProfile();
+  const inputRef = useRef(null);
+
+  const close = () => navigate(withLanguage('/business/workspace', language));
 
   useEffect(() => {
-    let cancelled = false;
+    let alive = true;
     getBusinessAccountBalance()
-      .then((payload) => {
-        if (cancelled) return;
-        setBalance(readBalance(payload));
-      })
-      .catch(() => { /* not signed in, or the endpoint is not deployed: show a dash */ });
-    return () => { cancelled = true; };
+      .then((payload) => { if (alive) setBalance(readBalance(payload)); })
+      .catch(() => { /* show a dash; the dialog still works */ });
+    loadPaymentChannels().then((methods) => {
+      if (!alive) return;
+      setChannels(methods);
+      if (!methods.card) setMethod((current) => (current === 'card' ? 'crypto' : current));
+    });
+    return () => { alive = false; };
   }, []);
 
-  /* The action button is what the profile unlocks; the rows stay free so the
-     fields are reachable in the first place. */
-  const billingReady = isBillingComplete(billing.profile);
-
-  const numeric = Number(String(amount).replace(/[^0-9.]/g, ''));
-
-  /* A link is created for one amount. Changing the amount makes the old link
-     wrong, so it must not stay on screen as if it were current. */
   useEffect(() => {
-    setLinkResult('');
-    setLinkModal(false);
-    setCopied(false);
-  }, [amount]);
+    const onKey = (event) => { if (event.key === 'Escape') close(); };
+    window.addEventListener('keydown', onKey);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    inputRef.current?.focus();
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = previous;
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const billingReady = isBillingComplete(billing.profile);
+  const numeric = Number(String(amount).replace(/[^0-9.]/g, ''));
+  const valid = Number.isFinite(numeric) && numeric >= MIN_TOP_UP;
+  const money = useMemo(
+    () => new Intl.NumberFormat(language, { style: 'currency', currency: 'USD' }),
+    [language],
+  );
+  const amountLabel = valid ? money.format(numeric) : '—';
+
+  const handleRailSelect = (id) => {
+    if (id === 'home') { navigate(withLanguage('/business/workspace', language)); return; }
+    if (id === 'ai') { navigate(withLanguage('/business/ai-brief', language)); return; }
+    navigate(withLanguage(`/business/workspace?view=${id}`, language));
+  };
+
+  const startCrypto = async () => {
+    setError('');
+    setSubmitting('crypto');
+    try {
+      const payload = await createCryptoRecharge({
+        amountUsd: numeric.toFixed(2),
+        idempotencyKey: `crypto:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`,
+      });
+      const checkoutUrl = payload?.payment?.checkoutUrl;
+      if (!checkoutUrl) throw new Error('NO_CHECKOUT_URL');
+      window.location.href = checkoutUrl;
+    } catch {
+      setError(copy.paymentFailed);
+    } finally {
+      setSubmitting('');
+    }
+  };
+
+  const createLink = async () => {
+    setLinkError('');
+    setLinkBusy(true);
+    try {
+      /* One day, set by us: a link is for topping up, and 24h is long enough
+         for the payer to open it. */
+      const expiresAt = new Date(Date.now() + 24 * 3600 * 1000).toISOString();
+      const payload = await createPaymentLink({
+        amountCents: Math.round(numeric * 100),
+        currency: 'USD',
+        purpose: '余额充值',
+        expiresAt,
+      }, `link:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`);
+      setLinkUrl(payload?.url || '');
+    } catch (failure) {
+      setLinkError(failure?.response?.data?.code === 'BILLING_PROFILE_REQUIRED' ? copy.needBilling : copy.linkFailed);
+    } finally {
+      setLinkBusy(false);
+    }
+  };
 
   const copyText = async (text) => {
     try {
@@ -150,303 +233,243 @@ export default function BusinessAddFunds() {
       return done;
     }
   };
-  const valid = Number.isFinite(numeric) && numeric >= MIN_TOP_UP;
-  const amountLabel = Number.isFinite(numeric) && numeric > 0 ? `$${numeric.toFixed(2)}` : '—';
-
-  /* Crypto is the only route that leaves the page for a cashier; card is handled
-   * by PayPal's hosted component, bank transfer is confirmed by hand. */
-  const startCrypto = async () => {
-    if (!valid || submitting) return;
-    setError('');
-    setSubmitting('crypto');
-    try {
-      const payload = await createCryptoRecharge({
-        amountUsd: numeric.toFixed(2),
-        idempotencyKey: `crypto:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`,
-      });
-      const checkoutUrl = payload?.payment?.checkoutUrl;
-      if (!checkoutUrl) throw new Error('NO_CHECKOUT_URL');
-      window.location.href = checkoutUrl;
-    } catch {
-      setError(ui.paymentFailed || 'We could not start this payment. Please try again.');
-    } finally {
-      setSubmitting('');
-    }
-  };
 
   const goBankTransfer = () => {
     navigate(withLanguage(`/business/add-funds/bank-transfer${valid ? `?amount=${numeric}` : ''}`, language));
   };
 
+  const methodLabel = method === 'bank' ? copy.methodBank
+    : method === 'link' ? copy.methodLink
+      : method === 'card' ? copy.methodCard
+        : copy.methodCrypto;
+  const ctaLabel = method === 'bank' ? copy.ctaBank
+    : method === 'link' ? copy.ctaLink
+      : method === 'card' ? copy.ctaCard
+        : copy.ctaCrypto;
+  const canSubmit = valid && !submitting && !linkBusy && method !== 'card'
+    && (method === 'bank' || billingReady);
+
+  const handleSubmit = () => {
+    if (!canSubmit) return;
+    if (method === 'bank') { goBankTransfer(); return; }
+    if (method === 'link') { createLink(); return; }
+    startCrypto();
+  };
+
+  /* Card is off in production (PayPal was closed in November), so its row is
+     not rendered at all and the provider's name never reaches the page. When a
+     new gateway sets methods.card, the row returns with the hosted component. */
+  const cardRow = channels.card ? (
+    <button
+      type="button"
+      role="radio"
+      aria-checked={method === 'card'}
+      className={`business-funds-method${method === 'card' ? ' is-active' : ''}`}
+      onClick={() => setMethod('card')}
+    >
+      <span className="business-funds-method-mark" aria-hidden="true"><CreditCard size={17} /></span>
+      <span className="business-funds-method-copy">
+        <strong>{copy.methodCard}</strong>
+        <small>{ws.funds.paypalCard || 'Card'}</small>
+      </span>
+      <span className="business-funds-radio" aria-hidden="true" />
+    </button>
+  ) : null;
+
   return (
-    <main className="business-add-funds-page">
-      <header className="business-add-funds-top">
-        <div className="business-add-funds-top-inner">
-          <Logo size="sm" />
-          <button type="button" className="business-add-funds-back" onClick={() => navigate(withLanguage('/business/workspace', language))}>
-            <ArrowLeft size={16} /> {language.startsWith('zh') ? '返回仪表盘' : 'Back to dashboard'}
-          </button>
-        </div>
-      </header>
+    <main className="business-account-page business-funds-screen">
+      <BusinessRail activeId="billing" onSelect={handleRailSelect} />
 
-      <div className="business-add-funds-head">
-        <p>{ui.addFundsSubtitle || ws.funds.subtitle}</p>
-      </div>
-
-      <div className="business-add-funds-grid">
-        <div className="business-add-funds-main">
-          <section className="business-add-funds-block business-add-funds-amount">
-            <label htmlFor="business-add-funds-input">{ui.amountLabel || ws.funds.amountLabel}</label>
-            <div className={`business-add-funds-input${touched && !valid ? ' is-invalid' : ''}`}>
-              <span aria-hidden="true">$</span>
-              <input
-                id="business-add-funds-input"
-                inputMode="decimal"
-                placeholder={ui.customAmountPlaceholder || 'Enter an amount'}
-                value={amount}
-                onChange={(event) => { setAmount(event.target.value); setCustom(true); setTouched(true); }}
-                onBlur={() => setTouched(true)}
-              />
-            </div>
-            <div className="business-add-funds-quick">
-              {QUICK_AMOUNTS.map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  className={Number(amount) === value ? 'is-active' : ''}
-                  onClick={() => { setAmount(String(value)); setCustom(false); setTouched(true); }}
-                >
-                  US${value}
-                </button>
-              ))}
-              <button
-                type="button"
-                className={custom ? 'is-active' : ''}
-                onClick={() => { setCustom(true); setAmount(''); setTouched(false); }}
-              >
-                {ui.customAmount || 'Custom'}
+      <div className="business-funds-dialog" role="dialog" aria-modal="true" aria-labelledby="business-funds-title">
+        <button type="button" className="business-funds-scrim" aria-label={copy.close} onClick={close} />
+        <section className="business-funds-card">
+          <div className="business-funds-main">
+            <div className="business-funds-top">
+              <button type="button" className="business-funds-back" onClick={close}>
+                <ArrowLeft size={16} aria-hidden="true" /> {copy.back}
+              </button>
+              <button type="button" className="business-funds-close" onClick={close} aria-label={copy.close}>
+                <X size={18} aria-hidden="true" />
               </button>
             </div>
-            <p className="business-add-funds-min">
-              {(ui.minTopUp || ws.funds.minTopUp || '').replace('{amount}', `US$${MIN_TOP_UP}`)}
-            </p>
 
-          </section>
+            <h2 id="business-funds-title" className="business-funds-title">{ui.addFunds || 'Add funds'}</h2>
+            <p className="business-funds-subtitle">{ui.addFundsSubtitle || ws.funds.subtitle}</p>
 
-          <section className="business-add-funds-block">
-            <h2 className="business-add-funds-block-title">{copy.methodTitle}</h2>
-
-            <div className="business-add-funds-options">
-              {/* The hosted card fields belong to this row, not to the end of the
-                  list: opening the card option expands it in place. */}
-              <div className={`business-add-funds-group${openMethod === 'card' ? ' is-open' : ''}`}>
-                <button
-                  type="button"
-                  className="business-add-funds-option"
-                  onClick={() => setOpenMethod((current) => (current === 'card' ? '' : 'card'))}
-                  disabled={!valid || Boolean(submitting)}
-                  aria-expanded={openMethod === 'card'}
-                >
-                  <span className="business-add-funds-option-mark" aria-hidden="true"><CreditCard size={19} /></span>
-                  <span className="business-add-funds-option-copy">
-                    <strong>{ws.funds.card || 'Credit or debit card'}</strong>
-                  </span>
-                  <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
-                </button>
-
-                {openMethod === 'card' ? (
-                  <div className="business-add-funds-panel-wrap">
-                    <BusinessBillingProfile billing={billing} embedded />
-                    <div className="business-add-funds-cardpanel">
-                      <PayPalCheckout
-                        amountUsd={valid ? numeric.toFixed(2) : ''}
-                        disabled={!valid || !billingReady}
-                        copy={PAYPAL_COPY}
-                        onPaid={() => { setOpenMethod(''); setError(''); }}
-                        onError={(message) => setError(message)}
-                      />
-                      {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
-                    </div>
-                  </div>
-                ) : null}
-
-              </div>
-
-              <div className={`business-add-funds-group${openMethod === 'crypto' ? ' is-open' : ''}`}>
-                <button
-                  type="button"
-                  className="business-add-funds-option"
-                  onClick={() => setOpenMethod((current) => (current === 'crypto' ? '' : 'crypto'))}
-                  disabled={!valid || Boolean(submitting)}
-                  aria-expanded={openMethod === 'crypto'}
-                >
-                  <span className="business-add-funds-option-mark is-cryptomus" aria-hidden="true">
-                    <CryptomusMark size={17} />
-                  </span>
-                  <span className="business-add-funds-option-copy">
-                    <strong>{ws.funds.crypto || 'Cryptocurrency'}</strong>
-                  </span>
-                  <span className="business-add-funds-option-go" aria-hidden="true">
-                    {submitting === 'crypto' ? '…' : <ArrowRight size={15} />}
-                  </span>
-                </button>
-
-                {openMethod === 'crypto' ? (
-                  <div className="business-add-funds-panel-wrap">
-                    <BusinessBillingProfile billing={billing} embedded />
-                    <div className="business-add-funds-panel">
-                      <button className="business-add-funds-continue" type="button" onClick={startCrypto} disabled={Boolean(submitting) || !billingReady}>
-                        {submitting === 'crypto' ? copy.opening : copy.cryptoContinue}
-                      </button>
-                      {error ? <p className="business-add-funds-error" role="alert">{error}</p> : null}
-                    </div>
-                  </div>
-                ) : null}
-
-              </div>
-
-              <button type="button" className="business-add-funds-option" onClick={goBankTransfer} disabled={!valid}>
-                <span className="business-add-funds-option-mark" aria-hidden="true"><Landmark size={19} /></span>
-                <span className="business-add-funds-option-copy">
-                  <strong>{ws.funds.bankTransfer || 'Bank transfer'}</strong>
-                </span>
-                <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
-              </button>
-
-              {/* Payment links are issued by a human, outside this page; the row
-                  is here so the range of ways to pay reads as complete. It has
-                  no action until the link mechanism exists. */}
-              <div className={`business-add-funds-group${openMethod === 'link' ? ' is-open' : ''}`}>
-                <button
-                  type="button"
-                  className="business-add-funds-option"
-                  onClick={() => setOpenMethod((current) => (current === 'link' ? '' : 'link'))}
-                  disabled={!valid}
-                  aria-expanded={openMethod === 'link'}
-                >
-                  <span className="business-add-funds-option-mark" aria-hidden="true"><Link2 size={19} /></span>
-                  <span className="business-add-funds-option-copy">
-                    <strong>{ui.paymentLink || 'Payment link'}</strong>
-                  </span>
-                  <span className="business-add-funds-option-go" aria-hidden="true"><ArrowRight size={15} /></span>
-                </button>
-
-                {openMethod === 'link' ? (
-                  <div className="business-add-funds-panel-wrap">
-                    <div className="business-add-funds-panel">
-                      {linkResult ? (
-                        <>
-                          <p className="business-add-funds-linkurl">{linkResult}</p>
-                          <button
-                            className="business-add-funds-continue"
-                            type="button"
-                            onClick={async () => setCopied(await copyText(linkResult))}
-                          >
-                            {copied ? (language.startsWith('zh') ? '已复制' : 'Copied') : copy.linkCopy}
-                          </button>
-                          <p className="business-add-funds-linkhint">{copy.linkHint}</p>
-                        </>
-                      ) : (
-                        <>
-                          {/* A link inherits the account's billing profile, so the
-                              profile is collected here too — otherwise the button
-                              below stays disabled with nothing on screen to fix. */}
-                          <BusinessBillingProfile billing={billing} embedded />
-                          <button
-                            className="business-add-funds-continue"
-                            type="button"
-                            disabled={linkBusy || !billingReady}
-                            onClick={async () => {
-                              setLinkError('');
-                              setLinkBusy(true);
-                              try {
-                                /* One day, set by us: a link is for topping up, and 24h
-                                   is long enough for the payer to open it. */
-                                const expiresAt = new Date(Date.now() + 24 * 3600 * 1000).toISOString();
-                                const payload = await createPaymentLink({
-                                  amountCents: Math.round(numeric * 100),
-                                  currency: 'USD',
-                                  purpose: '余额充值',
-                                  expiresAt,
-                                }, `link:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`);
-                                setLinkResult(payload?.url || '');
-                                setLinkModal(true);
-                              } catch (error) {
-                                setLinkError(error?.response?.data?.code === 'BILLING_PROFILE_REQUIRED' ? copy.needBilling : copy.linkFailed);
-                              } finally {
-                                setLinkBusy(false);
-                              }
-                            }}
-                          >
-                            {linkBusy ? copy.linkCreating : copy.linkCreate}
-                          </button>
-                          {!billingReady ? <p className="business-add-funds-linkhint">{copy.needBilling}</p> : null}
-                          {linkError ? <p className="business-add-funds-error">{linkError}</p> : null}
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            </div>
-
-
-          </section>
-
-        </div>
-
-        <aside className="business-add-funds-rail">
-          <div className="business-add-funds-rail-card">
-            <p className="business-add-funds-rail-label">{ui.balanceLabel || 'Current balance'}</p>
-            <p className="business-add-funds-rail-balance">{balance || '—'}</p>
-
-            <div className="business-add-funds-rail-row">
-              <span>{ui.thisTopUp || 'This top-up'}</span>
-              <span>{amountLabel}</span>
-            </div>
-
-            <div className="business-add-funds-rail-secure">
-              <p className="business-add-funds-rail-note">
-                <Lock size={14} aria-hidden="true" />
-                <span>{ui.securePaymentBody || ws.funds.secureBody}</span>
-              </p>
-              <div className="business-add-funds-marks" aria-hidden="true">
-                {CARD_MARKS.map((mark) => (
-                  <span className="business-add-funds-mark" key={mark.src}>
-                    <img src={mark.src} alt="" loading="lazy" />
-                  </span>
+            <section className="business-funds-section">
+              <p className="business-funds-label">{copy.amountSection}</p>
+              <div className="business-funds-amounts">
+                {QUICK_AMOUNTS.map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={`business-funds-amount${!custom && Number(amount) === value ? ' is-active' : ''}`}
+                    onClick={() => { setAmount(String(value)); setCustom(false); setTouched(true); }}
+                  >
+                    <strong>{money.format(value)}</strong>
+                    <small>{copy.amountOnce}</small>
+                  </button>
                 ))}
-                <span className="business-add-funds-mark is-cryptomus">
-                  <CryptomusMark size={15} />
-                </span>
               </div>
-            </div>
-          </div>
-        </aside>
-      </div>
 
-      {linkResult && linkModal ? (
-        <div className="business-add-funds-linkoverlay" role="dialog" aria-modal="true" aria-labelledby="business-add-funds-linkcreated">
-          <section>
-            <span className="business-add-funds-linkcreated-icon" aria-hidden="true"><Check size={44} strokeWidth={1.7} /></span>
-            <h2 id="business-add-funds-linkcreated">{copy.linkCreated}</h2>
-            <p>{copy.linkCreatedBody}</p>
-            <code className="business-add-funds-linkcreated-url">{linkResult}</code>
-            <div className="business-add-funds-linkcreated-actions">
-              <button
-                type="button"
-                className="business-add-funds-continue"
-                onClick={async () => setCopied(await copyText(linkResult))}
-              >
-                {copied ? (language.startsWith('zh') ? '已复制' : 'Copied') : copy.linkCopy}
-              </button>
-              <button type="button" className="business-add-funds-linkcreated-done" onClick={() => setLinkModal(false)}>
-                {copy.linkCreatedDone}
-              </button>
-            </div>
-          </section>
-        </div>
-      ) : null}
+              <label className="business-funds-custom">
+                <span>{copy.customAmount}</span>
+                <span className={`business-funds-input${touched && !valid ? ' is-invalid' : ''}`}>
+                  <i aria-hidden="true">$</i>
+                  <input
+                    ref={inputRef}
+                    inputMode="decimal"
+                    placeholder={copy.customPlaceholder}
+                    value={custom ? amount : ''}
+                    onFocus={() => setCustom(true)}
+                    onChange={(event) => { setAmount(event.target.value); setCustom(true); setTouched(true); }}
+                    onBlur={() => setTouched(true)}
+                  />
+                </span>
+              </label>
+
+              <p className="business-funds-hint">
+                {(ui.minTopUp || ws.funds.minTopUp || '').replace('{amount}', money.format(MIN_TOP_UP))}
+              </p>
+            </section>
+
+            <section className="business-funds-section">
+              <p className="business-funds-label">{copy.methodTitle}</p>
+              <div className="business-funds-methods" role="radiogroup" aria-label={copy.methodTitle}>
+                {cardRow}
+
+                {channels.crypto ? (
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={method === 'crypto'}
+                    className={`business-funds-method${method === 'crypto' ? ' is-active' : ''}`}
+                    onClick={() => setMethod('crypto')}
+                  >
+                    <span className="business-funds-method-mark is-cryptomus" aria-hidden="true"><CryptomusMark size={17} /></span>
+                    <span className="business-funds-method-copy">
+                      <strong>{copy.methodCrypto}</strong>
+                      <small>{copy.methodCryptoHint}</small>
+                    </span>
+                    <span className="business-funds-radio" aria-hidden="true" />
+                  </button>
+                ) : null}
+
+                {channels.bankTransfer ? (
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={method === 'bank'}
+                    className={`business-funds-method${method === 'bank' ? ' is-active' : ''}`}
+                    onClick={() => setMethod('bank')}
+                  >
+                    <span className="business-funds-method-mark" aria-hidden="true"><Landmark size={17} /></span>
+                    <span className="business-funds-method-copy">
+                      <strong>{copy.methodBank}</strong>
+                      <small>{copy.methodBankHint}</small>
+                    </span>
+                    <span className="business-funds-radio" aria-hidden="true" />
+                  </button>
+                ) : null}
+
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={method === 'link'}
+                  className={`business-funds-method${method === 'link' ? ' is-active' : ''}`}
+                  onClick={() => setMethod('link')}
+                >
+                  <span className="business-funds-method-mark" aria-hidden="true"><Link2 size={17} /></span>
+                  <span className="business-funds-method-copy">
+                    <strong>{copy.methodLink}</strong>
+                    <small>{copy.methodLinkHint}</small>
+                  </span>
+                  <span className="business-funds-radio" aria-hidden="true" />
+                </button>
+              </div>
+
+              {method === 'card' && channels.card ? (
+                <div className="business-funds-cardpanel">
+                  <PayPalCheckout
+                    amountUsd={valid ? numeric.toFixed(2) : ''}
+                    disabled={!valid || !billingReady}
+                    copy={PAYPAL_COPY}
+                    onPaid={() => { setError(''); close(); }}
+                    onError={(message) => setError(message)}
+                  />
+                </div>
+              ) : null}
+
+              {!channels.card ? <p className="business-funds-note">{copy.cardNote}</p> : null}
+            </section>
+
+            <section className="business-funds-section">
+              <BusinessBillingProfile billing={billing} embedded />
+            </section>
+          </div>
+
+          <aside className="business-funds-summary">
+            {linkUrl ? (
+              <>
+                <div>
+                  <p className="business-funds-label">{copy.linkTitle}</p>
+                  <p className="business-funds-linkurl">{linkUrl}</p>
+                  <p className="business-funds-legal">{copy.linkBody}</p>
+                </div>
+                <div className="business-funds-linkacts">
+                  <button type="button" className="business-funds-secondary" onClick={async () => setCopied(await copyText(linkUrl))}>
+                    {copied ? copy.linkCopied : copy.linkCopy}
+                  </button>
+                  <button type="button" className="business-button business-funds-cta" onClick={close}>
+                    {copy.linkDone}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <p className="business-funds-label">{copy.summaryLabel}</p>
+                  <p className="business-funds-total">{amountLabel}</p>
+                  <p className="business-funds-total-note">{copy.oneTime}</p>
+                </div>
+
+                <dl className="business-funds-rows">
+                  <div><dt>{copy.rowBalance}</dt><dd>{balance || '—'}</dd></div>
+                  <div><dt>{copy.rowAmount}</dt><dd>{amountLabel}</dd></div>
+                  <div><dt>{copy.methodTitle}</dt><dd>{methodLabel}</dd></div>
+                  <div><dt>{copy.rowDue}</dt><dd>{amountLabel}</dd></div>
+                </dl>
+
+                {/* The order stays at the top; the note and the button sit on
+                    the bottom edge of the panel, where the eye ends up. */}
+                <span className="business-funds-gap" aria-hidden="true" />
+
+                <p className="business-funds-legal">
+                  <Lock size={13} aria-hidden="true" /> {copy.legal}
+                </p>
+
+                {error ? <p className="business-funds-error" role="alert">{error}</p> : null}
+                {linkError ? <p className="business-funds-error" role="alert">{linkError}</p> : null}
+                {method !== 'bank' && !billingReady ? <p className="business-funds-error">{copy.needBilling}</p> : null}
+
+                {method !== 'card' ? (
+                  <button
+                    type="button"
+                    className="business-button business-funds-cta"
+                    onClick={handleSubmit}
+                    disabled={!canSubmit}
+                  >
+                    {submitting === 'crypto' ? copy.opening : linkBusy ? copy.creating : ctaLabel}
+                    {canSubmit ? <ArrowRight size={15} aria-hidden="true" /> : null}
+                  </button>
+                ) : (
+                  <p className="business-funds-legal">{copy.ctaCard}</p>
+                )}
+              </>
+            )}
+          </aside>
+        </section>
+      </div>
     </main>
   );
 }
