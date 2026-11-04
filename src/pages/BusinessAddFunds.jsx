@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Landmark, Link2, Lock, X } from 'lucide-react';
+import { ArrowLeft, CreditCard, Landmark, Link2, Lock } from 'lucide-react';
 import BusinessRail from '../components/BusinessRail';
 import PayPalCheckout from '../components/PayPalCheckout';
 import CryptomusMark from '../components/CryptomusMark';
@@ -39,7 +39,6 @@ const pageCopy = {
     back: '返回',
     close: '关闭',
     amountSection: '充值金额',
-    amountOnce: '一次性充值',
     customAmount: '自定义金额',
     customPlaceholder: '输入金额',
     methodTitle: '付款方式',
@@ -76,7 +75,6 @@ const pageCopyEn = {
   back: 'Back',
   close: 'Close',
   amountSection: 'Amount',
-  amountOnce: 'one-time top-up',
   customAmount: 'Custom amount',
   customPlaceholder: 'Enter an amount',
   methodTitle: 'Payment method',
@@ -165,7 +163,6 @@ export default function BusinessAddFunds() {
     window.addEventListener('keydown', onKey);
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    inputRef.current?.focus();
     return () => {
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = previous;
@@ -301,12 +298,11 @@ export default function BusinessAddFunds() {
         <button type="button" className="business-topup-scrim" aria-label={copy.close} onClick={close} />
         <section className="business-topup-card">
           <div className="business-topup-main">
+            {/* One way out, and it is the arrow: a second close control beside
+                it read as two different actions. */}
             <div className="business-topup-top">
-              <button type="button" className="business-topup-back" onClick={close}>
-                <ArrowLeft size={16} aria-hidden="true" /> {copy.back}
-              </button>
-              <button type="button" className="business-topup-close" onClick={close} aria-label={copy.close}>
-                <X size={18} aria-hidden="true" />
+              <button type="button" className="business-topup-back" onClick={close} aria-label={copy.back}>
+                <ArrowLeft size={18} aria-hidden="true" />
               </button>
             </div>
 
@@ -324,7 +320,6 @@ export default function BusinessAddFunds() {
                     onClick={() => { setAmount(String(value)); setCustom(false); setTouched(true); setError(''); }}
                   >
                     <strong>{money.format(value)}</strong>
-                    <small>{copy.amountOnce}</small>
                   </button>
                 ))}
               </div>

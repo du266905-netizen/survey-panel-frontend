@@ -66,36 +66,24 @@
   gap: 16px;
 }
 
+/* The only way out: a bare arrow, no word, no second close control. */
 .business-topup-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 0;
-  background: transparent;
-  color: #5F6862;
-  cursor: pointer;
-  font: 500 13px var(--font-sans);
-  padding: 4px 0;
-}
-
-.business-topup-back:hover { color: #141413; }
-
-.business-topup-close {
   display: grid;
   width: 32px;
   height: 32px;
   place-items: center;
-  border: 1px solid #E5E3DD;
+  border: 0;
   border-radius: 50%;
-  background: #FFFFFF;
+  background: transparent;
   color: #141413;
   cursor: pointer;
+  padding: 0;
 }
 
-.business-topup-close:hover { border-color: #141413; background: #FAF9F5; }
+.business-topup-back:hover { background: #FAF9F5; }
 
 .business-topup-title {
-  margin: 18px 0 0;
+  margin: 10px 0 0;
   color: #141413;
   font-family: var(--font-reading);
   font-size: 22px;
@@ -184,13 +172,18 @@
 
 .business-topup-input i { color: #5F6862; font-size: 13px; font-style: normal; }
 
-.business-topup-input input {
+/* Scoped hard: `.business-account-page input` in the workspace sheet draws its
+   own 1px border and white fill, which showed up as a box inside the box. */
+.business-account-page .business-topup-input input {
   width: 100%;
+  height: auto;
   border: 0;
+  border-radius: 0;
   outline: 0;
   background: transparent;
   color: #141413;
   font: 500 13px var(--font-sans);
+  padding: 0;
 }
 
 .business-topup-hint { margin: 10px 0 0; color: #8D948D; font-size: 11px; }
