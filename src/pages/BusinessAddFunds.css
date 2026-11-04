@@ -172,15 +172,16 @@
 
 .business-topup-input i { color: #5F6862; font-size: 13px; font-style: normal; }
 
-/* Scoped hard: `.business-account-page input` in the workspace sheet draws its
-   own 1px border and white fill, which showed up as a box inside the box. */
+/* The workspace sheet paints every input with
+   `border / radius / background !important`; a plain rule loses no matter how
+   specific it is, which is why the field kept its own box inside the box. */
 .business-account-page .business-topup-input input {
   width: 100%;
   height: auto;
-  border: 0;
-  border-radius: 0;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
   outline: 0;
-  background: transparent;
   color: #141413;
   font: 500 13px var(--font-sans);
   padding: 0;
