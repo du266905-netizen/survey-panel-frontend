@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, GripVertical, LoaderCircle,
-  MoreHorizontal, Plus, Send, Settings2, Star, Trash2, X,
+  AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, GripVertical,
+  ListChecks, LoaderCircle, MoreHorizontal, Plus, Receipt, Rocket, Send, Settings2, Star, Trash2, Users, X,
 } from 'lucide-react';
 import {
   archiveBusinessQuestionnaire, deleteBusinessProject, duplicateBusinessQuestionnaire,
@@ -45,8 +45,7 @@ const SECTIONS = [
 const copy = {
   'zh-CN': {
     back: '返回项目', draft: '草稿', published: '已发布',
-    flow: '流程', stepAudience: '受众', stepQuestions: '问卷', stepQuote: '报价', stepPay: '付款',
-    backToProject: '返回项目',
+    flow: '流程', stepAudience: '受众', stepQuestions: '问卷构建', stepQuote: '报价与付款', stepLaunch: '发布投放',
     quality: '质量检查', summary: '问卷概况', questionsN: '题目', requiredN: '必答',
     minutes: '预计时长', minutesValue: '{n} 分钟', issues: '待处理', noIssues: '没有发现问题',
     issuePrompt: 'Q{n} 还没有题干', issueOptions: 'Q{n} 的选项少于 2 个',
@@ -70,8 +69,7 @@ const copy = {
   },
   en: {
     back: 'Back to project', draft: 'Draft', published: 'Published',
-    flow: 'Flow', stepAudience: 'Audience', stepQuestions: 'Questionnaire', stepQuote: 'Quote', stepPay: 'Payment',
-    backToProject: 'Back to project',
+    flow: 'Flow', stepAudience: 'Audience', stepQuestions: 'Build', stepQuote: 'Quote and payment', stepLaunch: 'Launch',
     quality: 'Quality check', summary: 'Summary', questionsN: 'Questions', requiredN: 'Required',
     minutes: 'Length', minutesValue: '{n} min', issues: 'To fix', noIssues: 'Nothing to fix',
     issuePrompt: 'Q{n} has no prompt', issueOptions: 'Q{n} has fewer than two options',
@@ -432,28 +430,15 @@ export default function BusinessQuestionnaireStudio() {
       {error ? <p className="sq-error" role="alert">{error}</p> : null}
 
       <div className="sq-shell">
-        {/* The rail is the process, not a menu: audience, questionnaire,
-            quote, payment. Each step is a link; only the built ones are live. */}
+        {/* The rail is the process, in the same shape as the old section list:
+            icon and label, current step filled. */}
         <nav className="sq-nav" aria-label={text.flow}>
-          <ol className="sq-steps">
-            <li>
-              <a href={withLanguage(`/business/projects/${projectId}/audience`, language)}>
-                <span className="sq-step-n">1</span> {text.stepAudience}
-              </a>
-            </li>
-            <li className="is-current">
-              <span><span className="sq-step-n">2</span> {text.stepQuestions}</span>
-            </li>
-            <li className="is-todo">
-              <span><span className="sq-step-n">3</span> {text.stepQuote}</span>
-            </li>
-            <li className="is-todo">
-              <span><span className="sq-step-n">4</span> {text.stepPay}</span>
-            </li>
-          </ol>
-          <a className="sq-nav-back" href={withLanguage(`/business/projects/${projectId}`, language)}>
-            <ArrowLeft size={14} aria-hidden="true" /> {text.backToProject}
+          <a href={withLanguage(`/business/projects/${projectId}/audience`, language)}>
+            <Users size={16} aria-hidden="true" /> {text.stepAudience}
           </a>
+          <span className="is-active"><ListChecks size={16} aria-hidden="true" /> {text.stepQuestions}</span>
+          <span className="is-todo"><Receipt size={16} aria-hidden="true" /> {text.stepQuote}</span>
+          <span className="is-todo"><Rocket size={16} aria-hidden="true" /> {text.stepLaunch}</span>
         </nav>
 
         <section className="sq-canvas">

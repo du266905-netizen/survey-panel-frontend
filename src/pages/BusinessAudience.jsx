@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ChevronDown, Plus, Trash2, Users } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ListChecks, Receipt, Rocket, Trash2, Users } from 'lucide-react';
 import { getBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessQuestionnaireStudio.css';
@@ -57,7 +57,7 @@ const GROUPS = [
 const copy = {
   'zh-CN': {
     back: '返回项目', flow: '流程',
-    stepAudience: '受众', stepQuestions: '问卷', stepQuote: '报价', stepPay: '付款',
+    stepAudience: '受众', stepQuestions: '问卷构建', stepQuote: '报价与付款', stepLaunch: '发布投放',
     title: '确立受众',
     intro: '选出这次要访问的人。条件越多，符合的人越少，单位成本越高。',
     groupHint: '点开一组，选择条件',
@@ -81,7 +81,7 @@ const copy = {
   },
   en: {
     back: 'Back to project', flow: 'Flow',
-    stepAudience: 'Audience', stepQuestions: 'Questionnaire', stepQuote: 'Quote', stepPay: 'Payment',
+    stepAudience: 'Audience', stepQuestions: 'Build', stepQuote: 'Quote and payment', stepLaunch: 'Launch',
     title: 'Choose the audience',
     intro: 'Pick who gets invited. Every extra condition narrows the pool and raises the cost per complete.',
     groupHint: 'Open a group and pick conditions',
@@ -184,15 +184,12 @@ export default function BusinessAudience() {
 
       <div className="sq-shell">
         <nav className="sq-nav" aria-label={text.flow}>
-          <ol className="sq-steps">
-            <li className="is-current"><span><span className="sq-step-n">1</span> {text.stepAudience}</span></li>
-            <li><a href={withLanguage(`/business/projects/${projectId}`, language)}><span className="sq-step-n">2</span> {text.stepQuestions}</a></li>
-            <li className="is-todo"><span><span className="sq-step-n">3</span> {text.stepQuote}</span></li>
-            <li className="is-todo"><span><span className="sq-step-n">4</span> {text.stepPay}</span></li>
-          </ol>
-          <a className="sq-nav-back" href={withLanguage(`/business/projects/${projectId}`, language)}>
-            <ArrowLeft size={14} aria-hidden="true" /> {text.back}
+          <span className="is-active"><Users size={16} aria-hidden="true" /> {text.stepAudience}</span>
+          <a href={withLanguage(`/business/projects/${projectId}`, language)}>
+            <ListChecks size={16} aria-hidden="true" /> {text.stepQuestions}
           </a>
+          <span className="is-todo"><Receipt size={16} aria-hidden="true" /> {text.stepQuote}</span>
+          <span className="is-todo"><Rocket size={16} aria-hidden="true" /> {text.stepLaunch}</span>
         </nav>
 
         <section className="aud-canvas">
