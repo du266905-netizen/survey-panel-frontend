@@ -121,7 +121,6 @@ export default function AiAssistantChat({
           message.opening ? (
             <article key={`${message.id}-${index}`} className="is-guide is-opening">
               <h1><span><Sprout size={64} className="business-ai-opening-sprout" aria-hidden="true" /> {message.content}</span></h1>
-              <p className="business-ai-turn-opening-hint">{copy.openingHint}</p>
             </article>
           ) : (
             <article key={`${message.id}-${index}`} className={message.role === 'user' ? 'is-user' : 'is-guide'}>

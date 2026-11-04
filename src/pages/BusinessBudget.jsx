@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Info, Plus, Wallet } from 'lucide-react';
+import { Plus, Wallet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createBudget, listBudgets, updateBudget } from '../api/billing';
 import BusinessRail from '../components/BusinessRail';
@@ -252,25 +252,7 @@ export default function BusinessBudget() {
       <section className="business-budget-shell">
         <div className="business-budget-heading">
           <div className="business-budget-heading-copy">
-            <div className="business-budget-title-row">
-              <h1>{text.title}</h1>
-              {/* The caveat used to be a pill under the title; it is a note for
-                  whoever wonders whether a budget blocks a purchase, so it
-                  belongs behind one small mark rather than on the page. */}
-              <span className="business-budget-hint">
-                <button
-                  type="button"
-                  className="business-budget-hint-button"
-                  aria-label={text.planningNote}
-                  aria-describedby="business-budget-tip"
-                >
-                  <Info size={15} aria-hidden="true" />
-                </button>
-                <span id="business-budget-tip" role="tooltip" className="business-budget-tip">
-                  {text.planningNote}
-                </span>
-              </span>
-            </div>
+            <h1>{text.title}</h1>
             <p className="business-budget-intro">{text.intro}</p>
           </div>
 
