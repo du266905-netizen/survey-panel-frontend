@@ -488,7 +488,13 @@ export default function BusinessAiBriefTurn() {
         <aside className={`business-ai-brief-assistant${assistantOpen ? '' : ' is-collapsed'}`} aria-label={copy.title}>
           <div className="business-ai-brief-assistant-brand"><img src="/guanyisearch-wordmark.png" alt="GuanyiSearch" /></div>
           <header>
-            <button type="button" onClick={() => setAssistantOpen((value) => !value)} aria-label={assistantOpen ? copy.collapse : copy.expand} aria-expanded={assistantOpen}>
+            <button
+              type="button"
+              onClick={() => setAssistantOpen((value) => !value)}
+              aria-label={assistantOpen ? copy.collapse : copy.expand}
+              title={assistantOpen ? copy.collapse : copy.expand}
+              aria-expanded={assistantOpen}
+            >
               {assistantOpen ? <PanelLeftClose size={17} /> : <PanelLeft size={17} />}
             </button>
             <strong>{copy.title}</strong>
@@ -504,7 +510,7 @@ export default function BusinessAiBriefTurn() {
                 <button type="button" className="business-ai-brief-assistant-open" onClick={() => openConversation(entry)} aria-current={entry.id === conversationId ? 'true' : undefined}>
                   <strong>{entry.title}</strong>
                 </button>
-                <button type="button" className="business-ai-brief-assistant-delete" onClick={() => removeConversation(entry.id)} aria-label={copy.deleteChat}><Trash2 size={14} /></button>
+                <button type="button" className="business-ai-brief-assistant-delete" onClick={() => removeConversation(entry.id)} aria-label={copy.deleteChat} title={copy.deleteChat}><Trash2 size={14} /></button>
               </div>
             )) : <p className="business-ai-brief-assistant-empty">{copy.emptyHistory}</p>}
           </div>

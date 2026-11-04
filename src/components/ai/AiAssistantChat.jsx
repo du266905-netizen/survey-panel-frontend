@@ -121,6 +121,7 @@ export default function AiAssistantChat({
           message.opening ? (
             <article key={`${message.id}-${index}`} className="is-guide is-opening">
               <h1><span><Sprout size={64} className="business-ai-opening-sprout" aria-hidden="true" /> {message.content}</span></h1>
+              <p className="business-ai-turn-opening-hint">{copy.openingHint}</p>
             </article>
           ) : (
             <article key={`${message.id}-${index}`} className={message.role === 'user' ? 'is-user' : 'is-guide'}>
@@ -177,7 +178,7 @@ export default function AiAssistantChat({
               onChange={handleDocumentFile}
             />
             <button type="button" className="business-ai-attach" onClick={openDocumentPicker} disabled={docAnalyzing} title={copy.documentTitle} aria-label={copy.documentTitle}><Paperclip size={17} /></button>
-            <button type="submit" disabled={!reply.trim() || busy} aria-label={copy.send}>
+            <button type="submit" disabled={!reply.trim() || busy} aria-label={copy.send} title={copy.send}>
               {busy ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}
             </button>
           </div>

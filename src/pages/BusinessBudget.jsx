@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Plus, Wallet } from 'lucide-react';
+import { Info, Plus, Wallet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createBudget, listBudgets, updateBudget } from '../api/billing';
 import BusinessRail from '../components/BusinessRail';
@@ -250,26 +250,44 @@ export default function BusinessBudget() {
       </header>
 
       <section className="business-budget-shell">
-        <div>
-          <h1>{text.title}</h1>
-          <p className="business-budget-intro">{text.intro}</p>
-          {/* Budgets are tracked against the ledger but do not stop a purchase:
-              saying so here keeps a client from reading the table as a cap. */}
-          <p className="business-budget-planning-note">{text.planningNote}</p>
+        <div className="business-budget-heading">
+          <div className="business-budget-heading-copy">
+            <div className="business-budget-title-row">
+              <h1>{text.title}</h1>
+              {/* The caveat used to be a pill under the title; it is a note for
+                  whoever wonders whether a budget blocks a purchase, so it
+                  belongs behind one small mark rather than on the page. */}
+              <span className="business-budget-hint">
+                <button
+                  type="button"
+                  className="business-budget-hint-button"
+                  aria-label={text.planningNote}
+                  aria-describedby="business-budget-tip"
+                >
+                  <Info size={15} aria-hidden="true" />
+                </button>
+                <span id="business-budget-tip" role="tooltip" className="business-budget-tip">
+                  {text.planningNote}
+                </span>
+              </span>
+            </div>
+            <p className="business-budget-intro">{text.intro}</p>
+          </div>
+
+          <button className="business-button business-budget-create" type="button" onClick={openCreate}>
+            <Plus size={15} /> {text.create}
+          </button>
         </div>
 
         <div className="business-budget-card">
-          <div className="business-budget-head">
-            {activeTotal.amount > 0 ? (
+          {activeTotal.amount > 0 ? (
+            <div className="business-budget-totals">
               <p className="business-budget-total">
                 <span>{text.colAmount} <strong>{money.format(activeTotal.amount)}</strong></span>
                 <span>{text.colSpent} <strong>{money.format(activeTotal.spent)}</strong></span>
               </p>
-            ) : <span />}
-            <button className="business-button business-budget-create" type="button" onClick={openCreate}>
-              <Plus size={15} /> {text.create}
-            </button>
-          </div>
+            </div>
+          ) : null}
 
           {notice ? (
             <p className="business-budget-notice" role="status">
