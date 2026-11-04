@@ -605,3 +605,60 @@
 }
 
 .sq-modal-card.is-narrow { width: min(100%, 460px); }
+
+/* ---- the rail is the process: steps with arrows, not a menu ---- */
+
+.sq-steps { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+
+.sq-steps li + li::before {
+  display: block;
+  margin: 2px 0 2px 17px;
+  color: #C9CFCB;
+  content: '↓';
+  font-size: 11px;
+  line-height: 1;
+}
+
+.sq-steps a,
+.sq-steps > li > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  color: #5F6862;
+  font-size: 13px;
+  padding: 8px;
+  text-decoration: none;
+}
+
+.sq-steps a:hover { background: #FAF9F5; color: #141413; }
+
+.sq-steps > li > span { color: #8D948D; }
+
+.sq-steps li.is-current > span { background: #FAF9F5; color: #141413; font-weight: 600; }
+
+.sq-step-n {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #E5E3DD;
+  border-radius: 50%;
+  font-size: 11px;
+}
+
+.sq-steps li.is-current .sq-step-n { border-color: #141413; background: #141413; color: #FFFFFF; }
+
+.sq-nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  color: #5F6862;
+  font-size: 13px;
+  padding: 6px 8px;
+  text-decoration: none;
+}
+
+.sq-nav-back:hover { color: #141413; }

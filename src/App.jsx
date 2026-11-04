@@ -79,6 +79,7 @@ import HelpCenter from './pages/HelpCenter';
 import BusinessHelp from './pages/BusinessHelp';
 import BusinessBudget from './pages/BusinessBudget';
 import BusinessQuestionnaireStudio from './pages/BusinessQuestionnaireStudio';
+import BusinessAudience from './pages/BusinessAudience';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
 import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
@@ -230,6 +231,7 @@ export default function App() {
         <Route path="/business/budget" element={<BusinessRoute><BusinessBudget /></BusinessRoute>} />
         <Route path="/business/help" element={<BusinessRoute><BusinessHelp /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireStudio /></BusinessRoute>} />
+        <Route path="/business/projects/:projectId/audience" element={<BusinessRoute><BusinessAudience /></BusinessRoute>} />
         <Route path="/business/s/:publicId" element={<PublicBusinessQuestionnaire />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
