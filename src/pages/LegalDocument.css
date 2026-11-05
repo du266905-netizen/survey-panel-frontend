@@ -1,46 +1,46 @@
-/* A legal document on the dark ground the top navigation uses.
-   Type is one step up from the PDF, because this is a screen: 56 title /
-   32 lead / 22 section / 16 body. Source Serif 4 throughout; sans only for the
-   date and the download control, which is the same lime action the header
-   carries. */
+/* A legal document, set full width on the navigation's black.
+ *
+ * The type is the PDF's scale, one step up per level for the screen:
+ *   PDF 38 title  -> 56  (Newsreader 500, the page-title step)
+ *   PDF 22 lead   -> 38  (Source Serif 4 400)
+ *   PDF 16 section-> 22  (Source Serif 4 600)
+ *   PDF 14 body   -> 16  (Source Serif 4 400)
+ * Lines run the width of the page, the way the careers and China market pages
+ * do; there is no narrow column and no centred deck. */
 
 .legal-doc {
   background: #141413;
   color: #B9B5AC;
-  padding: clamp(56px, 8vw, 112px) 24px clamp(96px, 11vw, 160px);
+  padding: clamp(56px, 7vw, 104px) clamp(24px, 5vw, 88px) clamp(88px, 9vw, 144px);
 }
 
-.legal-doc-inner {
-  max-width: 640px;
-  margin: 0 auto;
-}
+.legal-doc-inner { width: 100%; }
 
 .legal-doc-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 32px;
+  gap: 40px;
 }
 
+/* 56 is the page-title step and it is Newsreader, not the reading serif. */
 .legal-doc-head h1 {
   margin: 0;
-  font-family: var(--font-reading);
+  font-family: var(--font-impact);
   font-size: 56px;
-  font-weight: 400;
-  letter-spacing: -.028em;
+  font-weight: 500;
+  letter-spacing: -.03em;
   line-height: 1.02;
   color: #F5F3EE;
 }
 
-/* The header's own action: lime, square, 44 tall. Reusing it keeps the page in
-   the same family as “加入我们”. */
 .legal-doc-pdf {
   display: inline-flex;
   height: 40px;
   align-items: center;
   gap: 8px;
   flex: 0 0 auto;
-  margin-top: 12px;
+  margin-top: 10px;
   background: #F5F3EE;
   color: #141413;
   font-family: var(--font-sans);
@@ -48,7 +48,7 @@
   font-weight: 500;
   letter-spacing: -.005em;
   line-height: 1;
-  padding: 0 18px;
+  padding: 0 16px;
   text-decoration: none;
   transition: background .14s ease;
   white-space: nowrap;
@@ -58,8 +58,8 @@
 .legal-doc-pdf:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 .legal-doc-date {
-  margin: 20px 0 0;
-  color: #9C9A93;
+  margin: 18px 0 0;
+  color: #8C8A83;
   font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 500;
@@ -68,54 +68,59 @@
 }
 
 .legal-doc-lead {
-  margin: 40px 0 0;
+  margin: 44px 0 0;
   font-family: var(--font-reading);
-  font-size: 22px;
+  font-size: 38px;
   font-weight: 400;
-  letter-spacing: -.01em;
-  line-height: 1.4;
-  color: #D8D5CC;
+  letter-spacing: -.02em;
+  line-height: 1.24;
+  color: #E7E4DC;
 }
 
-.legal-doc-lead p { margin: 0 0 16px; }
+.legal-doc-lead p { margin: 0 0 24px; }
 
-.legal-doc-body { margin: 56px 0 0; }
+.legal-doc-body { margin: 72px 0 0; }
 
-.legal-doc-section { margin: 0 0 72px; }
+.legal-doc-section {
+  display: grid;
+  grid-template-columns: minmax(240px, 22%) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 72px);
+  margin: 0 0 64px;
+}
 
 .legal-doc-section h2 {
-  margin: 0 0 16px;
+  margin: 0;
   font-family: var(--font-reading);
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 600;
-  letter-spacing: -.022em;
-  line-height: 1.15;
+  letter-spacing: -.02em;
+  line-height: 1.3;
   color: #F5F3EE;
 }
 
 .legal-doc-prose {
   font-family: var(--font-reading);
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.75;
   color: #B9B5AC;
 }
 
-.legal-doc-prose p { margin: 0 0 16px; }
-.legal-doc-prose ul { margin: 0 0 18px; padding-left: 22px; list-style: disc; }
+.legal-doc-prose p { margin: 0 0 18px; }
+.legal-doc-prose ul { margin: 0 0 20px; padding-left: 22px; list-style: disc; }
 .legal-doc-prose ul li { display: list-item; margin: 0 0 8px; }
 .legal-doc-prose strong { font-weight: 600; color: #F5F3EE; }
 .legal-doc-prose a { color: #DEEF24; text-decoration: underline; text-underline-offset: 3px; }
 
 .legal-doc-prose table {
   width: 100%;
-  margin: 0 0 20px;
+  margin: 0 0 22px;
   border-collapse: collapse;
   font-size: 15px;
 }
 
 .legal-doc-prose th,
 .legal-doc-prose td {
-  padding: 10px 14px 10px 0;
+  padding: 10px 16px 10px 0;
   border-top: 1px solid rgba(255, 255, 255, .14);
   text-align: left;
   vertical-align: top;
@@ -127,15 +132,15 @@
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: #9C9A93;
+  color: #8C8A83;
   border-top: 1px solid rgba(255, 255, 255, .22);
 }
 
-@media (max-width: 760px) {
-  .legal-doc { padding: 48px 20px 96px; }
+@media (max-width: 900px) {
+  .legal-doc { padding: 48px 20px 80px; }
   .legal-doc-head { display: block; }
   .legal-doc-head h1 { font-size: 40px; }
-  .legal-doc-pdf { margin-top: 22px; }
-  .legal-doc-lead { margin-top: 32px; font-size: 24px; }
-  .legal-doc-body { margin-top: 48px; }
+  .legal-doc-pdf { margin-top: 20px; }
+  .legal-doc-lead { margin-top: 32px; font-size: 26px; }
+  .legal-doc-section { grid-template-columns: 1fr; gap: 14px; margin-bottom: 48px; }
 }
