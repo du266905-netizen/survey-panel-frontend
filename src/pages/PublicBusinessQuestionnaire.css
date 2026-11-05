@@ -9,12 +9,37 @@
  */
 
 .pq-page {
+  display: flex;
+  height: 100svh;
   max-width: 720px;
   margin: 0 auto;
-  padding: clamp(28px, 5vw, 56px) clamp(18px, 5vw, 40px) 96px;
+  flex-direction: column;
+  padding: 0 clamp(18px, 5vw, 40px);
   background: #FFFFFF;
   color: #141413;
 }
+
+.pq-top { padding-top: clamp(20px, 4vw, 36px); }
+
+/* Only this scrolls; the header and the footer hold their place. */
+.pq-form {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 20px;
+}
+
+.pq-foot {
+  flex: 0 0 auto;
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid #E5E3DD;
+  background: #FFFFFF;
+  padding: 12px 0 20px;
+}
+
+.pq-foot-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 
 .pq-page > svg,
 .pq-page > a > svg { height: 26px; width: auto; margin-bottom: 32px; }
@@ -297,9 +322,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 40px;
-  border-top: 1px solid #E5E3DD;
-  padding-top: 18px;
 }
 
 .pq-map button {

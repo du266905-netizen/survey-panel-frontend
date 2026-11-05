@@ -327,23 +327,42 @@ export default function PublicBusinessQuestionnaire() {
 
   const [beforePrivacy, afterPrivacy] = copy.consent.split('隐私政策');
 
+  const goNext = () => {
+    const missing = currentQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
+    if (missing) {
+      setError(copy.missing);
+      document.getElementById(`question-${missing.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    setError('');
+    setPage(pageIndex + 1);
+    setFurthest((current) => Math.max(current, pageIndex + 1));
+    document.getElementById('pq-form')?.scrollTo({ top: 0 });
+  };
+
+  const goBack = () => {
+    setError('');
+    setPage(Math.max(0, pageIndex - 1));
+    document.getElementById('pq-form')?.scrollTo({ top: 0 });
+  };
+
   return (
     <main className="pq-page">
-      <Logo />
+      <div className="pq-top"><Logo /></div>
 
       <header className="pq-head">
         <h1>{questionnaire?.title}</h1>
         {questionnaire?.coverDescription ? <p>{questionnaire.coverDescription}</p> : null}
       </header>
 
-      <form className="pq-form" onSubmit={submit}>
-        {pages.length > 1 ? (
-          <div className="pq-progress">
-            <div><span style={{ width: `${((pageIndex + 1) / pages.length) * 100}%` }} /></div>
-            <small>{copy.step.replace('{n}', pageIndex + 1).replace('{total}', pages.length)}</small>
-          </div>
-        ) : null}
+      {pages.length > 1 ? (
+        <div className="pq-progress">
+          <div><span style={{ width: `${((pageIndex + 1) / pages.length) * 100}%` }} /></div>
+          <small>{copy.step.replace('{n}', pageIndex + 1).replace('{total}', pages.length)}</small>
+        </div>
+      ) : null}
 
+      <form className="pq-form" id="pq-form" onSubmit={submit}>
         {currentQuestions.map((question) => (
           <fieldset className="pq-question" id={`question-${question.id}`} key={question.id}>
             <legend>
@@ -362,95 +381,75 @@ export default function PublicBusinessQuestionnaire() {
 
         {error ? <p className="pq-error" role="alert">{error}</p> : null}
 
-        {!lastPage ? (
-          <div className="pq-nav">
-            {pageIndex > 0 ? <button type="button" className="pq-back" onClick={() => { setError(''); setPage(pageIndex - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{copy.back}</button> : <span />}
-            <button
-              type="button"
-              className="pq-submit"
-              onClick={() => {
-                const missing = currentQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
-                if (missing) {
-                  setError(copy.missing);
-                  document.getElementById(`question-${missing.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  return;
-                }
-                setError('');
-                setPage(pageIndex + 1);
-                setFurthest((current) => Math.max(current, pageIndex + 1));
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              {copy.next}
-            </button>
+        {lastPage ? (
+          <div className="pq-verify">
+            {verifyFailed ? null : (
+              <TurnstileWidget
+                onVerify={(token) => { setTurnstileToken(token); setVerifyFailed(false); }}
+                onExpire={() => setTurnstileToken('')}
+                onError={() => { setVerifyFailed(true); setTurnstileToken(''); }}
+              />
+            )}
+            <p className={verifyFailed ? 'pq-verify-note is-error' : 'pq-verify-note'}>
+              {verifyFailed ? copy.verifyFailed : copy.verifyHint}
+            </p>
+            {verifyFailed ? (
+              <button type="button" className="pq-retry" onClick={() => window.location.reload()}>{copy.retry}</button>
+            ) : null}
           </div>
         ) : null}
 
-        {lastPage ? <div className="pq-verify">
-          {/* A failed challenge leaves Cloudflare's own error box in place; it
-              says nothing a respondent can act on, so we drop it and offer one
-              action instead. */}
-          {verifyFailed ? null : (
-            <TurnstileWidget
-              onVerify={(token) => { setTurnstileToken(token); setVerifyFailed(false); }}
-              onExpire={() => setTurnstileToken('')}
-              onError={() => { setVerifyFailed(true); setTurnstileToken(''); }}
-            />
-          )}
-          <p className={verifyFailed ? 'pq-verify-note is-error' : 'pq-verify-note'}>
-            {verifyFailed ? copy.verifyFailed : copy.verifyHint}
-          </p>
-          {verifyFailed ? (
-            <button type="button" className="pq-retry" onClick={() => window.location.reload()}>
-              {copy.retry}
-            </button>
-          ) : null}
-        </div> : null}
-
         {lastPage ? (
-        <>
-        {pageIndex > 0 && pages.length > 1 ? (
-          <button type="button" className="pq-back" onClick={() => { setError(''); setPage(pageIndex - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{copy.back}</button>
+          <p className="pq-consent">
+            {afterPrivacy !== undefined
+              ? <>{beforePrivacy}<a href="/privacy" target="_blank" rel="noreferrer">{copy.privacy}</a>{afterPrivacy}</>
+              : <>{copy.consent} <a href="/privacy" target="_blank" rel="noreferrer">{copy.privacy}</a></>}
+          </p>
         ) : null}
-        <button className="pq-submit" type="submit" disabled={submitting || !turnstileToken || verifyFailed}>
-          {submitting ? <LoaderCircle className="pq-spin" size={17} /> : null}
-          {submitting ? copy.submitting : copy.submit}
-        </button>
-        </>
-        ) : null}
-
-        {lastPage ? <p className="pq-consent">
-          {afterPrivacy !== undefined
-            ? <>{beforePrivacy}<a href="/privacy" target="_blank" rel="noreferrer">{copy.privacy}</a>{afterPrivacy}</>
-            : <>{copy.consent} <a href="/privacy" target="_blank" rel="noreferrer">{copy.privacy}</a></>}
-        </p> : null}
       </form>
 
-      {pages.length > 1 ? (
-        <nav className="pq-map" aria-label={copy.mapLabel}>
-          {pages.map((group, groupIndex) => {
-            const answered = group.every((question) => !question.required || hasAnswer(answers[question.id]));
-            const reachable = groupIndex <= furthest;
-            return (
-              <button
-                key={`map-${groupIndex}`}
-                type="button"
-                className={`${groupIndex === pageIndex ? 'is-current' : ''} ${answered && groupIndex !== pageIndex ? 'is-done' : ''}`.trim()}
-                disabled={!reachable}
-                aria-current={groupIndex === pageIndex ? 'step' : undefined}
-                title={group.map((question) => question.prompt).join(' · ')}
-                onClick={() => {
-                  if (!reachable) return;
-                  setPage(groupIndex);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              >
-                {groupIndex + 1}
-              </button>
-            );
-          })}
-        </nav>
-      ) : null}
+      {/* The two ends stay put; only the questions scroll between them. */}
+      <footer className="pq-foot">
+        <div className="pq-foot-actions">
+          {pageIndex > 0 ? (
+            <button type="button" className="pq-back" onClick={goBack}>{copy.back}</button>
+          ) : <span />}
+          {lastPage ? (
+            <button className="pq-submit" type="submit" form="pq-form" disabled={submitting || !turnstileToken || verifyFailed}>
+              {submitting ? <LoaderCircle className="pq-spin" size={17} /> : null}
+              {submitting ? copy.submitting : copy.submit}
+            </button>
+          ) : (
+            <button type="button" className="pq-submit" onClick={goNext}>{copy.next}</button>
+          )}
+        </div>
+
+        {pages.length > 1 ? (
+          <nav className="pq-map" aria-label={copy.mapLabel}>
+            {pages.map((group, groupIndex) => {
+              const answered = group.every((question) => !question.required || hasAnswer(answers[question.id]));
+              const reachable = groupIndex <= furthest;
+              return (
+                <button
+                  key={`map-${groupIndex}`}
+                  type="button"
+                  className={`${groupIndex === pageIndex ? 'is-current' : ''} ${answered && groupIndex !== pageIndex ? 'is-done' : ''}`.trim()}
+                  disabled={!reachable}
+                  aria-current={groupIndex === pageIndex ? 'step' : undefined}
+                  title={group.map((question) => question.prompt).join(' · ')}
+                  onClick={() => {
+                    if (!reachable) return;
+                    setPage(groupIndex);
+                    document.getElementById('pq-form')?.scrollTo({ top: 0 });
+                  }}
+                >
+                  {groupIndex + 1}
+                </button>
+              );
+            })}
+          </nav>
+        ) : null}
+      </footer>
     </main>
   );
 }
