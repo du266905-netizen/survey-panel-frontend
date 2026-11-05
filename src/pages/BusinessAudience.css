@@ -278,3 +278,11 @@
 .aud-brief dd { margin: 0; color: #141413; font-size: 13px; line-height: 1.6; }
 
 .aud-brief-actions { display: flex; align-items: center; gap: 14px; }
+
+.aud-save { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
+
+.aud-save-ok { color: #5F6862; font-size: 11px; }
+
+.aud-save-error { color: #B42318; font-size: 11px; }
+
+.aud-save-local { color: #8D948D; font-size: 11px; }

@@ -22,7 +22,7 @@ const COPY = {
     verifyFailed: '人机验证加载失败。请刷新页面，或换一个浏览器再试。',
     verifyHint: '提交前需要完成一次人机验证。',
     loadFailed: '问卷加载失败，请稍后再打开链接。', missing: '还有必答题没有回答。', submitFailed: '提交失败，请稍后再试。', retry: '刷新重试',
-    rankingHint: '按您偏好的顺序依次勾选。', npsLow: '完全不会', npsHigh: '非常愿意', step: '第 {n} / {total} 页', next: '下一页', back: '上一页', mapLabel: '题目地图',
+    rankingHint: '按您偏好的顺序依次勾选。', npsLow: '完全不会', npsHigh: '非常愿意', step: '第 {n} / {total} 页', next: '下一页', back: '上一页', mapLabel: '题目地图', quotaFull: '该配额已满，感谢参与。',
     matrixDefault: ['非常不同意', '不同意', '一般', '同意', '非常同意'],
     loading: '正在打开问卷…',
   },
@@ -34,7 +34,7 @@ const COPY = {
     verifyFailed: 'The human check could not load. Refresh the page or try another browser.',
     verifyHint: 'A quick human check is required before submitting.',
     loadFailed: 'This survey could not load. Please open the link again later.', missing: 'Some required questions are still unanswered.', submitFailed: 'We could not submit your response. Please try again.', retry: 'Reload',
-    rankingHint: 'Select each option in the order you prefer it.', npsLow: 'Not at all likely', npsHigh: 'Extremely likely', step: 'Page {n} of {total}', next: 'Next', back: 'Back', mapLabel: 'Question map',
+    rankingHint: 'Select each option in the order you prefer it.', npsLow: 'Not at all likely', npsHigh: 'Extremely likely', step: 'Page {n} of {total}', next: 'Next', back: 'Back', mapLabel: 'Question map', quotaFull: 'This quota is full. Thank you.',
     matrixDefault: ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree'],
     loading: 'Opening the survey…',
   },
@@ -287,14 +287,9 @@ export default function PublicBusinessQuestionnaire() {
         respondentKey = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
         window.localStorage.setItem(storageKey, respondentKey);
       }
-      const serializedAnswers = Object.fromEntries(Object.entries(answers).map(([id, value]) => {
-        if (value && typeof value === 'object' && !Array.isArray(value)) {
-          return [id, Object.entries(value).map(([row, column]) => `${row} = ${column}`)];
-        }
-        return [id, value];
-      }));
+      // Matrix answers stay objects: the submit contract accepts records now.
       const response = await submitPublicBusinessQuestionnaire(publicId, {
-        answers: serializedAnswers,
+        answers,
         turnstileToken,
         respondentKey,
         durationSeconds: Math.floor((Date.now() - startedAtRef.current) / 1000),
@@ -302,7 +297,7 @@ export default function PublicBusinessQuestionnaire() {
       setScreenedOut(response.data?.status === 'SCREENED_OUT');
       setMessage(response.data?.message || copy.thanksBody);
     } catch (caughtError) {
-      setError(caughtError?.response?.data?.message || copy.submitFailed);
+      setError(caughtError?.response?.data?.code === 'QUOTA_FULL' ? copy.quotaFull : (caughtError?.response?.data?.message || copy.submitFailed));
     } finally {
       setSubmitting(false);
     }

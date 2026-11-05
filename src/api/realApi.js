@@ -209,13 +209,13 @@ export const getBusinessProject = async (projectId) => {
   return { data: response.data };
 };
 
-export const updateBusinessProject = async (projectId, payload) => {
-  const response = await apiClient.put(`/api/business/projects/${projectId}`, payload);
+export const updateBusinessAudience = async (projectId, targeting) => {
+  const response = await apiClient.patch(`/api/business/projects/${projectId}/audience`, { targeting });
   return { data: response.data };
 };
 
-export const updateBusinessAudience = async (projectId, targeting) => {
-  const response = await apiClient.patch(`/api/business/projects/${projectId}/audience`, { targeting });
+export const updateBusinessProject = async (projectId, payload) => {
+  const response = await apiClient.put(`/api/business/projects/${projectId}`, payload);
   return { data: response.data };
 };
 
