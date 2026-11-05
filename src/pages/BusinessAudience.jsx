@@ -232,7 +232,7 @@ export default function BusinessAudience() {
           <button type="button" className="sq-btn" disabled={saving} onClick={saveAudience}>
             {saving ? text.saving : text.save}
           </button>
-          <button type="button" className="sq-btn is-primary" onClick={() => navigate(withLanguage(`/business/projects/${projectId}`, language))}>
+          <button type="button" className="sq-btn is-primary" onClick={() => navigate(withLanguage(`/business/projects/${projectId}/quote`, language))}>
             {text.next}
           </button>
         </div>
