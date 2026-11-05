@@ -6,12 +6,12 @@
 
 .legal-doc {
   background: #141413;
-  color: #F2F0EA;
+  color: #B9B5AC;
   padding: clamp(56px, 8vw, 112px) 24px clamp(96px, 11vw, 160px);
 }
 
 .legal-doc-inner {
-  max-width: 720px;
+  max-width: 640px;
   margin: 0 auto;
 }
 
@@ -27,8 +27,8 @@
   font-family: var(--font-reading);
   font-size: 56px;
   font-weight: 400;
-  letter-spacing: -.025em;
-  line-height: 1.04;
+  letter-spacing: -.028em;
+  line-height: 1.02;
   color: #F5F3EE;
 }
 
@@ -36,13 +36,13 @@
    the same family as “加入我们”. */
 .legal-doc-pdf {
   display: inline-flex;
-  height: 44px;
+  height: 40px;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   flex: 0 0 auto;
-  margin-top: 6px;
-  background: #DEEF24;
-  color: #14161A;
+  margin-top: 12px;
+  background: #F5F3EE;
+  color: #141413;
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 500;
@@ -54,7 +54,7 @@
   white-space: nowrap;
 }
 
-.legal-doc-pdf:hover { background: #C9DB10; }
+.legal-doc-pdf:hover { background: #FFFFFF; }
 .legal-doc-pdf:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 .legal-doc-date {
@@ -70,26 +70,26 @@
 .legal-doc-lead {
   margin: 40px 0 0;
   font-family: var(--font-reading);
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 400;
-  letter-spacing: -.015em;
-  line-height: 1.28;
-  color: #EDEAE2;
+  letter-spacing: -.01em;
+  line-height: 1.4;
+  color: #D8D5CC;
 }
 
-.legal-doc-lead p { margin: 0 0 20px; }
+.legal-doc-lead p { margin: 0 0 16px; }
 
-.legal-doc-body { margin: 64px 0 0; }
+.legal-doc-body { margin: 56px 0 0; }
 
-.legal-doc-section { margin: 0 0 52px; }
+.legal-doc-section { margin: 0 0 72px; }
 
 .legal-doc-section h2 {
   margin: 0 0 16px;
   font-family: var(--font-reading);
-  font-size: 22px;
+  font-size: 32px;
   font-weight: 600;
-  letter-spacing: -.01em;
-  line-height: 1.3;
+  letter-spacing: -.022em;
+  line-height: 1.15;
   color: #F5F3EE;
 }
 
@@ -97,7 +97,7 @@
   font-family: var(--font-reading);
   font-size: 16px;
   line-height: 1.7;
-  color: #D8D5CC;
+  color: #B9B5AC;
 }
 
 .legal-doc-prose p { margin: 0 0 16px; }
