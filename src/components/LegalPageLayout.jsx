@@ -23,7 +23,7 @@ export function LegalSection({ number, id, title, children }) {
   );
 }
 
-export default function LegalPageLayout({ eyebrow, title, intro, sections, children, audience = 'For Guanyi Media users', effectiveDate }) {
+export default function LegalPageLayout({ eyebrow, title, intro, sections, children, audience = 'For guanyisearch users', effectiveDate }) {
   const { language } = useLanguage();
   const copy = legalUi[language];
   const localizedEffectiveDate = effectiveDate || (language === 'zh-CN' ? '生效日期：2026 年 7 月 5 日' : language === 'zh-Hant' ? '生效日期：2026 年 7 月 5 日' : 'Effective July 5, 2026');
