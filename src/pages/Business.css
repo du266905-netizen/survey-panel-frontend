@@ -1295,3 +1295,22 @@
   line-height: 1.02 !important;
   margin: 0 0 12px !important;
 }
+
+/* The rail can outgrow the viewport once settings has several entries:
+   let it scroll instead of pushing the account button off screen. */
+.business-workspace-rail,
+.business-custom-request-page .business-workspace-rail {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(36, 56, 46, .28) transparent;
+}
+
+.business-workspace-rail::-webkit-scrollbar { width: 6px; }
+
+.business-workspace-rail::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(36, 56, 46, .24);
+}
+
+.business-workspace-rail::-webkit-scrollbar-track { background: transparent; }

@@ -41,7 +41,7 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
   const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(true);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // `publicCopy.workspace.business.rail` is deep-merged with the English base
   // in LanguageContext, so these strings are translated in every locale that
