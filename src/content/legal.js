@@ -52,7 +52,7 @@ export const legalDocs = {
     "zh": {
       "title": "使用政策",
       "date": "生效日期：2026 年 9 月 1 日",
-      "pdf": "/legal/guanyisearch-acceptable-use-2026-09-en.pdf",
+      "pdf": "/legal/guanyisearch-acceptable-use-2026-09-zh.pdf",
       "lead": "<p>本政策规定哪些使用方式被允许、哪些不被允许。它适用于账号持有人、工作区席位成员、受邀协作者，以及通过公开链接参与研究的人。与《服务条款》冲突时，以《服务条款》为准；涉及具体研究项目的，以《研究端服务条款》为准。</p>\n<p>违反本政策可能导致内容被移除、收集被暂停、账号被限制或终止。我们按第七节的方式处理，并给出理由。</p>",
       "sections": [
         {
@@ -165,7 +165,7 @@ export const legalDocs = {
     "zh": {
       "title": "隐私政策",
       "date": "生效日期：2026 年 9 月 1 日",
-      "pdf": "/legal/guanyisearch-privacy-2026-09-en.pdf",
+      "pdf": "/legal/guanyisearch-privacy-2026-09-zh.pdf",
       "lead": "<p>本政策说明关尼搜索如何使用社群成员、账户持有人及研究服务联系人的信息，以及你可以要求我们做什么。</p>",
       "sections": [
         {
@@ -303,7 +303,7 @@ export const legalDocs = {
     "zh": {
       "title": "研究端服务条款",
       "date": "生效日期：2026 年 9 月 1 日",
-      "pdf": "/legal/guanyisearch-research-terms-2026-09-en.pdf",
+      "pdf": "/legal/guanyisearch-research-terms-2026-09-zh.pdf",
       "lead": "<p>本条款适用于组织或独立研究者使用研究端工作区、提交研究简报、创建问卷、委托样本与回收，或请我们支持研究项目的情形。与《服务条款》冲突时，就研究项目而言以本条款为准；与报价单冲突时，以报价单为准。</p>",
       "sections": [
         {
@@ -441,7 +441,7 @@ export const legalDocs = {
     "zh": {
       "title": "服务条款",
       "date": "生效日期：2026 年 9 月 1 日",
-      "pdf": "/legal/guanyisearch-terms-of-service-2026-09-en.pdf",
+      "pdf": "/legal/guanyisearch-terms-of-service-2026-09-zh.pdf",
       "lead": "",
       "sections": [
         {

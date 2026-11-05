@@ -145,4 +145,8 @@
 
 /* A second document on the same page: same ground, smaller gap, a hairline to
    separate it from the one above. */
-.legal-doc.is-part { padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, .14); }
+.legal-doc.is-part {
+  margin-top: 24px;
+  padding-top: clamp(56px, 6vw, 88px);
+  border-top: 1px solid rgba(255, 255, 255, .14);
+}

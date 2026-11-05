@@ -60,7 +60,7 @@ const docs = {};
    never drift in structure. */
 const files = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.endsWith('.zh.md'));
 for (const file of files) {
-  const parse = (source) => {
+  const parse = (source, lang) => {
   const md = source;
   const lines = md.split('\n');
   const title = (lines.find((l) => /^# /.test(l)) || '# Untitled').slice(2).trim();
@@ -88,18 +88,18 @@ for (const file of files) {
   return {
     title,
     date: dateLine,
-    pdf: `/legal/guanyisearch-${slugOf(file)}-2026-09-en.pdf`,
+    pdf: `/legal/guanyisearch-${slugOf(file)}-2026-09-${lang}.pdf`,
     lead: blocks(preamble),
     sections: sections.map((s) => ({ id: s.id, title: s.title, html: blocks(s.lines) })),
   };
   };
 
   const slug = slugOf(file);
-  const en = parse(readFileSync(join(DIR, file), 'utf8'));
+  const en = parse(readFileSync(join(DIR, file), 'utf8'), 'en');
   const zhPath = join(DIR, `${slug}.zh.md`);
   docs[slug] = {
     en,
-    zh: existsSync(zhPath) ? parse(readFileSync(zhPath, 'utf8')) : en,
+    zh: existsSync(zhPath) ? parse(readFileSync(zhPath, 'utf8'), 'zh') : en,
   };
 }
 
