@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, GripVertical, LayoutTemplate,
+  AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, Gauge, GripVertical, LayoutTemplate,
   ListChecks, LoaderCircle, MoreHorizontal, Plus, Receipt, Rocket, Send, Settings2, Star, Trash2, Users, X,
 } from 'lucide-react';
 import {
@@ -111,7 +111,9 @@ const copy = {
     remove: '删除', moveUp: '上移', moveDown: '下移',
     promptPlaceholder: '问题', type: '题型', options: '选项',
     save: '保存', publish: '发布', publishing: '发布中…', saved: '已保存', saveFailed: '保存失败，请稍后再试。',
-    untitled: '未命名问卷', preview: '预览', templates: '模板', templatesTitle: '从整卷模板开始', templatesHint: '插入后可以直接改题目和选项。', templatesApply: '插入', templatesFull: '题目数量会超过 30 题上限',
+    untitled: '未命名问卷', preview: '预览', quotas: '配额', quotasTitle: '配额', quotasHint: '按题目答案划分格子，填每格需要多少份。相加就是总样本量。',
+    quotaCell: '格子', quotaTarget: '目标份数', quotaAdd: '添加格子', quotaRemove: '删除', quotaEmpty: '还没有配额格子',
+    quotaEmptyHint: '先有单选、多选或下拉题，才能按答案划分格子。', quotaTotal: '合计目标', quotaEnforced: '进人判断在后端：页面上能配，接口接上后才真正限流。', templatesTitle: '从整卷模板开始', templatesHint: '插入后可以直接改题目和选项。', templatesApply: '插入', templatesFull: '题目数量会超过 30 题上限',
     archived: '已归档', copyDraft: '复制为新草稿', archive: '归档', deleteDraft: '删除草稿',
     deleteConfirm: '删除这份草稿？删除后不可恢复。',
     locked: '已发布：结构已锁定。如需修改，复制为新草稿。',
@@ -135,7 +137,9 @@ const copy = {
     remove: 'Delete', moveUp: 'Move up', moveDown: 'Move down',
     promptPlaceholder: 'Question', type: 'Type', options: 'Options',
     save: 'Save', publish: 'Publish', publishing: 'Publishing…', saved: 'Saved', saveFailed: 'Could not save. Try again.',
-    untitled: 'Untitled questionnaire', preview: 'Preview', templates: 'Templates', templatesTitle: 'Start from a whole questionnaire', templatesHint: 'Everything is editable once inserted.', templatesApply: 'Insert', templatesFull: 'This would pass the 30-question limit',
+    untitled: 'Untitled questionnaire', preview: 'Preview', quotas: 'Quotas', quotasTitle: 'Quotas', quotasHint: 'Split the sample by answers and set how many completes each cell needs; the sum is the total.', 
+    quotaCell: 'Cell', quotaTarget: 'Target', quotaAdd: 'Add cell', quotaRemove: 'Remove', quotaEmpty: 'No quota cells yet', 
+    quotaEmptyHint: 'Add a single-choice, multiple-choice or dropdown question first.', quotaTotal: 'Total target', quotaEnforced: 'Enforcement is server-side: it can be configured here and takes effect once the API accepts it.', templatesTitle: 'Start from a whole questionnaire', templatesHint: 'Everything is editable once inserted.', templatesApply: 'Insert', templatesFull: 'This would pass the 30-question limit',
     archived: 'Archived', copyDraft: 'Copy as a new draft', archive: 'Archive', deleteDraft: 'Delete draft',
     deleteConfirm: 'Delete this draft? This cannot be undone.',
     locked: 'Published: the structure is locked. Copy it to a new draft to change it.',
@@ -263,6 +267,8 @@ export default function BusinessQuestionnaireStudio() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewStep, setPreviewStep] = useState(0);
   const [templatesOpen, setTemplatesOpen] = useState(false);
+  const [quotasOpen, setQuotasOpen] = useState(false);
+  const [quotas, setQuotas] = useState([]);
   const [cover, setCover] = useState('');
   const [moreOpen, setMoreOpen] = useState(false);
   const [sensitiveOpen, setSensitiveOpen] = useState(false);
@@ -278,6 +284,7 @@ export default function BusinessQuestionnaireStudio() {
       }
       setProject(next);
       setCover(next.questionnaire?.coverDescription || '');
+      setQuotas(Array.isArray(next.questionnaire?.quotas) ? next.questionnaire.quotas : []);
       setQuestions((next.questionnaire?.questions || []).map(normalize));
     } catch {
       setError(text.saveFailed);
@@ -436,6 +443,7 @@ export default function BusinessQuestionnaireStudio() {
         coverDescription: cover || '',
         collectionMode: project?.questionnaire?.collectionMode || 'AUDIENCE_SOURCING',
         isCollecting: Boolean(project?.questionnaire?.isCollecting),
+        quotas,
         questions: questions.map((question, index) => ({
           type: question.type,
           section: question.section,
@@ -493,6 +501,22 @@ export default function BusinessQuestionnaireStudio() {
     }
   };
 
+  /* Quota cells are defined against the questions in this questionnaire, by
+     position, the same way display rules point at a question. They cannot be
+     enforced in the browser — that needs every response — but the definition
+     and its total are edited here. */
+  const quotaQuestions = questions
+    .map((question, position) => ({ question, position: position + 1 }))
+    .filter(({ question }) => ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'DROPDOWN'].includes(question.type) && question.choices.length > 0);
+
+  const addQuota = () => {
+    const first = quotaQuestions[0];
+    if (!first) return;
+    setQuotas((current) => [...current, { target: 100, conditions: [{ position: first.position, value: first.question.choices[0] }] }]);
+  };
+
+  const quotaTotal = quotas.reduce((sum, quota) => sum + (Number(quota.target) || 0), 0);
+
   const grouped = SECTIONS.map(([value]) => ({
     value,
     items: questions.filter((question) => question.section === value),
@@ -514,6 +538,10 @@ export default function BusinessQuestionnaireStudio() {
         </div>
         <div className="sq-top-actions">
           {message ? <span className="sq-saved"><Check size={14} aria-hidden="true" /> {message}</span> : null}
+          <button type="button" className="sq-btn" onClick={() => setQuotasOpen(true)}>
+            <Gauge size={15} aria-hidden="true" /> {text.quotas}
+            {quotas.length ? <span className="sq-badge">{quotaTotal}</span> : null}
+          </button>
           <button type="button" className="sq-btn" onClick={() => setTemplatesOpen(true)}>
             <LayoutTemplate size={15} aria-hidden="true" /> {text.templates}
           </button>
@@ -912,6 +940,86 @@ export default function BusinessQuestionnaireStudio() {
           </section>
         </aside>
       </div>
+
+      {quotasOpen ? (
+        <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.quotasTitle}>
+          <button type="button" className="sq-modal-scrim" aria-label={text.close} onClick={() => setQuotasOpen(false)} />
+          <section className="sq-modal-card">
+            <header>
+              <strong>{text.quotasTitle}</strong>
+              <span className="sq-modal-count">{text.quotaTotal} {quotaTotal}</span>
+              <button type="button" className="sq-icon" onClick={() => setQuotasOpen(false)} aria-label={text.close}>
+                <X size={17} aria-hidden="true" />
+              </button>
+            </header>
+            <div className="sq-modal-body">
+              <p className="sq-preview-empty">{text.quotasHint}</p>
+              {quotas.length === 0 ? (
+                <div className="sq-quota-empty">
+                  <strong>{text.quotaEmpty}</strong>
+                  <span>{quotaQuestions.length ? text.quotaEmptyHint : text.quotaEmptyHint}</span>
+                </div>
+              ) : (
+                <div className="sq-quota-list">
+                  {quotas.map((quota, quotaIndex) => (
+                    <div className="sq-quota" key={`quota-${quotaIndex}`}>
+                      <span className="sq-quota-cell">{text.quotaCell} {quotaIndex + 1}</span>
+                      <div className="sq-quota-conditions">
+                        {quota.conditions.map((condition, conditionIndex) => {
+                          const source = questions[condition.position - 1];
+                          return (
+                            <span className="sq-cond" key={`qc-${quotaIndex}-${conditionIndex}`}>
+                              <select
+                                value={condition.position}
+                                onChange={(event) => {
+                                  const position = Number(event.target.value);
+                                  setQuotas((current) => current.map((row, index) => (index === quotaIndex
+                                    ? { ...row, conditions: row.conditions.map((item, itemIndex) => (itemIndex === conditionIndex ? { position, value: questions[position - 1]?.choices?.[0] || '' } : item)) }
+                                    : row)));
+                                }}
+                              >
+                                {quotaQuestions.map(({ question, position }) => (
+                                  <option key={question.uid} value={position}>Q{position} · {(question.prompt || '—').slice(0, 18)}</option>
+                                ))}
+                              </select>
+                              <select
+                                value={condition.value}
+                                onChange={(event) => setQuotas((current) => current.map((row, index) => (index === quotaIndex
+                                  ? { ...row, conditions: row.conditions.map((item, itemIndex) => (itemIndex === conditionIndex ? { ...item, value: event.target.value } : item)) }
+                                  : row)))}
+                              >
+                                {(source?.choices || []).map((choice) => <option key={choice} value={choice}>{choice}</option>)}
+                              </select>
+                            </span>
+                          );
+                        })}
+                      </div>
+                      <label className="sq-quota-target">
+                        {text.quotaTarget}
+                        <input
+                          type="number"
+                          min="1"
+                          value={quota.target}
+                          onChange={(event) => setQuotas((current) => current.map((row, index) => (index === quotaIndex ? { ...row, target: Number(event.target.value) } : row)))}
+                        />
+                      </label>
+                      <button type="button" className="sq-tool" aria-label={text.quotaRemove} onClick={() => setQuotas((current) => current.filter((_, index) => index !== quotaIndex))}>
+                        <Trash2 size={14} aria-hidden="true" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="sq-quota-actions">
+                <button type="button" className="sq-btn" onClick={addQuota} disabled={!quotaQuestions.length}>
+                  <Plus size={14} aria-hidden="true" /> {text.quotaAdd}
+                </button>
+                <span className="sq-preview-empty">{text.quotaEnforced}</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      ) : null}
 
       {templatesOpen ? (
         <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.templatesTitle}>
