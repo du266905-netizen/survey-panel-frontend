@@ -1,0 +1,88 @@
+/* AI credits: a badge where they are spent, and one small purchase dialog. */
+
+.ai-credits { display: inline-flex; align-items: center; gap: 8px; }
+
+.ai-credits-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #5F6862;
+  font-size: 11px;
+  padding: 5px 11px;
+  white-space: nowrap;
+}
+
+.ai-credits-badge strong { color: #141413; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.ai-credits-buy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #141413;
+  border-radius: 999px;
+  background: #141413;
+  color: #FFFFFF;
+  cursor: pointer;
+  font: 500 11px var(--font-sans);
+  padding: 5px 11px;
+}
+
+.ai-credits-buy:disabled { opacity: .4; cursor: not-allowed; }
+
+.ai-credits.is-compact .ai-credits-badge { padding: 3px 9px; }
+
+.ai-credits-modal { position: fixed; z-index: 300; inset: 0; display: grid; place-items: center; padding: 20px; }
+
+.ai-credits-scrim { position: absolute; inset: 0; border: 0; background: rgba(20, 20, 19, .45); cursor: pointer; }
+
+.ai-credits-card {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  width: min(100%, 460px);
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 28px 70px rgba(20, 20, 19, .28);
+  padding: 20px;
+}
+
+.ai-credits-card > header { display: flex; align-items: center; justify-content: space-between; }
+
+.ai-credits-card > header strong { font-size: 14px; font-weight: 600; }
+
+.ai-credits-x { display: grid; width: 28px; height: 28px; place-items: center; border: 0; border-radius: 6px; background: transparent; color: #5F6862; cursor: pointer; }
+
+.ai-credits-x:hover { background: #FAF9F5; color: #141413; }
+
+.ai-credits-hint { margin: 0; color: #5F6862; font-size: 11px; line-height: 1.6; }
+
+.ai-credits-packs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+
+.ai-credits-pack {
+  display: grid;
+  gap: 4px;
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  padding: 12px;
+  text-align: left;
+}
+
+.ai-credits-pack:hover { border-color: #141413; }
+
+.ai-credits-pack strong { font-size: 13px; font-weight: 600; }
+
+.ai-credits-pack span { color: #141413; font-size: 16px; font-weight: 600; }
+
+.ai-credits-pack em { color: #8D948D; font-size: 11px; font-style: normal; }
+
+.ai-credits-ok { margin: 0; color: #2d6a49; font-size: 11px; }
+
+.ai-credits-error { margin: 0; color: #B42318; font-size: 11px; }
+
+@media (max-width: 520px) { .ai-credits-packs { grid-template-columns: 1fr; } }

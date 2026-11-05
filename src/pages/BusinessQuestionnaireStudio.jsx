@@ -10,6 +10,7 @@ import {
 } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { assistQuestion } from '../ai/questionAssistClient';
+import AiCreditsBadge from '../components/AiCredits';
 import './BusinessQuestionnaireStudio.css';
 
 /* The questionnaire editor.
@@ -116,7 +117,7 @@ const copy = {
     qualityButton: '质量检查', qualityTitle: '质量检查',
     assist: 'AI', assistTitle: '让 AI 改这道题', assistPlaceholder: '想让它怎么改？例如：更中性、别诱导、缩短',
     assistRewrite: '改写题干', assistOptions: '生成选项', assistApply: '采用', assistUndo: '撤销',
-    assistThinking: '生成中…', assistFailed: 'AI 接口还没接上（后端待加 /assist）。', assistMock: '开发环境示例结果，不是模型输出。',
+    assistThinking: '生成中…', assistFailed: 'AI 接口还没接上（后端待加 /assist）。', assistNoCredits: 'AI 次数已用完，去 AI 页加购。', assistMock: '开发环境示例结果，不是模型输出。',
     assistEmpty: '先写一句要求，或直接点一个动作。',
     paging: '分页', pagingHint: '一页放几道题。设成分页后，受访者会看到进度条。',
     pagingOff: '一页到底', pagingOne: '一屏一题', pagingPerPage: '每页题数', pagingPages: '共 {n} 页，下面带题目地图', quotasTitle: '配额', quotasHint: '按题目答案划分格子，填每格需要多少份。相加就是总样本量。',
@@ -150,7 +151,7 @@ const copy = {
     qualityButton: 'Quality check', qualityTitle: 'Quality check',
     assist: 'AI', assistTitle: 'Let AI rework this question', assistPlaceholder: 'How should it change? e.g. neutral, no leading, shorter',
     assistRewrite: 'Rewrite prompt', assistOptions: 'Suggest options', assistApply: 'Use', assistUndo: 'Undo',
-    assistThinking: 'Working…', assistFailed: 'The AI endpoint is not connected yet (backend needs /assist).', assistMock: 'Development fixture, not model output.',
+    assistThinking: 'Working…', assistFailed: 'The AI endpoint is not connected yet (backend needs /assist).', assistNoCredits: 'Out of AI credits — buy more on the AI page.', assistMock: 'Development fixture, not model output.',
     assistEmpty: 'Write an instruction first, or pick an action.',
     paging: 'Paging', pagingHint: 'Questions per page. Once paged, respondents see a progress bar.',
     pagingOff: 'One page', pagingOne: 'One per screen', pagingPerPage: 'Per page', pagingPages: '{n} pages, with a question map', quotasTitle: 'Quotas', quotasHint: 'Split the sample by answers and set how many completes each cell needs; the sum is the total.', 
@@ -355,8 +356,9 @@ export default function BusinessQuestionnaireStudio() {
       });
       setAssistResults((data?.candidates || []).map((text) => ({ text, mocked })));
       if (!data?.candidates?.length) setAssistError(text.assistEmpty);
-    } catch {
-      setAssistError(text.assistFailed);
+    } catch (failure) {
+      const code = failure?.response?.data?.code;
+      setAssistError(code === 'AI_CREDITS_EXHAUSTED' ? text.assistNoCredits : text.assistFailed);
     } finally {
       setAssistBusy('');
     }
@@ -798,6 +800,7 @@ export default function BusinessQuestionnaireStudio() {
                           <div className="sq-assist-head">
                             <Sparkles size={13} aria-hidden="true" />
                             <span>{text.assistTitle}</span>
+                            <AiCreditsBadge language={language} compact showBuy={false} />
                             {assistUndo[question.uid] ? (
                               <button type="button" className="sq-link" onClick={() => undoAssist(question)}>
                                 <Undo2 size={12} aria-hidden="true" /> {text.assistUndo}

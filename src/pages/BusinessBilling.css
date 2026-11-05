@@ -220,3 +220,15 @@ p.business-billing-intro {
 .business-billing-more > button:hover { border-color: #141413; background: #FAF9F5; }
 
 .business-billing-more > button:disabled { opacity: .45; cursor: not-allowed; }
+
+.business-billing-ai {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  color: #5F6862;
+  font-size: 11px;
+}
+
+.business-billing-ai-note { color: #8D948D; }
