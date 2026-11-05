@@ -19,37 +19,54 @@ import './BusinessAudience.css';
 const GROUPS = [
   {
     id: 'demo',
-    label: { 'zh-CN': '社会人口', en: 'Demographics' },
+    label: { 'zh-CN': '人口统计', en: 'Demographics' },
     items: [
       { id: 'age', label: { 'zh-CN': '年龄', en: 'Age' }, options: ['18–24', '25–34', '35–44', '45–54', '55–64', '65+'] },
-      { id: 'gender', label: { 'zh-CN': '性别', en: 'Gender' }, options: ['男', '女', '其他 / 不愿透露'] },
-      { id: 'region', label: { 'zh-CN': '地区', en: 'Region' }, options: ['一线城市', '新一线城市', '二线城市', '三线及以下'] },
-      { id: 'income', label: { 'zh-CN': '个人月收入', en: 'Personal income' }, options: ['5,000 以下', '5,000–10,000', '10,000–20,000', '20,000–50,000', '50,000 以上'] },
-      { id: 'education', label: { 'zh-CN': '学历', en: 'Education' }, options: ['高中及以下', '大专', '本科', '硕士及以上'] },
-      { id: 'employment', label: { 'zh-CN': '职业状态', en: 'Employment' }, options: ['全职', '兼职', '自由职业', '学生', '退休'] },
+      { id: 'gender', label: { 'zh-CN': '性别', en: 'Gender' }, options: ['男', '女', '非二元', '不愿透露'] },
+      { id: 'marital', label: { 'zh-CN': '婚姻状况', en: 'Marital status' }, options: ['未婚', '已婚', '同居', '离异', '丧偶'] },
+      { id: 'children', label: { 'zh-CN': '子女', en: 'Children' }, options: ['有 18 岁以下子女', '无 18 岁以下子女'] },
+      { id: 'education', label: { 'zh-CN': '教育程度', en: 'Education' }, options: ['中学及以下', '大专', '本科', '硕士', '博士'] },
+      { id: 'employment', label: { 'zh-CN': '就业状态', en: 'Employment' }, options: ['全职', '兼职', '自雇', '学生', '待业', '退休'] },
+    ],
+  },
+  {
+    id: 'geo',
+    label: { 'zh-CN': '地域与语言', en: 'Geography and language' },
+    items: [
+      { id: 'country', label: { 'zh-CN': '居住国家 / 地区', en: 'Country of residence' }, options: ['中国内地', '中国香港', '中国台湾', '新加坡', '日本', '韩国', '美国', '英国', '德国', '其他'] },
+      { id: 'urbanity', label: { 'zh-CN': '城市类型', en: 'Urbanity' }, options: ['城市', '郊区', '乡镇 / 农村'] },
+      { id: 'language', label: { 'zh-CN': '常用语言', en: 'Language' }, options: ['中文', '英文', '中英双语', '其他'] },
     ],
   },
   {
     id: 'b2b',
     label: { 'zh-CN': '企业与职能', en: 'Company and role' },
     items: [
-      {
-        id: 'industry',
-        label: { 'zh-CN': '行业', en: 'Industry' },
-        options: ['汽车', '旅游', '消费品', '医疗健康', '金融', '社会与公共', '工业制造', '科技', '媒体', '电商'],
-      },
-      { id: 'companySize', label: { 'zh-CN': '公司规模', en: 'Company size' }, options: ['1–10 人', '11–50 人', '51–200 人', '201–1000 人', '1000 人以上'] },
-      { id: 'department', label: { 'zh-CN': '部门', en: 'Department' }, options: ['市场', '产品', '研发', '采购', '管理层'] },
-      { id: 'seniority', label: { 'zh-CN': '职级', en: 'Seniority' }, options: ['专员', '经理', '总监', '副总裁及以上'] },
+      { id: 'industry', label: { 'zh-CN': '行业', en: 'Industry' }, options: ['汽车', '旅游', '消费品', '医疗健康', '金融', '社会与公共', '工业制造', '科技', '媒体', '电商'] },
+      { id: 'companySize', label: { 'zh-CN': '公司规模', en: 'Company size' }, options: ['1–10 人', '11–50 人', '51–200 人', '201–1000 人', '1001–5000 人', '5000 人以上'] },
+      { id: 'department', label: { 'zh-CN': '部门', en: 'Department' }, options: ['市场', '产品', '研发', '采购', '销售', '人力', '管理层'] },
+      { id: 'seniority', label: { 'zh-CN': '职级', en: 'Seniority' }, options: ['专员', '经理', '总监', '副总裁', '创始人 / CEO'] },
+      { id: 'authority', label: { 'zh-CN': '决策权', en: 'Decision role' }, options: ['最终决策', '参与决策', '提供建议', '不参与'] },
     ],
   },
   {
     id: 'behavior',
-    label: { 'zh-CN': '行为与品类', en: 'Behaviour' },
+    label: { 'zh-CN': '行为与品牌', en: 'Behaviour and brand' },
     items: [
       { id: 'usage', label: { 'zh-CN': '品类使用频率', en: 'Category usage' }, options: ['每天', '每周', '每月', '很少'] },
-      { id: 'brand', label: { 'zh-CN': '品牌认知', en: 'Brand awareness' }, options: ['知道并使用', '知道但未使用', '不知道'] },
+      { id: 'brand', label: { 'zh-CN': '品牌关系', en: 'Brand relationship' }, options: ['知道并正在使用', '知道但未使用', '考虑中', '不知道'] },
       { id: 'channel', label: { 'zh-CN': '购买渠道', en: 'Purchase channel' }, options: ['线上', '线下', '两者都有'] },
+      { id: 'device', label: { 'zh-CN': '常用设备', en: 'Device' }, options: ['手机', '电脑', '平板'] },
+    ],
+  },
+  {
+    id: 'sensitive',
+    label: { 'zh-CN': '敏感项（需谨慎）', en: 'Sensitive (with care)' },
+    items: [
+      { id: 'politics', label: { 'zh-CN': '政治倾向', en: 'Political leaning' }, options: ['偏左', '中间', '偏右', '不愿透露'] },
+      { id: 'religion', label: { 'zh-CN': '宗教信仰', en: 'Religion' }, options: ['有宗教信仰', '无宗教信仰', '不愿透露'] },
+      { id: 'sexuality', label: { 'zh-CN': '性取向', en: 'Sexual orientation' }, options: ['异性恋', 'LGBTQ+', '不愿透露'] },
+      { id: 'health', label: { 'zh-CN': '健康状况', en: 'Health condition' }, options: ['有长期健康状况', '无', '不愿透露'] },
     ],
   },
 ];
