@@ -1,10 +1,47 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Check, LoaderCircle } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { getPublicBusinessQuestionnaire, submitPublicBusinessQuestionnaire } from '../api/realApi';
 import TurnstileWidget from '../components/TurnstileWidget';
 import Logo from '../components/Logo';
 import './PublicBusinessQuestionnaire.css';
+
+/* The page a respondent opens.
+ *
+ * Own design, not the old one: one column, the questionnaire's own title and
+ * cover, the questions as cards, one button. Chrome text follows the language
+ * of the questionnaire (Chinese title → Chinese chrome), because the person
+ * answering only ever sees this page. */
+
+const COPY = {
+  zh: {
+    required: '必答', select: '请选择', other: '其他', submit: '提交', submitting: '正在提交…',
+    thanksTitle: '已提交', thanksBody: '感谢您的时间，您的回答已经收到。',
+    endedTitle: '感谢参与', endedBody: '根据您刚才的回答，本次调查到此结束，不需要继续作答。',
+    consent: '提交即表示您同意隐私政策，并理解这份回答会提供给问卷发起方。', privacy: '隐私政策',
+    verifyFailed: '人机验证加载失败。请刷新页面，或换一个浏览器再试。',
+    verifyHint: '提交前需要完成一次人机验证。',
+    loadFailed: '问卷加载失败，请稍后再打开链接。', missing: '还有必答题没有回答。', submitFailed: '提交失败，请稍后再试。', retry: '刷新重试',
+    rankingHint: '按您偏好的顺序依次勾选。', npsLow: '完全不会', npsHigh: '非常愿意',
+    matrixDefault: ['非常不同意', '不同意', '一般', '同意', '非常同意'],
+    loading: '正在打开问卷…',
+  },
+  en: {
+    required: 'Required', select: 'Select', other: 'Other', submit: 'Submit', submitting: 'Submitting…',
+    thanksTitle: 'Submitted', thanksBody: 'Thank you — your response has been received.',
+    endedTitle: 'Thank you', endedBody: 'This survey ends here based on your answers.',
+    consent: 'By submitting you agree to the privacy policy and understand this response is shared with the survey creator.', privacy: 'Privacy policy',
+    verifyFailed: 'The human check could not load. Refresh the page or try another browser.',
+    verifyHint: 'A quick human check is required before submitting.',
+    loadFailed: 'This survey could not load. Please open the link again later.', missing: 'Some required questions are still unanswered.', submitFailed: 'We could not submit your response. Please try again.', retry: 'Reload',
+    rankingHint: 'Select each option in the order you prefer it.', npsLow: 'Not at all likely', npsHigh: 'Extremely likely',
+    matrixDefault: ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree'],
+    loading: 'Opening the survey…',
+  },
+};
+
+const isChinese = (value) => /[\u4e00-\u9fa5]/.test(String(value || ''));
+const hasAnswer = (value) => (Array.isArray(value) ? value.length > 0 : String(value ?? '').trim().length > 0);
 
 function questionIsVisible(question, questions, answers) {
   const logic = question.logic;
@@ -14,53 +51,60 @@ function questionIsVisible(question, questions, answers) {
   return Array.isArray(answer) ? answer.includes(logic.value) : answer === logic.value;
 }
 
-function QuestionField({ question, value, onChange }) {
+function QuestionField({ question, value, onChange, copy }) {
   const choices = Array.isArray(question.choices) ? question.choices : [];
   const settings = question.settings || {};
-  const displayChoices = useMemo(() => settings.randomizeChoices ? [...choices].sort(() => Math.random() - .5) : choices, [question.id, question.choices, settings.randomizeChoices]);
+  const displayChoices = useMemo(
+    () => (settings.randomizeChoices ? [...choices].sort(() => Math.random() - 0.5) : choices),
+    [question.id, question.choices, settings.randomizeChoices],
+  );
+
+  if (question.type === 'LONG_TEXT') {
+    return <textarea className="pq-input pq-textarea" rows={4} value={value || ''} onChange={(event) => onChange(event.target.value)} />;
+  }
+  if (question.type === 'SHORT_TEXT' || question.type === 'NUMBER') {
+    return <input className="pq-input" type={question.type === 'NUMBER' ? 'number' : 'text'} inputMode={question.type === 'NUMBER' ? 'decimal' : undefined} value={value || ''} onChange={(event) => onChange(event.target.value)} />;
+  }
+  if (question.type === 'DATE') {
+    return <input className="pq-input" type="date" value={value || ''} onChange={(event) => onChange(event.target.value)} />;
+  }
   if (question.type === 'DROPDOWN') {
     return (
-      <select className="public-question-select" value={value || ''} onChange={(event) => onChange(event.target.value)}>
-        <option value="">请选择</option>
+      <select className="pq-input pq-select" value={value || ''} onChange={(event) => onChange(event.target.value)}>
+        <option value="">{copy.select}</option>
         {displayChoices.map((choice) => <option key={choice} value={choice}>{choice}</option>)}
       </select>
     );
   }
-  if (question.type === 'DATE') {
-    return <input type="date" value={value || ''} onChange={(event) => onChange(event.target.value)} />;
-  }
   if (question.type === 'NPS') {
     return (
-      <div className="public-question-nps">
-        <div>{Array.from({ length: 11 }, (_, index) => String(index)).map((score) => (
-          <label key={score} className={value === score ? 'is-on' : ''}>
-            <input type="radio" name={question.id} checked={value === score} onChange={() => onChange(score)} />
-            {score}
-          </label>
-        ))}</div>
-        <small><span>{settings.scaleLowLabel || '完全不会'}</span><span>{settings.scaleHighLabel || '非常愿意'}</span></small>
+      <div className="pq-nps">
+        <div>
+          {Array.from({ length: 11 }, (_, index) => String(index)).map((score) => (
+            <label key={score} className={value === score ? 'is-on' : ''}>
+              <input type="radio" name={question.id} checked={value === score} onChange={() => onChange(score)} />
+              {score}
+            </label>
+          ))}
+        </div>
+        <small><span>{settings.scaleLowLabel || copy.npsLow}</span><span>{settings.scaleHighLabel || copy.npsHigh}</span></small>
       </div>
     );
   }
   if (question.type === 'MATRIX') {
-    const columns = Array.isArray(settings.matrixColumns) && settings.matrixColumns.length ? settings.matrixColumns : ['非常不同意', '不同意', '一般', '同意', '非常同意'];
+    const columns = Array.isArray(settings.matrixColumns) && settings.matrixColumns.length ? settings.matrixColumns : copy.matrixDefault;
     const current = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
     return (
-      <div className="public-question-matrix">
+      <div className="pq-matrix">
         <table>
-          <thead><tr><th />{columns.map((column) => <th key={column}>{column}</th>)}</tr></thead>
+          <thead><tr><th aria-hidden="true" />{columns.map((column) => <th key={column}>{column}</th>)}</tr></thead>
           <tbody>
             {displayChoices.map((row) => (
               <tr key={row}>
                 <th scope="row">{row}</th>
                 {columns.map((column) => (
                   <td key={column}>
-                    <input
-                      type="radio"
-                      name={`${question.id}-${row}`}
-                      checked={current[row] === column}
-                      onChange={() => onChange({ ...current, [row]: column })}
-                    />
+                    <input type="radio" name={`${question.id}-${row}`} checked={current[row] === column} onChange={() => onChange({ ...current, [row]: column })} />
                   </td>
                 ))}
               </tr>
@@ -70,18 +114,85 @@ function QuestionField({ question, value, onChange }) {
       </div>
     );
   }
-  if (question.type === 'LONG_TEXT') return <textarea value={value || ''} onChange={(event) => onChange(event.target.value)} />;
-  if (question.type === 'SHORT_TEXT') return <input value={value || ''} onChange={(event) => onChange(event.target.value)} />;
-  if (question.type === 'NUMBER') return <input type="number" inputMode="decimal" value={value || ''} onChange={(event) => onChange(event.target.value)} />;
-  if (question.type === 'RANKING') return <div className="public-question-ranking">{displayChoices.map((choice) => <label key={choice}><span>{Array.isArray(value) ? value.indexOf(choice) + 1 || '—' : '—'}</span><input type="checkbox" checked={Array.isArray(value) && value.includes(choice)} onChange={(event) => onChange(event.target.checked ? [...(Array.isArray(value) ? value : []), choice] : (Array.isArray(value) ? value.filter((item) => item !== choice) : []))} /> {choice}</label>)}<small>Select each option in the order you prefer it.</small></div>;
-  if (question.type === 'MULTIPLE_CHOICE') { const other = Array.isArray(value) ? value.find((item) => item.startsWith('Other: ')) : ''; return <div className="public-question-options">{displayChoices.map((choice) => <label key={choice}><input type="checkbox" checked={Array.isArray(value) && value.includes(choice)} onChange={(event) => { const next = event.target.checked ? [...(Array.isArray(value) ? value : []), choice] : (Array.isArray(value) ? value.filter((item) => item !== choice) : []); if (!settings.maxSelections || next.length <= settings.maxSelections) onChange(next); }} /> {choice}</label>)}{settings.allowOther && <label className="public-question-other"><input type="checkbox" checked={Boolean(other)} onChange={(event) => onChange(event.target.checked ? [...(Array.isArray(value) ? value : []), 'Other: details'] : (Array.isArray(value) ? value.filter((item) => !item.startsWith('Other: ')) : []))} /> Other {other && <input aria-label="Other answer" value={other.replace(/^Other:\s*/, '')} onChange={(event) => onChange((Array.isArray(value) ? value : []).map((item) => item.startsWith('Other: ') ? `Other: ${event.target.value}` : item))} />}</label>}</div>; }
-  const other = typeof value === 'string' && value.startsWith('Other: ') ? value : '';
-  return <div className="public-question-options">{displayChoices.map((choice) => <label key={choice}><input type="radio" name={question.id} checked={value === choice} onChange={() => onChange(choice)} /> {choice}</label>)}{settings.allowOther && <label className="public-question-other"><input type="radio" name={question.id} checked={Boolean(other)} onChange={() => onChange('Other: details')} /> Other {other && <input aria-label="Other answer" value={other.replace(/^Other:\s*/, '')} onChange={(event) => onChange(`Other: ${event.target.value}`)} />}</label>}{question.type === 'RATING' && (settings.scaleLowLabel || settings.scaleHighLabel) && <small className="public-rating-labels"><span>{settings.scaleLowLabel}</span><span>{settings.scaleHighLabel}</span></small>}</div>;
-}
+  if (question.type === 'RANKING') {
+    return (
+      <div className="pq-options">
+        {displayChoices.map((choice) => (
+          <label key={choice}>
+            <input
+              type="checkbox"
+              checked={Array.isArray(value) && value.includes(choice)}
+              onChange={(event) => {
+                const list = Array.isArray(value) ? value : [];
+                onChange(event.target.checked ? [...list, choice] : list.filter((item) => item !== choice));
+              }}
+            />
+            <span>{choice}</span>
+            {Array.isArray(value) && value.includes(choice) ? <em>{value.indexOf(choice) + 1}</em> : null}
+          </label>
+        ))}
+        <small className="pq-hint">{copy.rankingHint}</small>
+      </div>
+    );
+  }
+  if (question.type === 'MULTIPLE_CHOICE') {
+    const list = Array.isArray(value) ? value : [];
+    const other = list.find((item) => item.startsWith('Other: ')) || '';
+    return (
+      <div className="pq-options">
+        {displayChoices.map((choice) => (
+          <label key={choice}>
+            <input
+              type="checkbox"
+              checked={list.includes(choice)}
+              onChange={(event) => {
+                const next = event.target.checked ? [...list, choice] : list.filter((item) => item !== choice);
+                if (!settings.maxSelections || next.length <= settings.maxSelections) onChange(next);
+              }}
+            />
+            <span>{choice}</span>
+          </label>
+        ))}
+        {settings.allowOther ? (
+          <label>
+            <input
+              type="checkbox"
+              checked={Boolean(other)}
+              onChange={(event) => onChange(event.target.checked ? [...list, 'Other: details'] : list.filter((item) => !item.startsWith('Other: ')))}
+            />
+            <span>{copy.other}</span>
+            {other ? (
+              <input className="pq-inline-input" aria-label={copy.other} value={other.replace(/^Other:\s*/, '')} onChange={(event) => onChange(list.map((item) => (item.startsWith('Other: ') ? `Other: ${event.target.value}` : item)))} />
+            ) : null}
+          </label>
+        ) : null}
+      </div>
+    );
+  }
 
-function hasAnswer(value) {
-  if (Array.isArray(value)) return value.length > 0;
-  return String(value ?? '').trim().length > 0;
+  const other = typeof value === 'string' && value.startsWith('Other: ') ? value : '';
+  return (
+    <div className="pq-options">
+      {displayChoices.map((choice) => (
+        <label key={choice}>
+          <input type="radio" name={question.id} checked={value === choice} onChange={() => onChange(choice)} />
+          <span>{choice}</span>
+        </label>
+      ))}
+      {settings.allowOther ? (
+        <label>
+          <input type="radio" name={question.id} checked={Boolean(other)} onChange={() => onChange('Other: details')} />
+          <span>{copy.other}</span>
+          {other ? (
+            <input className="pq-inline-input" aria-label={copy.other} value={other.replace(/^Other:\s*/, '')} onChange={(event) => onChange(`Other: ${event.target.value}`)} />
+          ) : null}
+        </label>
+      ) : null}
+      {question.type === 'RATING' && (settings.scaleLowLabel || settings.scaleHighLabel) ? (
+        <div className="pq-scale-labels"><span>{settings.scaleLowLabel}</span><span>{settings.scaleHighLabel}</span></div>
+      ) : null}
+    </div>
+  );
 }
 
 export default function PublicBusinessQuestionnaire() {
@@ -93,33 +204,42 @@ export default function PublicBusinessQuestionnaire() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
-  const [terminated, setTerminated] = useState(false);
+  const [verifyFailed, setVerifyFailed] = useState(false);
   const startedAtRef = useRef(Date.now());
+
+  const zh = isChinese(questionnaire?.title) || isChinese(questionnaire?.coverDescription);
+  const copy = zh ? COPY.zh : COPY.en;
+
+  useEffect(() => {
+    let active = true;
+    getPublicBusinessQuestionnaire(publicId)
+      .then((response) => {
+        if (!active) return;
+        setQuestionnaire(response.data.questionnaire);
+        startedAtRef.current = Date.now();
+      })
+      .catch(() => { if (active) setError(COPY.en.loadFailed); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [publicId]);
+
   const questions = Array.isArray(questionnaire?.questions) ? questionnaire.questions : [];
   const visibleQuestions = questions.filter((question) => questionIsVisible(question, questions, answers));
-  const terminatedNow = questions.some((question) => {
+
+  const terminated = questions.some((question) => {
     if (question.logic?.action !== 'TERMINATE' || !question.logic?.sourcePosition || !question.logic?.value) return false;
     const source = questions[question.logic.sourcePosition - 1];
     const answer = source ? answers[source.id] : null;
     return Array.isArray(answer) ? answer.includes(question.logic.value) : answer === question.logic.value;
   });
 
-  useEffect(() => {
-    let active = true;
-    getPublicBusinessQuestionnaire(publicId)
-      .then((response) => { if (active) { setQuestionnaire(response.data.questionnaire); startedAtRef.current = Date.now(); } })
-      .catch((caughtError) => { if (active) setError(caughtError.response?.data?.message || 'This questionnaire is not available.'); })
-      .finally(() => { if (active) setLoading(false); });
-    return () => { active = false; };
-  }, [publicId]);
-
   const submit = async (event) => {
     event.preventDefault();
     if (submitting || !questionnaire || terminated) return;
-    const missingQuestion = visibleQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
-    if (missingQuestion) {
-      setError('Please answer every required question before submitting.');
-      document.getElementById(`question-${missingQuestion.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const missing = visibleQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
+    if (missing) {
+      setError(copy.missing);
+      document.getElementById(`question-${missing.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     setSubmitting(true);
@@ -131,8 +251,6 @@ export default function PublicBusinessQuestionnaire() {
         respondentKey = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
         window.localStorage.setItem(storageKey, respondentKey);
       }
-      /* Matrix answers are objects in state; the submit contract takes strings,
-         so each row goes out as "row = column". */
       const serializedAnswers = Object.fromEntries(Object.entries(answers).map(([id, value]) => {
         if (value && typeof value === 'object' && !Array.isArray(value)) {
           return [id, Object.entries(value).map(([row, column]) => `${row} = ${column}`)];
@@ -145,41 +263,95 @@ export default function PublicBusinessQuestionnaire() {
         respondentKey,
         durationSeconds: Math.floor((Date.now() - startedAtRef.current) / 1000),
       });
-      setMessage(response.data.message || 'Response received.');
+      setMessage(response.data?.message || copy.thanksBody);
     } catch (caughtError) {
-      setError(caughtError.response?.data?.message || 'We could not submit your response. Please try again.');
+      setError(caughtError?.response?.data?.message || copy.submitFailed);
     } finally {
       setSubmitting(false);
     }
   };
 
-  if (loading) return <main className="public-questionnaire-state"><LoaderCircle className="animate-spin" /> Loading questionnaire</main>;
-  if (error && !questionnaire) return <main className="public-questionnaire-state"><strong>{error}</strong></main>;
-  if (message) return <main className="public-questionnaire-state"><span className="public-questionnaire-check"><Check size={29} /></span><h1>Thank you.</h1><p>{message}</p></main>;
+  if (loading) return <main className="pq-page"><Logo /><p className="pq-state">{copy.loading}</p></main>;
+  if (error && !questionnaire) return <main className="pq-page"><Logo /><p className="pq-state is-error">{error}</p></main>;
+  if (message) {
+    return (
+      <main className="pq-page">
+        <Logo />
+        <section className="pq-done"><h1>{copy.thanksTitle}</h1><p>{message}</p></section>
+      </main>
+    );
+  }
+  if (terminated) {
+    return (
+      <main className="pq-page">
+        <Logo />
+        <section className="pq-done"><h1>{copy.endedTitle}</h1><p>{copy.endedBody}</p></section>
+      </main>
+    );
+  }
+
+  const [beforePrivacy, afterPrivacy] = copy.consent.split('隐私政策');
 
   return (
-    <main className="public-questionnaire-page">
-      <header><img className="public-questionnaire-mark" src="/guanyisearch-project-mark.png" alt="" /><Logo size="sm" /></header>
-      {terminated || terminatedNow ? (
-        <div className="public-questionnaire-done">
-          <h2>感谢参与</h2>
-          <p>根据您刚才的回答，本次调查到此结束，不需要继续作答。</p>
-          <p className="is-en">Thank you — this survey ends here based on your answers.</p>
+    <main className="pq-page">
+      <Logo />
+
+      <header className="pq-head">
+        <h1>{questionnaire?.title}</h1>
+        {questionnaire?.coverDescription ? <p>{questionnaire.coverDescription}</p> : null}
+      </header>
+
+      <form className="pq-form" onSubmit={submit}>
+        {visibleQuestions.map((question, index) => (
+          <fieldset className="pq-question" id={`question-${question.id}`} key={question.id}>
+            <legend>
+              <span className="pq-num">{index + 1}</span>
+              {question.prompt || '—'}
+              {question.required ? <em>{copy.required}</em> : null}
+            </legend>
+            <QuestionField
+              question={question}
+              value={answers[question.id]}
+              copy={copy}
+              onChange={(value) => { setError(''); setAnswers((current) => ({ ...current, [question.id]: value })); }}
+            />
+          </fieldset>
+        ))}
+
+        {error ? <p className="pq-error" role="alert">{error}</p> : null}
+
+        <div className="pq-verify">
+          {/* A failed challenge leaves Cloudflare's own error box in place; it
+              says nothing a respondent can act on, so we drop it and offer one
+              action instead. */}
+          {verifyFailed ? null : (
+            <TurnstileWidget
+              onVerify={(token) => { setTurnstileToken(token); setVerifyFailed(false); }}
+              onExpire={() => setTurnstileToken('')}
+              onError={() => { setVerifyFailed(true); setTurnstileToken(''); }}
+            />
+          )}
+          <p className={verifyFailed ? 'pq-verify-note is-error' : 'pq-verify-note'}>
+            {verifyFailed ? copy.verifyFailed : copy.verifyHint}
+          </p>
+          {verifyFailed ? (
+            <button type="button" className="pq-retry" onClick={() => window.location.reload()}>
+              {copy.retry}
+            </button>
+          ) : null}
         </div>
-      ) : (
-      <form onSubmit={submit}>
-        <p>QUESTIONNAIRE</p>
-        <h1>{questionnaire.title}</h1>
-        <span className="public-questionnaire-intro">Created by {questionnaire.creatorName}. Your responses will be provided to this creator for the stated research purpose.</span>
-        {questionnaire.coverDescription && <p className="public-questionnaire-cover">{questionnaire.coverDescription}</p>}
-        <div className="public-questionnaire-questions">
-          {visibleQuestions.map((question, index) => <fieldset className="public-question" id={`question-${question.id}`} key={question.id}><legend>{index + 1}. {question.prompt} {question.required && <em>Required</em>}</legend><QuestionField question={question} value={answers[question.id]} onChange={(value) => setAnswers((current) => ({ ...current, [question.id]: value }))} /></fieldset>)}
-        </div>
-        {error && <p className="public-questionnaire-error">{error}</p>}
-        <div className="public-questionnaire-consent"><TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken('')} onError={() => setTurnstileToken('')} /><span>By submitting, you agree to the <a href="/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and understand that this response is shared with the questionnaire creator.</span></div>
-        <button type="submit" disabled={submitting || !turnstileToken}>{submitting ? <LoaderCircle className="animate-spin" size={17} /> : 'Submit response'}</button>
+
+        <button className="pq-submit" type="submit" disabled={submitting || !turnstileToken || verifyFailed}>
+          {submitting ? <LoaderCircle className="pq-spin" size={17} /> : null}
+          {submitting ? copy.submitting : copy.submit}
+        </button>
+
+        <p className="pq-consent">
+          {afterPrivacy !== undefined
+            ? <>{beforePrivacy}<a href="/privacy" target="_blank" rel="noreferrer">{copy.privacy}</a>{afterPrivacy}</>
+            : <>{copy.consent} <a href="/privacy" target="_blank" rel="noreferrer">{copy.privacy}</a></>}
+        </p>
       </form>
-      )}
     </main>
   );
 }
