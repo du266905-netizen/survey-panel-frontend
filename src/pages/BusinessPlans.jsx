@@ -12,7 +12,7 @@ import './BusinessPlans.css';
    Prices are monthly list prices. Yearly is 20% off — the number in
    BACKEND §16.5, not a percentage borrowed from someone else's page. */
 
-const PLANS = [
+export const PLANS = [
   {
     id: 'free',
     name: 'Free',
@@ -154,6 +154,13 @@ export default function BusinessPlans() {
                   type="button"
                   className={plan.featured ? 'pl-cta is-primary' : 'pl-cta'}
                   disabled={plan.id === current}
+                  onClick={() => {
+                    if (plan.id === 'free' || plan.id === 'team') return;
+                    navigate(withLanguage(
+                      `/business/plans/checkout?plan=${plan.id}&cycle=${yearly ? 'yearly' : 'monthly'}`,
+                      language,
+                    ));
+                  }}
                 >
                   {plan.id === current ? text.current : (plan.cta[language] || plan.cta.en)}
                 </button>

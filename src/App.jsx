@@ -84,6 +84,7 @@ import BusinessQuestionnaireStudio from './pages/BusinessQuestionnaireStudio';
 import BusinessAudience from './pages/BusinessAudience';
 import BusinessQuote from './pages/BusinessQuote';
 import BusinessPlans from './pages/BusinessPlans';
+import BusinessPlanCheckout from './pages/BusinessPlanCheckout';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
 import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
@@ -226,6 +227,7 @@ export default function App() {
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
         <Route path="/business/team" element={<BusinessRoute><BusinessTeam /></BusinessRoute>} />
         <Route path="/business/plans" element={<BusinessRoute><BusinessPlans /></BusinessRoute>} />
+        <Route path="/business/plans/checkout" element={<BusinessRoute><BusinessPlanCheckout /></BusinessRoute>} />
         <Route path="/business/invite" element={<BusinessInvite />} />
         <Route path="/business/billing" element={<BusinessRoute><BusinessBilling /></BusinessRoute>} />
         <Route path="/business/billing/invoices/:id" element={<BusinessRoute><BusinessInvoiceDetail /></BusinessRoute>} />
