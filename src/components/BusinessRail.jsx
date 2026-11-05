@@ -111,7 +111,7 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
             />
           </button>
           {settingsOpen && [
-            { id: 'personal', label: rail.account || 'Account', icon: UserRound, path: '/business/account' },
+            { id: 'personal', label: language === 'zh-CN' ? '个人设置' : language === 'zh-Hant' ? '個人設定' : (rail.account || 'Account'), icon: UserRound, path: '/business/account' },
             { id: 'team', label: language === 'zh-CN' ? '团队设置' : language === 'zh-Hant' ? '團隊設定' : 'Team settings', icon: Users, path: '/business/team' },
             { id: 'billing', label: billingCopy.title || 'Invoices and billing', icon: Receipt, path: '/business/billing' },
             { id: 'budget', label: budgetCopy.title || 'Account budget', icon: Wallet, path: '/business/budget' },

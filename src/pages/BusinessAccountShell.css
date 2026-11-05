@@ -251,3 +251,60 @@
 .business-account-password button:hover:not(:disabled) { border-color: #141413; }
 
 .business-account-password button:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ---- 个人设置 / 团队设置：信息行不再做成四个小盒子 ---- */
+
+#root .business-account-page .business-account-details dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin-top: 4px;
+}
+
+#root .business-account-page .business-account-details dl div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 16px;
+  border: 0;
+  border-top: 1px solid #E5E3DD;
+  border-radius: 0;
+  background: transparent !important;
+  min-height: 0;
+  padding: 12px 0;
+}
+
+#root .business-account-page .business-account-details dl div:first-child { border-top: 0; }
+
+#root .business-account-page .business-account-details dt {
+  color: #8D948D;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+#root .business-account-page .business-account-details dd {
+  margin: 0;
+  color: #141413;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+/* the right column reads as one list of actions, not four islands */
+.business-account-page .business-account-settings {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.business-account-page .business-account-settings > h2 { margin: 0; }
+
+.business-account-page .business-account-settings > span { line-height: 1.6; }
+
+/* the embedded team page sits inside the same shell */
+.business-account-page .bt-body {
+  max-width: none;
+  padding: 0;
+}
+
+.business-account-page .bt-body { margin-top: 28px; }

@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, Check, LoaderCircle, Mail, Plus, ShieldCheck, Trash2, UserRound, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import BusinessRail from '../components/BusinessRail';
+import NotificationBell from '../components/NotificationBell';
 import { useAuth } from '../components/AuthContext';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessTeam.css';
+import './BusinessAccountShell.css';
 
 /* Team settings, the shape Pollfish uses: the current team at the top, then
  * its name and logo, then the people in it.
@@ -124,17 +127,18 @@ export default function BusinessTeam() {
   };
 
   return (
-    <main className="bt-page">
-      <header className="bt-top">
-        <button type="button" className="bt-icon" onClick={() => navigate(withLanguage('/business/account', language))} aria-label={text.back}>
-          <ArrowLeft size={17} aria-hidden="true" />
-        </button>
-        <strong>{text.title}</strong>
-      </header>
+    <main className="business-account-page">
+      <BusinessRail activeId="team" />
+      <div className="business-account-pane">
+        <header><NotificationBell /></header>
 
-      <div className="bt-body">
-        <p className="bt-intro">{text.intro}</p>
+        <section className="business-account-shell">
+          <div>
+            <h1>{text.title}</h1>
+            <p>{text.intro}</p>
+          </div>
 
+          <div className="bt-body">
         <section className="bt-current">
           <span className="bt-current-icon">{logo ? <img src={logo} alt="" /> : <Users size={20} aria-hidden="true" />}</span>
           <div>
@@ -230,6 +234,8 @@ export default function BusinessTeam() {
           </div>
 
           <p className="bt-note">{text.localOnly}</p>
+        </section>
+          </div>
         </section>
       </div>
     </main>

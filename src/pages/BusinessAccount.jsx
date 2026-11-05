@@ -126,7 +126,7 @@ export default function BusinessAccount() {
 
       <section className="business-account-shell">
       <div>
-        <h1>{ws.account.title}</h1>
+        <h1>{language === 'zh-CN' ? '个人设置' : language === 'zh-Hant' ? '個人設定' : ws.account.title}</h1>
         <p>{ws.account.intro}</p>
       </div>
 
@@ -191,9 +191,6 @@ export default function BusinessAccount() {
             </button>
             {resetNote ? <em className={resetNote.startsWith('重置邮件') ? 'is-success' : 'is-error'}>{resetNote}</em> : null}
           </div>
-          <button className="business-account-team" type="button" onClick={() => navigate(withLanguage('/business/team', language))}>
-            <Users size={16} /> 团队设置
-          </button>
           <button className="business-account-signout" type="button" onClick={signOut}>
             <LogOut size={16} /> {ws.account.signOut}
           </button>
