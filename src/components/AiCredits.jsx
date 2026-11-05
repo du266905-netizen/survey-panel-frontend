@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { CreditCard, Sparkles, X } from 'lucide-react';
+import { ChevronRight, ChevronUp, CreditCard, Sparkles, User, X } from 'lucide-react';
 import { apiClient } from '../api/client';
+import { useBusinessAvatar } from '../utils/businessAvatar';
 import './AiCredits.css';
 
 /* AI credits, shown wherever they are spent.
@@ -42,18 +43,25 @@ const copy = {
 
 export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
   const text = copy[language] || copy.en;
+  const avatar = useBusinessAvatar();
   const [credits, setCredits] = useState(null);
+  const [plan, setPlan] = useState('');
   const [unavailable, setUnavailable] = useState(false);
   const [open, setOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
 
   useEffect(() => {
     fetchAiCredits()
-      .then((data) => { setCredits(Number(data?.balance ?? data?.credits ?? 0)); setUnavailable(false); })
+      .then((data) => {
+        setCredits(Number(data?.balance ?? data?.credits ?? 0));
+        setPlan(String(data?.plan || '').toLowerCase());
+        setUnavailable(false);
+      })
       .catch(() => setUnavailable(true));
   }, []);
 
   const go = (path) => { setOpen(false); onNavigate?.(path); };
+  const planLabel = plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : 'Free';
 
   return (
     <div className={`ai-menu${open ? ' is-open' : ''}`}>
@@ -63,14 +71,19 @@ export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
             <span>{text.label}</span>
             <strong>{unavailable ? '—' : (credits ?? '—')} {text.unit}</strong>
           </div>
-          <button type="button" role="menuitem" onClick={() => go('/business/plans')}>{text.upgrade}</button>
+          <button type="button" role="menuitem" className="ai-menu-row" onClick={() => go('/business/plans')}>
+            <span>{text.upgrade}</span>
+            <ChevronRight size={13} aria-hidden="true" />
+          </button>
           <button
             type="button"
             role="menuitem"
+            className="ai-menu-row"
             aria-expanded={moreOpen}
             onClick={() => setMoreOpen((value) => !value)}
           >
-            {text.learnMore}
+            <span>{text.learnMore}</span>
+            <ChevronRight size={13} aria-hidden="true" className={moreOpen ? 'is-open' : ''} />
           </button>
           {moreOpen ? (
             <div className="ai-menu-more">
@@ -82,8 +95,11 @@ export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
         </div>
       ) : null}
       <button type="button" className="ai-menu-trigger" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
-        <Sparkles size={15} aria-hidden="true" />
-        <span>{text.label} {unavailable ? '—' : (credits ?? '—')}</span>
+        <span className="ai-menu-avatar" aria-hidden="true">
+          {avatar ? <img src={avatar} alt="" /> : <User size={13} />}
+        </span>
+        <span className="ai-menu-plan">{planLabel}</span>
+        <ChevronUp size={14} aria-hidden="true" className={`ai-menu-chevron${open ? ' is-open' : ''}`} />
       </button>
     </div>
   );

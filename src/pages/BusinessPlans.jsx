@@ -5,57 +5,69 @@ import { fetchAiCredits } from '../components/AiCredits';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessPlans.css';
 
-/* Four plans, described by what a person is trying to do rather than by a
-   feature matrix. The middle one is the intended choice; the last one is for
-   teams that need seats and invoices. */
+/* Four plans. Each card lists only what that plan adds; inheritance is one line
+   ("含 Starter 全部") instead of repeating the tier below, so a higher plan can
+   never look like it lost something.
+
+   Prices are monthly list prices. Yearly is 20% off — the number in
+   BACKEND §16.5, not a percentage borrowed from someone else's page. */
 
 const PLANS = [
   {
     id: 'free',
     name: 'Free',
-    tagline: { 'zh-CN': '先把一份问卷做出来', en: 'Get one questionnaire made' },
-    price: { 'zh-CN': '$0', en: '$0' },
+    tagline: { 'zh-CN': '先跑通方法，不花钱', en: 'Try the method, at no cost' },
+    monthly: 0,
+    yearly: 0,
     cycle: { 'zh-CN': '永久免费', en: 'free forever' },
     cta: { 'zh-CN': '免费开始', en: 'Start free' },
+    inherit: { 'zh-CN': '包含：', en: 'Includes:' },
     features: {
-      'zh-CN': ['20 次 AI 辅助', '3 份进行中的问卷', '自有名单回收 100 份', 'CSV 导出'],
-      en: ['20 AI credits', '3 active questionnaires', '100 responses from your own list', 'CSV export'],
+      'zh-CN': ['20 次 AI 辅助', '3 份进行中的问卷', '自有名单回收 100 份', 'CSV 导出', '11 种题型与跳转逻辑'],
+      en: ['20 AI credits', '3 active questionnaires', '100 responses from your own list', 'CSV export', '11 question types with logic'],
     },
   },
   {
     id: 'starter',
     name: 'Starter',
-    tagline: { 'zh-CN': '一个人做研究，够用', en: 'One researcher, enough room' },
-    price: { 'zh-CN': '$19', en: '$19' },
+    tagline: { 'zh-CN': '一个人的研究，一套工具', en: 'One researcher, one tool' },
+    monthly: 19,
+    yearly: 182,
     cycle: { 'zh-CN': '每月 · 可随时取消', en: 'per month · cancel anytime' },
     cta: { 'zh-CN': '开始用 Starter', en: 'Choose Starter' },
+    inherit: { 'zh-CN': '含 Free 全部，另加：', en: 'Everything in Free, and:' },
     features: {
-      'zh-CN': ['每月 300 次 AI 辅助', '10 份进行中的问卷', '自有名单回收 1,000 份', '外部样本（按研究报价）', '问卷带上你的 Logo'],
-      en: ['300 AI credits a month', '10 active questionnaires', '1,000 responses a month', 'External sample, quoted per study', 'Your logo on the questionnaire'],
+      'zh-CN': ['每月 300 次 AI 辅助', '10 份进行中的问卷', '自有名单回收 1,000 份 / 月', '外部样本（按研究报价）', '问卷带你的 Logo · 2 个席位'],
+      en: ['300 AI credits a month', '10 active questionnaires', '1,000 responses a month', 'External sample, quoted per study', 'Your logo · 2 seats'],
     },
   },
   {
     id: 'pro',
     name: 'Pro',
-    tagline: { 'zh-CN': '一年十几份研究，配额和团队都能用', en: 'A dozen studies a year, quotas and a team' },
-    price: { 'zh-CN': '$49', en: '$49' },
+    tagline: { 'zh-CN': '项目多少都不限，按年做', en: 'Unlimited studies, run all year' },
+    monthly: 49,
+    yearly: 470,
+    featured: true,
     cycle: { 'zh-CN': '每月 · 推荐', en: 'per month · recommended' },
     cta: { 'zh-CN': '升级到 Pro', en: 'Choose Pro' },
+    inherit: { 'zh-CN': '含 Starter 全部，另加：', en: 'Everything in Starter, and:' },
     features: {
-      'zh-CN': ['每月 1,000 次 AI 辅助', '问卷数量不限', '自有名单回收 5,000 份', '配额控制与质量校验', '5 个席位'],
-      en: ['1,000 AI credits a month', 'Unlimited questionnaires', '5,000 responses a month', 'Quotas and quality checks', '5 seats'],
+      'zh-CN': ['每月 1,000 次 AI 辅助', '问卷数量不限', '自有名单回收 5,000 份 / 月', '配额控制与质量校验', '5 个席位与月度预算'],
+      en: ['1,000 AI credits a month', 'Unlimited questionnaires', '5,000 responses a month', 'Quotas and quality checks', '5 seats and monthly budgets'],
     },
   },
   {
     id: 'team',
     name: 'Team',
-    tagline: { 'zh-CN': '给研究团队用：席位、发票、审批', en: 'For research teams: seats, invoices, approvals' },
-    price: { 'zh-CN': '$149', en: '$149' },
+    tagline: { 'zh-CN': '能报销、能审批、能分权', en: 'Invoice, approve, and split by role' },
+    monthly: 149,
+    yearly: 1430,
     cycle: { 'zh-CN': '每月 · 含团队管理', en: 'per month · with team controls' },
     cta: { 'zh-CN': '联系我们开通', en: 'Talk to us' },
+    inherit: { 'zh-CN': '含 Pro 全部，另加：', en: 'Everything in Pro, and:' },
     features: {
-      'zh-CN': ['每月 4,000 次 AI 辅助', '自有名单回收 20,000 份', '10 个席位与角色权限', '发票、PO、月结', '数据导出与品牌定制'],
-      en: ['4,000 AI credits a month', '20,000 responses a month', '10 seats with roles', 'Invoices, POs, monthly billing', 'Exports and branding'],
+      'zh-CN': ['每月 4,000 次 AI 辅助', '自有名单回收 20,000 份 / 月', '10 个席位与角色权限', '发票、PO、月结', '团队预算与品牌定制'],
+      en: ['4,000 AI credits a month', '20,000 responses a month', '10 seats with roles', 'Invoices, POs, monthly billing', 'Team budgets and branding'],
     },
   },
 ];
@@ -63,11 +75,15 @@ const PLANS = [
 const copy = {
   'zh-CN': {
     back: '返回', title: '与你的研究一起成长的套餐', intro: '按你一年做多少研究来选，不用先算清楚需要多少次。',
-    current: '当前套餐', monthly: '月付', yearly: '按年付 · 省 17%', note: '外部样本按研究单独报价，不含在订阅里。',
+    current: '当前套餐', monthly: '月付', yearly: '按年付 · 省 20%', perMonth: '每月', perYear: '每年，一次付清',
+    credits: 'AI 次数当月用不完，结转到下月，最多留一个月的量；加购的次数 12 个月内有效。',
+    note: '外部样本按研究单独报价，不含在订阅里。',
   },
   en: {
     back: 'Back', title: 'Plans that grow with your research', intro: 'Pick by how many studies you run a year, not by how many credits you think you need.',
-    current: 'Current plan', monthly: 'Monthly', yearly: 'Yearly · save 17%', note: 'External sample is quoted per study and is not part of the subscription.',
+    current: 'Current plan', monthly: 'Monthly', yearly: 'Yearly · save 20%', perMonth: 'per month', perYear: 'per year, billed once',
+    credits: 'Unused AI credits carry over to the next month, up to one month of allowance. Purchased credits stay valid for 12 months.',
+    note: 'External sample is quoted per study and is not part of the subscription.',
   },
 };
 
@@ -76,6 +92,7 @@ export default function BusinessPlans() {
   const { language } = useLanguage();
   const text = copy[language] || copy.en;
   const [current, setCurrent] = useState('free');
+  const [yearly, setYearly] = useState(false);
 
   useEffect(() => {
     fetchAiCredits().then((data) => {
@@ -97,38 +114,64 @@ export default function BusinessPlans() {
         <p className="pl-intro">{text.intro}</p>
 
         <div className="pl-toggle" role="tablist">
-          <span className="is-active">{text.monthly}</span>
-          <span>{text.yearly}</span>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={!yearly}
+            className={yearly ? '' : 'is-active'}
+            onClick={() => setYearly(false)}
+          >
+            {text.monthly}
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={yearly}
+            className={yearly ? 'is-active' : ''}
+            onClick={() => setYearly(true)}
+          >
+            {text.yearly}
+          </button>
         </div>
 
         <div className="pl-grid">
-          {PLANS.map((plan) => (
-            <article className={`pl-card${plan.id === 'pro' ? ' is-featured' : ''}`} key={plan.id}>
-              <header>
-                <strong>{plan.name}</strong>
-                <span>{plan.tagline[language] || plan.tagline.en}</span>
-              </header>
-              <p className="pl-price">
-                {plan.price[language] || plan.price.en}
-                <small>{plan.cycle[language] || plan.cycle.en}</small>
-              </p>
-              <button
-                type="button"
-                className={plan.id === 'pro' ? 'pl-cta is-primary' : 'pl-cta'}
-                disabled={plan.id === current}
-              >
-                {plan.id === current ? text.current : (plan.cta[language] || plan.cta.en)}
-              </button>
-              <ul>
-                {(plan.features[language] || plan.features.en).map((feature) => (
-                  <li key={feature}><Check size={14} aria-hidden="true" /> {feature}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
+          {PLANS.map((plan) => {
+            const price = yearly ? plan.yearly : plan.monthly;
+            return (
+              <article className={`pl-card${plan.featured ? ' is-featured' : ''}`} key={plan.id}>
+                <header>
+                  <div className="pl-card-name">
+                    <strong>{plan.name}</strong>
+                    {plan.featured ? <span className="pl-badge">{language === 'zh-CN' ? '推荐' : 'Recommended'}</span> : null}
+                  </div>
+                  <p>{plan.tagline[language] || plan.tagline.en}</p>
+                </header>
+                <p className="pl-price">
+                  ${price.toLocaleString('en-US')}
+                  <small>{price === 0 ? (plan.cycle[language] || plan.cycle.en) : (yearly ? text.perYear : text.perMonth)}</small>
+                </p>
+                <button
+                  type="button"
+                  className={plan.featured ? 'pl-cta is-primary' : 'pl-cta'}
+                  disabled={plan.id === current}
+                >
+                  {plan.id === current ? text.current : (plan.cta[language] || plan.cta.en)}
+                </button>
+                <p className="pl-inherit">{plan.inherit[language] || plan.inherit.en}</p>
+                <ul>
+                  {(plan.features[language] || plan.features.en).map((feature) => (
+                    <li key={feature}><Check size={14} aria-hidden="true" /> {feature}</li>
+                  ))}
+                </ul>
+              </article>
+            );
+          })}
         </div>
 
-        <p className="pl-note">{text.note}</p>
+        <footer className="pl-foot">
+          <p className="pl-credits">{text.credits}</p>
+          <p className="pl-note">{text.note}</p>
+        </footer>
       </section>
     </main>
   );

@@ -1,7 +1,11 @@
-/* Plan cards: four across on desktop, stacked on small screens. Same paper,
-   one type scale, the featured card marked by a border rather than a colour. */
+/* Plan cards: four across on desktop, stacked on small screens.
+   Palette only — the eight values in RULES §2. The page is white, the cards sit
+   on the pale sage the workspace chips use, and the recommended plan is the one
+   white card, edged in the accent lime.
 
-.pl-page { min-height: 100svh; background: #FAF9F5; color: #141413; }
+   Page title follows RULES §1.1: 56 / Newsreader / 500 / -.03em. */
+
+.pl-page { min-height: 100svh; background: #FFFFFF; color: #141413; }
 
 .pl-top { padding: 14px clamp(16px, 4vw, 40px); }
 
@@ -16,13 +20,13 @@
 .pl-shell { max-width: 1180px; margin: 0 auto; padding: clamp(12px, 3vw, 32px) clamp(16px, 4vw, 40px) 80px; }
 
 .pl-shell h1 {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
-  font-family: var(--font-reading);
-  font-size: 38px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.15;
+  font-family: 'Newsreader', 'Songti SC', 'STSong', 'SimSun', serif;
+  font-size: 56px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  line-height: 1.02;
   text-align: center;
 }
 
@@ -33,28 +37,39 @@
   border: 1px solid #E5E3DD; border-radius: 999px; background: #FFFFFF; padding: 3px;
 }
 
-.pl-toggle span { border-radius: 999px; color: #5F6862; font-size: 12px; padding: 6px 14px; }
-
-.pl-toggle span.is-active { background: #141413; color: #FFFFFF; }
-
-.pl-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: start; }
-
-.pl-card {
-  display: grid; gap: 12px; border: 1px solid #E5E3DD; border-radius: 12px;
-  background: #FFFFFF; padding: 20px;
+.pl-toggle button {
+  border: 0; border-radius: 999px; background: transparent;
+  color: #5F6862; cursor: pointer; font: 400 12px var(--font-sans); padding: 7px 16px;
 }
 
-.pl-card.is-featured { border-color: #141413; box-shadow: 0 10px 30px rgba(20, 20, 19, .08); }
+.pl-toggle button.is-active { background: #141413; color: #FFFFFF; }
 
-.pl-card header { display: grid; gap: 4px; }
+.pl-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
 
-.pl-card header strong { font-size: 16px; font-weight: 600; }
+.pl-card {
+  display: flex; flex-direction: column; gap: 12px;
+  border: 1px solid transparent; border-radius: 14px;
+  background: #F4F7F2; padding: 22px;
+}
 
-.pl-card header span { color: #5F6862; font-size: 12px; line-height: 1.5; min-height: 36px; }
+.pl-card.is-featured { border-color: #DEEF24; background: #FFFFFF; }
+
+.pl-card header { display: grid; gap: 6px; }
+
+.pl-card-name { display: flex; align-items: center; gap: 8px; min-height: 22px; }
+
+.pl-card-name strong { font-size: 16px; font-weight: 600; }
+
+.pl-card header p { margin: 0; color: #5F6862; font-size: 12px; line-height: 1.5; min-height: 36px; }
+
+.pl-badge {
+  border-radius: 999px; background: #DEEF24;
+  color: #141413; font-size: 11px; font-weight: 500; line-height: 1; padding: 4px 8px;
+}
 
 .pl-price { margin: 4px 0 0; font-family: var(--font-reading); font-size: 32px; font-weight: 600; letter-spacing: -.02em; }
 
-.pl-price small { display: block; margin-top: 2px; color: #8D948D; font-family: var(--font-sans); font-size: 11px; font-weight: 400; letter-spacing: 0; }
+.pl-price small { display: block; margin-top: 4px; color: #8D948D; font-family: var(--font-sans); font-size: 11px; font-weight: 400; letter-spacing: 0; }
 
 .pl-cta {
   min-height: 40px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF;
@@ -63,17 +78,26 @@
 
 .pl-cta:hover:not(:disabled) { border-color: #141413; }
 
-.pl-cta.is-primary { border-color: #DEEF24; background: #DEEF24; font-weight: 600; }
+.pl-cta.is-primary { border-color: #DEEF24; background: #DEEF24; color: #141413; font-weight: 600; }
 
-.pl-cta:disabled { opacity: .5; cursor: default; }
+.pl-cta.is-primary:hover:not(:disabled) { border-color: #C9DB10; background: #C9DB10; color: #141413; }
 
-.pl-card ul { display: grid; gap: 8px; margin: 6px 0 0; padding: 14px 0 0; border-top: 1px solid #E5E3DD; list-style: none; }
+.pl-cta:disabled { border-color: transparent; background: transparent; color: #8D948D; cursor: default; font-weight: 400; }
+
+.pl-inherit { margin: 2px 0 0; color: #8D948D; font-size: 11px; line-height: 1.5; }
+
+.pl-card ul { display: grid; gap: 8px; margin: 0; padding: 12px 0 0; border-top: 1px solid #E5E3DD; list-style: none; }
 
 .pl-card li { display: flex; align-items: flex-start; gap: 8px; color: #141413; font-size: 12px; line-height: 1.5; }
 
 .pl-card li svg { flex: 0 0 auto; margin-top: 2px; color: #5F6862; }
 
-.pl-note { margin: 24px 0 0; color: #8D948D; font-size: 11px; text-align: center; }
+.pl-foot { display: grid; gap: 6px; margin-top: 26px; }
+
+.pl-credits { margin: 0; color: #5F6862; font-size: 12px; text-align: center; }
+
+.pl-note { margin: 0; color: #8D948D; font-size: 11px; text-align: center; }
 
 @media (max-width: 1080px) { .pl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 620px) { .pl-grid { grid-template-columns: 1fr; } .pl-shell h1 { font-size: 22px; } }
+
+@media (max-width: 620px) { .pl-grid { grid-template-columns: 1fr; } .pl-shell h1 { font-size: 38px; } }
