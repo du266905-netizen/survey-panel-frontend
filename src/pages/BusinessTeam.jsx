@@ -15,6 +15,8 @@ import './BusinessTeam.css';
 const copy = {
   'zh-CN': {
     title: '团队设置', intro: '团队共享项目、余额与发票；成员看到的是同一份工作区。',
+    untitled: '未命名团队', teamNamePlaceholder: '输入团队名称',
+    emailFixed: '团队邮箱不可自行修改；如需变更，请邮件联系',
     back: '返回账户', current: '当前团队', teamInfo: '团队信息', teamName: '团队名称', teamEmail: '团队邮箱',
     update: '更新', saved: '已保存', logo: '团队标志', logoHint: '添加到问卷与结果页顶部，建议 600KB 以内的 PNG 或 SVG。',
     logoDrop: '把图片拖到这里，或点击选择', logoChange: '更换标志', logoNote: '标志只存在这台浏览器：还没有上传接口。',
@@ -27,6 +29,8 @@ const copy = {
   },
   en: {
     title: 'Team settings', intro: 'A team shares projects, balance and invoices; every member sees the same workspace.',
+    untitled: 'Unnamed team', teamNamePlaceholder: 'Enter a team name',
+    emailFixed: 'The team email cannot be changed here. To change it, email',
     back: 'Back to account', current: 'Current team', teamInfo: 'Team information', teamName: 'Team name', teamEmail: 'Team email',
     update: 'Update', saved: 'Saved', logo: 'Team logo', logoHint: 'Shown on questionnaires and result pages; PNG or SVG under 600KB.',
     logoDrop: 'Drop an image here, or click to choose', logoChange: 'Change logo', logoNote: 'The logo stays in this browser: there is no upload endpoint yet.',
@@ -53,7 +57,7 @@ export default function BusinessTeam() {
       return JSON.parse(window.localStorage.getItem(storageKey(teamId)) || '{}');
     } catch { return {}; }
   });
-  const [name, setName] = useState(stored.name || user?.displayName || '个人团队');
+  const [name, setName] = useState(stored.name || '');
   const [logo, setLogo] = useState(stored.logo || '');
   const [members, setMembers] = useState(stored.members || []);
   const [email, setEmail] = useState('');
@@ -134,7 +138,7 @@ export default function BusinessTeam() {
         <section className="bt-current">
           <span className="bt-current-icon">{logo ? <img src={logo} alt="" /> : <Users size={20} aria-hidden="true" />}</span>
           <div>
-            <strong>{name || '—'}</strong>
+            <strong>{name || text.untitled}</strong>
             <small>{user?.email || '—'}</small>
           </div>
           <em>{text.current}</em>
@@ -144,12 +148,17 @@ export default function BusinessTeam() {
           <h2>{text.teamInfo}</h2>
           <label className="bt-field">
             <span>{text.teamName}</span>
-            <input value={name} onChange={(event) => setName(event.target.value)} maxLength={80} />
+            <input value={name} placeholder={text.teamNamePlaceholder} onChange={(event) => setName(event.target.value)} maxLength={80} />
           </label>
           <label className="bt-field">
             <span>{text.teamEmail}</span>
             <input value={user?.email || ''} readOnly disabled />
           </label>
+          <p className="bt-hint">
+            {text.emailFixed}
+            {' '}
+            <a className="bt-link" href="mailto:support@guanyisearch.com">support@guanyisearch.com</a>
+          </p>
           <button type="button" className="bt-button" onClick={() => { setNote(text.saved); setError(''); }}>
             <Check size={15} aria-hidden="true" /> {text.update}
           </button>

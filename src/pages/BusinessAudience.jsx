@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, ChevronDown, ListChecks, Receipt, Rocket, Trash2, Users } from 'lucide-react';
-import { getBusinessProject } from '../api/realApi';
+import { getBusinessProject, updateBusinessAudience } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessQuestionnaireStudio.css';
 import './BusinessAudience.css';
@@ -14,8 +14,8 @@ import './BusinessAudience.css';
  * question — it decides who gets invited, how hard they are to find, and what
  * the fieldwork costs.
  *
- * The selection is held in this browser for now: the project record has no
- * targeting field yet, so nothing here is written to the server. */
+ * Targeting is stored with the project. The broader `filters` object preserves
+ * every editor condition while the named dimensions feed pricing and routing. */
 const GROUPS = [
   {
     id: 'demo',
@@ -93,7 +93,7 @@ const copy = {
     total: '合计',
     estimateNote: '示意价，按筛选条件与 {minutes} 分钟时长估算，正式报价以项目为准。',
     next: '下一步：问卷',
-    localOnly: '当前选择只保存在这台浏览器：项目还没有存放受众条件的字段。',
+    localOnly: '受众条件会随项目保存，换设备后仍可继续编辑。', save: '保存受众', saving: '保存中…', saveFailed: '受众条件未保存，请重试。',
     notSet: '未选择',
     briefTitle: '项目简报', briefEdit: '编辑简报', briefExpand: '展开全部', briefCollapse: '收起',
     briefGoal: '研究目标', briefAudience: '受众描述', briefFormat: '研究形式', briefLanguages: '语言',
@@ -121,7 +121,7 @@ const copy = {
     total: 'Total',
     estimateNote: 'Indicative only, based on filters and a {minutes}-minute interview; the project quote is the record.',
     next: 'Next: questionnaire',
-    localOnly: 'Kept in this browser only: the project record has no targeting field yet.',
+    localOnly: 'Audience criteria are saved with this project and stay available on another device.', save: 'Save audience', saving: 'Saving…', saveFailed: 'Audience criteria could not be saved. Try again.',
     notSet: 'Not set',
     briefTitle: 'Project brief', briefEdit: 'Edit brief', briefExpand: 'Show all', briefCollapse: 'Collapse',
     briefGoal: 'Research goal', briefAudience: 'Audience', briefFormat: 'Format', briefLanguages: 'Languages',
@@ -132,12 +132,6 @@ const copy = {
 
 const SIZES = [100, 500, 1000, 1500, 2000];
 
-const readSelection = (projectId) => {
-  try {
-    return JSON.parse(window.localStorage.getItem(`guanyisearch.business.targeting.${projectId}`) || '{}');
-  } catch { return {}; }
-};
-
 export default function BusinessAudience() {
   const { projectId } = useParams();
   const navigate = useNavigate();
@@ -147,21 +141,24 @@ export default function BusinessAudience() {
   const [project, setProject] = useState(null);
   const [openGroup, setOpenGroup] = useState('demo');
   const [openItem, setOpenItem] = useState('age');
-  const [selection, setSelection] = useState(() => readSelection(projectId));
+  const [selection, setSelection] = useState({});
   const [completes, setCompletes] = useState(1000);
   const [customSize, setCustomSize] = useState('');
   const [logic, setLogic] = useState('and');
   const [briefOpen, setBriefOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
 
   useEffect(() => {
-    getBusinessProject(projectId).then((response) => setProject(response.data.project)).catch(() => {});
+    getBusinessProject(projectId).then((response) => {
+      const next = response.data.project;
+      const targeting = next.targeting || {};
+      setProject(next);
+      setSelection(targeting.filters || {});
+      setCompletes(targeting.completes || 1000);
+      setLogic(String(targeting.joiner || 'AND').toLowerCase());
+    }).catch(() => {});
   }, [projectId]);
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(`guanyisearch.business.targeting.${projectId}`, JSON.stringify(selection));
-    } catch { /* private mode */ }
-  }, [projectId, selection]);
 
   const label = (value) => (typeof value === 'object' ? value[language] || value.en : value);
 
@@ -204,6 +201,22 @@ export default function BusinessAudience() {
   };
 
   const money = (value) => new Intl.NumberFormat(language, { style: 'currency', currency: 'USD' }).format(value);
+  const saveAudience = async () => {
+    setSaving(true);
+    setSaveError('');
+    try {
+      const targeting = {
+        age: selection.age || [], industry: selection.industry || [], urbanity: selection.urbanity || [],
+        joiner: logic.toUpperCase(), completes, filters: selection,
+      };
+      const response = await updateBusinessAudience(projectId, targeting);
+      setProject(response.data.project);
+    } catch {
+      setSaveError(text.saveFailed);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <main className="sq-page aud-page">
@@ -216,11 +229,16 @@ export default function BusinessAudience() {
           <span className="sq-status">{text.title}</span>
         </div>
         <div className="sq-top-actions">
+          <button type="button" className="sq-btn" disabled={saving} onClick={saveAudience}>
+            {saving ? text.saving : text.save}
+          </button>
           <button type="button" className="sq-btn is-primary" onClick={() => navigate(withLanguage(`/business/projects/${projectId}`, language))}>
             {text.next}
           </button>
         </div>
       </header>
+
+      {saveError ? <p className="sq-error" role="alert">{saveError}</p> : null}
 
       <div className="sq-shell">
         <nav className="sq-nav" aria-label={text.flow}>

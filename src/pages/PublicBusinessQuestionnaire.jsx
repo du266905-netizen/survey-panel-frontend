@@ -17,7 +17,7 @@ const COPY = {
   zh: {
     required: '必答', select: '请选择', other: '其他', submit: '提交', submitting: '正在提交…',
     thanksTitle: '已提交', thanksBody: '感谢您的时间，您的回答已经收到。',
-    endedTitle: '感谢参与', endedBody: '根据您刚才的回答，本次调查到此结束，不需要继续作答。',
+    endedTitle: '感谢参与', endedBody: '根据您刚才的回答，本次调查到此结束，不需要继续作答。', endedSubmit: '完成',
     consent: '提交即表示您同意隐私政策，并理解这份回答会提供给问卷发起方。', privacy: '隐私政策',
     verifyFailed: '人机验证加载失败。请刷新页面，或换一个浏览器再试。',
     verifyHint: '提交前需要完成一次人机验证。',
@@ -29,7 +29,7 @@ const COPY = {
   en: {
     required: 'Required', select: 'Select', other: 'Other', submit: 'Submit', submitting: 'Submitting…',
     thanksTitle: 'Submitted', thanksBody: 'Thank you — your response has been received.',
-    endedTitle: 'Thank you', endedBody: 'This survey ends here based on your answers.',
+    endedTitle: 'Thank you', endedBody: 'This survey ends here based on your answers.', endedSubmit: 'Finish',
     consent: 'By submitting you agree to the privacy policy and understand this response is shared with the survey creator.', privacy: 'Privacy policy',
     verifyFailed: 'The human check could not load. Refresh the page or try another browser.',
     verifyHint: 'A quick human check is required before submitting.',
@@ -228,6 +228,7 @@ export default function PublicBusinessQuestionnaire() {
   const [verifyFailed, setVerifyFailed] = useState(false);
   const [page, setPage] = useState(0);
   const [furthest, setFurthest] = useState(0);
+  const [screenedOut, setScreenedOut] = useState(false);
   const startedAtRef = useRef(Date.now());
 
   const zh = isChinese(questionnaire?.title) || isChinese(questionnaire?.coverDescription);
@@ -266,10 +267,10 @@ export default function PublicBusinessQuestionnaire() {
   const currentQuestions = pages[pageIndex] || [];
   const lastPage = pageIndex >= pages.length - 1;
 
-  const submit = async (event) => {
+  const submit = async (event, { allowTerminated = false } = {}) => {
     event.preventDefault();
-    if (submitting || !questionnaire || terminated) return;
-    const missing = visibleQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
+    if (submitting || !questionnaire || (terminated && !allowTerminated)) return;
+    const missing = terminated ? null : visibleQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
     if (missing) {
       const missingPage = pages.findIndex((group) => group.some((question) => question.id === missing.id));
       if (missingPage >= 0) setPage(missingPage);
@@ -298,6 +299,7 @@ export default function PublicBusinessQuestionnaire() {
         respondentKey,
         durationSeconds: Math.floor((Date.now() - startedAtRef.current) / 1000),
       });
+      setScreenedOut(response.data?.status === 'SCREENED_OUT');
       setMessage(response.data?.message || copy.thanksBody);
     } catch (caughtError) {
       setError(caughtError?.response?.data?.message || copy.submitFailed);
@@ -312,7 +314,7 @@ export default function PublicBusinessQuestionnaire() {
     return (
       <main className="pq-page">
         <Logo />
-        <section className="pq-done"><h1>{copy.thanksTitle}</h1><p>{message}</p></section>
+        <section className="pq-done"><h1>{screenedOut ? copy.endedTitle : copy.thanksTitle}</h1><p>{message}</p></section>
       </main>
     );
   }
@@ -320,7 +322,11 @@ export default function PublicBusinessQuestionnaire() {
     return (
       <main className="pq-page">
         <Logo />
-        <section className="pq-done"><h1>{copy.endedTitle}</h1><p>{copy.endedBody}</p></section>
+        <section className="pq-done">
+          <h1>{copy.endedTitle}</h1><p>{copy.endedBody}</p>
+          {verifyFailed ? <p className="pq-error">{copy.verifyFailed}</p> : <TurnstileWidget onVerify={(token) => { setTurnstileToken(token); setVerifyFailed(false); }} onExpire={() => setTurnstileToken('')} onError={() => { setVerifyFailed(true); setTurnstileToken(''); }} />}
+          <button type="button" className="pq-submit" disabled={!turnstileToken || submitting} onClick={(event) => submit(event, { allowTerminated: true })}>{submitting ? copy.submitting : copy.endedSubmit}</button>
+        </section>
       </main>
     );
   }

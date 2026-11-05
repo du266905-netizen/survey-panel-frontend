@@ -237,3 +237,5 @@
   .bt-invite-row { flex-direction: column; align-items: stretch; }
   .bt-button.is-primary { width: 100%; justify-content: center; }
 }
+
+.bt-link { color: #141413; text-decoration: underline; text-underline-offset: 3px; }

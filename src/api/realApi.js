@@ -214,6 +214,11 @@ export const updateBusinessProject = async (projectId, payload) => {
   return { data: response.data };
 };
 
+export const updateBusinessAudience = async (projectId, targeting) => {
+  const response = await apiClient.patch(`/api/business/projects/${projectId}/audience`, { targeting });
+  return { data: response.data };
+};
+
 export const deleteBusinessProject = async (projectId) => {
   await apiClient.delete(`/api/business/projects/${projectId}`);
 };

@@ -36,7 +36,7 @@ const TYPES = [
   ['DATE', '日期', 'Date'],
 ];
 const TYPE_LABEL = Object.fromEntries(TYPES.map(([value, zh, en]) => [value, { 'zh-CN': zh, en }]));
-const CHOICE_TYPES = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'RATING', 'RANKING', 'DROPDOWN'];
+const CHOICE_TYPES = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'RATING', 'RANKING', 'DROPDOWN', 'NPS'];
 const MATRIX_DEFAULT_COLUMNS = ['非常不同意', '不同意', '一般', '同意', '非常同意'];
 const LOGIC_TYPES = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'RATING'];
 const SAVE_SETTINGS = ['allowOther', 'maxSelections', 'randomizeChoices', 'scaleLowLabel', 'scaleHighLabel', 'matrixColumns'];
@@ -169,8 +169,8 @@ const copy = {
 };
 
 const uid = () => window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`;
-const emptySettings = () => ({ allowOther: false, maxSelections: null, randomizeChoices: false, scaleLowLabel: '', scaleHighLabel: '' });
 const defaultMatrixColumns = () => [...MATRIX_DEFAULT_COLUMNS];
+const emptySettings = () => ({ allowOther: false, maxSelections: null, randomizeChoices: false, scaleLowLabel: '', scaleHighLabel: '', matrixColumns: defaultMatrixColumns() });
 const npsChoices = () => ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 const defaultChoices = (type) => {
   if (type === 'RATING') return ['1', '2', '3', '4', '5'];
