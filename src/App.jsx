@@ -71,6 +71,7 @@ import BusinessCustomQuestionnaireRequest from './pages/BusinessCustomQuestionna
 import BusinessResearchSupportRequest from './pages/BusinessResearchSupportRequest';
 import BusinessAccount from './pages/BusinessAccount';
 import BusinessTeam from './pages/BusinessTeam';
+import BusinessInvite from './pages/BusinessInvite';
 import BusinessBilling from './pages/BusinessBilling';
 import BusinessInvoiceDetail from './pages/BusinessInvoiceDetail';
 import BusinessBankTransfer from './pages/BusinessBankTransfer';
@@ -222,6 +223,7 @@ export default function App() {
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessQuestionnaireResults /></BusinessRoute>} />
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
         <Route path="/business/team" element={<BusinessRoute><BusinessTeam /></BusinessRoute>} />
+        <Route path="/business/invite" element={<BusinessInvite />} />
         <Route path="/business/billing" element={<BusinessRoute><BusinessBilling /></BusinessRoute>} />
         <Route path="/business/billing/invoices/:id" element={<BusinessRoute><BusinessInvoiceDetail /></BusinessRoute>} />
         <Route path="/business/add-funds" element={<BusinessRoute><BusinessAddFunds /></BusinessRoute>} />

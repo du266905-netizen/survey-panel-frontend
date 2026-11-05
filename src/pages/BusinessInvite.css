@@ -1,0 +1,80 @@
+/* Landing page for an invitation link. One card, one decision. */
+
+.bi-page {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  background: #FAF9F5;
+  padding: 24px;
+}
+
+.bi-card {
+  display: grid;
+  width: min(100%, 460px);
+  gap: 14px;
+  border: 1px solid #E5E3DD;
+  border-radius: 14px;
+  background: #FFFFFF;
+  padding: clamp(24px, 5vw, 36px);
+}
+
+.bi-eyebrow {
+  margin: 0;
+  color: #8D948D;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.bi-card h1 { margin: 0; font-family: var(--font-reading); font-size: 32px; font-weight: 600; letter-spacing: -.02em; }
+
+.bi-team { display: flex; align-items: center; gap: 12px; border: 1px solid #E5E3DD; border-radius: 10px; background: #FAF9F5; padding: 12px 14px; }
+
+.bi-team-icon { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 10px; background: #FFFFFF; color: #5F6862; }
+
+.bi-team > div { display: grid; gap: 2px; min-width: 0; }
+
+.bi-team strong { font-size: 14px; font-weight: 600; }
+
+.bi-team small { color: #5F6862; font-size: 11px; }
+
+.bi-body { margin: 0; color: #5F6862; font-size: 14px; line-height: 1.7; }
+
+.bi-signed { margin: 0; color: #5F6862; font-size: 13px; }
+
+.bi-error { margin: 0; color: #B42318; font-size: 13px; }
+
+.bi-note { margin: 0; color: #5F6862; font-size: 12px; line-height: 1.6; }
+
+.bi-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font: 500 14px var(--font-sans);
+  padding: 0 18px;
+  text-decoration: none;
+}
+
+.bi-button:hover { border-color: #141413; }
+
+.bi-button.is-primary { border-color: #DEEF24; background: #DEEF24; font-weight: 600; }
+
+.bi-link {
+  width: max-content;
+  border: 0;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

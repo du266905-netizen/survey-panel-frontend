@@ -1,0 +1,113 @@
+import { useState } from 'react';
+import { ArrowRight, LogIn, Mail, UserPlus, Users } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../components/AuthContext';
+import { useLanguage, withLanguage } from '../components/LanguageContext';
+import './BusinessInvite.css';
+
+/* The page an invited person lands on.
+ *
+ * The link carries a token; the page shows which team it is for and what to do
+ * next. Accepting needs the team API (there is none yet), so the button either
+ * continues into the existing sign-up with the token attached, or — when the
+ * person is already signed in — says the invitation will be applied once the
+ * endpoint exists. Nothing here pretends the person has joined. */
+
+const copy = {
+  'zh-CN': {
+    eyebrow: '团队邀请', title: '加入团队', inviter: '邀请你加入',
+    body: '接受后，你会看到这个团队的项目、问卷和结果，和团队其他成员是同一份工作区。',
+    signedInAs: '当前登录邮箱', mismatch: '这个邀请发往另一个邮箱，请用该邮箱登录后再接受。',
+    accept: '接受邀请', signup: '注册并接受', login: '登录后接受', signout: '换一个账号',
+    pending: '接受接口还没接上：你的账号已就绪，邀请会在团队功能上线后自动生效。',
+    invalid: '这个邀请链接不完整或已失效。', back: '返回首页',
+  },
+  en: {
+    eyebrow: 'Team invitation', title: 'Join the team', inviter: 'invites you to join',
+    body: 'Once you accept, you see this team’s projects, questionnaires and results — the same workspace as everyone else in it.',
+    signedInAs: 'Signed in as', mismatch: 'This invitation was sent to a different address. Sign in with that one to accept.',
+    accept: 'Accept invitation', signup: 'Sign up and accept', login: 'Sign in and accept', signout: 'Use another account',
+    pending: 'There is no accept endpoint yet: your account is ready and the invitation will apply once team support lands.',
+    invalid: 'This invitation link is incomplete or expired.', back: 'Back to home',
+  },
+};
+
+export default function BusinessInvite() {
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+  const { language } = useLanguage();
+  const text = copy[language] || copy.en;
+
+  const token = params.get('token') || '';
+  const email = params.get('email') || '';
+  const team = params.get('team') || '';
+  const [note, setNote] = useState('');
+
+  const nextPath = `/business/invite?${new URLSearchParams({ token, email, team }).toString()}`;
+
+  if (!token) {
+    return (
+      <main className="bi-page">
+        <section className="bi-card">
+          <p className="bi-eyebrow">{text.eyebrow}</p>
+          <h1>{text.invalid}</h1>
+          <Link className="bi-button" to={withLanguage('/', language)}>{text.back}</Link>
+        </section>
+      </main>
+    );
+  }
+
+  return (
+    <main className="bi-page">
+      <section className="bi-card">
+        <p className="bi-eyebrow">{text.eyebrow}</p>
+        <h1>{text.title}</h1>
+
+        <div className="bi-team">
+          <span className="bi-team-icon"><Users size={20} aria-hidden="true" /></span>
+          <div>
+            <strong>{team || '—'}</strong>
+            <small>{text.inviter}{email ? ` · ${email}` : ''}</small>
+          </div>
+        </div>
+
+        <p className="bi-body">{text.body}</p>
+
+        {user ? (
+          <>
+            <p className="bi-signed">
+              {text.signedInAs} <strong>{user.email}</strong>
+            </p>
+            {email && user.email && email.toLowerCase() !== String(user.email).toLowerCase() ? (
+              <p className="bi-error">{text.mismatch}</p>
+            ) : null}
+            <button
+              type="button"
+              className="bi-button is-primary"
+              onClick={() => {
+                setNote(text.pending);
+              }}
+            >
+              <LogIn size={16} aria-hidden="true" /> {text.accept}
+            </button>
+            <button type="button" className="bi-link" onClick={() => logout()}>{text.signout}</button>
+            {note ? <p className="bi-note">{note}</p> : null}
+          </>
+        ) : (
+          <>
+            <Link
+              className="bi-button is-primary"
+              to={withLanguage(`/register?role=BUSINESS&invite=${encodeURIComponent(token)}&inviteEmail=${encodeURIComponent(email)}`, language)}
+            >
+              <UserPlus size={16} aria-hidden="true" /> {text.signup}
+            </Link>
+            <Link className="bi-button" to={withLanguage(`/login?next=${encodeURIComponent(nextPath)}`, language)}>
+              <Mail size={16} aria-hidden="true" /> {text.login} <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          </>
+        )}
+      </section>
+    </main>
+  );
+}
