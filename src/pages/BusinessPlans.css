@@ -1,9 +1,13 @@
 /* Plan cards: four across on desktop, stacked on small screens.
    Palette only — the eight values in RULES §2. The page is white, the cards sit
    on the pale sage the workspace chips use, and the recommended plan is the one
-   white card, edged in the accent lime.
+   white card. It is marked by the lime badge and the lime call to action alone;
+   the lime outline came off on 2026-11-06 at the user's request.
 
-   Page title follows RULES §1.1: 56 / Newsreader / 500 / -.03em. */
+   Page title: 38 / Source Serif 4 / 400. The user is trialling this on the live
+   site (2026-11-06) before deciding whether RULES §1.1 should record an
+   exception; page titles are otherwise 56 / Newsreader. Do not "fix" it back to
+   56, and do not bump the weight, without asking. */
 
 .pl-page { min-height: 100svh; background: #FFFFFF; color: #141413; }
 
@@ -17,20 +21,20 @@
 
 .pl-back:hover { border-color: #E5E3DD; background: #FFFFFF; }
 
-.pl-shell { max-width: 1180px; margin: 0 auto; padding: clamp(12px, 3vw, 32px) clamp(16px, 4vw, 40px) 80px; }
+.pl-shell { max-width: 1320px; margin: 0 auto; padding: clamp(12px, 3vw, 32px) clamp(16px, 4vw, 40px) 80px; }
 
 .pl-shell h1 {
   max-width: 760px;
   margin: 0 auto;
-  font-family: 'Newsreader', 'Songti SC', 'STSong', 'SimSun', serif;
-  font-size: 56px;
-  font-weight: 500;
-  letter-spacing: -.03em;
-  line-height: 1.02;
+  font-family: var(--font-reading);
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.2;
   text-align: center;
 }
 
-.pl-intro { max-width: 560px; margin: 12px auto 22px; color: #5F6862; font-size: 14px; line-height: 1.7; text-align: center; }
+.pl-intro { max-width: 560px; margin: 16px auto 24px; color: #5F6862; font-size: 14px; line-height: 1.7; text-align: center; }
 
 .pl-toggle {
   display: flex; width: max-content; margin: 0 auto 28px;
@@ -44,15 +48,15 @@
 
 .pl-toggle button.is-active { background: #141413; color: #FFFFFF; }
 
-.pl-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
+.pl-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
 
 .pl-card {
-  display: flex; flex-direction: column; gap: 12px;
-  border: 1px solid transparent; border-radius: 14px;
-  background: #F4F7F2; padding: 22px;
+  display: flex; flex-direction: column; gap: 14px;
+  border: 1px solid transparent; border-radius: 16px;
+  background: #F4F7F2; padding: 28px;
 }
 
-.pl-card.is-featured { border-color: #DEEF24; background: #FFFFFF; }
+.pl-card.is-featured { border-color: #E5E3DD; background: #FFFFFF; }
 
 .pl-card header { display: grid; gap: 6px; }
 
@@ -60,7 +64,7 @@
 
 .pl-card-name strong { font-size: 16px; font-weight: 600; }
 
-.pl-card header p { margin: 0; color: #5F6862; font-size: 12px; line-height: 1.5; min-height: 36px; }
+.pl-card header p { margin: 0; color: #5F6862; font-size: 13px; line-height: 1.5; min-height: 40px; }
 
 .pl-badge {
   border-radius: 999px; background: #DEEF24;
@@ -72,8 +76,8 @@
 .pl-price small { display: block; margin-top: 4px; color: #8D948D; font-family: var(--font-sans); font-size: 11px; font-weight: 400; letter-spacing: 0; }
 
 .pl-cta {
-  min-height: 40px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF;
-  color: #141413; cursor: pointer; font: 500 13px var(--font-sans);
+  min-height: 44px; border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF;
+  color: #141413; cursor: pointer; font: 500 14px var(--font-sans);
 }
 
 .pl-cta:hover:not(:disabled) { border-color: #141413; }
@@ -88,7 +92,7 @@
 
 .pl-card ul { display: grid; gap: 8px; margin: 0; padding: 12px 0 0; border-top: 1px solid #E5E3DD; list-style: none; }
 
-.pl-card li { display: flex; align-items: flex-start; gap: 8px; color: #141413; font-size: 12px; line-height: 1.5; }
+.pl-card li { display: flex; align-items: flex-start; gap: 8px; color: #141413; font-size: 13px; line-height: 1.5; }
 
 .pl-card li svg { flex: 0 0 auto; margin-top: 2px; color: #5F6862; }
 
@@ -100,4 +104,4 @@
 
 @media (max-width: 1080px) { .pl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-@media (max-width: 620px) { .pl-grid { grid-template-columns: 1fr; } .pl-shell h1 { font-size: 38px; } }
+@media (max-width: 620px) { .pl-grid { grid-template-columns: 1fr; } }
