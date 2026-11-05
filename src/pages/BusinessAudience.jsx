@@ -94,8 +94,7 @@ const copy = {
     estimateNote: '示意价，按筛选条件与 {minutes} 分钟时长估算，正式报价以项目为准。',
     next: '下一步：问卷',
     localOnly: '受众条件会随项目保存，换设备后仍可继续编辑。', save: '保存受众', saving: '保存中…', saveFailed: '受众条件未保存，请重试。',
-    notSet: '未选择', saveTargeting: '保存受众条件', savedTargeting: '已保存到项目',
-    lockedTargeting: '项目已送审，受众条件不能再改。', failedTargeting: '保存失败，请稍后再试。', localTargeting: '后端未上线，已存在本机。',
+    notSet: '未选择',
     briefTitle: '项目简报', briefEdit: '编辑简报', briefExpand: '展开全部', briefCollapse: '收起',
     briefGoal: '研究目标', briefAudience: '受众描述', briefFormat: '研究形式', briefLanguages: '语言',
     briefTiming: '时间要求', briefIncentive: '激励', briefContext: '补充说明',
@@ -123,8 +122,7 @@ const copy = {
     estimateNote: 'Indicative only, based on filters and a {minutes}-minute interview; the project quote is the record.',
     next: 'Next: questionnaire',
     localOnly: 'Audience criteria are saved with this project and stay available on another device.', save: 'Save audience', saving: 'Saving…', saveFailed: 'Audience criteria could not be saved. Try again.',
-    notSet: 'Not set', saveTargeting: 'Save audience', savedTargeting: 'Saved to the project',
-    lockedTargeting: 'The project is no longer a draft, so the audience is locked.', failedTargeting: 'Could not save. Try again.', localTargeting: 'Backend not live yet; kept in this browser.',
+    notSet: 'Not set',
     briefTitle: 'Project brief', briefEdit: 'Edit brief', briefExpand: 'Show all', briefCollapse: 'Collapse',
     briefGoal: 'Research goal', briefAudience: 'Audience', briefFormat: 'Format', briefLanguages: 'Languages',
     briefTiming: 'Timing', briefIncentive: 'Incentive', briefContext: 'Additional notes',
@@ -190,28 +188,6 @@ export default function BusinessAudience() {
   const minutes = project?.estimatedMinutes || 8;
   const perComplete = 1.1 + (1 / incidence) * 0.35 + minutes * 0.04;
   const total = completes * perComplete;
-
-  const saveTargeting = async () => {
-    setSaveState('');
-    const filters = Object.fromEntries(Object.entries(selection).filter(([key]) => !['age', 'industry', 'urbanity'].includes(key)));
-    const payload = {
-      age: selection.age || [],
-      industry: selection.industry || [],
-      urbanity: selection.urbanity || [],
-      joiner: logic === 'or' ? 'OR' : 'AND',
-      completes,
-      filters,
-    };
-    try {
-      await updateBusinessAudience(projectId, payload);
-      setSaveState('saved');
-    } catch (failure) {
-      const code = failure?.response?.data?.code;
-      if (code === 'BUSINESS_PROJECT_EDIT_LOCKED') setSaveState('locked');
-      else if (!failure?.response || failure.response.status === 404) setSaveState('local');
-      else setSaveState('failed');
-    }
-  };
 
   const toggleValue = (itemId, value) => {
     setSelection((current) => {
@@ -351,13 +327,6 @@ export default function BusinessAudience() {
             })}
           </div>
 
-          <div className="aud-save">
-            <button type="button" className="sq-btn is-primary" onClick={saveTargeting}>{text.saveTargeting}</button>
-            {saveState === 'saved' ? <span className="aud-save-ok">{text.savedTargeting}</span> : null}
-            {saveState === 'locked' ? <span className="aud-save-error">{text.lockedTargeting}</span> : null}
-            {saveState === 'local' ? <span className="aud-save-local">{text.localTargeting}</span> : null}
-            {saveState === 'failed' ? <span className="aud-save-error">{text.failedTargeting}</span> : null}
-          </div>
           <p className="aud-local">{text.localOnly}</p>
         </section>
 
