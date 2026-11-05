@@ -91,13 +91,13 @@ Disputes are first raised with us in good faith. If they are not resolved, they 
 
 **Entire agreement, severability, waiver.** These terms, the Acceptable Use Policy, the Research Terms, the Privacy Policy and any quotation are the entire agreement and replace earlier discussions. If a provision is unenforceable it is read down to the minimum extent needed and the rest stands. Not enforcing a provision once is not a waiver of it.
 
-**Notices.** Formal notices go to the address on your account and to heguanyi@guanyi-media.com, and are treated as received when delivered.
+**Notices.** Formal notices go to the address on your account and to support@guanyisearch.com, and are treated as received when delivered.
 
 ## 11. Changes and contact
 
 We may update these terms to reflect changes in the service, the law or our operations. Material changes are notified before they take effect through the service, by email or by another reasonable method; continuing to use the service after that date means accepting the updated terms.
 
-Questions about these terms, or requests to exercise a right under them: heguanyi@guanyi-media.com, with “Terms of Service” in the subject line.
+Questions about these terms, or requests to exercise a right under them: support@guanyisearch.com, with “Terms of Service” in the subject line.
 
 ---
 

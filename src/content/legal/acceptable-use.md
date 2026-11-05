@@ -85,7 +85,7 @@ A decision may be appealed by replying to the notice. We review and respond with
 
 ## 8. Contact and changes
 
-Questions, reports and requests for an exception: heguanyi@guanyi-media.com, with “Acceptable Use” in the subject line.
+Questions, reports and requests for an exception: support@guanyisearch.com, with “Acceptable Use” in the subject line.
 
 We may update this policy as the service, the law or research practice changes. Material changes are notified before they take effect through the service, by email or by another reasonable method. The updated version applies from its effective date.
 

@@ -108,7 +108,7 @@ Nothing here limits liability that law does not allow to be limited, or any righ
 
 We may update these terms as the service, research practice or the law changes. Material changes are notified through the workspace or by email before they take effect.
 
-For a study, write to heguanyi@guanyi-media.com with the project name or reference in the subject line.
+For a study, write to support@guanyisearch.com with the project name or reference in the subject line.
 
 ---
 
