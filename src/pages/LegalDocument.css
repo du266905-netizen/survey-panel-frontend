@@ -36,19 +36,20 @@
 
 .legal-doc-pdf {
   display: inline-flex;
-  height: 40px;
+  height: 44px;
   align-items: center;
   gap: 8px;
   flex: 0 0 auto;
   margin-top: 10px;
+  border-radius: 6px;
   background: #F5F3EE;
-  color: #141413;
+  color: #14161A;
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -.005em;
   line-height: 1;
-  padding: 0 16px;
+  padding: 0 18px;
   text-decoration: none;
   transition: background .14s ease;
   white-space: nowrap;
@@ -81,15 +82,10 @@
 
 .legal-doc-body { margin: 72px 0 0; }
 
-.legal-doc-section {
-  display: grid;
-  grid-template-columns: minmax(240px, 22%) minmax(0, 1fr);
-  gap: clamp(24px, 4vw, 72px);
-  margin: 0 0 64px;
-}
+.legal-doc-section { margin: 0 0 64px; }
 
 .legal-doc-section h2 {
-  margin: 0;
+  margin: 0 0 18px;
   font-family: var(--font-reading);
   font-size: 22px;
   font-weight: 600;
@@ -100,9 +96,11 @@
 
 .legal-doc-prose {
   font-family: var(--font-reading);
-  font-size: 16px;
-  line-height: 1.75;
-  color: #B9B5AC;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.55;
+  color: #C9C5BB;
 }
 
 .legal-doc-prose p { margin: 0 0 18px; }
