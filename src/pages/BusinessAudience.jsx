@@ -95,7 +95,9 @@ const copy = {
     next: '下一步：问卷',
     localOnly: '当前选择只保存在这台浏览器：项目还没有存放受众条件的字段。',
     notSet: '未选择',
-    briefTitle: '项目简报', briefEdit: '去改简报', briefGoal: '研究目标', briefAudience: '受众描述',
+    briefTitle: '项目简报', briefEdit: '编辑简报', briefExpand: '展开全部', briefCollapse: '收起',
+    briefGoal: '研究目标', briefAudience: '受众描述', briefFormat: '研究形式', briefLanguages: '语言',
+    briefTiming: '时间要求', briefIncentive: '激励', briefContext: '补充说明',
     briefMarket: '市场', briefParticipants: '目标人数', briefPeople: '{n} 人', briefMinutes: '单份时长', briefMin: '{n} 分钟',
   },
   en: {
@@ -121,7 +123,9 @@ const copy = {
     next: 'Next: questionnaire',
     localOnly: 'Kept in this browser only: the project record has no targeting field yet.',
     notSet: 'Not set',
-    briefTitle: 'Project brief', briefEdit: 'Edit brief', briefGoal: 'Research goal', briefAudience: 'Audience',
+    briefTitle: 'Project brief', briefEdit: 'Edit brief', briefExpand: 'Show all', briefCollapse: 'Collapse',
+    briefGoal: 'Research goal', briefAudience: 'Audience', briefFormat: 'Format', briefLanguages: 'Languages',
+    briefTiming: 'Timing', briefIncentive: 'Incentive', briefContext: 'Additional notes',
     briefMarket: 'Market', briefParticipants: 'Target completes', briefPeople: '{n}', briefMinutes: 'Length', briefMin: '{n} min',
   },
 };
@@ -147,6 +151,7 @@ export default function BusinessAudience() {
   const [completes, setCompletes] = useState(1000);
   const [customSize, setCustomSize] = useState('');
   const [logic, setLogic] = useState('and');
+  const [briefOpen, setBriefOpen] = useState(false);
 
   useEffect(() => {
     getBusinessProject(projectId).then((response) => setProject(response.data.project)).catch(() => {});
@@ -159,6 +164,20 @@ export default function BusinessAudience() {
   }, [projectId, selection]);
 
   const label = (value) => (typeof value === 'object' ? value[language] || value.en : value);
+
+  const formatLabel = (format) => ({
+    SURVEY: language === 'zh-CN' ? '在线问卷' : 'Online survey',
+    INTERVIEW: language === 'zh-CN' ? '深访' : 'Interview',
+    GROUP_DISCUSSION: language === 'zh-CN' ? '座谈会' : 'Group discussion',
+    USABILITY_TEST: language === 'zh-CN' ? '可用性测试' : 'Usability test',
+    OTHER: language === 'zh-CN' ? '其他' : 'Other',
+  }[format] || format || '—');
+
+  const incentiveLabel = (value) => ({
+    CONFIRMED: language === 'zh-CN' ? '已确定' : 'Confirmed',
+    NEED_GUIDANCE: language === 'zh-CN' ? '需要建议' : 'Needs guidance',
+    NOT_APPLICABLE: language === 'zh-CN' ? '不适用' : 'Not applicable',
+  }[value] || value || '—');
   const chosen = useMemo(() => Object.entries(selection).flatMap(([itemId, values]) => (
     GROUPS.flatMap((group) => group.items)
       .filter((item) => item.id === itemId)
@@ -218,20 +237,34 @@ export default function BusinessAudience() {
             <section className="aud-brief">
               <header>
                 <strong>{text.briefTitle}</strong>
-                <button
-                  type="button"
-                  className="aud-brief-edit"
-                  onClick={() => navigate(withLanguage(`/business/workspace?view=projects`, language))}
-                >
-                  {text.briefEdit}
-                </button>
+                <div className="aud-brief-actions">
+                  <button type="button" className="aud-brief-edit" onClick={() => setBriefOpen((open) => !open)}>
+                    {briefOpen ? text.briefCollapse : text.briefExpand}
+                  </button>
+                  <button
+                    type="button"
+                    className="aud-brief-edit"
+                    onClick={() => navigate(withLanguage(`/business/workspace?view=projects&brief=${projectId}`, language))}
+                  >
+                    {text.briefEdit}
+                  </button>
+                </div>
               </header>
               <dl>
                 <div><dt>{text.briefGoal}</dt><dd>{project.researchGoal || '—'}</dd></div>
                 <div><dt>{text.briefAudience}</dt><dd>{project.audienceDescription || '—'}</dd></div>
-                <div><dt>{text.briefMarket}</dt><dd>{project.countries || '—'}</dd></div>
-                <div><dt>{text.briefParticipants}</dt><dd>{project.targetParticipants ? text.briefPeople.replace('{n}', project.targetParticipants) : '—'}</dd></div>
-                <div><dt>{text.briefMinutes}</dt><dd>{project.estimatedMinutes ? text.briefMin.replace('{n}', project.estimatedMinutes) : '—'}</dd></div>
+                {briefOpen ? (
+                  <>
+                    <div><dt>{text.briefFormat}</dt><dd>{formatLabel(project.studyFormat)}</dd></div>
+                    <div><dt>{text.briefMarket}</dt><dd>{project.countries || '—'}</dd></div>
+                    <div><dt>{text.briefLanguages}</dt><dd>{project.languages || '—'}</dd></div>
+                    <div><dt>{text.briefParticipants}</dt><dd>{project.targetParticipants ? text.briefPeople.replace('{n}', project.targetParticipants) : '—'}</dd></div>
+                    <div><dt>{text.briefMinutes}</dt><dd>{project.estimatedMinutes ? text.briefMin.replace('{n}', project.estimatedMinutes) : '—'}</dd></div>
+                    <div><dt>{text.briefTiming}</dt><dd>{project.timeline || '—'}</dd></div>
+                    <div><dt>{text.briefIncentive}</dt><dd>{incentiveLabel(project.incentiveBudget)}</dd></div>
+                    <div><dt>{text.briefContext}</dt><dd>{project.additionalContext || '—'}</dd></div>
+                  </>
+                ) : null}
               </dl>
             </section>
           ) : null}

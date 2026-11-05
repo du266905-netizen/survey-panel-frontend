@@ -371,6 +371,11 @@ export default function BusinessWorkspace() {
         const quoteId = new URLSearchParams(location.search).get('quote');
         const matchingProject = quoteId ? (response.data.projects || []).find((project) => project.latestQuote?.id === quoteId && project.latestQuote?.status === 'SENT') : null;
         if (matchingProject) setQuoteProject(matchingProject);
+        // ?brief=<projectId> opens that project's brief, so the editor and the
+        // audience step can link to the real dialog instead of the list.
+        const briefId = new URLSearchParams(location.search).get('brief');
+        const briefTarget = briefId ? (response.data.projects || []).find((project) => project.id === briefId) : null;
+        if (briefTarget) setBriefProject(briefTarget);
       })
       .catch(() => {
         if (active) setMessage(feedbackCopy.loadProjects);

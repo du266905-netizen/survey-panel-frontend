@@ -276,3 +276,5 @@
 .aud-brief dt { color: #8D948D; font-size: 11px; line-height: 1.6; }
 
 .aud-brief dd { margin: 0; color: #141413; font-size: 13px; line-height: 1.6; }
+
+.aud-brief-actions { display: flex; align-items: center; gap: 14px; }
