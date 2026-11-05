@@ -290,3 +290,35 @@
 }
 
 .pq-back:hover { border-color: #141413; }
+
+/* ---- the question map: one chip per question, under the form ---- */
+
+.pq-map {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+  border-top: 1px solid #E5E3DD;
+  padding-top: 18px;
+}
+
+.pq-map button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid #E5E3DD;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 11px var(--font-sans);
+}
+
+.pq-map button:hover:not(:disabled) { border-color: #141413; color: #141413; }
+
+.pq-map button.is-done { border-color: #8D948D; color: #141413; }
+
+.pq-map button.is-current { border-color: #141413; background: #141413; color: #FFFFFF; }
+
+.pq-map button:disabled { opacity: .35; cursor: not-allowed; }
