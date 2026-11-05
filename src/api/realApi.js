@@ -934,6 +934,22 @@ export const createPaymentLink = async ({ amountCents, currency, purpose, expire
   return response.data;
 };
 
+/* --- Subscribing to a plan ------------------------------------------------
+ * Deducts from the account ledger and writes the subscription. Contract:
+ * docs/接口-套餐订阅.md. The price is never sent by the browser — the server
+ * looks it up from `plan` + `cycle` and compares it with amountCents only to
+ * refuse a stale tab.
+ */
+
+export const subscribePlan = async ({ plan, cycle, method, amountCents, currency }, idempotencyKey) => {
+  const response = await apiClient.post(
+    '/api/business/plans/subscribe',
+    { plan, cycle, method, amountCents, currency },
+    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
+  );
+  return response.data;
+};
+
 export const getPublicPaymentLink = async (token) => {
   const response = await apiClient.get(`/api/payment-links/${encodeURIComponent(token)}`);
   return response.data;

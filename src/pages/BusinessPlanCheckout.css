@@ -1,9 +1,9 @@
 /* The plan checkout borrows the add-funds sheet class for class. Only what the
  * modal needed to be a modal is undone here, plus three new pieces: the
- * two-cycle tile row, the save badge, and the note under the action.
+ * two-cycle tile row, the save badge, and the sticky order column.
  *
  * Palette: RULES §2 only. The badge is the one accent lime, as on the plans
- * page, and it is the only lime on this screen besides nothing. */
+ * page. */
 
 .business-topup-screen.is-page {
   padding: clamp(16px, 3vw, 40px) clamp(16px, 3vw, 40px) 72px;
@@ -12,11 +12,10 @@
 .business-topup-screen.is-page .business-topup-card {
   margin: 0 auto;
   max-height: none;
+  overflow: visible;
   border: 1px solid #E5E3DD;
   box-shadow: none;
 }
-
-.business-topup-screen.is-page .business-topup-card { overflow: visible; }
 
 .business-topup-screen.is-page .business-topup-main {
   overflow: visible;
@@ -24,13 +23,19 @@
   -webkit-mask-image: none;
 }
 
-/* The order column rides along: the billing form is long, and an action that
-   scrolls out of reach is an action the payer never sees. */
-.business-topup-screen.is-page .business-topup-summary {
+/* The order column keeps its full height — its hairline runs the length of the
+   card, not to wherever the text stops — while its contents ride along, so the
+   action survives a billing form longer than the viewport. */
+.business-topup-screen.is-page .business-topup-summary { overflow: visible; }
+
+.business-topup-screen.is-page .pco-summary-inner {
   position: sticky;
   top: 24px;
-  align-self: start;
-  max-height: calc(100svh - 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-height: calc(100svh - 72px);
+  overflow-y: auto;
 }
 
 /* Two cycles, not four amounts: same tiles, two columns. */
@@ -61,16 +66,14 @@
   padding: 4px 8px;
 }
 
-/* Nothing to charge yet, so the action is not painted as one: a pale lime
-   button reads as a hover, not as "this cannot be pressed".
-   The !important matches `.business-workspace .business-button`, which paints
-   every business button lime with !important; without it the disabled state
-   loses the cascade, not the argument. */
+/* Busy, not unavailable: the action stays lime while it works, and only the
+   working copy changes. The !important matches `.business-workspace
+   .business-button`, which paints every business button lime with !important. */
 .business-topup-screen.is-page .business-topup-cta:disabled {
   border: 1px solid #E5E3DD !important;
   background: #F4F7F2 !important;
   color: #8D948D !important;
-  cursor: not-allowed;
+  cursor: progress;
   opacity: 1;
 }
 
@@ -83,15 +86,9 @@
 
 .pco-short { color: #B42318; }
 
-.pco-note {
-  margin: 0;
-  color: #8D948D;
-  font-size: 11px;
-  line-height: 1.5;
-}
-
 @media (max-width: 760px) {
   .business-topup-screen.is-page { padding: 12px 12px 48px; }
   .business-topup-screen.is-page .business-topup-card { border: 0; }
+  .business-topup-screen.is-page .pco-summary-inner { position: static; max-height: none; }
   .pco-cycles { grid-template-columns: 1fr; }
 }
