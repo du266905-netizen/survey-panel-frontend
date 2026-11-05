@@ -53,6 +53,7 @@ import PageMotion from './components/PageMotion';
 import PublicSiteLayout from './components/PublicSiteLayout';
 import Terms from './pages/Terms';
 import LegalDocument from './pages/LegalDocument';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import TrafficConsole from './pages/TrafficConsole';
 import Wallet from './pages/Wallet';
 import WorkerDetail from './pages/WorkerDetail';
@@ -247,9 +248,9 @@ export default function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/business/forgot-password" element={<ForgotPassword />} />
         <Route path="/business/reset-password" element={<ResetPassword />} />
-        <Route path="/privacy" element={<PublicPage><Privacy /></PublicPage>} />
+        <Route path="/privacy" element={<PublicPage><PrivacyPolicy /></PublicPage>} />
         <Route path="/terms" element={<PublicPage><LegalDocument slug="terms-of-service" /></PublicPage>} />
-        <Route path="/legal/acceptable-use" element={<PublicPage><LegalDocument slug="acceptable-use" /></PublicPage>} />
+        <Route path="/legal/acceptable-use" element={<Navigate to="/privacy" replace />} />
         <Route path="/email/unsubscribe" element={<MarketingUnsubscribe />} />
         <Route path="/business/terms" element={<PublicPage><LegalDocument slug="research-terms" /></PublicPage>} />
         <Route path="/about" element={<PublicPage><About /></PublicPage>} />

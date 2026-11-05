@@ -98,6 +98,134 @@ export const legalDocs = {
       ]
     }
   },
+  "privacy": {
+    "en": {
+      "title": "Privacy Policy",
+      "date": "Effective 1 September 2026",
+      "pdf": "/legal/guanyisearch-privacy-2026-09-en.pdf",
+      "lead": "<p>This policy explains how guanyisearch uses information from panel participants, account holders and people who contact us about research services, and what you can ask us to do with it.</p>",
+      "sections": [
+        {
+          "id": "scope-and-controller",
+          "title": "1. Scope and controller",
+          "html": "<p>This Privacy Policy applies to people who register for or use the guanyisearch research panel, use a client workspace, answer a client questionnaire, or contact us about research services. guanyisearch is the data controller for the personal information described here, except where a client-created questionnaire makes that client responsible for the research purpose and use of the responses.</p>\n<p>For privacy questions or requests, contact support@guanyisearch.com.</p>"
+        },
+        {
+          "id": "information-we-collect",
+          "title": "2. Information we collect",
+          "html": "<p>We collect information needed to provide accounts, support participation and research services, administer rewards, communicate with you, and protect the service.</p>\n<ul><li><strong>Account information.</strong> Email address, display name, password, account role and session information. Passwords are stored in a protected form and are not displayed to our team.</li><li><strong>Participation and profile information.</strong> What you choose to provide for panel participation: country or region, birth year, gender, education, employment, household information, survey participation, eligibility and completion records.</li><li><strong>Research contact information.</strong> When you contact us about research services, the name, email address, organisation type, region and the information you include about your research needs.</li><li><strong>Questionnaire information.</strong> For client-created questionnaires: the questionnaire title, purpose notice, questions, responses, response timing, and limited browser or network-derived information used to protect the response process.</li><li><strong>Technical and support information.</strong> IP address, browser and device information, approximate location derived from network information, support messages, and what is needed to protect the service and respond to requests.</li></ul>"
+        },
+        {
+          "id": "client-questionnaires-and-responses",
+          "title": "3. Client questionnaires and responses",
+          "html": "<p>When you answer a questionnaire created in a client workspace, the client is generally responsible for deciding why responses are collected and how they are used. The questionnaire identifies the client or states that it is a third-party client, and presents a purpose notice before you respond.</p>\n<p>We provide the technical service for hosting, securing and delivering the questionnaire. We make the submitted response available to that questionnaire's creator and process it to operate the service, prevent misuse and meet applicable obligations. We do not use a client's response data for unrelated purposes without an appropriate legal basis or notice.</p>"
+        },
+        {
+          "id": "how-we-use-information",
+          "title": "4. How we use information",
+          "html": "<ul><li>create, authenticate and support accounts and workspaces;</li><li>match panel participants with suitable research opportunities, and administer participation and rewards;</li><li>respond to research enquiries and provide requested research-related services;</li><li>send service-related communications, and respond to support or privacy requests;</li><li>protect the service, detect misuse and meet applicable legal obligations.</li></ul>\n<p>We process information to provide requested services, meet applicable obligations, protect the integrity of the service and, where required, on the basis of your consent.</p>"
+        },
+        {
+          "id": "sharing-by-category",
+          "title": "5. Sharing by category",
+          "html": "<p>We do not publish personal information. Where needed for the stated purpose, we share limited information with three categories of recipient:</p>\n<ul><li><strong>Questionnaire creators.</strong> Responses to a client-created questionnaire are shared with its creator for the stated research purpose.</li><li><strong>Research partners and service providers.</strong> Information necessary to provide a requested research service, support a research opportunity, or operate service features.</li><li><strong>Security and communications providers.</strong> Technical or contact information needed to keep accounts and response collection safe, and to send service-related messages.</li></ul>\n<p>We may also disclose information where the law requires it, to protect rights and safety, or as part of a legitimate business transfer.</p>"
+        },
+        {
+          "id": "ai-assisted-support",
+          "title": "6. AI-assisted support",
+          "html": "<p>When you use the website support assistant, the messages you send are processed to provide a support response. The assistant draws on published service information and is not a substitute for a person reviewing an individual account, reward, survey or privacy request.</p>\n<p>Do not include passwords, verification codes, payment-card details, government identifiers or full financial details in the chat. If you ask to speak to a person, the conversation and the contact details you provide are stored as a private support request.</p>"
+        },
+        {
+          "id": "data-retention",
+          "title": "7. Data retention",
+          "html": "<p>Account and participation information is generally retained for the life of your account. Research-contact and workspace information is retained as long as needed to provide the requested services and keep appropriate records. Client questionnaire responses are retained according to the applicable client relationship, the questionnaire settings and applicable requirements.</p>\n<p>We may retain limited information for longer where necessary for legal obligations, resolving disputes, protecting the service or maintaining reward records.</p>"
+        },
+        {
+          "id": "your-privacy-rights",
+          "title": "8. Your privacy rights",
+          "html": "<p>Depending on where you live, you may have the right to request access to your information, correction of inaccurate information, deletion, withdrawal of consent, and a portable copy of the information you provided to us.</p>\n<p>To exercise a right, email support@guanyisearch.com with the subject line “Privacy Request”. We may ask for what is necessary to verify the request and will respond as applicable law requires.</p>"
+        },
+        {
+          "id": "california-notice",
+          "title": "9. California notice",
+          "html": "<p>For California residents, certain uses of IP addresses, device identifiers and related technical information may be considered “sharing” under California privacy law. You may ask us to opt you out of applicable sharing by emailing support@guanyisearch.com with the subject line “California Privacy Request”.</p>\n<p>guanyisearch does not knowingly sell or share the personal information of California residents under 16 years of age.</p>"
+        },
+        {
+          "id": "cookies-and-similar-technology",
+          "title": "10. Cookies and similar technology",
+          "html": "<p>Necessary browser storage and security-verification technology protect registration, maintain authenticated access and keep the service working; they cannot be disabled without affecting core features.</p>\n<p>Your cookie preference is recorded in your browser. Optional analytics and personalised advertising remain off until you choose them. When we add an optional measurement or advertising service, we enable it only after the matching preference has been selected, and update this policy before using it.</p>"
+        },
+        {
+          "id": "security-and-contact",
+          "title": "11. Security and contact",
+          "html": "<p>We use encryption in transit, access controls and other technical and organisational measures designed to protect personal information. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.</p>\n<p>For questions about this policy, contact support@guanyisearch.com.</p>"
+        }
+      ]
+    },
+    "zh": {
+      "title": "隐私政策",
+      "date": "生效日期：2026 年 9 月 1 日",
+      "pdf": "/legal/guanyisearch-privacy-2026-09-en.pdf",
+      "lead": "<p>本政策说明关尼搜索如何使用社群成员、账户持有人及研究服务联系人的信息，以及你可以要求我们做什么。</p>",
+      "sections": [
+        {
+          "id": "",
+          "title": "一、适用范围与数据控制者",
+          "html": "<p>本隐私政策适用于注册或使用关尼搜索研究社群、使用客户工作区、回答客户问卷，或因研究服务联系我们的人员。除非客户创建的问卷使该客户负责研究目的和回答使用方式，否则关尼搜索是本政策所述个人信息的数据控制者。</p>\n<p>如有隐私问题或请求，请联系 support@guanyisearch.com。</p>"
+        },
+        {
+          "id": "",
+          "title": "二、我们收集的信息",
+          "html": "<p>我们收集提供账户、支持参与和研究服务、管理奖励、与你沟通及保护服务所需的信息。</p>\n<ul><li><strong>账户信息。</strong> 电子邮箱、显示名称、密码、账户角色和会话信息。密码以受保护的形式存储，不向团队显示。</li><li><strong>参与与资料信息。</strong> 你为参与社群自愿提供的内容：国家或地区、出生年份、性别、教育、就业、家庭信息、调研参与、资格与完成记录。</li><li><strong>研究联系信息。</strong> 因研究服务联系我们时的姓名、邮箱、组织类型、地区，以及你在需求中提供的信息。</li><li><strong>问卷信息。</strong> 客户创建的问卷：问卷标题、目的说明、问题、回答、作答时间，以及用于保护作答流程的有限浏览器或网络衍生信息。</li><li><strong>技术与支持信息。</strong> IP 地址、浏览器与设备信息、由网络信息推断的大致位置、支持消息，以及保护服务和回应请求所需的信息。</li></ul>"
+        },
+        {
+          "id": "",
+          "title": "三、客户问卷与回答",
+          "html": "<p>当你在客户工作区创建的问卷中作答时，通常由该客户决定收集回答的目的与使用方式。问卷会在作答前标明客户身份或说明其为第三方客户，并展示目的说明。</p>\n<p>我们提供问卷托管、保护与交付的技术服务；提交的回答会提供给该问卷的创建者，并仅为运营服务、防止滥用和履行适用义务而处理。未经适当法律依据或告知，我们不会将客户回答数据用于无关目的。</p>"
+        },
+        {
+          "id": "",
+          "title": "四、我们如何使用信息",
+          "html": "<ul><li>创建、验证及支持账户与工作区；</li><li>为社群成员匹配适合的研究机会，管理参与与奖励；</li><li>回应研究咨询，提供所请求的研究服务；</li><li>发送服务相关沟通，回应支持或隐私请求；</li><li>保护服务、发现滥用并履行适用法律义务。</li></ul>\n<p>我们为提供所请求的服务、履行适用义务、维护服务完整性，以及在必要时基于你的同意处理信息。</p>"
+        },
+        {
+          "id": "",
+          "title": "五、信息共享类别",
+          "html": "<p>我们不会公开个人信息。为实现所述目的，我们会与三类接收方共享有限信息：</p>\n<ul><li><strong>问卷创建者。</strong> 客户创建问卷的回答，按所述研究目的提供给该创建者。</li><li><strong>研究合作伙伴与服务提供方。</strong> 提供服务、支持研究机会或运行服务功能所必需的信息。</li><li><strong>安全与通信服务提供方。</strong> 保障账户与作答安全、发送服务信息所需的技术或联系信息。</li></ul>\n<p>在法律要求、保护权利与安全，或合法业务转让的情况下，我们也可能披露信息。</p>"
+        },
+        {
+          "id": "ai",
+          "title": "六、AI 辅助支持",
+          "html": "<p>当你使用网站支持助手时，你发送的消息会被处理以生成支持回复。该助手依据公开的服务信息作答，不能替代人工审核个人账户、奖励、问卷或隐私请求。</p>\n<p>请勿在对话中发送密码、验证码、支付卡资料、政府身份标识或完整金融资料。若你要求人工协助，相关对话与你提供的联系方式会作为私密支持请求保存。</p>"
+        },
+        {
+          "id": "",
+          "title": "七、数据保留",
+          "html": "<p>账户与参与信息通常在账户存续期间保留。研究联系与工作区信息在提供服务与保留必要记录所需期间保留。客户问卷回答依据适用的客户关系、问卷设置与适用要求保留。</p>\n<p>为履行法律义务、解决争议、保护服务或维护奖励记录，我们可能在必要范围内更长时间保留有限信息。</p>"
+        },
+        {
+          "id": "",
+          "title": "八、你的隐私权利",
+          "html": "<p>依据你所在地区，你可能有权请求访问个人信息、更正不准确的信息、删除信息、撤回同意，以及取得你提供信息的可携副本。</p>\n<p>行使权利请发送邮件至 support@guanyisearch.com，主题写明「Privacy Request」。我们可能要求必要信息以核验请求，并按适用法律回应。</p>"
+        },
+        {
+          "id": "",
+          "title": "九、加州隐私说明",
+          "html": "<p>对于加利福尼亚州居民，IP 地址、设备标识符及相关技术信息的某些使用，在加州隐私法下可能构成「共享」。你可发送主题为「California Privacy Request」的邮件至 support@guanyisearch.com，请求退出适用共享。</p>\n<p>关尼搜索不会在知情情况下出售或共享 16 岁以下加州居民的个人信息。</p>"
+        },
+        {
+          "id": "cookie",
+          "title": "十、Cookie 与类似技术",
+          "html": "<p>必要的浏览器存储与安全验证技术用于保护注册、维持已登录状态并保证服务运行；关闭它们会影响核心功能。</p>\n<p>你对 Cookie 的选择记录在浏览器中。可选的分析与个性化广告在你选择之前保持关闭。当我们引入可选的分析或广告服务时，只会在对应选择生效后启用，并在使用前更新本政策。</p>"
+        },
+        {
+          "id": "",
+          "title": "十一、安全与联系",
+          "html": "<p>我们使用传输加密、访问控制及其他技术与组织措施保护个人信息。任何传输或存储方式都无法做到绝对安全，因此我们无法保证绝对安全。</p>\n<p>如对本政策有疑问，请联系 support@guanyisearch.com。</p>"
+        }
+      ]
+    }
+  },
   "research-terms": {
     "en": {
       "title": "Research Terms",

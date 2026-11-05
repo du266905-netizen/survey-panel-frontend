@@ -8,14 +8,14 @@ import './LegalDocument.css';
  * in the same place the cookie preference link puts the cookie policy. */
 const LABEL = { zh: '下载 PDF', en: 'Download PDF' };
 
-export default function LegalDocument({ slug }) {
+export default function LegalDocument({ slug, part = false }) {
   const { language } = useLanguage();
   const lang = String(language || '').startsWith('zh') ? 'zh' : 'en';
   const doc = legalDocs[slug]?.[lang] || legalDocs[slug]?.en;
   if (!doc) return null;
 
   return (
-    <main className="legal-doc">
+    <main className={`legal-doc${part ? ' is-part' : ''}`}>
       <article className="legal-doc-inner">
         <header className="legal-doc-head">
           <h1>{doc.title}</h1>

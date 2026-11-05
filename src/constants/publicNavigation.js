@@ -83,7 +83,6 @@ export const publicNavigation = [
       { to: '/privacy', title: 'Privacy', note: 'How we handle your information' },
       { to: '/terms', title: 'Terms', note: 'Participation terms' },
       { to: '/business/terms', title: 'Researcher terms', note: 'Terms for organisations and researchers' },
-      { to: '/legal/acceptable-use', title: 'Acceptable use', note: 'What may and may not be done on the platform' },
     ],
   },
 ];
