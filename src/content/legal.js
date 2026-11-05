@@ -57,7 +57,7 @@ export const legalDocs = {
       {
         "id": "scope-and-acceptance",
         "title": "1. Scope and acceptance",
-        "html": "<p>“You” means the organisation or researcher using the workspace (the Client); “we” and “us” mean Guanyi Media. Opening a workspace, submitting a brief, accepting a quotation or publishing a questionnaire means you accept these terms.</p>\n<p>You confirm that you are authorised to act for the Client and are responsible for what workspace members do. A written project agreement may add to these terms, but may not fall below the participant protections in section 7.</p>"
+        "html": "<p>“You” means the organisation or researcher using the workspace (the Client); “we” and “us” mean guanyisearch. Opening a workspace, submitting a brief, accepting a quotation or publishing a questionnaire means you accept these terms.</p>\n<p>You confirm that you are authorised to act for the Client and are responsible for what workspace members do. A written project agreement may add to these terms, but may not fall below the participant protections in section 7.</p>"
       },
       {
         "id": "briefs-proposals-and-quotations",

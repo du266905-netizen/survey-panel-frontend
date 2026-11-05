@@ -6,7 +6,7 @@ These terms cover a study from brief to delivery: quotation, sample and fieldwor
 
 ## 1. Scope and acceptance
 
-“You” means the organisation or researcher using the workspace (the Client); “we” and “us” mean Guanyi Media. Opening a workspace, submitting a brief, accepting a quotation or publishing a questionnaire means you accept these terms.
+“You” means the organisation or researcher using the workspace (the Client); “we” and “us” mean guanyisearch. Opening a workspace, submitting a brief, accepting a quotation or publishing a questionnaire means you accept these terms.
 
 You confirm that you are authorised to act for the Client and are responsible for what workspace members do. A written project agreement may add to these terms, but may not fall below the participant protections in section 7.
 

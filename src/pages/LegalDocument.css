@@ -96,10 +96,10 @@
 
 .legal-doc-prose {
   font-family: var(--font-reading);
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 400;
-  letter-spacing: -.01em;
-  line-height: 1.55;
+  letter-spacing: 0;
+  line-height: 1.7;
   color: #C9C5BB;
 }
 
