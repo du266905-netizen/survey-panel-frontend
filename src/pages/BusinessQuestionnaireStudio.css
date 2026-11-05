@@ -621,3 +621,18 @@
 .sq-template span { color: #5F6862; font-size: 11px; line-height: 1.6; }
 
 .sq-template .sq-btn { margin-top: 8px; justify-self: start; }
+
+.sq-matrix { display: grid; gap: 4px; margin: 10px 0 0 26px; }
+
+.sq-matrix .sq-label { margin-bottom: 4px; }
+
+.sq-note { margin: 8px 0 0 26px; color: #8D948D; font-size: 11px; line-height: 1.6; }
+
+.sq-preview-matrix { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.sq-preview-matrix th,
+.sq-preview-matrix td { border-bottom: 1px solid #E5E3DD; padding: 7px 6px; text-align: center; }
+
+.sq-preview-matrix th:first-child { text-align: left; font-weight: 500; }
+
+.sq-preview-matrix thead th { color: #5F6862; font-size: 11px; font-weight: 600; }

@@ -24,16 +24,21 @@ import './BusinessQuestionnaireStudio.css';
 const TYPES = [
   ['SINGLE_CHOICE', '单选', 'Single choice'],
   ['MULTIPLE_CHOICE', '多选', 'Multiple choice'],
+  ['DROPDOWN', '下拉', 'Dropdown'],
   ['RATING', '评分', 'Rating'],
+  ['NPS', 'NPS', 'NPS'],
+  ['MATRIX', '矩阵', 'Matrix'],
   ['RANKING', '排序', 'Ranking'],
   ['NUMBER', '数字', 'Number'],
   ['SHORT_TEXT', '短文本', 'Short text'],
   ['LONG_TEXT', '长文本', 'Long text'],
+  ['DATE', '日期', 'Date'],
 ];
 const TYPE_LABEL = Object.fromEntries(TYPES.map(([value, zh, en]) => [value, { 'zh-CN': zh, en }]));
-const CHOICE_TYPES = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'RATING', 'RANKING'];
+const CHOICE_TYPES = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'RATING', 'RANKING', 'DROPDOWN'];
+const MATRIX_DEFAULT_COLUMNS = ['非常不同意', '不同意', '一般', '同意', '非常同意'];
 const LOGIC_TYPES = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'RATING'];
-const SAVE_SETTINGS = ['allowOther', 'maxSelections', 'randomizeChoices', 'scaleLowLabel', 'scaleHighLabel'];
+const SAVE_SETTINGS = ['allowOther', 'maxSelections', 'randomizeChoices', 'scaleLowLabel', 'scaleHighLabel', 'matrixColumns'];
 const MAX_QUESTIONS = 30;
 const SECTIONS = [
   ['SCREENING', '甄别', 'Screening'],
@@ -144,7 +149,15 @@ const copy = {
 
 const uid = () => window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`;
 const emptySettings = () => ({ allowOther: false, maxSelections: null, randomizeChoices: false, scaleLowLabel: '', scaleHighLabel: '' });
-const defaultChoices = (type) => (type === 'RATING' ? ['1', '2', '3', '4', '5'] : ['选项 1', '选项 2']);
+const defaultMatrixColumns = () => [...MATRIX_DEFAULT_COLUMNS];
+const npsChoices = () => ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+const defaultChoices = (type) => {
+  if (type === 'RATING') return ['1', '2', '3', '4', '5'];
+  if (type === 'NPS') return npsChoices();
+  if (type === 'MATRIX') return ['陈述 1', '陈述 2', '陈述 3'];
+  if (type === 'DATE') return [];
+  return ['选项 1', '选项 2'];
+};
 const newQuestion = (type = 'SINGLE_CHOICE', section = 'CORE') => ({
   uid: uid(), type, section, prompt: '', required: false,
   choices: CHOICE_TYPES.includes(type) ? defaultChoices(type) : [],
@@ -169,6 +182,35 @@ const savedSettings = (settings) => SAVE_SETTINGS.reduce((out, key) => {
 function PreviewAnswer({ question }) {
   if (question.type === 'LONG_TEXT') return <textarea className="sq-preview-input" rows={4} disabled placeholder="…" />;
   if (question.type === 'SHORT_TEXT' || question.type === 'NUMBER') return <input className="sq-preview-input" disabled placeholder="…" />;
+  if (question.type === 'DATE') return <input className="sq-preview-input" type="date" disabled />;
+  if (question.type === 'DROPDOWN') {
+    return (
+      <select className="sq-preview-input" disabled defaultValue="">
+        <option value="">请选择</option>
+        {question.choices.map((choice) => <option key={choice} value={choice}>{choice}</option>)}
+      </select>
+    );
+  }
+  if (question.type === 'NPS') {
+    return (
+      <div className="sq-preview-scale">
+        {Array.from({ length: 11 }, (_, index) => <span key={index}>{index}</span>)}
+      </div>
+    );
+  }
+  if (question.type === 'MATRIX') {
+    const columns = question.settings?.matrixColumns?.length ? question.settings.matrixColumns : MATRIX_DEFAULT_COLUMNS;
+    return (
+      <table className="sq-preview-matrix">
+        <thead><tr><th />{columns.map((column) => <th key={column}>{column}</th>)}</tr></thead>
+        <tbody>
+          {question.choices.map((row) => (
+            <tr key={row}><th scope="row">{row}</th>{columns.map((column) => <td key={column}><input type="radio" disabled /></td>)}</tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  }
   if (question.type === 'RATING') {
     return (
       <div className="sq-preview-scale">
@@ -554,7 +596,8 @@ export default function BusinessQuestionnaireStudio() {
                 {group.items.map((question) => {
                   const index = questions.findIndex((item) => item.uid === question.uid);
                   const logicSource = question.logic?.sourcePosition ? questions[question.logic.sourcePosition - 1] : null;
-                  const isChoice = CHOICE_TYPES.includes(question.type);
+                  const isMatrix = question.type === 'MATRIX';
+                  const isChoice = (CHOICE_TYPES.includes(question.type) && question.type !== 'NPS') || isMatrix;
                   return (
                     <article
                       key={question.uid}
@@ -629,6 +672,7 @@ export default function BusinessQuestionnaireStudio() {
 
                       {isChoice ? (
                         <div className="sq-options">
+                          {isMatrix ? <p className="sq-label">行（陈述）</p> : null}
                           {question.choices.map((choice, choiceIndex) => (
                             <div className="sq-option" key={`${question.uid}-${choiceIndex}`}>
                               <span className="sq-bullet" aria-hidden="true" />
@@ -668,7 +712,46 @@ export default function BusinessQuestionnaireStudio() {
                         </div>
                       ) : null}
 
-                      {question.type === 'RATING' ? (
+                      {isMatrix ? (
+                        <div className="sq-matrix">
+                          <p className="sq-label">列（评价刻度）</p>
+                          {(question.settings.matrixColumns || MATRIX_DEFAULT_COLUMNS).map((column, columnIndex) => (
+                            <div className="sq-option" key={`${question.uid}-col-${columnIndex}`}>
+                              <span className="sq-option-num">{columnIndex + 1}</span>
+                              <input
+                                value={column}
+                                onChange={(event) => {
+                                  const next = [...(question.settings.matrixColumns || MATRIX_DEFAULT_COLUMNS)];
+                                  next[columnIndex] = event.target.value;
+                                  updateSettings(question.uid, { matrixColumns: next });
+                                }}
+                              />
+                              <button
+                                type="button"
+                                className="sq-tool"
+                                title={text.remove}
+                                disabled={(question.settings.matrixColumns || MATRIX_DEFAULT_COLUMNS).length <= 2}
+                                onClick={() => updateSettings(question.uid, {
+                                  matrixColumns: (question.settings.matrixColumns || MATRIX_DEFAULT_COLUMNS).filter((_, position) => position !== columnIndex),
+                                })}
+                              >
+                                <X size={14} aria-hidden="true" />
+                              </button>
+                            </div>
+                          ))}
+                          <button
+                            type="button"
+                            className="sq-add-option"
+                            onClick={() => updateSettings(question.uid, {
+                              matrixColumns: [...(question.settings.matrixColumns || MATRIX_DEFAULT_COLUMNS), `刻度 ${(question.settings.matrixColumns || MATRIX_DEFAULT_COLUMNS).length + 1}`],
+                            })}
+                          >
+                            <Plus size={14} aria-hidden="true" /> 添加刻度
+                          </button>
+                        </div>
+                      ) : null}
+
+                      {['RATING', 'NPS'].includes(question.type) ? (
                         <div className="sq-scale">
                           <input
                             placeholder={language === 'zh-CN' ? '低分说明' : 'Low end'}
@@ -683,6 +766,10 @@ export default function BusinessQuestionnaireStudio() {
                         </div>
                       ) : null}
 
+                      {question.type === 'NPS' ? (
+                        <p className="sq-note">NPS 固定 0–10 分，按推荐者（9–10）/ 被动者（7–8）/ 贬损者（0–6）统计。</p>
+                      ) : null}
+
                       <div className={`sq-logic${logicSource ? ' is-set' : ''}`}>
                         <Settings2 size={13} aria-hidden="true" />
                         {logicSource ? (
@@ -693,6 +780,15 @@ export default function BusinessQuestionnaireStudio() {
                               onChange={(event) => update(question.uid, { logic: { ...question.logic, value: event.target.value } })}
                             >
                               {logicSource.choices.map((choice) => <option key={choice} value={choice}>{choice}</option>)}
+                            </select>
+                            →
+                            <select
+                              value={question.logic.action || 'SHOW'}
+                              onChange={(event) => update(question.uid, { logic: { ...question.logic, action: event.target.value } })}
+                            >
+                              <option value="SHOW">显示本题</option>
+                              <option value="SKIP">跳过本题</option>
+                              <option value="TERMINATE">终止问卷</option>
                             </select>
                             <button type="button" className="sq-link" onClick={() => update(question.uid, { logic: null })}>{text.remove}</button>
                           </span>

@@ -18,6 +18,58 @@ function QuestionField({ question, value, onChange }) {
   const choices = Array.isArray(question.choices) ? question.choices : [];
   const settings = question.settings || {};
   const displayChoices = useMemo(() => settings.randomizeChoices ? [...choices].sort(() => Math.random() - .5) : choices, [question.id, question.choices, settings.randomizeChoices]);
+  if (question.type === 'DROPDOWN') {
+    return (
+      <select className="public-question-select" value={value || ''} onChange={(event) => onChange(event.target.value)}>
+        <option value="">请选择</option>
+        {displayChoices.map((choice) => <option key={choice} value={choice}>{choice}</option>)}
+      </select>
+    );
+  }
+  if (question.type === 'DATE') {
+    return <input type="date" value={value || ''} onChange={(event) => onChange(event.target.value)} />;
+  }
+  if (question.type === 'NPS') {
+    return (
+      <div className="public-question-nps">
+        <div>{Array.from({ length: 11 }, (_, index) => String(index)).map((score) => (
+          <label key={score} className={value === score ? 'is-on' : ''}>
+            <input type="radio" name={question.id} checked={value === score} onChange={() => onChange(score)} />
+            {score}
+          </label>
+        ))}</div>
+        <small><span>{settings.scaleLowLabel || '完全不会'}</span><span>{settings.scaleHighLabel || '非常愿意'}</span></small>
+      </div>
+    );
+  }
+  if (question.type === 'MATRIX') {
+    const columns = Array.isArray(settings.matrixColumns) && settings.matrixColumns.length ? settings.matrixColumns : ['非常不同意', '不同意', '一般', '同意', '非常同意'];
+    const current = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+    return (
+      <div className="public-question-matrix">
+        <table>
+          <thead><tr><th />{columns.map((column) => <th key={column}>{column}</th>)}</tr></thead>
+          <tbody>
+            {displayChoices.map((row) => (
+              <tr key={row}>
+                <th scope="row">{row}</th>
+                {columns.map((column) => (
+                  <td key={column}>
+                    <input
+                      type="radio"
+                      name={`${question.id}-${row}`}
+                      checked={current[row] === column}
+                      onChange={() => onChange({ ...current, [row]: column })}
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
   if (question.type === 'LONG_TEXT') return <textarea value={value || ''} onChange={(event) => onChange(event.target.value)} />;
   if (question.type === 'SHORT_TEXT') return <input value={value || ''} onChange={(event) => onChange(event.target.value)} />;
   if (question.type === 'NUMBER') return <input type="number" inputMode="decimal" value={value || ''} onChange={(event) => onChange(event.target.value)} />;
@@ -41,9 +93,16 @@ export default function PublicBusinessQuestionnaire() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [terminated, setTerminated] = useState(false);
   const startedAtRef = useRef(Date.now());
   const questions = Array.isArray(questionnaire?.questions) ? questionnaire.questions : [];
   const visibleQuestions = questions.filter((question) => questionIsVisible(question, questions, answers));
+  const terminatedNow = questions.some((question) => {
+    if (question.logic?.action !== 'TERMINATE' || !question.logic?.sourcePosition || !question.logic?.value) return false;
+    const source = questions[question.logic.sourcePosition - 1];
+    const answer = source ? answers[source.id] : null;
+    return Array.isArray(answer) ? answer.includes(question.logic.value) : answer === question.logic.value;
+  });
 
   useEffect(() => {
     let active = true;
@@ -56,7 +115,7 @@ export default function PublicBusinessQuestionnaire() {
 
   const submit = async (event) => {
     event.preventDefault();
-    if (submitting || !questionnaire) return;
+    if (submitting || !questionnaire || terminated) return;
     const missingQuestion = visibleQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
     if (missingQuestion) {
       setError('Please answer every required question before submitting.');
@@ -72,8 +131,16 @@ export default function PublicBusinessQuestionnaire() {
         respondentKey = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
         window.localStorage.setItem(storageKey, respondentKey);
       }
+      /* Matrix answers are objects in state; the submit contract takes strings,
+         so each row goes out as "row = column". */
+      const serializedAnswers = Object.fromEntries(Object.entries(answers).map(([id, value]) => {
+        if (value && typeof value === 'object' && !Array.isArray(value)) {
+          return [id, Object.entries(value).map(([row, column]) => `${row} = ${column}`)];
+        }
+        return [id, value];
+      }));
       const response = await submitPublicBusinessQuestionnaire(publicId, {
-        answers,
+        answers: serializedAnswers,
         turnstileToken,
         respondentKey,
         durationSeconds: Math.floor((Date.now() - startedAtRef.current) / 1000),
@@ -93,6 +160,13 @@ export default function PublicBusinessQuestionnaire() {
   return (
     <main className="public-questionnaire-page">
       <header><img className="public-questionnaire-mark" src="/guanyisearch-project-mark.png" alt="" /><Logo size="sm" /></header>
+      {terminated || terminatedNow ? (
+        <div className="public-questionnaire-done">
+          <h2>感谢参与</h2>
+          <p>根据您刚才的回答，本次调查到此结束，不需要继续作答。</p>
+          <p className="is-en">Thank you — this survey ends here based on your answers.</p>
+        </div>
+      ) : (
       <form onSubmit={submit}>
         <p>QUESTIONNAIRE</p>
         <h1>{questionnaire.title}</h1>
@@ -105,6 +179,7 @@ export default function PublicBusinessQuestionnaire() {
         <div className="public-questionnaire-consent"><TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken('')} onError={() => setTurnstileToken('')} /><span>By submitting, you agree to the <a href="/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and understand that this response is shared with the questionnaire creator.</span></div>
         <button type="submit" disabled={submitting || !turnstileToken}>{submitting ? <LoaderCircle className="animate-spin" size={17} /> : 'Submit response'}</button>
       </form>
+      )}
     </main>
   );
 }
