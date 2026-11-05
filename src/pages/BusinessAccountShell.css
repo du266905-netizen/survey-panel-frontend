@@ -308,3 +308,44 @@
 }
 
 .business-account-page .bt-body { margin-top: 28px; }
+
+/* 更改密码：三个字段竖排，按钮与提示跟在下面 */
+.business-account-password form { display: grid; gap: 10px; margin-top: 4px; }
+
+.business-account-password form label { display: grid; gap: 6px; }
+
+.business-account-password form label > span { color: #5F6862; font-size: 11px; font-weight: 600; }
+
+.business-account-password form input {
+  width: 100%;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  font: 400 14px var(--font-sans);
+  padding: 10px 12px;
+}
+
+.business-account-password form input:focus { outline: 2px solid #141413; outline-offset: 0; }
+
+.business-account-password form .business-button {
+  width: 100%;
+  min-height: 40px;
+  margin-top: 4px;
+  justify-content: center;
+}
+
+.business-account-hint { margin: 10px 0 0; color: #8D948D; font-size: 11px; }
+
+.business-account-link {
+  border: 0;
+  background: transparent;
+  color: #141413;
+  cursor: pointer;
+  font: 500 11px var(--font-sans);
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.business-account-link:disabled { opacity: .5; cursor: not-allowed; }

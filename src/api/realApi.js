@@ -340,6 +340,11 @@ export const verifyEmailCode = async ({ email, code }) => {
   return { data: response.data };
 };
 
+export const changePassword = async ({ currentPassword, newPassword }) => {
+  const response = await apiClient.post('/api/auth/change-password', { currentPassword, newPassword });
+  return { data: response.data };
+};
+
 export const requestPasswordReset = async ({ email, accountType }) => {
   const response = await apiClient.post('/api/auth/forgot-password', accountType ? { email, accountType } : { email });
   return { data: response.data };
