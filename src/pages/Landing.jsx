@@ -1499,7 +1499,7 @@ export default function Landing({ initialAuthMode = 'register', authOnly = false
           <div className="landing-footer-brand">
             <div className="landing-footer-identity"><img className="landing-footer-logo-mark" src="/guanyisearch-brand-mark.png" alt="" aria-hidden="true" /><Logo size="lg" variant="light" /></div>
             <p>Clear participation, considered rewards, and a place for real perspectives.</p>
-            <a className="landing-footer-email" href="mailto:heguanyi@guanyi-media.com">Contact the team <ArrowRight size={16} /></a>
+            <a className="landing-footer-email" href="mailto:support@guanyisearch.com">Contact the team <ArrowRight size={16} /></a>
             <nav className="landing-social-links" aria-label="GuanyiSearch social links">
               {socialLinks.map((social) => (
                 <a key={social.id} className="landing-social-link" href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}>

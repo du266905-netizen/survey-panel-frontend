@@ -30,7 +30,7 @@ export default function BusinessResearcherTerms() {
 
       <LegalSection number={2} id="workspace" title="Workspace access and account security">
         <p>You must keep account details accurate, maintain the confidentiality of your login credentials, and ensure that each person using the workspace is authorised by the Client. Do not share credentials or allow unauthorised access.</p>
-        <p>Please contact us promptly at <a href="mailto:heguanyi@guanyi-media.com?subject=Business%20Workspace%20Security">heguanyi@guanyi-media.com</a> if you believe a workspace has been accessed without permission. We may take reasonable steps to protect the workspace while we review the report.</p>
+        <p>Please contact us promptly at <a href="mailto:support@guanyisearch.com?subject=Business%20Workspace%20Security">support@guanyisearch.com</a> if you believe a workspace has been accessed without permission. We may take reasonable steps to protect the workspace while we review the report.</p>
       </LegalSection>
 
       <LegalSection number={3} id="research-briefs" title="Research briefs and questionnaires">
@@ -77,7 +77,7 @@ export default function BusinessResearcherTerms() {
 
       <LegalSection number={11} id="changes-contact" title="Changes and contact">
         <p>We may update these terms to reflect changes to the service, research practices, or legal requirements. For material changes, we will provide notice through the workspace, by email, or by another reasonable method before the revised terms take effect where required.</p>
-        <p>Questions about these terms or a business research project can be sent to <a href="mailto:heguanyi@guanyi-media.com?subject=Business%20Researcher%20Terms">heguanyi@guanyi-media.com</a>.</p>
+        <p>Questions about these terms or a business research project can be sent to <a href="mailto:support@guanyisearch.com?subject=Business%20Researcher%20Terms">support@guanyisearch.com</a>.</p>
       </LegalSection>
     </LegalPageLayout>
   );
