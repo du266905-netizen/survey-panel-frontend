@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, Info, Lock, Receipt, Wallet } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Info, Lock, Wallet } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -29,10 +29,10 @@ const copy = {
     briefTitle: '本次研究', completes: '份有效回答', minutes: '分钟问卷', questions: '道题',
     incidence: '预计符合比例', incidenceHint: '条件越多，符合的人越少，单价越高。',
     breakdown: '价格构成', unit: '单份价格', count: '份数', sample: '样本费用',
-    fee: '支付手续费', total: '合计', estimateNote: '示意价：正式报价以服务端计算为准，签约价锁定 7 天。',
+    fee: '支付手续费', total: '合计', estimateNote: '示意价：签约时用同一公式重算一次并锁定，不另出报价单。',
     guarantees: '我们的承诺', g1: '收不满按实际完成收费', g2: '数据有问题免费补', g3: '价格锁定 7 天',
     balance: '账户余额', pay: '去付款', notEnough: '余额不足，先去充值', topUp: '充值',
-    quote: '获取正式报价', quoted: '正式报价已生成', pending: '报价接口还没接上，先按示意价展示。',
+    lockLine: '这个价格锁到 {date}，期间不会变。',
     locked: '项目已送审，报价不能再改。',
   },
   en: {
@@ -42,12 +42,18 @@ const copy = {
     briefTitle: 'This study', completes: 'completes', minutes: 'minute questionnaire', questions: 'questions',
     incidence: 'Estimated incidence', incidenceHint: 'More conditions mean fewer eligible people, and a higher price per complete.',
     breakdown: 'Breakdown', unit: 'Price per complete', count: 'Completes', sample: 'Sample',
-    fee: 'Payment fee', total: 'Total', estimateNote: 'Estimate: the server quote is the record, and the signed price holds for seven days.',
+    fee: 'Payment fee', total: 'Total', estimateNote: 'Estimate: the same formula is recalculated and locked when you sign — no separate quote document.',
     guarantees: 'What we commit to', g1: 'Pay for completes delivered', g2: 'Free replacements for bad data', g3: 'Price locked for seven days',
     balance: 'Account balance', pay: 'Pay', notEnough: 'Not enough balance — top up first', topUp: 'Top up',
-    quote: 'Get the formal quote', quoted: 'Formal quote created', pending: 'The quote endpoint is not connected yet, so this is the estimate.',
+    lockLine: 'This price holds until {date}.',
     locked: 'The project is no longer a draft, so the quote cannot change.',
   },
+};
+
+const lockUntil = () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 7);
+  return date;
 };
 
 const money = (value, language) => new Intl.NumberFormat(language === 'en' ? 'en-US' : 'zh-CN', {
@@ -61,7 +67,7 @@ export default function BusinessQuote() {
   const text = copy[language] || copy.en;
 
   const [project, setProject] = useState(null);
-  const [note, setNote] = useState('');
+  const lockDate = lockUntil().toLocaleDateString(language === 'en' ? 'en-GB' : 'zh-CN', { month: 'long', day: 'numeric' });
 
   useEffect(() => {
     getBusinessProject(projectId).then((response) => setProject(response.data.project)).catch(() => {});
@@ -165,10 +171,7 @@ export default function BusinessQuote() {
             >
               <Wallet size={15} aria-hidden="true" /> {text.pay} <ArrowRight size={15} aria-hidden="true" />
             </button>
-            <button type="button" className="sq-btn bq-quote" onClick={() => setNote(text.pending)}>
-              <Receipt size={15} aria-hidden="true" /> {text.quote}
-            </button>
-            {note ? <p className="bq-note-small">{note}</p> : null}
+            <p className="bq-note-small">{text.lockLine.replace('{date}', lockDate)}</p>
           </section>
 
           <section className="bq-side-block">
