@@ -216,3 +216,38 @@
 }
 
 .business-account-team:hover { border-color: #141413; background: #FAF9F5; }
+
+.business-account-fixed { margin: 12px 0 0; color: #8D948D; font-size: 11px; line-height: 1.6; }
+
+.business-account-fixed a { color: #5F6862; }
+
+.business-account-password {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 18px;
+  border-top: 1px solid #E5E3DD;
+  padding-top: 14px;
+}
+
+.business-account-password h2 { margin: 0; font-size: 13px; font-weight: 600; }
+
+.business-account-password > span { color: #8D948D; font-size: 11px; line-height: 1.6; }
+
+.business-account-password button {
+  display: inline-flex;
+  width: max-content;
+  min-height: 34px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  padding: 0 14px;
+}
+
+.business-account-password button:hover:not(:disabled) { border-color: #141413; }
+
+.business-account-password button:disabled { opacity: .5; cursor: not-allowed; }

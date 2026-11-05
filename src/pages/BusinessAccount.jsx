@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Check, LoaderCircle, LogOut, UserRound, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { getBusinessWorkspace, updateProfile } from '../api/realApi';
+import { getBusinessWorkspace, requestPasswordReset, updateProfile } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import {
@@ -32,6 +32,8 @@ export default function BusinessAccount() {
   const [avatarNote, setAvatarNote] = useState('');
   // the object URL shown under the cropper; nothing is stored until it is confirmed
   const [cropSrc, setCropSrc] = useState('');
+  const [resetBusy, setResetBusy] = useState(false);
+  const [resetNote, setResetNote] = useState('');
 
   /* Choosing a picture never reaches a server yet — see utils/businessAvatar.js
      for what that means and for the one function to change when it does. */
@@ -145,11 +147,14 @@ export default function BusinessAccount() {
           </div>
           {(avatarNote || avatarBusy) ? <p className="business-account-avatar-note">{avatarBusy ? '正在处理图片…' : avatarNote}</p> : null}
           <dl>
+            <div><dt>{ws.account.emailLabel}</dt><dd>{user?.email || notSet}</dd></div>
             <div><dt>{ws.account.organisationLabel}</dt><dd>{profile?.organizationName || ws.account.organisationFallback}</dd></div>
             <div><dt>{ws.account.organisationType}</dt><dd>{profile?.organizationType?.replaceAll('_', ' ').toLowerCase() || notSet}</dd></div>
-            <div><dt>{ws.account.emailLabel}</dt><dd>{user?.email || notSet}</dd></div>
             <div><dt>{ws.account.regionLabel}</dt><dd>{profile?.region || notSet}</dd></div>
           </dl>
+          <p className="business-account-fixed">
+            邮箱不可自行修改；如需变更，请邮件联系 <a href="mailto:support@guanyisearch.com">support@guanyisearch.com</a>。
+          </p>
         </section>
 
         <aside className="business-account-settings">
@@ -163,6 +168,29 @@ export default function BusinessAccount() {
           <button className="business-button" type="button" onClick={saveName} disabled={saving || !displayName.trim()}>
             {saving ? <LoaderCircle className="animate-spin" size={16} /> : ws.account.saveName}
           </button>
+          <div className="business-account-password">
+            <h2>密码</h2>
+            <span>密码不在这里改。点下面的按钮，会往你的邮箱发一封重置邮件。</span>
+            <button
+              type="button"
+              onClick={async () => {
+                setResetNote('');
+                setResetBusy(true);
+                try {
+                  await requestPasswordReset({ email: user?.email, accountType: 'BUSINESS' });
+                  setResetNote('重置邮件已发送，请查收。');
+                } catch {
+                  setResetNote('发送失败，请稍后再试。');
+                } finally {
+                  setResetBusy(false);
+                }
+              }}
+              disabled={resetBusy || !user?.email}
+            >
+              {resetBusy ? <LoaderCircle className="animate-spin" size={15} /> : null} 发送重置邮件
+            </button>
+            {resetNote ? <em className={resetNote.startsWith('重置邮件') ? 'is-success' : 'is-error'}>{resetNote}</em> : null}
+          </div>
           <button className="business-account-team" type="button" onClick={() => navigate(withLanguage('/business/team', language))}>
             <Users size={16} /> 团队设置
           </button>
