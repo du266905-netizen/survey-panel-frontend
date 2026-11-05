@@ -26,7 +26,17 @@
 /* The order column keeps its full height — its hairline runs the length of the
    card, not to wherever the text stops — while its contents ride along, so the
    action survives a billing form longer than the viewport. */
-.business-topup-screen.is-page .business-topup-summary { overflow: visible; }
+/* The column paints white and runs the full height, so without its own radius
+   it covers the sheet's top-right and bottom-right curves and both corners read
+   as cut off. Give it the right two corners and the sheet's outline survives. */
+.business-topup-screen.is-page .business-topup-summary {
+  overflow: visible;
+  border-radius: 0 14px 14px 0;
+}
+
+/* The sheet's own cap is a modal width. On a page the line can use the column:
+   54ch broke a 13px sentence into three lines for no reason. */
+.business-topup-screen.is-page .business-topup-subtitle { max-width: none; }
 
 .business-topup-screen.is-page .pco-summary-inner {
   position: sticky;

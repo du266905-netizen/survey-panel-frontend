@@ -39,7 +39,7 @@ const copy = {
   'zh-CN': {
     back: '返回套餐',
     title: '设置您的套餐',
-    subtitle: '选计费周期和付款方式。余额够就直接抵扣；转账、付款链接和加密货币到账后开通。',
+    subtitle: '选计费周期和付款方式。余额直接抵扣，其它到账后开通。',
     cycleLabel: '计费周期',
     monthly: '按月计费',
     yearly: '按年计费',
@@ -86,7 +86,7 @@ const copy = {
   en: {
     back: 'Back to plans',
     title: 'Set up your plan',
-    subtitle: 'Pick a cycle and how to pay. Balance comes straight off the account; transfers, links and crypto start the plan once they land.',
+    subtitle: 'Pick a cycle and how to pay. Balance deducts now; the rest starts once funds land.',
     cycleLabel: 'Billing cycle',
     monthly: 'Billed monthly',
     yearly: 'Billed yearly',
