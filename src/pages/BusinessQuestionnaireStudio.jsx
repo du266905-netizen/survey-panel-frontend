@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, GripVertical,
+  AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, GripVertical, LayoutTemplate,
   ListChecks, LoaderCircle, MoreHorizontal, Plus, Receipt, Rocket, Send, Settings2, Star, Trash2, Users, X,
 } from 'lucide-react';
 import {
@@ -42,6 +42,55 @@ const SECTIONS = [
   ['CLOSING', '收尾', 'Closing'],
 ];
 
+/* Whole questionnaires, not parts: a template inserts the prompts, the
+   options and the sections, so a study starts from something real. All of them
+   use only the seven types the API already accepts. */
+const TEMPLATES = [
+  {
+    id: 'nps',
+    name: { 'zh-CN': 'NPS 推荐意愿', en: 'NPS' },
+    detail: { 'zh-CN': '8 题 · 推荐分、原因、使用情况、改进点、画像', en: '8 questions · score, reason, usage, improvement, profile' },
+    questions: [
+      { type: 'RATING', section: 'CORE', prompt: '您有多大可能把我们的产品推荐给同事或朋友？', required: true, choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], settings: { scaleLowLabel: '完全不会', scaleHighLabel: '非常愿意' } },
+      { type: 'LONG_TEXT', section: 'CORE', prompt: '您给出这个分数的主要原因是什么？', required: false, choices: [] },
+      { type: 'SINGLE_CHOICE', section: 'CORE', prompt: '您使用我们产品多久了？', required: true, choices: ['不到 3 个月', '3–12 个月', '1–3 年', '3 年以上'], settings: {} },
+      { type: 'SINGLE_CHOICE', section: 'CORE', prompt: '您多久使用一次？', required: true, choices: ['每天', '每周', '每月', '更少'], settings: {} },
+      { type: 'MULTIPLE_CHOICE', section: 'CORE', prompt: '以下哪些方面最需要改进？', required: false, choices: ['功能完整度', '易用性', '速度与稳定性', '价格', '客户支持'], settings: { allowOther: true } },
+      { type: 'SINGLE_CHOICE', section: 'PROFILE', prompt: '您所在公司的规模？', required: false, choices: ['1–10 人', '11–50 人', '51–200 人', '200 人以上'], settings: {} },
+      { type: 'SINGLE_CHOICE', section: 'CLOSING', prompt: '是否愿意接受后续 15 分钟回访？', required: false, choices: ['愿意', '不愿意'], settings: {} },
+      { type: 'SHORT_TEXT', section: 'CLOSING', prompt: '如果愿意，请留下联系邮箱（选填）', required: false, choices: [] },
+    ],
+  },
+  {
+    id: 'concept',
+    name: { 'zh-CN': '概念测试', en: 'Concept test' },
+    detail: { 'zh-CN': '7 题 · 购买意愿、喜欢与不喜欢、价格、决策角色', en: '7 questions · intent, likes, dislikes, price, role' },
+    questions: [
+      { type: 'SINGLE_CHOICE', section: 'CORE', prompt: '看到这个产品概念后，您购买的可能性有多大？', required: true, choices: ['一定会买', '很可能会买', '说不准', '可能不会买', '一定不会买'], settings: {} },
+      { type: 'LONG_TEXT', section: 'CORE', prompt: '这个概念里，您最喜欢的是什么？', required: false, choices: [] },
+      { type: 'LONG_TEXT', section: 'CORE', prompt: '最让您犹豫的是什么？', required: false, choices: [] },
+      { type: 'SINGLE_CHOICE', section: 'CORE', prompt: '您认为合理的价格区间是？', required: true, choices: ['低于 100 元', '100–300 元', '300–600 元', '600 元以上'], settings: {} },
+      { type: 'SINGLE_CHOICE', section: 'CORE', prompt: '与您现在使用的方式相比，它更好还是更差？', required: true, choices: ['明显更好', '略好', '差不多', '略差', '明显更差'], settings: {} },
+      { type: 'SINGLE_CHOICE', section: 'PROFILE', prompt: '您在采购决策中的角色？', required: true, choices: ['最终决策', '参与决策', '提供建议', '不参与'], settings: {} },
+      { type: 'SINGLE_CHOICE', section: 'CLOSING', prompt: '是否愿意参与后续测试？', required: false, choices: ['愿意', '不愿意'], settings: {} },
+    ],
+  },
+  {
+    id: 'brand',
+    name: { 'zh-CN': '品牌追踪', en: 'Brand tracker' },
+    detail: { 'zh-CN': '7 题 · 认知、首选、使用、满意度、推荐、切换', en: '7 questions · awareness, choice, usage, satisfaction, advocacy, switching' },
+    questions: [
+      { type: 'MULTIPLE_CHOICE', section: 'CORE', prompt: '您知道以下哪些品牌？', required: true, choices: ['品牌 A', '品牌 B', '品牌 C', '品牌 D', '都不知道'], settings: {} },
+      { type: 'SINGLE_CHOICE', section: 'CORE', prompt: '如果只能选一个，您会首选哪个品牌？', required: true, choices: ['品牌 A', '品牌 B', '品牌 C', '品牌 D', '没有偏好'], settings: {} },
+      { type: 'SINGLE_CHOICE', section: 'CORE', prompt: '您多久购买一次这个品类？', required: true, choices: ['每周', '每月', '每季度', '更少'], settings: {} },
+      { type: 'RATING', section: 'CORE', prompt: '对目前使用品牌的整体满意度？', required: true, choices: ['1', '2', '3', '4', '5'], settings: { scaleLowLabel: '非常不满意', scaleHighLabel: '非常满意' } },
+      { type: 'RATING', section: 'CORE', prompt: '您有多大可能推荐这个品牌？', required: true, choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], settings: { scaleLowLabel: '完全不会', scaleHighLabel: '非常愿意' } },
+      { type: 'SINGLE_CHOICE', section: 'CORE', prompt: '未来半年，您会考虑换品牌吗？', required: false, choices: ['会', '不确定', '不会'], settings: {} },
+      { type: 'SINGLE_CHOICE', section: 'PROFILE', prompt: '您的年龄段？', required: false, choices: ['18–24', '25–34', '35–44', '45–54', '55+'], settings: {} },
+    ],
+  },
+];
+
 const copy = {
   'zh-CN': {
     back: '返回项目', draft: '草稿', published: '已发布',
@@ -57,7 +106,7 @@ const copy = {
     remove: '删除', moveUp: '上移', moveDown: '下移',
     promptPlaceholder: '问题', type: '题型', options: '选项',
     save: '保存', publish: '发布', publishing: '发布中…', saved: '已保存', saveFailed: '保存失败，请稍后再试。',
-    untitled: '未命名问卷', preview: '预览',
+    untitled: '未命名问卷', preview: '预览', templates: '模板', templatesTitle: '从整卷模板开始', templatesHint: '插入后可以直接改题目和选项。', templatesApply: '插入', templatesFull: '题目数量会超过 30 题上限',
     archived: '已归档', copyDraft: '复制为新草稿', archive: '归档', deleteDraft: '删除草稿',
     deleteConfirm: '删除这份草稿？删除后不可恢复。',
     locked: '已发布：结构已锁定。如需修改，复制为新草稿。',
@@ -81,7 +130,7 @@ const copy = {
     remove: 'Delete', moveUp: 'Move up', moveDown: 'Move down',
     promptPlaceholder: 'Question', type: 'Type', options: 'Options',
     save: 'Save', publish: 'Publish', publishing: 'Publishing…', saved: 'Saved', saveFailed: 'Could not save. Try again.',
-    untitled: 'Untitled questionnaire', preview: 'Preview',
+    untitled: 'Untitled questionnaire', preview: 'Preview', templates: 'Templates', templatesTitle: 'Start from a whole questionnaire', templatesHint: 'Everything is editable once inserted.', templatesApply: 'Insert', templatesFull: 'This would pass the 30-question limit',
     archived: 'Archived', copyDraft: 'Copy as a new draft', archive: 'Archive', deleteDraft: 'Delete draft',
     deleteConfirm: 'Delete this draft? This cannot be undone.',
     locked: 'Published: the structure is locked. Copy it to a new draft to change it.',
@@ -161,6 +210,7 @@ export default function BusinessQuestionnaireStudio() {
   const [error, setError] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewStep, setPreviewStep] = useState(0);
+  const [templatesOpen, setTemplatesOpen] = useState(false);
   const [cover, setCover] = useState('');
   const [moreOpen, setMoreOpen] = useState(false);
   const [sensitiveOpen, setSensitiveOpen] = useState(false);
@@ -202,6 +252,20 @@ export default function BusinessQuestionnaireStudio() {
   const updateSettings = (uidValue, changes) => {
     const target = questions.find((question) => question.uid === uidValue);
     if (target) update(uidValue, { settings: { ...target.settings, ...changes } });
+  };
+
+  const applyTemplate = (template) => {
+    if (questions.length + template.questions.length > MAX_QUESTIONS) return;
+    const added = template.questions.map((question) => ({
+      ...newQuestion(question.type, question.section),
+      prompt: question.prompt,
+      required: Boolean(question.required),
+      choices: [...(question.choices || [])],
+      settings: { ...emptySettings(), ...(question.settings || {}) },
+    }));
+    setQuestions((current) => [...current, ...added]);
+    setTemplatesOpen(false);
+    setMessage('');
   };
 
   const addQuestion = (section = 'CORE') => {
@@ -398,6 +462,9 @@ export default function BusinessQuestionnaireStudio() {
         </div>
         <div className="sq-top-actions">
           {message ? <span className="sq-saved"><Check size={14} aria-hidden="true" /> {message}</span> : null}
+          <button type="button" className="sq-btn" onClick={() => setTemplatesOpen(true)}>
+            <LayoutTemplate size={15} aria-hidden="true" /> {text.templates}
+          </button>
           <button type="button" className="sq-btn" onClick={() => { setPreviewOpen(true); setPreviewStep(0); }}>
             <Eye size={15} aria-hidden="true" /> {text.preview}
           </button>
@@ -690,6 +757,37 @@ export default function BusinessQuestionnaireStudio() {
           </section>
         </aside>
       </div>
+
+      {templatesOpen ? (
+        <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.templatesTitle}>
+          <button type="button" className="sq-modal-scrim" aria-label={text.close} onClick={() => setTemplatesOpen(false)} />
+          <section className="sq-modal-card">
+            <header>
+              <strong>{text.templatesTitle}</strong>
+              <button type="button" className="sq-icon" onClick={() => setTemplatesOpen(false)} aria-label={text.close}>
+                <X size={17} aria-hidden="true" />
+              </button>
+            </header>
+            <div className="sq-modal-body">
+              <p className="sq-preview-empty">{text.templatesHint}</p>
+              <div className="sq-template-grid">
+                {TEMPLATES.map((template) => {
+                  const tooMany = questions.length + template.questions.length > MAX_QUESTIONS;
+                  return (
+                    <article key={template.id} className="sq-template">
+                      <strong>{template.name[language] || template.name.en}</strong>
+                      <span>{template.detail[language] || template.detail.en}</span>
+                      <button type="button" className="sq-btn is-primary" disabled={tooMany} onClick={() => applyTemplate(template)}>
+                        {tooMany ? text.templatesFull : text.templatesApply}
+                      </button>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        </div>
+      ) : null}
 
       {sensitiveOpen ? (
         <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.sensitiveTitle}>

@@ -603,3 +603,21 @@
   .sq-card-head { flex-wrap: wrap; }
   .sq-prompt { flex-basis: 100%; order: 10; }
 }
+
+/* ---- templates ---- */
+
+.sq-template-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 14px; }
+
+.sq-template {
+  display: grid;
+  gap: 6px;
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.sq-template strong { font-size: 14px; font-weight: 600; }
+
+.sq-template span { color: #5F6862; font-size: 11px; line-height: 1.6; }
+
+.sq-template .sq-btn { margin-top: 8px; justify-self: start; }
