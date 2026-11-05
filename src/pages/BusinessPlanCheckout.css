@@ -74,6 +74,13 @@
   opacity: 1;
 }
 
+/* The billing block brings its own hairline (`is-embedded`), so the section
+   must not bring a second one — two rules 70px apart read as an empty band. */
+.business-topup-screen.is-page .business-topup-section.is-billing {
+  border-top: 0;
+  padding-top: 0;
+}
+
 .pco-short { color: #B42318; }
 
 .pco-note {

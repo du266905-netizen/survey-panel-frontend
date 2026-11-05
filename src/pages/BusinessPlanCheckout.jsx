@@ -257,7 +257,7 @@ export default function BusinessPlanCheckout() {
             </div>
           </section>
 
-          <section className="business-topup-section">
+          <section className="business-topup-section is-billing">
             {/* Nothing is red until the payer has tried to submit. */}
             <BusinessBillingProfile billing={billing} embedded highlightMissing={false} />
           </section>
