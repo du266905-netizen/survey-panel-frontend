@@ -351,6 +351,7 @@ export default function BusinessQuestionnaireStudio() {
         prompt: question.prompt,
         choices: question.choices,
         brief: `${project?.researchGoal || ''} ${project?.audienceDescription || ''}`.trim(),
+        projectId,
       });
       setAssistResults((data?.candidates || []).map((text) => ({ text, mocked })));
       if (!data?.candidates?.length) setAssistError(text.assistEmpty);

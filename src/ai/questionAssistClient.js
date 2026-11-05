@@ -32,8 +32,8 @@ const devFixture = (request) => {
   };
 };
 
-export async function assistQuestion({ mode, prompt, choices, brief }) {
-  const request = { mode, prompt, choices: choices || [], brief: brief || '' };
+export async function assistQuestion({ mode, prompt, choices, brief, projectId }) {
+  const request = { mode, prompt, choices: choices || [], brief: brief || '', ...(projectId ? { projectId } : {}) };
   if (import.meta.env.DEV) return { data: devFixture(request), mocked: true };
   const response = await apiClient.post(ASSIST_ENDPOINT, request, { timeout: 60000 });
   return { data: response.data, mocked: false };

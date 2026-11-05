@@ -198,3 +198,21 @@
 .business-account-page .business-account-pane > header {
   justify-content: flex-end;
 }
+
+.business-account-team {
+  display: inline-flex;
+  width: 100%;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+}
+
+.business-account-team:hover { border-color: #141413; background: #FAF9F5; }

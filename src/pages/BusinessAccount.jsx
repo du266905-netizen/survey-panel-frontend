@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Check, LoaderCircle, LogOut, UserRound } from 'lucide-react';
+import { Check, LoaderCircle, LogOut, UserRound, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getBusinessWorkspace, updateProfile } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -162,6 +162,9 @@ export default function BusinessAccount() {
           {error && <em className="is-error">{error}</em>}
           <button className="business-button" type="button" onClick={saveName} disabled={saving || !displayName.trim()}>
             {saving ? <LoaderCircle className="animate-spin" size={16} /> : ws.account.saveName}
+          </button>
+          <button className="business-account-team" type="button" onClick={() => navigate(withLanguage('/business/team', language))}>
+            <Users size={16} /> 团队设置
           </button>
           <button className="business-account-signout" type="button" onClick={signOut}>
             <LogOut size={16} /> {ws.account.signOut}
