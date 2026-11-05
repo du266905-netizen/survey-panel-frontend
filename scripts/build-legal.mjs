@@ -6,7 +6,7 @@
  * 这里做一次最小转换（标题 / 段落 / 列表 / 粗体 / 斜体 / 链接 / 表格 / 分隔线），
  * 页面只负责排版。改了 md 就跑一次 `node scripts/build-legal.mjs`。
  */
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -55,16 +55,21 @@ function blocks(lines) {
 const slugOf = (file) => file.replace(/\.md$/, '');
 
 const docs = {};
-for (const file of readdirSync(DIR).filter((f) => f.endsWith('.md'))) {
-  const md = readFileSync(join(DIR, file), 'utf8');
+/* Every document exists twice: X.md is the English original, X.zh.md the
+   Chinese one. Both go through the same converter, so the two languages can
+   never drift in structure. */
+const files = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.endsWith('.zh.md'));
+for (const file of files) {
+  const parse = (source) => {
+  const md = source;
   const lines = md.split('\n');
   const title = (lines.find((l) => /^# /.test(l)) || '# Untitled').slice(2).trim();
-  const dateLine = lines.find((l) => /^Effective /.test(l)) || '';
+  const dateLine = lines.find((l) => /^(Effective |生效日期：)/.test(l)) || '';
   const firstH2 = lines.findIndex((l) => /^## /.test(l));
 
   const preamble = lines
     .slice(lines.findIndex((l) => /^# /.test(l)) + 1, firstH2 < 0 ? lines.length : firstH2)
-    .filter((l) => !/^Effective /.test(l));
+    .filter((l) => !/^(Effective |生效日期：)/.test(l));
 
   const sections = [];
   let current = null;
@@ -80,15 +85,24 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith('.md'))) {
   }
   if (current) sections.push(current);
 
-  docs[slugOf(file)] = {
+  return {
     title,
-    date: dateLine.replace(/^Effective /, ''),
+    date: dateLine,
     pdf: `/legal/guanyisearch-${slugOf(file)}-2026-09-en.pdf`,
     lead: blocks(preamble),
     sections: sections.map((s) => ({ id: s.id, title: s.title, html: blocks(s.lines) })),
+  };
+  };
+
+  const slug = slugOf(file);
+  const en = parse(readFileSync(join(DIR, file), 'utf8'));
+  const zhPath = join(DIR, `${slug}.zh.md`);
+  docs[slug] = {
+    en,
+    zh: existsSync(zhPath) ? parse(readFileSync(zhPath, 'utf8')) : en,
   };
 }
 
 const banner = '/* 自动生成：node scripts/build-legal.mjs —— 不要手改，改 src/content/legal/*.md */\n';
 writeFileSync(OUT, `${banner}export const legalDocs = ${JSON.stringify(docs, null, 2)};\n`);
-console.log('已生成', OUT, Object.keys(docs).map((k) => `${k}:${docs[k].sections.length} 节`).join(' · '));
+console.log('已生成', OUT, Object.keys(docs).map((k) => `${k}:${docs[k].en.sections.length}/${docs[k].zh.sections.length} 节`).join(' · '));
