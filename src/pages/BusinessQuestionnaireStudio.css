@@ -789,3 +789,24 @@
 .sq-assist-list li span { flex: 1 1 auto; color: #141413; font-size: 13px; line-height: 1.5; }
 
 .sq-tool.is-on { border-color: #141413; color: #141413; }
+
+.sq-modal-card.is-wide { width: min(100%, 760px); }
+
+.sq-template { grid-template-rows: auto auto 1fr auto; }
+
+.sq-template-preview {
+  display: grid;
+  gap: 4px;
+  margin: 4px 0 10px;
+  padding: 0;
+  color: #5F6862;
+  font-size: 11px;
+  line-height: 1.5;
+  list-style: none;
+}
+
+.sq-template-preview li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.sq-template-preview li.is-more { color: #8D948D; }
+
+.sq-template .sq-btn { justify-self: stretch; justify-content: center; }

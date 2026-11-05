@@ -112,7 +112,7 @@ const copy = {
     remove: '删除', moveUp: '上移', moveDown: '下移',
     promptPlaceholder: '问题', type: '题型', options: '选项',
     save: '保存', publish: '发布', publishing: '发布中…', saved: '已保存', saveFailed: '保存失败，请稍后再试。',
-    untitled: '未命名问卷', preview: '预览', quotas: '配额',
+    untitled: '未命名问卷', preview: '预览', quotas: '配额', templates: '模板',
     qualityButton: '质量检查', qualityTitle: '质量检查',
     assist: 'AI', assistTitle: '让 AI 改这道题', assistPlaceholder: '想让它怎么改？例如：更中性、别诱导、缩短',
     assistRewrite: '改写题干', assistOptions: '生成选项', assistApply: '采用', assistUndo: '撤销',
@@ -145,7 +145,7 @@ const copy = {
     remove: 'Delete', moveUp: 'Move up', moveDown: 'Move down',
     promptPlaceholder: 'Question', type: 'Type', options: 'Options',
     save: 'Save', publish: 'Publish', publishing: 'Publishing…', saved: 'Saved', saveFailed: 'Could not save. Try again.',
-    untitled: 'Untitled questionnaire', preview: 'Preview', quotas: 'Quotas',
+    untitled: 'Untitled questionnaire', preview: 'Preview', quotas: 'Quotas', templates: 'Templates',
     qualityButton: 'Quality check', qualityTitle: 'Quality check',
     assist: 'AI', assistTitle: 'Let AI rework this question', assistPlaceholder: 'How should it change? e.g. neutral, no leading, shorter',
     assistRewrite: 'Rewrite prompt', assistOptions: 'Suggest options', assistApply: 'Use', assistUndo: 'Undo',
@@ -592,7 +592,7 @@ export default function BusinessQuestionnaireStudio() {
   return (
     <main className={`sq-page${readOnly ? ' is-locked' : ''}`}>
       <header className="sq-top">
-        <button type="button" className="sq-icon" onClick={() => navigate(withLanguage(`/business/projects/${projectId}`, language))} aria-label={text.back}>
+        <button type="button" className="sq-icon" onClick={() => navigate(withLanguage('/business/workspace?view=questionnaires', language))} aria-label={text.back}>
           <ArrowLeft size={17} aria-hidden="true" />
         </button>
         <div className="sq-title">
@@ -1183,7 +1183,7 @@ export default function BusinessQuestionnaireStudio() {
       {templatesOpen ? (
         <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.templatesTitle}>
           <button type="button" className="sq-modal-scrim" aria-label={text.close} onClick={() => setTemplatesOpen(false)} />
-          <section className="sq-modal-card">
+          <section className="sq-modal-card is-wide">
             <header>
               <strong>{text.templatesTitle}</strong>
               <button type="button" className="sq-icon" onClick={() => setTemplatesOpen(false)} aria-label={text.close}>
@@ -1199,7 +1199,13 @@ export default function BusinessQuestionnaireStudio() {
                     <article key={template.id} className="sq-template">
                       <strong>{template.name[language] || template.name.en}</strong>
                       <span>{template.detail[language] || template.detail.en}</span>
-                      <button type="button" className="sq-btn is-primary" disabled={tooMany} onClick={() => applyTemplate(template)}>
+                      <ul className="sq-template-preview">
+                        {template.questions.slice(0, 3).map((question) => (
+                          <li key={question.prompt}>{question.prompt}</li>
+                        ))}
+                        {template.questions.length > 3 ? <li className="is-more">+{template.questions.length - 3}</li> : null}
+                      </ul>
+                      <button type="button" className="sq-btn" disabled={tooMany} onClick={() => applyTemplate(template)}>
                         {tooMany ? text.templatesFull : text.templatesApply}
                       </button>
                     </article>

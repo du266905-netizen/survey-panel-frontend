@@ -241,3 +241,38 @@
   .aud-selected { border-left: 0; border-top: 1px solid #E5E3DD; }
   .sq-shell { grid-template-columns: 180px minmax(0, 1fr); }
 }
+
+/* ---- the brief, read back at the top of the audience step ---- */
+
+.aud-brief {
+  margin-bottom: 24px;
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  background: #FAF9F5;
+  padding: 14px 16px;
+}
+
+.aud-brief > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+
+.aud-brief > header strong { font-size: 13px; font-weight: 600; }
+
+.aud-brief-edit {
+  border: 0;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 11px var(--font-sans);
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.aud-brief-edit:hover { color: #141413; }
+
+.aud-brief dl { display: grid; gap: 8px; margin: 0; }
+
+.aud-brief dl > div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; }
+
+.aud-brief dt { color: #8D948D; font-size: 11px; line-height: 1.6; }
+
+.aud-brief dd { margin: 0; color: #141413; font-size: 13px; line-height: 1.6; }

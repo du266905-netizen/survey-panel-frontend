@@ -91,10 +91,12 @@ const copy = {
     incidence: '符合比例',
     perComplete: '单份成本',
     total: '合计',
-    estimateNote: '示意价，按筛选条件与默认 8 分钟时长估算，正式报价以项目为准。',
+    estimateNote: '示意价，按筛选条件与 {minutes} 分钟时长估算，正式报价以项目为准。',
     next: '下一步：问卷',
     localOnly: '当前选择只保存在这台浏览器：项目还没有存放受众条件的字段。',
     notSet: '未选择',
+    briefTitle: '项目简报', briefEdit: '去改简报', briefGoal: '研究目标', briefAudience: '受众描述',
+    briefMarket: '市场', briefParticipants: '目标人数', briefPeople: '{n} 人', briefMinutes: '单份时长', briefMin: '{n} 分钟',
   },
   en: {
     back: 'Back to project', flow: 'Flow',
@@ -115,10 +117,12 @@ const copy = {
     incidence: 'Incidence',
     perComplete: 'Cost per complete',
     total: 'Total',
-    estimateNote: 'Indicative only, based on filters and an 8-minute interview; the project quote is the record.',
+    estimateNote: 'Indicative only, based on filters and a {minutes}-minute interview; the project quote is the record.',
     next: 'Next: questionnaire',
     localOnly: 'Kept in this browser only: the project record has no targeting field yet.',
     notSet: 'Not set',
+    briefTitle: 'Project brief', briefEdit: 'Edit brief', briefGoal: 'Research goal', briefAudience: 'Audience',
+    briefMarket: 'Market', briefParticipants: 'Target completes', briefPeople: '{n}', briefMinutes: 'Length', briefMin: '{n} min',
   },
 };
 
@@ -210,6 +214,28 @@ export default function BusinessAudience() {
         </nav>
 
         <section className="aud-canvas">
+          {project ? (
+            <section className="aud-brief">
+              <header>
+                <strong>{text.briefTitle}</strong>
+                <button
+                  type="button"
+                  className="aud-brief-edit"
+                  onClick={() => navigate(withLanguage(`/business/workspace?view=projects`, language))}
+                >
+                  {text.briefEdit}
+                </button>
+              </header>
+              <dl>
+                <div><dt>{text.briefGoal}</dt><dd>{project.researchGoal || '—'}</dd></div>
+                <div><dt>{text.briefAudience}</dt><dd>{project.audienceDescription || '—'}</dd></div>
+                <div><dt>{text.briefMarket}</dt><dd>{project.countries || '—'}</dd></div>
+                <div><dt>{text.briefParticipants}</dt><dd>{project.targetParticipants ? text.briefPeople.replace('{n}', project.targetParticipants) : '—'}</dd></div>
+                <div><dt>{text.briefMinutes}</dt><dd>{project.estimatedMinutes ? text.briefMin.replace('{n}', project.estimatedMinutes) : '—'}</dd></div>
+              </dl>
+            </section>
+          ) : null}
+
           <h1 className="aud-title">{text.title}</h1>
           <p className="aud-intro">{text.intro}</p>
 
@@ -330,7 +356,7 @@ export default function BusinessAudience() {
               <div><dt>{text.perComplete}</dt><dd>{money(perComplete)}</dd></div>
               <div className="is-total"><dt>{text.total}</dt><dd>{money(total)}</dd></div>
             </dl>
-            <p>{text.estimateNote}</p>
+            <p>{text.estimateNote.replace('{minutes}', minutes)}</p>
           </div>
         </section>
       </div>
