@@ -52,7 +52,7 @@ import RouteScrollManager from './components/RouteScrollManager';
 import PageMotion from './components/PageMotion';
 import PublicSiteLayout from './components/PublicSiteLayout';
 import Terms from './pages/Terms';
-import BusinessResearcherTerms from './pages/BusinessResearcherTerms';
+import LegalDocument from './pages/LegalDocument';
 import TrafficConsole from './pages/TrafficConsole';
 import Wallet from './pages/Wallet';
 import WorkerDetail from './pages/WorkerDetail';
@@ -248,9 +248,10 @@ export default function App() {
         <Route path="/business/forgot-password" element={<ForgotPassword />} />
         <Route path="/business/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PublicPage><Privacy /></PublicPage>} />
-        <Route path="/terms" element={<PublicPage><Terms /></PublicPage>} />
+        <Route path="/terms" element={<PublicPage><LegalDocument slug="terms-of-service" /></PublicPage>} />
+        <Route path="/legal/acceptable-use" element={<PublicPage><LegalDocument slug="acceptable-use" /></PublicPage>} />
         <Route path="/email/unsubscribe" element={<MarketingUnsubscribe />} />
-        <Route path="/business/terms" element={<PublicPage><BusinessResearcherTerms /></PublicPage>} />
+        <Route path="/business/terms" element={<PublicPage><LegalDocument slug="research-terms" /></PublicPage>} />
         <Route path="/about" element={<PublicPage><About /></PublicPage>} />
         <Route path="/__icons" element={<IconBoard />} />
         <Route path="/rewards" element={<PublicPage><Rewards /></PublicPage>} />
