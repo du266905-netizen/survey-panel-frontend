@@ -48,7 +48,9 @@ const copy = {
     save: '省 20%',
     methodLabel: '付款方式',
     methodBalance: '余额扣除',
-    methodBalanceHint: '余额 {balance}，可直接抵扣',
+    methodBalanceEnough: '余额 {balance}，可直接抵扣',
+    methodBalanceShort: '余额 {balance}，还差 {gap}',
+    methodBalanceUnknown: '余额读取中…',
     methodCard: '银行卡',
     methodCardOff: '卡通道正在升级中，请使用其他支付方式',
     methodCardHint: '借记卡或信用卡',
@@ -95,7 +97,9 @@ const copy = {
     save: 'Save 20%',
     methodLabel: 'Payment method',
     methodBalance: 'Account balance',
-    methodBalanceHint: 'Balance {balance} — deduct now',
+    methodBalanceEnough: 'Balance {balance} — deduct now',
+    methodBalanceShort: 'Balance {balance} — {gap} short',
+    methodBalanceUnknown: 'Reading balance…',
     methodCard: 'Card',
     methodCardOff: 'Card payments are being upgraded — please use another method',
     methodCardHint: 'Debit or credit card',
@@ -167,7 +171,11 @@ export default function BusinessPlanCheckout() {
     let alive = true;
     getBusinessAccountBalance()
       .then((payload) => {
-        const value = Number(payload?.balance?.balance);
+        /* `Number(null)` is 0, which would print a confident $0 for an account
+           the server never answered for. Keep "unknown" unknown. */
+        const raw = payload?.balance?.balance;
+        if (raw === null || raw === undefined || raw === '') return;
+        const value = Number(raw);
         if (alive && Number.isFinite(value)) setBalance(value);
       })
       .catch(() => { /* the page still reads without a balance */ });
@@ -180,6 +188,11 @@ export default function BusinessPlanCheckout() {
   const due = cycle === 'yearly' ? plan.yearly : plan.monthly;
   const dueCents = Math.round(due * 100);
   const balanceText = balance === null ? '—' : money.format(balance);
+  const balanceHint = balance === null
+    ? text.methodBalanceUnknown
+    : balance >= due
+      ? fill(text.methodBalanceEnough, { balance: balanceText })
+      : fill(text.methodBalanceShort, { balance: balanceText, gap: money.format(due - balance) });
   const billingReady = isBillingComplete(billing.profile);
   const busy = Boolean(submitting);
 
@@ -271,7 +284,7 @@ export default function BusinessPlanCheckout() {
     if (method === 'link') { createLink(); return; }
     if (method === 'crypto') { startCrypto(); return; }
     if (method === 'bank') {
-      navigate(withLanguage(`/business/add-funds/bank-transfer?amount=${due}`, language));
+      navigate(withLanguage(`/business/add-funds/bank-transfer?amount=${due}&from=plan&plan=${plan.id}&cycle=${cycle}`, language));
       return;
     }
     if (method === 'card') return;
@@ -342,7 +355,7 @@ export default function BusinessPlanCheckout() {
                 <span className="business-topup-method-copy">
                   <strong>{text.methodBalance}</strong>
                   <small className={error && method === 'balance' ? 'pco-short' : undefined}>
-                    {fill(text.methodBalanceHint, { balance: balanceText })}
+                    {balanceHint}
                   </small>
                 </span>
                 <span className="business-topup-radio" aria-hidden="true" />

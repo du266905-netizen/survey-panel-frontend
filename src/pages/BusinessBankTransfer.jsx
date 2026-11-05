@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
@@ -18,6 +18,7 @@ import './BusinessBankTransfer.css';
 const copyByLanguage = {
   'zh-CN': {
     back: '返回充值',
+    backPlan: '返回套餐',
     title: '银行转账付款',
     intro: '转账完成后，在下方填写这笔付款。',
     sendTo: '收款信息',
@@ -56,6 +57,7 @@ const copyByLanguage = {
 
 const en = {
   back: 'Back to add funds',
+  backPlan: 'Back to plan',
   title: 'Pay by bank transfer',
   intro: 'Send the transfer, then fill in the details below.',
   sendTo: 'Send to',
@@ -103,8 +105,21 @@ async function copyText(value) {
 
 export default function BusinessBankTransfer() {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const { language } = useLanguage();
   const copy = copyByLanguage[language] || en;
+  /* A plan sends the payer here to top up the exact price; going back must land
+     on the plan they were buying, not on the generic top-up sheet. */
+  const fromPlan = params.get('from') === 'plan';
+  const planId = params.get('plan') || '';
+  const planCycle = params.get('cycle') === 'yearly' ? 'yearly' : 'monthly';
+  const goBack = () => {
+    if (fromPlan) {
+      navigate(withLanguage(`/business/plans/checkout?plan=${planId}&cycle=${planCycle}`, language));
+      return;
+    }
+    navigate(withLanguage('/business/add-funds', language));
+  };
   /* The account comes from the server. The constant stays only as the
    * first-paint value until the endpoint is deployed; once it is, the constant
    * is deleted and this becomes a plain fetch. */
@@ -184,8 +199,8 @@ export default function BusinessBankTransfer() {
       <header className="bank-transfer-top">
         <div className="bank-transfer-top-inner">
           <Logo size="sm" />
-          <button type="button" className="bank-transfer-back" onClick={() => navigate(withLanguage('/business/add-funds', language))}>
-            <ArrowLeft size={16} /> {copy.back}
+          <button type="button" className="bank-transfer-back" onClick={goBack}>
+            <ArrowLeft size={16} /> {fromPlan ? copy.backPlan : copy.back}
           </button>
         </div>
       </header>
