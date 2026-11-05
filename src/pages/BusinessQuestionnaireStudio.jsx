@@ -111,7 +111,10 @@ const copy = {
     remove: '删除', moveUp: '上移', moveDown: '下移',
     promptPlaceholder: '问题', type: '题型', options: '选项',
     save: '保存', publish: '发布', publishing: '发布中…', saved: '已保存', saveFailed: '保存失败，请稍后再试。',
-    untitled: '未命名问卷', preview: '预览', quotas: '配额', quotasTitle: '配额', quotasHint: '按题目答案划分格子，填每格需要多少份。相加就是总样本量。',
+    untitled: '未命名问卷', preview: '预览', quotas: '配额',
+    qualityButton: '质量检查', qualityTitle: '质量检查',
+    paging: '分页', pagingHint: '一页放几道题。设成分页后，受访者会看到进度条。',
+    pagingOff: '不分页', pagingPerPage: '每页题数', pagingPages: '共 {n} 页', quotasTitle: '配额', quotasHint: '按题目答案划分格子，填每格需要多少份。相加就是总样本量。',
     quotaCell: '格子', quotaTarget: '目标份数', quotaAdd: '添加格子', quotaRemove: '删除', quotaEmpty: '还没有配额格子',
     quotaEmptyHint: '先有单选、多选或下拉题，才能按答案划分格子。', quotaTotal: '合计目标', quotaEnforced: '进人判断在后端：页面上能配，接口接上后才真正限流。', templatesTitle: '从整卷模板开始', templatesHint: '插入后可以直接改题目和选项。', templatesApply: '插入', templatesFull: '题目数量会超过 30 题上限',
     archived: '已归档', copyDraft: '复制为新草稿', archive: '归档', deleteDraft: '删除草稿',
@@ -137,7 +140,10 @@ const copy = {
     remove: 'Delete', moveUp: 'Move up', moveDown: 'Move down',
     promptPlaceholder: 'Question', type: 'Type', options: 'Options',
     save: 'Save', publish: 'Publish', publishing: 'Publishing…', saved: 'Saved', saveFailed: 'Could not save. Try again.',
-    untitled: 'Untitled questionnaire', preview: 'Preview', quotas: 'Quotas', quotasTitle: 'Quotas', quotasHint: 'Split the sample by answers and set how many completes each cell needs; the sum is the total.', 
+    untitled: 'Untitled questionnaire', preview: 'Preview', quotas: 'Quotas',
+    qualityButton: 'Quality check', qualityTitle: 'Quality check',
+    paging: 'Paging', pagingHint: 'Questions per page. Once paged, respondents see a progress bar.',
+    pagingOff: 'One page', pagingPerPage: 'Per page', pagingPages: '{n} pages', quotasTitle: 'Quotas', quotasHint: 'Split the sample by answers and set how many completes each cell needs; the sum is the total.', 
     quotaCell: 'Cell', quotaTarget: 'Target', quotaAdd: 'Add cell', quotaRemove: 'Remove', quotaEmpty: 'No quota cells yet', 
     quotaEmptyHint: 'Add a single-choice, multiple-choice or dropdown question first.', quotaTotal: 'Total target', quotaEnforced: 'Enforcement is server-side: it can be configured here and takes effect once the API accepts it.', templatesTitle: 'Start from a whole questionnaire', templatesHint: 'Everything is editable once inserted.', templatesApply: 'Insert', templatesFull: 'This would pass the 30-question limit',
     archived: 'Archived', copyDraft: 'Copy as a new draft', archive: 'Archive', deleteDraft: 'Delete draft',
@@ -269,6 +275,8 @@ export default function BusinessQuestionnaireStudio() {
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [quotasOpen, setQuotasOpen] = useState(false);
   const [quotas, setQuotas] = useState([]);
+  const [pageSize, setPageSize] = useState(0);
+  const [checksOpen, setChecksOpen] = useState(false);
   const [cover, setCover] = useState('');
   const [moreOpen, setMoreOpen] = useState(false);
   const [sensitiveOpen, setSensitiveOpen] = useState(false);
@@ -285,6 +293,7 @@ export default function BusinessQuestionnaireStudio() {
       setProject(next);
       setCover(next.questionnaire?.coverDescription || '');
       setQuotas(Array.isArray(next.questionnaire?.quotas) ? next.questionnaire.quotas : []);
+      setPageSize(Number(next.questionnaire?.pageSize) || 0);
       setQuestions((next.questionnaire?.questions || []).map(normalize));
     } catch {
       setError(text.saveFailed);
@@ -444,6 +453,7 @@ export default function BusinessQuestionnaireStudio() {
         collectionMode: project?.questionnaire?.collectionMode || 'AUDIENCE_SOURCING',
         isCollecting: Boolean(project?.questionnaire?.isCollecting),
         quotas,
+        pageSize,
         questions: questions.map((question, index) => ({
           type: question.type,
           section: question.section,
@@ -538,6 +548,10 @@ export default function BusinessQuestionnaireStudio() {
         </div>
         <div className="sq-top-actions">
           {message ? <span className="sq-saved"><Check size={14} aria-hidden="true" /> {message}</span> : null}
+          <button type="button" className="sq-btn" onClick={() => setChecksOpen(true)}>
+            <AlertCircle size={15} aria-hidden="true" /> {text.qualityButton}
+            {checks.length ? <span className="sq-badge is-alert">{checks.length}</span> : null}
+          </button>
           <button type="button" className="sq-btn" onClick={() => setQuotasOpen(true)}>
             <Gauge size={15} aria-hidden="true" /> {text.quotas}
             {quotas.length ? <span className="sq-badge">{quotaTotal}</span> : null}
@@ -929,17 +943,52 @@ export default function BusinessQuestionnaireStudio() {
             </dl>
           </section>
           <section className="sq-side-block">
-            <h2>{text.quality}</h2>
-            {checks.length === 0 ? (
-              <p className="sq-ok"><CheckCircle2 size={15} aria-hidden="true" /> {text.noIssues}</p>
-            ) : (
-              <ul className="sq-issues">
-                {checks.map((issue) => <li key={issue}><AlertCircle size={14} aria-hidden="true" /> {issue}</li>)}
-              </ul>
-            )}
+            <h2>{text.paging}</h2>
+            <p className="sq-side-hint">{text.pagingHint}</p>
+            <div className="sq-page-size">
+              {[0, 5, 10, 15].map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  className={pageSize === size ? 'is-on' : ''}
+                  onClick={() => setPageSize(size)}
+                >
+                  {size === 0 ? text.pagingOff : size}
+                </button>
+              ))}
+            </div>
+            <p className="sq-side-note">
+              {pageSize === 0
+                ? text.pagingOff
+                : text.pagingPages.replace('{n}', Math.max(1, Math.ceil(questions.length / pageSize)))}
+            </p>
           </section>
         </aside>
       </div>
+
+      {checksOpen ? (
+        <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.qualityTitle}>
+          <button type="button" className="sq-modal-scrim" aria-label={text.close} onClick={() => setChecksOpen(false)} />
+          <section className="sq-modal-card is-narrow">
+            <header>
+              <strong>{text.qualityTitle}</strong>
+              <span className="sq-modal-count">{checks.length}</span>
+              <button type="button" className="sq-icon" onClick={() => setChecksOpen(false)} aria-label={text.close}>
+                <X size={17} aria-hidden="true" />
+              </button>
+            </header>
+            <div className="sq-modal-body">
+              {checks.length === 0 ? (
+                <p className="sq-ok"><CheckCircle2 size={15} aria-hidden="true" /> {text.noIssues}</p>
+              ) : (
+                <ul className="sq-issues">
+                  {checks.map((issue) => <li key={issue}><AlertCircle size={14} aria-hidden="true" /> {issue}</li>)}
+                </ul>
+              )}
+            </div>
+          </section>
+        </div>
+      ) : null}
 
       {quotasOpen ? (
         <div className="sq-modal" role="dialog" aria-modal="true" aria-label={text.quotasTitle}>

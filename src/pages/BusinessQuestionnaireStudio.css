@@ -706,3 +706,29 @@
 }
 
 .sq-quota-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
+
+/* ---- paging panel in the right column ---- */
+
+.sq-side-hint { margin: 0 0 10px; color: #5F6862; font-size: 11px; line-height: 1.6; }
+
+.sq-page-size { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.sq-page-size button {
+  min-height: 30px;
+  min-width: 42px;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  padding: 0 10px;
+}
+
+.sq-page-size button:hover { border-color: #8D948D; }
+
+.sq-page-size button.is-on { border-color: #141413; box-shadow: inset 0 0 0 1px #141413; }
+
+.sq-side-note { margin: 10px 0 0; color: #8D948D; font-size: 11px; }
+
+.sq-badge.is-alert { background: #FBEDEB; color: #B42318; }

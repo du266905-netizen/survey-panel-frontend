@@ -265,3 +265,28 @@
 }
 
 .pq-retry:hover { border-color: #141413; background: #FAF9F5; }
+
+/* ---- paging: a thin progress line and one pair of buttons ---- */
+
+.pq-progress { display: grid; gap: 6px; margin: -8px 0 4px; }
+
+.pq-progress > div { height: 3px; overflow: hidden; border-radius: 999px; background: #E5E3DD; }
+
+.pq-progress > div > span { display: block; height: 100%; border-radius: 999px; background: #141413; transition: width .2s ease; }
+
+.pq-progress small { color: #8D948D; font-family: var(--font-sans); font-size: 11px; letter-spacing: .06em; }
+
+.pq-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.pq-back {
+  min-height: 46px;
+  border: 1px solid #E5E3DD;
+  border-radius: 3px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font: 500 14px var(--font-sans);
+  padding: 0 22px;
+}
+
+.pq-back:hover { border-color: #141413; }

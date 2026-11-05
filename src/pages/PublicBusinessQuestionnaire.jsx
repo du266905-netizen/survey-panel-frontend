@@ -22,7 +22,7 @@ const COPY = {
     verifyFailed: '人机验证加载失败。请刷新页面，或换一个浏览器再试。',
     verifyHint: '提交前需要完成一次人机验证。',
     loadFailed: '问卷加载失败，请稍后再打开链接。', missing: '还有必答题没有回答。', submitFailed: '提交失败，请稍后再试。', retry: '刷新重试',
-    rankingHint: '按您偏好的顺序依次勾选。', npsLow: '完全不会', npsHigh: '非常愿意',
+    rankingHint: '按您偏好的顺序依次勾选。', npsLow: '完全不会', npsHigh: '非常愿意', step: '第 {n} / {total} 页', next: '下一页', back: '上一页',
     matrixDefault: ['非常不同意', '不同意', '一般', '同意', '非常同意'],
     loading: '正在打开问卷…',
   },
@@ -34,7 +34,7 @@ const COPY = {
     verifyFailed: 'The human check could not load. Refresh the page or try another browser.',
     verifyHint: 'A quick human check is required before submitting.',
     loadFailed: 'This survey could not load. Please open the link again later.', missing: 'Some required questions are still unanswered.', submitFailed: 'We could not submit your response. Please try again.', retry: 'Reload',
-    rankingHint: 'Select each option in the order you prefer it.', npsLow: 'Not at all likely', npsHigh: 'Extremely likely',
+    rankingHint: 'Select each option in the order you prefer it.', npsLow: 'Not at all likely', npsHigh: 'Extremely likely', step: 'Page {n} of {total}', next: 'Next', back: 'Back',
     matrixDefault: ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree'],
     loading: 'Opening the survey…',
   },
@@ -226,6 +226,7 @@ export default function PublicBusinessQuestionnaire() {
   const [error, setError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [verifyFailed, setVerifyFailed] = useState(false);
+  const [page, setPage] = useState(0);
   const startedAtRef = useRef(Date.now());
 
   const zh = isChinese(questionnaire?.title) || isChinese(questionnaire?.coverDescription);
@@ -249,13 +250,30 @@ export default function PublicBusinessQuestionnaire() {
 
   const terminated = questions.some((question) => question.logic?.action === 'TERMINATE' && logicMatches(question, questions, answers));
 
+  /* Pages are chunks of the visible questions, sized by questionnaire.pageSize.
+     Zero means one page, which is what a short survey should be. */
+  const pageSize = Number(questionnaire?.pageSize) || 0;
+  const pages = useMemo(() => {
+    if (!pageSize || pageSize >= visibleQuestions.length) return [visibleQuestions];
+    const chunks = [];
+    for (let index = 0; index < visibleQuestions.length; index += pageSize) {
+      chunks.push(visibleQuestions.slice(index, index + pageSize));
+    }
+    return chunks;
+  }, [visibleQuestions, pageSize]);
+  const pageIndex = Math.min(page, Math.max(0, pages.length - 1));
+  const currentQuestions = pages[pageIndex] || [];
+  const lastPage = pageIndex >= pages.length - 1;
+
   const submit = async (event) => {
     event.preventDefault();
     if (submitting || !questionnaire || terminated) return;
     const missing = visibleQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
     if (missing) {
+      const missingPage = pages.findIndex((group) => group.some((question) => question.id === missing.id));
+      if (missingPage >= 0) setPage(missingPage);
       setError(copy.missing);
-      document.getElementById(`question-${missing.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      window.setTimeout(() => document.getElementById(`question-${missing.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 60);
       return;
     }
     setSubmitting(true);
@@ -318,10 +336,17 @@ export default function PublicBusinessQuestionnaire() {
       </header>
 
       <form className="pq-form" onSubmit={submit}>
-        {visibleQuestions.map((question, index) => (
+        {pages.length > 1 ? (
+          <div className="pq-progress">
+            <div><span style={{ width: `${((pageIndex + 1) / pages.length) * 100}%` }} /></div>
+            <small>{copy.step.replace('{n}', pageIndex + 1).replace('{total}', pages.length)}</small>
+          </div>
+        ) : null}
+
+        {currentQuestions.map((question) => (
           <fieldset className="pq-question" id={`question-${question.id}`} key={question.id}>
             <legend>
-              <span className="pq-num">{index + 1}</span>
+              <span className="pq-num">{visibleQuestions.indexOf(question) + 1}</span>
               {question.prompt || '—'}
               {question.required ? <em>{copy.required}</em> : null}
             </legend>
@@ -336,7 +361,30 @@ export default function PublicBusinessQuestionnaire() {
 
         {error ? <p className="pq-error" role="alert">{error}</p> : null}
 
-        <div className="pq-verify">
+        {!lastPage ? (
+          <div className="pq-nav">
+            {pageIndex > 0 ? <button type="button" className="pq-back" onClick={() => { setError(''); setPage(pageIndex - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{copy.back}</button> : <span />}
+            <button
+              type="button"
+              className="pq-submit"
+              onClick={() => {
+                const missing = currentQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
+                if (missing) {
+                  setError(copy.missing);
+                  document.getElementById(`question-${missing.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  return;
+                }
+                setError('');
+                setPage(pageIndex + 1);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              {copy.next}
+            </button>
+          </div>
+        ) : null}
+
+        {lastPage ? <div className="pq-verify">
           {/* A failed challenge leaves Cloudflare's own error box in place; it
               says nothing a respondent can act on, so we drop it and offer one
               action instead. */}
@@ -355,18 +403,25 @@ export default function PublicBusinessQuestionnaire() {
               {copy.retry}
             </button>
           ) : null}
-        </div>
+        </div> : null}
 
+        {lastPage ? (
+        <>
+        {pageIndex > 0 && pages.length > 1 ? (
+          <button type="button" className="pq-back" onClick={() => { setError(''); setPage(pageIndex - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{copy.back}</button>
+        ) : null}
         <button className="pq-submit" type="submit" disabled={submitting || !turnstileToken || verifyFailed}>
           {submitting ? <LoaderCircle className="pq-spin" size={17} /> : null}
           {submitting ? copy.submitting : copy.submit}
         </button>
+        </>
+        ) : null}
 
-        <p className="pq-consent">
+        {lastPage ? <p className="pq-consent">
           {afterPrivacy !== undefined
             ? <>{beforePrivacy}<a href="/privacy" target="_blank" rel="noreferrer">{copy.privacy}</a>{afterPrivacy}</>
             : <>{copy.consent} <a href="/privacy" target="_blank" rel="noreferrer">{copy.privacy}</a></>}
-        </p>
+        </p> : null}
       </form>
     </main>
   );
