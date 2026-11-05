@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, Gauge, GripVertical, LayoutTemplate,
+  AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, Gauge, GripVertical, LayoutTemplate, Sparkles, Undo2,
   ListChecks, LoaderCircle, MoreHorizontal, Plus, Receipt, Rocket, Send, Settings2, Star, Trash2, Users, X,
 } from 'lucide-react';
 import {
@@ -9,6 +9,7 @@ import {
   getBusinessProject, publishBusinessQuestionnaire, saveBusinessQuestionnaire,
 } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import { assistQuestion } from '../ai/questionAssistClient';
 import './BusinessQuestionnaireStudio.css';
 
 /* The questionnaire editor.
@@ -113,6 +114,10 @@ const copy = {
     save: '保存', publish: '发布', publishing: '发布中…', saved: '已保存', saveFailed: '保存失败，请稍后再试。',
     untitled: '未命名问卷', preview: '预览', quotas: '配额',
     qualityButton: '质量检查', qualityTitle: '质量检查',
+    assist: 'AI', assistTitle: '让 AI 改这道题', assistPlaceholder: '想让它怎么改？例如：更中性、别诱导、缩短',
+    assistRewrite: '改写题干', assistOptions: '生成选项', assistApply: '采用', assistUndo: '撤销',
+    assistThinking: '生成中…', assistFailed: 'AI 接口还没接上（后端待加 /assist）。', assistMock: '开发环境示例结果，不是模型输出。',
+    assistEmpty: '先写一句要求，或直接点一个动作。',
     paging: '分页', pagingHint: '一页放几道题。设成分页后，受访者会看到进度条。',
     pagingOff: '一页到底', pagingOne: '一屏一题', pagingPerPage: '每页题数', pagingPages: '共 {n} 页，下面带题目地图', quotasTitle: '配额', quotasHint: '按题目答案划分格子，填每格需要多少份。相加就是总样本量。',
     quotaCell: '格子', quotaTarget: '目标份数', quotaAdd: '添加格子', quotaRemove: '删除', quotaEmpty: '还没有配额格子',
@@ -142,6 +147,10 @@ const copy = {
     save: 'Save', publish: 'Publish', publishing: 'Publishing…', saved: 'Saved', saveFailed: 'Could not save. Try again.',
     untitled: 'Untitled questionnaire', preview: 'Preview', quotas: 'Quotas',
     qualityButton: 'Quality check', qualityTitle: 'Quality check',
+    assist: 'AI', assistTitle: 'Let AI rework this question', assistPlaceholder: 'How should it change? e.g. neutral, no leading, shorter',
+    assistRewrite: 'Rewrite prompt', assistOptions: 'Suggest options', assistApply: 'Use', assistUndo: 'Undo',
+    assistThinking: 'Working…', assistFailed: 'The AI endpoint is not connected yet (backend needs /assist).', assistMock: 'Development fixture, not model output.',
+    assistEmpty: 'Write an instruction first, or pick an action.',
     paging: 'Paging', pagingHint: 'Questions per page. Once paged, respondents see a progress bar.',
     pagingOff: 'One page', pagingOne: 'One per screen', pagingPerPage: 'Per page', pagingPages: '{n} pages, with a question map', quotasTitle: 'Quotas', quotasHint: 'Split the sample by answers and set how many completes each cell needs; the sum is the total.', 
     quotaCell: 'Cell', quotaTarget: 'Target', quotaAdd: 'Add cell', quotaRemove: 'Remove', quotaEmpty: 'No quota cells yet', 
@@ -277,6 +286,13 @@ export default function BusinessQuestionnaireStudio() {
   const [quotas, setQuotas] = useState([]);
   const [pageSize, setPageSize] = useState(1);
   const [checksOpen, setChecksOpen] = useState(false);
+  const [assistFor, setAssistFor] = useState('');
+  const [assistBusy, setAssistBusy] = useState('');
+  const [assistError, setAssistError] = useState('');
+  const [assistResults, setAssistResults] = useState([]);
+  const [assistInstruction, setAssistInstruction] = useState('');
+  const [assistMode, setAssistMode] = useState('rewrite');
+  const [assistUndo, setAssistUndo] = useState({});
   const [cover, setCover] = useState('');
   const [moreOpen, setMoreOpen] = useState(false);
   const [sensitiveOpen, setSensitiveOpen] = useState(false);
@@ -320,6 +336,45 @@ export default function BusinessQuestionnaireStudio() {
   const updateSettings = (uidValue, changes) => {
     const target = questions.find((question) => question.uid === uidValue);
     if (target) update(uidValue, { settings: { ...target.settings, ...changes } });
+  };
+
+  const runAssist = async (question, mode) => {
+    setAssistMode(mode);
+    setAssistBusy(mode);
+    setAssistError('');
+    setAssistResults([]);
+    try {
+      const { data, mocked } = await assistQuestion({
+        mode,
+        prompt: question.prompt,
+        choices: question.choices,
+        brief: `${project?.researchGoal || ''} ${project?.audienceDescription || ''}`.trim(),
+      });
+      setAssistResults((data?.candidates || []).map((text) => ({ text, mocked })));
+      if (!data?.candidates?.length) setAssistError(text.assistEmpty);
+    } catch {
+      setAssistError(text.assistFailed);
+    } finally {
+      setAssistBusy('');
+    }
+  };
+
+  const applyAssist = (question, value, mode) => {
+    setAssistUndo((current) => ({ ...current, [question.uid]: { prompt: question.prompt, choices: [...question.choices] } }));
+    if (mode === 'options') update(question.uid, { choices: [...question.choices, value] });
+    else update(question.uid, { prompt: value });
+    setAssistResults([]);
+  };
+
+  const undoAssist = (question) => {
+    const snapshot = assistUndo[question.uid];
+    if (!snapshot) return;
+    update(question.uid, { prompt: snapshot.prompt, choices: snapshot.choices });
+    setAssistUndo((current) => {
+      const next = { ...current };
+      delete next[question.uid];
+      return next;
+    });
   };
 
   const applyTemplate = (template) => {
@@ -685,6 +740,19 @@ export default function BusinessQuestionnaireStudio() {
                           <input type="checkbox" checked={question.required} onChange={(event) => update(question.uid, { required: event.target.checked })} />
                           <span>{text.required}</span>
                         </label>
+                        <button
+                          type="button"
+                          className={`sq-tool${assistFor === question.uid ? ' is-on' : ''}`}
+                          title={text.assistTitle}
+                          onClick={() => {
+                            setAssistFor((current) => (current === question.uid ? '' : question.uid));
+                            setAssistResults([]);
+                            setAssistError('');
+                            setAssistInstruction('');
+                          }}
+                        >
+                          <Sparkles size={15} aria-hidden="true" />
+                        </button>
                         <button type="button" className="sq-tool" title={text.duplicate} onClick={() => duplicateQuestion(question.uid)}>
                           <Copy size={15} aria-hidden="true" />
                         </button>
@@ -721,6 +789,48 @@ export default function BusinessQuestionnaireStudio() {
                           ) : null}
                         </div>
                       </header>
+
+                      {assistFor === question.uid ? (
+                        <div className="sq-assist">
+                          <div className="sq-assist-head">
+                            <Sparkles size={13} aria-hidden="true" />
+                            <span>{text.assistTitle}</span>
+                            {assistUndo[question.uid] ? (
+                              <button type="button" className="sq-link" onClick={() => undoAssist(question)}>
+                                <Undo2 size={12} aria-hidden="true" /> {text.assistUndo}
+                              </button>
+                            ) : null}
+                          </div>
+                          <input
+                            className="sq-assist-input"
+                            value={assistInstruction}
+                            placeholder={text.assistPlaceholder}
+                            onChange={(event) => setAssistInstruction(event.target.value)}
+                          />
+                          <div className="sq-assist-actions">
+                            <button type="button" className="sq-btn" disabled={Boolean(assistBusy)} onClick={() => runAssist(question, 'rewrite')}>
+                              {assistBusy === 'rewrite' ? <LoaderCircle size={14} className="sq-spin" /> : null} {text.assistRewrite}
+                            </button>
+                            <button type="button" className="sq-btn" disabled={Boolean(assistBusy) || !['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'DROPDOWN'].includes(question.type)} onClick={() => runAssist(question, 'options')}>
+                              {assistBusy === 'options' ? <LoaderCircle size={14} className="sq-spin" /> : null} {text.assistOptions}
+                            </button>
+                          </div>
+                          {assistError ? <p className="sq-assist-error">{assistError}</p> : null}
+                          {assistResults.length ? (
+                            <ul className="sq-assist-list">
+                              {assistResults.map((candidate, candidateIndex) => (
+                                <li key={`${question.uid}-ai-${candidateIndex}`}>
+                                  <span>{candidate.text}</span>
+                                  <button type="button" className="sq-btn" onClick={() => applyAssist(question, candidate.text, assistMode)}>
+                                    {text.assistApply}
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                          {assistResults.some((candidate) => candidate.mocked) ? <p className="sq-assist-note">{text.assistMock}</p> : null}
+                        </div>
+                      ) : null}
 
                       {isChoice ? (
                         <div className="sq-options">
