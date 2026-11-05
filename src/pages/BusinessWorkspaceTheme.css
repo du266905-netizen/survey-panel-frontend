@@ -5586,3 +5586,98 @@ main.business-custom-request-page .business-workspace-rail {
 
 .business-funds-card-submit:hover:not(:disabled) { background: #2B2B2B; }
 .business-funds-card-submit:disabled { cursor: not-allowed; opacity: .55; }
+
+/* ---- projects as rows, the way a work list is read ---- */
+
+.business-workspace .business-project-table {
+  display: grid;
+  border-top: 1px solid var(--rs-line);
+}
+
+.business-workspace .business-project-thead,
+.business-workspace .business-project-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.7fr) 96px 96px 88px 112px minmax(110px, auto) 40px;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--rs-line);
+  padding: 14px 10px;
+}
+
+.business-workspace .business-project-thead {
+  color: var(--rs-faint);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.business-workspace .business-project-row:hover { background: #FAF9F5; }
+
+.business-workspace .business-project-cell { min-width: 0; }
+
+.business-workspace .business-project-cell.is-name { display: grid; justify-items: start; gap: 5px; }
+
+.business-workspace .business-project-cell.is-name .business-status { justify-self: start; width: auto; }
+
+.business-workspace .business-project-cell.is-status .business-status { width: auto; white-space: nowrap; }
+
+.business-workspace .business-project-cell.is-name h2 {
+  margin: 0;
+  color: var(--rs-ink);
+  font-family: var(--font-sans) !important;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.business-workspace .business-project-cell.is-name p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--rs-body);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.business-workspace .business-project-cell.is-format,
+.business-workspace .business-project-cell.is-completes,
+.business-workspace .business-project-cell.is-date {
+  color: var(--rs-body);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.business-workspace .business-project-cell.is-completes small { color: var(--rs-faint); }
+
+.business-workspace .business-project-cell.is-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.business-workspace .business-project-cell.is-menu { position: relative; justify-self: end; }
+
+.business-workspace .business-project-thead span:first-child { padding-left: 2px; }
+
+@media (max-width: 1080px) {
+  .business-workspace .business-project-thead,
+  .business-workspace .business-project-row {
+    grid-template-columns: minmax(0, 1fr) 96px 88px 40px;
+  }
+  .business-workspace .business-project-cell.is-format,
+  .business-workspace .business-project-cell.is-date,
+  .business-workspace .business-project-thead span:nth-child(3),
+  .business-workspace .business-project-thead span:nth-child(5) { display: none; }
+}
+
+/* 插入 in the template dialog is the one decisive action there: keep it ink. */
+.sq-template .sq-btn {
+  border-color: #141413;
+  background: #141413;
+  color: #FFFFFF;
+}
+
+.sq-template .sq-btn:hover:not(:disabled) { border-color: #000000; background: #000000; }
