@@ -239,3 +239,15 @@
 }
 
 .bt-link { color: #141413; text-decoration: underline; text-underline-offset: 3px; }
+
+/* The team email cannot be edited here: it must not look like a live field. */
+.business-account-page .bt-field input.bt-input-locked,
+.bt-field input.bt-input-locked {
+  border-color: #E5E3DD !important;
+  background: #F1F0EC !important;
+  color: #8D948D !important;
+  cursor: not-allowed;
+}
+
+.business-account-page .bt-field input.bt-input-locked:focus,
+.bt-field input.bt-input-locked:focus { outline: 0; }

@@ -156,7 +156,7 @@ export default function BusinessTeam() {
           </label>
           <label className="bt-field">
             <span>{text.teamEmail}</span>
-            <input value={user?.email || ''} readOnly disabled />
+            <input className="bt-input-locked" value={user?.email || ''} readOnly disabled />
           </label>
           <p className="bt-hint">
             {text.emailFixed}
