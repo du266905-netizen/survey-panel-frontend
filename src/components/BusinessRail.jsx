@@ -41,7 +41,17 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
   const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  /* The rail remounts on navigation; without this the group closed itself the
+     moment you picked one of its entries. Keep the choice for the session, and
+     open by default when the current page is one of them. */
+  const settingsIds = ['personal', 'team', 'billing', 'budget'];
+  const [settingsOpen, setSettingsOpen] = useState(() => {
+    try {
+      const stored = window.sessionStorage.getItem('guanyi.rail.settingsOpen');
+      if (stored !== null) return stored === 'true';
+    } catch { /* private mode */ }
+    return settingsIds.includes(activeId);
+  });
 
   // `publicCopy.workspace.business.rail` is deep-merged with the English base
   // in LanguageContext, so these strings are translated in every locale that
@@ -101,7 +111,11 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
             className="business-workspace-navgroup-title"
             type="button"
             aria-expanded={settingsOpen}
-            onClick={() => setSettingsOpen((value) => !value)}
+            onClick={() => setSettingsOpen((value) => {
+              const next = !value;
+              try { window.sessionStorage.setItem('guanyi.rail.settingsOpen', String(next)); } catch { /* private mode */ }
+              return next;
+            })}
           >
             <Settings size={17} aria-hidden="true" />
             <span>{rail.settings || 'Settings'}</span>
