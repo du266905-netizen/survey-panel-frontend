@@ -125,6 +125,7 @@ const copy = {
     archived: '已归档', copyDraft: '复制为新草稿', archive: '归档', deleteDraft: '删除草稿',
     deleteConfirm: '删除这份草稿？删除后不可恢复。',
     locked: '已发布：结构已锁定。如需修改，复制为新草稿。',
+    lockedReview: '审核中：内容已提交，暂不可修改。需要改动请复制为新草稿。',
     coverTitle: '封面说明', coverPlaceholder: '受访者打开问卷时先看到的一段话',
     sensitiveTitle: '这份问卷会收集敏感信息', sensitiveBody: '包含收入、性别、健康等字段时，发布前需要确认用途与告知已就位。',
     sensitiveConfirm: '确认并发布', sensitiveCancel: '再检查一下', previewTitle: '受访者看到的顺序', close: '关闭',
@@ -158,6 +159,7 @@ const copy = {
     archived: 'Archived', copyDraft: 'Copy as a new draft', archive: 'Archive', deleteDraft: 'Delete draft',
     deleteConfirm: 'Delete this draft? This cannot be undone.',
     locked: 'Published: the structure is locked. Copy it to a new draft to change it.',
+    lockedReview: 'In review: the content is submitted and cannot change. Copy it to a new draft to edit.',
     coverTitle: 'Cover note', coverPlaceholder: 'What respondents read before the first question',
     sensitiveTitle: 'This survey asks for sensitive information', sensitiveBody: 'Income, gender or health fields need a stated purpose and notice before publishing.',
     sensitiveConfirm: 'Confirm and publish', sensitiveCancel: 'Check again', previewTitle: 'What the respondent sees', close: 'Close',
@@ -617,10 +619,10 @@ export default function BusinessQuestionnaireStudio() {
           <button type="button" className="sq-btn" onClick={() => { setPreviewOpen(true); setPreviewStep(0); }}>
             <Eye size={15} aria-hidden="true" /> {text.preview}
           </button>
-          <button type="button" className="sq-btn" onClick={() => save()} disabled={Boolean(saving)}>
+          <button type="button" className="sq-btn" onClick={() => save()} disabled={Boolean(saving) || readOnly}>
             {saving === 'save' ? <LoaderCircle size={15} className="sq-spin" /> : null} {text.save}
           </button>
-          <button type="button" className="sq-btn is-primary" onClick={() => save({ publish: true })} disabled={Boolean(saving) || !questions.length}>
+          <button type="button" className="sq-btn is-primary" onClick={() => save({ publish: true })} disabled={Boolean(saving) || !questions.length || readOnly}>
             {saving === 'publish' ? <LoaderCircle size={15} className="sq-spin" /> : <Send size={15} aria-hidden="true" />}
             {saving === 'publish' ? text.publishing : text.publish}
           </button>
@@ -631,7 +633,7 @@ export default function BusinessQuestionnaireStudio() {
             {moreOpen ? (
               <div className="sq-menu">
                 <button type="button" onClick={duplicate}><Copy size={14} aria-hidden="true" /> {text.copyDraft}</button>
-                {['PUBLISHED', 'PENDING_REVIEW', 'APPROVED'].includes(status) ? (
+                {['PUBLISHED', 'APPROVED'].includes(status) ? (
                   <button type="button" onClick={archive}><Archive size={14} aria-hidden="true" /> {text.archive}</button>
                 ) : null}
                 {status === 'DRAFT' ? (
@@ -661,7 +663,7 @@ export default function BusinessQuestionnaireStudio() {
           {readOnly ? (
             <div className="sq-banner">
               <AlertCircle size={15} aria-hidden="true" />
-              <span>{text.locked}</span>
+              <span>{status === 'PENDING_REVIEW' ? text.lockedReview : text.locked}</span>
               <button type="button" className="sq-btn" onClick={duplicate}>{text.copyDraft}</button>
             </div>
           ) : null}
