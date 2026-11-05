@@ -172,7 +172,17 @@ const normalize = (question) => ({
   required: Boolean(question.required),
   choices: Array.isArray(question.choices) ? question.choices : [],
   settings: { ...emptySettings(), ...(question.settings || {}) },
-  logic: question.logic || null,
+  logic: question.logic
+    ? {
+      action: question.logic.action || 'SHOW',
+      joiner: question.logic.joiner || 'AND',
+      conditions: question.logic.conditions?.length
+        ? question.logic.conditions
+        : (question.logic.sourcePosition
+          ? [{ sourcePosition: question.logic.sourcePosition, value: question.logic.value }]
+          : []),
+    }
+    : null,
 });
 const savedSettings = (settings) => SAVE_SETTINGS.reduce((out, key) => {
   if (settings && key in settings) out[key] = settings[key];
@@ -772,53 +782,102 @@ export default function BusinessQuestionnaireStudio() {
 
                       <div className={`sq-logic${logicSource ? ' is-set' : ''}`}>
                         <Settings2 size={13} aria-hidden="true" />
-                        {logicSource ? (
-                          <span className="sq-logic-text">
-                            {text.logicWhen} Q{question.logic.sourcePosition} {text.logicIs}
-                            <select
-                              value={question.logic.value}
-                              onChange={(event) => update(question.uid, { logic: { ...question.logic, value: event.target.value } })}
+                        {question.logic ? (
+                          <>
+                            <span className="sq-logic-text">
+                              {text.logicWhen}
+                              {(question.logic.conditions || []).map((condition, conditionIndex) => {
+                                const source = questions[condition.sourcePosition - 1];
+                                return (
+                                  <span className="sq-cond" key={`${question.uid}-c-${conditionIndex}`}>
+                                    {conditionIndex > 0 ? (
+                                      <select
+                                        value={question.logic.joiner || 'AND'}
+                                        onChange={(event) => update(question.uid, { logic: { ...question.logic, joiner: event.target.value } })}
+                                      >
+                                        <option value="AND">且</option>
+                                        <option value="OR">或</option>
+                                      </select>
+                                    ) : null}
+                                    <select
+                                      value={condition.sourcePosition}
+                                      onChange={(event) => {
+                                        const position = Number(event.target.value);
+                                        const conditions = [...question.logic.conditions];
+                                        conditions[conditionIndex] = { sourcePosition: position, value: questions[position - 1]?.choices?.[0] || '' };
+                                        update(question.uid, { logic: { ...question.logic, conditions } });
+                                      }}
+                                    >
+                                      {questions.slice(0, index).filter((item) => LOGIC_TYPES.includes(item.type)).map((item) => (
+                                        <option key={item.uid} value={questions.indexOf(item) + 1}>Q{questions.indexOf(item) + 1}</option>
+                                      ))}
+                                    </select>
+                                    {text.logicIs}
+                                    <select
+                                      value={condition.value}
+                                      onChange={(event) => {
+                                        const conditions = [...question.logic.conditions];
+                                        conditions[conditionIndex] = { ...conditions[conditionIndex], value: event.target.value };
+                                        update(question.uid, { logic: { ...question.logic, conditions } });
+                                      }}
+                                    >
+                                      {(source?.choices || []).map((choice) => <option key={choice} value={choice}>{choice}</option>)}
+                                    </select>
+                                    {(question.logic.conditions || []).length > 1 ? (
+                                      <button
+                                        type="button"
+                                        className="sq-tool"
+                                        title={text.remove}
+                                        onClick={() => {
+                                          const conditions = question.logic.conditions.filter((_, position) => position !== conditionIndex);
+                                          update(question.uid, { logic: conditions.length ? { ...question.logic, conditions } : null });
+                                        }}
+                                      >
+                                        <X size={13} aria-hidden="true" />
+                                      </button>
+                                    ) : null}
+                                  </span>
+                                );
+                              })}
+                              →
+                              <select
+                                value={question.logic.action || 'SHOW'}
+                                onChange={(event) => update(question.uid, { logic: { ...question.logic, action: event.target.value } })}
+                              >
+                                <option value="SHOW">显示本题</option>
+                                <option value="SKIP">跳过本题</option>
+                                <option value="TERMINATE">终止问卷</option>
+                              </select>
+                            </span>
+                            <button
+                              type="button"
+                              className="sq-link"
+                              onClick={() => update(question.uid, {
+                                logic: {
+                                  ...question.logic,
+                                  conditions: [...question.logic.conditions, { sourcePosition: question.logic.conditions[0].sourcePosition, value: questions[question.logic.conditions[0].sourcePosition - 1]?.choices?.[0] || '' }],
+                                },
+                              })}
                             >
-                              {logicSource.choices.map((choice) => <option key={choice} value={choice}>{choice}</option>)}
-                            </select>
-                            →
-                            <select
-                              value={question.logic.action || 'SHOW'}
-                              onChange={(event) => update(question.uid, { logic: { ...question.logic, action: event.target.value } })}
-                            >
-                              <option value="SHOW">显示本题</option>
-                              <option value="SKIP">跳过本题</option>
-                              <option value="TERMINATE">终止问卷</option>
-                            </select>
+                              + 条件
+                            </button>
                             <button type="button" className="sq-link" onClick={() => update(question.uid, { logic: null })}>{text.remove}</button>
-                          </span>
+                          </>
                         ) : (
                           <button
                             type="button"
                             className="sq-link"
                             disabled={index === 0}
-                            onClick={() => setOpenLogic((current) => (current === question.uid ? null : question.uid))}
+                            onClick={() => {
+                              const source = questions.slice(0, index).filter((item) => LOGIC_TYPES.includes(item.type)).pop();
+                              if (!source) return;
+                              const position = questions.indexOf(source) + 1;
+                              update(question.uid, { logic: { action: 'SHOW', joiner: 'AND', conditions: [{ sourcePosition: position, value: source.choices?.[0] || '' }] } });
+                            }}
                           >
                             {text.logicAdd}
                           </button>
                         )}
-                        {openLogic === question.uid ? (
-                          <select
-                            autoFocus
-                            defaultValue=""
-                            onChange={(event) => {
-                              if (!event.target.value) return;
-                              const position = Number(event.target.value);
-                              update(question.uid, { logic: { sourcePosition: position, value: questions[position - 1]?.choices?.[0] || '' } });
-                              setOpenLogic(null);
-                            }}
-                          >
-                            <option value="">{text.logicPick}</option>
-                            {questions.slice(0, index).filter((item) => LOGIC_TYPES.includes(item.type)).map((item) => (
-                              <option key={item.uid} value={questions.indexOf(item) + 1}>Q{questions.indexOf(item) + 1} · {item.prompt || '—'}</option>
-                            ))}
-                          </select>
-                        ) : null}
                       </div>
                     </article>
                   );

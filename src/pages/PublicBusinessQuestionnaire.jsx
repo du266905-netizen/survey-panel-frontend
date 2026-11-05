@@ -43,12 +43,33 @@ const COPY = {
 const isChinese = (value) => /[\u4e00-\u9fa5]/.test(String(value || ''));
 const hasAnswer = (value) => (Array.isArray(value) ? value.length > 0 : String(value ?? '').trim().length > 0);
 
+const logicConditions = (logic) => {
+  if (!logic) return [];
+  if (Array.isArray(logic.conditions) && logic.conditions.length) return logic.conditions;
+  return logic.sourcePosition ? [{ sourcePosition: logic.sourcePosition, value: logic.value }] : [];
+};
+
+/* Each condition is compared against the answer it points at; the joiner decides
+   whether all of them or any of them must hold. The action then decides what a
+   match means: show the question, hide it, or end the survey. */
+function logicMatches(question, questions, answers) {
+  const logic = question.logic;
+  const conditions = logicConditions(logic);
+  if (!conditions.length) return false;
+  const results = conditions.map((condition) => {
+    const source = questions[condition.sourcePosition - 1];
+    const answer = source ? answers[source.id] : null;
+    return Array.isArray(answer) ? answer.includes(condition.value) : answer === condition.value;
+  });
+  return logic.joiner === 'OR' ? results.some(Boolean) : results.every(Boolean);
+}
+
 function questionIsVisible(question, questions, answers) {
   const logic = question.logic;
-  if (!logic?.sourcePosition || !logic?.value) return true;
-  const source = questions[logic.sourcePosition - 1];
-  const answer = source ? answers[source.id] : null;
-  return Array.isArray(answer) ? answer.includes(logic.value) : answer === logic.value;
+  if (!logicConditions(logic).length) return true;
+  if ((logic.action || 'SHOW') === 'TERMINATE') return true;
+  const matched = logicMatches(question, questions, answers);
+  return logic.action === 'SKIP' ? !matched : matched;
 }
 
 function QuestionField({ question, value, onChange, copy }) {
@@ -226,12 +247,7 @@ export default function PublicBusinessQuestionnaire() {
   const questions = Array.isArray(questionnaire?.questions) ? questionnaire.questions : [];
   const visibleQuestions = questions.filter((question) => questionIsVisible(question, questions, answers));
 
-  const terminated = questions.some((question) => {
-    if (question.logic?.action !== 'TERMINATE' || !question.logic?.sourcePosition || !question.logic?.value) return false;
-    const source = questions[question.logic.sourcePosition - 1];
-    const answer = source ? answers[source.id] : null;
-    return Array.isArray(answer) ? answer.includes(question.logic.value) : answer === question.logic.value;
-  });
+  const terminated = questions.some((question) => question.logic?.action === 'TERMINATE' && logicMatches(question, questions, answers));
 
   const submit = async (event) => {
     event.preventDefault();
