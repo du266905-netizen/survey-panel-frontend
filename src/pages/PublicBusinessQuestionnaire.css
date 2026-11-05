@@ -184,12 +184,12 @@
   cursor: not-allowed;
   opacity: 0.6;
 }
-.public-questionnaire-page form > p.public-questionnaire-cover {
+.public-questionnaire-cover {
   border-left: 2px solid #79a182;
   color: #52665a;
   font-size: 13px;
   line-height: 1.55;
-  margin: 15px 0 18px;
+  margin: 15px 0 -14px;
   padding-left: 10px;
 }
 .public-questionnaire-consent {
@@ -212,45 +212,4 @@
   .public-questionnaire-page form {
     padding: 28px 21px;
   }
-}
-
-/* ---- one page per section, with a progress bar ---- */
-
-.public-questionnaire-progress { display: grid; gap: 6px; margin: 0 0 22px; }
-
-.public-questionnaire-progress > div {
-  height: 3px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #E5E3DD;
-}
-
-.public-questionnaire-progress > div > span {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-  background: #141413;
-  transition: width .2s ease;
-}
-
-.public-questionnaire-progress small {
-  color: #8D948D;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.public-questionnaire-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.public-questionnaire-nav button.is-ghost {
-  border: 1px solid #E5E3DD;
-  background: transparent;
-  color: #141413;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, LoaderCircle } from 'lucide-react';
+import { Check, LoaderCircle } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { getPublicBusinessQuestionnaire, submitPublicBusinessQuestionnaire } from '../api/realApi';
 import TurnstileWidget from '../components/TurnstileWidget';
@@ -45,27 +45,6 @@ export default function PublicBusinessQuestionnaire() {
   const questions = Array.isArray(questionnaire?.questions) ? questionnaire.questions : [];
   const visibleQuestions = questions.filter((question) => questionIsVisible(question, questions, answers));
 
-  /* One page per section, in the order the section list defines. A section that
-     has no visible question (all hidden by logic) does not produce a page. */
-  const pages = useMemo(() => {
-    const order = ['SCREENING', 'CORE', 'PROFILE', 'CLOSING'];
-    const grouped = order
-      .map((section) => ({ section, items: visibleQuestions.filter((question) => (question.section || 'CORE') === section) }))
-      .filter((group) => group.items.length);
-    const loose = visibleQuestions.filter((question) => !order.includes(question.section || 'CORE'));
-    if (loose.length) grouped.push({ section: 'OTHER', items: loose });
-    return grouped;
-  }, [visibleQuestions]);
-
-  const [page, setPage] = useState(0);
-
-  useEffect(() => {
-    if (page > pages.length - 1) setPage(Math.max(0, pages.length - 1));
-  }, [page, pages.length]);
-
-  const currentPage = pages[page] || { items: [] };
-  const lastPage = page >= pages.length - 1;
-
   useEffect(() => {
     let active = true;
     getPublicBusinessQuestionnaire(publicId)
@@ -75,37 +54,13 @@ export default function PublicBusinessQuestionnaire() {
     return () => { active = false; };
   }, [publicId]);
 
-  const missingOn = (items) => items.filter((question) => question.required && !hasAnswer(answers[question.id]));
-
-  const goNext = () => {
-    const missing = missingOn(currentPage.items);
-    if (missing.length) {
-      setError('Please answer every required question on this page.');
-      document.getElementById(`question-${missing[0].id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-    setError('');
-    setPage((current) => Math.min(current + 1, pages.length - 1));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const goBack = () => {
-    setError('');
-    setPage((current) => Math.max(0, current - 1));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const submit = async (event) => {
     event.preventDefault();
     if (submitting || !questionnaire) return;
     const missingQuestion = visibleQuestions.find((question) => question.required && !hasAnswer(answers[question.id]));
     if (missingQuestion) {
-      const missingPage = pages.findIndex((group) => group.items.some((question) => question.id === missingQuestion.id));
-      if (missingPage >= 0) setPage(missingPage);
       setError('Please answer every required question before submitting.');
-      window.setTimeout(() => {
-        document.getElementById(`question-${missingQuestion.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 60);
+      document.getElementById(`question-${missingQuestion.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     setSubmitting(true);
@@ -143,54 +98,12 @@ export default function PublicBusinessQuestionnaire() {
         <h1>{questionnaire.title}</h1>
         <span className="public-questionnaire-intro">Created by {questionnaire.creatorName}. Your responses will be provided to this creator for the stated research purpose.</span>
         {questionnaire.coverDescription && <p className="public-questionnaire-cover">{questionnaire.coverDescription}</p>}
-
-        {pages.length > 1 ? (
-          <div className="public-questionnaire-progress" aria-live="polite">
-            <div><span style={{ width: `${((page + 1) / pages.length) * 100}%` }} /></div>
-            <small>Step {page + 1} of {pages.length}</small>
-          </div>
-        ) : null}
-
         <div className="public-questionnaire-questions">
-          {currentPage.items.map((question) => {
-            const index = visibleQuestions.indexOf(question);
-            return (
-              <fieldset className="public-question" id={`question-${question.id}`} key={question.id}>
-                <legend>{index + 1}. {question.prompt} {question.required && <em>Required</em>}</legend>
-                <QuestionField question={question} value={answers[question.id]} onChange={(value) => setAnswers((current) => ({ ...current, [question.id]: value }))} />
-              </fieldset>
-            );
-          })}
+          {visibleQuestions.map((question, index) => <fieldset className="public-question" id={`question-${question.id}`} key={question.id}><legend>{index + 1}. {question.prompt} {question.required && <em>Required</em>}</legend><QuestionField question={question} value={answers[question.id]} onChange={(value) => setAnswers((current) => ({ ...current, [question.id]: value }))} /></fieldset>)}
         </div>
-
         {error && <p className="public-questionnaire-error">{error}</p>}
-
-        {lastPage ? (
-          <>
-            <div className="public-questionnaire-consent"><TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken('')} onError={() => setTurnstileToken('')} /><span>By submitting, you agree to the <a href="/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and understand that this response is shared with the questionnaire creator.</span></div>
-            <div className="public-questionnaire-nav">
-              {pages.length > 1 ? (
-                <button type="button" className="is-ghost" onClick={goBack}>
-                  <ArrowLeft size={16} aria-hidden="true" /> Back
-                </button>
-              ) : null}
-              <button type="submit" disabled={submitting || !turnstileToken}>
-                {submitting ? <LoaderCircle className="animate-spin" size={17} /> : 'Submit response'}
-              </button>
-            </div>
-          </>
-        ) : (
-          <div className="public-questionnaire-nav">
-            {page > 0 ? (
-              <button type="button" className="is-ghost" onClick={goBack}>
-                <ArrowLeft size={16} aria-hidden="true" /> Back
-              </button>
-            ) : <span />}
-            <button type="button" onClick={goNext}>
-              Next <ArrowRight size={16} aria-hidden="true" />
-            </button>
-          </div>
-        )}
+        <div className="public-questionnaire-consent"><TurnstileWidget onVerify={setTurnstileToken} onExpire={() => setTurnstileToken('')} onError={() => setTurnstileToken('')} /><span>By submitting, you agree to the <a href="/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and understand that this response is shared with the questionnaire creator.</span></div>
+        <button type="submit" disabled={submitting || !turnstileToken}>{submitting ? <LoaderCircle className="animate-spin" size={17} /> : 'Submit response'}</button>
       </form>
     </main>
   );
