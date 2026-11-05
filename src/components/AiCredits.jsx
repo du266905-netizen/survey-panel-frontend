@@ -30,13 +30,64 @@ const copy = {
     label: 'AI 剩余', unit: '次', unavailable: '额度接口未接', buy: '加购',
     title: '加购 AI 次数', hint: '从账户余额扣除，不足时先充值。', confirm: '确认购买',
     loading: '处理中…', failed: '购买失败，请稍后再试。', done: '已到账', close: '关闭',
+    upgrade: '升级套餐', learnMore: '了解更多', privacy: '隐私政策', terms: '服务条款', help: '帮助中心',
   },
   en: {
     label: 'AI credits', unit: '', unavailable: 'Credits endpoint pending', buy: 'Buy',
     title: 'Buy AI credits', hint: 'Paid from your balance; top up first if short.', confirm: 'Buy',
     loading: 'Working…', failed: 'Could not buy. Try again.', done: 'Added', close: 'Close',
+    upgrade: 'Upgrade plan', learnMore: 'Learn more', privacy: 'Privacy', terms: 'Terms', help: 'Help centre',
   },
 };
+
+export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
+  const text = copy[language] || copy.en;
+  const [credits, setCredits] = useState(null);
+  const [unavailable, setUnavailable] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+
+  useEffect(() => {
+    fetchAiCredits()
+      .then((data) => { setCredits(Number(data?.balance ?? data?.credits ?? 0)); setUnavailable(false); })
+      .catch(() => setUnavailable(true));
+  }, []);
+
+  const go = (path) => { setOpen(false); onNavigate?.(path); };
+
+  return (
+    <div className={`ai-menu${open ? ' is-open' : ''}`}>
+      {open ? (
+        <div className="ai-menu-pop" role="menu">
+          <div className="ai-menu-balance">
+            <span>{text.label}</span>
+            <strong>{unavailable ? '—' : (credits ?? '—')} {text.unit}</strong>
+          </div>
+          <button type="button" role="menuitem" onClick={() => go('/business/plans')}>{text.upgrade}</button>
+          <button
+            type="button"
+            role="menuitem"
+            aria-expanded={moreOpen}
+            onClick={() => setMoreOpen((value) => !value)}
+          >
+            {text.learnMore}
+          </button>
+          {moreOpen ? (
+            <div className="ai-menu-more">
+              <button type="button" onClick={() => go('/privacy')}>{text.privacy}</button>
+              <button type="button" onClick={() => go('/terms')}>{text.terms}</button>
+              <button type="button" onClick={() => go('/help')}>{text.help}</button>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+      <button type="button" className="ai-menu-trigger" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
+        <Sparkles size={15} aria-hidden="true" />
+        <span>{text.label} {unavailable ? '—' : (credits ?? '—')}</span>
+      </button>
+    </div>
+  );
+}
 
 export default function AiCreditsBadge({ language = 'zh-CN', onChanged, compact = false, showBuy = true }) {
   const text = copy[language] || copy.en;

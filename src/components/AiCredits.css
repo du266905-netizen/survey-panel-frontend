@@ -86,3 +86,70 @@
 .ai-credits-error { margin: 0; color: #B42318; font-size: 11px; }
 
 @media (max-width: 520px) { .ai-credits-packs { grid-template-columns: 1fr; } }
+
+/* bottom-left account menu on the AI page, the way a chat app does it */
+.ai-menu { position: relative; margin-top: auto; }
+
+.ai-menu-trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  padding: 8px 10px;
+}
+
+.ai-menu-trigger:hover { border-color: #141413; }
+
+.ai-menu-pop {
+  position: absolute;
+  z-index: 30;
+  bottom: calc(100% + 8px);
+  left: 0;
+  display: grid;
+  width: 220px;
+  gap: 2px;
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  background: #FFFFFF;
+  box-shadow: 0 16px 40px rgba(20, 20, 19, .14);
+  padding: 6px;
+}
+
+.ai-menu-pop button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #141413;
+  cursor: pointer;
+  font: 400 12px var(--font-sans);
+  padding: 8px;
+  text-align: left;
+}
+
+.ai-menu-pop button:hover { background: #FAF9F5; }
+
+.ai-menu-balance {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid #E5E3DD;
+  color: #8D948D;
+  font-size: 11px;
+  margin-bottom: 4px;
+  padding: 6px 8px 10px;
+}
+
+.ai-menu-balance strong { color: #141413; font-size: 12px; font-weight: 600; }
+
+.ai-menu-more { display: grid; border-top: 1px solid #E5E3DD; margin-top: 4px; padding-top: 4px; }
+
+.ai-menu-more button { color: #5F6862; font-size: 11px; }

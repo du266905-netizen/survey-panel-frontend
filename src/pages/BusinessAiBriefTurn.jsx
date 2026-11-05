@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, LoaderCircle, PanelLeft, PanelLeftClose, Plus, Trash2 } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import NotificationBell from '../components/NotificationBell';
-import AiCreditsBadge from '../components/AiCredits';
+import { AiCreditsMenu } from '../components/AiCredits';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { AI_BRIEF_MODE, MOCK_COMMANDS, MOCK_SCENARIOS, generateBriefProject, sendBriefTurn } from '../ai/aiBriefTurnClient';
 import { createConversation, deleteConversation as deleteRemoteConversation, getConversation, saveDraft } from '../api/aiConversations';
@@ -515,6 +515,7 @@ export default function BusinessAiBriefTurn() {
               </div>
             )) : <p className="business-ai-brief-assistant-empty">{copy.emptyHistory}</p>}
           </div>
+          <AiCreditsMenu language={language} onNavigate={(path) => navigate(withLanguage(path, language))} />
         </aside>
 
         <section className="business-ai-brief-surface">
@@ -523,7 +524,7 @@ export default function BusinessAiBriefTurn() {
               <img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />
               {hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}
             </div>
-            <div className="business-ai-brief-tools"><AiCreditsBadge language={language} /><NotificationBell className="business-workspace-notification" /></div>
+            <div className="business-ai-brief-tools"><NotificationBell className="business-workspace-notification" /></div>
           </header>
 
           <section className={`business-ai-conversation${hasStarted ? ' is-started' : ' is-waiting'}`} aria-label={copy.title}>
