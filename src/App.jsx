@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminConsole from './pages/AdminConsole';
 import AdminSupportTickets from './pages/AdminSupportTickets';
 import AdminSandbox from './pages/AdminSandbox';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
@@ -413,15 +414,8 @@ export default function App() {
             path="/admin/sandbox"
             element={<AdminRoute><AdminSandbox /></AdminRoute>}
           />
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
-            }
-          />
         </Route>
+        <Route path="/admin" element={<AdminRoute><AdminConsole /></AdminRoute>} />
         <Route path="/" element={<HomeAtlas />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

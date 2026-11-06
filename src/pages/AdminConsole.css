@@ -1,0 +1,266 @@
+/* 运营工作台：左侧固定轨道 + 右侧内容。
+   两个环境（参与端 / 研究端）只在顶栏切换，导航随之更换。
+   颜色只用现有色卡：墨 #141413、纸 #F6F5F1、卡 #FFFFFF、发丝 #E5E3DD、次文字 #5F6862。 */
+
+.con {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  min-height: 100svh;
+  background: #F6F5F1;
+  color: #141413;
+  font-family: var(--font-sans);
+}
+
+.con-rail {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100svh;
+  flex-direction: column;
+  border-right: 1px solid #E5E3DD;
+  background: #FFFFFF;
+  padding: 22px 16px 18px;
+}
+
+.con-brand {
+  display: block;
+  color: #141413;
+  font-family: var(--font-impact);
+  font-size: 20px;
+  letter-spacing: -.02em;
+  text-decoration: none;
+  padding: 0 6px;
+}
+
+.con-brand span {
+  display: block;
+  margin-top: 2px;
+  color: #8D948D;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+}
+
+.con-envs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 20px;
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.con-envs button {
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  padding: 8px 0;
+}
+
+.con-envs button.is-active { background: #141413; color: #FFFFFF; }
+
+.con-caption {
+  margin: 12px 6px 0;
+  color: #8D948D;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.con-nav { flex: 1 1 auto; margin-top: 18px; overflow-y: auto; }
+
+.con-group { margin-bottom: 18px; }
+
+.con-group > p {
+  margin: 0 6px 6px;
+  color: #8D948D;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.con-group a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 8px;
+  color: #33352F;
+  font-size: 13.5px;
+  line-height: 1.3;
+  padding: 8px 8px;
+  text-decoration: none;
+}
+
+.con-group a:hover { background: #F6F5F1; }
+.con-group a.is-active { background: #F6F5F1; color: #141413; font-weight: 600; box-shadow: inset 2px 0 0 #141413; }
+.con-group a em { margin-left: auto; color: #A9A79F; font-size: 10.5px; font-style: normal; }
+
+.con-rail-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid #E5E3DD;
+  color: #5F6862;
+  font-size: 12px;
+  padding: 14px 6px 0;
+}
+
+.con-dot { width: 7px; height: 7px; border-radius: 50%; background: #DEEF24; }
+
+.con-main { min-width: 0; display: flex; flex-direction: column; }
+
+.con-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #E5E3DD;
+  background: #FFFFFF;
+  padding: 12px 28px;
+}
+
+.con-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(420px, 45vw);
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  color: #8D948D;
+  padding: 8px 10px;
+}
+
+.con-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #141413;
+  font: 400 13px var(--font-sans);
+}
+
+.con-top-right { display: flex; gap: 8px; }
+
+.con-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+}
+
+.is-spinning { animation: con-spin 1s linear infinite; }
+@keyframes con-spin { to { transform: rotate(360deg); } }
+
+.con-body { padding: 28px; }
+
+.con-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+
+.con-head h1 {
+  margin: 0;
+  font-family: var(--font-reading);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+.con-head p { margin: 6px 0 0; color: #5F6862; font-size: 13px; }
+
+.con-stamp {
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #5F6862;
+  font-size: 11.5px;
+  padding: 5px 10px;
+}
+
+.con-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.con-card {
+  border: 1px solid #E5E3DD;
+  border-radius: 12px;
+  background: #FFFFFF;
+  padding: 16px 18px;
+}
+
+.con-card p { margin: 0; color: #5F6862; font-size: 12px; }
+.con-card strong { display: block; margin-top: 8px; font-size: 26px; font-weight: 600; letter-spacing: -.02em; }
+
+.con-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.con-panel {
+  border: 1px solid #E5E3DD;
+  border-radius: 12px;
+  background: #FFFFFF;
+  padding: 18px 20px;
+}
+
+.con-panel header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.con-panel h2 { margin: 0; font-size: 14px; font-weight: 600; }
+.con-panel header a { color: #141413; font-size: 12.5px; text-decoration: none; border-bottom: 1px solid #141413; padding-bottom: 1px; }
+
+.con-empty {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  border: 1px dashed #E5E3DD;
+  border-radius: 10px;
+  color: #8D948D;
+  padding: 42px 16px;
+  text-align: center;
+}
+
+.con-empty p { margin: 0; font-size: 12.5px; }
+
+.con-tasks { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+
+.con-tasks li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 8px;
+  color: #33352F;
+  font-size: 13px;
+  padding: 9px 8px;
+}
+
+.con-tasks li:hover { background: #F6F5F1; }
+.con-tasks li em { margin-left: auto; color: #A9A79F; font-size: 10.5px; font-style: normal; }
+
+@media (max-width: 1080px) {
+  .con { grid-template-columns: 1fr; }
+  .con-rail { position: static; height: auto; border-right: 0; border-bottom: 1px solid #E5E3DD; }
+  .con-nav { display: none; }
+  .con-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .con-grid { grid-template-columns: 1fr; }
+}
+
+/* 没有数字的卡片用文字，不要用 26px 的大字号装一个“待接入”。 */
+.con-card strong.is-text { font-size: 13px; font-weight: 500; color: #8D948D; }

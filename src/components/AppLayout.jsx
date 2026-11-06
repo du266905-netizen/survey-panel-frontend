@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, BriefcaseBusiness, ChevronDown, ClipboardCheck, Compass, Database, FlaskConical, Gift, House, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, BriefcaseBusiness, MessageSquare, ChevronDown, ClipboardCheck, Compass, Database, FlaskConical, Gift, House, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
@@ -209,18 +209,12 @@ export default function AppLayout({ children }) {
               {adminLink('/admin/business-projects', '客户项目', BriefcaseBusiness)}
               {adminLink('/admin/business-questionnaires', '问卷审核', ClipboardCheck)}
               {adminLink('/admin/support', '销售与客服', MessageCircleMore)}
+              {adminLink('/team', '团队', UserPlus)}
+              {adminLink('/admin/marketing-assets', '消息与邮件', MessageSquare)}
               <div className="app-sidebar-label app-sidebar-label-secondary">研究运营</div>
               {adminLink('/admin/research-opportunities', '研究机会', Compass)}
               {adminLink('/admin/panelists', '参与者资料', ListFilter)}
-              {adminLink('/admin/rewards', '奖励与兑换', Gift)}
               {adminLink('/admin/partners', '问卷来源', Users)}
-              <div className="app-sidebar-label app-sidebar-label-secondary">系统</div>
-              {adminLink('/admin/sandbox', '沙盒发布', FlaskConical)}
-              {adminLink('/team', '团队', UserPlus)}
-              {adminLink('/workers', 'Orbit 运营', UserCog)}
-              {adminLink('/orbit/settlement', '结算审核', ClipboardCheck)}
-              {adminLink('/admin/database', '数据库', Database)}
-              {adminLink('/admin/marketing-assets', '营销素材', Image)}
             </nav>
             <div className="app-sidebar-foot">
               <span className="app-sidebar-status" aria-hidden="true" />
