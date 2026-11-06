@@ -87,10 +87,11 @@
 
 #root .business-workspace .business-workspace-rail::before { display: none !important; }
 
+/* 竖线整根贯通，从最上一直到最下：不再在顶栏那一行断掉。 */
 #root .business-workspace .business-workspace-rail::after {
   content: '';
   position: absolute;
-  top: 70px;
+  top: 0;
   right: 0;
   bottom: 0;
   width: 1px;
@@ -108,13 +109,24 @@
 }
 
 #root .business-workspace .business-workspace-rail .business-workspace-rail-brand {
-  height: 26px !important;
+  height: 24px !important;
   width: auto !important;
-  max-width: 200px;
+  max-width: 160px;
   margin: 0 !important;
 }
 
 @media (max-width: 620px) {
   #root .business-workspace .business-workspace-rail::after { top: 60px; }
   #root .business-workspace .business-workspace-rail-head { flex-basis: 60px; height: 60px; }
+}
+
+/* 导轨收窄后，内容区的左右留白跟着收一点，行宽才不会被挤。 */
+#root .business-workspace .business-workspace-topbar {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+#root .business-workspace .business-projects {
+  padding-left: clamp(28px, 3.4vw, 52px);
+  padding-right: clamp(28px, 3.4vw, 52px);
 }
