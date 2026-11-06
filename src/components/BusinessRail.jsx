@@ -84,8 +84,11 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
 
   return (
     <aside className={['business-workspace-rail', 'business-rail', className].filter(Boolean).join(' ')} aria-label={navigationLabel}>
-      {/* 导轨顶部放站点字标，不用那个大 G：和顶栏、管理端的品牌写法保持一致。 */}
-      <Logo size="sm" variant="dark" className="business-workspace-rail-brand" />
+      {/* 导轨顶部：一条和右侧顶栏等高、带下边框的带子，字标在里面垂直居中。
+          竖线从这条线以下才开始，顶部这一段是干净的。 */}
+      <header className="business-workspace-rail-head">
+        <Logo size="sm" variant="dark" className="business-workspace-rail-brand" />
+      </header>
 
       <nav className="business-workspace-navgroups" aria-label={navigationLabel} data-tour="rail-nav">
         {groups.map((group) => {

@@ -39,3 +39,19 @@
   width: 96px !important;
   height: 74px !important;
 }
+
+/* 顶带要和右侧顶栏从同一条线开始：导轨自身不能有上内边距。
+   这里用 #root 前缀压过前面所有 padding 简写。 */
+#root .business-workspace .business-workspace-rail {
+  padding-top: 0 !important;
+}
+
+#root .business-workspace .business-workspace-rail-head {
+  flex: 0 0 70px;
+  height: 70px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 620px) {
+  #root .business-workspace .business-workspace-rail-head { flex-basis: 60px; height: 60px; }
+}

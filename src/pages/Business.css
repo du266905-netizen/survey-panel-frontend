@@ -1315,19 +1315,74 @@
 
 .business-workspace-rail::-webkit-scrollbar-track { background: transparent; }
 
-/* 导轨顶部：字标占一条和右侧顶栏等高（70px）的带子，
-   导航标题就从那条线开始，不再被一个大 G 顶下去。 */
-.business-workspace-rail { padding-top: 0 !important; }
+/* 导轨顶部：一条 70px 的带子，和右侧顶栏同高；字标在带子里垂直居中，
+   带子下方一条横线接上内容区的顶栏线。竖线只从横线以下开始。 */
+.business-workspace-rail {
+  position: relative;
+  border-right: 0 !important;
+  padding: 0 11px 18px !important;
+}
+
+.business-workspace-rail::after {
+  content: '';
+  position: absolute;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(36, 56, 46, .14);
+}
+
+.business-workspace-rail-head {
+  display: flex;
+  align-items: center;
+  width: calc(100% + 22px);
+  height: 70px;
+  margin: 0 -11px;
+  padding: 0 11px;
+  border-bottom: 1px solid rgba(36, 56, 46, .14);
+}
 
 .business-workspace-rail .business-workspace-rail-brand {
   display: block;
   width: auto !important;
   height: 22px !important;
   max-width: 190px;
-  margin: 24px 0 15px 6px !important;
-  align-self: flex-start;
+  margin: 0 !important;
 }
 
 @media (max-width: 620px) {
-  .business-workspace-rail-brand { height: 18px; margin: 20px 0; }
+  .business-workspace-rail-head { height: 60px; }
+  .business-workspace-rail::after { top: 60px; }
+  .business-workspace-rail .business-workspace-rail-brand { height: 18px !important; }
+}
+
+/* 导轨顶带下方那条横线，和右侧顶栏的线连成一条。 */
+.business-workspace-rail::before {
+  content: '';
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(36, 56, 46, .14);
+}
+
+@media (max-width: 620px) {
+  .business-workspace-rail::before { top: 60px; }
+}
+
+/* 顶带必须是固定的 70px，且导轨自身不能有上内边距——否则字标和导航都会
+   比右侧顶栏低一截。这两条放在最后，覆盖前面所有 padding/height。 */
+.business-workspace-rail { padding-top: 0 !important; margin-top: 0 !important; }
+
+.business-workspace-rail-head {
+  flex: 0 0 70px;
+  height: 70px;
+  box-sizing: border-box;
+  margin-top: 0;
+}
+
+@media (max-width: 620px) {
+  .business-workspace-rail-head { flex-basis: 60px; height: 60px; }
 }
