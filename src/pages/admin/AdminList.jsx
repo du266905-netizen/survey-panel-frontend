@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AdminDetail from './AdminDetail';
 import { Download, Filter, Plus, Search } from 'lucide-react';
 import '../AdminConsole.css';
@@ -9,9 +9,25 @@ import '../AdminConsole.css';
  * rows 为空时显示表头 + 一句说明，不造假数据；接后端时只换传进来的 rows。
  */
 
-export default function AdminList({ config, rows = [], emptyNote }) {
+export default function AdminList({ config, rows: givenRows, emptyNote }) {
   const [tab, setTab] = useState(0);
   const [selected, setSelected] = useState(null);
+  const [loaded, setLoaded] = useState(null);
+  const [loading, setLoading] = useState(Boolean(config.load));
+
+  /* 模块带 load 就自己去取；不带就显示空表，不编数据。 */
+  useEffect(() => {
+    if (!config.load) return;
+    let alive = true;
+    setLoading(true);
+    config.load()
+      .then((items) => { if (alive) setLoaded(items.map(config.toRow)); })
+      .catch(() => { if (alive) setLoaded(null); })
+      .finally(() => { if (alive) setLoading(false); });
+    return () => { alive = false; };
+  }, [config]);
+
+  const rows = givenRows ?? loaded ?? [];
 
   return (
     <div className="con-body">
@@ -77,7 +93,7 @@ export default function AdminList({ config, rows = [], emptyNote }) {
             )) : (
               <tr className="is-empty">
                 <td colSpan={config.columns.length + 1}>
-                  {emptyNote || '列表接口接入后，这里显示最近的记录；列的“待接入”不会用假数据填。'}
+                  {loading ? '加载中…' : (emptyNote || '列表接口接入后，这里显示最近的记录；列的“待接入”不会用假数据填。')}
                 </td>
               </tr>
             )}

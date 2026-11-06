@@ -1,3 +1,5 @@
+import { getAdminBusinessProjects } from '../../api/realApi';
+
 /* 十个模块的列表配置。
  *
  * 每一页只描述“有哪些列、能筛什么、能做什么”，布局和交互由 AdminList 统一给。
@@ -23,6 +25,22 @@ export const MODULES = {
   projects: {
     title: '项目与订单',
     caption: '列表、筛选、详情、状态流转与备注',
+    /* 目前唯一接上真实数据的模块：/api/admin/business-projects */
+    load: async () => {
+      const { data } = await getAdminBusinessProjects('ALL');
+      return data?.projects || data?.items || [];
+    },
+    toRow: (project) => ({
+      id: project.id,
+      title: project.title || '未命名项目',
+      customer: project.client?.email || project.client?.name || '—',
+      kind: project.studyFormat || project.researchGoal || '问卷',
+      stage: project.status || 'DRAFT',
+      amount: project.latestQuote?.totalCents != null
+        ? `$${(project.latestQuote.totalCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+        : '—',
+      updatedAt: project.updatedAt ? String(project.updatedAt).slice(0, 10) : '—',
+    }),
     tabs: ['全部', '进行中', '待付款', '已交付'],
     primary: '新建项目',
     columns: [
