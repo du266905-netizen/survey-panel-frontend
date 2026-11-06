@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessQuote.css';
+import { quoteFor, isSelfServe } from '../content/rateCard';
 
 /* Step three: what the study costs and how it is paid.
  *
@@ -16,10 +17,6 @@ import './BusinessQuote.css';
  * Fixed rules shown to the customer: the price holds for seven days, unfilled
  * completes are refunded, and replacements for bad data are free. */
 
-const FIXED_COST = 20;
-const PAYMENT_FEE = 0.03;
-const MARGIN = 0.45;
-const WHOLESALE_BASE = 1.2;
 
 const copy = {
   'zh-CN': {
@@ -86,13 +83,13 @@ export default function BusinessQuote() {
 
   /* Incidence falls as criteria accumulate; the price per complete rises with
      it. Same shape as the pricing service, kept here so the page is usable. */
-  const incidence = Math.max(0.05, 0.6 * (0.82 ** criteria));
-  const lengthFactor = 1 + Math.max(0, minutes - 8) * 0.05;
-  const supplierCost = (WHOLESALE_BASE / incidence) * lengthFactor;
-  const unitPrice = (supplierCost + FIXED_COST / completes) / (1 - PAYMENT_FEE - MARGIN);
-  const sampleCost = completes * unitPrice;
-  const fee = sampleCost * PAYMENT_FEE;
-  const total = sampleCost + fee;
+  const incidence = Math.max(0.02, 0.6 * (0.82 ** criteria));
+  const quotaCells = Array.isArray(project?.questionnaire?.quotas) ? project.questionnaire.quotas.length : 1;
+  const priced = quoteFor({ incidence, minutes, quotaCells, completes });
+  const unitPrice = priced.selfServe ? priced.unitCents / 100 : 0;
+  const sampleCost = priced.selfServe ? priced.sampleCents / 100 : 0;
+  const fee = priced.selfServe ? priced.feeCents / 100 : 0;
+  const total = priced.selfServe ? priced.totalCents / 100 : 0;
 
   const status = project?.status || 'DRAFT';
   const locked = !['DRAFT', 'QUOTE_REQUIRED'].includes(status);
@@ -139,6 +136,12 @@ export default function BusinessQuote() {
 
           <section className="bq-breakdown">
             <h2>{text.breakdown}</h2>
+            {!priced.selfServe ? (
+              <div className="bq-noself">
+                <p><strong>{text.notSelfServe}</strong></p>
+                <p>{text.notSelfServeBody}</p>
+              </div>
+            ) : (
             <dl>
               <div><dt>{text.unit}</dt><dd>{money(unitPrice, language)}</dd></div>
               <div><dt>{text.count}</dt><dd>{completes.toLocaleString(language === 'en' ? 'en-US' : 'zh-CN')}</dd></div>
@@ -146,6 +149,7 @@ export default function BusinessQuote() {
               <div><dt>{text.fee}</dt><dd>{money(fee, language)}</dd></div>
               <div className="is-total"><dt>{text.total}</dt><dd>{money(total, language)}</dd></div>
             </dl>
+            )}
             <p className="bq-note"><Info size={13} aria-hidden="true" /> {text.estimateNote}</p>
           </section>
 
@@ -162,15 +166,21 @@ export default function BusinessQuote() {
         <aside className="bq-side">
           <section className="bq-side-block">
             <h2>{text.total}</h2>
-            <strong className="bq-total">{money(total, language)}</strong>
+            <strong className="bq-total">{priced.selfServe ? money(total, language) : '—'}</strong>
             {locked ? <p className="bq-locked">{text.locked}</p> : null}
-            <button
-              type="button"
-              className="sq-btn is-primary bq-pay"
-              onClick={() => navigate(withLanguage('/business/add-funds', language))}
-            >
-              <Wallet size={15} aria-hidden="true" /> {text.pay} <ArrowRight size={15} aria-hidden="true" />
-            </button>
+            {priced.selfServe ? (
+              <button
+                type="button"
+                className="sq-btn is-primary bq-pay"
+                onClick={() => navigate(withLanguage('/business/add-funds', language))}
+              >
+                <Wallet size={15} aria-hidden="true" /> {text.pay} <ArrowRight size={15} aria-hidden="true" />
+              </button>
+            ) : (
+              <a className="sq-btn is-primary bq-pay" href="mailto:support@guanyisearch.com?subject=Research%20quote">
+                {text.notSelfServeCta} <ArrowRight size={15} aria-hidden="true" />
+              </a>
+            )}
             <p className="bq-note-small">{text.lockLine.replace('{date}', lockDate)}</p>
           </section>
 
