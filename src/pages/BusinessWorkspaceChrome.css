@@ -55,3 +55,19 @@
 @media (max-width: 620px) {
   #root .business-workspace .business-workspace-rail-head { flex-basis: 60px; height: 60px; }
 }
+
+/* 顶带不要任何线：字标和右侧搜索框之间不留竖线，字标下面也不留横线。
+   竖线（.business-workspace-rail::after）仍从 70px 处开始，只分隔下面的导航。
+   字标放大到 26px 高，和右侧铃铛/余额那一行的视觉重量对齐。 */
+#root .business-workspace .business-workspace-rail-head {
+  border-bottom: 1px solid transparent !important;
+}
+
+#root .business-workspace .business-workspace-rail::before {
+  display: none !important;
+}
+
+#root .business-workspace .business-workspace-rail .business-workspace-rail-brand {
+  height: 26px !important;
+  max-width: 200px;
+}
