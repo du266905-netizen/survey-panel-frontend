@@ -130,3 +130,14 @@
   padding-left: clamp(28px, 3.4vw, 52px);
   padding-right: clamp(28px, 3.4vw, 52px);
 }
+
+/* 导航项不再额外缩进：它和字标同一条左边线，
+   栏宽收窄后右边也就不留一条空带。 */
+#root .business-workspace .business-workspace-navitem {
+  margin-left: 0 !important;
+  padding-left: 10px !important;
+}
+
+#root .business-workspace .business-workspace-rail .business-workspace-rail-brand {
+  max-width: 148px;
+}
