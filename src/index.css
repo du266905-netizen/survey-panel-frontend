@@ -2375,3 +2375,21 @@ textarea {
   .survey-result-next-card { grid-template-columns: minmax(0, 1fr) auto; }
   .survey-result-next-card > svg { display: none; }
 }
+
+/* 管理员顶栏的“预览版”入口：和问卷编辑器的次级按钮同一套尺寸。 */
+.app-topbar-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 11px;
+  border: 1px solid #E5E3DD;
+  border-radius: 7px;
+  background: #FFFFFF;
+  color: #141413;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.app-topbar-preview:hover { background: #FAF9F5; }

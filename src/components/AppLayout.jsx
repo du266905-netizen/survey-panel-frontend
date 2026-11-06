@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BarChart3, BriefcaseBusiness, MessageSquare, ChevronDown, ClipboardCheck, Compass, Database, FlaskConical, Gift, House, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
+import { BarChart3, BriefcaseBusiness, ExternalLink, MessageSquare, ChevronDown, ClipboardCheck, Compass, Database, FlaskConical, Gift, House, Image, ListFilter, LogOut, MessageCircleMore, Newspaper, Settings, ShieldCheck, User, UserCog, UserPlus, Users, WalletCards } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Logo from './Logo';
@@ -139,6 +139,16 @@ export default function AppLayout({ children }) {
               {isPanelist && <nav className="app-panelist-nav hidden lg:flex" aria-label="Main navigation">{panelistNavItems.map((item) => navigationLink(item, 'app-panelist-nav-link'))}</nav>}
             </div>
             <div className="flex items-center gap-3 sm:gap-4">
+              {isAdmin && (
+                <a
+                  className="app-topbar-preview"
+                  href="https://survey-panel-frontend-git-preview-check-heguanyi-s-projects.vercel.app/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <ExternalLink size={13} aria-hidden="true" /> 预览版
+                </a>
+              )}
               {isAdmin && <NotificationBell />}
               {!isAdmin && <div
                 ref={userMenuRef}
