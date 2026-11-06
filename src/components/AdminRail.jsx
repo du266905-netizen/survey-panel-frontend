@@ -87,11 +87,6 @@ export default function AdminRail() {
 
   return (
     <div className="arail">
-      {/* 站点 logo 在顶栏已经有了，这里只放工作台的名字，避免一行出现两次。 */}
-      <Link className="arail-brand" to="/admin">
-        运营工作台
-      </Link>
-
       <div className="arail-envs" role="tablist" aria-label="环境">
         {Object.entries(ADMIN_ENVS).map(([key, item]) => (
           <button
@@ -106,8 +101,6 @@ export default function AdminRail() {
           </button>
         ))}
       </div>
-      <p className="arail-caption">{config.caption}</p>
-
       <nav className="arail-nav">
         {config.groups.map((group) => (
           <div className="arail-group" key={group.title}>

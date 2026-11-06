@@ -50,7 +50,6 @@ export default function AdminConsole() {
       <header className="con-head">
         <div>
           <h1>{ENV_TITLE[env]}总览</h1>
-          <p>{env === 'panel' ? '参与者、任务与回收' : '客户、项目与交付'}</p>
         </div>
         <div className="con-head-actions">
           <button type="button" className="con-btn" onClick={load}>

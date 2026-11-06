@@ -16,7 +16,6 @@ export default function AdminList({ config, rows = [], emptyNote }) {
       <header className="con-head">
         <div>
           <h1>{config.title}</h1>
-          <p>{config.caption}</p>
         </div>
         <div className="con-head-actions">
           <button type="button" className="con-btn"><Download size={14} /> 导出</button>

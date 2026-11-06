@@ -130,18 +130,17 @@ export default function AppLayout({ children }) {
       <div className={`app-shell notranslate min-h-screen${isAdmin ? ' app-shell-admin' : ''}${isPanelist ? ' app-shell-panelist' : ''}`} translate="no" data-translate="no">
         <div className="app-shell-grain" aria-hidden="true" />
         <header className="app-topbar sticky top-0 z-30">
-          <div className="flex h-[76px] items-center justify-between px-5 sm:px-7">
+          <div className={`flex items-center justify-between px-5 sm:px-7 ${isAdmin ? 'h-[56px]' : 'h-[76px]'}`}>
             <div className="flex items-center gap-4">
               <div className="app-brand-lockup" aria-label="GuanyiSearch">
                 <Logo size="md" className="app-logo" />
               </div>
-              {isAdmin && <span className="app-topbar-divider hidden sm:block" aria-hidden="true" />}
-              {isAdmin && <p className="app-topbar-context hidden text-xs sm:block">运营工作区</p>}
+
               {isPanelist && <nav className="app-panelist-nav hidden lg:flex" aria-label="Main navigation">{panelistNavItems.map((item) => navigationLink(item, 'app-panelist-nav-link'))}</nav>}
             </div>
             <div className="flex items-center gap-3 sm:gap-4">
               {isAdmin && <NotificationBell />}
-              <div
+              {!isAdmin && <div
                 ref={userMenuRef}
                 className="app-user-menu"
                 onMouseEnter={openUserMenu}
@@ -196,7 +195,7 @@ export default function AppLayout({ children }) {
                   </button>
                 </div>
               )}
-              </div>
+              </div>}
             </div>
           </div>
         </header>
