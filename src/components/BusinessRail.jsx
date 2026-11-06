@@ -76,10 +76,25 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
     ] },
   ];
 
+  /* 每个入口自己的地址。页面没有传 onSelect（团队、帮助这些独立页）时，
+     导轨必须能自己跳转——否则点了没反应，只有走 navigate 的那几项还能用。 */
+  const RAIL_ROUTES = {
+    home: '/business/workspace',
+    ai: '/business/ai-brief',
+    questionnaires: '/business/questionnaires',
+    projects: '/business/projects',
+    results: '/business/results',
+    personal: '/business/account',
+    billing: '/business/billing',
+    team: '/business/team',
+    budget: '/business/budget',
+    help: '/business/help',
+  };
+
   const selectItem = (id) => {
-    if (id === 'personal') { navigate(withLanguage('/business/account', language)); return; }
-    if (id === 'billing') { navigate(withLanguage('/business/billing', language)); return; }
-    onSelect?.(id);
+    if (onSelect) { onSelect(id); return; }
+    const path = RAIL_ROUTES[id];
+    if (path) navigate(withLanguage(path, language));
   };
 
   return (

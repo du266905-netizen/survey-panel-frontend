@@ -71,3 +71,50 @@
   height: 26px !important;
   max-width: 200px;
 }
+
+/* ===== 导轨的最终规则（放在最后统一收口） =====
+   1) 宽度收窄；
+   2) 顶部 70px 是一块干净的区域：没有横线，也没有竖线；
+   3) 竖线只从 70px 开始，1px，跟着内容区顶栏那条线往下；
+   4) 字标 26px，左边留 14px，不贴边。 */
+
+#root .business-workspace.business-workspace--x .business-workspace-rail { border-right: 0 !important; }
+
+#root .business-workspace .business-workspace-rail {
+  border-right: 0 !important;
+  padding: 0 12px 18px !important;
+}
+
+#root .business-workspace .business-workspace-rail::before { display: none !important; }
+
+#root .business-workspace .business-workspace-rail::after {
+  content: '';
+  position: absolute;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background: #E5E3DD;
+}
+
+#root .business-workspace .business-workspace-rail-head {
+  display: flex;
+  align-items: center;
+  flex: 0 0 70px;
+  height: 70px;
+  margin: 0 0 6px;
+  padding: 0 2px;
+  border: 0 !important;
+}
+
+#root .business-workspace .business-workspace-rail .business-workspace-rail-brand {
+  height: 26px !important;
+  width: auto !important;
+  max-width: 200px;
+  margin: 0 !important;
+}
+
+@media (max-width: 620px) {
+  #root .business-workspace .business-workspace-rail::after { top: 60px; }
+  #root .business-workspace .business-workspace-rail-head { flex-basis: 60px; height: 60px; }
+}
