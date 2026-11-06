@@ -421,3 +421,40 @@
   font-size: 11px;
   padding: 10px 2px 0;
 }
+
+/* ---- 右侧详情抽屉 ---- */
+
+.con-table tr.is-clickable { cursor: pointer; }
+.con-table tbody tr.is-clickable:hover { background: #FAF9F5; }
+
+.con-drawer-layer { position: fixed; inset: 0; z-index: 60; display: flex; justify-content: flex-end; }
+
+.con-drawer-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(20, 20, 19, .28);
+  cursor: pointer;
+}
+
+.con-drawer {
+  position: relative;
+  display: flex;
+  width: min(460px, 92vw);
+  flex-direction: column;
+  gap: 16px;
+  border-left: 1px solid #E5E3DD;
+  background: #FFFFFF;
+  padding: 18px 20px;
+  overflow-y: auto;
+}
+
+.con-drawer header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.con-drawer h2 { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
+
+.con-drawer-fields { display: grid; gap: 10px; margin: 0; }
+.con-drawer-fields div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; }
+.con-drawer-fields dt { color: #8D948D; font-size: 12px; }
+.con-drawer-fields dd { margin: 0; color: #141413; font-size: 13px; }
+
+.con-drawer footer { display: flex; gap: 8px; margin-top: auto; border-top: 1px solid #E5E3DD; padding-top: 14px; }

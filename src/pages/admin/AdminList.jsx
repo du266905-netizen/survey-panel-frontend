@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import AdminDetail from './AdminDetail';
 import { Download, Filter, Plus, Search } from 'lucide-react';
 import '../AdminConsole.css';
 
@@ -10,6 +11,7 @@ import '../AdminConsole.css';
 
 export default function AdminList({ config, rows = [], emptyNote }) {
   const [tab, setTab] = useState(0);
+  const [selected, setSelected] = useState(null);
 
   return (
     <div className="con-body">
@@ -62,7 +64,7 @@ export default function AdminList({ config, rows = [], emptyNote }) {
           </thead>
           <tbody>
             {rows.length ? rows.map((row) => (
-              <tr key={row.id}>
+              <tr key={row.id} onClick={() => setSelected(row)} className="is-clickable">
                 {config.columns.map((column) => (
                   <td key={column.key} style={column.align === 'right' ? { textAlign: 'right' } : undefined}>
                     {column.type === 'badge'
@@ -70,7 +72,7 @@ export default function AdminList({ config, rows = [], emptyNote }) {
                       : row[column.key]}
                   </td>
                 ))}
-                <td className="con-row-action">···</td>
+                <td className="con-row-action" aria-hidden="true">···</td>
               </tr>
             )) : (
               <tr className="is-empty">
@@ -84,9 +86,17 @@ export default function AdminList({ config, rows = [], emptyNote }) {
       </div>
 
       <div className="con-foot">
-        <span>0 条</span>
+        <span>{rows.length} 条</span>
         <span>每页 50</span>
       </div>
+
+      <AdminDetail
+        open={Boolean(selected)}
+        title={config.title}
+        status={selected ? String(selected[config.columns[0].key] ?? '') : ''}
+        fields={selected ? config.columns.map((column) => ({ label: column.label, value: selected[column.key] })) : []}
+        onClose={() => setSelected(null)}
+      />
     </div>
   );
 }
