@@ -1,99 +1,30 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import {
-  Activity, BriefcaseBusiness, ClipboardCheck, Compass, FileText, Gauge, Inbox,
-  LayoutGrid, ListFilter, Mail, ReceiptText, RefreshCcw, Search, Settings, Users, WalletCards,
+  Download, Filter, Plus, RefreshCcw, Search,
 } from 'lucide-react';
 import { getAdminDashboard } from '../api/realApi';
-import { useAuth } from '../components/AuthContext';
 import './AdminConsole.css';
 
-/* 运营工作台。
+/* 总览。
  *
- * 两个环境，两套导航：参与端（panel）和研究端（research）。切换只在顶栏发生，
- * 左侧导航跟着换——和 PayPal 开发者后台的 sandbox / live 是同一个结构。
- * 数字全部来自已有的 /api/admin/* 接口；没有接口的地方写“待接入”，不编。
+ * 结构照 Conceptzilla 那一页：一行指标 → 一排页签 → 一条工具条 → 一张表。
+ * 数字读 /api/admin/stats；没有聚合接口的列显示“待接入”，不填假数据。
  */
 
-const ENVS = {
-  panel: {
-    label: '参与端',
-    caption: '参与者、任务与回收',
-    groups: [
-      {
-        title: '概览',
-        items: [
-          { to: '/admin', label: '总览', icon: Gauge, end: true },
-          { to: '/admin/panelists', label: '参与者', icon: ListFilter },
-          { to: '/admin/research-opportunities', label: '任务与问卷', icon: Compass },
-        ],
-      },
-      {
-        title: '运营',
-        items: [
-          { to: '/admin/partners', label: '问卷来源', icon: Users },
-          { to: '/admin/support', label: '服务与工单', icon: Inbox },
-          { to: '/admin/marketing-assets', label: '消息与邮件', icon: Mail },
-        ],
-      },
-    ],
-  },
-  research: {
-    label: '研究端',
-    caption: '客户、项目与交付',
-    groups: [
-      {
-        title: '概览',
-        items: [
-          { to: '/admin/business-projects', label: '客户与项目', icon: BriefcaseBusiness },
-          { to: '/admin/business-questionnaires', label: '问卷审核', icon: ClipboardCheck },
-        ],
-      },
-      {
-        title: '交付',
-        items: [
-          { to: '/admin/delivery-centre', label: '交付中心', icon: FileText },
-          { to: '/admin/billing', label: '报价与收款', icon: ReceiptText, pending: true },
-          { to: '/team', label: '团队与账号', icon: Users },
-        ],
-      },
-    ],
-  },
-};
+const ENV_TITLE = { panel: '参与端', research: '研究端' };
 
-/* 参与端的四个数字来自 /api/admin/stats，路径沿用现有字段；
-   研究端还没有对应的聚合接口，先显示“待接入”，不编数字。 */
-const CARDS = {
-  panel: [
-    ['记录总数', (d) => d?.stats?.totalResponses, true],
-    ['已完成', (d) => d?.stats?.completedResponses, true],
-    ['待处理', (d) => d?.stats?.pendingResponses, true],
-    ['活跃用户', (d) => d?.stats?.activeUsers, true],
-  ],
-  research: [
-    ['客户项目', null, false],
-    ['待审核问卷', null, false],
-    ['本月交付', null, false],
-    ['待收款', null, false],
-  ],
+const COLUMNS = {
+  panel: ['参与者', '来源', '状态', '任务', '最近活跃'],
+  research: ['客户', '项目', '阶段', '负责人', '金额'],
 };
-
-function value(card, data) {
-  if (!card[1]) return '待接入';
-  try {
-    const v = card[1](data);
-    return v === undefined || v === null ? '—' : v;
-  } catch {
-    return '—';
-  }
-}
 
 export default function AdminConsole() {
-  const { user } = useAuth();
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const env = params.get('env') === 'research' ? 'research' : 'panel';
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState('all');
 
   const load = () => {
     setLoading(true);
@@ -105,55 +36,80 @@ export default function AdminConsole() {
 
   useEffect(() => { load(); }, []);
 
-  const config = ENVS[env];
-  const cards = useMemo(() => CARDS[env], [env]);
+  const figures = useMemo(() => ([
+    ['记录总数', data?.stats?.totalResponses],
+    ['已完成', data?.stats?.completedResponses],
+    ['待处理', data?.stats?.pendingResponses],
+    ['活跃用户', data?.stats?.activeUsers],
+  ]), [data]);
 
-  const switchEnv = (next) => {
-    setParams(next === 'panel' ? {} : { env: next }, { replace: true });
-  };
+  const columns = COLUMNS[env];
 
   return (
     <div className="con-body">
-      <div className="con-head">
+      <header className="con-head">
         <div>
-          <h1>{config.label}总览</h1>
-          <p>{config.caption}</p>
+          <h1>{ENV_TITLE[env]}总览</h1>
+          <p>{env === 'panel' ? '参与者、任务与回收' : '客户、项目与交付'}</p>
         </div>
-        <span className="con-stamp">实时</span>
-      </div>
+        <div className="con-head-actions">
+          <button type="button" className="con-btn" onClick={load}>
+            <RefreshCcw size={14} className={loading ? 'is-spinning' : ''} /> 刷新
+          </button>
+          <button type="button" className="con-btn is-primary">
+            <Plus size={14} /> {env === 'panel' ? '新建任务' : '新建项目'}
+          </button>
+        </div>
+      </header>
 
-      <div className="con-cards">
-        {cards.map((card) => (
-          <article key={card[0]} className="con-card">
-            <p>{card[0]}</p>
-            <strong className={card[2] ? undefined : 'is-text'}>{loading ? '·' : value(card, data)}</strong>
-          </article>
+      <div className="con-figures">
+        {figures.map(([label, value]) => (
+          <div key={label} className="con-figure">
+            <span>{label}</span>
+            <strong>{loading ? '·' : (value ?? '—')}</strong>
+          </div>
         ))}
       </div>
 
-      <div className="con-grid">
-        <section className="con-panel">
-          <header>
-            <h2>最近进行</h2>
-            <Link to={env === 'panel' ? '/admin/panelists' : '/admin/business-projects'}>查看全部</Link>
-          </header>
-          <div className="con-empty">
-            <Activity size={18} aria-hidden="true" />
-            <p>列表接口接入后，这里显示最近的 10 条。</p>
-          </div>
-        </section>
+      <div className="con-tabs" role="tablist">
+        {[['all', '全部'], ['pending', '待处理'], ['today', '今天']].map(([key, label]) => (
+          <button
+            key={key}
+            type="button"
+            role="tab"
+            aria-selected={tab === key}
+            className={tab === key ? 'is-active' : ''}
+            onClick={() => setTab(key)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
 
-        <section className="con-panel">
-          <header>
-            <h2>待处理</h2>
-            <Settings size={15} aria-hidden="true" />
-          </header>
-          <ul className="con-tasks">
-            <li><ClipboardCheck size={15} aria-hidden="true" /> 问卷审核<em>待接入</em></li>
-            <li><WalletCards size={15} aria-hidden="true" /> 收款与对账<em>待接入</em></li>
-            <li><Mail size={15} aria-hidden="true" /> 消息与邮件<em>待接入</em></li>
-          </ul>
-        </section>
+      <div className="con-toolbar">
+        <div className="con-toolbar-search">
+          <Search size={14} aria-hidden="true" />
+          <input placeholder={env === 'panel' ? '搜索参与者' : '搜索客户或项目'} aria-label="搜索" />
+        </div>
+        <div className="con-toolbar-actions">
+          <button type="button" className="con-btn"><Filter size={14} /> 筛选</button>
+          <button type="button" className="con-btn"><Download size={14} /> 导出</button>
+        </div>
+      </div>
+
+      <div className="con-table">
+        <table>
+          <thead>
+            <tr>{columns.map((column) => <th key={column}>{column}</th>)}</tr>
+          </thead>
+          <tbody>
+            <tr className="is-empty">
+              <td colSpan={columns.length}>
+                列表接口接入后，这里显示最近 50 条；“待接入”的列不会用假数据填。
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
