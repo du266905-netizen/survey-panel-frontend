@@ -16,6 +16,7 @@ import {
   Users,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import Logo from './Logo';
 import { useAuth } from './AuthContext';
 import BusinessLanguagePicker from './BusinessLanguagePicker';
 import { useLanguage, withLanguage } from './LanguageContext';
@@ -83,7 +84,8 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
 
   return (
     <aside className={['business-workspace-rail', 'business-rail', className].filter(Boolean).join(' ')} aria-label={navigationLabel}>
-      <img className="business-workspace-rail-mark" src="/guanyisearch-project-mark.png" alt="" />
+      {/* 导轨顶部放站点字标，不用那个大 G：和顶栏、管理端的品牌写法保持一致。 */}
+      <Logo size="sm" variant="dark" className="business-workspace-rail-brand" />
 
       <nav className="business-workspace-navgroups" aria-label={navigationLabel} data-tour="rail-nav">
         {groups.map((group) => {

@@ -146,7 +146,7 @@ export default function AppLayout({ children }) {
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  <ExternalLink size={13} aria-hidden="true" /> 预览版
+                  <ExternalLink size={13} aria-hidden="true" /> 线上预览
                 </a>
               )}
               {isAdmin && <NotificationBell />}

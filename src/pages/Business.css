@@ -1314,3 +1314,20 @@
 }
 
 .business-workspace-rail::-webkit-scrollbar-track { background: transparent; }
+
+/* 导轨顶部：字标占一条和右侧顶栏等高（70px）的带子，
+   导航标题就从那条线开始，不再被一个大 G 顶下去。 */
+.business-workspace-rail { padding-top: 0 !important; }
+
+.business-workspace-rail .business-workspace-rail-brand {
+  display: block;
+  width: auto !important;
+  height: 22px !important;
+  max-width: 190px;
+  margin: 24px 0 15px 6px !important;
+  align-self: flex-start;
+}
+
+@media (max-width: 620px) {
+  .business-workspace-rail-brand { height: 18px; margin: 20px 0; }
+}
