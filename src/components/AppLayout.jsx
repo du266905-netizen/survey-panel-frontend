@@ -33,7 +33,7 @@ export default function AppLayout({ children }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const isAdmin = isAdminRole(user?.role);
   const isPanelist = isPanelistRole(user?.role);
-  const roleLabel = isAdmin ? 'Admin' : user?.role === 'panelist' ? 'Panelist' : 'Member';
+  const roleLabel = isAdmin ? '管理员' : user?.role === 'panelist' ? '参与者' : '成员';
   const referralOpenRequested = new URLSearchParams(location.search).get('referral') === 'true';
   const usesEditorialWorkspaceSurface = location.pathname === '/dashboard' || location.pathname === '/activity';
 
@@ -135,7 +135,7 @@ export default function AppLayout({ children }) {
                 <Logo size="md" className="app-logo" />
               </div>
               {isAdmin && <span className="app-topbar-divider hidden sm:block" aria-hidden="true" />}
-              {isAdmin && <p className="app-topbar-context hidden text-xs sm:block">Operations workspace</p>}
+              {isAdmin && <p className="app-topbar-context hidden text-xs sm:block">运营工作区</p>}
               {isPanelist && <nav className="app-panelist-nav hidden lg:flex" aria-label="Main navigation">{panelistNavItems.map((item) => navigationLink(item, 'app-panelist-nav-link'))}</nav>}
             </div>
             <div className="flex items-center gap-3 sm:gap-4">
@@ -203,28 +203,28 @@ export default function AppLayout({ children }) {
       <div className="app-frame flex">
         {isAdmin && (
           <aside className="app-sidebar w-[272px] shrink-0 px-4 py-6">
-            <div className="app-sidebar-label">Operations</div>
+            <div className="app-sidebar-label">运营</div>
             <nav className="space-y-1">
-              {adminLink('/admin', 'Operations overview', ShieldCheck, true)}
-              {adminLink('/admin/business-projects', 'Client projects', BriefcaseBusiness)}
-              {adminLink('/admin/business-questionnaires', 'Questionnaire review', ClipboardCheck)}
-              {adminLink('/admin/support', 'Sales & support', MessageCircleMore)}
-              <div className="app-sidebar-label app-sidebar-label-secondary">Research operations</div>
-              {adminLink('/admin/research-opportunities', 'Research opportunities', Compass)}
-              {adminLink('/admin/panelists', 'Panel profiles', ListFilter)}
-              {adminLink('/admin/rewards', 'Rewards & redemptions', Gift)}
-              {adminLink('/admin/partners', 'Survey sources', Users)}
-              <div className="app-sidebar-label app-sidebar-label-secondary">System</div>
-              {adminLink('/admin/sandbox', 'Sandbox release', FlaskConical)}
-              {adminLink('/team', 'Team', UserPlus)}
-              {adminLink('/workers', 'Orbit Operations', UserCog)}
-              {adminLink('/orbit/settlement', 'Settlement Review', ClipboardCheck)}
-              {adminLink('/admin/database', 'Database', Database)}
-              {adminLink('/admin/marketing-assets', 'Marketing Assets', Image)}
+              {adminLink('/admin', '运营总览', ShieldCheck, true)}
+              {adminLink('/admin/business-projects', '客户项目', BriefcaseBusiness)}
+              {adminLink('/admin/business-questionnaires', '问卷审核', ClipboardCheck)}
+              {adminLink('/admin/support', '销售与客服', MessageCircleMore)}
+              <div className="app-sidebar-label app-sidebar-label-secondary">研究运营</div>
+              {adminLink('/admin/research-opportunities', '研究机会', Compass)}
+              {adminLink('/admin/panelists', '参与者资料', ListFilter)}
+              {adminLink('/admin/rewards', '奖励与兑换', Gift)}
+              {adminLink('/admin/partners', '问卷来源', Users)}
+              <div className="app-sidebar-label app-sidebar-label-secondary">系统</div>
+              {adminLink('/admin/sandbox', '沙盒发布', FlaskConical)}
+              {adminLink('/team', '团队', UserPlus)}
+              {adminLink('/workers', 'Orbit 运营', UserCog)}
+              {adminLink('/orbit/settlement', '结算审核', ClipboardCheck)}
+              {adminLink('/admin/database', '数据库', Database)}
+              {adminLink('/admin/marketing-assets', '营销素材', Image)}
             </nav>
             <div className="app-sidebar-foot">
               <span className="app-sidebar-status" aria-hidden="true" />
-              Secure workspace
+              安全工作区
             </div>
           </aside>
         )}

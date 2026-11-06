@@ -38,7 +38,7 @@ export default function WorkerMonitor() {
     try {
       setDiagnostics(await getTrafficDiagnostics());
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Unable to load Orbit operations.');
+      setError(err.response?.data?.message || (err.message === 'Network Error' ? '网络错误，请检查连接后重试。' : err.message) || '无法加载 Orbit 运营数据。');
     } finally {
       setLoading(false);
     }
@@ -65,7 +65,7 @@ export default function WorkerMonitor() {
   const columns = [
     {
       key: 'member',
-      header: 'Member',
+      header: '成员',
       render: (row) => (
         <div>
           <p className="font-bold text-slate-950">{row.worker.displayName}</p>
@@ -75,16 +75,16 @@ export default function WorkerMonitor() {
     },
     {
       key: 'device',
-      header: 'Device',
+      header: '设备',
       render: (row) => (
         <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${row.worker.isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'}`}>
-          {row.worker.isOnline ? 'Online' : 'Offline'}
+          {row.worker.isOnline ? '在线' : '离线'}
         </span>
       ),
     },
     {
       key: 'readiness',
-      header: 'Readiness',
+      header: '就绪状态',
       render: (row) => (
         <div className="space-y-1.5">
           <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${readinessClass(row.severity)}`}>
@@ -98,21 +98,21 @@ export default function WorkerMonitor() {
     },
     {
       key: 'work',
-      header: 'Work',
-      render: (row) => `${row.counts.runningTasks || 0} active · ${row.counts.idleProfiles || 0}/${row.counts.profiles || 0} ready`,
+      header: '工作',
+      render: (row) => `${row.counts.runningTasks || 0} 进行中 · ${row.counts.idleProfiles || 0}/${row.counts.profiles || 0} 就绪`,
     },
     {
       key: 'settlement',
-      header: 'Settlement review',
+      header: '结算审核',
       render: (row) => row.worker.settlementPendingTaskCount || 0,
     },
-    { key: 'lastSeen', header: 'Last active', render: (row) => formatTime(row.worker.lastSeenAt) },
+    { key: 'lastSeen', header: '最近活跃', render: (row) => formatTime(row.worker.lastSeenAt) },
     {
       key: 'actions',
-      header: 'Action',
+      header: '操作',
       render: (row) => (
         <Link className="btn-secondary px-3 py-1.5" to={`/workers/${row.worker.id}`}>
-          Open
+          打开
         </Link>
       ),
     },
@@ -121,12 +121,12 @@ export default function WorkerMonitor() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Orbit Operations"
-        description="See member readiness, device activity, work in progress, and items awaiting settlement review."
+        title="Orbit 运营"
+        description="查看成员就绪状态、设备在线情况、进行中的任务，以及待结算审核的条目。"
         action={
           <button className="btn-secondary" type="button" onClick={loadOperations} disabled={loading}>
             <RefreshCcw size={16} />
-            Refresh
+            刷新
           </button>
         }
       />
@@ -139,29 +139,29 @@ export default function WorkerMonitor() {
       )}
 
       <div className="grid gap-4 lg:grid-cols-4">
-        <StatCard label="Online members" value={totals.online} icon={MonitorCheck} tone="bg-emerald-50 text-emerald-600" />
-        <StatCard label="Needs attention" value={totals.attention} icon={AlertTriangle} tone="bg-amber-50 text-amber-600" />
-        <StatCard label="Active work" value={totals.active} icon={Activity} tone="bg-blue-50 text-blue-600" />
-        <StatCard label="Awaiting review" value={totals.settlement} icon={ClipboardCheck} tone="bg-violet-50 text-violet-600" />
+        <StatCard label="在线成员" value={totals.online} icon={MonitorCheck} tone="bg-emerald-50 text-emerald-600" />
+        <StatCard label="需要处理" value={totals.attention} icon={AlertTriangle} tone="bg-amber-50 text-amber-600" />
+        <StatCard label="进行中任务" value={totals.active} icon={Activity} tone="bg-blue-50 text-blue-600" />
+        <StatCard label="待审核" value={totals.settlement} icon={ClipboardCheck} tone="bg-violet-50 text-violet-600" />
       </div>
 
       <section className="card overflow-hidden">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-5 py-4">
           <div>
-            <h2 className="text-lg font-bold text-slate-950">Member readiness</h2>
-            <p className="mt-1 text-sm text-slate-500">Open a member only when an action is required. Task routing and result handling remain controlled by the member application.</p>
+            <h2 className="text-lg font-bold text-slate-950">成员就绪状态</h2>
+            <p className="mt-1 text-sm text-slate-500">只有需要处理时才打开成员；任务分发与结果处理仍由成员端控制。</p>
           </div>
           <div className="flex flex-wrap gap-2 text-xs font-bold">
-            <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700">Ready {diagnostics?.summary?.ready || 0}</span>
-            <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-700">Review {diagnostics?.summary?.warning || 0}</span>
-            <span className="rounded-full bg-red-50 px-3 py-1 text-red-700">Blocked {diagnostics?.summary?.blocked || 0}</span>
+            <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700">就绪 {diagnostics?.summary?.ready || 0}</span>
+            <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-700">待复核 {diagnostics?.summary?.warning || 0}</span>
+            <span className="rounded-full bg-red-50 px-3 py-1 text-red-700">阻塞 {diagnostics?.summary?.blocked || 0}</span>
           </div>
         </div>
-        <DataTable columns={columns} rows={rows} loading={loading} emptyMessage="No internal members are available yet." />
+        <DataTable columns={columns} rows={rows} loading={loading} emptyMessage="暂无内部成员。" />
       </section>
 
       <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-5 py-4 text-sm text-emerald-900">
-        <div className="flex items-center gap-2 font-semibold"><CheckCircle2 size={16} /> Daily management only needs this page and settlement review.</div>
+        <div className="flex items-center gap-2 font-semibold"><CheckCircle2 size={16} /> 日常管理只需要这一页和结算审核。</div>
       </div>
     </div>
   );
