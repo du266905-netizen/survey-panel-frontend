@@ -399,3 +399,25 @@
   .con-figure:nth-child(2) { border-right: 0; }
   .con-figure:nth-child(-n+2) { border-bottom: 1px solid #E5E3DD; }
 }
+
+/* ---- 列表页 ---- */
+
+.con-badge {
+  display: inline-flex;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #FAF9F5;
+  color: #5F6862;
+  font-size: 11px;
+  padding: 2px 8px;
+}
+
+.con-row-action { color: #8D948D; text-align: right; width: 40px; }
+
+.con-foot {
+  display: flex;
+  justify-content: space-between;
+  color: #8D948D;
+  font-size: 11px;
+  padding: 10px 2px 0;
+}

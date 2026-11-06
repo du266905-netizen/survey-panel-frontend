@@ -4,6 +4,8 @@ import AppLayout from './components/AppLayout';
 import { useAuth } from './components/AuthContext';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminConsole from './pages/AdminConsole';
+import AdminList from './pages/admin/AdminList';
+import { MODULES } from './pages/admin/modules';
 import AdminSupportTickets from './pages/AdminSupportTickets';
 import AdminSandbox from './pages/AdminSandbox';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
@@ -394,10 +396,16 @@ export default function App() {
             path="/admin/business-questionnaires"
             element={<AdminRoute><AdminBusinessQuestionnaires /></AdminRoute>}
           />
-          <Route
-            path="/admin/business-projects"
-            element={<AdminRoute><AdminBusinessProjects /></AdminRoute>}
-          />
+          <Route path="/admin/customers" element={<AdminRoute><AdminList config={MODULES.customers} /></AdminRoute>} />
+          <Route path="/admin/business-projects" element={<AdminRoute><AdminList config={MODULES.projects} /></AdminRoute>} />
+          <Route path="/admin/billing" element={<AdminRoute><AdminList config={MODULES.billing} /></AdminRoute>} />
+          <Route path="/admin/reviews" element={<AdminRoute><AdminList config={MODULES.reviews} /></AdminRoute>} />
+          <Route path="/admin/delivery" element={<AdminRoute><AdminList config={MODULES.delivery} /></AdminRoute>} />
+          <Route path="/admin/approvals" element={<AdminRoute><AdminList config={MODULES.approvals} /></AdminRoute>} />
+          <Route path="/admin/roles" element={<AdminRoute><AdminList config={MODULES.roles} /></AdminRoute>} />
+          <Route path="/admin/system" element={<AdminRoute><AdminList config={MODULES.system} /></AdminRoute>} />
+          <Route path="/admin/messages" element={<AdminRoute><AdminList config={MODULES.messages} /></AdminRoute>} />
+          <Route path="/admin/content" element={<AdminRoute><AdminList config={MODULES.content} /></AdminRoute>} />
           <Route
             path="/admin/delivery-centre"
             element={<AdminRoute><AdminDeliveryCenter /></AdminRoute>}

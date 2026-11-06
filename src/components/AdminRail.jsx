@@ -1,4 +1,4 @@
-import { Link, NavLink, useSearchParams } from 'react-router-dom';
+import { Link, NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import {
   BriefcaseBusiness, ClipboardCheck, Compass, Database, FileText, Gauge, Inbox,
   ListFilter, Mail, ReceiptText, Settings, Users,
@@ -27,15 +27,15 @@ export const ADMIN_ENVS = {
       {
         title: '内容与消息',
         items: [
-          { to: '/admin/content', label: '内容库', icon: FileText, pending: true },
-          { to: '/admin/review', label: '审核', icon: ClipboardCheck, pending: true },
-          { to: '/admin/marketing-assets', label: '消息与邮件', icon: Mail },
+          { to: '/admin/content', label: '内容库', icon: FileText },
+          { to: '/admin/approvals', label: '审核', icon: ClipboardCheck },
+          { to: '/admin/messages', label: '消息与邮件', icon: Mail },
         ],
       },
       {
         title: '系统',
         items: [
-          { to: '/admin/settings', label: '设置', icon: Settings, pending: true },
+          { to: '/admin/roles', label: '权限与设置', icon: Settings },
         ],
       },
     ],
@@ -48,25 +48,25 @@ export const ADMIN_ENVS = {
         title: '业务',
         items: [
           { to: '/admin', label: '总览', icon: Gauge, end: true },
-          { to: '/admin/customers', label: '客户', icon: Users, pending: true },
+          { to: '/admin/customers', label: '客户', icon: Users },
           { to: '/admin/business-projects', label: '项目与订单', icon: BriefcaseBusiness },
-          { to: '/admin/billing', label: '财务', icon: ReceiptText, pending: true },
+          { to: '/admin/billing', label: '财务', icon: ReceiptText },
         ],
       },
       {
         title: '交付',
         items: [
-          { to: '/admin/business-questionnaires', label: '问卷审核', icon: ClipboardCheck },
-          { to: '/admin/delivery-centre', label: '交付中心', icon: FileText },
-          { to: '/admin/review', label: '报价与退款审批', icon: Inbox, pending: true },
+          { to: '/admin/reviews', label: '问卷审核', icon: ClipboardCheck },
+          { to: '/admin/delivery', label: '交付中心', icon: FileText },
+          { to: '/admin/approvals', label: '报价与退款审批', icon: Inbox },
         ],
       },
       {
         title: '系统',
         items: [
-          { to: '/admin/roles', label: '权限与审计', icon: Settings, pending: true },
-          { to: '/admin/database', label: '系统与导出', icon: Database, pending: true },
-          { to: '/admin/marketing-assets', label: '消息与模板', icon: Mail },
+          { to: '/admin/roles', label: '权限与审计', icon: Settings },
+          { to: '/admin/system', label: '系统与导出', icon: Database },
+          { to: '/admin/messages', label: '消息与模板', icon: Mail },
         ],
       },
     ],
@@ -76,7 +76,11 @@ export const ADMIN_ENVS = {
 export default function AdminRail() {
   const { user } = useAuth();
   const [params, setParams] = useSearchParams();
-  const env = params.get('env') === 'research' ? 'research' : 'panel';
+  const { pathname } = useLocation();
+  /* 直接打开研究端某一页时，环境要跟着路由走，不能停在参与端。 */
+  const RESEARCH_PATHS = ['/admin/customers', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system'];
+  const fromRoute = RESEARCH_PATHS.some((path) => pathname.startsWith(path)) ? 'research' : 'panel';
+  const env = params.get('env') === 'research' ? 'research' : params.get('env') === 'panel' ? 'panel' : fromRoute;
   const config = ADMIN_ENVS[env];
 
   const switchEnv = (next) => setParams(next === 'panel' ? {} : { env: next }, { replace: true });
