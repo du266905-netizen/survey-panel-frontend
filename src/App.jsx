@@ -414,8 +414,15 @@ export default function App() {
             path="/admin/sandbox"
             element={<AdminRoute><AdminSandbox /></AdminRoute>}
           />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminConsole />
+              </AdminRoute>
+            }
+          />
         </Route>
-        <Route path="/admin" element={<AdminRoute><AdminConsole /></AdminRoute>} />
         <Route path="/" element={<HomeAtlas />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

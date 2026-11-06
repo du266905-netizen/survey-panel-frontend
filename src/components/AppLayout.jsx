@@ -7,6 +7,7 @@ import { isAdminRole, isPanelistRole } from '../utils/roles';
 import { ProfileSurveyProvider } from './ProfileSurveyContext';
 import ReferralProgramWidget from './ReferralProgramWidget';
 import NotificationBell from './NotificationBell';
+import AdminRail from './AdminRail';
 import { HomeFooter } from './HomeLegacySections';
 import { useLanguage, withLanguage } from './LanguageContext';
 
@@ -202,24 +203,8 @@ export default function AppLayout({ children }) {
 
       <div className="app-frame flex">
         {isAdmin && (
-          <aside className="app-sidebar w-[272px] shrink-0 px-4 py-6">
-            <div className="app-sidebar-label">运营</div>
-            <nav className="space-y-1">
-              {adminLink('/admin', '运营总览', ShieldCheck, true)}
-              {adminLink('/admin/business-projects', '客户项目', BriefcaseBusiness)}
-              {adminLink('/admin/business-questionnaires', '问卷审核', ClipboardCheck)}
-              {adminLink('/admin/support', '销售与客服', MessageCircleMore)}
-              {adminLink('/team', '团队', UserPlus)}
-              {adminLink('/admin/marketing-assets', '消息与邮件', MessageSquare)}
-              <div className="app-sidebar-label app-sidebar-label-secondary">研究运营</div>
-              {adminLink('/admin/research-opportunities', '研究机会', Compass)}
-              {adminLink('/admin/panelists', '参与者资料', ListFilter)}
-              {adminLink('/admin/partners', '问卷来源', Users)}
-            </nav>
-            <div className="app-sidebar-foot">
-              <span className="app-sidebar-status" aria-hidden="true" />
-              安全工作区
-            </div>
+          <aside className="app-sidebar w-[236px] shrink-0 border-r border-[#E5E3DD] bg-white">
+            <AdminRail />
           </aside>
         )}
         <main className={`app-main min-w-0 flex-1 px-5 py-7 sm:px-8 lg:px-10 ${usesEditorialWorkspaceSurface ? 'app-main-dashboard' : ''} ${isPanelist ? 'app-main-panelist' : ''} ${isAdmin ? 'app-main-admin' : ''}`}>

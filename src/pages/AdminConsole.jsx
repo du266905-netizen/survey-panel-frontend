@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, NavLink, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   Activity, BriefcaseBusiness, ClipboardCheck, Compass, FileText, Gauge, Inbox,
   LayoutGrid, ListFilter, Mail, ReceiptText, RefreshCcw, Search, Settings, Users, WalletCards,
@@ -91,7 +91,6 @@ function value(card, data) {
 export default function AdminConsole() {
   const { user } = useAuth();
   const [params, setParams] = useSearchParams();
-  const location = useLocation();
   const env = params.get('env') === 'research' ? 'research' : 'panel';
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -114,114 +113,48 @@ export default function AdminConsole() {
   };
 
   return (
-    <div className="con">
-      <aside className="con-rail">
-        <Link className="con-brand" to="/admin">
-          guanyisearch<span>运营工作台</span>
-        </Link>
-
-        <div className="con-envs" role="tablist" aria-label="环境">
-          {Object.entries(ENVS).map(([key, item]) => (
-            <button
-              key={key}
-              type="button"
-              role="tab"
-              aria-selected={env === key}
-              className={env === key ? 'is-active' : ''}
-              onClick={() => switchEnv(key)}
-            >
-              {item.label}
-            </button>
-          ))}
+    <div className="con-body">
+      <div className="con-head">
+        <div>
+          <h1>{config.label}总览</h1>
+          <p>{config.caption}</p>
         </div>
-        <p className="con-caption">{config.caption}</p>
+        <span className="con-stamp">实时</span>
+      </div>
 
-        <nav className="con-nav">
-          {config.groups.map((group) => (
-            <div className="con-group" key={group.title}>
-              <p>{group.title}</p>
-              {group.items.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.end}
-                  className={({ isActive }) => `${isActive ? 'is-active' : ''}${item.pending ? ' is-pending' : ''}`}
-                >
-                  <item.icon size={16} aria-hidden="true" />
-                  <span>{item.label}</span>
-                  {item.pending ? <em>待接入</em> : null}
-                </NavLink>
-              ))}
-            </div>
-          ))}
-        </nav>
+      <div className="con-cards">
+        {cards.map((card) => (
+          <article key={card[0]} className="con-card">
+            <p>{card[0]}</p>
+            <strong className={card[2] ? undefined : 'is-text'}>{loading ? '·' : value(card, data)}</strong>
+          </article>
+        ))}
+      </div>
 
-        <div className="con-rail-foot">
-          <span className="con-dot" aria-hidden="true" />
-          {user?.displayName || user?.name || '管理员'}
-        </div>
-      </aside>
-
-      <main className="con-main">
-        <header className="con-top">
-          <div className="con-search">
-            <Search size={15} aria-hidden="true" />
-            <input placeholder="搜索项目、参与者、工单" aria-label="搜索" />
+      <div className="con-grid">
+        <section className="con-panel">
+          <header>
+            <h2>最近进行</h2>
+            <Link to={env === 'panel' ? '/admin/panelists' : '/admin/business-projects'}>查看全部</Link>
+          </header>
+          <div className="con-empty">
+            <Activity size={18} aria-hidden="true" />
+            <p>列表接口接入后，这里显示最近的 10 条。</p>
           </div>
-          <div className="con-top-right">
-            <button type="button" className="con-icon" onClick={load} aria-label="刷新">
-              <RefreshCcw size={16} className={loading ? 'is-spinning' : ''} />
-            </button>
-            <Link className="con-icon" to="/" aria-label="返回站点">
-              <LayoutGrid size={16} />
-            </Link>
-          </div>
-        </header>
+        </section>
 
-        <div className="con-body">
-          <div className="con-head">
-            <div>
-              <h1>{config.label}总览</h1>
-              <p>{config.caption}</p>
-            </div>
-            <span className="con-stamp">{location.pathname === '/admin' ? '实时' : config.label}</span>
-          </div>
-
-          <div className="con-cards">
-            {cards.map((card) => (
-              <article key={card[0]} className="con-card">
-                <p>{card[0]}</p>
-                <strong className={card[2] ? undefined : 'is-text'}>{loading ? '·' : value(card, data)}</strong>
-              </article>
-            ))}
-          </div>
-
-          <div className="con-grid">
-            <section className="con-panel">
-              <header>
-                <h2>最近进行</h2>
-                <Link to={env === 'panel' ? '/admin/panelists' : '/admin/business-projects'}>查看全部</Link>
-              </header>
-              <div className="con-empty">
-                <Activity size={18} aria-hidden="true" />
-                <p>列表接口接入后，这里显示最近的 10 条。</p>
-              </div>
-            </section>
-
-            <section className="con-panel">
-              <header>
-                <h2>待处理</h2>
-                <Settings size={15} aria-hidden="true" />
-              </header>
-              <ul className="con-tasks">
-                <li><ClipboardCheck size={15} aria-hidden="true" /> 问卷审核<em>待接入</em></li>
-                <li><WalletCards size={15} aria-hidden="true" /> 收款与对账<em>待接入</em></li>
-                <li><Mail size={15} aria-hidden="true" /> 消息与邮件<em>待接入</em></li>
-              </ul>
-            </section>
-          </div>
-        </div>
-      </main>
+        <section className="con-panel">
+          <header>
+            <h2>待处理</h2>
+            <Settings size={15} aria-hidden="true" />
+          </header>
+          <ul className="con-tasks">
+            <li><ClipboardCheck size={15} aria-hidden="true" /> 问卷审核<em>待接入</em></li>
+            <li><WalletCards size={15} aria-hidden="true" /> 收款与对账<em>待接入</em></li>
+            <li><Mail size={15} aria-hidden="true" /> 消息与邮件<em>待接入</em></li>
+          </ul>
+        </section>
+      </div>
     </div>
   );
 }

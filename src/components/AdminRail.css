@@ -1,0 +1,85 @@
+/* 运营左轨。色卡与编辑器一致，只用八个值。 */
+
+.arail {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  background: #FFFFFF;
+  padding: 14px 12px 12px;
+}
+
+.arail-brand {
+  display: block;
+  color: #8D948D;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-decoration: none;
+  padding: 4px 8px;
+}
+
+.arail-envs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 16px;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FAF9F5;
+  padding: 3px;
+}
+
+.arail-envs button {
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  padding: 7px 0;
+}
+
+.arail-envs button.is-active { background: #141413; color: #FFFFFF; }
+
+.arail-caption { margin: 10px 8px 0; color: #8D948D; font-size: 11px; line-height: 1.4; }
+
+.arail-nav { flex: 1 1 auto; margin-top: 14px; overflow-y: auto; }
+
+.arail-group { margin-bottom: 14px; }
+
+.arail-group > p {
+  margin: 0 8px 4px;
+  color: #8D948D;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+}
+
+.arail-group a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 7px;
+  color: #141413;
+  font-size: 13px;
+  line-height: 1.3;
+  padding: 8px;
+  text-decoration: none;
+}
+
+.arail-group a:hover { background: #FAF9F5; }
+.arail-group a.is-active { background: #FAF9F5; font-weight: 600; }
+.arail-group a em { margin-left: auto; color: #8D948D; font-size: 11px; font-style: normal; }
+
+.arail-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid #E5E3DD;
+  color: #5F6862;
+  font-size: 12px;
+  padding: 12px 8px 0;
+}
+
+.arail-dot { width: 6px; height: 6px; border-radius: 50%; background: #DEEF24; }
