@@ -37,13 +37,13 @@ function newIdempotencyKey() {
 
 const copy = {
   'zh-CN': {
-    label: 'AI 剩余', unit: '次', unavailable: '额度接口未接', buy: '加购',
+    label: 'AI 剩余', unit: '次', unavailable: '额度暂时读不到', buy: '加购',
     title: '加购 AI 次数', hint: '从账户余额扣除，不足时先充值。', confirm: '确认购买',
     loading: '处理中…', failed: '购买失败，请稍后再试。', done: '已到账', close: '关闭',
     upgrade: '升级套餐', learnMore: '了解更多', privacy: '隐私政策', terms: '服务条款', help: '帮助中心',
   },
   en: {
-    label: 'AI credits', unit: '', unavailable: 'Credits endpoint pending', buy: 'Buy',
+    label: 'AI credits', unit: '', unavailable: 'Credits are unavailable right now', buy: 'Buy',
     title: 'Buy AI credits', hint: 'Paid from your balance; top up first if short.', confirm: 'Buy',
     loading: 'Working…', failed: 'Could not buy. Try again.', done: 'Added', close: 'Close',
     upgrade: 'Upgrade plan', learnMore: 'Learn more', privacy: 'Privacy', terms: 'Terms', help: 'Help centre',
