@@ -1,151 +1,131 @@
 /* 通知弹层。
  *
- * 一条规则的来源：一行只允许一个未读信号。这里用「一个小点 + 标题略重」，
- * 不再用左边一道黄条——那道条是同一句话的第三种写法。
- * 宽度 380：放得下两行正文，又不至于把页面遮掉一半。
+ * 640 宽，一条一张卡片：标题一行、正文一段、时间靠右。不放图标。
+ * 未读是浅灰卡（4% 墨色，不是米色——米色会让整块看着像纸），
+ * 点开即恢复白底、去掉小点；「全部已读」留在头部。
  */
 
 .notification-popover {
   position: absolute;
   z-index: 80;
-  top: calc(100% + 10px);
+  top: calc(100% + 12px);
   right: 0;
-  width: min(380px, calc(100vw - 24px));
+  width: min(640px, calc(100vw - 24px));
   overflow: hidden;
-  border: 1px solid #E5E3DD;
-  border-radius: 12px;
+  border: 1px solid rgba(20, 20, 19, .08);
+  border-radius: 16px;
   background: #FFFFFF;
-  box-shadow: 0 18px 44px rgba(20, 20, 19, .13);
+  box-shadow: 0 24px 64px rgba(20, 20, 19, .18);
 }
 
 .notification-popover header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  border-bottom: 1px solid #E5E3DD;
-  padding: 14px 16px;
+  gap: 16px;
+  padding: 20px 22px 10px;
 }
 
 .notification-popover header strong {
-  display: block;
   color: #141413;
-  font: 600 14px/1.3 var(--font-sans);
-  letter-spacing: -.01em;
-}
-
-.notification-popover header small {
-  display: block;
-  margin-top: 3px;
-  color: #8D948D;
-  font: 400 11px/1.4 var(--font-sans);
+  font: 600 18px/1.3 var(--font-sans);
+  letter-spacing: -.02em;
 }
 
 .notification-popover header button {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   border: 0;
   background: transparent;
   color: #5F6862;
   cursor: pointer;
-  font: 500 12px var(--font-sans);
+  font: 500 13px var(--font-sans);
   padding: 4px 0;
-  white-space: nowrap;
 }
 
 .notification-popover header button:hover { color: #141413; }
 
 .notification-list {
-  max-height: min(460px, 62vh);
+  display: flex;
+  max-height: min(560px, 64vh);
+  flex-direction: column;
+  gap: 6px;
   overflow-y: auto;
+  padding: 4px 12px 14px;
 }
 
 .nb-group > p {
-  margin: 12px 16px 4px;
+  margin: 12px 8px 4px;
   color: #8D948D;
-  font: 600 11px/1.4 var(--font-sans);
-  letter-spacing: .08em;
+  font: 500 12px/1.4 var(--font-sans);
 }
 
-.nb-row {
-  display: grid;
+.nb-item {
+  display: block;
   width: 100%;
-  grid-template-columns: 28px minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 10px;
-  border: 0;
+  border: 1px solid rgba(20, 20, 19, .08);
+  border-radius: 12px;
   background: #FFFFFF;
   cursor: pointer;
-  padding: 9px 16px;
+  padding: 12px 14px;
   text-align: left;
+  transition: background .12s ease, border-color .12s ease;
 }
 
-.nb-row:hover { background: #FAF9F5; }
+.nb-item:hover { border-color: rgba(20, 20, 19, .22); }
 
-.nb-icon {
-  display: grid;
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  background: #FAF9F5;
-  color: #5F6862;
-  place-items: center;
+.nb-item.is-unread {
+  border-color: transparent;
+  background: rgba(20, 20, 19, .045);
 }
 
-.nb-main {
+.nb-item.is-unread:hover { background: rgba(20, 20, 19, .07); }
+
+.nb-head {
   display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 2px;
-  padding-top: 3px;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.nb-dot {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #141413;
+  transform: translateY(-2px);
 }
 
 .nb-title {
   overflow: hidden;
   color: #141413;
-  font: 500 13px/1.45 var(--font-sans);
+  font: 600 14px/1.45 var(--font-sans);
+  letter-spacing: -.01em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.nb-row.is-unread .nb-title { font-weight: 600; }
-
-.nb-body {
-  display: -webkit-box;
-  overflow: hidden;
-  color: #5F6862;
-  font: 400 12px/1.5 var(--font-sans);
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.nb-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 7px;
-  padding-top: 4px;
-}
-
-.nb-meta em {
+.nb-head em {
+  flex: 0 0 auto;
+  margin-left: auto;
   color: #8D948D;
-  font: 400 11px var(--font-sans);
+  font: 400 12px var(--font-sans);
   font-style: normal;
   white-space: nowrap;
 }
 
-.nb-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: #141413;
+.nb-body {
+  display: block;
+  margin-top: 6px;
+  color: #5F6862;
+  font: 400 13px/1.7 var(--font-sans);
 }
 
 .nb-empty {
   display: grid;
-  min-height: 150px;
+  min-height: 160px;
   margin: 0;
   place-content: center;
   color: #8D948D;
@@ -154,14 +134,14 @@
   text-align: center;
 }
 
-/* 工作台里以“弹窗”而不是“下拉”呈现时，贴着右上角，不跟随铃铛定位。 */
+/* 工作台里以“弹窗”而不是“下拉”呈现时，贴着右上角。 */
 .notification-popover--modal {
   position: fixed;
   top: 88px;
   right: 24px;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 560px) {
   .notification-popover { width: calc(100vw - 20px); }
-  .nb-row { padding: 12px 16px; }
+  .nb-item { padding: 14px; }
 }

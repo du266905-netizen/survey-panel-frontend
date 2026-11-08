@@ -1,27 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { Bell, CheckCheck, CircleCheck, FileText, Inbox, Wallet } from 'lucide-react';
+import { Bell, CheckCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getNotifications, markAllNotificationsRead, markNotificationRead } from '../api/realApi';
 import './NotificationBell.css';
 
 /* 通知铃铛。
  *
- * 排版照 Courier 那篇通知中心设计稿的结论：一行只留一个未读信号（一个点），
- * 前面一个类型图标先回答“这是什么”，标题自己站得住，正文最多两行，时间用相对的。
- * 以前同一件事用了黄条 + 加粗 + 底色三种写法，所以看着脏。
+ * 排版照常见做法：面板放宽到 640，一条是一张浅灰卡片，标题一行、正文一段。
+ * 不放类型图标——图标在这里不承担识别作用，只会让每行多一个噪音。
+ * 未读用底色区分（灰底），点开即恢复白底；未读那条左边留一个小点，
+ * 一屏里能扫出哪几条是新到的。
  */
-
-const ICON_RULES = [
-  [/PAYMENT|FUNDED|REFUND|INVOICE/i, Wallet],
-  [/QUOTE/i, FileText],
-  [/SUBMITTED|CREATED|REVIEW/i, Inbox],
-  [/LIVE|RECRUITING|COMPLETED|APPROVED/i, CircleCheck],
-];
-
-const iconFor = (type) => {
-  const match = ICON_RULES.find(([pattern]) => pattern.test(String(type || '')));
-  return match ? match[1] : Bell;
-};
 
 const timeLabel = (value) => {
   const date = new Date(value);
@@ -89,7 +78,6 @@ export default function NotificationBell({ className = '', presentation = 'popov
     try { await markAllNotificationsRead(); } catch { load(); }
   };
 
-  /* 今天 / 昨天 / 更早：分三组，列表长一点也扫得动。 */
   const groups = notifications.reduce((list, item) => {
     const label = groupLabel(item.createdAt);
     const last = list[list.length - 1];
@@ -105,32 +93,23 @@ export default function NotificationBell({ className = '', presentation = 'popov
     </button>
     {open && <section className={`notification-popover${presentation === 'modal' ? ' notification-popover--modal' : ''}`} aria-label="通知">
       <header>
-        <div>
-          <strong>通知</strong>
-          <small>{unreadCount ? `${unreadCount} 条未读` : '都读完了'}</small>
-        </div>
+        <strong>通知</strong>
         {unreadCount > 0 && <button type="button" onClick={readAll}><CheckCheck size={14} /> 全部已读</button>}
       </header>
       <div className="notification-list">
         {notifications.length ? groups.map((group) => (
           <div className="nb-group" key={group.label}>
             <p>{group.label}</p>
-            {group.items.map((notification) => {
-              const Icon = iconFor(notification.type);
-              return (
-                <button type="button" key={notification.id} className={`nb-row${notification.readAt ? '' : ' is-unread'}`} onClick={() => openNotification(notification)}>
-                  <span className="nb-icon"><Icon size={15} aria-hidden="true" /></span>
-                  <span className="nb-main">
-                    <span className="nb-title">{notification.title}</span>
-                    {notification.body ? <span className="nb-body">{notification.body}</span> : null}
-                  </span>
-                  <span className="nb-meta">
-                    <em>{timeLabel(notification.createdAt)}</em>
-                    {notification.readAt ? null : <i className="nb-dot" aria-label="未读" />}
-                  </span>
-                </button>
-              );
-            })}
+            {group.items.map((notification) => (
+              <button type="button" key={notification.id} className={`nb-item${notification.readAt ? '' : ' is-unread'}`} onClick={() => openNotification(notification)}>
+                <span className="nb-head">
+                  {notification.readAt ? null : <i className="nb-dot" aria-label="未读" />}
+                  <span className="nb-title">{notification.title}</span>
+                  <em>{timeLabel(notification.createdAt)}</em>
+                </span>
+                {notification.body ? <span className="nb-body">{notification.body}</span> : null}
+              </button>
+            ))}
           </div>
         )) : <p className="nb-empty">还没有通知。项目有进展、钱到账时，这里会出现一条。</p>}
       </div>
