@@ -33,6 +33,58 @@
   font: 500 12px var(--font-sans);
 }
 
+/* ---- 检查项 ---- */
+
+.rv-checks { margin-top: 18px; }
+
+.rv-checks h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: #5F6862;
+  font: 600 12px var(--font-sans);
+}
+
+.rv-checks h3 em { color: #8D948D; font-style: normal; font-weight: 400; }
+
+.rv-check {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  border-bottom: 1px solid #E5E3DD;
+  color: #141413;
+  font: 400 13px/1.6 var(--font-sans);
+  padding: 8px 0;
+}
+
+.rv-check svg { flex: 0 0 auto; }
+.rv-check.is-pass svg { color: #5F6862; }
+.rv-check.is-fail { color: #B42318; }
+.rv-check.is-fail svg { color: #B42318; }
+.rv-check em { margin-left: auto; color: #B42318; font: 400 12px var(--font-sans); font-style: normal; }
+
+.rv-manual {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #E5E3DD;
+  cursor: pointer;
+  padding: 9px 0;
+}
+
+.rv-manual input { margin-top: 3px; accent-color: #141413; }
+.rv-manual strong { display: block; color: #141413; font: 400 13px/1.5 var(--font-sans); }
+.rv-manual small { display: block; margin-top: 2px; color: #8D948D; font: 400 12px var(--font-sans); }
+
+.rv-full { margin-top: 16px; }
+.rv-full summary {
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  padding: 6px 0;
+}
+
 /* ---- 队列 ---- */
 
 .rv-queue {

@@ -58,7 +58,7 @@ export const ADMIN_ENVS = {
           { to: '/admin/customers', label: '客户', icon: Users },
           { to: '/admin/business-projects', label: '项目与订单', icon: BriefcaseBusiness },
           { to: '/admin/billing', label: '财务', icon: ReceiptText },
-          { to: '/admin/reviews', label: '问卷审核', icon: ClipboardCheck },
+          { to: '/admin/reviews', label: '问卷质检', icon: ClipboardCheck },
           { to: '/admin/delivery', label: '交付中心', icon: FileText },
           { to: '/admin/approvals', label: '报价与退款审批', icon: Inbox },
           { to: '/admin/changelog', label: '更新日志', icon: History },
