@@ -145,3 +145,5 @@
 .msg-actions-cell button:disabled { opacity: .45; }
 .msg-err-inline { display: block; margin-top: 3px; color: #B42318; font: 400 11px var(--font-sans); }
 .msg-mode.is-failed { border-color: #B42318; color: #B42318; }
+
+.msg-more { margin-top: 12px; }

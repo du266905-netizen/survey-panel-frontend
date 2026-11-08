@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ExternalLink, Search, Send } from 'lucide-react';
 import { EMAIL_TEMPLATES, RESEND_TEMPLATES_URL } from '../content/emailTemplates';
-import { cancelEmailOutboxItem, getAdminBusinessProjects, getEmailOutbox, getEmailOutboxStats, getMarketingDeliveries, previewMarketingCampaign, retryEmailOutboxItem, sendEmailOutboxItem, sendMarketingCampaign } from '../api/realApi';
+import { cancelEmailOutboxItem, getAdminBusinessProjects, getEmailLogs, getEmailOutbox, getEmailOutboxStats, getMarketingDeliveries, previewMarketingCampaign, retryEmailOutboxItem, sendEmailOutboxItem, sendMarketingCampaign } from '../api/realApi';
 import './AdminMessages.css';
 
 /* 营销与模板。
@@ -30,7 +30,7 @@ const LOCALES = [
 
 export default function AdminMessages() {
   const [params] = useSearchParams();
-  const [tab, setTab] = useState(['campaign', 'templates', 'transactional'].includes(params.get('tab')) ? params.get('tab') : 'campaign');
+  const [tab, setTab] = useState(['campaign', 'templates', 'transactional', 'log'].includes(params.get('tab')) ? params.get('tab') : 'campaign');
   const [template, setTemplate] = useState('organization-market-research');
   const [locale, setLocale] = useState('en');
   const [recipients, setRecipients] = useState('');
@@ -47,6 +47,25 @@ export default function AdminMessages() {
   const [txTemplate, setTxTemplate] = useState('Payment Received');
   const [outbox, setOutbox] = useState([]);
   const [outboxStats, setOutboxStats] = useState(null);
+  const [logs, setLogs] = useState([]);
+  const [logTotal, setLogTotal] = useState(0);
+  const [logCursor, setLogCursor] = useState(null);
+  const [logStatus, setLogStatus] = useState('');
+  const [logQuery, setLogQuery] = useState('');
+  const [logLoading, setLogLoading] = useState(false);
+
+  const loadLogs = (cursor = '') => {
+    setLogLoading(true);
+    getEmailLogs({ status: logStatus || undefined, q: logQuery || undefined, cursor: cursor || undefined, limit: 50 })
+      .then(({ data }) => {
+        const items = data?.items || [];
+        setLogs((current) => (cursor ? [...current, ...items] : items));
+        setLogCursor(data?.nextCursor || null);
+        setLogTotal(data?.total || 0);
+      })
+      .catch(() => { if (!cursor) { setLogs([]); setLogTotal(0); } })
+      .finally(() => setLogLoading(false));
+  };
   const [busyId, setBusyId] = useState('');
 
   const loadOutbox = () => {
@@ -69,7 +88,8 @@ export default function AdminMessages() {
 
   useEffect(() => {
     if (tab === 'transactional') loadOutbox();
-  }, [tab]);
+    if (tab === 'log') loadLogs();
+  }, [tab, logStatus]);
 
   useEffect(() => {
     if (tab !== 'transactional' || customers.length) return;
@@ -136,7 +156,7 @@ export default function AdminMessages() {
       </header>
 
       <div className="con-tabs" role="tablist">
-        {[['campaign', '营销邮件'], ['templates', '模板'], ['transactional', '交易邮件']].map(([id, label]) => (
+        {[['campaign', '营销邮件'], ['templates', '模板'], ['transactional', '交易邮件'], ['log', '发送记录']].map(([id, label]) => (
           <button key={id} type="button" role="tab" aria-selected={tab === id} className={tab === id ? 'is-active' : ''} onClick={() => setTab(id)}>
             {label}
           </button>
@@ -285,6 +305,55 @@ export default function AdminMessages() {
           <p className="msg-note">
             交易邮件走 guanyisearch.com 的独立凭据，和营销邮件互不影响。点「发送」只是放行，真正的投递由后台按 1 分钟到 24 小时的退避重试，失败三次以上会标红。
           </p>
+        </>
+      )}
+
+      {tab === 'log' && (
+        <>
+          <div className="con-tabs" role="tablist">
+            {[['', '全部'], ['delivered', '已送达'], ['bounced', '退信'], ['complained', '投诉']].map(([id, label]) => (
+              <button key={id || 'all'} type="button" role="tab" aria-selected={logStatus === id} className={logStatus === id ? 'is-active' : ''} onClick={() => setLogStatus(id)}>
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div className="con-toolbar">
+            <div className="con-toolbar-search">
+              <Search size={14} aria-hidden="true" />
+              <input value={logQuery} onChange={(event) => setLogQuery(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') loadLogs(); }} placeholder="搜收件人邮箱，回车查询" aria-label="搜索发送记录" />
+            </div>
+            <span className="tx-count">共 {logTotal} 条</span>
+          </div>
+
+          <div className="con-table">
+            <table>
+              <thead><tr><th>收件人</th><th>模板</th><th>结果</th><th>服务商消息 ID</th><th className="is-right">时间</th></tr></thead>
+              <tbody>
+                {logs.length ? logs.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.toEmail}</td>
+                    <td>{item.template || '—'}</td>
+                    <td><span className={`msg-mode is-${item.status}`}>{item.status}</span></td>
+                    <td className="msg-vars">{item.providerMessageId || '—'}</td>
+                    <td className="is-right">{item.at ? new Date(item.at).toISOString().slice(0, 16).replace('T', ' ') : '—'}</td>
+                  </tr>
+                )) : (
+                  <tr className="is-empty">
+                    <td colSpan={5}>{logLoading ? '读取中…' : '还没有回执。等 Resend 的 Webhook 密钥配好、开始回调之后，这里才会有数据。'}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {logCursor ? (
+            <button type="button" className="con-btn msg-more" disabled={logLoading} onClick={() => loadLogs(logCursor)}>
+              {logLoading ? '读取中…' : '加载更多'}
+            </button>
+          ) : null}
+
+          <p className="msg-note">只记录投递结果，不存正文与变量；退信和投诉会进抑制名单，之后的群发自动跳过。</p>
         </>
       )}
     </div>
