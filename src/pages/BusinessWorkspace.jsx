@@ -21,7 +21,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessQuestionnaireDrafts, getBusinessWorkspace, submitBusinessProject, updateBusinessProject } from '../api/realApi';
+import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../components/BusinessBalanceChip';
 import BusinessPageLoader from '../components/BusinessPageLoader';
@@ -121,23 +121,6 @@ const organizationTypeOptions = [
 function onboardingStorageKey(user) {
   const identity = String(user?.id || user?.email || '').trim().toLowerCase();
   return identity ? `guanyi-business-onboarding:${identity}` : '';
-}
-
-function readStoredOnboarding(user) {
-  const key = onboardingStorageKey(user);
-  if (!key || typeof window === 'undefined') return null;
-  try {
-    const stored = JSON.parse(window.localStorage.getItem(key) || 'null');
-    return stored?.researchRole && stored?.researchIntent ? stored : null;
-  } catch {
-    return null;
-  }
-}
-
-function storeOnboarding(user, value) {
-  const key = onboardingStorageKey(user);
-  if (!key || typeof window === 'undefined') return;
-  window.localStorage.setItem(key, JSON.stringify({ ...value, savedAt: new Date().toISOString() }));
 }
 
 function welcomeStorageKey(user) {
@@ -343,11 +326,14 @@ export default function BusinessWorkspace() {
   useEffect(() => {
     let active = true;
     getBusinessWorkspace()
-      .then((response) => {
+      .then(async (response) => {
         if (!active) return;
         setWorkspace(response.data);
         const hasSeenWelcome = hasSeenWorkspaceWelcome(user);
-        const savedOnThisDevice = readStoredOnboarding(user);
+        const onboardingDraft = await getBusinessOnboarding()
+          .then((data) => data?.onboarding || null)
+          .catch(() => null);
+        const savedOnThisDevice = onboardingDraft;
         const onboarded = Boolean(response.data.profile?.researchOnboardedAt || savedOnThisDevice);
         /* A first visit ALWAYS gets the time of day. Someone coming back gets
            "Welcome back" about half the time and the time of day otherwise, so
@@ -502,13 +488,13 @@ export default function BusinessWorkspace() {
         ...(onboarding.researchRole === 'ORGANIZATION' ? { organizationType: onboarding.organizationType } : {}),
       });
       setWorkspace((current) => ({ ...current, profile: response.data.profile }));
-      storeOnboarding(user, onboarding);
+      await saveBusinessOnboarding({ researchRole: onboarding.researchRole, researchIntent: onboarding.researchIntent }).catch(() => {});
       setOnboardingComplete(true);
       if (!hasSeenBusinessTour(user)) setTourOpen(true);
     } catch (error) {
       const status = error.response?.status;
       if (!status || status >= 500 || [404, 405, 501].includes(status)) {
-        storeOnboarding(user, onboarding);
+        await saveBusinessOnboarding({ researchRole: onboarding.researchRole, researchIntent: onboarding.researchIntent }).catch(() => {});
         setOnboardingComplete(true);
         if (!hasSeenBusinessTour(user)) setTourOpen(true);
         setMessage(feedbackCopy.preferencesSaved);

@@ -1073,3 +1073,14 @@ export const acceptTeamInvitation = async (token) => {
   const response = await apiClient.post(`/api/business/team/invitations/${encodeURIComponent(token)}/accept`);
   return response.data;
 };
+
+
+export const getBusinessOnboarding = async () => {
+  const response = await apiClient.get('/api/business/onboarding');
+  return response.data;
+};
+
+export const saveBusinessOnboarding = async ({ researchRole, researchIntent }) => {
+  const response = await apiClient.put('/api/business/onboarding', { researchRole, researchIntent });
+  return response.data;
+};
