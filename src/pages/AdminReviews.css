@@ -106,6 +106,20 @@
 
 .rv-queue-head em { color: #141413; font: 600 13px var(--font-sans); font-style: normal; }
 
+.rv-sources { display: flex; gap: 4px; border-bottom: 1px solid #E5E3DD; padding: 8px 10px; }
+
+.rv-sources button {
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8D948D;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  padding: 3px 8px;
+}
+
+.rv-sources button.is-active { background: #FAF9F5; color: #141413; }
+
 .rv-item {
   position: relative;
   display: grid;

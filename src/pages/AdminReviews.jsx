@@ -71,6 +71,7 @@ export default function AdminReviews() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [doneNote, setDoneNote] = useState('');
+  const [source, setSource] = useState('all');
 
   const load = () => {
     setLoading(true);
@@ -86,6 +87,12 @@ export default function AdminReviews() {
   };
 
   useEffect(() => { load(); }, []);
+
+  const visibleQueue = useMemo(() => queue.filter((item) => {
+    if (source === 'managed') return item.collectionMode !== 'SELF_DISTRIBUTED';
+    if (source === 'self') return item.collectionMode === 'SELF_DISTRIBUTED';
+    return true;
+  }), [queue, source]);
 
   const active = useMemo(() => queue.find((item) => item.id === activeId) || null, [queue, activeId]);
   const checks = useMemo(() => (active ? autoChecks(active) : []), [active]);
@@ -138,7 +145,14 @@ export default function AdminReviews() {
             <span>待质检</span>
             <em>{loading ? '·' : queue.length}</em>
           </div>
-          {queue.length ? queue.map((item) => (
+          <div className="rv-sources" role="tablist">
+            {[['all', '全部'], ['managed', '我们投放'], ['self', '客户自投']].map(([id, label]) => (
+              <button key={id} type="button" role="tab" aria-selected={source === id} className={source === id ? 'is-active' : ''} onClick={() => setSource(id)}>
+                {label}
+              </button>
+            ))}
+          </div>
+          {visibleQueue.length ? visibleQueue.map((item) => (
             <button
               key={item.id}
               type="button"
