@@ -6,6 +6,20 @@ import { getAdminBusinessProjects } from '../../api/realApi';
  * 数据源先留空：接后端时只替换 AdminList 里的 rows，不动页面配置。
  */
 
+/* 后端存的是英文状态码，列表里要给人看中文。 */
+const PROJECT_STATUS = {
+  DRAFT: '草稿',
+  SUBMITTED_FOR_REVIEW: '待审核',
+  QUOTE_REQUIRED: '待报价',
+  QUOTE_SENT: '报价已发',
+  CLIENT_ACCEPTED: '待收款',
+  FUNDED: '已付款',
+  RECRUITING: '招募中',
+  LIVE: '进行中',
+  COMPLETED: '已完成',
+  CANCELLED: '已取消',
+};
+
 export const MODULES = {
   customers: {
     title: '客户',
@@ -35,7 +49,7 @@ export const MODULES = {
       title: project.title || '未命名项目',
       customer: project.client?.email || project.client?.name || '—',
       kind: project.studyFormat || project.researchGoal || '问卷',
-      stage: project.status || 'DRAFT',
+      stage: PROJECT_STATUS[project.status] || project.status || '草稿',
       amount: project.latestQuote?.totalCents != null
         ? `$${(project.latestQuote.totalCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
         : '—',

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import AdminDetail from './AdminDetail';
-import { Download, Filter, Plus, Search } from 'lucide-react';
+import { ArrowLeft, Download, Filter, Plus, Search } from 'lucide-react';
 import '../AdminConsole.css';
 
 /* 通用列表页。
@@ -33,6 +34,7 @@ export default function AdminList({ config, rows: givenRows, emptyNote }) {
     <div className="con-body">
       <header className="con-head">
         <div>
+          <Link className="con-back" to="/admin"><ArrowLeft size={12} /> 总览</Link>
           <h1>{config.title}</h1>
         </div>
         <div className="con-head-actions">

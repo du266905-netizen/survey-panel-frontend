@@ -185,6 +185,19 @@
 
 .con-head p { margin: 5px 0 0; color: #5F6862; font-size: 13px; }
 
+/* 列表页回到总览的入口：小、靠上，不占标题的位置。 */
+.con-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+  color: #8D948D;
+  font: 500 12px var(--font-sans);
+  text-decoration: none;
+}
+
+.con-back:hover { color: #141413; }
+
 .con-stamp {
   border: 1px solid #E5E3DD;
   border-radius: 999px;
@@ -385,7 +398,7 @@
   text-align: left;
 }
 
-.con-table td { padding: 14px; }
+.con-table td { font-size: 13px; line-height: 1.55; padding: 12px 14px; }
 
 .con-table tr.is-empty td {
   color: #8D948D;
