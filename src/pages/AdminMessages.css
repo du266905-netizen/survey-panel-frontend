@@ -1,0 +1,39 @@
+/* 消息与模板。表沿用 con-table，补状态标签、变量列与脚注。 */
+
+.msg-mode {
+  display: inline-block;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #FAF9F5;
+  color: #5F6862;
+  font: 500 11px var(--font-sans);
+  padding: 2px 8px;
+}
+
+.msg-mode.is-manual { border-color: #141413; color: #141413; }
+.msg-mode.is-planned { color: #8D948D; }
+
+.msg-vars {
+  color: #8D948D;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.msg-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #5F6862;
+  font: 500 12px var(--font-sans);
+  text-decoration: none;
+}
+
+.msg-link:hover { color: #141413; }
+
+.msg-note {
+  margin: 12px 0 0;
+  color: #8D948D;
+  font: 400 12px/1.7 var(--font-sans);
+}
+
+.msg-note code { color: #5F6862; font-family: var(--font-mono); font-size: 11px; }

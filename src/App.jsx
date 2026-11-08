@@ -14,6 +14,7 @@ import AdminReviews from './pages/AdminReviews';
 import AdminFinance from './pages/AdminFinance';
 import AdminApprovals from './pages/AdminApprovals';
 import AdminDelivery from './pages/AdminDelivery';
+import AdminMessages from './pages/AdminMessages';
 import AdminCustomerDetail from './pages/AdminCustomerDetail';
 import AdminSandbox from './pages/AdminSandbox';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
@@ -414,7 +415,7 @@ export default function App() {
           <Route path="/admin/approvals" element={<AdminRoute><AdminApprovals /></AdminRoute>} />
           <Route path="/admin/roles" element={<AdminRoute><AdminList config={MODULES.roles} /></AdminRoute>} />
           <Route path="/admin/system" element={<AdminRoute><AdminList config={MODULES.system} /></AdminRoute>} />
-          <Route path="/admin/messages" element={<AdminRoute><AdminList config={MODULES.messages} /></AdminRoute>} />
+          <Route path="/admin/messages" element={<AdminRoute><AdminMessages /></AdminRoute>} />
           <Route path="/admin/content" element={<AdminRoute><AdminList config={MODULES.content} /></AdminRoute>} />
           <Route
             path="/admin/delivery-centre"
