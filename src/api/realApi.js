@@ -600,6 +600,9 @@ export const getMarketingDeliveries = async (params = {}) => apiClient.get('/api
 /* 交易邮件发件箱与管理端公告 */
 export const getEmailOutbox = async (params = {}) => apiClient.get('/api/admin/email-outbox', { params });
 export const getEmailLogs = async (params = {}) => apiClient.get('/api/admin/email-logs', { params });
+
+/* 统一只读列表：invoices / questionnaires / ai-usage / refunds / deliveries / suppliers */
+export const listAdminResource = async (resource, params = {}) => apiClient.get(`/api/admin/${resource}`, { params });
 export const getEmailOutboxStats = async () => apiClient.get('/api/admin/email-outbox/stats');
 export const sendEmailOutboxItem = async (id) => apiClient.post(`/api/admin/email-outbox/${id}/send`);
 export const cancelEmailOutboxItem = async (id) => apiClient.post(`/api/admin/email-outbox/${id}/cancel`);

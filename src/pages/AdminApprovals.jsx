@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { RefreshCcw } from 'lucide-react';
-import { getAdminBusinessProjects } from '../api/realApi';
+import { getAdminBusinessProjects, listAdminResource } from '../api/realApi';
 import { STATUS_LABEL } from '../utils/businessStatus';
 import { dollars } from '../utils/money';
 import AdminDetail from './admin/AdminDetail';
@@ -29,6 +29,17 @@ export default function AdminApprovals() {
   const [failed, setFailed] = useState(false);
   const [tab, setTab] = useState('quote');
   const [selected, setSelected] = useState(null);
+  const [refunds, setRefunds] = useState([]);
+  const [refundLoading, setRefundLoading] = useState(true);
+
+  useEffect(() => {
+    if (tab !== 'refund') return;
+    setRefundLoading(true);
+    listAdminResource('refunds', { limit: 50 })
+      .then(({ data }) => setRefunds(data?.items || []))
+      .catch(() => setRefunds([]))
+      .finally(() => setRefundLoading(false));
+  }, [tab]);
 
   const load = () => {
     setLoading(true);
@@ -114,11 +125,21 @@ export default function AdminApprovals() {
           <table>
             <thead><tr><th>退款单</th><th>客户</th><th className="is-right">金额</th><th>状态</th><th className="is-right">申请时间</th></tr></thead>
             <tbody>
-              <tr className="is-empty">
-                <td colSpan={5}>
-                  还没有退款接口。客户端现在只能对支付宝充值发起退款，管理员侧没有退款单列表，也没有审批动作——这一块等后端加表，再按“申请 → 审批 → 执行”三步做。
-                </td>
-              </tr>
+              {refunds.length ? refunds.map((row) => (
+                <tr key={row.id}>
+                  <td>{row.id.slice(0, 10)}</td>
+                  <td>{row.client || '—'}</td>
+                  <td className="is-right">{dollars((row.amountCents || 0) / 100)}</td>
+                  <td><span className="fin-stage">{row.status}</span></td>
+                  <td className="is-right">{day(row.requestedAt)}</td>
+                </tr>
+              )) : (
+                <tr className="is-empty">
+                  <td colSpan={5}>
+                    {refundLoading ? '读取中…' : '还没有退款记录。目前只能列出已完成的退款；申请中/已批准/已拒绝要等独立的退款表。'}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

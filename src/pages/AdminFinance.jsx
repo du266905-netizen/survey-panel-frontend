@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Download, RefreshCcw } from 'lucide-react';
-import { getAdminBusinessProjects } from '../api/realApi';
+import { getAdminBusinessProjects, listAdminResource } from '../api/realApi';
 import { STATUS_LABEL } from '../utils/businessStatus';
 import { dollars } from '../utils/money';
 import './AdminFinance.css';
@@ -28,6 +28,9 @@ export default function AdminFinance() {
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
   const [tab, setTab] = useState('owed');
+  const [invoices, setInvoices] = useState([]);
+  const [invoiceTotal, setInvoiceTotal] = useState(0);
+  const [loadingInvoices, setLoadingInvoices] = useState(true);
 
   const load = () => {
     setLoading(true);
@@ -38,6 +41,15 @@ export default function AdminFinance() {
   };
 
   useEffect(() => { load(); }, []);
+
+  useEffect(() => {
+    if (tab !== 'invoices') return;
+    setLoadingInvoices(true);
+    listAdminResource('invoices', { limit: 50 })
+      .then(({ data }) => { setInvoices(data?.items || []); setInvoiceTotal(data?.total || 0); })
+      .catch(() => { setInvoices([]); setInvoiceTotal(0); })
+      .finally(() => setLoadingInvoices(false));
+  }, [tab]);
 
   const rows = useMemo(() => projects.map((project) => ({
     id: project.id,
@@ -96,7 +108,17 @@ export default function AdminFinance() {
             <tr><th>项目</th><th>客户</th><th>状态</th><th className="is-right">金额</th><th className="is-right">更新</th></tr>
           </thead>
           <tbody>
-            {listed.length ? listed.map((row) => (
+            {tab === 'invoices' ? (invoices.length ? invoices.map((row) => (
+              <tr key={row.id}>
+                <td>{row.number}</td>
+                <td>{row.client}</td>
+                <td><span className="fin-stage">{row.status}</span></td>
+                <td className="is-right">{dollars(row.amountCents / 100)}</td>
+                <td className="is-right">{day(row.issuedAt)}</td>
+              </tr>
+            )) : (
+              <tr className="is-empty"><td colSpan={5}>{loadingInvoices ? '读取中…' : '还没有发票。'}</td></tr>
+            )) : listed.length ? listed.map((row) => (
               <tr key={row.id}>
                 <td>{row.title}</td>
                 <td>{row.client}</td>
@@ -104,7 +126,7 @@ export default function AdminFinance() {
                 <td className="is-right">{row.amount ? dollars(row.amount) : '—'}</td>
                 <td className="is-right">{day(row.updatedAt)}</td>
               </tr>
-            )) : (
+            )) : tab === 'invoices' ? null : (
               <tr className="is-empty">
                 <td colSpan={5}>
                   {loading ? '读取中…' : tab === 'owed' ? '没有待收款的项目。' : tab === 'received' ? '还没有已收款的项目。' : empty}

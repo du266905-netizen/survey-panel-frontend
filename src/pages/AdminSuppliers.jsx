@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RefreshCcw } from 'lucide-react';
+import { listAdminResource } from '../api/realApi';
 import './AdminFinance.css';
 
 /* 供应商。
@@ -20,6 +21,15 @@ const STEPS = [
 
 export default function AdminSuppliers() {
   const [tab, setTab] = useState('list');
+  const [suppliers, setSuppliers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    listAdminResource('suppliers', { limit: 100 })
+      .then(({ data }) => setSuppliers(data?.items || []))
+      .catch(() => setSuppliers([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="con-body">
@@ -48,14 +58,23 @@ export default function AdminSuppliers() {
             <table>
               <thead><tr><th>供应商</th><th>市场</th><th className="is-right">单价</th><th>接口</th><th className="is-right">本月交付</th><th>对账</th></tr></thead>
               <tbody>
-                <tr className="is-empty">
-                  <td colSpan={6}>接口未接：还没有读出供应商与费率的接口。合同与单价在文档里，系统里没有表。</td>
-                </tr>
+                {suppliers.length ? suppliers.map((row) => (
+                  <tr key={row.id}>
+                    <td>{row.name}</td>
+                    <td>{row.market || '—'}</td>
+                    <td className="is-right">{row.unitPrice == null ? '—' : row.unitPrice}</td>
+                    <td><span className="fin-stage">{row.apiStatus || '—'}</span></td>
+                    <td className="is-right">{row.deliveredThisMonth ?? '—'}</td>
+                    <td>{row.unreconciled == null ? '—' : row.unreconciled}</td>
+                  </tr>
+                )) : (
+                  <tr className="is-empty"><td colSpan={6}>{loading ? '读取中…' : '还没有登记供应商。'}</td></tr>
+                )}
               </tbody>
             </table>
           </div>
           <p className="fin-note">
-            要看的是三样：这家每份多少钱、这个月交了多少、对账差多少。三样都要后端建供应商表与费率表，再挂到项目上。
+            单价与对账差异还没有持久化来源，接口会返回空值；交付量来自渠道交付流水。要和 Asif 这种买方供应商对账，先得建费率表。
           </p>
         </>
       ) : (
