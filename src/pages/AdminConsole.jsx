@@ -4,6 +4,7 @@ import {
   Download, Filter, Plus, RefreshCcw, Search,
 } from 'lucide-react';
 import { getAdminDashboard } from '../api/realApi';
+import AdminResearchOverview from './AdminResearchOverview';
 import './AdminConsole.css';
 
 /* 总览。
@@ -44,6 +45,9 @@ export default function AdminConsole() {
   ]), [data]);
 
   const columns = COLUMNS[env];
+
+  /* 研究端不看参与端那四个数字，整页换掉。 */
+  if (env === 'research') return <AdminResearchOverview />;
 
   return (
     <div className="con-body">

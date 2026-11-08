@@ -1,0 +1,106 @@
+/* 研究端总览。
+ * 先处理、再大盘、最后最近的事。色卡与字号仍用工作台那一套。 */
+
+.rv-section { margin-top: 22px; }
+
+.rv-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.rv-head h2 {
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.rv-head > span { color: #B42318; font: 400 12px var(--font-sans); }
+
+.rv-link {
+  border: 0;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  padding: 0;
+}
+
+.rv-link:hover { color: #141413; }
+
+.rv-todos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.rv-todo {
+  position: relative;
+  display: grid;
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  background: #FFFFFF;
+  cursor: pointer;
+  padding: 14px 16px 16px;
+  text-align: left;
+}
+
+.rv-todo:hover { border-color: #141413; }
+
+.rv-todo strong {
+  color: #141413;
+  font: 600 22px/1.2 var(--font-sans);
+  letter-spacing: -.02em;
+}
+
+.rv-todo > span {
+  margin-top: 4px;
+  color: #141413;
+  font: 500 13px var(--font-sans);
+}
+
+.rv-todo small {
+  margin-top: 3px;
+  color: #8D948D;
+  font: 400 12px var(--font-sans);
+}
+
+.rv-todo svg {
+  position: absolute;
+  top: 16px;
+  right: 14px;
+  color: #B9BDB7;
+}
+
+.rv-todo:hover svg { color: #141413; }
+
+/* 清空的那一档退到背景里，不抢注意力。 */
+.rv-todo.is-clear strong { color: #8D948D; }
+.rv-todo.is-clear small { color: #B9BDB7; }
+
+.rv-figures { margin-top: 22px; }
+
+.rv-recent .con-table { margin-top: 0; }
+
+.rv-stage {
+  display: inline-block;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #FAF9F5;
+  color: #5F6862;
+  font: 500 11px var(--font-sans);
+  padding: 2px 8px;
+}
+
+@media (max-width: 1080px) {
+  .rv-todos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .rv-todos { grid-template-columns: minmax(0, 1fr); }
+}
