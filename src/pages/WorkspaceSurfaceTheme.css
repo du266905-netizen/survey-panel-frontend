@@ -1130,40 +1130,60 @@
 @media (max-width: 560px) { .admin-research-create { padding: 18px; } .admin-research-form-grid { grid-template-columns: 1fr; } .admin-research-field-wide { grid-column: auto; } .admin-research-create-actions, .admin-research-list-heading, .admin-research-application { align-items: stretch; flex-direction: column; } .admin-research-create-actions .action-injection { width: 100%; } .admin-research-application label { flex-basis: auto; } }
 
 /* Admin uses the same calm, practical paper workspace as the research client, without member navigation. */
-.app-shell-admin { background: #f7f7f3; color: #203228; font-family: var(--font-sans); }
+/* 工作台：只用色卡里的八个值，不留米色、绿灰这类“纸感”颜色。
+   #FFFFFF 底，#FAF9F5 悬停，#141413 主色，#5F6862 次文，#8D948D 弱化，#E5E3DD 线。 */
+.app-shell-admin { background: #FFFFFF; color: #141413; font-family: var(--font-sans); }
 .app-shell-admin::before, .app-shell-admin .app-shell-grain { display: none; }
-.app-shell-admin .app-topbar { border-bottom-color: rgba(36, 56, 46, .14); background: rgba(247, 247, 243, .96); box-shadow: none; }
-.app-shell-admin .app-topbar-context { color: #64746b; font-family: var(--font-sans); font-size: 10px; font-weight: 850; letter-spacing: .14em; }
-.app-shell-admin .app-sidebar { border-right: 1px solid rgba(36, 56, 46, .14); background: #eef2ed; backdrop-filter: none; }
+.app-shell-admin .app-topbar { border-bottom-color: #E5E3DD; background: #FFFFFF; box-shadow: none; }
+.app-shell-admin .app-topbar-context { color: #8D948D; font-family: var(--font-sans); font-size: 10px; font-weight: 850; letter-spacing: .14em; }
+.app-shell-admin .app-sidebar { border-right: 1px solid #E5E3DD; background: #FFFFFF; backdrop-filter: none; }
 .app-shell-admin .app-sidebar::after { display: none; }
-.app-shell-admin .app-sidebar-label { color: #718076; font-family: var(--font-sans); font-size: 9px; font-weight: 900; letter-spacing: .14em; }
-.app-shell-admin .app-nav-link { border-radius: 4px; color: #52665a; font-family: var(--font-sans); font-size: 13px; font-weight: 720; }
-.app-shell-admin .app-nav-link:hover { background: rgba(49, 83, 58, .07); color: #1f4834; }
-.app-shell-admin .app-nav-link.is-active { background: #285647; box-shadow: none; color: #fffefa; }
-.app-shell-admin .app-nav-link.is-active svg { color: #dcebd8; }
-.app-shell-admin .app-sidebar-foot { border-top-color: rgba(36, 56, 46, .13); color: #718076; font-family: var(--font-sans); }
+.app-shell-admin .app-sidebar-label { color: #8D948D; font-family: var(--font-sans); font-size: 9px; font-weight: 900; letter-spacing: .14em; }
+.app-shell-admin .app-nav-link { border-radius: 4px; color: #5F6862; font-family: var(--font-sans); font-size: 13px; font-weight: 720; }
+.app-shell-admin .app-nav-link:hover { background: #FAF9F5; color: #141413; }
+.app-shell-admin .app-nav-link.is-active { background: #141413; box-shadow: none; color: #FFFFFF; }
+.app-shell-admin .app-nav-link.is-active svg { color: #FFFFFF; }
+.app-shell-admin .app-sidebar-foot { border-top-color: #E5E3DD; color: #8D948D; font-family: var(--font-sans); }
 .app-main-admin { min-height: calc(100vh - 76px); background: #FFFFFF; }
-.app-main-admin .app-page-header { border-bottom: 1px solid rgba(36, 56, 46, .15); margin-bottom: 32px; padding-bottom: 20px; }
+.app-main-admin .app-page-header { border-bottom: 1px solid #E5E3DD; margin-bottom: 32px; padding-bottom: 20px; }
 .app-main-admin .app-page-header h1, .app-main-admin .card h2, .app-main-admin .card h3 { font-family: var(--font-sans); }
-.app-main-admin .app-page-header h1 { color: #203228 !important; font-size: clamp(29px, 3vw, 42px); font-weight: 820; letter-spacing: -.05em; line-height: 1.04; }
-.app-main-admin .app-page-header p { max-width: 650px; color: #627168 !important; font-family: var(--font-sans); font-size: 14px; font-weight: 540; line-height: 1.6; }
-.app-main-admin .card { border-color: rgba(36, 56, 46, .16); border-radius: 4px; background: #FFFFFF; box-shadow: none; backdrop-filter: none; }
-.app-main-admin .field { border-color: rgba(36, 56, 46, .22); border-radius: 4px; background: #FFFFFF; color: #26382c; font-family: var(--font-sans); }
-.app-main-admin .btn-primary { border-color: #285647; background: #285647; color: #fffefa; }
-.app-main-admin .btn-primary:hover { border-color: #183c2a; background: #183c2a; }
-.app-main-admin .btn-secondary { border-color: rgba(36, 56, 46, .2); border-radius: 4px; background: #fffefa; color: #315a45; }
-.app-main-admin .app-data-table { border-color: rgba(36, 56, 46, .16); border-radius: 4px; box-shadow: none; }
-.app-main-admin .table-head { background: #eef2ed; color: #64746b; }
-.app-main-admin .table-cell { border-color: rgba(36, 56, 46, .11); color: #45584c; }
-.app-main-admin .bg-slate-950 { background-color: #285647 !important; }
-.app-main-admin .text-slate-950 { color: #203228 !important; }
-.app-main-admin .text-slate-700 { color: #52665a !important; }
-.app-main-admin .text-slate-600, .app-main-admin .text-slate-500 { color: #68776e !important; }
-.app-main-admin .bg-slate-50 { background-color: #f1f4ef !important; }
-.app-main-admin .border-slate-100, .app-main-admin .border-slate-200 { border-color: rgba(36, 56, 46, .13) !important; }
-.app-main-admin .text-cyan-600, .app-main-admin .text-cyan-700 { color: #315a45 !important; }
-.app-main-admin .bg-cyan-50 { background-color: #eaf2e8 !important; }
-.app-main-admin .border-cyan-200 { border-color: #c9dac8 !important; }
+.app-main-admin .app-page-header h1 { color: #141413 !important; font-size: clamp(29px, 3vw, 42px); font-weight: 820; letter-spacing: -.05em; line-height: 1.04; }
+.app-main-admin .app-page-header p { max-width: 650px; color: #5F6862 !important; font-family: var(--font-sans); font-size: 14px; font-weight: 540; line-height: 1.6; }
+.app-main-admin .card { border-color: #E5E3DD; border-radius: 4px; background: #FFFFFF; box-shadow: none; backdrop-filter: none; }
+.app-main-admin .field { border-color: #E5E3DD; border-radius: 4px; background: #FFFFFF; color: #141413; font-family: var(--font-sans); }
+.app-main-admin .btn-primary { border-color: #141413; background: #141413; color: #FFFFFF; }
+.app-main-admin .btn-primary:hover { border-color: #141413; background: #2B2B2B; }
+.app-main-admin .btn-secondary { border-color: #E5E3DD; border-radius: 4px; background: #FFFFFF; color: #141413; }
+.app-main-admin .app-data-table { border-color: #E5E3DD; border-radius: 4px; box-shadow: none; }
+.app-main-admin .table-head { background: #FAF9F5; color: #8D948D; }
+.app-main-admin .table-cell { border-color: #E5E3DD; color: #5F6862; }
+.app-main-admin .bg-slate-950 { background-color: #141413 !important; }
+.app-main-admin .text-slate-950 { color: #141413 !important; }
+.app-main-admin .text-slate-700 { color: #5F6862 !important; }
+.app-main-admin .text-slate-600, .app-main-admin .text-slate-500 { color: #8D948D !important; }
+.app-main-admin .bg-slate-50 { background-color: #FAF9F5 !important; }
+.app-main-admin .border-slate-100, .app-main-admin .border-slate-200 { border-color: #E5E3DD !important; }
+.app-main-admin .text-cyan-600, .app-main-admin .text-cyan-700 { color: #141413 !important; }
+.app-main-admin .bg-cyan-50 { background-color: #FAF9F5 !important; }
+.app-main-admin .border-cyan-200 { border-color: #E5E3DD !important; }
+
+/* 顶栏那个铃铛原来是一圈米白底 + 绿图标，是整页最扎眼的纸色残留。 */
+.app-shell-admin .notification-bell > button {
+  border-color: #E5E3DD;
+  background: #FFFFFF;
+  color: #141413;
+}
+
+.app-shell-admin .notification-bell > button:hover,
+.app-shell-admin .notification-bell > button.is-open {
+  border-color: #141413;
+  background: #FAF9F5;
+}
+
+.app-shell-admin .notification-bell > button > span {
+  border-color: #FFFFFF;
+  background: #B42318;
+}
 
 /* Homepage-style primary action: forest green slowly injects into ink black. */
 .action-injection { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 42px; border: 1px solid #1f4a30; border-radius: 999px !important; background-color: #1f4a30 !important; background-image: linear-gradient(90deg, #111 0 50%, #1f4a30 50% 100%) !important; background-position: 100% 0; background-size: 205% 100%; color: #f7f7f3; font-size: .86rem; font-weight: 800; transition: color .72s ease, border-color .72s ease, background-position .72s cubic-bezier(.22,.72,.2,1), box-shadow 1.25s cubic-bezier(.22,.72,.2,1); }
