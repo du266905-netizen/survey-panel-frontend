@@ -11,6 +11,7 @@ import AdminChangelog from './pages/AdminChangelog';
 import AdminBroadcast from './pages/AdminBroadcast';
 import AdminCustomers from './pages/AdminCustomers';
 import AdminReviews from './pages/AdminReviews';
+import AdminFinance from './pages/AdminFinance';
 import AdminCustomerDetail from './pages/AdminCustomerDetail';
 import AdminSandbox from './pages/AdminSandbox';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
@@ -405,7 +406,7 @@ export default function App() {
           <Route path="/admin/customers" element={<AdminRoute><AdminCustomers /></AdminRoute>} />
           <Route path="/admin/customers/:key" element={<AdminRoute><AdminCustomerDetail /></AdminRoute>} />
           <Route path="/admin/business-projects" element={<AdminRoute><AdminList config={MODULES.projects} /></AdminRoute>} />
-          <Route path="/admin/billing" element={<AdminRoute><AdminList config={MODULES.billing} /></AdminRoute>} />
+          <Route path="/admin/billing" element={<AdminRoute><AdminFinance /></AdminRoute>} />
           <Route path="/admin/reviews" element={<AdminRoute><AdminReviews /></AdminRoute>} />
           <Route path="/admin/delivery" element={<AdminRoute><AdminList config={MODULES.delivery} /></AdminRoute>} />
           <Route path="/admin/approvals" element={<AdminRoute><AdminList config={MODULES.approvals} /></AdminRoute>} />

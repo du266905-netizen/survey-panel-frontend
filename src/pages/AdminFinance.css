@@ -1,0 +1,17 @@
+/* 财务。表沿用工作台的 con-table，这里只补状态标签与脚注。 */
+
+.fin-stage {
+  display: inline-block;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #FAF9F5;
+  color: #5F6862;
+  font: 500 11px var(--font-sans);
+  padding: 2px 8px;
+}
+
+.fin-note {
+  margin: 12px 0 0;
+  color: #8D948D;
+  font: 400 12px/1.7 var(--font-sans);
+}
