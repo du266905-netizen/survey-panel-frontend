@@ -8,6 +8,7 @@ import AdminList from './pages/admin/AdminList';
 import { MODULES } from './pages/admin/modules';
 import AdminSupportTickets from './pages/AdminSupportTickets';
 import AdminChangelog from './pages/AdminChangelog';
+import AdminBroadcast from './pages/AdminBroadcast';
 import AdminSandbox from './pages/AdminSandbox';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
 import AdminBusinessProjects from './pages/AdminBusinessProjects';
@@ -423,6 +424,10 @@ export default function App() {
           <Route
             path="/admin/changelog"
             element={<AdminRoute><AdminChangelog /></AdminRoute>}
+          />
+          <Route
+            path="/admin/broadcast"
+            element={<AdminRoute><AdminBroadcast /></AdminRoute>}
           />
           <Route
             path="/admin/sandbox"

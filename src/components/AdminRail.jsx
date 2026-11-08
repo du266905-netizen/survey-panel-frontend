@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Link, NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import {
   BriefcaseBusiness, ClipboardCheck, Compass, Database, FileText, Gauge, History, Inbox,
-  ListFilter, Mail, ReceiptText, Settings, Users,
+  ListFilter, Mail, ReceiptText, Send, Settings, Users,
 } from 'lucide-react';
 import { useAuth } from './AuthContext';
 import { hasUnseenChangelog } from '../utils/changelogSeen';
@@ -57,6 +57,7 @@ export const ADMIN_ENVS = {
           { to: '/admin/delivery', label: '交付中心', icon: FileText },
           { to: '/admin/approvals', label: '报价与退款审批', icon: Inbox },
           { to: '/admin/changelog', label: '更新日志', icon: History },
+          { to: '/admin/broadcast', label: '发通知', icon: Send },
           { to: '/admin/roles', label: '权限与审计', icon: Settings },
           { to: '/admin/system', label: '系统与导出', icon: Database },
           { to: '/admin/messages', label: '消息与模板', icon: Mail },
@@ -71,7 +72,7 @@ export default function AdminRail() {
   const [params, setParams] = useSearchParams();
   const { pathname } = useLocation();
   /* 直接打开研究端某一页时，环境要跟着路由走，不能停在参与端。 */
-  const RESEARCH_PATHS = ['/admin/customers', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system', '/admin/changelog'];
+  const RESEARCH_PATHS = ['/admin/customers', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system', '/admin/changelog', '/admin/broadcast'];
   const fromRoute = RESEARCH_PATHS.some((path) => pathname.startsWith(path)) ? 'research' : 'panel';
   const env = params.get('env') === 'research' ? 'research' : params.get('env') === 'panel' ? 'panel' : fromRoute;
   const config = ADMIN_ENVS[env];
