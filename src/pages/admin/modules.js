@@ -1,5 +1,6 @@
 import { getAdminBusinessProjects } from '../../api/realApi';
 import { STATUS_LABEL } from '../../utils/businessStatus';
+import { dollars } from '../../utils/money';
 
 /* 十个模块的列表配置。
  *
@@ -37,9 +38,7 @@ export const MODULES = {
       customer: project.client?.email || project.client?.name || '—',
       kind: project.studyFormat || project.researchGoal || '问卷',
       stage: STATUS_LABEL[project.status] || project.status || '草稿',
-      amount: project.latestQuote?.totalCents != null
-        ? `$${(project.latestQuote.totalCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
-        : '—',
+      amount: dollars(project.latestQuote?.amount),
       updatedAt: project.updatedAt ? String(project.updatedAt).slice(0, 10) : '—',
     }),
     tabs: ['全部', '进行中', '待付款', '已交付'],

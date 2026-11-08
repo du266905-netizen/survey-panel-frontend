@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, RefreshCcw } from 'lucide-react';
 import { getAdminBusinessProjects } from '../api/realApi';
 import { STATUS_LABEL } from '../utils/businessStatus';
+import { dollars } from '../utils/money';
 import './AdminResearchOverview.css';
 
 /* 研究端总览。
@@ -18,8 +19,6 @@ const TODO = [
   { id: 'accept', label: '待客户确认', statuses: ['QUOTE_SENT'], hint: '报价已发，等回话' },
   { id: 'pay', label: '待收款', statuses: ['CLIENT_ACCEPTED'], hint: '已接受，等钱到账' },
 ];
-
-const money = (cents) => (cents == null ? '—' : `$${(cents / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}`);
 
 const startOfMonth = () => {
   const date = new Date();
@@ -59,9 +58,9 @@ export default function AdminResearchOverview() {
       running: by(['FUNDED', 'RECRUITING', 'LIVE']),
       done: by(['COMPLETED']),
       newThisMonth: list.filter((item) => new Date(item.createdAt).getTime() >= startOfMonth()).length,
-      waitingCents: list
+      waitingAmount: list
         .filter((item) => ['CLIENT_ACCEPTED', 'QUOTE_SENT'].includes(item.status))
-        .reduce((sum, item) => sum + (item.latestQuote?.totalCents || 0), 0),
+        .reduce((sum, item) => sum + Number(item.latestQuote?.amount || 0), 0),
     };
   }, [projects]);
 
@@ -113,7 +112,7 @@ export default function AdminResearchOverview() {
       <div className="con-figures rv-figures">
         <div className="con-figure"><span>进行中的项目</span><strong>{show(counts.running)}</strong></div>
         <div className="con-figure"><span>本月新进项目</span><strong>{show(counts.newThisMonth)}</strong></div>
-        <div className="con-figure"><span>待收金额</span><strong>{loading ? '·' : money(counts.waitingCents)}</strong></div>
+        <div className="con-figure"><span>待收金额</span><strong>{loading ? '·' : dollars(counts.waitingAmount)}</strong></div>
         <div className="con-figure"><span>已完成</span><strong>{show(counts.done)}</strong></div>
       </div>
 
@@ -133,7 +132,7 @@ export default function AdminResearchOverview() {
                   <td>{project.title || '未命名项目'}</td>
                   <td>{project.client?.email || project.client?.name || '—'}</td>
                   <td><span className="rv-stage">{STATUS_LABEL[project.status] || project.status}</span></td>
-                  <td className="is-right">{money(project.latestQuote?.totalCents)}</td>
+                  <td className="is-right">{dollars(project.latestQuote?.amount)}</td>
                   <td className="is-right">{project.updatedAt ? String(project.updatedAt).slice(0, 10) : '—'}</td>
                 </tr>
               )) : (

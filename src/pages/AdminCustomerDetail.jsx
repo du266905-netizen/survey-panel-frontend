@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { getAdminBusinessProjects } from '../api/realApi';
 import { STATUS_LABEL } from '../utils/businessStatus';
 import { customerKey } from './AdminCustomers';
+import { dollars } from '../utils/money';
 import './AdminCustomers.css';
 
 /* 客户详情。
@@ -12,7 +13,6 @@ import './AdminCustomers.css';
  * 往下是他手上的项目，再往下是最近发生的动作。不换 tab，一页看完。
  */
 
-const money = (cents) => (cents == null ? '—' : `$${(cents / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}`);
 const day = (value) => (value ? new Date(value).toISOString().slice(0, 10) : '—');
 
 export default function AdminCustomerDetail() {
@@ -36,7 +36,7 @@ export default function AdminCustomerDetail() {
   );
 
   const stats = useMemo(() => {
-    const total = mine.reduce((sum, project) => sum + (project.latestQuote?.totalCents || 0), 0);
+    const total = mine.reduce((sum, project) => sum + Number(project.latestQuote?.amount || 0), 0);
     return {
       count: mine.length,
       running: mine.filter((project) => ['FUNDED', 'RECRUITING', 'LIVE'].includes(project.status)).length,
@@ -64,7 +64,7 @@ export default function AdminCustomerDetail() {
         <div className="con-figure"><span>项目</span><strong>{loading ? '·' : stats.count}</strong></div>
         <div className="con-figure"><span>进行中</span><strong>{loading ? '·' : stats.running}</strong></div>
         <div className="con-figure"><span>待收款</span><strong>{loading ? '·' : stats.owed}</strong></div>
-        <div className="con-figure"><span>累计金额</span><strong>{loading ? '·' : money(stats.total)}</strong></div>
+        <div className="con-figure"><span>累计金额</span><strong>{loading ? '·' : dollars(stats.total)}</strong></div>
       </div>
 
       <section className="cu-section">
@@ -79,7 +79,7 @@ export default function AdminCustomerDetail() {
                 <tr key={project.id}>
                   <td>{project.title || '未命名项目'}</td>
                   <td><span className="rv-stage">{STATUS_LABEL[project.status] || project.status}</span></td>
-                  <td className="is-right">{money(project.latestQuote?.totalCents)}</td>
+                  <td className="is-right">{dollars(project.latestQuote?.amount)}</td>
                   <td className="is-right">{day(project.createdAt)}</td>
                   <td className="is-right">{day(project.updatedAt)}</td>
                 </tr>

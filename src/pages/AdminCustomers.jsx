@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { getAdminBusinessProjects } from '../api/realApi';
+import { dollars } from '../utils/money';
 import './AdminCustomers.css';
 
 /* 客户列表。
@@ -10,8 +11,6 @@ import './AdminCustomers.css';
  * 数据只有项目接口给的那点东西：client 是组织名或邮箱，contactEmail 是联系人邮箱，
  * 所以一个“客户”按 contactEmail 归并——没有联系人邮箱时退回 client 那个字符串。
  */
-
-const money = (cents) => (cents == null ? '—' : `$${(cents / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}`);
 
 const TABS = [
   { id: 'all', label: '全部' },
@@ -44,9 +43,9 @@ export default function AdminCustomers() {
     projects.forEach((project) => {
       const key = customerKey(project);
       const org = typeof project.client === 'string' && !project.client.includes('@') ? project.client : '—';
-      const entry = map.get(key) || { key, email: key, org, projects: [], totalCents: 0, running: 0, owed: 0, done: 0, updatedAt: 0 };
+      const entry = map.get(key) || { key, email: key, org, projects: [], totalAmount: 0, running: 0, owed: 0, done: 0, updatedAt: 0 };
       entry.projects.push(project);
-      entry.totalCents += project.latestQuote?.totalCents || 0;
+      entry.totalAmount += Number(project.latestQuote?.amount || 0);
       if (['FUNDED', 'RECRUITING', 'LIVE'].includes(project.status)) entry.running += 1;
       if (['CLIENT_ACCEPTED', 'QUOTE_SENT'].includes(project.status)) entry.owed += 1;
       if (project.status === 'COMPLETED') entry.done += 1;
@@ -102,7 +101,7 @@ export default function AdminCustomers() {
                 <td>{customer.org}</td>
                 <td className="is-right">{customer.projects.length}</td>
                 <td className="is-right">{customer.running}</td>
-                <td className="is-right">{money(customer.totalCents)}</td>
+                <td className="is-right">{dollars(customer.totalAmount)}</td>
                 <td className="is-right">{customer.updatedAt ? new Date(customer.updatedAt).toISOString().slice(0, 10) : '—'}</td>
               </tr>
             )) : (

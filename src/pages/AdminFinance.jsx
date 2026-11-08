@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Download, RefreshCcw } from 'lucide-react';
 import { getAdminBusinessProjects } from '../api/realApi';
 import { STATUS_LABEL } from '../utils/businessStatus';
+import { dollars } from '../utils/money';
 import './AdminFinance.css';
 
 /* 财务。
@@ -13,7 +14,6 @@ import './AdminFinance.css';
  * 这两块先空着并写明，不拿项目金额冒充回款。
  */
 
-const money = (cents) => `$${((cents || 0) / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
 const day = (value) => (value ? new Date(value).toISOString().slice(0, 10) : '—');
 
 const TABS = [
@@ -44,7 +44,7 @@ export default function AdminFinance() {
     title: project.title || '未命名项目',
     client: project.contactEmail || project.client || '—',
     status: project.status,
-    amountCents: project.latestQuote?.totalCents || 0,
+    amount: Number(project.latestQuote?.amount || 0),
     updatedAt: project.updatedAt,
     createdAt: project.createdAt,
   })), [projects]);
@@ -53,7 +53,7 @@ export default function AdminFinance() {
   const received = rows.filter((row) => ['FUNDED', 'RECRUITING', 'LIVE', 'COMPLETED'].includes(row.status));
   const receivedMonth = received.filter((row) => row.updatedAt && new Date(row.updatedAt).getMonth() === new Date().getMonth());
 
-  const sum = (list) => list.reduce((total, row) => total + row.amountCents, 0);
+  const sum = (list) => list.reduce((total, row) => total + row.amount, 0);
   const listed = tab === 'owed' ? owed : tab === 'received' ? received : [];
 
   const empty = failed
@@ -75,9 +75,9 @@ export default function AdminFinance() {
       </header>
 
       <div className="con-figures">
-        <div className="con-figure"><span>应收</span><strong>{loading ? '·' : money(sum(owed))}</strong></div>
-        <div className="con-figure"><span>本月已收</span><strong>{loading ? '·' : money(sum(receivedMonth))}</strong></div>
-        <div className="con-figure"><span>累计已收</span><strong>{loading ? '·' : money(sum(received))}</strong></div>
+        <div className="con-figure"><span>应收</span><strong>{loading ? '·' : dollars(sum(owed))}</strong></div>
+        <div className="con-figure"><span>本月已收</span><strong>{loading ? '·' : dollars(sum(receivedMonth))}</strong></div>
+        <div className="con-figure"><span>累计已收</span><strong>{loading ? '·' : dollars(sum(received))}</strong></div>
         <div className="con-figure"><span>退款</span><strong>—</strong></div>
       </div>
 
@@ -101,7 +101,7 @@ export default function AdminFinance() {
                 <td>{row.title}</td>
                 <td>{row.client}</td>
                 <td><span className="fin-stage">{STATUS_LABEL[row.status] || row.status}</span></td>
-                <td className="is-right">{row.amountCents ? money(row.amountCents) : '—'}</td>
+                <td className="is-right">{row.amount ? dollars(row.amount) : '—'}</td>
                 <td className="is-right">{day(row.updatedAt)}</td>
               </tr>
             )) : (
