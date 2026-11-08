@@ -1,0 +1,40 @@
+/* 交付中心。表沿用 con-table，这里只补状态标签、交付包与脚注。 */
+
+.dl-stage {
+  display: inline-block;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #FAF9F5;
+  color: #5F6862;
+  font: 500 11px var(--font-sans);
+  padding: 2px 8px;
+}
+
+.dl-note {
+  margin: 12px 0 0;
+  color: #8D948D;
+  font: 400 12px/1.7 var(--font-sans);
+}
+
+.dl-pack { margin-top: 18px; }
+.dl-pack h3 { margin: 0 0 8px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.dl-pack ul { margin: 0; padding: 0; list-style: none; }
+
+.dl-pack li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #E5E3DD;
+  color: #141413;
+  font: 400 13px/1.6 var(--font-sans);
+  padding: 9px 0;
+}
+
+.dl-pack li em {
+  color: #8D948D;
+  font: 400 12px var(--font-sans);
+  font-style: normal;
+}
+
+.dl-pack p { margin: 12px 0 0; color: #8D948D; font: 400 12px/1.7 var(--font-sans); }
