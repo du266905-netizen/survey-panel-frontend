@@ -680,6 +680,15 @@ textarea {
 .app-sidebar-status { width: 6px; height: 6px; border-radius: 50%; background: #a77a2b; box-shadow: 0 0 0 4px rgba(167, 122, 43, .11); }
 
 .app-main { position: relative; }
+
+/* 运营工作台的外壳：左轨占满视口高度、自己滚，右侧内容单独滚。
+   以前整页跟着内容一起长——表格一长，左轨被推出视口，右侧也没法单独滑。
+   只作用于管理员这一侧（.app-frame-admin），其它角色的页面维持原来的整页滚动。 */
+@media (min-width: 1024px) {
+  .app-frame-admin { height: calc(100svh - 76px); min-height: 0; overflow: hidden; }
+  .app-frame-admin > .app-sidebar { height: 100%; min-height: 0; }
+  .app-frame-admin > .app-main { height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+}
 .app-main::before {
   position: absolute;
   z-index: -1;

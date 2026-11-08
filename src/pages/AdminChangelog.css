@@ -180,3 +180,22 @@
   .chg-day-mark { display: flex; align-items: baseline; gap: 8px; }
   .chg-day-mark span { margin-top: 0; }
 }
+
+/* 单条锚点：默认不显示，鼠标移到这一条才出现，避免每行都挂着井号。 */
+.chg-entry-head h2 { scroll-margin-top: 24px; }
+
+.chg-anchor {
+  margin-left: 6px;
+  color: #8D948D;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0;
+  text-decoration: none;
+  transition: opacity .12s ease;
+}
+
+.chg-entry:hover .chg-anchor,
+.chg-anchor:focus-visible { opacity: 1; }
+
+.chg-anchor:hover { color: #141413; }

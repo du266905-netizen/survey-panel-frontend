@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { History } from 'lucide-react';
 import { CHANGELOG, CHANGELOG_KINDS } from '../content/changelog';
+import { markChangelogSeen } from '../utils/changelogSeen';
 import './AdminChangelog.css';
 
 /* 更新日志。
@@ -29,6 +30,16 @@ const parseDate = (value) => {
 
 export default function AdminChangelog() {
   const [filter, setFilter] = useState('all');
+
+  /* 打开这一页就算读过了：左轨的小红点下次换页会自己灭。 */
+  useEffect(() => { markChangelogSeen(); }, []);
+
+  /* #216f78f 这类锚点：页面渲染完再滚，浏览器自己滚会滚不到。 */
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView({ block: 'start' });
+  }, []);
 
   const days = useMemo(() => {
     const visible = filter === 'all' ? CHANGELOG : CHANGELOG.filter((entry) => entry.kind === filter);
@@ -80,24 +91,31 @@ export default function AdminChangelog() {
                 <span>{WEEK.format(parseDate(day.date))}</span>
               </div>
               <div className="chg-day-body">
-                {day.items.map((entry) => (
-                  <article className="chg-entry" key={`${entry.date}-${entry.title}`}>
-                    <div className="chg-entry-head">
-                      <span className={`chg-kind is-${entry.kind}`}>
-                        <i aria-hidden="true" />
-                        {CHANGELOG_KINDS[entry.kind]}
-                      </span>
-                      <h2>{entry.title}</h2>
-                    </div>
-                    <p>{entry.body}</p>
-                    {entry.points?.length ? (
-                      <ul>
-                        {entry.points.map((point) => <li key={point}>{point}</li>)}
-                      </ul>
-                    ) : null}
-                    {entry.ref ? <span className="chg-ref">提交 {entry.ref}</span> : null}
-                  </article>
-                ))}
+                {day.items.map((entry, index) => {
+                  /* 锚点用提交号：稳定，且和 git 里那一笔对得上。没有提交号时退回日期+序号。 */
+                  const anchorId = entry.ref || `${entry.date}-${index + 1}`;
+                  return (
+                    <article className="chg-entry" key={`${entry.date}-${entry.title}`}>
+                      <div className="chg-entry-head">
+                        <span className={`chg-kind is-${entry.kind}`}>
+                          <i aria-hidden="true" />
+                          {CHANGELOG_KINDS[entry.kind]}
+                        </span>
+                        <h2 id={anchorId}>
+                          {entry.title}
+                          <a className="chg-anchor" href={`#${anchorId}`} aria-label="这一条的固定链接">#</a>
+                        </h2>
+                      </div>
+                      <p>{entry.body}</p>
+                      {entry.points?.length ? (
+                        <ul>
+                          {entry.points.map((point) => <li key={point}>{point}</li>)}
+                        </ul>
+                      ) : null}
+                      {entry.ref ? <span className="chg-ref">提交 {entry.ref}</span> : null}
+                    </article>
+                  );
+                })}
               </div>
             </li>
           ))}

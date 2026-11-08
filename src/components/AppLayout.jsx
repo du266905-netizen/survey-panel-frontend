@@ -210,7 +210,7 @@ export default function AppLayout({ children }) {
           </div>
         </header>
 
-      <div className="app-frame flex">
+      <div className={`app-frame flex${isAdmin ? ' app-frame-admin' : ''}`}>
         {isAdmin && (
           <aside className="app-sidebar w-[236px] shrink-0 border-r border-[#E5E3DD] bg-white">
             <AdminRail />

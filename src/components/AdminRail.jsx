@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
 import { Link, NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import {
   BriefcaseBusiness, ClipboardCheck, Compass, Database, FileText, Gauge, History, Inbox,
   ListFilter, Mail, ReceiptText, Settings, Users,
 } from 'lucide-react';
 import { useAuth } from './AuthContext';
+import { hasUnseenChangelog } from '../utils/changelogSeen';
 import './AdminRail.css';
 
 /* 运营工作台的左轨：两个环境，导航随环境换。
@@ -73,6 +75,8 @@ export default function AdminRail() {
   const fromRoute = RESEARCH_PATHS.some((path) => pathname.startsWith(path)) ? 'research' : 'panel';
   const env = params.get('env') === 'research' ? 'research' : params.get('env') === 'panel' ? 'panel' : fromRoute;
   const config = ADMIN_ENVS[env];
+  /* 每次换页重算一次：看完更新日志回到别的页，小红点要自己灭掉。 */
+  const unseen = useMemo(() => pathname !== '/admin/changelog' && hasUnseenChangelog(), [pathname]);
 
   const switchEnv = (next) => setParams(next === 'panel' ? {} : { env: next }, { replace: true });
 
@@ -105,6 +109,7 @@ export default function AdminRail() {
               >
                 <item.icon size={16} aria-hidden="true" />
                 <span>{item.label}</span>
+                {item.to === '/admin/changelog' && unseen ? <span className="arail-unseen" aria-label="有新更新" /> : null}
                 {item.pending ? <em>待接入</em> : null}
               </NavLink>
             ))}

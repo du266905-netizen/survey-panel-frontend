@@ -83,3 +83,13 @@
 }
 
 .arail-dot { width: 6px; height: 6px; border-radius: 50%; background: #DEEF24; }
+
+/* 「更新日志」上的未读点：这台设备还没看过最新一条时亮，看过就灭。 */
+.arail-unseen {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  border-radius: 999px;
+  background: #B42318;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, .12);
+}
