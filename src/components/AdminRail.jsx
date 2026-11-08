@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { Link, NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import {
-  BriefcaseBusiness, ClipboardCheck, Compass, Database, FileText, Gauge, History, Inbox,
-  ListFilter, Mail, ReceiptText, Send, Settings, Users,
+  BriefcaseBusiness, ChartColumn, ClipboardCheck, Compass, Database, FileText, Gauge, History, Inbox,
+  ListFilter, Mail, ReceiptText, Send, Settings, Truck, Users,
 } from 'lucide-react';
 import { useAuth } from './AuthContext';
 import { hasUnseenChangelog } from '../utils/changelogSeen';
@@ -12,7 +12,7 @@ import './AdminRail.css';
    所有 /admin/* 页面共用这一条轨道——换页不换壳。 */
 
 /* 研究端的路由清单：直接打开某一页时，环境要跟着路由走。 */
-export const RESEARCH_PATHS = ['/admin/customers', '/admin/business-projects', '/admin/business-questionnaires', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system', '/admin/messages', '/admin/changelog', '/admin/broadcast'];
+export const RESEARCH_PATHS = ['/admin/customers', '/admin/business-projects', '/admin/business-questionnaires', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system', '/admin/messages', '/admin/changelog', '/admin/broadcast', '/admin/ai-usage', '/admin/suppliers'];
 
 export const isResearchPath = (pathname) => RESEARCH_PATHS.some((path) => pathname.startsWith(path));
 
@@ -61,6 +61,8 @@ export const ADMIN_ENVS = {
           { to: '/admin/reviews', label: '问卷质检', icon: ClipboardCheck },
           { to: '/admin/delivery', label: '交付中心', icon: FileText },
           { to: '/admin/approvals', label: '报价与退款审批', icon: Inbox },
+          { to: '/admin/ai-usage', label: 'AI 用量', icon: ChartColumn },
+          { to: '/admin/suppliers', label: '供应商', icon: Truck },
           { to: '/admin/changelog', label: '更新日志', icon: History },
           { to: '/admin/broadcast', label: '群发消息', icon: Send },
           { to: '/admin/roles', label: '权限与审计', icon: Settings },
