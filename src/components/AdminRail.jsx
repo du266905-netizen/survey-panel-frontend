@@ -57,7 +57,7 @@ export const ADMIN_ENVS = {
           { to: '/admin/delivery', label: '交付中心', icon: FileText },
           { to: '/admin/approvals', label: '报价与退款审批', icon: Inbox },
           { to: '/admin/changelog', label: '更新日志', icon: History },
-          { to: '/admin/broadcast', label: '发通知', icon: Send },
+          { to: '/admin/broadcast', label: '群发消息', icon: Send },
           { to: '/admin/roles', label: '权限与审计', icon: Settings },
           { to: '/admin/system', label: '系统与导出', icon: Database },
           { to: '/admin/messages', label: '消息与模板', icon: Mail },

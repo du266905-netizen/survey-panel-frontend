@@ -1,22 +1,18 @@
-import { useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, Bell, Check, Megaphone, Send, Users } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { Bell, Megaphone, Send } from 'lucide-react';
 import './AdminBroadcast.css';
 
-/* 人工发一条通知。
+/* 群发消息。
  *
- * 三步：写内容 → 选人 → 定时间，最后过一遍复核再发。顺序照 Intercom 的 outbound
- * 控制台（先定受众、发送前有 review）和 Firebase 控制台（compose → audience →
- * schedule → review）。
+ * 一页写完：内容、受众、发送设置都在同一页，右边跟着变；点发送弹一次确认，
+ * 列出这次会发给谁、什么时候发。命名与流程照大公司的做法（Intercom 的 New
+ * message、Customer.io 的 Broadcast 都是单页 + 发送前 review）。
  *
- * 只做前端：最后一步点「确认发送」不会真发——后端没有广播接口，也没有
- * ANNOUNCEMENT 类型。
+ * 草稿存在这台机器的 localStorage 里：存了就还在，下次打开自动带回来。
+ * 只做前端：点确认发送不会真发——后端没有广播接口，也没有 ANNOUNCEMENT 类型。
  */
 
-const STEPS = [
-  { id: 1, label: '内容' },
-  { id: 2, label: '受众' },
-  { id: 3, label: '发送' },
-];
+const DRAFT_KEY = 'guanyi.broadcast.draft';
 
 const AUDIENCES = [
   { id: 'all', label: '全部研究端账号', note: '含还未开通项目的账号', count: 128 },
@@ -24,171 +20,161 @@ const AUDIENCES = [
   { id: 'picked', label: '指定客户', note: '按邮箱或公司名挑', count: 0 },
 ];
 
+const readDraft = () => {
+  try {
+    const raw = window.localStorage.getItem(DRAFT_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+};
+
 export default function AdminBroadcast() {
-  const [step, setStep] = useState(1);
-  const [kind, setKind] = useState('notice');
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [ctaLabel, setCtaLabel] = useState('');
-  const [ctaHref, setCtaHref] = useState('');
-  const [audience, setAudience] = useState('all');
-  const [picked, setPicked] = useState('');
-  const [when, setWhen] = useState('now');
-  const [scheduleAt, setScheduleAt] = useState('2026-11-10T09:00');
+  const [draft] = useState(readDraft);
+  const [kind, setKind] = useState(draft?.kind || 'notice');
+  const [title, setTitle] = useState(draft?.title || '');
+  const [body, setBody] = useState(draft?.body || '');
+  const [ctaLabel, setCtaLabel] = useState(draft?.ctaLabel || '');
+  const [ctaHref, setCtaHref] = useState(draft?.ctaHref || '');
+  const [audience, setAudience] = useState(draft?.audience || 'all');
+  const [picked, setPicked] = useState(draft?.picked || '');
+  const [when, setWhen] = useState(draft?.when || 'now');
+  const [scheduleAt, setScheduleAt] = useState(draft?.scheduleAt || '2026-11-10T09:00');
   const [testEmail, setTestEmail] = useState('');
-  const [previewTab, setPreviewTab] = useState('bell');
+  const [mailCopy, setMailCopy] = useState(false);
   const [confirming, setConfirming] = useState(false);
-  const [notSent, setNotSent] = useState(false);
+  const [notice, setNotice] = useState(draft ? '已带回上次的草稿。' : '');
+
+  useEffect(() => {
+    if (!notice) return undefined;
+    const timer = window.setTimeout(() => setNotice(''), 4000);
+    return () => window.clearTimeout(timer);
+  }, [notice]);
 
   const pickedCount = useMemo(() => picked.split(/[,，\s]+/).filter(Boolean).length, [picked]);
   const audienceCount = audience === 'picked' ? pickedCount : AUDIENCES.find((item) => item.id === audience).count;
 
   const contentReady = title.trim().length > 0 && body.trim().length > 0;
   const audienceReady = audience !== 'picked' || pickedCount > 0;
-  const canContinue = step === 1 ? contentReady : step === 2 ? audienceReady : true;
+  const ready = contentReady && audienceReady;
 
-  const goNext = () => { if (canContinue && step < 3) setStep(step + 1); };
+  const saveDraft = () => {
+    try {
+      window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ kind, title, body, ctaLabel, ctaHref, audience, picked, when, scheduleAt }));
+      setNotice('草稿已存，下次打开会带回来。');
+    } catch {
+      setNotice('这台机器不让存草稿（隐私模式）。');
+    }
+  };
+
+  const clearDraft = () => {
+    try { window.localStorage.removeItem(DRAFT_KEY); } catch { /* 隐私模式 */ }
+    setNotice('草稿已清掉。');
+  };
 
   return (
     <div className="con-body br">
       <header className="con-head">
         <div>
-          <h1>发通知</h1>
-          <p>人工写一条，推到对方工作台。通知进铃铛，公告在下次登录时弹一次。</p>
+          <h1>群发消息</h1>
         </div>
-        <span className="con-stamp">草稿</span>
+        <div className="con-head-actions">
+          <button type="button" className="con-btn" onClick={saveDraft}>存草稿</button>
+          <button type="button" className="con-btn is-primary" disabled={!ready} onClick={() => setConfirming(true)}><Send size={14} /> 发送</button>
+        </div>
       </header>
-
-      <ol className="br-steps">
-        {STEPS.map((item) => (
-          <li key={item.id} className={`${step === item.id ? 'is-current' : ''}${step > item.id ? ' is-done' : ''}`}>
-            <span>{step > item.id ? <Check size={12} /> : item.id}</span>
-            {item.label}
-          </li>
-        ))}
-      </ol>
 
       <div className="br-grid">
         <div className="br-form">
-          {step === 1 && (
-            <section className="br-block">
-              <h2>形式</h2>
-              <div className="br-seg" role="tablist">
-                <button type="button" role="tab" aria-selected={kind === 'notice'} className={kind === 'notice' ? 'is-active' : ''} onClick={() => { setKind('notice'); setPreviewTab('bell'); }}>
-                  <Bell size={15} /> 通知
-                </button>
-                <button type="button" role="tab" aria-selected={kind === 'announcement'} className={kind === 'announcement' ? 'is-active' : ''} onClick={() => { setKind('announcement'); setPreviewTab('modal'); }}>
-                  <Megaphone size={15} /> 公告
-                </button>
-              </div>
-              <p className="br-hint">
-                {kind === 'notice'
-                  ? '进铃铛，不弹窗。适合“有进展、要你知道”的事。'
-                  : '登录时弹一次，每条只弹一次。适合必须说明、不能错过的事。'}
-              </p>
+          <section className="br-block">
+            <h2>形式</h2>
+            <div className="br-seg" role="tablist">
+              <button type="button" role="tab" aria-selected={kind === 'notice'} className={kind === 'notice' ? 'is-active' : ''} onClick={() => setKind('notice')}>
+                <Bell size={15} /> 通知
+              </button>
+              <button type="button" role="tab" aria-selected={kind === 'announcement'} className={kind === 'announcement' ? 'is-active' : ''} onClick={() => setKind('announcement')}>
+                <Megaphone size={15} /> 公告
+              </button>
+            </div>
+            <p className="br-hint">
+              {kind === 'notice' ? '进对方工作台的铃铛，不打断他正在做的事。' : '对方下次登录时弹一次，每条只弹一次。'}
+            </p>
+            <label className="br-clear">
+              <input type="checkbox" checked={mailCopy} onChange={(event) => setMailCopy(event.target.checked)} />
+              同时发一封邮件给对方
+            </label>
+          </section>
 
-              <h2 className="br-sub">内容</h2>
+          <section className="br-block">
+            <h2>内容</h2>
+            <label className="br-field">
+              <span>标题<em>{title.length}/40</em></span>
+              <input value={title} maxLength={40} onChange={(event) => setTitle(event.target.value)} placeholder="例如：发票已开具" />
+            </label>
+            <label className="br-field">
+              <span>正文<em>{body.length}/200</em></span>
+              <textarea value={body} maxLength={200} rows={4} onChange={(event) => setBody(event.target.value)} placeholder="一到两句。写他看到之后该做什么。" />
+            </label>
+            <div className="br-row">
               <label className="br-field">
-                <span>标题<em>{title.length}/40</em></span>
-                <input value={title} maxLength={40} onChange={(event) => setTitle(event.target.value)} placeholder="例如：发票已开具" />
+                <span>按钮文案</span>
+                <input value={ctaLabel} maxLength={16} onChange={(event) => setCtaLabel(event.target.value)} placeholder="查看发票" />
               </label>
               <label className="br-field">
-                <span>正文<em>{body.length}/200</em></span>
-                <textarea value={body} maxLength={200} rows={4} onChange={(event) => setBody(event.target.value)} placeholder="一到两句。写他看到之后该做什么。" />
+                <span>跳到哪一页</span>
+                <input value={ctaHref} onChange={(event) => setCtaHref(event.target.value)} placeholder="/business/billing" />
               </label>
+            </div>
+          </section>
 
-              <div className="br-row">
-                <label className="br-field">
-                  <span>按钮文案（可选）</span>
-                  <input value={ctaLabel} maxLength={16} onChange={(event) => setCtaLabel(event.target.value)} placeholder="查看发票" />
+          <section className="br-block">
+            <h2>发给谁</h2>
+            <div className="br-audiences">
+              {AUDIENCES.map((item) => (
+                <label key={item.id} className={`br-audience${audience === item.id ? ' is-active' : ''}`}>
+                  <input type="radio" name="audience" checked={audience === item.id} onChange={() => setAudience(item.id)} />
+                  <span>
+                    <strong>{item.label}</strong>
+                    <small>{item.note}</small>
+                  </span>
+                  <em>{item.id === 'picked' ? (pickedCount || '—') : item.count} 人</em>
                 </label>
-                <label className="br-field">
-                  <span>跳到哪一页（可选）</span>
-                  <input value={ctaHref} onChange={(event) => setCtaHref(event.target.value)} placeholder="/business/billing" />
-                </label>
-              </div>
-            </section>
-          )}
+              ))}
+            </div>
+            {audience === 'picked' && (
+              <label className="br-field br-field-gap">
+                <span>邮箱或公司名</span>
+                <textarea rows={3} value={picked} onChange={(event) => setPicked(event.target.value)} placeholder="client@example.com，多个用逗号或换行分开" />
+              </label>
+            )}
+            <p className="br-hint">退订、没有邮箱、邮件硬退的人自动排除，不计入人数。</p>
+          </section>
 
-          {step === 2 && (
-            <section className="br-block">
-              <h2>发给谁</h2>
-              <div className="br-audiences">
-                {AUDIENCES.map((item) => (
-                  <label key={item.id} className={`br-audience${audience === item.id ? ' is-active' : ''}`}>
-                    <input type="radio" name="audience" checked={audience === item.id} onChange={() => setAudience(item.id)} />
-                    <span>
-                      <strong>{item.label}</strong>
-                      <small>{item.note}</small>
-                    </span>
-                    <em>{item.id === 'picked' ? (pickedCount || '—') : item.count} 人</em>
-                  </label>
-                ))}
-              </div>
-              {audience === 'picked' && (
-                <label className="br-field br-field-gap">
-                  <span>邮箱或公司名</span>
-                  <textarea rows={3} value={picked} onChange={(event) => setPicked(event.target.value)} placeholder="client@example.com，多个用逗号或换行分开" />
-                </label>
-              )}
-              <p className="br-hint">已退订、没有邮箱、邮件硬退的客户会被自动排除，不计入上面的数字。</p>
-            </section>
-          )}
+          <section className="br-block">
+            <h2>什么时候发</h2>
+            <div className="br-seg br-seg-wide" role="tablist">
+              <button type="button" role="tab" aria-selected={when === 'now'} className={when === 'now' ? 'is-active' : ''} onClick={() => setWhen('now')}>立即</button>
+              <button type="button" role="tab" aria-selected={when === 'later'} className={when === 'later' ? 'is-active' : ''} onClick={() => setWhen('later')}>定时</button>
+            </div>
+            {when === 'later' && (
+              <input className="br-datetime" type="datetime-local" value={scheduleAt} onChange={(event) => setScheduleAt(event.target.value)} />
+            )}
+            <div className="br-test">
+              <input value={testEmail} onChange={(event) => setTestEmail(event.target.value)} placeholder="先发给自己：填邮箱" />
+              <button type="button" className="con-btn" disabled={!testEmail.trim()}>发送测试</button>
+            </div>
+          </section>
 
-          {step === 3 && (
-            <>
-              <section className="br-block">
-                <h2>什么时候发</h2>
-                <div className="br-seg br-seg-wide" role="tablist">
-                  <button type="button" role="tab" aria-selected={when === 'now'} className={when === 'now' ? 'is-active' : ''} onClick={() => setWhen('now')}>立即</button>
-                  <button type="button" role="tab" aria-selected={when === 'later'} className={when === 'later' ? 'is-active' : ''} onClick={() => setWhen('later')}>定时</button>
-                </div>
-                {when === 'later' && (
-                  <input className="br-datetime" type="datetime-local" value={scheduleAt} onChange={(event) => setScheduleAt(event.target.value)} />
-                )}
-              </section>
-
-              <section className="br-block">
-                <h2>先发给自己</h2>
-                <div className="br-test">
-                  <input value={testEmail} onChange={(event) => setTestEmail(event.target.value)} placeholder="你的邮箱，多个用逗号分开" />
-                  <button type="button" className="con-btn" disabled={!testEmail.trim()}>发送测试</button>
-                </div>
-                <p className="br-hint">测试只出现在你自己的铃铛里，不计入受众，客户看不到。</p>
-              </section>
-
-              <section className="br-block">
-                <h2>过一遍</h2>
-                <dl className="br-review">
-                  <div><dt>形式</dt><dd>{kind === 'notice' ? '通知（进铃铛）' : '公告（登录弹一次）'}</dd></div>
-                  <div><dt>标题</dt><dd>{title || '—'}</dd></div>
-                  <div><dt>正文</dt><dd>{body || '—'}</dd></div>
-                  <div><dt>受众</dt><dd>{AUDIENCES.find((item) => item.id === audience).label} · 预计送达 {audienceCount} 人</dd></div>
-                  <div><dt>时间</dt><dd>{when === 'now' ? '立即发送' : scheduleAt.replace('T', ' ')}</dd></div>
-                </dl>
-              </section>
-            </>
-          )}
-
-          <footer className="br-actions">
-            {step > 1 && <button type="button" className="con-btn" onClick={() => setStep(step - 1)}><ArrowLeft size={14} /> 上一步</button>}
-            {step < 3 && <button type="button" className="con-btn is-primary" disabled={!canContinue} onClick={goNext}>下一步 <ArrowRight size={14} /></button>}
-            {step === 3 && <button type="button" className="con-btn is-primary" disabled={!contentReady || !audienceReady} onClick={() => setConfirming(true)}><Send size={14} /> 发送</button>}
-            <button type="button" className="con-btn">存草稿</button>
-            <span className="br-note">接口未接，最后一步不会真的发出。</span>
-          </footer>
+          <p className="br-note">{ready ? '接口未接，点发送不会真的发出。' : '标题、正文、受众填完才能发；接口未接，点发送也不会真的发出。'}</p>
         </div>
 
         <aside className="br-preview">
           <div className="br-preview-head">
             <h2>预览</h2>
-            <div className="br-preview-tabs">
-              <button type="button" className={previewTab === 'bell' ? 'is-active' : ''} onClick={() => setPreviewTab('bell')}>铃铛</button>
-              <button type="button" className={previewTab === 'modal' ? 'is-active' : ''} onClick={() => setPreviewTab('modal')}>公告弹窗</button>
-            </div>
+            <span>预计送达 {audienceCount} 人</span>
           </div>
 
-          {previewTab === 'bell' ? (
+          {kind === 'notice' ? (
             <div className="br-bell">
               <header><strong>通知</strong><small>1 条未读</small></header>
               <div className="br-bell-card">
@@ -199,7 +185,6 @@ export default function AdminBroadcast() {
                 </span>
                 <p>{body || '正文写在这里，一到两句，写清他看到之后该做什么。'}</p>
               </div>
-              <p className="br-bell-more"><Users size={13} /> 预计送达 {audienceCount} 人</p>
             </div>
           ) : (
             <div className="br-modal">
@@ -207,11 +192,9 @@ export default function AdminBroadcast() {
               <h3>{title || '公告标题'}</h3>
               <p>{body || '正文写在这里。公告会在登录时弹一次，看完不再出现。'}</p>
               {ctaLabel ? <span className="br-modal-cta">{ctaLabel}</span> : null}
-              <small>每条公告只弹一次 · 预计送达 {audienceCount} 人</small>
+              <small>每条公告只弹一次</small>
             </div>
           )}
-
-          <p className="br-preview-note">铃铛里的样子，和工作台右上角那个面板一致。</p>
         </aside>
       </div>
 
@@ -237,16 +220,17 @@ export default function AdminBroadcast() {
             </p>
             <div className="br-confirm-actions">
               <button type="button" className="con-btn" onClick={() => setConfirming(false)}>返回修改</button>
-              <button type="button" className="con-btn is-primary" onClick={() => { setConfirming(false); setNotSent(true); }}>确认发送</button>
+              <button type="button" className="con-btn is-primary" onClick={() => { setConfirming(false); setNotice('这是前端演示：广播接口还没接，没有真的发出去。'); }}>确认发送</button>
             </div>
           </div>
         </div>
       )}
 
-      {notSent && (
+      {notice && (
         <div className="br-banner">
-          这是前端演示：广播接口还没接，没有真的发出去。
-          <button type="button" onClick={() => setNotSent(false)}>知道了</button>
+          {notice}
+          <button type="button" onClick={() => setNotice('')}>知道了</button>
+          {draft ? <button type="button" onClick={clearDraft}>清掉草稿</button> : null}
         </div>
       )}
     </div>

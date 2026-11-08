@@ -1,38 +1,6 @@
 /* 发通知：三步，左写右看。
  * 色卡仍是工作台那八个值，字号只用 22 / 16 / 14 / 13 / 12 / 11。 */
 
-.br-steps {
-  display: flex;
-  gap: 28px;
-  margin: 18px 0 0;
-  border-bottom: 1px solid #E5E3DD;
-  list-style: none;
-  padding: 0 0 14px;
-}
-
-.br-steps li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #8D948D;
-  font: 500 13px var(--font-sans);
-}
-
-.br-steps li > span {
-  display: grid;
-  width: 20px;
-  height: 20px;
-  border: 1px solid #E5E3DD;
-  border-radius: 999px;
-  color: #8D948D;
-  font: 600 11px var(--font-sans);
-  place-items: center;
-}
-
-.br-steps li.is-current { color: #141413; }
-.br-steps li.is-current > span { border-color: #141413; background: #141413; color: #FFFFFF; }
-.br-steps li.is-done > span { border-color: #141413; color: #141413; }
-
 .br-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 380px;
@@ -172,14 +140,31 @@
 .br-review dt { color: #8D948D; font: 400 12px/1.6 var(--font-sans); }
 .br-review dd { margin: 0; overflow-wrap: anywhere; color: #141413; font: 400 13px/1.6 var(--font-sans); }
 
-.br-actions {
+.br-clear {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 18px 0 6px;
+  gap: 8px;
+  margin-top: 12px;
+  color: #5F6862;
+  font: 400 13px var(--font-sans);
+  cursor: pointer;
 }
 
-.br-note { color: #8D948D; font: 400 12px var(--font-sans); }
+.br-clear input { accent-color: #141413; }
+
+.br-note {
+  margin: 14px 0 0;
+  color: #8D948D;
+  font: 400 12px/1.7 var(--font-sans);
+}
+
+/* 没填完时按钮要看得出来不能点，否则和可点状态一模一样。 */
+.br .con-btn:disabled {
+  cursor: not-allowed;
+  opacity: .38;
+}
+
+.br .con-btn.is-primary:disabled { background: #141413; border-color: #141413; }
 
 /* ---- 右侧预览 ---- */
 
@@ -193,20 +178,7 @@
 }
 
 .br-preview-head h2 { margin: 0; color: #5F6862; font: 500 12px var(--font-sans); }
-.br-preview-tabs { display: flex; gap: 2px; }
-
-.br-preview-tabs button {
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: #8D948D;
-  cursor: pointer;
-  font: 500 12px var(--font-sans);
-  padding: 3px 7px;
-}
-
-.br-preview-tabs button.is-active { background: #FAF9F5; color: #141413; }
-
+.br-preview-head > span { color: #8D948D; font: 400 12px var(--font-sans); }
 .br-bell {
   border: 1px solid rgba(20, 20, 19, .08);
   border-radius: 14px;
