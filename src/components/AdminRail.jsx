@@ -1,6 +1,6 @@
 import { Link, NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import {
-  BriefcaseBusiness, ClipboardCheck, Compass, Database, FileText, Gauge, Inbox,
+  BriefcaseBusiness, ClipboardCheck, Compass, Database, FileText, Gauge, History, Inbox,
   ListFilter, Mail, ReceiptText, Settings, Users,
 } from 'lucide-react';
 import { useAuth } from './AuthContext';
@@ -43,27 +43,18 @@ export const ADMIN_ENVS = {
   research: {
     label: '研究端',
     caption: '客户、项目与交付',
+    /* 研究端不再分组：条目顺着排下来，不加「业务 / 交付 / 系统」这些小标题。 */
     groups: [
       {
-        title: '业务',
         items: [
           { to: '/admin', label: '总览', icon: Gauge, end: true },
           { to: '/admin/customers', label: '客户', icon: Users },
           { to: '/admin/business-projects', label: '项目与订单', icon: BriefcaseBusiness },
           { to: '/admin/billing', label: '财务', icon: ReceiptText },
-        ],
-      },
-      {
-        title: '交付',
-        items: [
           { to: '/admin/reviews', label: '问卷审核', icon: ClipboardCheck },
           { to: '/admin/delivery', label: '交付中心', icon: FileText },
           { to: '/admin/approvals', label: '报价与退款审批', icon: Inbox },
-        ],
-      },
-      {
-        title: '系统',
-        items: [
+          { to: '/admin/changelog', label: '更新日志', icon: History },
           { to: '/admin/roles', label: '权限与审计', icon: Settings },
           { to: '/admin/system', label: '系统与导出', icon: Database },
           { to: '/admin/messages', label: '消息与模板', icon: Mail },
@@ -78,7 +69,7 @@ export default function AdminRail() {
   const [params, setParams] = useSearchParams();
   const { pathname } = useLocation();
   /* 直接打开研究端某一页时，环境要跟着路由走，不能停在参与端。 */
-  const RESEARCH_PATHS = ['/admin/customers', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system'];
+  const RESEARCH_PATHS = ['/admin/customers', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system', '/admin/changelog'];
   const fromRoute = RESEARCH_PATHS.some((path) => pathname.startsWith(path)) ? 'research' : 'panel';
   const env = params.get('env') === 'research' ? 'research' : params.get('env') === 'panel' ? 'panel' : fromRoute;
   const config = ADMIN_ENVS[env];
@@ -102,9 +93,9 @@ export default function AdminRail() {
         ))}
       </div>
       <nav className="arail-nav">
-        {config.groups.map((group) => (
-          <div className="arail-group" key={group.title}>
-            <p>{group.title}</p>
+        {config.groups.map((group, index) => (
+          <div className="arail-group" key={group.title || `group-${index}`}>
+            {group.title ? <p>{group.title}</p> : null}
             {group.items.map((item) => (
               <NavLink
                 key={item.to}
