@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ExternalLink, Search, Send } from 'lucide-react';
 import { EMAIL_TEMPLATES, RESEND_TEMPLATES_URL } from '../content/emailTemplates';
-import { getAdminBusinessProjects, getMarketingDeliveries, previewMarketingCampaign, sendMarketingCampaign } from '../api/realApi';
+import { cancelEmailOutboxItem, getAdminBusinessProjects, getEmailOutbox, getEmailOutboxStats, getMarketingDeliveries, previewMarketingCampaign, retryEmailOutboxItem, sendEmailOutboxItem, sendMarketingCampaign } from '../api/realApi';
 import './AdminMessages.css';
 
 /* 营销与模板。
@@ -45,8 +45,31 @@ export default function AdminMessages() {
   const [picked, setPicked] = useState([]);
   const [customerQuery, setCustomerQuery] = useState('');
   const [txTemplate, setTxTemplate] = useState('Payment Received');
+  const [outbox, setOutbox] = useState([]);
+  const [outboxStats, setOutboxStats] = useState(null);
+  const [busyId, setBusyId] = useState('');
+
+  const loadOutbox = () => {
+    getEmailOutbox()
+      .then(({ data }) => setOutbox(data?.items || []))
+      .catch(() => setOutbox([]));
+    getEmailOutboxStats()
+      .then(({ data }) => setOutboxStats(data))
+      .catch(() => setOutboxStats(null));
+  };
+
+  const act = async (id, fn) => {
+    setBusyId(id);
+    try { await fn(id); } catch { /* 后端会返回 404/409，刷新即见真状态 */ }
+    setBusyId('');
+    loadOutbox();
+  };
 
   const count = useMemo(() => recipients.split(/[\s,;]+/).filter(Boolean).length, [recipients]);
+
+  useEffect(() => {
+    if (tab === 'transactional') loadOutbox();
+  }, [tab]);
 
   useEffect(() => {
     if (tab !== 'transactional' || customers.length) return;
@@ -221,58 +244,46 @@ export default function AdminMessages() {
 
       {tab === 'transactional' && (
         <>
-          <div className="tx-grid">
-            <section className="tx-form">
-              <h2>发给谁</h2>
-              <p className="tx-hint">交易邮件只能发给已有客户——从项目里出现过的联系人选，不能手填地址。</p>
-              <div className="con-toolbar">
-                <div className="con-toolbar-search">
-                  <Search size={14} aria-hidden="true" />
-                  <input value={customerQuery} onChange={(event) => setCustomerQuery(event.target.value)} placeholder="搜邮箱或组织" aria-label="搜索客户" />
-                </div>
-                <span className="tx-count">已选 {picked.length}</span>
-              </div>
-              <div className="tx-list">
-                {customers.length ? customers.filter((customer) => {
-                  const needle = customerQuery.trim().toLowerCase();
-                  return !needle || customer.email.toLowerCase().includes(needle) || customer.org.toLowerCase().includes(needle);
-                }).map((customer) => (
-                  <label key={customer.email} className={`tx-item${picked.includes(customer.email) ? ' is-picked' : ''}`}>
-                    <input
-                      type="checkbox"
-                      checked={picked.includes(customer.email)}
-                      onChange={(event) => setPicked((current) => event.target.checked ? [...current, customer.email] : current.filter((email) => email !== customer.email))}
-                    />
-                    <span>
-                      <strong>{customer.email}</strong>
-                      <small>{customer.org}</small>
-                    </span>
-                  </label>
-                )) : <p className="tx-empty">还没有客户。客户建过项目之后才会出现在这里。</p>}
-              </div>
-            </section>
+          {outboxStats && (outboxStats.queuedOver24h > 0 || outboxStats.failed > 0) ? (
+            <p className="msg-error">
+              有 {outboxStats.queuedOver24h} 封排队超过 24 小时、{outboxStats.failed} 封发送失败，需要处理。
+            </p>
+          ) : null}
 
-            <section className="tx-form">
-              <h2>发什么</h2>
-              <label className="msg-field">
-                <span>模板</span>
-                <select value={txTemplate} onChange={(event) => setTxTemplate(event.target.value)}>
-                  {['Payment Received', 'Transfer Notice', 'Transfer Unmatched'].map((name) => <option key={name} value={name}>{name}</option>)}
-                </select>
-              </label>
-              <p className="tx-hint">
-                Payment Received 带发票 PDF 附件；Transfer Notice 在提交转账申报后自动发；Transfer Unmatched 在核对失败后自动发。人工这条主要用在“银行转账到账、需要补发收据”。
-              </p>
-              <div className="msg-actions">
-                <button type="button" className="con-btn is-primary" disabled>
-                  <Send size={14} /> 发送
-                </button>
-                <span className="msg-from">接口未接：后端还没有交易邮件发件箱</span>
-              </div>
-            </section>
+          <div className="con-table">
+            <table>
+              <thead><tr><th>收件人</th><th>模板</th><th>状态</th><th className="is-right">尝试</th><th className="is-right">时间</th><th /></tr></thead>
+              <tbody>
+                {outbox.length ? outbox.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.recipient}</td>
+                    <td>{item.template}</td>
+                    <td>
+                      <span className={`msg-mode is-${String(item.status).toLowerCase()}`}>{item.status}</span>
+                      {item.lastError ? <small className="msg-err-inline">{item.lastError}</small> : null}
+                    </td>
+                    <td className="is-right">{item.attempts}</td>
+                    <td className="is-right">{item.createdAt ? new Date(item.createdAt).toISOString().slice(0, 16).replace('T', ' ') : '—'}</td>
+                    <td className="is-right msg-actions-cell">
+                      {item.status === 'PENDING_APPROVAL' && (
+                        <button type="button" className="msg-link" disabled={busyId === item.id} onClick={() => act(item.id, sendEmailOutboxItem)}>发送</button>
+                      )}
+                      {['PENDING_APPROVAL', 'QUEUED', 'FAILED'].includes(item.status) && (
+                        <button type="button" className="msg-link" disabled={busyId === item.id} onClick={() => act(item.id, cancelEmailOutboxItem)}>取消</button>
+                      )}
+                      {item.status === 'FAILED' && (
+                        <button type="button" className="msg-link" disabled={busyId === item.id} onClick={() => act(item.id, retryEmailOutboxItem)}>重试</button>
+                      )}
+                    </td>
+                  </tr>
+                )) : (
+                  <tr className="is-empty"><td colSpan={6}>发件箱是空的。到账后的收据这类需要人工确认的邮件会排在这里。</td></tr>
+                )}
+              </tbody>
+            </table>
           </div>
           <p className="msg-note">
-            交易邮件走 guanyisearch.com 的独立凭据，和营销邮件互不影响。要真发出去，需要后端加一张 <code>EmailOutbox</code>（收件人、模板、变量、状态、操作人）和发送接口。
+            交易邮件走 guanyisearch.com 的独立凭据，和营销邮件互不影响。点「发送」只是放行，真正的投递由后台按 1 分钟到 24 小时的退避重试，失败三次以上会标红。
           </p>
         </>
       )}

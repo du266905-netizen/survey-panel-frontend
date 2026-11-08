@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Bell, Megaphone, Send } from 'lucide-react';
+import { sendBroadcast } from '../api/realApi';
 import './AdminBroadcast.css';
 
 /* 群发消息。
@@ -9,7 +10,7 @@ import './AdminBroadcast.css';
  * message、Customer.io 的 Broadcast 都是单页 + 发送前 review）。
  *
  * 草稿存在这台机器的 localStorage 里：存了就还在，下次打开自动带回来。
- * 只做前端：点确认发送不会真发——后端没有广播接口，也没有 ANNOUNCEMENT 类型。
+ * 发送走 POST /api/admin/notifications/broadcast；公告类型 ANNOUNCEMENT，指定人群要传 userIds。
  */
 
 const DRAFT_KEY = 'guanyi.broadcast.draft';
@@ -43,6 +44,8 @@ export default function AdminBroadcast() {
   const [testEmail, setTestEmail] = useState('');
   const [mailCopy, setMailCopy] = useState(false);
   const [confirming, setConfirming] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
   const [notice, setNotice] = useState(draft ? '已带回上次的草稿。' : '');
 
   useEffect(() => {
@@ -220,12 +223,38 @@ export default function AdminBroadcast() {
             </p>
             <div className="br-confirm-actions">
               <button type="button" className="con-btn" onClick={() => setConfirming(false)}>返回修改</button>
-              <button type="button" className="con-btn is-primary" onClick={() => { setConfirming(false); setNotice('这是前端演示：广播接口还没接，没有真的发出去。'); }}>确认发送</button>
+              <button
+                type="button"
+                className="con-btn is-primary"
+                disabled={sending}
+                onClick={async () => {
+                  if (audience !== 'all') {
+                    setConfirming(false);
+                    setError('接口目前只支持“全部客户”；指定人群要等 userIds 对接。');
+                    return;
+                  }
+                  setSending(true);
+                  setError('');
+                  try {
+                    await sendBroadcast({ title, body, audience: audience === 'all' ? 'ALL' : 'SPECIFIED', userIds: [] });
+                    setConfirming(false);
+                    setNotice('已发出。对方下次登录会看到这条公告，只弹一次。');
+                  } catch (err) {
+                    setError(err?.response?.data?.message || '发送失败。');
+                    setConfirming(false);
+                  } finally {
+                    setSending(false);
+                  }
+                }}
+              >
+                {sending ? '发送中…' : '确认发送'}
+              </button>
             </div>
           </div>
         </div>
       )}
 
+      {error ? <p className="br-error">{error}</p> : null}
       {notice && (
         <div className="br-banner">
           {notice}

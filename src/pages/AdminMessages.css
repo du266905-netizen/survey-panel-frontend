@@ -138,3 +138,10 @@
 @media (max-width: 1080px) {
   .tx-grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+
+.msg-actions-cell { display: flex; gap: 12px; justify-content: flex-end; }
+.msg-actions-cell button { border: 0; background: transparent; cursor: pointer; padding: 0; }
+.msg-actions-cell button:disabled { opacity: .45; }
+.msg-err-inline { display: block; margin-top: 3px; color: #B42318; font: 400 11px var(--font-sans); }
+.msg-mode.is-failed { border-color: #B42318; color: #B42318; }

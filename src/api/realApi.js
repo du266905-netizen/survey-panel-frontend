@@ -596,6 +596,15 @@ export const unsubscribeMarketingEmail = async (token) => {
 };
 
 export const getMarketingDeliveries = async (params = {}) => apiClient.get('/api/admin/marketing-campaigns/deliveries', { params });
+
+/* 交易邮件发件箱与管理端公告 */
+export const getEmailOutbox = async (params = {}) => apiClient.get('/api/admin/email-outbox', { params });
+export const getEmailOutboxStats = async () => apiClient.get('/api/admin/email-outbox/stats');
+export const sendEmailOutboxItem = async (id) => apiClient.post(`/api/admin/email-outbox/${id}/send`);
+export const cancelEmailOutboxItem = async (id) => apiClient.post(`/api/admin/email-outbox/${id}/cancel`);
+export const retryEmailOutboxItem = async (id) => apiClient.post(`/api/admin/email-outbox/${id}/retry`);
+export const getBroadcasts = async () => apiClient.get('/api/admin/notifications/broadcast');
+export const sendBroadcast = async (payload) => apiClient.post('/api/admin/notifications/broadcast', payload);
 export const getMarketingContacts = async () => apiClient.get('/api/admin/marketing-contacts');
 export const saveMarketingContact = async ({ email, consentSource }) => apiClient.post('/api/admin/marketing-contacts', { email, consentSource, confirmMarketingConsent: true });
 
