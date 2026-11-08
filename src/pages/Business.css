@@ -44,6 +44,16 @@
 .business-workspace-logout { display: inline-flex; align-items: center; gap: 7px; border: 0; background: transparent; color: #4c6055; cursor: pointer; font-family: var(--font-sans); font-size: 12px; font-weight: 800; }
 .business-workspace-logout:hover { color: #1f4a35; }
 .business-workspace-body.business-workspace-body--rail { grid-template-columns: 200px minmax(0, 1fr); min-height: 100svh; }
+
+/* 工作台这一版的外壳是 grid，不是 account 页那种 fixed 轨道：页面一长，
+   左轨跟着滚走，滑到一半就看不到导航。改成 sticky，宽度与列宽不变，
+   不碰页面其它布局。 */
+.business-workspace-body--rail > .business-workspace-rail {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100svh;
+}
 .business-workspace-rail { display: flex !important; align-content: initial !important; align-items: center; flex-direction: column; gap: 9px; border-right: 1px solid rgba(36, 56, 46, .14) !important; background: #FAF9F5 !important; padding: 18px 11px !important; }
 .business-workspace-rail-mark { display: block; width: 42px; height: 32px; object-fit: contain; object-position: center; margin: 2px 0 10px; }
 .business-workspace-rail a { position: relative; display: grid !important; width: 44px; height: 44px; place-items: center; border: 1px solid transparent; border-radius: 10px; color: #64756b !important; margin: 0 !important; text-decoration: none; }
