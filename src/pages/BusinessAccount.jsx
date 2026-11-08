@@ -185,7 +185,7 @@ export default function BusinessAccount() {
                 }
                 setPasswordBusy(true);
                 try {
-                  await changePassword({ currentPassword: passwords.current, newPassword: passwords.next });
+                  await changePassword({ currentPassword: passwords.current, password: passwords.next });
                   setPasswords({ current: '', next: '', confirm: '' });
                   setPasswordNote('密码已更新。');
                 } catch (failure) {

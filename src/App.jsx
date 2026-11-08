@@ -233,6 +233,7 @@ export default function App() {
         <Route path="/business/plans" element={<BusinessRoute><BusinessPlans /></BusinessRoute>} />
         <Route path="/business/plans/checkout" element={<BusinessRoute><BusinessPlanCheckout /></BusinessRoute>} />
         <Route path="/business/invite" element={<BusinessInvite />} />
+        <Route path="/business/team/invitations/:token" element={<BusinessInvite />} />
         <Route path="/business/billing" element={<BusinessRoute><BusinessBilling /></BusinessRoute>} />
         <Route path="/business/billing/invoices/:id" element={<BusinessRoute><BusinessInvoiceDetail /></BusinessRoute>} />
         <Route path="/business/add-funds" element={<BusinessRoute><BusinessAddFunds /></BusinessRoute>} />

@@ -21,9 +21,18 @@ export async function fetchAiCredits() {
   return response.data;
 }
 
-export async function purchaseAiCredits(packId) {
-  const response = await apiClient.post('/api/business/ai/credits/purchase', { packId });
+export async function purchaseAiCredits(packId, idempotencyKey) {
+  const response = await apiClient.post(
+    '/api/business/ai/credits/purchase',
+    { packId },
+    idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
+  );
   return response.data;
+}
+
+function newIdempotencyKey() {
+  const random = Math.random().toString(36).slice(2, 10);
+  return `ui-${Date.now()}-${random}`;
 }
 
 const copy = {
@@ -108,6 +117,7 @@ export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
 export default function AiCreditsBadge({ language = 'zh-CN', onChanged, compact = false, showBuy = true }) {
   const text = copy[language] || copy.en;
   const [credits, setCredits] = useState(null);
+  const [packs, setPacks] = useState([]);
   const [unavailable, setUnavailable] = useState(false);
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState('');
@@ -117,6 +127,7 @@ export default function AiCreditsBadge({ language = 'zh-CN', onChanged, compact 
     try {
       const data = await fetchAiCredits();
       setCredits(Number(data?.balance ?? data?.credits ?? 0));
+      setPacks(Array.isArray(data?.packs) ? data.packs : []);
       setUnavailable(false);
     } catch {
       setUnavailable(true);
@@ -129,7 +140,7 @@ export default function AiCreditsBadge({ language = 'zh-CN', onChanged, compact 
     setBusy(packId);
     setNote('');
     try {
-      await purchaseAiCredits(packId);
+      await purchaseAiCredits(packId, newIdempotencyKey());
       await load();
       setNote(text.done);
       onChanged?.();
@@ -166,7 +177,7 @@ export default function AiCreditsBadge({ language = 'zh-CN', onChanged, compact 
             </header>
             <p className="ai-credits-hint">{text.hint}</p>
             <div className="ai-credits-packs">
-              {AI_CREDIT_PACKS.map((pack) => (
+              {packs.map((pack) => (
                 <button
                   key={pack.id}
                   type="button"
@@ -175,7 +186,7 @@ export default function AiCreditsBadge({ language = 'zh-CN', onChanged, compact 
                   disabled={Boolean(busy)}
                 >
                   <strong>{pack.credits} {text.unit}</strong>
-                  <span>${pack.price}</span>
+                  <span>${(Number(pack.priceCents || 0) / 100).toFixed(0)}</span>
                   <em>{busy === pack.id ? text.loading : text.confirm}</em>
                 </button>
               ))}

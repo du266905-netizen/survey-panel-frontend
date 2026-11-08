@@ -340,8 +340,8 @@ export const verifyEmailCode = async ({ email, code }) => {
   return { data: response.data };
 };
 
-export const changePassword = async ({ currentPassword, newPassword }) => {
-  const response = await apiClient.post('/api/auth/change-password', { currentPassword, newPassword });
+export const changePassword = async ({ currentPassword, password }) => {
+  const response = await apiClient.post('/api/auth/change-password', { currentPassword, password });
   return { data: response.data };
 };
 
@@ -1033,5 +1033,43 @@ export const createCryptoRecharge = async ({ amountUsd, idempotencyKey }) => {
     { amountUsd },
     idempotencyKey ? { headers: { 'x-idempotency-key': idempotencyKey } } : undefined,
   );
+  return response.data;
+};
+
+
+/* Team ------------------------------------------------------------------ */
+
+export const getBusinessTeam = async () => {
+  const response = await apiClient.get('/api/business/team');
+  return response.data;
+};
+
+export const updateBusinessTeam = async (payload) => {
+  const response = await apiClient.patch('/api/business/team', payload);
+  return response.data;
+};
+
+export const createTeamInvitation = async ({ email, role }) => {
+  const response = await apiClient.post('/api/business/team/invitations', { email, role });
+  return response.data;
+};
+
+export const revokeTeamInvitation = async (invitationId) => {
+  const response = await apiClient.delete(`/api/business/team/invitations/${encodeURIComponent(invitationId)}`);
+  return response.data;
+};
+
+export const updateTeamMemberRole = async (memberId, role) => {
+  const response = await apiClient.patch(`/api/business/team/members/${encodeURIComponent(memberId)}`, { role });
+  return response.data;
+};
+
+export const removeTeamMember = async (memberId) => {
+  const response = await apiClient.delete(`/api/business/team/members/${encodeURIComponent(memberId)}`);
+  return response.data;
+};
+
+export const acceptTeamInvitation = async (token) => {
+  const response = await apiClient.post(`/api/business/team/invitations/${encodeURIComponent(token)}/accept`);
   return response.data;
 };
