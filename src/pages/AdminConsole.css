@@ -304,6 +304,7 @@
 }
 
 .con-btn:hover { background: #FAF9F5; }
+.con-btn:disabled { cursor: not-allowed; opacity: .4; }
 .con-btn.is-primary { border-color: #141413; background: #141413; color: #FFFFFF; }
 .con-btn.is-primary:hover { background: #141413; }
 

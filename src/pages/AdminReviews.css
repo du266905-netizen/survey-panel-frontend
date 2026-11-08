@@ -1,0 +1,204 @@
+/* 问卷审核：左队列、右内容。
+
+   照 GitHub 的 PR 页和 Linear 的 triage：内容占主位，判断放在底部，
+   不把按钮堆在标题旁边。 */
+
+.rv-grid {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.rv-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #E5E3DD;
+  border-radius: 9px;
+  background: #FAF9F5;
+  color: #141413;
+  font: 400 13px var(--font-sans);
+  margin-top: 14px;
+  padding: 10px 14px;
+}
+
+.rv-banner button {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+}
+
+/* ---- 队列 ---- */
+
+.rv-queue {
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.rv-queue-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid #E5E3DD;
+  color: #5F6862;
+  font: 500 12px var(--font-sans);
+  padding: 12px 14px;
+}
+
+.rv-queue-head em { color: #141413; font: 600 13px var(--font-sans); font-style: normal; }
+
+.rv-item {
+  position: relative;
+  display: grid;
+  width: 100%;
+  gap: 3px;
+  border: 0;
+  border-bottom: 1px solid #E5E3DD;
+  background: #FFFFFF;
+  cursor: pointer;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.rv-item:last-child { border-bottom: 0; }
+.rv-item:hover { background: #FAF9F5; }
+.rv-item.is-active { background: #FAF9F5; box-shadow: inset 2px 0 #141413; }
+
+.rv-item strong {
+  overflow: hidden;
+  color: #141413;
+  font: 500 13px var(--font-sans);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-item small { color: #8D948D; font: 400 12px var(--font-sans); }
+
+.rv-item em {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  color: #8D948D;
+  font: 400 11px var(--font-sans);
+  font-style: normal;
+}
+
+.rv-queue-empty {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  color: #8D948D;
+  padding: 40px 18px;
+  text-align: center;
+}
+
+.rv-queue-empty p { margin: 0; font: 400 12px/1.6 var(--font-sans); }
+
+/* ---- 内容 ---- */
+
+.rv-panel {
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  background: #FFFFFF;
+  padding: 20px 22px 18px;
+}
+
+.rv-panel-head h2 {
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+.rv-panel-head p { margin: 5px 0 0; color: #8D948D; font: 400 12px var(--font-sans); }
+
+.rv-error {
+  margin: 14px 0 0;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #B42318;
+  font: 400 13px/1.6 var(--font-sans);
+  padding: 10px 12px;
+}
+
+.rv-questions {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rv-questions li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 10px;
+  border-bottom: 1px solid #E5E3DD;
+  padding: 12px 0;
+}
+
+.rv-index {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #FAF9F5;
+  color: #5F6862;
+  font: 600 11px var(--font-sans);
+  place-items: center;
+}
+
+.rv-questions p {
+  margin: 0;
+  color: #141413;
+  font: 400 14px/1.55 var(--font-sans);
+}
+
+.rv-questions p em {
+  margin-left: 8px;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  color: #8D948D;
+  font: 500 10px var(--font-sans);
+  font-style: normal;
+  padding: 1px 6px;
+  vertical-align: 2px;
+}
+
+.rv-questions small { display: block; margin-top: 4px; color: #8D948D; font: 400 12px var(--font-sans); }
+
+.rv-questions .rv-empty { display: block; color: #8D948D; font: 400 13px var(--font-sans); }
+
+.rv-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #E5E3DD;
+  margin-top: 18px;
+  padding-top: 16px;
+}
+
+.rv-actions-note { color: #8D948D; font: 400 12px var(--font-sans); }
+
+.rv-panel-empty {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  color: #8D948D;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.rv-panel-empty p { margin: 0; font: 400 13px var(--font-sans); }
+
+@media (max-width: 1080px) {
+  .rv-grid { grid-template-columns: minmax(0, 1fr); }
+}
