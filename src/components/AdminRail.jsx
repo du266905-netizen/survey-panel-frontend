@@ -11,6 +11,11 @@ import './AdminRail.css';
 /* 运营工作台的左轨：两个环境，导航随环境换。
    所有 /admin/* 页面共用这一条轨道——换页不换壳。 */
 
+/* 研究端的路由清单：直接打开某一页时，环境要跟着路由走。 */
+export const RESEARCH_PATHS = ['/admin/customers', '/admin/business-projects', '/admin/business-questionnaires', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system', '/admin/messages', '/admin/changelog', '/admin/broadcast'];
+
+export const isResearchPath = (pathname) => RESEARCH_PATHS.some((path) => pathname.startsWith(path));
+
 export const ADMIN_ENVS = {
   panel: {
     label: '参与端',
@@ -72,8 +77,7 @@ export default function AdminRail() {
   const [params, setParams] = useSearchParams();
   const { pathname } = useLocation();
   /* 直接打开研究端某一页时，环境要跟着路由走，不能停在参与端。 */
-  const RESEARCH_PATHS = ['/admin/customers', '/admin/billing', '/admin/reviews', '/admin/delivery', '/admin/approvals', '/admin/roles', '/admin/system', '/admin/changelog', '/admin/broadcast'];
-  const fromRoute = RESEARCH_PATHS.some((path) => pathname.startsWith(path)) ? 'research' : 'panel';
+  const fromRoute = isResearchPath(pathname) ? 'research' : 'panel';
   const env = params.get('env') === 'research' ? 'research' : params.get('env') === 'panel' ? 'panel' : fromRoute;
   const config = ADMIN_ENVS[env];
   /* 每次换页重算一次：看完更新日志回到别的页，小红点要自己灭掉。 */
@@ -104,7 +108,7 @@ export default function AdminRail() {
             {group.items.map((item) => (
               <NavLink
                 key={item.to}
-                to={item.to}
+                to={item.to === '/admin' && env === 'research' ? '/admin?env=research' : item.to}
                 end={item.end}
                 className={({ isActive }) => `${isActive ? 'is-active' : ''}${item.pending ? ' is-pending' : ''}`}
               >

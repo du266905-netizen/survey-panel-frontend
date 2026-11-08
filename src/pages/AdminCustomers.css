@@ -1,0 +1,51 @@
+/* 客户列表与详情。表沿用工作台的 con-table，这里只补两处。 */
+
+.cu-table { margin-top: 12px; }
+
+.cu-table td:first-child { color: #141413; }
+
+.cu-note {
+  margin: 12px 0 0;
+  color: #8D948D;
+  font: 400 12px/1.7 var(--font-sans);
+}
+
+.cu-projects { margin-top: 18px; }
+
+.cu-projects h3 {
+  margin: 0 0 10px;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.cu-project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: baseline;
+  gap: 10px;
+  border-bottom: 1px solid #E5E3DD;
+  padding: 9px 0;
+}
+
+.cu-project span {
+  overflow: hidden;
+  color: #141413;
+  font: 400 13px var(--font-sans);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cu-project em {
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  background: #FAF9F5;
+  color: #5F6862;
+  font: 500 11px var(--font-sans);
+  font-style: normal;
+  padding: 1px 8px;
+}
+
+.cu-project small { color: #5F6862; font: 400 12px var(--font-sans); }

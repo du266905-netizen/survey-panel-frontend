@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, RefreshCcw } from 'lucide-react';
 import { getAdminBusinessProjects } from '../api/realApi';
+import { STATUS_LABEL } from '../utils/businessStatus';
 import './AdminResearchOverview.css';
 
 /* 研究端总览。
@@ -17,19 +18,6 @@ const TODO = [
   { id: 'accept', label: '待客户确认', statuses: ['QUOTE_SENT'], hint: '报价已发，等回话' },
   { id: 'pay', label: '待收款', statuses: ['CLIENT_ACCEPTED'], hint: '已接受，等钱到账' },
 ];
-
-const STATUS_LABEL = {
-  DRAFT: '草稿',
-  SUBMITTED_FOR_REVIEW: '待审核',
-  QUOTE_REQUIRED: '待报价',
-  QUOTE_SENT: '报价已发',
-  CLIENT_ACCEPTED: '待收款',
-  FUNDED: '已付款',
-  RECRUITING: '招募中',
-  LIVE: '进行中',
-  COMPLETED: '已完成',
-  CANCELLED: '已取消',
-};
 
 const money = (cents) => (cents == null ? '—' : `$${(cents / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}`);
 
@@ -93,7 +81,7 @@ export default function AdminResearchOverview() {
           <button type="button" className="con-btn" onClick={load}>
             <RefreshCcw size={14} className={loading ? 'is-spinning' : ''} /> 刷新
           </button>
-          <button type="button" className="con-btn is-primary" onClick={() => navigate('/admin/business-projects')}>全部项目</button>
+          <button type="button" className="con-btn is-primary" onClick={() => navigate('/admin/business-projects?env=research')}>全部项目</button>
         </div>
       </header>
 
@@ -110,7 +98,7 @@ export default function AdminResearchOverview() {
                 key={item.id}
                 type="button"
                 className={`rv-todo${!loading && value === 0 ? ' is-clear' : ''}`}
-                onClick={() => navigate('/admin/business-projects')}
+                onClick={() => navigate('/admin/business-projects?env=research')}
               >
                 <strong>{show(value)}</strong>
                 <span>{item.label}</span>
@@ -132,7 +120,7 @@ export default function AdminResearchOverview() {
       <section className="rv-section rv-recent">
         <div className="rv-head">
           <h2>最近动的项目</h2>
-          <button type="button" className="rv-link" onClick={() => navigate('/admin/business-projects')}>看全部</button>
+          <button type="button" className="rv-link" onClick={() => navigate('/admin/business-projects?env=research')}>看全部</button>
         </div>
         <div className="con-table">
           <table>

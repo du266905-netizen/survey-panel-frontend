@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import AdminDetail from './AdminDetail';
+import { isResearchPath } from '../../components/AdminRail';
 import { ArrowLeft, Download, Filter, Plus, Search } from 'lucide-react';
 import '../AdminConsole.css';
 
@@ -11,6 +12,8 @@ import '../AdminConsole.css';
  */
 
 export default function AdminList({ config, rows: givenRows, emptyNote }) {
+  const [params] = useSearchParams();
+  const backTo = (params.get('env') === 'research' || isResearchPath(window.location.pathname)) ? '/admin?env=research' : '/admin';
   const [tab, setTab] = useState(0);
   const [selected, setSelected] = useState(null);
   const [loaded, setLoaded] = useState(null);
@@ -34,7 +37,7 @@ export default function AdminList({ config, rows: givenRows, emptyNote }) {
     <div className="con-body">
       <header className="con-head">
         <div>
-          <Link className="con-back" to="/admin"><ArrowLeft size={12} /> 总览</Link>
+          <Link className="con-back" to={backTo}><ArrowLeft size={12} /> 总览</Link>
           <h1>{config.title}</h1>
         </div>
         <div className="con-head-actions">
