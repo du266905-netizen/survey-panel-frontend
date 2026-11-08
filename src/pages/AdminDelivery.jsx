@@ -66,7 +66,7 @@ export default function AdminDelivery() {
       </header>
 
       <div className="con-tabs" role="tablist">
-        {[['pending', `待交付 · ${pending.length}`], ['running', `还在跑 · ${running.length}`]].map(([id, label]) => (
+        {[['pending', `待交付 · ${pending.length}`], ['running', `回收中 · ${running.length}`]].map(([id, label]) => (
           <button key={id} type="button" role="tab" aria-selected={tab === id} className={tab === id ? 'is-active' : ''} onClick={() => setTab(id)}>
             {label}
           </button>
