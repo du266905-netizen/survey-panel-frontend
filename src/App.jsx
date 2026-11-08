@@ -10,6 +10,7 @@ import AdminSupportTickets from './pages/AdminSupportTickets';
 import AdminChangelog from './pages/AdminChangelog';
 import AdminBroadcast from './pages/AdminBroadcast';
 import AdminCustomers from './pages/AdminCustomers';
+import AdminCustomerDetail from './pages/AdminCustomerDetail';
 import AdminSandbox from './pages/AdminSandbox';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
 import AdminBusinessProjects from './pages/AdminBusinessProjects';
@@ -401,6 +402,7 @@ export default function App() {
             element={<AdminRoute><AdminBusinessQuestionnaires /></AdminRoute>}
           />
           <Route path="/admin/customers" element={<AdminRoute><AdminCustomers /></AdminRoute>} />
+          <Route path="/admin/customers/:key" element={<AdminRoute><AdminCustomerDetail /></AdminRoute>} />
           <Route path="/admin/business-projects" element={<AdminRoute><AdminList config={MODULES.projects} /></AdminRoute>} />
           <Route path="/admin/billing" element={<AdminRoute><AdminList config={MODULES.billing} /></AdminRoute>} />
           <Route path="/admin/reviews" element={<AdminRoute><AdminList config={MODULES.reviews} /></AdminRoute>} />

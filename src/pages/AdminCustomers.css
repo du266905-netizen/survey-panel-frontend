@@ -49,3 +49,28 @@
 }
 
 .cu-project small { color: #5F6862; font: 400 12px var(--font-sans); }
+
+/* ---- 客户详情 ---- */
+
+.cu-head { margin: 2px 0 4px; }
+.cu-head h1 { margin: 0; color: #141413; font-family: var(--font-reading); font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
+.cu-head p { margin: 4px 0 0; color: #5F6862; font: 400 13px var(--font-sans); }
+
+.cu-figures { margin-top: 18px; }
+
+.cu-section { margin-top: 28px; }
+.cu-section h2 { margin: 0 0 12px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+
+.cu-timeline { margin: 0; padding: 0; list-style: none; }
+
+.cu-timeline li {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  border-bottom: 1px solid #E5E3DD;
+  color: #5F6862;
+  font: 400 13px/1.6 var(--font-sans);
+  padding: 10px 0;
+}
+
+.cu-timeline time { color: #8D948D; font: 400 12px var(--font-sans); }
