@@ -674,3 +674,22 @@
   margin-left: 0;
   padding-left: 9px;
 }
+
+
+/* 设置下面那五个入口要和主入口分得开：整体右移、图标也一起缩进去，
+   不然它们看着跟“概览、项目”是同一级。 */
+.business-rail .business-workspace-navgroup-settings .business-workspace-navitem {
+  width: calc(100% - 26px) !important;
+  margin: 0 0 0 26px !important;
+  padding: 7px 8px 7px 10px !important;
+  color: #5F6862;
+}
+
+.business-rail .business-workspace-navgroup-settings .business-workspace-navitem svg {
+  width: 15px;
+  height: 15px;
+}
+
+.business-rail .business-workspace-navgroup-settings .business-workspace-navitem.is-active {
+  color: #141413;
+}

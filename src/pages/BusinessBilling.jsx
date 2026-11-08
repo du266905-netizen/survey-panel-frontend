@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { listInvoices } from '../api/billing';
 import BusinessRail from '../components/BusinessRail';
 import NotificationBell from '../components/NotificationBell';
-import AiCreditsBadge from '../components/AiCredits';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
 import './BusinessAccountShell.css';
@@ -102,10 +101,6 @@ export default function BusinessBilling() {
         <div>
           <h1>{text.title}</h1>
           <p className="business-billing-intro">{text.intro}</p>
-          <div className="business-billing-ai">
-            <AiCreditsBadge language={language} />
-            <span className="business-billing-ai-note">加购从账户余额扣除；余额不足时先充值。</span>
-          </div>
         </div>
 
         <div className="business-billing-card">
