@@ -27,9 +27,17 @@
 }
 
 .notification-popover header strong {
+  display: block;
   color: #141413;
   font: 600 18px/1.3 var(--font-sans);
   letter-spacing: -.02em;
+}
+
+.notification-popover header small {
+  display: block;
+  margin-top: 3px;
+  color: #8D948D;
+  font: 400 12px/1.4 var(--font-sans);
 }
 
 .notification-popover header button {
@@ -63,6 +71,7 @@
 }
 
 .nb-item {
+  position: relative;
   display: block;
   width: 100%;
   border: 1px solid rgba(20, 20, 19, .08);
@@ -113,8 +122,38 @@
   color: #8D948D;
   font: 400 12px var(--font-sans);
   font-style: normal;
+  transition: opacity .1s ease;
   white-space: nowrap;
 }
+
+/* 未读那条才有「标记已读」：平时藏起来，鼠标移上去（或键盘聚焦）才出现，
+   出现时让时间先让位，避免两个东西挤在同一行。 */
+.nb-read {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: 0;
+  border-radius: 6px;
+  background: #FFFFFF;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  opacity: 0;
+  padding: 3px 8px;
+  pointer-events: none;
+  transition: opacity .1s ease;
+}
+
+.nb-item:hover .nb-read,
+.nb-item:focus-within .nb-read {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nb-item:hover .nb-head em,
+.nb-item:focus-within .nb-head em { opacity: 0; }
+
+.nb-read:hover { background: #FFFFFF; color: #141413; }
 
 .nb-body {
   display: block;

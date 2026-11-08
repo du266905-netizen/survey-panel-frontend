@@ -72,6 +72,14 @@ export default function NotificationBell({ className = '', presentation = 'popov
     if (notification.href) navigate(notification.href);
   };
 
+  /* 单条标记已读：不跳转，只把这卡片变白、点消失。 */
+  const markOneRead = (notification) => {
+    if (notification.readAt) return;
+    setNotifications((current) => current.map((item) => item.id === notification.id ? { ...item, readAt: new Date().toISOString() } : item));
+    setUnreadCount((current) => Math.max(0, current - 1));
+    markNotificationRead(notification.id).catch(() => load());
+  };
+
   const readAll = async () => {
     setNotifications((current) => current.map((item) => ({ ...item, readAt: item.readAt || new Date().toISOString() })));
     setUnreadCount(0);
@@ -93,7 +101,10 @@ export default function NotificationBell({ className = '', presentation = 'popov
     </button>
     {open && <section className={`notification-popover${presentation === 'modal' ? ' notification-popover--modal' : ''}`} aria-label="通知">
       <header>
-        <strong>通知</strong>
+        <div>
+          <strong>通知</strong>
+          <small>{unreadCount ? `${unreadCount} 条未读` : '都读完了'}</small>
+        </div>
         {unreadCount > 0 && <button type="button" onClick={readAll}><CheckCheck size={14} /> 全部已读</button>}
       </header>
       <div className="notification-list">
@@ -101,14 +112,35 @@ export default function NotificationBell({ className = '', presentation = 'popov
           <div className="nb-group" key={group.label}>
             <p>{group.label}</p>
             {group.items.map((notification) => (
-              <button type="button" key={notification.id} className={`nb-item${notification.readAt ? '' : ' is-unread'}`} onClick={() => openNotification(notification)}>
+              <div
+                key={notification.id}
+                role="button"
+                tabIndex={0}
+                className={`nb-item${notification.readAt ? '' : ' is-unread'}`}
+                onClick={() => openNotification(notification)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openNotification(notification);
+                  }
+                }}
+              >
                 <span className="nb-head">
                   {notification.readAt ? null : <i className="nb-dot" aria-label="未读" />}
                   <span className="nb-title">{notification.title}</span>
                   <em>{timeLabel(notification.createdAt)}</em>
                 </span>
                 {notification.body ? <span className="nb-body">{notification.body}</span> : null}
-              </button>
+                {notification.readAt ? null : (
+                  <button
+                    type="button"
+                    className="nb-read"
+                    onClick={(event) => { event.stopPropagation(); markOneRead(notification); }}
+                  >
+                    标记已读
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         )) : <p className="nb-empty">还没有通知。项目有进展、钱到账时，这里会出现一条。</p>}
