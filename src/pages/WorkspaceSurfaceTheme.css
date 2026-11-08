@@ -1132,7 +1132,9 @@
 /* Admin uses the same calm, practical paper workspace as the research client, without member navigation. */
 /* 工作台：只用色卡里的八个值，不留米色、绿灰这类“纸感”颜色。
    #FFFFFF 底，#FAF9F5 悬停，#141413 主色，#5F6862 次文，#8D948D 弱化，#E5E3DD 线。 */
-.app-shell-admin { background: #FFFFFF; color: #141413; font-family: var(--font-sans); }
+.app-shell-admin { min-height: 100vh; background: #FFFFFF; color: #141413; font-family: var(--font-sans); }
+/* 页面比屏幕短、或手机上回弹时，露出来的是 body 那层米色；工作台把它也压成白色。 */
+body:has(.app-shell-admin) { background: #FFFFFF; }
 .app-shell-admin::before, .app-shell-admin .app-shell-grain { display: none; }
 .app-shell-admin .app-topbar { border-bottom-color: #E5E3DD; background: #FFFFFF; box-shadow: none; }
 .app-shell-admin .app-topbar-context { color: #8D948D; font-family: var(--font-sans); font-size: 10px; font-weight: 850; letter-spacing: .14em; }
