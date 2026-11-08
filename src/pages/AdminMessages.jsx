@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ExternalLink, Send } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { ExternalLink, Search, Send } from 'lucide-react';
 import { EMAIL_TEMPLATES, RESEND_TEMPLATES_URL } from '../content/emailTemplates';
-import { getMarketingDeliveries, previewMarketingCampaign, sendMarketingCampaign } from '../api/realApi';
+import { getAdminBusinessProjects, getMarketingDeliveries, previewMarketingCampaign, sendMarketingCampaign } from '../api/realApi';
 import './AdminMessages.css';
 
 /* 营销与模板。
@@ -24,11 +25,12 @@ const CAMPAIGN_TEMPLATES = [
 
 const LOCALES = [
   { id: 'en', label: 'English' },
-  { id: 'zh', label: '中文' },
+  { id: 'zh-CN', label: '中文' },
 ];
 
 export default function AdminMessages() {
-  const [tab, setTab] = useState('campaign');
+  const [params] = useSearchParams();
+  const [tab, setTab] = useState(['campaign', 'templates', 'transactional'].includes(params.get('tab')) ? params.get('tab') : 'campaign');
   const [template, setTemplate] = useState('organization-market-research');
   const [locale, setLocale] = useState('en');
   const [recipients, setRecipients] = useState('');
@@ -39,8 +41,28 @@ export default function AdminMessages() {
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
   const [deliveries, setDeliveries] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [picked, setPicked] = useState([]);
+  const [customerQuery, setCustomerQuery] = useState('');
+  const [txTemplate, setTxTemplate] = useState('Payment Received');
 
   const count = useMemo(() => recipients.split(/[\s,;]+/).filter(Boolean).length, [recipients]);
+
+  useEffect(() => {
+    if (tab !== 'transactional' || customers.length) return;
+    getAdminBusinessProjects('ALL')
+      .then(({ data }) => {
+        const list = data?.projects || data?.items || [];
+        const map = new Map();
+        list.forEach((project) => {
+          const email = project.contactEmail || (typeof project.client === 'string' && project.client.includes('@') ? project.client : '');
+          if (!email) return;
+          if (!map.has(email)) map.set(email, { email, org: typeof project.client === 'string' && !project.client.includes('@') ? project.client : '—' });
+        });
+        setCustomers([...map.values()].sort((a, b) => a.email.localeCompare(b.email)));
+      })
+      .catch(() => setCustomers([]));
+  }, [tab, customers.length]);
 
   useEffect(() => {
     if (tab !== 'campaign') return;
@@ -55,8 +77,8 @@ export default function AdminMessages() {
     try {
       const { data } = await previewMarketingCampaign({ template, locale });
       setPreview(data);
-    } catch {
-      setError('预览没回来，检查一下接口与选择。');
+    } catch (err) {
+      setError(err?.response?.data?.message || '预览没回来，检查接口与语言选择。');
     } finally {
       setPreviewing(false);
     }
@@ -81,7 +103,7 @@ export default function AdminMessages() {
     <div className="con-body">
       <header className="con-head">
         <div>
-          <h1>营销与模板</h1>
+          <h1>邮件与模板</h1>
         </div>
         <div className="con-head-actions">
           <a className="con-btn" href={RESEND_TEMPLATES_URL} target="_blank" rel="noreferrer">
@@ -144,7 +166,7 @@ export default function AdminMessages() {
               {preview ? <em>{preview.subject}</em> : null}
             </div>
             {preview ? (
-              <iframe title="邮件预览" className="msg-frame" srcDoc={preview.html} sandbox="" />
+              <iframe title="邮件预览" className="msg-frame" srcDoc={preview.html} />
             ) : (
               <div className="msg-preview-empty">点“预览”看这封邮件长什么样。发送前必须看过。</div>
             )}
@@ -199,20 +221,58 @@ export default function AdminMessages() {
 
       {tab === 'transactional' && (
         <>
-          <div className="con-table">
-            <table>
-              <thead><tr><th>收件人</th><th>模板</th><th className="is-right">金额</th><th>状态</th><th className="is-right">时间</th></tr></thead>
-              <tbody>
-                <tr className="is-empty">
-                  <td colSpan={5}>
-                    还没有发件箱。从 guanyisearch.com 发出、需要人确认的邮件（银行转账到账后的收据、核对失败提醒）会排在这里。
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="tx-grid">
+            <section className="tx-form">
+              <h2>发给谁</h2>
+              <p className="tx-hint">交易邮件只能发给已有客户——从项目里出现过的联系人选，不能手填地址。</p>
+              <div className="con-toolbar">
+                <div className="con-toolbar-search">
+                  <Search size={14} aria-hidden="true" />
+                  <input value={customerQuery} onChange={(event) => setCustomerQuery(event.target.value)} placeholder="搜邮箱或组织" aria-label="搜索客户" />
+                </div>
+                <span className="tx-count">已选 {picked.length}</span>
+              </div>
+              <div className="tx-list">
+                {customers.length ? customers.filter((customer) => {
+                  const needle = customerQuery.trim().toLowerCase();
+                  return !needle || customer.email.toLowerCase().includes(needle) || customer.org.toLowerCase().includes(needle);
+                }).map((customer) => (
+                  <label key={customer.email} className={`tx-item${picked.includes(customer.email) ? ' is-picked' : ''}`}>
+                    <input
+                      type="checkbox"
+                      checked={picked.includes(customer.email)}
+                      onChange={(event) => setPicked((current) => event.target.checked ? [...current, customer.email] : current.filter((email) => email !== customer.email))}
+                    />
+                    <span>
+                      <strong>{customer.email}</strong>
+                      <small>{customer.org}</small>
+                    </span>
+                  </label>
+                )) : <p className="tx-empty">还没有客户。客户建过项目之后才会出现在这里。</p>}
+              </div>
+            </section>
+
+            <section className="tx-form">
+              <h2>发什么</h2>
+              <label className="msg-field">
+                <span>模板</span>
+                <select value={txTemplate} onChange={(event) => setTxTemplate(event.target.value)}>
+                  {['Payment Received', 'Transfer Notice', 'Transfer Unmatched'].map((name) => <option key={name} value={name}>{name}</option>)}
+                </select>
+              </label>
+              <p className="tx-hint">
+                Payment Received 带发票 PDF 附件；Transfer Notice 在提交转账申报后自动发；Transfer Unmatched 在核对失败后自动发。人工这条主要用在“银行转账到账、需要补发收据”。
+              </p>
+              <div className="msg-actions">
+                <button type="button" className="con-btn is-primary" disabled>
+                  <Send size={14} /> 发送
+                </button>
+                <span className="msg-from">接口未接：后端还没有交易邮件发件箱</span>
+              </div>
+            </section>
           </div>
           <p className="msg-note">
-            交易邮件走 guanyisearch.com 的独立凭据，和营销邮件互不影响。要让人工确认生效，需要后端加一张 <code>EmailOutbox</code>（收件人、模板、变量、状态、操作人）和发送接口。
+            交易邮件走 guanyisearch.com 的独立凭据，和营销邮件互不影响。要真发出去，需要后端加一张 <code>EmailOutbox</code>（收件人、模板、变量、状态、操作人）和发送接口。
           </p>
         </>
       )}

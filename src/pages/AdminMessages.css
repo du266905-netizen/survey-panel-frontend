@@ -105,3 +105,36 @@
 }
 
 .msg-deliveries h2 { margin: 0 0 8px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+
+/* ---- 交易邮件 ---- */
+
+.tx-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; margin-top: 18px; }
+
+.tx-form h2 { margin: 0 0 6px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.tx-hint { margin: 0 0 12px; color: #8D948D; font: 400 12px/1.7 var(--font-sans); }
+
+.tx-count { color: #8D948D; font: 400 12px var(--font-sans); white-space: nowrap; }
+
+.tx-list { max-height: 320px; overflow-y: auto; border: 1px solid #E5E3DD; border-radius: 10px; }
+
+.tx-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #E5E3DD;
+  cursor: pointer;
+  padding: 9px 12px;
+}
+
+.tx-item:last-child { border-bottom: 0; }
+.tx-item:hover { background: #FAF9F5; }
+.tx-item.is-picked { background: #FAF9F5; }
+.tx-item input { accent-color: #141413; }
+.tx-item strong { display: block; color: #141413; font: 400 13px var(--font-sans); }
+.tx-item small { display: block; color: #8D948D; font: 400 12px var(--font-sans); }
+
+.tx-empty { margin: 0; color: #8D948D; font: 400 13px var(--font-sans); padding: 28px 16px; text-align: center; }
+
+@media (max-width: 1080px) {
+  .tx-grid { grid-template-columns: minmax(0, 1fr); }
+}
