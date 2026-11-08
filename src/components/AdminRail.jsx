@@ -65,7 +65,7 @@ export const ADMIN_ENVS = {
           { to: '/admin/broadcast', label: '群发消息', icon: Send },
           { to: '/admin/roles', label: '权限与审计', icon: Settings },
           { to: '/admin/system', label: '系统与导出', icon: Database },
-          { to: '/admin/messages', label: '消息与模板', icon: Mail },
+          { to: '/admin/messages', label: '营销与模板', icon: Mail },
         ],
       },
     ],

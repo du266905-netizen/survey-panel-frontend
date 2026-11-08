@@ -37,3 +37,71 @@
 }
 
 .msg-note code { color: #5F6862; font-family: var(--font-mono); font-size: 11px; }
+
+/* ---- 营销邮件 ---- */
+
+.msg-campaign { display: grid; gap: 22px; margin-top: 18px; }
+
+.msg-form { max-width: 620px; }
+.msg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.msg-field { display: block; margin-bottom: 14px; }
+.msg-field > span { display: flex; justify-content: space-between; margin-bottom: 6px; color: #5F6862; font: 500 12px var(--font-sans); }
+.msg-field > span em { color: #8D948D; font-style: normal; font-weight: 400; }
+
+.msg-field select,
+.msg-field textarea {
+  width: 100%;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  font: 400 13px/1.6 var(--font-sans);
+  padding: 9px 11px;
+}
+
+.msg-field select:focus,
+.msg-field textarea:focus { border-color: #141413; outline: none; }
+
+.msg-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #5F6862;
+  font: 400 12px/1.6 var(--font-sans);
+  margin-bottom: 16px;
+}
+
+.msg-consent input { margin-top: 3px; accent-color: #141413; }
+
+.msg-actions { display: flex; align-items: center; gap: 10px; }
+.msg-from { color: #8D948D; font: 400 12px var(--font-sans); }
+
+.msg-ok { margin: 12px 0 0; color: #141413; font: 400 13px var(--font-sans); }
+.msg-error { margin: 12px 0 0; color: #B42318; font: 400 13px var(--font-sans); }
+
+.msg-preview-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.msg-preview-head span { color: #5F6862; font: 500 12px var(--font-sans); }
+.msg-preview-head em { color: #8D948D; font: 400 12px var(--font-sans); font-style: normal; }
+
+.msg-frame {
+  width: 100%;
+  height: 460px;
+  border: 1px solid #E5E3DD;
+  border-radius: 10px;
+  background: #FAF9F5;
+}
+
+.msg-preview-empty {
+  display: grid;
+  min-height: 180px;
+  border: 1px dashed #E5E3DD;
+  border-radius: 10px;
+  color: #8D948D;
+  font: 400 13px/1.6 var(--font-sans);
+  padding: 24px;
+  place-content: center;
+  text-align: center;
+}
+
+.msg-deliveries h2 { margin: 0 0 8px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
