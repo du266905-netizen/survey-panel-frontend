@@ -103,7 +103,6 @@ export default function BusinessBilling() {
           <h1>{text.title}</h1>
           <p className="business-billing-intro">{text.intro}</p>
           <div className="business-billing-ai">
-            <span>AI 次数</span>
             <AiCreditsBadge language={language} />
             <span className="business-billing-ai-note">加购从账户余额扣除；余额不足时先充值。</span>
           </div>

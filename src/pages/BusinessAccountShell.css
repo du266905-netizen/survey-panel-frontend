@@ -11,6 +11,7 @@
    way the AI brief page does it. */
 .business-account-page .business-workspace-rail {
   position: fixed;
+  overflow-y: auto;
   z-index: 5;
   top: 0;
   bottom: 0;

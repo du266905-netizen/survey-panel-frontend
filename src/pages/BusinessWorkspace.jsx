@@ -235,11 +235,15 @@ export default function BusinessWorkspace() {
   const studyFormatLabel = (format) => format === 'SURVEY'
     ? (language.startsWith('zh') ? '在线问卷' : 'Online survey')
     : briefCopy.methods.find(([value]) => value === format)?.[1] || String(format || '').replaceAll('_', ' ').toLowerCase();
+  /* 项目阶段的中文与英文短名。英文不再把 SUBMITTED_FOR_REVIEW 整个摊开——
+     它比列宽还长，会把下一列压重叠。 */
+  const STATUS_TEXT = {
+    'zh-CN': { DRAFT: '草稿', SUBMITTED_FOR_REVIEW: '待审核', QUOTE_REQUIRED: '待报价', QUOTE_SENT: '报价已发', CLIENT_ACCEPTED: '待收款', FUNDED: '已付款', RECRUITING: '招募中', LIVE: '进行中', COMPLETED: '已完成', CANCELLED: '已取消', PENDING_REVIEW: '待审核', APPROVED: '内容已通过', PUBLISHED: '已发布', ARCHIVED: '已归档' },
+    en: { DRAFT: 'Draft', SUBMITTED_FOR_REVIEW: 'In review', QUOTE_REQUIRED: 'Quote needed', QUOTE_SENT: 'Quote sent', CLIENT_ACCEPTED: 'Accepted', FUNDED: 'Funded', RECRUITING: 'Recruiting', LIVE: 'Live', COMPLETED: 'Completed', CANCELLED: 'Cancelled', PENDING_REVIEW: 'In review', APPROVED: 'Approved', PUBLISHED: 'Published', ARCHIVED: 'Archived' },
+  };
   const workspaceStatusLabel = (status) => projectsCopy.statuses?.[status]
-    || (language.startsWith('zh')
-      ? { DRAFT: '草稿', PENDING_REVIEW: '待审核', APPROVED: '内容已通过', PUBLISHED: '已发布', ARCHIVED: '已归档' }[status]
-      : String(status || '').replaceAll('_', ' ').toLowerCase())
-    || status;
+    || (language.startsWith('zh') ? STATUS_TEXT['zh-CN'] : STATUS_TEXT.en)[status]
+    || String(status || '').replaceAll('_', ' ').toLowerCase();
   const isQuestionnaire = projectType === 'questionnaire';
   const categoryLabels = projectCategoryCopy[language] || projectCategoryCopy['en-US'];
   const projectPool = workspace.projects.filter((project) => project.visibleInProjects ?? legacyVisibleInProjects(project));
