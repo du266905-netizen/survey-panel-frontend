@@ -383,8 +383,8 @@
 
 .business-account-page .business-account-pane > header::after {
   position: absolute;
-  top: 72px;
   right: 0;
+  bottom: -1px;
   left: -288px;
   height: 1px;
   background: #e5e3dd;

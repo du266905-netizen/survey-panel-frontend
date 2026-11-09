@@ -17,6 +17,23 @@ import './BusinessProjectOverview.css';
  * 状态条 + 主行动 + 分区块。
  */
 
+const STATUS_EN = {
+  DRAFT: 'Draft',
+  SUBMITTED_FOR_REVIEW: 'In review',
+  QUOTE_REQUIRED: 'Awaiting quote',
+  QUOTE_SENT: 'Quote sent',
+  CLIENT_ACCEPTED: 'Awaiting payment',
+  FUNDED: 'Funded',
+  RECRUITING: 'Recruiting',
+  LIVE: 'Live',
+  COMPLETED: 'Completed',
+  CANCELLED: 'Cancelled',
+  PENDING_REVIEW: 'In review',
+  APPROVED: 'Approved',
+  PUBLISHED: 'Published',
+  ARCHIVED: 'Archived',
+};
+
 const STATUS = {
   DRAFT: '草稿',
   SUBMITTED_FOR_REVIEW: '待审核',
@@ -113,7 +130,7 @@ export default function BusinessProjectOverview() {
               <h1>{project?.title || (zh ? '项目' : 'Project')}</h1>
               <p>{project?.researchGoal || ''}</p>
             </div>
-            <span className="bpr-status">{STATUS[project?.status] || project?.status}</span>
+            <span className="bpr-status">{(zh ? STATUS : STATUS_EN)[project?.status] || project?.status}</span>
           </div>
 
           <ol className="bpr-stages">
@@ -159,7 +176,7 @@ export default function BusinessProjectOverview() {
               {questionnaire ? (
                 <>
                   <p className="bpr-block-title">{questionnaire.title || project?.title}</p>
-                  <p className="bpr-block-note">{STATUS[questionnaire.status] || questionnaire.status}{questionnaire.isCollecting ? (zh ? ' · 回收中' : ' · collecting') : ''}</p>
+                  <p className="bpr-block-note">{(zh ? STATUS : STATUS_EN)[questionnaire.status] || questionnaire.status}{questionnaire.isCollecting ? (zh ? ' · 回收中' : ' · collecting') : ''}</p>
                 </>
               ) : (
                 <>

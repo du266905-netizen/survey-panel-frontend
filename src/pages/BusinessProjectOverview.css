@@ -50,15 +50,15 @@
 .bpr-tiles strong { display: block; margin-top: 6px; color: #141413; font: 500 28px/1.1 var(--font-reading); letter-spacing: -.02em; }
 
 .bpr-blocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 10px; border-top: 1px solid #e5e3dd; }
-.bpr-block { padding: 22px 24px 22px 0; }
+.bpr-block { min-width: 0; overflow: hidden; padding: 22px 24px 22px 0; }
 .bpr-block + .bpr-block { border-left: 1px solid #e5e3dd; padding-left: 24px; }
 .bpr-block header { display: flex; align-items: center; gap: 8px; color: #141413; }
 .bpr-block h2 { margin: 0; font: 600 13px var(--font-sans); }
 .bpr-block dl { display: grid; gap: 8px; margin: 14px 0 0; }
-.bpr-block dl > div { display: flex; justify-content: space-between; gap: 12px; }
+.bpr-block dl > div { display: flex; min-width: 0; justify-content: space-between; gap: 12px; }
 .bpr-block dt { color: #8d948d; font: 400 12px var(--font-sans); }
-.bpr-block dd { margin: 0; overflow: hidden; color: #141413; font: 500 12px var(--font-sans); text-align: right; text-overflow: ellipsis; white-space: nowrap; }
-.bpr-block-title { margin: 14px 0 0; color: #141413; font: 500 13px/1.5 var(--font-sans); }
+.bpr-block dd { min-width: 0; margin: 0; overflow: hidden; color: #141413; font: 500 12px var(--font-sans); text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+.bpr-block-title { overflow: hidden; margin: 14px 0 0; color: #141413; font: 500 13px/1.5 var(--font-sans); text-overflow: ellipsis; white-space: nowrap; }
 .bpr-block-note { margin: 4px 0 0; color: #8d948d; font: 400 12px/1.6 var(--font-sans); }
 .bpr-block-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 14px; color: #141413; font: 500 13px var(--font-sans); text-decoration: none; border-bottom: 1px solid #141413; padding-bottom: 2px; }
 
