@@ -1,19 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, LoaderCircle } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { ArrowRight, Check, ClipboardList, FileText, Lock } from 'lucide-react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import BusinessPageLoader from '../components/BusinessPageLoader';
+import BusinessRail from '../components/BusinessRail';
+import NotificationBell from '../components/NotificationBell';
 import './BusinessProjectOverview.css';
 
-/* 项目展开。
+/* 项目页。
  *
- * 客户提交之后最常问的一句是“现在到哪了”。这一页把流程摊开成一条竖线：
- * 提交 → 报价 → 付款 → 建卷质检 → 回收 → 交付。每个节点给状态、时间和下一步，
- * 结构照 Linear 的 issue 时间线与 Stripe 的付款时间线。
+ * 客户提交之后打开的就是这一页：第一屏告诉他“现在到哪、下一步做什么”，
+ * 下面按区块展开（进度 / 问卷 / 答卷与报告），不是一条干巴巴的状态列表。
+ * 结构参照 Linear 的 project overview 和 Stripe 的 payment 页：
+ * 状态条 + 主行动 + 分区块。
  */
 
-const STATUS_TEXT = {
+const STATUS = {
   DRAFT: '草稿',
   SUBMITTED_FOR_REVIEW: '待审核',
   QUOTE_REQUIRED: '待报价',
@@ -24,17 +27,38 @@ const STATUS_TEXT = {
   LIVE: '进行中',
   COMPLETED: '已完成',
   CANCELLED: '已取消',
+  PENDING_REVIEW: '待质检',
+  APPROVED: '已通过',
+  PUBLISHED: '已发布',
+  ARCHIVED: '已归档',
 };
 
-const day = (value, language) => (value ? new Date(value).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' }) : '—');
+const STAGES = [
+  { id: 'brief', label: '需求' },
+  { id: 'quote', label: '报价' },
+  { id: 'pay', label: '付款' },
+  { id: 'build', label: '建卷质检' },
+  { id: 'collect', label: '回收' },
+  { id: 'report', label: '报告' },
+];
+
+const day = (value, language) => (value ? new Date(value).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { month: 'short', day: 'numeric' }) : '—');
 
 export default function BusinessProjectOverview() {
   const { projectId } = useParams();
   const { language } = useLanguage();
+  const navigate = useNavigate();
   const zh = language.startsWith('zh');
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const handleRailSelect = (id) => {
+    if (id === 'home') { navigate(withLanguage('/business/workspace', language)); return; }
+    if (id === 'ai') { navigate(withLanguage('/business/ai-brief', language)); return; }
+    if (id === 'projects') { navigate(withLanguage('/business/workspace?view=projects', language)); return; }
+    navigate(withLanguage(`/business/workspace?view=${id}`, language));
+  };
 
   useEffect(() => {
     let alive = true;
@@ -45,112 +69,116 @@ export default function BusinessProjectOverview() {
     return () => { alive = false; };
   }, [projectId, zh]);
 
-  const steps = useMemo(() => {
-    if (!project) return [];
+  const stageIndex = useMemo(() => {
+    if (!project) return 0;
     const quote = project.latestQuote;
     const paid = project.latestPayment?.status === 'PAID' || ['FUNDED', 'RECRUITING', 'LIVE', 'COMPLETED'].includes(project.status);
-    const questionnaire = project.questionnaire;
-
-    const list = [
-      { id: 'brief', title: zh ? '需求已提交' : 'Brief submitted', time: project.createdAt, done: true, note: project.researchGoal || '' },
-    ];
-
-    if (!quote) {
-      list.push({ id: 'quote', title: zh ? '等我们出报价' : 'Waiting for our quote', note: zh ? '一般 1 个工作日内给出范围与价格。' : 'Usually within one working day.', current: true });
-    } else if (quote.status === 'DECLINED') {
-      list.push({ id: 'quote', title: zh ? '报价被拒绝，重新出价' : 'Quote declined', time: quote.declinedAt, note: quote.declineReason || '', current: true });
-    } else {
-      list.push({
-        id: 'quote',
-        title: zh ? `报价 v${quote.version} 已发出` : `Quote v${quote.version} sent`,
-        time: quote.sentAt,
-        done: quote.status === 'ACCEPTED',
-        current: quote.status === 'SENT',
-        note: quote.validUntil ? (zh ? `有效期至 ${day(quote.validUntil, language)}` : `Valid until ${day(quote.validUntil, language)}`) : '',
-      });
-    }
-
-    list.push({
-      id: 'payment',
-      title: zh ? '付款' : 'Payment',
-      time: project.latestPayment?.paidAt || null,
-      done: paid,
-      current: quote?.status === 'ACCEPTED' && !paid,
-      note: paid ? '' : (zh ? '接受报价后在这里继续付款。' : 'Continue to payment after accepting the quote.'),
-    });
-
-    list.push({
-      id: 'build',
-      title: zh ? '问卷与质检' : 'Questionnaire and QC',
-      done: Boolean(questionnaire && ['APPROVED', 'PUBLISHED'].includes(questionnaire.status)),
-      current: paid && (!questionnaire || ['DRAFT', 'PENDING_REVIEW'].includes(questionnaire.status)),
-      note: questionnaire
-        ? (questionnaire.status === 'PENDING_REVIEW' ? (zh ? '正在质检，通过后即可投放。' : 'In review.') : '')
-        : (zh ? '付款后我们开始建卷，定制问卷由我们撰写。' : 'We build it after payment.'),
-    });
-
-    list.push({
-      id: 'collect',
-      title: zh ? '回收答卷' : 'Collecting',
-      done: project.status === 'COMPLETED',
-      current: questionnaire?.status === 'PUBLISHED' && project.status !== 'COMPLETED',
-      note: questionnaire?.responseCount != null
-        ? (zh ? `已回收 ${questionnaire.responseCount} 份${project.targetParticipants ? ` / 目标 ${project.targetParticipants}` : ''}` : `${questionnaire.responseCount} responses`)
-        : '',
-    });
-
-    list.push({ id: 'deliver', title: zh ? '交付报告' : 'Report delivered', done: project.status === 'COMPLETED', current: project.status === 'COMPLETED' });
-    return list;
-  }, [project, zh, language]);
+    if (project.status === 'COMPLETED') return 5;
+    if (project.questionnaire?.status === 'PUBLISHED') return 4;
+    if (quote?.status === 'ACCEPTED' && paid) return 3;
+    if (quote?.status === 'ACCEPTED') return 2;
+    if (quote) return 1;
+    return 0;
+  }, [project]);
 
   if (loading) return <BusinessPageLoader />;
 
+  const quote = project?.latestQuote;
+  const questionnaire = project?.questionnaire;
+  const paid = project?.latestPayment?.status === 'PAID' || ['FUNDED', 'RECRUITING', 'LIVE', 'COMPLETED'].includes(project?.status || '');
+  const responses = questionnaire?.responseCount || 0;
+  const target = project?.targetParticipants || 0;
+
+  const nextStep = (() => {
+    if (!quote) return { label: zh ? '等我们出报价' : 'Waiting for a quote', note: zh ? '一般 1 个工作日内给出范围与价格。' : 'Usually within one working day.', action: null };
+    if (quote.status === 'DECLINED') return { label: zh ? '报价被拒绝' : 'Quote declined', note: quote.declineReason || '', action: null };
+    if (quote.status === 'SENT') return { label: zh ? `报价 v${quote.version} 等你确认` : `Quote v${quote.version} is waiting`, note: quote.validUntil ? (zh ? `有效期至 ${day(quote.validUntil, language)}` : `Valid until ${day(quote.validUntil, language)}`) : '', action: { label: zh ? '查看报价' : 'Review quote', to: `/business/workspace?view=projects` } };
+    if (!paid) return { label: zh ? '接受后即可付款' : 'Continue to payment', note: zh ? '付款后我们开始建卷。' : 'We start building after payment.', action: { label: zh ? '去付款' : 'Pay', to: `/business/workspace?view=projects` } };
+    if (!questionnaire || ['DRAFT', 'PENDING_REVIEW'].includes(questionnaire.status)) return { label: zh ? '我们在建卷质检' : 'Building and checking the questionnaire', note: zh ? '完成后会通知你，通过审核即可投放。' : '', action: null };
+    if (questionnaire.status === 'PUBLISHED' && project.status !== 'COMPLETED') return { label: zh ? '正在回收答卷' : 'Collecting responses', note: zh ? `已回收 ${responses} 份${target ? ` / 目标 ${target}` : ''}` : `${responses} responses`, action: { label: zh ? '看结果' : 'View results', to: `/business/projects/${project.id}/results` } };
+    return { label: zh ? '报告已可查看' : 'Report ready', note: '', action: { label: zh ? '看结果' : 'View results', to: `/business/projects/${project.id}/results` } };
+  })();
+
   return (
-    <main className="bpo-page">
-      <Link className="bpo-back" to={withLanguage('/business/workspace?view=projects', language)}>
-        <ArrowLeft size={15} /> {zh ? '返回项目' : 'Back to projects'}
-      </Link>
+    <main className="business-account-page">
+      <BusinessRail activeId="projects" onSelect={handleRailSelect} />
+      <div className="business-account-pane">
+        <header><NotificationBell /></header>
 
-      <header className="bpo-head">
-        <div>
-          <h1>{project?.title || (zh ? '项目' : 'Project')}</h1>
-          <p>{project?.researchGoal || ''}</p>
-        </div>
-        {project ? <span className={`bpo-status status-${String(project.status).toLowerCase()}`}>{STATUS_TEXT[project.status] || project.status}</span> : null}
-      </header>
+        <section className="bpr-shell">
+          <div className="bpr-top">
+            <div>
+              <Link className="bpr-back" to={withLanguage('/business/workspace?view=projects', language)}>{zh ? '项目' : 'Projects'} / {project?.title || ''}</Link>
+              <h1>{project?.title || (zh ? '项目' : 'Project')}</h1>
+              <p>{project?.researchGoal || ''}</p>
+            </div>
+            <span className="bpr-status">{STATUS[project?.status] || project?.status}</span>
+          </div>
 
-      {error ? <p className="bpo-error">{error}</p> : null}
+          <ol className="bpr-stages">
+            {STAGES.map((stage, index) => (
+              <li key={stage.id} className={index < stageIndex ? 'is-done' : index === stageIndex ? 'is-current' : ''}>
+                <span>{index < stageIndex ? <Check size={11} /> : index + 1}</span>
+                {stage.label}
+              </li>
+            ))}
+          </ol>
 
-      <div className="bpo-grid">
-        <ol className="bpo-timeline">
-          {steps.map((step) => (
-            <li key={step.id} className={`${step.done ? 'is-done' : ''}${step.current ? ' is-current' : ''}`}>
-              <span className="bpo-dot">{step.done ? <Check size={12} /> : step.current ? <LoaderCircle size={12} /> : null}</span>
-              <div>
-                <strong>{step.title}</strong>
-                <small>{step.time ? day(step.time, language) : step.current ? (zh ? '进行中' : 'In progress') : ''}</small>
-                {step.note ? <p>{step.note}</p> : null}
-              </div>
-            </li>
-          ))}
-        </ol>
+          {error ? <p className="bpr-error">{error}</p> : null}
 
-        <aside className="bpo-side">
-          <h2>{zh ? '项目信息' : 'Project'}</h2>
-          <dl>
-            <div><dt>{zh ? '形式' : 'Format'}</dt><dd>{project?.studyFormat || '—'}</dd></div>
-            <div><dt>{zh ? '样本量' : 'Sample'}</dt><dd>{project?.targetParticipants || '—'}</dd></div>
-            <div><dt>{zh ? '国家' : 'Countries'}</dt><dd>{project?.countries || '—'}</dd></div>
-            <div><dt>{zh ? '时长' : 'Length'}</dt><dd>{project?.estimatedMinutes ? `${project.estimatedMinutes} ${zh ? '分钟' : 'min'}` : '—'}</dd></div>
-            <div><dt>{zh ? '报价' : 'Quote'}</dt><dd>{project?.latestQuote ? `$${Number(project.latestQuote.amount).toLocaleString('en-US')}` : '—'}</dd></div>
-          </dl>
+          <section className="bpr-next">
+            <div>
+              <em>{zh ? '现在' : 'Now'}</em>
+              <strong>{nextStep.label}</strong>
+              {nextStep.note ? <p>{nextStep.note}</p> : null}
+            </div>
+            {nextStep.action ? (
+              <Link className="bpr-cta" to={withLanguage(nextStep.action.to, language)}>{nextStep.action.label} <ArrowRight size={14} /></Link>
+            ) : null}
+          </section>
 
-          {project?.questionnaire?.status === 'PUBLISHED' ? (
-            <Link className="bpo-action" to={withLanguage(`/business/projects/${project.id}/results`, language)}>
-              {zh ? '看结果' : 'View results'} <ArrowRight size={14} />
-            </Link>
-          ) : null}
-        </aside>
+          <div className="bpr-tiles">
+            <div><span>{zh ? '样本目标' : 'Target'}</span><strong>{target || '—'}</strong></div>
+            <div><span>{zh ? '已回收' : 'Collected'}</span><strong>{responses}</strong></div>
+            <div><span>{zh ? '报价' : 'Quote'}</span><strong>{quote ? `$${Number(quote.amount).toLocaleString('en-US')}` : '—'}</strong></div>
+            <div><span>{zh ? '预计时长' : 'Length'}</span><strong>{project?.estimatedMinutes ? `${project.estimatedMinutes}′` : '—'}</strong></div>
+          </div>
+
+          <div className="bpr-blocks">
+            <article className="bpr-block">
+              <header><FileText size={16} /><h2>{zh ? '需求' : 'Brief'}</h2></header>
+              <dl>
+                <div><dt>{zh ? '形式' : 'Format'}</dt><dd>{project?.studyFormat || '—'}</dd></div>
+                <div><dt>{zh ? '国家' : 'Countries'}</dt><dd>{project?.countries || '—'}</dd></div>
+                <div><dt>{zh ? '受众' : 'Audience'}</dt><dd>{project?.audienceDescription || '—'}</dd></div>
+              </dl>
+            </article>
+
+            <article className="bpr-block">
+              <header><ClipboardList size={16} /><h2>{zh ? '问卷' : 'Questionnaire'}</h2></header>
+              {questionnaire ? (
+                <>
+                  <p className="bpr-block-title">{questionnaire.title || project?.title}</p>
+                  <p className="bpr-block-note">{STATUS[questionnaire.status] || questionnaire.status}{questionnaire.isCollecting ? (zh ? ' · 回收中' : ' · collecting') : ''}</p>
+                </>
+              ) : (
+                <>
+                  <p className="bpr-block-title">{zh ? '还没开始建卷' : 'Not started'}</p>
+                  <p className="bpr-block-note">{zh ? '付款后由我们撰写，定制问卷不需要你自己写。' : 'We build it after payment.'}</p>
+                </>
+              )}
+            </article>
+
+            <article className="bpr-block">
+              <header><Lock size={16} /><h2>{zh ? '答卷与报告' : 'Data and report'}</h2></header>
+              {questionnaire?.status === 'PUBLISHED' ? (
+                <Link className="bpr-block-link" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{zh ? '打开结果页' : 'Open results'} <ArrowRight size={13} /></Link>
+              ) : (
+                <p className="bpr-block-note">{zh ? '问卷发布并开始回收后开放。' : 'Opens once the questionnaire is live.'}</p>
+              )}
+            </article>
+          </div>
+        </section>
       </div>
     </main>
   );

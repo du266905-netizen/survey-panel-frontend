@@ -1,13 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, Download, LoaderCircle, LockKeyhole, TriangleAlert } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { Download, LockKeyhole, TriangleAlert } from 'lucide-react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getBusinessProject, getBusinessQuestionnaireResponses } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import BusinessPageLoader from '../components/BusinessPageLoader';
+import BusinessRail from '../components/BusinessRail';
+import NotificationBell from '../components/NotificationBell';
 import './BusinessResults.css';
 
-const labelOf = (value) => (Array.isArray(value) ? value.join('、') : String(value ?? '—'));
+/* 结果页。
+ *
+ * 排法照 SurveyMonkey / Qualtrics 的 Summary：上面四个数，下面每题一张卡，
+ * 每张卡自带图，一屏能扫完；文本题单独占宽。导出 CSV 由浏览器自己生成。
+ */
 
+const labelOf = (value) => (Array.isArray(value) ? value.join('、') : String(value ?? '—'));
 const isChoice = (type) => ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'DROPDOWN', 'RANKING'].includes(type);
 const isScale = (type) => ['RATING', 'NPS'].includes(type);
 
@@ -27,30 +34,35 @@ function tally(question, responses) {
 }
 
 function scaleStats(question, responses) {
-  const values = responses
-    .map((response) => Number(response.answers?.[question.id]))
-    .filter((value) => Number.isFinite(value));
+  const values = responses.map((response) => Number(response.answers?.[question.id])).filter((value) => Number.isFinite(value));
   if (!values.length) return null;
-  const sum = values.reduce((total, value) => total + value, 0);
-  const average = sum / values.length;
   const counts = new Map();
   values.forEach((value) => counts.set(value, (counts.get(value) || 0) + 1));
-  const rows = [...counts.entries()].sort((a, b) => a[0] - b[0])
-    .map(([value, count]) => ({ label: String(value), count, percent: Math.round((count / values.length) * 100) }));
-  return { answered: values.length, average, rows };
+  return {
+    answered: values.length,
+    average: values.reduce((total, value) => total + value, 0) / values.length,
+    rows: [...counts.entries()].sort((a, b) => a[0] - b[0]).map(([value, count]) => ({ label: String(value), count, percent: Math.round((count / values.length) * 100) })),
+  };
 }
 
 export default function BusinessQuestionnaireResults() {
   const { projectId } = useParams();
   const { language } = useLanguage();
+  const navigate = useNavigate();
   const zh = language.startsWith('zh');
 
   const [project, setProject] = useState(null);
   const [data, setData] = useState({ questions: [], responses: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [activeId, setActiveId] = useState('');
   const [onlyUsable, setOnlyUsable] = useState(false);
+
+  const handleRailSelect = (id) => {
+    if (id === 'home') { navigate(withLanguage('/business/workspace', language)); return; }
+    if (id === 'ai') { navigate(withLanguage('/business/ai-brief', language)); return; }
+    if (id === 'projects') { navigate(withLanguage('/business/workspace?view=projects', language)); return; }
+    navigate(withLanguage(`/business/workspace?view=${id}`, language));
+  };
 
   useEffect(() => {
     let alive = true;
@@ -59,7 +71,6 @@ export default function BusinessQuestionnaireResults() {
         if (!alive) return;
         setProject(projectResponse.data.project);
         setData(response.data);
-        setActiveId(response.data.questions?.[0]?.id || '');
       })
       .catch(() => { if (alive) setError(zh ? '结果没能加载，刷新再试。' : 'Results could not be loaded.'); })
       .finally(() => { if (alive) setLoading(false); });
@@ -69,25 +80,18 @@ export default function BusinessQuestionnaireResults() {
   const responses = data.responses || [];
   const usable = responses.filter((response) => !response.qualityFlag);
   const pool = onlyUsable ? usable : responses;
-  const question = useMemo(() => data.questions.find((item) => item.id === activeId) || data.questions[0], [activeId, data.questions]);
   const locked = project?.questionnaire?.status !== 'PUBLISHED' || !responses.length;
 
-  const medianSeconds = useMemo(() => {
+  const medianMinutes = useMemo(() => {
     const values = responses.map((response) => Number(response.durationSeconds)).filter((value) => Number.isFinite(value) && value > 0).sort((a, b) => a - b);
-    if (!values.length) return null;
-    return values[Math.floor(values.length / 2)];
+    return values.length ? Math.round(values[Math.floor(values.length / 2)] / 60) : null;
   }, [responses]);
 
   const exportCsv = () => {
     const header = ['提交时间', '有效', ...data.questions.map((item) => item.prompt)];
-    const rows = responses.map((response) => [
-      response.submittedAt ? new Date(response.submittedAt).toISOString() : '',
-      response.qualityFlag ? '否' : '是',
-      ...data.questions.map((item) => labelOf(response.answers?.[item.id])),
-    ]);
+    const rows = responses.map((response) => [response.submittedAt ? new Date(response.submittedAt).toISOString() : '', response.qualityFlag ? '否' : '是', ...data.questions.map((item) => labelOf(response.answers?.[item.id]))]);
     const csv = [header, ...rows].map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(',')).join('\n');
-    const blob = new Blob([`\ufeff${csv}`], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(new Blob([`\ufeff${csv}`], { type: 'text/csv;charset=utf-8;' }));
     const link = document.createElement('a');
     link.href = url;
     link.download = `${project?.title || 'results'}.csv`;
@@ -98,118 +102,90 @@ export default function BusinessQuestionnaireResults() {
   if (loading) return <BusinessPageLoader />;
 
   return (
-    <main className="business-results-page">
-      <header className="brs-head">
-        <Link className="brs-back" to={withLanguage('/business/workspace?view=projects', language)}>
-          <ArrowLeft size={15} /> {zh ? '返回项目' : 'Back to projects'}
-        </Link>
-        <div className="brs-title">
-          <div>
-            <h1>{project?.questionnaire?.title || project?.title || (zh ? '结果' : 'Results')}</h1>
-            <p>{zh ? '每道题的分布都在这一页，原始答卷可以导出。' : 'Every question with its distribution; raw answers export as CSV.'}</p>
-          </div>
-          <button type="button" className="brs-export" onClick={exportCsv} disabled={!responses.length}>
-            <Download size={14} /> {zh ? '导出 CSV' : 'Export CSV'}
-          </button>
-        </div>
+    <main className="business-account-page">
+      <BusinessRail activeId="results" onSelect={handleRailSelect} />
+      <div className="business-account-pane">
+        <header><NotificationBell /></header>
 
-        <div className="brs-figures">
-          <div><span>{zh ? '回收' : 'Responses'}</span><strong>{responses.length}</strong></div>
-          <div><span>{zh ? '有效' : 'Usable'}</span><strong>{usable.length}</strong></div>
-          <div><span>{zh ? '待复核' : 'Flagged'}</span><strong>{responses.length - usable.length}</strong></div>
-          <div><span>{zh ? '中位时长' : 'Median time'}</span><strong>{medianSeconds ? `${Math.round(medianSeconds / 60)}′` : '—'}</strong></div>
-        </div>
-      </header>
-
-      {error ? <p className="brs-error">{error}</p> : null}
-
-      {locked ? (
-        <div className="brs-locked">
-          <LockKeyhole size={18} />
-          <p>{zh ? '问卷发布并收到答卷之后，这里才会出现结果。' : 'Results appear once the questionnaire is published and collecting.'}</p>
-        </div>
-      ) : (
-        <>
-          <div className="brs-filters">
-            <button type="button" className={!onlyUsable ? 'is-active' : ''} onClick={() => setOnlyUsable(false)}>{zh ? '全部答卷' : 'All'}</button>
-            <button type="button" className={onlyUsable ? 'is-active' : ''} onClick={() => setOnlyUsable(true)}>{zh ? '只看有效' : 'Usable only'}</button>
-            {responses.length - usable.length > 0 && (
-              <span className="brs-flag-note"><TriangleAlert size={13} /> {zh ? `${responses.length - usable.length} 份被标记为过快` : `${responses.length - usable.length} flagged`}</span>
-            )}
+        <section className="brp-shell">
+          <div className="brp-top">
+            <div>
+              <Link className="brp-back" to={withLanguage('/business/workspace?view=projects', language)}>{zh ? '项目' : 'Projects'} / {project?.title || ''}</Link>
+              <h1>{project?.questionnaire?.title || project?.title || (zh ? '结果' : 'Results')}</h1>
+              <p>{zh ? '每题一张卡，横向能扫完；原始答卷可以导出。' : 'One card per question; raw answers export as CSV.'}</p>
+            </div>
+            <button type="button" className="brp-export" onClick={exportCsv} disabled={!responses.length}><Download size={14} /> {zh ? '导出 CSV' : 'Export CSV'}</button>
           </div>
 
-          <div className="brs-layout">
-            <aside className="brs-nav">
-              {data.questions.map((item, index) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={item.id === question?.id ? 'is-active' : ''}
-                  onClick={() => setActiveId(item.id)}
-                >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <strong>{item.prompt}</strong>
-                </button>
-              ))}
-            </aside>
+          {error ? <p className="brp-error">{error}</p> : null}
 
-            <section className="brs-main">
-              {question ? (
-                <>
-                  <header>
-                    <h2>{question.prompt}</h2>
-                    <p>
-                      {zh ? `${pool.filter((response) => response.answers?.[question.id] !== undefined && response.answers?.[question.id] !== '').length} 人作答` : 'answered'}
-                      {question.type === 'MULTIPLE_CHOICE' ? (zh ? ' · 多选，合计超过 100%' : ' · multi-select, sums over 100%') : ''}
-                    </p>
-                  </header>
+          {locked ? (
+            <div className="brp-locked"><LockKeyhole size={18} /><p>{zh ? '问卷发布并收到答卷之后，这里才会出现结果。' : 'Results appear once the questionnaire is live.'}</p></div>
+          ) : (
+            <>
+              <div className="brp-tiles">
+                <div><span>{zh ? '回收' : 'Responses'}</span><strong>{responses.length}</strong></div>
+                <div><span>{zh ? '有效' : 'Usable'}</span><strong>{usable.length}</strong></div>
+                <div><span>{zh ? '待复核' : 'Flagged'}</span><strong>{responses.length - usable.length}</strong></div>
+                <div><span>{zh ? '中位时长' : 'Median'}</span><strong>{medianMinutes != null ? `${medianMinutes}′` : '—'}</strong></div>
+              </div>
 
-                  {isChoice(question.type) ? (
-                    <div className="brs-bars">
-                      {tally(question, pool).rows.map((row) => (
-                        <div key={row.label} className="brs-bar">
-                          <div><strong>{row.label}</strong><span>{row.count} · {row.percent}%</span></div>
-                          <i><b style={{ width: `${row.percent}%` }} /></i>
+              <div className="brp-filters">
+                <button type="button" className={!onlyUsable ? 'is-active' : ''} onClick={() => setOnlyUsable(false)}>{zh ? '全部答卷' : 'All'}</button>
+                <button type="button" className={onlyUsable ? 'is-active' : ''} onClick={() => setOnlyUsable(true)}>{zh ? '只看有效' : 'Usable only'}</button>
+                {responses.length - usable.length > 0 ? <span><TriangleAlert size={13} /> {zh ? `${responses.length - usable.length} 份偏快` : `${responses.length - usable.length} flagged`}</span> : null}
+              </div>
+
+              <div className="brp-grid">
+                {data.questions.map((question, index) => {
+                  const choice = tally(question, pool);
+                  const scale = isScale(question.type) ? scaleStats(question, pool) : null;
+                  const texts = !isChoice(question.type) && !isScale(question.type)
+                    ? pool.filter((response) => response.answers?.[question.id] !== undefined && response.answers?.[question.id] !== '')
+                    : [];
+                  return (
+                    <article key={question.id} className={`brp-card${texts.length ? ' is-wide' : ''}`}>
+                      <header>
+                        <span>{String(index + 1).padStart(2, '0')}</span>
+                        <h2>{question.prompt}</h2>
+                      </header>
+
+                      {isChoice(question.type) ? (
+                        <div className="brp-bars">
+                          {choice.rows.map((row) => (
+                            <div key={row.label}>
+                              <div><strong>{row.label}</strong><span>{row.count} · {row.percent}%</span></div>
+                              <i><b style={{ width: `${row.percent}%` }} /></i>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  ) : isScale(question.type) ? (
-                    (() => {
-                      const stats = scaleStats(question, pool);
-                      if (!stats) return <p className="brs-empty">{zh ? '还没有作答。' : 'No answers yet.'}</p>;
-                      return (
-                        <div className="brs-scale">
-                          <div className="brs-scale-score">
-                            <strong>{stats.average.toFixed(1)}</strong>
-                            <span>{zh ? '平均分' : 'average'}</span>
-                          </div>
-                          <div className="brs-bars">
-                            {stats.rows.map((row) => (
-                              <div key={row.label} className="brs-bar">
+                      ) : scale ? (
+                        <div className="brp-scale">
+                          <strong>{scale.average.toFixed(1)}</strong>
+                          <div className="brp-bars">
+                            {scale.rows.map((row) => (
+                              <div key={row.label}>
                                 <div><strong>{row.label}</strong><span>{row.count} · {row.percent}%</span></div>
                                 <i><b style={{ width: `${row.percent}%` }} /></i>
                               </div>
                             ))}
                           </div>
                         </div>
-                      );
-                    })()
-                  ) : (
-                    <div className="brs-texts">
-                      {pool.filter((response) => response.answers?.[question.id] !== undefined && response.answers?.[question.id] !== '').map((response) => (
-                        <article key={response.id}>
-                          <time>{response.submittedAt ? new Date(response.submittedAt).toLocaleDateString(language) : ''}</time>
-                          <p>{labelOf(response.answers[question.id])}</p>
-                        </article>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : null}
-            </section>
-          </div>
-        </>
-      )}
+                      ) : (
+                        <ul className="brp-texts">
+                          {texts.length ? texts.slice(0, 8).map((response) => <li key={response.id}>{labelOf(response.answers[question.id])}</li>) : <li className="is-empty">{zh ? '还没有作答。' : 'No answers yet.'}</li>}
+                        </ul>
+                      )}
+
+                      <footer>{zh ? `${isChoice(question.type) ? choice.answered : scale ? scale.answered : texts.length} 人作答` : `${isChoice(question.type) ? choice.answered : scale ? scale.answered : texts.length} answered`}</footer>
+                    </article>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </section>
+      </div>
     </main>
   );
 }
