@@ -363,3 +363,31 @@
 }
 
 .business-account-page .business-workspace-rail::before { display: none; }
+
+
+/* 顶栏那条线只画一条：把内容区顶栏的线向左延伸到导轨上，导轨顶带自己不画线。
+   两条各自画的时候，导轨有 18px 上内边距、顶栏 72px，永远差几像素。 */
+.business-account-page .business-workspace-rail-head {
+  flex: 0 0 72px;
+  height: 72px;
+  border: 0 !important;
+}
+
+.business-account-page .business-workspace-rail::before { display: none !important; }
+
+.business-account-page .business-account-pane > header {
+  position: relative;
+  min-height: 72px;
+  border-bottom: 0 !important;
+}
+
+.business-account-page .business-account-pane > header::after {
+  position: absolute;
+  top: 72px;
+  right: 0;
+  left: -288px;
+  height: 1px;
+  background: #e5e3dd;
+  content: '';
+  z-index: 10;
+}

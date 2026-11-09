@@ -24,7 +24,7 @@
 .bpr-stages li.is-done { color: #141413; }
 .bpr-stages li.is-done span { border-color: #141413; background: #141413; color: #ffffff; }
 .bpr-stages li.is-current { color: #141413; font-weight: 600; }
-.bpr-stages li.is-current span { border-color: #deef24; background: #deef24; color: #141413; }
+.bpr-stages li.is-current span { border-color: #c15f3c; background: #c15f3c; color: #ffffff; }
 
 .bpr-next {
   display: flex;

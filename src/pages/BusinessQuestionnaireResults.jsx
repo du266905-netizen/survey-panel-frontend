@@ -6,6 +6,7 @@ import { useLanguage, withLanguage } from '../components/LanguageContext';
 import BusinessPageLoader from '../components/BusinessPageLoader';
 import BusinessRail from '../components/BusinessRail';
 import NotificationBell from '../components/NotificationBell';
+import './BusinessAccountShell.css';
 import './BusinessResults.css';
 
 /* 结果页。
@@ -17,6 +18,16 @@ import './BusinessResults.css';
 const labelOf = (value) => (Array.isArray(value) ? value.join('、') : String(value ?? '—'));
 const isChoice = (type) => ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'DROPDOWN', 'RANKING'].includes(type);
 const isScale = (type) => ['RATING', 'NPS'].includes(type);
+const CHART = ['#c15f3c', '#4e8e8c', '#7b6aa8', '#b08d57', '#141413'];
+
+function donut(rows) {
+  let at = 0;
+  return rows.map((row, index) => {
+    const from = at;
+    at += row.percent;
+    return `${CHART[index % CHART.length]} ${from}% ${at}%`;
+  }).join(', ');
+}
 
 function tally(question, responses) {
   const counts = new Map((question.choices || []).map((choice) => [choice, 0]));
@@ -151,13 +162,18 @@ export default function BusinessQuestionnaireResults() {
                       </header>
 
                       {isChoice(question.type) ? (
-                        <div className="brp-bars">
-                          {choice.rows.map((row) => (
-                            <div key={row.label}>
-                              <div><strong>{row.label}</strong><span>{row.count} · {row.percent}%</span></div>
-                              <i><b style={{ width: `${row.percent}%` }} /></i>
-                            </div>
-                          ))}
+                        <div className="brp-choice">
+                          {question.type === 'SINGLE_CHOICE' && choice.rows.length ? (
+                            <div className="brp-donut" style={{ background: `conic-gradient(${donut(choice.rows)})` }} aria-hidden="true"><span /></div>
+                          ) : null}
+                          <div className="brp-bars">
+                            {choice.rows.map((row) => (
+                              <div key={row.label}>
+                                <div><strong>{row.label}</strong><span>{row.count} · {row.percent}%</span></div>
+                                <i><b style={{ width: `${row.percent}%` }} /></i>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       ) : scale ? (
                         <div className="brp-scale">

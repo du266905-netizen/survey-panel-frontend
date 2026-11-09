@@ -6,6 +6,7 @@ import { useLanguage, withLanguage } from '../components/LanguageContext';
 import BusinessPageLoader from '../components/BusinessPageLoader';
 import BusinessRail from '../components/BusinessRail';
 import NotificationBell from '../components/NotificationBell';
+import './BusinessAccountShell.css';
 import './BusinessProjectOverview.css';
 
 /* 项目页。

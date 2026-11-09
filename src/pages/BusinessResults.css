@@ -1,3 +1,14 @@
+
+/* 图表色板：只在这一页用，取自 Claude 一类产品的纸面配色——
+   墨黑、陶土、紫、青、赭，配荧光黄做强调。不当作品牌色使用。 */
+.business-account-page {
+  --c-ink: #141413;
+  --c-clay: #c15f3c;
+  --c-plum: #7b6aa8;
+  --c-teal: #4e8e8c;
+  --c-ochre: #b08d57;
+  --c-lime: #deef24;
+}
 /* 结果页：四个数 + 每题一张卡。 */
 
 .brp-shell { width: min(100% - 44px, 1160px); margin: 0 auto; padding: clamp(26px, 4vw, 44px) 0 80px; }
@@ -17,6 +28,10 @@
 .brp-tiles > div:first-child { padding-left: 0; }
 .brp-tiles > div:last-child { border-right: 0; }
 .brp-tiles span { display: block; color: #8d948d; font: 500 11px var(--font-sans); }
+.brp-tiles > div:nth-child(1) strong { color: var(--c-clay); }
+.brp-tiles > div:nth-child(2) strong { color: var(--c-teal); }
+.brp-tiles > div:nth-child(3) strong { color: var(--c-plum); }
+.brp-tiles > div:nth-child(4) strong { color: var(--c-ink); }
 .brp-tiles strong { display: block; margin-top: 6px; color: #141413; font: 500 28px/1.1 var(--font-reading); letter-spacing: -.02em; }
 
 .brp-filters { display: flex; align-items: center; gap: 6px; margin-top: 14px; }
@@ -37,10 +52,15 @@
 .brp-bars strong { color: #141413; font: 400 13px var(--font-sans); }
 .brp-bars span { color: #8d948d; font: 400 12px var(--font-sans); }
 .brp-bars i { display: block; height: 8px; border-radius: 999px; background: #faf9f5; margin-top: 5px; overflow: hidden; }
-.brp-bars b { display: block; height: 100%; border-radius: 999px; background: #141413; }
+.brp-bars b { display: block; height: 100%; border-radius: 999px; background: var(--c-ink); }
+.brp-bars > div:nth-child(5n+1) b { background: var(--c-clay); }
+.brp-bars > div:nth-child(5n+2) b { background: var(--c-teal); }
+.brp-bars > div:nth-child(5n+3) b { background: var(--c-plum); }
+.brp-bars > div:nth-child(5n+4) b { background: var(--c-ochre); }
+.brp-bars > div:nth-child(5n+5) b { background: var(--c-ink); }
 
 .brp-scale { display: flex; gap: 20px; align-items: flex-start; margin-top: 12px; }
-.brp-scale > strong { color: #141413; font: 500 40px/1 var(--font-reading); letter-spacing: -.03em; }
+.brp-scale > strong { color: var(--c-clay); font: 500 40px/1 var(--font-reading); letter-spacing: -.03em; }
 .brp-scale .brp-bars { flex: 1 1 auto; margin-top: 0; }
 
 .brp-texts { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
@@ -57,4 +77,25 @@
   .brp-grid { grid-template-columns: minmax(0, 1fr); }
   .brp-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .brp-top h1 { font-size: 32px; }
+}
+
+
+.brp-choice { display: flex; gap: 20px; align-items: center; }
+.brp-choice .brp-bars { flex: 1 1 auto; }
+
+.brp-donut {
+  position: relative;
+  display: grid;
+  width: 108px;
+  height: 108px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  place-items: center;
+}
+
+.brp-donut span {
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+  background: #ffffff;
 }
