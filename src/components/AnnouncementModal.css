@@ -1,0 +1,91 @@
+/* 公告弹窗：压暗背景 + 一张居中卡片。色卡只用工作台那八个值。 */
+
+.ann-layer {
+  position: fixed;
+  z-index: 200;
+  display: grid;
+  inset: 0;
+  padding: 24px;
+  place-items: center;
+}
+
+.ann-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(20, 20, 19, .32);
+  cursor: default;
+}
+
+.ann-card {
+  position: relative;
+  width: min(480px, 100%);
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 28px 70px rgba(20, 20, 19, .26);
+  padding: 28px 28px 22px;
+  animation: ann-in .18s ease-out;
+}
+
+@keyframes ann-in {
+  from { opacity: 0; transform: translateY(8px) scale(.99); }
+  to { opacity: 1; transform: none; }
+}
+
+.ann-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #8D948D;
+  cursor: pointer;
+  place-items: center;
+}
+
+.ann-close:hover { background: #FAF9F5; color: #141413; }
+
+.ann-eyebrow {
+  display: inline-block;
+  border: 1px solid #E5E3DD;
+  border-radius: 999px;
+  color: #5F6862;
+  font: 600 11px var(--font-sans);
+  letter-spacing: .08em;
+  padding: 2px 9px;
+}
+
+.ann-card h2 {
+  margin: 12px 0 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.3;
+}
+
+.ann-card p {
+  margin: 10px 0 0;
+  color: #5F6862;
+  font: 400 14px/1.75 var(--font-sans);
+  white-space: pre-wrap;
+}
+
+.ann-actions { display: flex; justify-content: flex-end; margin-top: 22px; }
+
+.ann-primary {
+  border: 1px solid #141413;
+  border-radius: 8px;
+  background: #141413;
+  color: #FFFFFF;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  padding: 9px 18px;
+}
+
+.ann-primary:hover { background: #2B2B2B; border-color: #2B2B2B; }

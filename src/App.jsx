@@ -16,6 +16,7 @@ import AdminApprovals from './pages/AdminApprovals';
 import AdminDelivery from './pages/AdminDelivery';
 import AdminMessages from './pages/AdminMessages';
 import AdminAiUsage from './pages/AdminAiUsage';
+import AnnouncementModal from './components/AnnouncementModal';
 import AdminCustomerDetail from './pages/AdminCustomerDetail';
 import AdminSandbox from './pages/AdminSandbox';
 import AdminBusinessQuestionnaires from './pages/AdminBusinessQuestionnaires';
@@ -140,7 +141,7 @@ function MemberRoute({ children }) {
 function BusinessRoute({ children }) {
   const { user } = useAuth();
   return isBusinessRole(user?.role)
-    ? <div className="business-translate-guard notranslate" translate="no" data-translate="no">{children}</div>
+    ? <div className="business-translate-guard notranslate" translate="no" data-translate="no">{children}<AnnouncementModal /></div>
     : <Navigate to="/business/access" replace />;
 }
 
