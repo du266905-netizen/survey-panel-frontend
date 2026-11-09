@@ -49,9 +49,11 @@ export default function AnnouncementModal() {
       <button type="button" className="ann-scrim" onClick={dismiss} aria-label="关闭" />
       <section className="ann-card">
         <button type="button" className="ann-close" onClick={dismiss} aria-label="关闭"><X size={16} /></button>
-        <div className="ann-body">
+        <header className="ann-hero">
           <h2 id="ann-title">{items[0].title}</h2>
-          <p>{items[0].body}</p>
+        </header>
+        <div className="ann-body">
+          {String(items[0].body || '').split(/\n{2,}/).filter(Boolean).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
         <footer className="ann-actions">
           <button type="button" className="ann-primary" onClick={dismiss}>知道了</button>
