@@ -5,9 +5,8 @@ import './AnnouncementModal.css';
 
 /* 公告弹窗。
  *
- * 照常见做法（Linear / Notion 的 What's new，Tour Kit 那篇的实现）：没有眉标，
- * 标题 + 条目列表 + 底部一个按钮。一次把所有未读公告列出来，而不是一条弹一次。
- * 退出时逐条写已读，并在本机记 id，换设备也不重复弹。
+ * 一次只弹一条（最新的一条未读公告），标题就是公告标题，没有眉标。
+ * 退出时写已读，并在本机记 id，换设备也不重复弹；下一条等下次打开再出现。
  */
 
 const SEEN_KEY = 'guanyi.announcement.seen';
@@ -25,7 +24,7 @@ export default function AnnouncementModal() {
       .then(({ data }) => {
         const seen = new Set(seenIds());
         const unread = (data?.notifications || []).filter((row) => row.type === 'ANNOUNCEMENT' && !row.readAt && !seen.has(row.id));
-        if (alive) setItems(unread.slice(0, 5));
+        if (alive) setItems(unread.slice(0, 1));
       })
       .catch(() => { /* 读不到就不弹 */ });
     return () => { alive = false; };
@@ -49,22 +48,13 @@ export default function AnnouncementModal() {
     <div className="ann-layer" role="dialog" aria-modal="true" aria-labelledby="ann-title">
       <button type="button" className="ann-scrim" onClick={dismiss} aria-label="关闭" />
       <section className="ann-card">
-        <header className="ann-head">
-          <h2 id="ann-title">更新</h2>
-          <button type="button" className="ann-close" onClick={dismiss} aria-label="关闭"><X size={16} /></button>
-        </header>
-
-        <div className="ann-list">
-          {items.map((item) => (
-            <article key={item.id} className="ann-item">
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
+        <button type="button" className="ann-close" onClick={dismiss} aria-label="关闭"><X size={16} /></button>
+        <div className="ann-body">
+          <h2 id="ann-title">{items[0].title}</h2>
+          <p>{items[0].body}</p>
         </div>
-
         <footer className="ann-actions">
-          <span className="ann-hint">{items.length} 条更新，只出现一次</span>
+          <span className="ann-hint">只出现一次</span>
           <button type="button" className="ann-primary" onClick={dismiss}>知道了</button>
         </footer>
       </section>
