@@ -101,6 +101,7 @@ import BusinessQuote from './pages/BusinessQuote';
 import BusinessPlans from './pages/BusinessPlans';
 import BusinessPlanCheckout from './pages/BusinessPlanCheckout';
 import BusinessQuestionnaireResults from './pages/BusinessQuestionnaireResults';
+import BusinessProjectOverview from './pages/BusinessProjectOverview';
 import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinEntry from './pages/JoinEntry';
@@ -239,6 +240,7 @@ export default function App() {
         <Route path="/business/research-support" element={<BusinessRoute><BusinessResearchSupportRequest /></BusinessRoute>} />
         <Route path="/business/delivery-preview" element={<BusinessRoute><BusinessDeliveryPreview /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessQuestionnaireResults /></BusinessRoute>} />
+        <Route path="/business/projects/:projectId/overview" element={<BusinessRoute><BusinessProjectOverview /></BusinessRoute>} />
         <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
         <Route path="/business/team" element={<BusinessRoute><BusinessTeam /></BusinessRoute>} />
         <Route path="/business/plans" element={<BusinessRoute><BusinessPlans /></BusinessRoute>} />
