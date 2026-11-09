@@ -11,7 +11,7 @@
 }
 /* 结果页：四个数 + 每题一张卡。 */
 
-.brp-shell { width: min(100% - 44px, 1160px); margin: 0 auto; padding: clamp(26px, 4vw, 44px) 0 80px; }
+.brp-shell { width: min(100% - 44px, 1160px); margin: 0 auto; padding: 24px 0 60px; }
 
 .brp-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
 .brp-back { color: #8d948d; font: 400 12px var(--font-sans); text-decoration: none; }
@@ -23,8 +23,8 @@
 .brp-export:hover { background: #faf9f5; }
 .brp-export:disabled { cursor: not-allowed; opacity: .4; }
 
-.brp-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 24px; border-top: 1px solid #e5e3dd; border-bottom: 1px solid #e5e3dd; }
-.brp-tiles > div { border-right: 1px solid #e5e3dd; padding: 16px 22px 18px 0; }
+.brp-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 18px; border-top: 1px solid #e5e3dd; border-bottom: 1px solid #e5e3dd; }
+.brp-tiles > div { border-right: 1px solid #e5e3dd; padding: 14px 22px 14px 0; }
 .brp-tiles > div:first-child { padding-left: 0; }
 .brp-tiles > div:last-child { border-right: 0; }
 .brp-tiles span { display: block; color: #8d948d; font: 500 11px var(--font-sans); }

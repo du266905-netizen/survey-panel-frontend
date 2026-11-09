@@ -365,29 +365,25 @@
 .business-account-page .business-workspace-rail::before { display: none; }
 
 
-/* 顶栏那条线只画一条：把内容区顶栏的线向左延伸到导轨上，导轨顶带自己不画线。
-   两条各自画的时候，导轨有 18px 上内边距、顶栏 72px，永远差几像素。 */
+/* 顶栏分割线：导轨和内容区必须同高、同一条线。
+   导轨原本有 18px 上内边距，顶带被推到 90px，线就穿过字标；这里把它清零，
+   顶带 72、顶栏 72，两边各自一条 1px，位置一致。 */
+.business-account-page .business-workspace-rail {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
 .business-account-page .business-workspace-rail-head {
-  flex: 0 0 72px;
-  height: 72px;
+  flex: 0 0 72px !important;
+  height: 72px !important;
   border: 0 !important;
+  border-bottom: 1px solid #e5e3dd !important;
+  box-sizing: border-box;
 }
 
 .business-account-page .business-workspace-rail::before { display: none !important; }
 
 .business-account-page .business-account-pane > header {
-  position: relative;
   min-height: 72px;
-  border-bottom: 0 !important;
-}
-
-.business-account-page .business-account-pane > header::after {
-  position: absolute;
-  right: 0;
-  bottom: -1px;
-  left: -288px;
-  height: 1px;
-  background: #e5e3dd;
-  content: '';
-  z-index: 10;
+  border-bottom: 1px solid #e5e3dd !important;
 }
