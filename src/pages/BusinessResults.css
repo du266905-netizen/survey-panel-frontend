@@ -1,7 +1,6 @@
 /* 结果页：浅灰底 + 白卡，每题一张卡，左均值右分布。 */
 
-.br-page { min-height: 100vh; background: #f4f4f1; padding: 0 0 64px; }
-.br-wrap { width: min(100% - 48px, 1100px); margin: 0 auto; padding-top: 20px; }
+.br-wrap { width: min(100%, 1060px); margin: 0; padding: 4px 0 56px; }
 
 .br-back { color: #8d948d; font: 500 12px var(--font-sans); text-decoration: none; }
 .br-back:hover { color: #141413; }

@@ -1,7 +1,6 @@
 /* 项目页：浅灰底 + 白卡，版式照 Typeform 表单详情。 */
 
-.bp-page { min-height: 100vh; background: #f4f4f1; padding: 0 0 64px; }
-.bp-wrap { width: min(100% - 48px, 1040px); margin: 0 auto; padding-top: 20px; }
+.bp-wrap { width: min(100%, 1000px); margin: 0; padding: 4px 0 56px; }
 
 .bp-back { color: #8d948d; font: 500 12px var(--font-sans); text-decoration: none; }
 .bp-back:hover { color: #141413; }

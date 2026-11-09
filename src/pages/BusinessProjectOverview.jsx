@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import BusinessPageLoader from '../components/BusinessPageLoader';
+import BusinessWorkspaceShell from '../components/BusinessWorkspaceShell';
 import './BusinessProjectOverview.css';
 
 /* 项目页。
@@ -27,7 +28,6 @@ const fmt = (value, language) => (value ? new Date(value).toLocaleDateString(lan
 export default function BusinessProjectOverview() {
   const { projectId } = useParams();
   const { language } = useLanguage();
-  const navigate = useNavigate();
   const zh = language.startsWith('zh');
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -66,7 +66,7 @@ export default function BusinessProjectOverview() {
   else if (project?.questionnaire?.status === 'PUBLISHED') next = { text: zh ? '正在回收答卷' : 'Collecting responses', note: zh ? `已回收 ${responses} 份${target ? ` / 目标 ${target}` : ''}` : `${responses} responses`, action: { label: zh ? '看结果' : 'View results', to: `/business/projects/${project.id}/results` } };
 
   return (
-    <main className="bp-page">
+    <BusinessWorkspaceShell activeView="projects">
       <div className="bp-wrap">
         <Link className="bp-back" to={withLanguage('/business/workspace?view=projects', language)}>{zh ? '← 项目' : '← Projects'}</Link>
 
@@ -118,6 +118,6 @@ export default function BusinessProjectOverview() {
           </section>
         </div>
       </div>
-    </main>
+    </BusinessWorkspaceShell>
   );
 }

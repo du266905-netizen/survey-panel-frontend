@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { getBusinessProject, getBusinessQuestionnaireResponses } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import BusinessPageLoader from '../components/BusinessPageLoader';
+import BusinessWorkspaceShell from '../components/BusinessWorkspaceShell';
 import './BusinessResults.css';
 
 /* 结果页。
@@ -83,7 +84,7 @@ export default function BusinessQuestionnaireResults() {
   if (loading) return <BusinessPageLoader />;
 
   return (
-    <main className="br-page">
+    <BusinessWorkspaceShell activeView="results">
       <div className="br-wrap">
         <Link className="br-back" to={withLanguage('/business/workspace?view=projects', language)}>{zh ? '← 项目' : '← Projects'}</Link>
 
@@ -156,6 +157,6 @@ export default function BusinessQuestionnaireResults() {
           </>
         )}
       </div>
-    </main>
+    </BusinessWorkspaceShell>
   );
 }
