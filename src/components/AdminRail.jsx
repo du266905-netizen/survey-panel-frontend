@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { Link, NavLink, useLocation, useSearchParams } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { Link, NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   BriefcaseBusiness, ChartColumn, ClipboardCheck, Compass, Database, FileText, Gauge, History, Inbox,
   ListFilter, Mail, ReceiptText, Send, Settings, Users,
@@ -74,8 +74,10 @@ export const ADMIN_ENVS = {
 };
 
 export default function AdminRail() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
+  const [accountOpen, setAccountOpen] = useState(false);
   const { pathname } = useLocation();
   /* 直接打开研究端某一页时，环境要跟着路由走，不能停在参与端。 */
   const fromRoute = isResearchPath(pathname) ? 'research' : 'panel';
@@ -123,9 +125,22 @@ export default function AdminRail() {
         ))}
       </nav>
 
-      <div className="arail-foot">
-        <span className="arail-dot" aria-hidden="true" />
-        {user?.displayName || user?.name || '管理员'}
+      <div className="arail-account">
+        <button type="button" className="arail-account-btn" onClick={() => setAccountOpen((value) => !value)} aria-expanded={accountOpen}>
+          <span className="arail-avatar">
+            {(user?.displayName || user?.name || '管').slice(0, 1).toUpperCase()}
+            <i className="arail-presence" aria-hidden="true" />
+          </span>
+          <span className="arail-account-text">
+            <strong>{user?.displayName || user?.name || '管理员'}</strong>
+            <small>{user?.email || ''}</small>
+          </span>
+        </button>
+        {accountOpen && (
+          <div className="arail-menu">
+            <button type="button" onClick={() => { setAccountOpen(false); logout(); navigate('/admin/login'); }}>退出登录</button>
+          </div>
+        )}
       </div>
     </div>
   );
