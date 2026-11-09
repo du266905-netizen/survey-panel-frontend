@@ -99,3 +99,8 @@
   border-radius: 999px;
   background: #ffffff;
 }
+
+
+/* 题目很长时同样会溢出卡片；标题允许断行，正文允许任意位置换行。 */
+.brp-card, .brp-card > * { min-width: 0; }
+.brp-card h2, .brp-texts li, .brp-bars strong { overflow-wrap: anywhere; }

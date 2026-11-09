@@ -55,9 +55,9 @@
 .bpr-block header { display: flex; align-items: center; gap: 8px; color: #141413; }
 .bpr-block h2 { margin: 0; font: 600 13px var(--font-sans); }
 .bpr-block dl { display: grid; gap: 8px; margin: 14px 0 0; }
-.bpr-block dl > div { display: flex; min-width: 0; justify-content: space-between; gap: 12px; }
-.bpr-block dt { color: #8d948d; font: 400 12px var(--font-sans); }
-.bpr-block dd { min-width: 0; margin: 0; overflow: hidden; color: #141413; font: 500 12px var(--font-sans); text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+.bpr-block dl > div { display: flex; min-width: 0; align-items: baseline; justify-content: space-between; gap: 12px; }
+.bpr-block dt { flex: 0 0 auto; color: #8d948d; font: 400 12px var(--font-sans); white-space: nowrap; }
+.bpr-block dd { flex: 1 1 auto; min-width: 0; margin: 0; overflow: hidden; color: #141413; font: 500 12px var(--font-sans); text-align: right; text-overflow: ellipsis; white-space: nowrap; }
 .bpr-block-title { overflow: hidden; margin: 14px 0 0; color: #141413; font: 500 13px/1.5 var(--font-sans); text-overflow: ellipsis; white-space: nowrap; }
 .bpr-block-note { margin: 4px 0 0; color: #8d948d; font: 400 12px/1.6 var(--font-sans); }
 .bpr-block-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 14px; color: #141413; font: 500 13px var(--font-sans); text-decoration: none; border-bottom: 1px solid #141413; padding-bottom: 2px; }
@@ -70,3 +70,10 @@
   .bpr-stages { overflow-x: auto; }
   .bpr-top h1 { font-size: 32px; }
 }
+
+
+/* 中文长句在 flex / grid 里默认不换行，会溢出压到隔壁列，看起来就是“字压字”。
+   这里统一给容器 0 最小宽度、给文本允许断行。 */
+.bpr-blocks > * { min-width: 0; }
+.bpr-block dl > div > * { min-width: 0; }
+.bpr-block dd, .bpr-block p, .bpr-top p { overflow-wrap: anywhere; }
