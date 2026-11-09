@@ -51,12 +51,15 @@ export default function AnnouncementModal() {
       <button type="button" className="ann-scrim" onClick={dismiss} aria-label="关闭" />
       <section className="ann-card">
         <button type="button" className="ann-close" onClick={dismiss} aria-label="关闭"><X size={16} /></button>
-        <span className="ann-eyebrow">公告</span>
-        <h2>{item.title}</h2>
-        <p>{item.body}</p>
-        <div className="ann-actions">
-          <button type="button" className="ann-primary" onClick={dismiss}>知道了</button>
+        <div className="ann-body">
+          <span className="ann-eyebrow">产品公告</span>
+          <h2>{item.title}</h2>
+          <p>{item.body}</p>
         </div>
+        <footer className="ann-actions">
+          <span className="ann-hint">这条只会出现一次</span>
+          <button type="button" className="ann-primary" onClick={dismiss}>知道了</button>
+        </footer>
       </section>
     </div>
   );
