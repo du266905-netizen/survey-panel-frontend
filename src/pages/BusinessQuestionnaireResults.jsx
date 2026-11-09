@@ -110,7 +110,7 @@ export default function BusinessQuestionnaireResults() {
         <section className="brp-shell">
           <div className="brp-top">
             <div>
-              <Link className="brp-back" to={withLanguage('/business/workspace?view=projects', language)}>{zh ? '项目' : 'Projects'} / {project?.title || ''}</Link>
+              <Link className="brp-back" to={withLanguage('/business/workspace?view=projects', language)}>← {zh ? '项目' : 'Projects'}</Link>
               <h1>{project?.questionnaire?.title || project?.title || (zh ? '结果' : 'Results')}</h1>
               <p>{zh ? '每题一张卡，横向能扫完；原始答卷可以导出。' : 'One card per question; raw answers export as CSV.'}</p>
             </div>
@@ -137,7 +137,7 @@ export default function BusinessQuestionnaireResults() {
               </div>
 
               <div className="brp-grid">
-                {data.questions.map((question, index) => {
+                {data.questions.map((question) => {
                   const choice = tally(question, pool);
                   const scale = isScale(question.type) ? scaleStats(question, pool) : null;
                   const texts = !isChoice(question.type) && !isScale(question.type)
@@ -146,8 +146,8 @@ export default function BusinessQuestionnaireResults() {
                   return (
                     <article key={question.id} className={`brp-card${texts.length ? ' is-wide' : ''}`}>
                       <header>
-                        <span>{String(index + 1).padStart(2, '0')}</span>
                         <h2>{question.prompt}</h2>
+                        <span className="brp-answered">{isChoice(question.type) ? choice.answered : scale ? scale.answered : texts.length} {zh ? '人作答' : 'answered'}</span>
                       </header>
 
                       {isChoice(question.type) ? (
@@ -177,7 +177,7 @@ export default function BusinessQuestionnaireResults() {
                         </ul>
                       )}
 
-                      <footer>{zh ? `${isChoice(question.type) ? choice.answered : scale ? scale.answered : texts.length} 人作答` : `${isChoice(question.type) ? choice.answered : scale ? scale.answered : texts.length} answered`}</footer>
+
                     </article>
                   );
                 })}

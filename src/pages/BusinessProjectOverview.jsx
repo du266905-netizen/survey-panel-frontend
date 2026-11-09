@@ -108,7 +108,7 @@ export default function BusinessProjectOverview() {
         <section className="bpr-shell">
           <div className="bpr-top">
             <div>
-              <Link className="bpr-back" to={withLanguage('/business/workspace?view=projects', language)}>{zh ? '项目' : 'Projects'} / {project?.title || ''}</Link>
+              <Link className="bpr-back" to={withLanguage('/business/workspace?view=projects', language)} aria-label={zh ? '返回项目' : 'Back to projects'}>← {zh ? '项目' : 'Projects'}</Link>
               <h1>{project?.title || (zh ? '项目' : 'Project')}</h1>
               <p>{project?.researchGoal || ''}</p>
             </div>
@@ -128,7 +128,6 @@ export default function BusinessProjectOverview() {
 
           <section className="bpr-next">
             <div>
-              <em>{zh ? '现在' : 'Now'}</em>
               <strong>{nextStep.label}</strong>
               {nextStep.note ? <p>{nextStep.note}</p> : null}
             </div>
