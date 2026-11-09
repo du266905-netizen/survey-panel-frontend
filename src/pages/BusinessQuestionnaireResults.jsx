@@ -1,21 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Download, LockKeyhole, TriangleAlert } from 'lucide-react';
+import { ArrowLeft, BarChart3, CheckCircle2, LoaderCircle, LockKeyhole, TriangleAlert } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { getBusinessProject, getBusinessQuestionnaireResponses } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import BusinessPageLoader from '../components/BusinessPageLoader';
-import BusinessWorkspaceShell from '../components/BusinessWorkspaceShell';
-import './BusinessResults.css';
+import './BusinessQuestionnaire.css';
 
-/* 结果页。
- * 版式照 HDFC / Typeform 的结果面板：每题一张卡，左边是均值或最高占比，
- * 右边是分布条；上面一排数字卡，页面浅灰底。 */
+const answerLabel = (value) => Array.isArray(value) ? value.join(', ') : String(value || '—');
+const interpolate = (template, values) => Object.entries(values).reduce((result, [key, value]) => result.replaceAll(`{${key}}`, String(value)), template);
 
-const labelOf = (value) => (Array.isArray(value) ? value.join('、') : String(value ?? '—'));
-const isChoice = (type) => ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'DROPDOWN', 'RANKING'].includes(type);
-const isScale = (type) => ['RATING', 'NPS'].includes(type);
-
-function tally(question, responses) {
+function choiceSummary(question, responses) {
   const counts = new Map((question.choices || []).map((choice) => [choice, 0]));
   let answered = 0;
   responses.forEach((response) => {
@@ -24,139 +18,56 @@ function tally(question, responses) {
     answered += 1;
     (Array.isArray(value) ? value : [value]).forEach((choice) => counts.set(choice, (counts.get(choice) || 0) + 1));
   });
-  const rows = [...counts.entries()].map(([label, count]) => ({ label, count, percent: answered ? Math.round((count / answered) * 100) : 0 })).sort((a, b) => b.count - a.count);
-  return { answered, rows };
-}
-
-function scaleStats(question, responses) {
-  const values = responses.map((response) => Number(response.answers?.[question.id])).filter((value) => Number.isFinite(value) && value > 0);
-  if (!values.length) return null;
-  const counts = new Map();
-  values.forEach((value) => counts.set(value, (counts.get(value) || 0) + 1));
-  const rows = [...counts.entries()].sort((a, b) => b[0] - a[0]).map(([value, count]) => ({ label: String(value), count, percent: Math.round((count / values.length) * 100) }));
-  return { answered: values.length, average: values.reduce((total, value) => total + value, 0) / values.length, rows };
+  return { answered, rows: [...counts.entries()].map(([label, count]) => ({ label, count, percent: answered ? Math.round((count / answered) * 100) : 0 })) };
 }
 
 export default function BusinessQuestionnaireResults() {
   const { projectId } = useParams();
-  const { language } = useLanguage();
-  const zh = language.startsWith('zh');
+  const { language, publicCopy } = useLanguage();
+  // Copy comes from the language library; these two strings used to be
+  // inline zh-CN ternaries, so 16 languages showed English here.
+  const resultCopy = publicCopy?.workspace?.business?.questionnaireResults || {};
+  const results = resultCopy[language] || resultCopy['en-US'] || {};
+  const copy = publicCopy.workspace.business.results.detail;
   const [project, setProject] = useState(null);
   const [data, setData] = useState({ questions: [], responses: [] });
   const [loading, setLoading] = useState(true);
-  const [onlyUsable, setOnlyUsable] = useState(false);
+  const [error, setError] = useState('');
+  const [activeQuestionId, setActiveQuestionId] = useState('');
 
   useEffect(() => {
-    let alive = true;
+    let active = true;
     Promise.all([getBusinessProject(projectId), getBusinessQuestionnaireResponses(projectId)])
-      .then(([projectResponse, response]) => {
-        if (!alive) return;
+      .then(([projectResponse, responsesResponse]) => {
+        if (!active) return;
         setProject(projectResponse.data.project);
-        setData(response.data);
+        const nextData = responsesResponse.data;
+        setData(nextData);
+        setActiveQuestionId(nextData.questions?.[0]?.id || '');
       })
-      .catch(() => {})
-      .finally(() => { if (alive) setLoading(false); });
-    return () => { alive = false; };
-  }, [projectId]);
+      .catch(() => { if (active) setError(copy.loadError); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [projectId, copy.loadError]);
 
+  const activeQuestion = useMemo(() => data.questions.find((question) => question.id === activeQuestionId) || data.questions[0], [activeQuestionId, data.questions]);
   const responses = data.responses || [];
-  const usable = responses.filter((response) => !response.qualityFlag);
-  const pool = onlyUsable ? usable : responses;
-  const locked = project?.questionnaire?.status !== 'PUBLISHED' || !responses.length;
+  const usableResponses = responses.filter((response) => !response.qualityFlag);
+  const flaggedResponses = responses.filter((response) => response.qualityFlag);
+  const summary = activeQuestion && ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'RATING'].includes(activeQuestion.type) ? choiceSummary(activeQuestion, usableResponses) : null;
+  const resultsLocked = project?.questionnaire?.status !== 'PUBLISHED' || !responses.length;
 
-  const median = useMemo(() => {
-    const values = responses.map((response) => Number(response.durationSeconds)).filter((value) => Number.isFinite(value) && value > 0).sort((a, b) => a - b);
-    return values.length ? Math.round(values[Math.floor(values.length / 2)] / 60) : null;
-  }, [responses]);
+  if (loading) return <BusinessPageLoader full label={copy.loading} />;
+  if (error) return <main className="business-builder-loading"><strong>{error}</strong><Link to={withLanguage('/business/workspace', language)}>{copy.backToProjects}</Link></main>;
 
-  const exportCsv = () => {
-    const header = ['提交时间', '有效', ...data.questions.map((item) => item.prompt)];
-    const rows = responses.map((response) => [response.submittedAt ? new Date(response.submittedAt).toISOString() : '', response.qualityFlag ? '否' : '是', ...data.questions.map((item) => labelOf(response.answers?.[item.id]))]);
-    const csv = [header, ...rows].map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(',')).join('\n');
-    const url = URL.createObjectURL(new Blob([`\ufeff${csv}`], { type: 'text/csv;charset=utf-8;' }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${project?.title || 'results'}.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
+  if (resultsLocked) return <main className="business-results-page business-results-page--locked"><header className="business-results-header"><Link to={withLanguage('/business/workspace?view=results', language)}><ArrowLeft size={17} /> {copy.projects}</Link></header><section className="business-results-locked"><span><LockKeyhole size={24} /></span><h1>{results.noResultsTitle}</h1><p>{results.noResultsBody}</p></section></main>;
 
-  if (loading) return <BusinessPageLoader />;
+  return <main className="business-results-page">
+    <header className="business-results-header"><Link to={withLanguage('/business/workspace?view=results', language)}><ArrowLeft size={17} /> {copy.projects}</Link><Link to={withLanguage(`/business/projects/${projectId}`, language)}>{copy.openQuestionnaire}</Link></header>
+    <section className="business-results-intro"><div><p className="business-eyebrow">{publicCopy.workspace.business.results.eyebrow}</p><h1>{project?.questionnaire?.title || project?.title}</h1><p>{copy.intro}</p></div><dl><div><dt>{copy.responsesReceived}</dt><dd>{responses.length}</dd></div><div><dt>{copy.usable}</dt><dd>{usableResponses.length}</dd></div><div><dt>{copy.needsReview}</dt><dd>{flaggedResponses.length}</dd></div></dl></section>
 
-  return (
-    <BusinessWorkspaceShell activeView="results">
-      <div className="br-wrap">
-        <Link className="br-back" to={withLanguage('/business/workspace?view=projects', language)}>{zh ? '← 项目' : '← Projects'}</Link>
+    <div className="business-results-layout"><aside className="business-results-questions"><p>{copy.questions}</p>{data.questions.map((question, index) => <button key={question.id} type="button" className={activeQuestion?.id === question.id ? 'is-active' : ''} onClick={() => setActiveQuestionId(question.id)}><span>{String(index + 1).padStart(2, '0')}</span><strong>{question.prompt}</strong></button>)}</aside><section className="business-results-main">{activeQuestion && <><header><p>{copy.summary}</p><h2>{activeQuestion.prompt}</h2><span>{summary ? interpolate(copy.answered, { answered: summary.answered, usable: usableResponses.length }) : copy.individual}</span></header>{summary ? <div className="business-results-distribution">{summary.rows.map((row) => <article key={row.label}><div><strong>{row.label}</strong><span>{interpolate(copy.responseBreakdown, { count: row.count, percent: row.percent })}</span></div><i><b style={{ width: `${row.percent}%` }} /></i></article>)}</div> : <div className="business-results-text-responses">{usableResponses.filter((response) => response.answers?.[activeQuestion.id] !== undefined).map((response) => <article key={response.id}><time>{new Date(response.submittedAt).toLocaleDateString(language)}</time><p>{answerLabel(response.answers[activeQuestion.id])}</p></article>)}{!usableResponses.some((response) => response.answers?.[activeQuestion.id] !== undefined) && <p className="business-results-none">{copy.noUsable}</p>}</div>}</>}</section></div>
 
-        <header className="br-head">
-          <div>
-            <h1>{project?.questionnaire?.title || project?.title || (zh ? '结果' : 'Results')}</h1>
-            <p>{zh ? '每题一张卡，长文本单独一块；原始答卷可导出。' : 'One card per question; raw answers export as CSV.'}</p>
-          </div>
-          <button type="button" className="br-export" onClick={exportCsv} disabled={!responses.length}><Download size={14} /> {zh ? '导出 CSV' : 'Export CSV'}</button>
-        </header>
-
-        {locked ? (
-          <div className="br-locked"><LockKeyhole size={18} /><p>{zh ? '问卷发布并收到答卷之后，这里才会出现结果。' : 'Results appear once the questionnaire is live.'}</p></div>
-        ) : (
-          <>
-            <div className="br-kpis">
-              <article><span>{zh ? '回收' : 'Responses'}</span><strong>{responses.length}</strong></article>
-              <article><span>{zh ? '有效' : 'Usable'}</span><strong>{usable.length}</strong></article>
-              <article><span>{zh ? '待复核' : 'Flagged'}</span><strong>{responses.length - usable.length}</strong></article>
-              <article><span>{zh ? '中位时长' : 'Median time'}</span><strong>{median != null ? `${median}′` : '—'}</strong></article>
-            </div>
-
-            <div className="br-filters">
-              <button type="button" className={!onlyUsable ? 'is-active' : ''} onClick={() => setOnlyUsable(false)}>{zh ? '全部答卷' : 'All'}</button>
-              <button type="button" className={onlyUsable ? 'is-active' : ''} onClick={() => setOnlyUsable(true)}>{zh ? '只看有效' : 'Usable only'}</button>
-              {responses.length - usable.length > 0 ? <span><TriangleAlert size={13} /> {zh ? `${responses.length - usable.length} 份偏快` : `${responses.length - usable.length} flagged`}</span> : null}
-            </div>
-
-            <div className="br-grid">
-              {data.questions.map((question) => {
-                const choice = tally(question, pool);
-                const scale = isScale(question.type) ? scaleStats(question, pool) : null;
-                const texts = !isChoice(question.type) && !scale
-                  ? pool.filter((response) => response.answers?.[question.id] !== undefined && response.answers?.[question.id] !== '')
-                  : [];
-                const headline = scale ? scale.average.toFixed(1) : choice.rows[0]?.percent ?? 0;
-                const headlineLabel = scale ? (zh ? '平均分' : 'average') : (zh ? '最高占比' : 'top share');
-
-                return (
-                  <article key={question.id} className={`br-card${texts.length ? ' is-wide' : ''}`}>
-                    <h2>{question.prompt}</h2>
-
-                    {texts.length ? (
-                      <ul className="br-texts">
-                        {texts.slice(0, 8).map((response) => <li key={response.id}>{labelOf(response.answers[question.id])}</li>)}
-                      </ul>
-                    ) : (
-                      <div className="br-body">
-                        <div className="br-lead">
-                          <strong>{headline}{scale ? '' : '%'}</strong>
-                          <span>{headlineLabel}</span>
-                        </div>
-                        <ul className="br-bars">
-                          {(scale ? scale.rows : choice.rows).map((row) => (
-                            <li key={row.label}>
-                              <span>{row.label}</span>
-                              <i><b style={{ width: `${row.percent}%` }} /></i>
-                              <em>{row.percent}%</em>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    <footer>{zh ? `${scale ? scale.answered : texts.length || choice.answered} 人作答` : `${scale ? scale.answered : texts.length || choice.answered} answered`}</footer>
-                  </article>
-                );
-              })}
-            </div>
-          </>
-        )}
-      </div>
-    </BusinessWorkspaceShell>
-  );
+    {responses.length > 0 && <section className="business-results-records"><header><div><p>{copy.records}</p><h2>{copy.individualAnswers}</h2></div><span>{copy.recordsNote}</span></header><div>{responses.map((response) => <article key={response.id}><header><div><CheckCircle2 size={16} /><span>{interpolate(copy.submitted, { date: new Date(response.submittedAt).toLocaleString(language) })}</span></div>{response.qualityFlag && <em><TriangleAlert size={14} /> {copy.fastReview}</em>}</header>{data.questions.map((question) => response.answers?.[question.id] !== undefined && <dl key={question.id}><dt>{question.prompt}</dt><dd>{answerLabel(response.answers[question.id])}</dd></dl>)}</article>)}</div></section>}
+  </main>;
 }

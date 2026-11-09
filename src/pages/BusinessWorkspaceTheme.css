@@ -5681,3 +5681,18 @@ main.business-custom-request-page .business-workspace-rail {
 }
 
 .sq-template .sq-btn:hover:not(:disabled) { border-color: #000000; background: #000000; }
+
+/* 研究端统一纯白。之前 --ap-ground 是 #f4f6f3、顶栏 #fcfdfb，
+   在浅色屏幕上会读成一层暖灰，和邮件模板的 #FFFFFF 卡片不一致。
+   这里把底、导轨、顶栏都改成 #FFFFFF。 */
+.business-workspace,
+.business-ai-brief-page {
+  --ap-ground: #ffffff;
+  --business-paper: #ffffff;
+  background: #ffffff;
+}
+
+.business-workspace .business-workspace-rail,
+.business-workspace .business-workspace-topbar {
+  background: #ffffff;
+}
