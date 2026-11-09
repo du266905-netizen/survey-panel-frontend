@@ -20,11 +20,11 @@
 }
 
 .bpr-stages li { display: flex; flex: 1 1 0; align-items: center; gap: 7px; color: #8d948d; font: 500 12px var(--font-sans); white-space: nowrap; }
-.bpr-stages li span { display: grid; width: 18px; height: 18px; flex: 0 0 auto; border: 1px solid #e5e3dd; border-radius: 999px; font: 600 10px var(--font-sans); place-items: center; }
+.bpr-stages li span { display: grid; width: 20px; height: 20px; flex: 0 0 auto; border: 1px solid #e5e3dd; border-radius: 999px; background: #ffffff; font: 600 10px var(--font-sans); place-items: center; }
 .bpr-stages li.is-done { color: #141413; }
 .bpr-stages li.is-done span { border-color: #141413; background: #141413; color: #ffffff; }
 .bpr-stages li.is-current { color: #141413; font-weight: 600; }
-.bpr-stages li.is-current span { border-color: #141413; color: #141413; }
+.bpr-stages li.is-current span { border-color: #deef24; background: #deef24; color: #141413; }
 
 .bpr-next {
   display: flex;

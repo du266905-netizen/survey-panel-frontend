@@ -12,6 +12,8 @@
 .business-account-page .business-workspace-rail {
   position: fixed;
   overflow-y: auto;
+  /* 顶带和右侧顶栏必须同高，否则两条底线差 2px，看起来就是两根线。 */
+  --rail-head-height: 72px;
   z-index: 5;
   top: 0;
   bottom: 0;
@@ -350,3 +352,14 @@
 }
 
 .business-account-link:disabled { opacity: .5; cursor: not-allowed; }
+
+
+/* 账号页的顶带与右侧顶栏对齐：70px 的导轨顶带 + 一条 ::before 假线，
+   在 72px 的顶栏旁边会露出两根线。这里统一成 72px，只留一条边框。 */
+.business-account-page .business-workspace-rail-head {
+  flex: 0 0 72px;
+  height: 72px;
+  border-bottom: 1px solid rgba(36, 56, 46, .14);
+}
+
+.business-account-page .business-workspace-rail::before { display: none; }
