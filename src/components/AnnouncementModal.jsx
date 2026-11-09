@@ -54,7 +54,6 @@ export default function AnnouncementModal() {
           <p>{items[0].body}</p>
         </div>
         <footer className="ann-actions">
-          <span className="ann-hint">只出现一次</span>
           <button type="button" className="ann-primary" onClick={dismiss}>知道了</button>
         </footer>
       </section>

@@ -76,14 +76,12 @@
 .ann-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 16px;
   border-top: 1px solid #E5E3DD;
   background: #FAF9F5;
-  padding: 14px 20px 14px 32px;
+  padding: 14px 20px;
 }
-
-.ann-hint { color: #8D948D; font: 400 12px var(--font-sans); }
 
 .ann-primary {
   border: 1px solid #141413;
