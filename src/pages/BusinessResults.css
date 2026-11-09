@@ -1,106 +1,56 @@
+/* 结果页：浅灰底 + 白卡，每题一张卡，左均值右分布。 */
 
-/* 图表色板：只在这一页用，取自 Claude 一类产品的纸面配色——
-   墨黑、陶土、紫、青、赭，配荧光黄做强调。不当作品牌色使用。 */
-.business-account-page {
-  --c-ink: #141413;
-  --c-clay: #c15f3c;
-  --c-plum: #7b6aa8;
-  --c-teal: #4e8e8c;
-  --c-ochre: #b08d57;
-  --c-lime: #deef24;
+.br-page { min-height: 100vh; background: #f4f4f1; padding: 0 0 64px; }
+.br-wrap { width: min(100% - 48px, 1100px); margin: 0 auto; padding-top: 20px; }
+
+.br-back { color: #8d948d; font: 500 12px var(--font-sans); text-decoration: none; }
+.br-back:hover { color: #141413; }
+
+.br-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin: 10px 0 14px; }
+.br-head h1 { margin: 0; color: #141413; font: 600 28px/1.25 var(--font-sans); letter-spacing: -.02em; }
+.br-head p { margin: 6px 0 0; color: #5f6862; font: 400 13px var(--font-sans); }
+
+.br-export { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; border: 1px solid #e5e3dd; border-radius: 8px; background: #fff; color: #141413; cursor: pointer; font: 500 12px var(--font-sans); padding: 8px 14px; }
+.br-export:hover { border-color: #141413; }
+.br-export:disabled { cursor: not-allowed; opacity: .4; }
+
+.br-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.br-kpis article { border: 1px solid #e5e3dd; border-radius: 12px; background: #fff; padding: 14px 16px; }
+.br-kpis span { display: block; color: #8d948d; font: 500 11px var(--font-sans); }
+.br-kpis strong { display: block; margin-top: 4px; color: #141413; font: 600 26px/1.1 var(--font-sans); letter-spacing: -.02em; }
+
+.br-filters { display: flex; align-items: center; gap: 6px; margin: 14px 0 12px; }
+.br-filters button { border: 1px solid #e5e3dd; border-radius: 999px; background: #fff; color: #5f6862; cursor: pointer; font: 500 12px var(--font-sans); padding: 5px 12px; }
+.br-filters button.is-active { border-color: #141413; background: #141413; color: #fff; }
+.br-filters span { display: inline-flex; align-items: center; gap: 5px; margin-left: 6px; color: #8d948d; font: 400 12px var(--font-sans); }
+
+.br-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.br-card { display: flex; min-width: 0; flex-direction: column; border: 1px solid #e5e3dd; border-radius: 12px; background: #fff; padding: 16px 18px 12px; }
+.br-card.is-wide { grid-column: 1 / -1; }
+.br-card h2 { margin: 0 0 14px; color: #141413; font: 600 14px/1.5 var(--font-sans); }
+
+.br-body { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 18px; align-items: start; }
+.br-lead { display: grid; gap: 2px; }
+.br-lead strong { color: #c15f3c; font: 600 30px/1 var(--font-sans); letter-spacing: -.03em; }
+.br-lead span { color: #8d948d; font: 400 11px var(--font-sans); }
+
+.br-bars { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.br-bars li { display: grid; grid-template-columns: 84px minmax(0, 1fr) 38px; gap: 10px; align-items: center; }
+.br-bars span { overflow: hidden; color: #5f6862; font: 400 12px var(--font-sans); text-overflow: ellipsis; white-space: nowrap; }
+.br-bars i { display: block; height: 8px; overflow: hidden; border-radius: 999px; background: #f1f0ec; }
+.br-bars b { display: block; height: 100%; border-radius: 999px; background: #141413; }
+.br-bars em { color: #8d948d; font: 400 11px var(--font-sans); font-style: normal; text-align: right; }
+
+.br-texts { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.br-texts li { border-left: 2px solid #e5e3dd; color: #5f6862; font: 400 13px/1.65 var(--font-sans); padding-left: 12px; }
+
+.br-card footer { margin-top: auto; padding-top: 12px; color: #8d948d; font: 400 11px var(--font-sans); }
+
+.br-locked { display: grid; justify-items: center; gap: 10px; border: 1px solid #e5e3dd; border-radius: 12px; background: #fff; color: #8d948d; padding: 56px 24px; text-align: center; }
+.br-locked p { margin: 0; font: 400 13px var(--font-sans); }
+
+@media (max-width: 900px) {
+  .br-grid { grid-template-columns: minmax(0, 1fr); }
+  .br-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .br-head h1 { font-size: 22px; }
 }
-/* 结果页：四个数 + 每题一张卡。 */
-
-.brp-shell { width: min(100% - 44px, 1160px); margin: 0 auto; padding: 24px 0 60px; }
-
-.brp-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
-.brp-back { color: #8d948d; font: 400 12px var(--font-sans); text-decoration: none; }
-.brp-back:hover { color: #141413; }
-.brp-top h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-impact); font-size: 38px; font-weight: 500; letter-spacing: -.03em; line-height: 1.08; }
-.brp-top p { margin: 8px 0 0; color: #5f6862; font: 400 14px/1.6 var(--font-sans); }
-
-.brp-export { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 7px; border: 1px solid #141413; border-radius: 9px; background: #ffffff; color: #141413; cursor: pointer; font: 500 13px var(--font-sans); padding: 10px 16px; }
-.brp-export:hover { background: #faf9f5; }
-.brp-export:disabled { cursor: not-allowed; opacity: .4; }
-
-.brp-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 18px; border-top: 1px solid #e5e3dd; border-bottom: 1px solid #e5e3dd; }
-.brp-tiles > div { border-right: 1px solid #e5e3dd; padding: 14px 22px 14px 0; }
-.brp-tiles > div:first-child { padding-left: 0; }
-.brp-tiles > div:last-child { border-right: 0; }
-.brp-tiles span { display: block; color: #8d948d; font: 500 11px var(--font-sans); }
-.brp-tiles > div:nth-child(1) strong { color: var(--c-clay); }
-.brp-tiles > div:nth-child(2) strong { color: var(--c-teal); }
-.brp-tiles > div:nth-child(3) strong { color: var(--c-plum); }
-.brp-tiles > div:nth-child(4) strong { color: var(--c-ink); }
-.brp-tiles strong { display: block; margin-top: 6px; color: #141413; font: 500 28px/1.1 var(--font-reading); letter-spacing: -.02em; }
-
-.brp-filters { display: flex; align-items: center; gap: 6px; margin-top: 14px; }
-.brp-filters button { border: 1px solid #e5e3dd; border-radius: 999px; background: #ffffff; color: #5f6862; cursor: pointer; font: 500 12px var(--font-sans); padding: 5px 14px; }
-.brp-filters button.is-active { border-color: #141413; background: #141413; color: #ffffff; }
-.brp-filters span { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; color: #8d948d; font: 400 12px var(--font-sans); }
-
-.brp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
-.brp-card { border: 1px solid #e5e3dd; border-radius: 12px; padding: 18px 20px 14px; }
-.brp-card.is-wide { grid-column: 1 / -1; }
-
-.brp-card header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.brp-answered { flex: 0 0 auto; color: #8d948d; font: 400 11px var(--font-sans); }
-.brp-card h2 { margin: 0; color: #141413; font: 500 14px/1.5 var(--font-sans); }
-
-.brp-bars { display: grid; gap: 10px; margin-top: 14px; }
-.brp-bars > div > div { display: flex; justify-content: space-between; gap: 12px; }
-.brp-bars strong { color: #141413; font: 400 13px var(--font-sans); }
-.brp-bars span { color: #8d948d; font: 400 12px var(--font-sans); }
-.brp-bars i { display: block; height: 8px; border-radius: 999px; background: #faf9f5; margin-top: 5px; overflow: hidden; }
-.brp-bars b { display: block; height: 100%; border-radius: 999px; background: var(--c-ink); }
-.brp-bars > div:nth-child(5n+1) b { background: var(--c-clay); }
-.brp-bars > div:nth-child(5n+2) b { background: var(--c-teal); }
-.brp-bars > div:nth-child(5n+3) b { background: var(--c-plum); }
-.brp-bars > div:nth-child(5n+4) b { background: var(--c-ochre); }
-.brp-bars > div:nth-child(5n+5) b { background: var(--c-ink); }
-
-.brp-scale { display: flex; gap: 20px; align-items: flex-start; margin-top: 12px; }
-.brp-scale > strong { color: var(--c-clay); font: 500 40px/1 var(--font-reading); letter-spacing: -.03em; }
-.brp-scale .brp-bars { flex: 1 1 auto; margin-top: 0; }
-
-.brp-texts { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-.brp-texts li { border-left: 2px solid #e5e3dd; color: #5f6862; font: 400 13px/1.7 var(--font-sans); padding-left: 12px; }
-.brp-texts li.is-empty { border: 0; color: #8d948d; padding: 0; }
-
-.brp-card footer { margin-top: 14px; color: #8d948d; font: 400 11px var(--font-sans); }
-
-.brp-locked { display: grid; justify-items: center; gap: 10px; border: 1px dashed #e5e3dd; border-radius: 12px; color: #8d948d; margin-top: 24px; padding: 64px 24px; text-align: center; }
-.brp-locked p { margin: 0; font: 400 13px var(--font-sans); }
-.brp-error { margin-top: 14px; color: #b42318; font: 400 13px var(--font-sans); }
-
-@media (max-width: 980px) {
-  .brp-grid { grid-template-columns: minmax(0, 1fr); }
-  .brp-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .brp-top h1 { font-size: 32px; }
-}
-
-
-.brp-choice { display: flex; gap: 20px; align-items: center; }
-.brp-choice .brp-bars { flex: 1 1 auto; }
-
-.brp-donut {
-  position: relative;
-  display: grid;
-  width: 108px;
-  height: 108px;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  place-items: center;
-}
-
-.brp-donut span {
-  width: 62px;
-  height: 62px;
-  border-radius: 999px;
-  background: #ffffff;
-}
-
-
-/* 题目很长时同样会溢出卡片；标题允许断行，正文允许任意位置换行。 */
-.brp-card, .brp-card > * { min-width: 0; }
-.brp-card h2, .brp-texts li, .brp-bars strong { overflow-wrap: anywhere; }

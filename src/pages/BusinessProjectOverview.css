@@ -1,79 +1,45 @@
-/* 项目页：状态条 → 现在做什么 → 四个数 → 分区块。 */
+/* 项目页：浅灰底 + 白卡，版式照 Typeform 表单详情。 */
 
-.bpr-shell { width: min(100% - 44px, 1080px); margin: 0 auto; padding: 24px 0 60px; }
+.bp-page { min-height: 100vh; background: #f4f4f1; padding: 0 0 64px; }
+.bp-wrap { width: min(100% - 48px, 1040px); margin: 0 auto; padding-top: 20px; }
 
-.bpr-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
-.bpr-back { color: #8d948d; font: 400 12px var(--font-sans); text-decoration: none; }
-.bpr-back:hover { color: #141413; }
-.bpr-top h1 { margin: 8px 0 0; color: #141413; font-family: var(--font-impact); font-size: 38px; font-weight: 500; letter-spacing: -.03em; line-height: 1.08; }
-.bpr-top p { max-width: 620px; margin: 8px 0 0; color: #5f6862; font: 400 14px/1.6 var(--font-sans); }
+.bp-back { color: #8d948d; font: 500 12px var(--font-sans); text-decoration: none; }
+.bp-back:hover { color: #141413; }
 
-.bpr-status { flex: 0 0 auto; border-radius: 999px; background: #141413; color: #ffffff; font: 500 12px var(--font-sans); padding: 6px 12px; }
+.bp-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin: 10px 0 14px; }
+.bp-head h1 { margin: 0; color: #141413; font: 600 28px/1.25 var(--font-sans); letter-spacing: -.02em; }
+.bp-head p { max-width: 620px; margin: 6px 0 0; color: #5f6862; font: 400 13px/1.6 var(--font-sans); }
+.bp-status { flex: 0 0 auto; border-radius: 999px; background: #141413; color: #fff; font: 500 12px var(--font-sans); padding: 5px 11px; }
 
-.bpr-stages {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin: 18px 0 0;
-  padding: 0;
-  list-style: none;
+.bp-next { display: flex; align-items: center; justify-content: space-between; gap: 20px; border: 1px solid #e5e3dd; border-radius: 12px; background: #fff; padding: 16px 20px; }
+.bp-next strong { display: block; color: #141413; font: 600 15px/1.4 var(--font-sans); }
+.bp-next span { display: block; margin-top: 3px; color: #8d948d; font: 400 12px var(--font-sans); }
+.bp-cta { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; border-radius: 8px; background: #141413; color: #fff; font: 500 13px var(--font-sans); padding: 9px 15px; text-decoration: none; }
+
+.bp-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+.bp-kpis article { border: 1px solid #e5e3dd; border-radius: 12px; background: #fff; padding: 14px 16px; }
+.bp-kpis span { display: block; color: #8d948d; font: 500 11px var(--font-sans); }
+.bp-kpis strong { display: block; margin-top: 4px; color: #141413; font: 600 26px/1.1 var(--font-sans); letter-spacing: -.02em; }
+
+.bp-cols { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 12px; margin-top: 12px; }
+.bp-card { border: 1px solid #e5e3dd; border-radius: 12px; background: #fff; padding: 18px 20px 20px; }
+.bp-card h2 { margin: 0 0 14px; color: #141413; font: 600 14px var(--font-sans); }
+
+.bp-steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.bp-steps li { display: grid; gap: 6px; justify-items: center; color: #8d948d; font: 500 11px var(--font-sans); text-align: center; }
+.bp-dot { display: grid; width: 22px; height: 22px; border: 1px solid #e5e3dd; border-radius: 999px; background: #fff; font: 600 10px var(--font-sans); place-items: center; }
+.bp-steps li.is-done .bp-dot { border-color: #141413; background: #141413; color: #fff; }
+.bp-steps li.is-current .bp-dot { border-color: #c15f3c; background: #c15f3c; color: #fff; }
+.bp-steps li.is-current em { color: #141413; font-style: normal; font-weight: 600; }
+.bp-steps-note { margin: 14px 0 0; color: #8d948d; font: 400 12px var(--font-sans); }
+
+.bp-info { display: grid; gap: 10px; margin: 0; }
+.bp-info > div { display: flex; min-width: 0; align-items: baseline; justify-content: space-between; gap: 12px; }
+.bp-info dt { flex: 0 0 auto; color: #8d948d; font: 400 12px var(--font-sans); white-space: nowrap; }
+.bp-info dd { flex: 1 1 auto; min-width: 0; margin: 0; overflow: hidden; color: #141413; font: 500 12px var(--font-sans); text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .bp-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bp-cols { grid-template-columns: minmax(0, 1fr); }
+  .bp-head h1 { font-size: 22px; }
 }
-
-.bpr-stages li { display: flex; flex: 1 1 0; align-items: center; gap: 7px; color: #8d948d; font: 500 12px var(--font-sans); white-space: nowrap; }
-.bpr-stages li span { display: grid; width: 20px; height: 20px; flex: 0 0 auto; border: 1px solid #e5e3dd; border-radius: 999px; background: #ffffff; font: 600 10px var(--font-sans); place-items: center; }
-.bpr-stages li.is-done { color: #141413; }
-.bpr-stages li.is-done span { border-color: #141413; background: #141413; color: #ffffff; }
-.bpr-stages li.is-current { color: #141413; font-weight: 600; }
-.bpr-stages li.is-current span { border-color: #c15f3c; background: #c15f3c; color: #ffffff; }
-
-.bpr-next {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  border-top: 1px solid #e5e3dd;
-  border-bottom: 1px solid #e5e3dd;
-  margin-top: 14px;
-  padding: 16px 0;
-}
-
-.bpr-next em { display: block; color: #8d948d; font: 600 11px var(--font-sans); letter-spacing: .12em; font-style: normal; }
-.bpr-next strong { display: block; margin-top: 6px; color: #141413; font: 500 18px/1.4 var(--font-sans); }
-.bpr-next p { margin: 4px 0 0; color: #5f6862; font: 400 13px var(--font-sans); }
-
-.bpr-cta { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; border-radius: 9px; background: #141413; color: #ffffff; font: 500 13px var(--font-sans); padding: 11px 18px; text-decoration: none; }
-
-.bpr-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 6px; }
-.bpr-tiles > div { border-right: 1px solid #e5e3dd; padding: 14px 22px 14px 0; }
-.bpr-tiles > div:last-child { border-right: 0; }
-.bpr-tiles span { display: block; color: #8d948d; font: 500 11px var(--font-sans); }
-.bpr-tiles strong { display: block; margin-top: 6px; color: #141413; font: 500 28px/1.1 var(--font-reading); letter-spacing: -.02em; }
-
-.bpr-blocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 10px; border-top: 1px solid #e5e3dd; }
-.bpr-block { min-width: 0; overflow: hidden; padding: 16px 24px 16px 0; }
-.bpr-block + .bpr-block { border-left: 1px solid #e5e3dd; padding-left: 24px; }
-.bpr-block header { display: flex; align-items: center; gap: 8px; color: #141413; }
-.bpr-block h2 { margin: 0; font: 600 13px var(--font-sans); }
-.bpr-block dl { display: grid; gap: 8px; margin: 14px 0 0; }
-.bpr-block dl > div { display: flex; min-width: 0; align-items: baseline; justify-content: space-between; gap: 12px; }
-.bpr-block dt { flex: 0 0 auto; color: #8d948d; font: 400 12px var(--font-sans); white-space: nowrap; }
-.bpr-block dd { flex: 1 1 auto; min-width: 0; margin: 0; overflow: hidden; color: #141413; font: 500 12px var(--font-sans); text-align: right; text-overflow: ellipsis; white-space: nowrap; }
-.bpr-block-title { overflow: hidden; margin: 14px 0 0; color: #141413; font: 500 13px/1.5 var(--font-sans); text-overflow: ellipsis; white-space: nowrap; }
-.bpr-block-note { margin: 4px 0 0; color: #8d948d; font: 400 12px/1.6 var(--font-sans); }
-.bpr-block-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 14px; color: #141413; font: 500 13px var(--font-sans); text-decoration: none; border-bottom: 1px solid #141413; padding-bottom: 2px; }
-
-.bpr-error { margin-top: 14px; color: #b42318; font: 400 13px var(--font-sans); }
-
-@media (max-width: 980px) {
-  .bpr-blocks { grid-template-columns: minmax(0, 1fr); }
-  .bpr-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .bpr-stages { overflow-x: auto; }
-  .bpr-top h1 { font-size: 32px; }
-}
-
-
-/* 中文长句在 flex / grid 里默认不换行，会溢出压到隔壁列，看起来就是“字压字”。
-   这里统一给容器 0 最小宽度、给文本允许断行。 */
-.bpr-blocks > * { min-width: 0; }
-.bpr-block dl > div > * { min-width: 0; }
-.bpr-block dd, .bpr-block p, .bpr-top p { overflow-wrap: anywhere; }
