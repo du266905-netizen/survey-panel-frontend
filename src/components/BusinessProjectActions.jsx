@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { releaseBusinessProjectReport, requestQuestionnaireApproval, sendBusinessContract, sendBusinessReport } from '../api/realApi';
 import { useLanguage } from './LanguageContext';
@@ -27,6 +27,12 @@ export default function BusinessProjectActions({ project, onClose, onDone }) {
   const t = (cn, en) => (zh ? cn : en);
   const [busy, setBusy] = useState('');
   const [note, setNote] = useState('');
+
+  useEffect(() => {
+    const onKey = (event) => { if (event.key === 'Escape') onClose?.(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   const status = String(project.status || 'DRAFT');
   const current = stepIndex(status);

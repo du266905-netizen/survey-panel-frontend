@@ -9,4 +9,7 @@
 .business-settings-frame .business-billing-shell,
 .business-settings-frame .business-budget-shell,
 .business-settings-frame .business-help-shell { padding-top: clamp(26px, 3.2vw, 40px); }
-@media (max-width: 800px) { .business-settings-frame .business-account-pane > header.business-workspace-topbar .business-workspace-searchbar { display: none; } }
+/* The search box belongs to the workspace, where it can actually answer a
+   question. On settings pages it only navigated away, so it is not shown. */
+.business-settings-frame .business-account-pane > header.business-workspace-topbar .business-workspace-searchbar { display: none; }
+.business-settings-frame .business-account-pane > header.business-workspace-topbar .business-workspace-notification { margin-left: auto; }

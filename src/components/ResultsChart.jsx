@@ -26,7 +26,7 @@ function ValueTooltip({ active, payload, suffix }) {
   );
 }
 
-export default function ResultsChart({ type, rows, height = 220 }) {
+export default function ResultsChart({ type, rows, height = 220, otherLabel = 'Other' }) {
   if (!rows?.length) return null;
 
   if (type === 'RATING') {
@@ -57,7 +57,7 @@ export default function ResultsChart({ type, rows, height = 220 }) {
     const top = rows.slice(0, 6);
     const rest = rows.slice(6);
     const data = rest.length
-      ? [...top, { label: '其他', count: rest.reduce((sum, row) => sum + row.count, 0), percent: rest.reduce((sum, row) => sum + row.percent, 0) }]
+      ? [...top, { label: otherLabel, count: rest.reduce((sum, row) => sum + row.count, 0), percent: rest.reduce((sum, row) => sum + row.percent, 0) }]
       : top;
     return (
       <div className="brd-chart brd-chart--split">

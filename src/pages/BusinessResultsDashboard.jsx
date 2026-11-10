@@ -290,7 +290,7 @@ function QuestionCard({ question, index, responses, copy }) {
         </div>
       ) : choice && choice.rows.length > 0 ? (
         display === 'chart'
-          ? <ResultsChart type={question.type} rows={choice.rows} />
+          ? <ResultsChart type={question.type} rows={choice.rows} otherLabel={copy.other || 'Other'} />
           : <div className="brd-bars">
             {choice.rows.map((row) => <BarRow key={row.label} row={row} total={choice.answered} />)}
           </div>
@@ -388,6 +388,7 @@ export default function BusinessResultsDashboard({ preview }) {
      accident. RELEASED means APPROVED or SENT. */
   const deliveryStatus = project?.deliveryStatus || project?.delivery?.status;
   const notReleased = Boolean(deliveryStatus) && !['APPROVED', 'SENT'].includes(deliveryStatus);
+  const withdrawn = deliveryStatus === 'REVOKED';
   const resultsLocked = notReleased || project?.questionnaire?.status !== 'PUBLISHED' || !responses.length;
   const target = Number(project?.targetParticipants) || 0;
   const collectedPercent = target ? Math.min((usable.length / target) * 100, 100) : 0;
@@ -434,8 +435,8 @@ export default function BusinessResultsDashboard({ preview }) {
         </header>
         <section className="brd-locked">
           <span className="brd-locked-icon"><LockKeyhole size={20} aria-hidden="true" /></span>
-          <h1>{notReleased ? (copy.notReleasedTitle || 'This report has not been released yet.') : results.noResultsTitle}</h1>
-          <p>{notReleased ? (copy.notReleasedBody || 'We are still checking the results. You will be notified when the report is released.') : results.noResultsBody}</p>
+          <h1>{withdrawn ? (copy.withdrawnTitle || 'This report is no longer available.') : notReleased ? (copy.notReleasedTitle || 'This report has not been released yet.') : results.noResultsTitle}</h1>
+          <p>{withdrawn ? (copy.withdrawnBody || 'Please contact your research lead if you need it again.') : notReleased ? (copy.notReleasedBody || 'We are still checking the results. You will be notified when the report is released.') : results.noResultsBody}</p>
           <Link className="brd-button" to={withLanguage('/business/workspace', language)}>{copy.backToProjects}</Link>
         </section>
       </main>
@@ -455,7 +456,7 @@ export default function BusinessResultsDashboard({ preview }) {
           <button
             type="button"
             className="brd-button brd-button--ghost brd-print-hide"
-            onClick={() => downloadCsv(questions, pool, `responses-${projectId || 'project'}.csv`, {
+            onClick={() => downloadCsv(questions, pool, `responses-${projectId || 'project'}${filtered || view !== 'all' ? '-segment' : ''}.csv`, {
               submitted: copy.csvSubmitted || 'Submitted at',
               quality: copy.csvQuality || 'Quality flag',
               flagged: copy.csvFlagged || 'flagged',

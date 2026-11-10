@@ -47,6 +47,12 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    const onKey = (event) => { if (event.key === 'Escape') onClose?.(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  useEffect(() => {
     if (preview) {
       setProject(preview.project);
       setLoading(false);
