@@ -811,7 +811,7 @@ export default function BusinessWorkspace() {
                       <footer>
                         {project.questionnaire && <Link className="business-project-card-link" to={withLanguage(`/business/projects/${project.id}`, language)}>{projectsCopy.openDraft}</Link>}
                         <button type="button" className="business-project-card-link" onClick={() => setDetailProjectId(project.id)}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']}</button>
-                        <button type="button" className="business-project-card-action" onClick={() => setActionsProject(project)}>{projectsCopy.projectActions || (String(language).startsWith('zh') ? '操作' : 'Actions')}</button>
+                        
                       </footer>
                     </article>
                   );
@@ -1067,7 +1067,6 @@ export default function BusinessWorkspace() {
         </div>
       )}
       {detailProjectId && <BusinessProjectSheet projectId={detailProjectId} onClose={() => setDetailProjectId('')} />}
-      {actionsProject && <BusinessProjectActions project={actionsProject} onClose={() => setActionsProject(null)} onDone={() => { setActionsProject(null); setReloadKey((value) => value + 1); }} />}
     </main>
   );
 }
