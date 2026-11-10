@@ -5733,3 +5733,102 @@ main.business-custom-request-page .business-workspace-rail {
       "date menu";
   }
 }
+
+/* Projects read as cards, the way YouGov lists surveys: status, title, a date,
+   how much sample has been collected, and one action. No description text —
+   the brief is one click away and the row stays scannable. */
+.business-workspace .business-project-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.business-workspace .business-project-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #e5e3dd;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 16px 18px 14px;
+}
+
+.business-workspace .business-project-card > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.business-workspace .business-project-card h2 {
+  margin: 0;
+  color: #141413;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.business-workspace .business-project-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: #6f6f68;
+  font-size: 12px;
+}
+
+.business-workspace .business-project-card-progress { display: grid; gap: 6px; margin-top: 2px; }
+.business-workspace .business-project-card-progress > span { color: #141413; font-size: 12px; font-variant-numeric: tabular-nums; }
+.business-workspace .business-project-card-progress > i { display: block; height: 4px; overflow: hidden; border-radius: 999px; background: #f2f1ec; }
+.business-workspace .business-project-card-progress b { display: block; height: 100%; border-radius: inherit; background: #141413; }
+
+.business-workspace .business-project-card > footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid #f0eee7;
+  margin-top: 4px;
+  padding-top: 10px;
+}
+
+.business-workspace .business-project-card-link,
+.business-workspace .business-project-card-action {
+  border: 0;
+  background: transparent;
+  color: #141413;
+  cursor: pointer;
+  font: 600 12px var(--font-sans);
+  padding: 2px 0;
+  text-decoration: none;
+}
+
+.business-workspace .business-project-card-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.business-workspace .business-project-card-action { margin-left: auto; border: 1px solid #141413; border-radius: 7px; padding: 6px 10px; }
+
+.business-workspace .business-project-card-more { display: grid; width: 26px; height: 26px; place-items: center; border: 0; border-radius: 6px; background: transparent; color: #6f6f68; cursor: pointer; }
+.business-workspace .business-project-card-more:hover { background: #f7f6f1; color: #141413; }
+
+.business-workspace .business-project-card-menu {
+  position: absolute;
+  z-index: 20;
+  top: 44px;
+  right: 12px;
+  display: grid;
+  gap: 2px;
+  width: 190px;
+  border: 1px solid #e5e3dd;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(20,20,19,.10);
+  padding: 6px;
+}
+
+.business-workspace .business-project-card-menu button { display: flex; align-items: center; gap: 8px; border: 0; border-radius: 6px; background: transparent; color: #141413; cursor: pointer; font: 500 13px var(--font-sans); padding: 8px 9px; text-align: left; }
+.business-workspace .business-project-card-menu button:hover { background: #f7f6f1; }
+.business-workspace .business-project-card-menu button.is-danger { color: #8a3f2f; }

@@ -780,62 +780,42 @@ export default function BusinessWorkspace() {
                 ariaLabel={projectsCopy.title}
               />
 
-              <div className="business-project-table">
-                <div className="business-project-thead" aria-hidden="true">
-                  <span>{projectsCopy.title}</span>
-                  <span>{projectsCopy.statusLabel || tableLabels.status}</span>
-                  <span>{projectsCopy.formatLabel || tableLabels.format}</span>
-                  <span>{projectsCopy.completesLabel || tableLabels.collect}</span>
-                  <span>{projectsCopy.createdLabel || tableLabels.created}</span>
-                  <span />
-                  <span />
-                </div>
-                {visibleProjects.map((project) => (
-                  <article className="business-project-row" key={project.id}>
-                    <div className="business-project-cell is-name">
+              <div className="business-project-cards">
+                {visibleProjects.map((project) => {
+                  const collected = Number(project.questionnaire?.responseCount || 0);
+                  const target = Number(project.targetParticipants || 0);
+                  const percent = target ? Math.min((collected / target) * 100, 100) : 0;
+                  const paid = Number(project.latestPayment?.amount || 0);
+                  return (
+                    <article className="business-project-card" key={project.id}>
+                      <header>
+                        <span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span>
+                        <button type="button" className="business-project-card-more" onClick={() => setProjectMenuId((current) => current === project.id ? '' : project.id)} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={17} /></button>
+                        {projectMenuId === project.id && (
+                          <div className="business-project-card-menu">
+                            <button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> {projectsCopy.viewBrief}</button>
+                            {project.status === 'DRAFT' && <button type="button" onClick={() => openEditProject(project)}><Pencil size={14} /> {projectsCopy.editBrief}</button>}
+                            {project.status === 'DRAFT' && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> {projectsCopy.deleteDraft}</button>}
+                          </div>
+                        )}
+                      </header>
                       <h2>{project.title}</h2>
-                      <p>{project.researchGoal}</p>
-                      {project.latestQuote && <p className="business-project-quote-note">{project.latestQuote.status === 'SENT'
-                        ? feedbackCopy.quoteReady.replace('{version}', project.latestQuote.version)
-                        : feedbackCopy.quoteStatus.replace('{version}', project.latestQuote.version).replace('{status}', projectsCopy.statuses[project.latestQuote.status] || project.latestQuote.status)}</p>}
-                    </div>
-
-                    <div className="business-project-cell is-status">
-                      <span className={`business-status status-${String(project.status).toLowerCase()}`} title={businessProjectStatusDescriptions[project.status] || ''}>
-                        {workspaceStatusLabel(project.status)}
-                      </span>
-                    </div>
-
-                    <div className="business-project-cell is-format">{studyFormatLabel(project.studyFormat)}</div>
-
-                    <div className="business-project-cell is-completes">
-                      {project.questionnaire?.responseCount ?? 0}
-                      <small> / {project.targetParticipants || '—'}</small>
-                    </div>
-
-                    <div className="business-project-cell is-date">
-                      {project.createdAt ? new Date(project.createdAt).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
-                    </div>
-
-                    <div className="business-project-cell is-actions">
-                      <button type="button" className="business-project-open" onClick={() => setDetailProjectId(project.id)}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']} <ArrowRight size={15} /></button><button type="button" className="business-project-open business-project-actions" onClick={() => setActionsProject(project)}>{projectsCopy.projectActions || (String(language).startsWith('zh') ? '操作' : 'Actions')}</button>
-                      {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit}</button>}
-                      {!project.questionnaire && project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote}</button>}
-                      {!project.questionnaire && project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={Boolean(payingProjectId)} aria-busy={payingProjectId === project.id}>{payingProjectId === project.id ? <><LoaderCircle className="animate-spin" size={15} /> {ws.workspace.paymentPreparing}</> : <>{ws.workspace.continueToPayment}</>}</button>}
-                    </div>
-
-                    <div className="business-project-cell is-menu business-project-menu">
-                      <button type="button" onClick={() => setProjectMenuId((current) => current === project.id ? '' : project.id)} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={19} /></button>
-                      {projectMenuId === project.id && (
-                        <div>
-                          <button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> {projectsCopy.viewBrief}</button>
-                          {project.status === 'DRAFT' && <button type="button" onClick={() => openEditProject(project)}><Pencil size={14} /> {projectsCopy.editBrief}</button>}
-                          {project.status === 'DRAFT' && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> {projectsCopy.deleteDraft}</button>}
-                        </div>
-                      )}
-                    </div>
-                  </article>
-                ))}
+                      <p className="business-project-card-meta">
+                        {studyFormatLabel(project.studyFormat)}<span>·</span>
+                        {project.createdAt ? new Date(project.createdAt).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
+                      </p>
+                      <div className="business-project-card-progress">
+                        <span>{collected} / {target || '—'}</span>
+                        <i aria-hidden="true"><b style={{ width: `${percent}%` }} /></i>
+                      </div>
+                      <footer>
+                        {project.questionnaire && <Link className="business-project-card-link" to={withLanguage(`/business/projects/${project.id}`, language)}>{projectsCopy.openDraft}</Link>}
+                        <button type="button" className="business-project-card-link" onClick={() => setDetailProjectId(project.id)}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']}</button>
+                        <button type="button" className="business-project-card-action" onClick={() => setActionsProject(project)}>{projectsCopy.projectActions || (String(language).startsWith('zh') ? '操作' : 'Actions')}</button>
+                      </footer>
+                    </article>
+                  );
+                })}
                 {!visibleProjects.length && (
                   <div className="business-project-filter-empty">
                     <ClipboardList size={22} />
