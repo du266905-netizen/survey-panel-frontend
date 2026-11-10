@@ -29,7 +29,7 @@ const copy = {
     members: '团队成员', invite: '邀请', inviteTitle: '邀请团队成员', inviteEmail: '邮箱', inviteRole: '角色',
     inviteSend: '发送邀请', inviteNote: '邀请会发到对方邮箱，接受后才加入团队。',
     roleOwner: '所有者', roleAdmin: '管理员', roleMember: '成员', remove: '移除', you: '你',
-    pending: '待接受', localOnly: '成员与邀请以团队接口为准。',
+    pending: '待接受', localOnly: '成员列表暂时不可用，请稍后重试。',
     empty: '还没有成员', invited: '邀请已发送', invalidEmail: '请输入有效邮箱', exists: '这个邮箱已经在团队里了',
     ownerLocked: '所有者不能移除', loadFailed: '团队信息加载失败', saveFailed: '保存失败', inviteFailed: '邀请发送失败',
     managerOnly: '只有所有者或管理员可以修改团队',
@@ -44,7 +44,7 @@ const copy = {
     members: 'Team members', invite: 'Invite', inviteTitle: 'Invite a team member', inviteEmail: 'Email', inviteRole: 'Role',
     inviteSend: 'Send invitation', inviteNote: 'The invitation is emailed and joins the team once accepted.',
     roleOwner: 'Owner', roleAdmin: 'Admin', roleMember: 'Member', remove: 'Remove', you: 'You',
-    pending: 'Pending', localOnly: 'Members and invitations come from the team API.',
+    pending: 'Pending', localOnly: 'The member list is temporarily unavailable. Try again later.',
     empty: 'No members yet', invited: 'Invitation sent', invalidEmail: 'Enter a valid email', exists: 'That email is already in the team',
     ownerLocked: 'The owner cannot be removed', loadFailed: 'Could not load the team', saveFailed: 'Could not save',
     inviteFailed: 'Could not send the invitation', managerOnly: 'Only an owner or admin can change the team',
@@ -173,12 +173,6 @@ export default function BusinessTeam() {
     }
   };
 
-  const pickLogo = (event) => {
-    event.preventDefault();
-    setNote('');
-    setError(text.logoNote);
-  };
-
   return (
     <>
       <section className="business-account-shell">
@@ -218,16 +212,16 @@ export default function BusinessTeam() {
           {note ? <p className="bt-note"><Check size={13} aria-hidden="true" /> {note}</p> : null}
         </section>
 
-        <section className="bt-block">
-          <h2>{text.logo}</h2>
-          <p className="bt-hint">{text.logoHint}</p>
-          <label className={`bt-drop${team?.logoUrl ? ' has-logo' : ''}`}>
-            {team?.logoUrl ? <img src={team.logoUrl} alt="" /> : <Plus size={20} aria-hidden="true" />}
-            <span>{team?.logoUrl ? text.logoChange : text.logoDrop}</span>
-            <input type="file" accept="image/png,image/svg+xml,image/jpeg" onClick={pickLogo} disabled />
-          </label>
-          <p className="bt-note">{text.logoNote}</p>
-        </section>
+        {/* Logo upload has no endpoint yet. Showing a dropzone that can only
+            answer "not open yet" reads as a broken control, so the block stays
+            hidden until the API exists; an existing logo is still shown. */}
+        {team?.logoUrl && (
+          <section className="bt-block">
+            <h2>{text.logo}</h2>
+            <p className="bt-hint">{text.logoHint}</p>
+            <div className="bt-drop has-logo"><img src={team.logoUrl} alt={text.logo} /></div>
+          </section>
+        )}
 
         <section className="bt-block">
           <h2>{text.members}</h2>
@@ -280,10 +274,10 @@ export default function BusinessTeam() {
                 ) : null}
               </article>
             ))}
-            {!loading && !people.length ? <p className="bt-hint">{text.empty}</p> : null}
+            {!loading && !people.length && !error ? <p className="bt-hint">{text.empty}</p> : null}
           </div>
 
-          <p className="bt-note">{text.localOnly}</p>
+          {error ? <p className="bt-note">{text.localOnly}</p> : null}
         </section>
           </div>
         </section>

@@ -179,7 +179,7 @@ function QuestionField({ question, value, onChange, copy }) {
             <input
               type="checkbox"
               checked={Boolean(other)}
-              onChange={(event) => onChange(event.target.checked ? [...list, 'Other: details'] : list.filter((item) => !item.startsWith('Other: ')))}
+              onChange={(event) => onChange(event.target.checked ? [...list, 'Other: '] : list.filter((item) => !item.startsWith('Other: ')))}
             />
             <span>{copy.other}</span>
             {other ? (
@@ -202,7 +202,7 @@ function QuestionField({ question, value, onChange, copy }) {
       ))}
       {settings.allowOther ? (
         <label>
-          <input type="radio" name={question.id} checked={Boolean(other)} onChange={() => onChange('Other: details')} />
+          <input type="radio" name={question.id} checked={Boolean(other)} onChange={() => onChange('Other: ')} />
           <span>{copy.other}</span>
           {other ? (
             <input className="pq-inline-input" aria-label={copy.other} value={other.replace(/^Other:\s*/, '')} onChange={(event) => onChange(`Other: ${event.target.value}`)} />

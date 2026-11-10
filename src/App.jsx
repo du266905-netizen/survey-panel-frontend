@@ -102,7 +102,6 @@ import BusinessQuote from './pages/BusinessQuote';
 import BusinessPlans from './pages/BusinessPlans';
 import BusinessPlanCheckout from './pages/BusinessPlanCheckout';
 import BusinessResultsDashboard from './pages/BusinessResultsDashboard';
-import BusinessDeliveryPreview from './pages/BusinessDeliveryPreview';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
 import JoinEntry from './pages/JoinEntry';
 import ChinaMarketInsights from './pages/ChinaMarketInsights';
@@ -238,7 +237,8 @@ export default function App() {
         <Route path="/business/audience-plan" element={<BusinessRoute><BusinessAudiencePlan /></BusinessRoute>} />
         <Route path="/business/custom-questionnaire" element={<BusinessRoute><BusinessCustomQuestionnaireRequest /></BusinessRoute>} />
         <Route path="/business/research-support" element={<BusinessRoute><BusinessResearchSupportRequest /></BusinessRoute>} />
-        <Route path="/business/delivery-preview" element={<BusinessRoute><BusinessDeliveryPreview /></BusinessRoute>} />
+        {/* Prototype with fixed demo numbers ("选项 A 48%"). Not real data, so it must not be reachable by a client. */}
+        <Route path="/business/delivery-preview" element={<Navigate to="/business/workspace" replace />} />
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessResultsDashboard /></BusinessRoute>} />
         <Route element={<BusinessRoute><BusinessSettingsLayout /></BusinessRoute>}>
           <Route path="/business/account" element={<BusinessAccount />} />

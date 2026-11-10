@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import BusinessRail from '../components/BusinessRail';
+import { pick } from '../content/projectStatus';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { ARTICLES } from '../help/content';
 import './BusinessHelp.css';
@@ -27,7 +28,7 @@ export default function BusinessHelp() {
     <>
       <section className="business-help-shell">
           <div className="business-help-hero">
-            <h1>{zh ? '帮助中心' : 'Help centre'}</h1>
+            <h1>{pick(language, '帮助中心', 'Help centre', '幫助中心')}</h1>
             <p>
               {zh
                 ? '付款、账单与账户问题的说明，按主题归档。'

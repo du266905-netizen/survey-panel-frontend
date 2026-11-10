@@ -39,7 +39,7 @@ export default function BusinessSettingsLayout() {
     <main className="business-account-page business-settings-frame">
       <BusinessRail activeId={activeIdFor(pathname)} onSelect={handleRailSelect} />
       <div className="business-account-pane">
-        <BusinessTopBar query={query} onQueryChange={setQuery} onSubmit={submit} />
+        <BusinessTopBar query={query} onQueryChange={setQuery} onSubmit={submit} showBalance={false} />
         <Outlet />
       </div>
     </main>

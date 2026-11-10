@@ -21,7 +21,7 @@ const copy = {
     signedInAs: '当前登录邮箱', mismatch: '这个邀请发往另一个邮箱，请用该邮箱登录后再接受。',
     expired: '这个邀请已过期，请让对方重新发送。', acceptFailed: '加入失败，请稍后重试。',
     accept: '接受邀请', signup: '注册并接受', login: '登录后接受', signout: '换一个账号',
-    pending: '接受接口还没接上：你的账号已就绪，邀请会在团队功能上线后自动生效。',
+    pending: '邀请暂时无法接受；功能开放后会自动生效。',
     invalid: '这个邀请链接不完整或已失效。', back: '返回首页',
   },
   en: {
@@ -30,7 +30,7 @@ const copy = {
     signedInAs: 'Signed in as', mismatch: 'This invitation was sent to a different address. Sign in with that one to accept.',
     expired: 'This invitation has expired. Ask the team to send a new one.', acceptFailed: 'Could not join the team. Try again.',
     accept: 'Accept invitation', signup: 'Sign up and accept', login: 'Sign in and accept', signout: 'Use another account',
-    pending: 'There is no accept endpoint yet: your account is ready and the invitation will apply once team support lands.',
+    pending: 'This invitation cannot be accepted yet; it will apply once team invitations open.',
     invalid: 'This invitation link is incomplete or expired.', back: 'Back to home',
   },
 };

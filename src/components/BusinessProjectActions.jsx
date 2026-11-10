@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { releaseBusinessProjectReport, requestQuestionnaireApproval, sendBusinessContract, sendBusinessReport } from '../api/realApi';
 import { useLanguage } from './LanguageContext';
+import { isReportReleased } from '../content/projectStatus';
 import './BusinessProjectActions.css';
 
 /* Staff-side operations for one project. Every action is the document we send
@@ -36,7 +37,7 @@ export default function BusinessProjectActions({ project, onClose, onDone }) {
 
   const status = String(project.status || 'DRAFT');
   const current = stepIndex(status);
-  const released = (project.deliveryStatus || project.delivery?.status) === 'APPROVED';
+  const released = isReportReleased(project);
 
   const run = async (kind, call, doneMessage) => {
     setBusy(kind);

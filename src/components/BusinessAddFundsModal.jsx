@@ -239,7 +239,6 @@ export default function BusinessAddFundsModal({ open, onClose }) {
             <strong>{ui.securePaymentTitle || ws.funds.secureTitle}</strong>
             <small>{ui.securePaymentBody || ws.funds.secureBody}</small>
           </span>
-          <CardMarks />
         </footer>
       </section>
     </div>

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import NotificationBell from '../components/NotificationBell';
 import { AiCreditsMenu } from '../components/AiCredits';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import { useAuth } from '../components/AuthContext';
 import { AI_BRIEF_MODE, MOCK_COMMANDS, MOCK_SCENARIOS, generateBriefProject, sendBriefTurn } from '../ai/aiBriefTurnClient';
 import { createConversation, deleteConversation as deleteRemoteConversation, getConversation, saveDraft } from '../api/aiConversations';
 import { useConversationList } from '../hooks/useAiConversations';
@@ -13,7 +14,21 @@ import './Business.css';
 import './BusinessAiBriefTheme.css';
 import './BusinessAiBriefTurn.css';
 
-const GENERATION_KEY = 'guanyisearch.business-ai-brief.generation.v1';
+const GENERATION_KEY_BASE = 'guanyisearch.business-ai-brief.generation.v2';
+
+/* The stored signature used to be the brief text itself, under a key shared by
+   every account on the browser: sign out, sign in as someone else, and their
+   draft was still sitting there in localStorage. Now the key carries the user
+   id and only a hash of the draft is kept. */
+function generationStorageKey(userId) {
+  return `${GENERATION_KEY_BASE}:${userId || 'anonymous'}`;
+}
+
+function hashSignature(text) {
+  let hash = 5381;
+  for (let i = 0; i < text.length; i += 1) hash = ((hash * 33) ^ text.charCodeAt(i)) >>> 0;
+  return hash.toString(16);
+}
 const OLD_PENDING_KEY = 'guanyisearch.business-ai-brief.pending.v2';
 function newId(prefix) {
   const random = globalThis.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
@@ -57,21 +72,22 @@ function generationSignature(draft) {
   ]);
 }
 
-function getGenerationKey(draft) {
-  const signature = generationSignature(draft);
+function getGenerationKey(draft, userId) {
+  const signature = hashSignature(generationSignature(draft));
   try {
-    const stored = JSON.parse(localStorage.getItem(GENERATION_KEY) || 'null');
+    const storageKey = generationStorageKey(userId);
+    const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
     if (stored?.key && stored.signature === signature) return stored.key;
     const key = newId('generate');
-    localStorage.setItem(GENERATION_KEY, JSON.stringify({ key, signature, createdAt: Date.now() }));
+    localStorage.setItem(storageKey, JSON.stringify({ key, signature, createdAt: Date.now() }));
     return key;
   } catch {
     return newId('generate');
   }
 }
 
-function clearGenerationKey() {
-  try { localStorage.removeItem(GENERATION_KEY); } catch { /* Restricted browser context. */ }
+function clearGenerationKey(userId) {
+  try { localStorage.removeItem(generationStorageKey(userId)); } catch { /* Restricted browser context. */ }
 }
 
 function isEmptyDraft(draft) {
@@ -151,6 +167,7 @@ export default function BusinessAiBriefTurn() {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
   const copy = useMemo(() => getAiBriefTurnCopy(language), [language]);
   /* Opening the page always starts a new conversation. The previous one stays
      in the history list on the left, where it belongs — an empty page is the
@@ -226,7 +243,7 @@ export default function BusinessAiBriefTurn() {
     setDocResult(null);
     setDocInputs({ decision: '', audience: '' });
     setManualOpen(false);
-    clearGenerationKey();
+    clearGenerationKey(user?.id);
   };
 
   const turnSeqRef = useRef(0);
@@ -299,6 +316,17 @@ export default function BusinessAiBriefTurn() {
   };
 
   const sendMessage = (text) => runTurn({ message: text });
+
+  /* The ask box in the workspace hands its question over through router state;
+     without this it opened an empty conversation and dropped what was typed. */
+  const seededPromptRef = useRef(false);
+  useEffect(() => {
+    const prompt = String(location.state?.initialPrompt || '').trim();
+    if (!prompt || seededPromptRef.current) return;
+    seededPromptRef.current = true;
+    navigate(location.pathname, { replace: true, state: {} });
+    sendMessage(prompt);
+  }, [location, navigate]);
 
   const mockCommand = (key, fallback) => (AI_BRIEF_MODE === 'mock' ? MOCK_COMMANDS[key] || fallback : fallback);
 
@@ -375,7 +403,7 @@ export default function BusinessAiBriefTurn() {
     }
     setGenerating(true);
     setGenerateError('');
-    const generationKey = getGenerationKey(draft);
+    const generationKey = getGenerationKey(draft, user?.id);
     try {
       const result = await generateBriefProject({
         generationKey,
@@ -386,7 +414,7 @@ export default function BusinessAiBriefTurn() {
       navigate(result.editorPath);
     } catch (failure) {
       const code = failure?.response?.data?.code || failure?.code;
-      if (code === 'AI_BRIEF_GENERATION_KEY_CONFLICT') clearGenerationKey();
+      if (code === 'AI_BRIEF_GENERATION_KEY_CONFLICT') clearGenerationKey(user?.id);
       const messages = {
         AI_BRIEF_GENERATION_INVALID: copy.generationInvalid,
         AI_BRIEF_GENERATION_KEY_CONFLICT: copy.generationKeyConflict,
@@ -462,7 +490,7 @@ export default function BusinessAiBriefTurn() {
     setDocResult(null);
     setDocInputs({ decision: '', audience: '' });
     setManualOpen(false);
-    clearGenerationKey();
+    clearGenerationKey(user?.id);
   };
 
   const removeConversation = async (id) => {

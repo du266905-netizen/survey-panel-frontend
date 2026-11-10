@@ -21,7 +21,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, releaseBusinessProjectReport, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
+import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../components/BusinessBalanceChip';
 import BusinessPageLoader from '../components/BusinessPageLoader';
@@ -43,6 +43,9 @@ import './BusinessResearchType.css';
 import './BusinessNewProjectChooser.css';
 import './BusinessCustomSubmission.css';
 import './BusinessWorkspaceChrome.css';
+import BusinessProjectSheet from './BusinessProjectSheet';
+import { clientNextStep, clientStepConfirm, clientStepNote, submitClientStep } from '../components/businessNextStep';
+import { canDeleteProject, isReportReleased, pick, statusLabel } from '../content/projectStatus';
 
 
 const emptyProject = {
@@ -80,9 +83,12 @@ const projectCategory = (project) => {
   return 'CUSTOM_RESEARCH';
 };
 const legacyVisibleInProjects = (project) => {
-  if (project.status === 'DRAFT') return false;
-  if (!project.questionnaire) return true;
-  return ['PENDING_REVIEW', 'APPROVED', 'PUBLISHED'].includes(project.questionnaire.status);
+  /* Drafts belong in the list: a client who creates a project and then opens
+     "Projects" must find it there, the way YouGov's list has a Drafts tab.
+     Only cancelled projects are hidden. The earlier filter also hid anything
+     whose questionnaire was still a draft, which silently removed projects
+     that were waiting on the client. */
+  return String(project.status || '').toUpperCase() !== 'CANCELLED';
 };
 
 const projectTypes = {
@@ -208,9 +214,8 @@ export default function BusinessWorkspace() {
   const [payingProjectId, setPayingProjectId] = useState('');
   const paypalReturnHandledRef = useRef('');
   const [message, setMessage] = useState('');
-  const [releaseBusy, setReleaseBusy] = useState('');
   const [detailProjectId, setDetailProjectId] = useState('');
-  const [actionsProject, setActionsProject] = useState(null);
+  const [clientBusy, setClientBusy] = useState('');
   const [reloadKey, setReloadKey] = useState(0);
   const [quoteProject, setQuoteProject] = useState(null);
   const [quoteDecision, setQuoteDecision] = useState('');
@@ -241,17 +246,11 @@ export default function BusinessWorkspace() {
     : { status: 'Status', format: 'Format', collect: 'Response', created: 'Created' };
 
   const studyFormatLabel = (format) => format === 'SURVEY'
-    ? (language.startsWith('zh') ? '在线问卷' : 'Online survey')
+    ? pick(language, '在线问卷', 'Online survey', '線上問卷')
     : briefCopy.methods.find(([value]) => value === format)?.[1] || String(format || '').replaceAll('_', ' ').toLowerCase();
   /* 项目阶段的中文与英文短名。英文不再把 SUBMITTED_FOR_REVIEW 整个摊开——
      它比列宽还长，会把下一列压重叠。 */
-  const STATUS_TEXT = {
-    'zh-CN': { DRAFT: '草稿', SUBMITTED_FOR_REVIEW: '待审核', QUOTE_REQUIRED: '待报价', QUOTE_SENT: '报价已发', CLIENT_ACCEPTED: '待收款', FUNDED: '已付款', RECRUITING: '招募中', LIVE: '进行中', COMPLETED: '已完成', CANCELLED: '已取消', PENDING_REVIEW: '待审核', APPROVED: '内容已通过', PUBLISHED: '已发布', ARCHIVED: '已归档' },
-    en: { DRAFT: 'Draft', SUBMITTED_FOR_REVIEW: 'In review', QUOTE_REQUIRED: 'Quote needed', QUOTE_SENT: 'Quote sent', CLIENT_ACCEPTED: 'Accepted', FUNDED: 'Funded', RECRUITING: 'Recruiting', LIVE: 'Live', COMPLETED: 'Completed', CANCELLED: 'Cancelled', PENDING_REVIEW: 'In review', APPROVED: 'Approved', PUBLISHED: 'Published', ARCHIVED: 'Archived' },
-  };
-  const workspaceStatusLabel = (status) => projectsCopy.statuses?.[status]
-    || (language.startsWith('zh') ? STATUS_TEXT['zh-CN'] : STATUS_TEXT.en)[status]
-    || String(status || '').replaceAll('_', ' ').toLowerCase();
+  const workspaceStatusLabel = (status) => statusLabel(status, language);
   const isQuestionnaire = projectType === 'questionnaire';
   const categoryLabels = projectCategoryCopy[language] || projectCategoryCopy['en-US'];
   const projectPool = workspace.projects.filter((project) => project.visibleInProjects ?? legacyVisibleInProjects(project));
@@ -396,6 +395,11 @@ export default function BusinessWorkspace() {
         if (!active) return;
         clearPaypalReturnFromUrl();
         window.dispatchEvent(new Event(BUSINESS_BALANCE_REFRESH_EVENT));
+        /* The capture may have settled a project payment, not only a top-up;
+           without this the client came back from PayPal to an unchanged page
+           and could not tell whether the money had gone through. */
+        setReloadKey((value) => value + 1);
+        setMessage(language.startsWith('zh') ? '付款已收到，正在更新项目状态。' : 'Payment received. Refreshing the project.');
       })
       .catch(() => {
         if (!active) return;
@@ -621,6 +625,43 @@ export default function BusinessWorkspace() {
     } finally { setSubmitting(false); }
   };
 
+  /* The client's own next step. Quote and payment live here because they open
+     the workspace's own dialogs; the other three are one POST each. */
+  const runClientStep = async (project, kind) => {
+    if (kind === 'publish') { setDetailProjectId(''); navigate(withLanguage(`/business/projects/${project.id}`, language)); return; }
+    if (kind === 'quote') { setDetailProjectId(''); setQuoteProject(project); return; }
+    if (kind === 'pay') { setDetailProjectId(''); await beginPayment(project); return; }
+    const confirmText = clientStepConfirm(kind, language);
+    if (confirmText && !window.confirm(confirmText)) return;
+    setClientBusy(project.id);
+    setMessage('');
+    try {
+      await submitClientStep(project, kind);
+      setMessage(clientStepNote(kind, language));
+      setDetailProjectId('');
+      setReloadKey((value) => value + 1);
+    } catch (error) {
+      setMessage(clientStepNote(kind, language, error));
+    } finally {
+      setClientBusy('');
+    }
+  };
+
+  /* Every modal in this page answers Escape. The brief viewer, the chooser and
+     the create/edit form used to ignore it — the sheet and the quote dialog did
+     not, so the page felt inconsistent. */
+  useEffect(() => {
+    const onKey = (event) => {
+      if (event.key !== 'Escape') return;
+      if (quoteProject) { setQuoteProject(null); return; }
+      if (briefProject) { setBriefProject(null); return; }
+      if (openForm) { setOpenForm(false); return; }
+      if (openChooser) { setOpenChooser(false); }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [quoteProject, briefProject, openForm, openChooser]);
+
   const beginPayment = async (project) => {
     if (payingProjectId) return;
     setPayingProjectId(project.id); setMessage('');
@@ -633,7 +674,14 @@ export default function BusinessWorkspace() {
         window.location.assign(payment.checkoutUrl);
         return;
       }
-      // A 201 without a checkout URL is not a success the user can act on.
+      /* No checkout URL: the payment came out of the balance and is already
+         settled. Treating that as "unavailable" told a charged client their
+         payment had failed. */
+      if (['PAID', 'SUCCEEDED', 'COMPLETED', 'CAPTURED'].includes(String(payment.status || '').toUpperCase())) {
+        setMessage(language.startsWith('zh') ? '付款已确认，项目继续。' : 'Payment confirmed. The project moves on.');
+        setReloadKey((value) => value + 1);
+        return;
+      }
       setMessage(ws.workspace.paymentUnavailable);
     } catch (error) {
       setMessage(error.response?.data?.message || ws.workspace.paymentUnavailable);
@@ -669,40 +717,15 @@ export default function BusinessWorkspace() {
   const onboardingTitleText = onboardingTitle.replace(/[?？]\s*$/, '');
   const onboardingTitleMark = /[?？]\s*$/.test(onboardingTitle) ? onboardingTitle.trim().slice(-1) : '';
 
-  /* Releasing the report is a staff decision; publishing the questionnaire alone
-     must never make results visible to the client. */
-  const toggleReportRelease = async (project) => {
-    const current = project.deliveryStatus || project.delivery?.status;
-    const next = current === 'APPROVED' ? 'REVOKED' : 'APPROVED';
-    setReleaseBusy(project.id);
-    setMessage('');
-    try {
-      await releaseBusinessProjectReport(project.id, next);
-      setWorkspace((state) => ({
-        ...state,
-        projects: state.projects.map((item) => (item.id === project.id ? { ...item, deliveryStatus: next } : item)),
-      }));
-      setMessage(next === 'APPROVED'
-        ? (projectsCopy.releasedMessage || 'Report released. The client can open the results page now.')
-        : (projectsCopy.retractedMessage || 'Report taken down. The client can no longer open it.'));
-    } catch (err) {
-      setMessage(err?.response?.status === 404
-        ? (projectsCopy.releaseNotReadyMessage || 'The backend has no release endpoint yet, so nothing was saved.')
-        : (projectsCopy.releaseFailedMessage || 'Could not change the release state. Try again.'));
-    } finally {
-      setReleaseBusy('');
-    }
-  };
-
   return (
     <main className={`business-workspace${activeView === 'questionnaires' ? ' business-workspace--questionnaire-hub' : ''}`}>
       <div className="business-workspace-body business-workspace-body--rail">
         <BusinessRail activeId={activeView} onSelect={handleRailSelect} onReplayTour={replayTour} />
 
         <header className="business-workspace-topbar">
-          <form className="business-workspace-searchbar" role="search" aria-label="ask a question in guanyisearch" data-tour="search" onSubmit={submitWorkspaceQuestion}>
+          <form className="business-workspace-searchbar" role="search" aria-label={pick(language, '在 guanyisearch 提问', 'ask a question in guanyisearch', '在 guanyisearch 提問')} data-tour="search" onSubmit={submitWorkspaceQuestion}>
             <Search size={17} aria-hidden="true" />
-            <input ref={workspaceSearchRef} type="search" value={workspaceQuery} onChange={(event) => setWorkspaceQuery(event.target.value)} placeholder="ask a question in guanyisearch" aria-label="ask a question in guanyisearch" />
+            <input ref={workspaceSearchRef} type="search" value={workspaceQuery} onChange={(event) => setWorkspaceQuery(event.target.value)} placeholder={pick(language, '在 guanyisearch 提问', 'ask a question in guanyisearch', '在 guanyisearch 提問')} aria-label={pick(language, '在 guanyisearch 提问', 'ask a question in guanyisearch', '在 guanyisearch 提問')} />
             <kbd aria-hidden="true">⌘K</kbd>
           </form>
           <BusinessBalanceChip />
@@ -726,7 +749,16 @@ export default function BusinessWorkspace() {
           {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : draftsError ? <div className="business-questionnaire-load-error" role="alert"><strong>{language.startsWith('zh') ? '草稿加载失败' : 'Could not load drafts'}</strong><p>{language.startsWith('zh') ? '这不代表草稿被删除。请重试。' : 'Your drafts are not deleted. Try again.'}</p><button type="button" onClick={() => setDraftsReload((value) => value + 1)}>{language.startsWith('zh') ? '重试' : 'Retry'}</button></div> : questionnaireDrafts.length ? <div className="business-questionnaire-hub-list">{questionnaireDrafts.map((project) => {
             const questionnaire = project.questionnaire || {};
             const status = String(questionnaire.status || project.status || 'DRAFT');
-            const statusLabel = projectsCopy.statuses?.[status] || (status === 'DRAFT' ? (ui.draftBadge || 'Draft') : status);
+            /* Questionnaire states are not project states: projectsCopy.statuses
+               has no PUBLISHED / PENDING_REVIEW, so the badge used to print the
+               raw enum. Map them here, per language, never show the code. */
+            const statusLabel = ({
+              DRAFT: ui.draftBadge || pick(language, '草稿', 'Draft', '草稿'),
+              PENDING_REVIEW: pick(language, '审核中', 'In review', '審核中'),
+              APPROVED: pick(language, '已通过', 'Approved', '已通過'),
+              PUBLISHED: pick(language, '已发布', 'Published', '已發布'),
+              ARCHIVED: pick(language, '已归档', 'Archived', '已歸檔'),
+            })[status] || projectsCopy.statuses?.[status] || status;
             const questionCount = Number(questionnaire.questionCount || 0);
             const responseCount = Number(questionnaire.responseCount || 0);
             const stats = String(ui.questionStats || '{q} questions · {r} responses')
@@ -747,7 +779,9 @@ export default function BusinessWorkspace() {
                   <p>{stats}</p>
                   <div className="business-questionnaire-card-actions">
                     <Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{ui.openEditor} <ArrowRight size={15} /></Link>
-                    {questionnaire.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}{questionnaire.status === 'PUBLISHED' && <button type="button" className={`business-project-open business-project-release${(project.deliveryStatus || project.delivery?.status) === 'APPROVED' ? ' is-released' : ''}`} onClick={() => toggleReportRelease(project)} disabled={releaseBusy === project.id}>{(project.deliveryStatus || project.delivery?.status) === 'APPROVED' ? (projectsCopy.retractReport || 'Take down') : (projectsCopy.releaseReport || 'Release report')}</button>}
+                    {questionnaire.status === 'PUBLISHED' && (isReportReleased(project)
+                      ? <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>
+                      : <span className="business-project-open is-pending" aria-disabled="true">{pick(language, '报告整理中', 'Report in progress', '報告整理中')}</span>)}
                     {project.status === 'DRAFT' && <button type="button" className="business-project-open business-project-delete" onClick={() => deleteProject(project)} disabled={submitting}><Trash2 size={15} /> {projectsCopy.deleteDraft}</button>}
                   </div>
                 </div>
@@ -756,7 +790,9 @@ export default function BusinessWorkspace() {
           })}</div> : <p className="business-questionnaire-empty">{ui.noDraftsTitle}</p>}
         </section> : activeView === 'results' ? <section className="business-projects business-results-index">
           <div className="business-projects-head"><div><p className="business-eyebrow">{copy.results.eyebrow}</p><h1>{copy.results.indexTitle}</h1><p>{copy.results.indexIntro}</p></div><button className="business-button" type="button" onClick={() => selectWorkspaceView('home')}>{copy.rail.services} <ArrowRight size={16} /></button></div>
-          {loading ? <BusinessPageLoader label={feedbackCopy.loadingResults} /> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <p className="business-results-empty-line">{copy.results.noResultsTitle}</p>}
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingResults} /> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div>{isReportReleased(project)
+              ? <Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link>
+              : <span className="business-results-pending">{pick(language, '报告整理中', 'Report in progress', '報告整理中')}</span>}</article>)}</div> : <p className="business-results-empty-line">{copy.results.noResultsTitle}</p>}
         </section> : <section className="business-projects">
           <div className="business-projects-head">
             <div>
@@ -786,21 +822,38 @@ export default function BusinessWorkspace() {
                   const target = Number(project.targetParticipants || 0);
                   const percent = target ? Math.min((collected / target) * 100, 100) : 0;
                   const paid = Number(project.latestPayment?.amount || 0);
+                  const nextStep = clientNextStep(project, language);
+                  const released = isReportReleased(project);
+                  const questionnaireLabel = project.questionnaire?.status === 'PUBLISHED'
+                    ? pick(language, '打开问卷', 'Open questionnaire', '開啟問卷')
+                    : projectsCopy.openDraft;
                   return (
-                    <article className="business-project-card" key={project.id}>
+                    <article
+                      className="business-project-card"
+                      key={project.id}
+                      onClick={() => setDetailProjectId(project.id)}
+                    >
                       <header>
                         <span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span>
-                        <button type="button" className="business-project-card-more" onClick={() => setProjectMenuId((current) => current === project.id ? '' : project.id)} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={17} /></button>
+                        <button type="button" className="business-project-card-more" onClick={(event) => { event.stopPropagation(); setProjectMenuId((current) => current === project.id ? '' : project.id); }} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={17} /></button>
                         {projectMenuId === project.id && (
                           <div className="business-project-card-menu">
                             <button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> {projectsCopy.viewBrief}</button>
                             {project.status === 'DRAFT' && <button type="button" onClick={() => openEditProject(project)}><Pencil size={14} /> {projectsCopy.editBrief}</button>}
-                            {project.status === 'DRAFT' && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> {projectsCopy.deleteDraft}</button>}
+                            {canDeleteProject(project) && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> {pick(language, '删除项目', 'Delete project', '刪除專案')}</button>}
                           </div>
                         )}
                       </header>
-                      <h2>{project.title}</h2>
+                      <h2>
+                        <button type="button" className="business-project-card-title" onClick={(event) => { event.stopPropagation(); setDetailProjectId(project.id); }}>
+                          {project.title}
+                        </button>
+                      </h2>
                       <p className="business-project-card-meta">
+                        {({ SURVEY: pick(language, '自助调查', 'Self-serve survey', '自助調查'),
+                            CUSTOM_RESEARCH: pick(language, '定制研究', 'Managed research', '客製研究'),
+                            QUALITATIVE_SUPPORT: pick(language, '定性支持', 'Qualitative support', '質性支持'),
+                          })[projectCategory(project)]}<span>·</span>
                         {studyFormatLabel(project.studyFormat)}<span>·</span>
                         {project.createdAt ? new Date(project.createdAt).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
                       </p>
@@ -808,11 +861,35 @@ export default function BusinessWorkspace() {
                         <span>{collected} / {target || '—'}</span>
                         <i aria-hidden="true"><b style={{ width: `${percent}%` }} /></i>
                       </div>
-                      <footer>
-                        {project.questionnaire && <Link className="business-project-card-link" to={withLanguage(`/business/projects/${project.id}`, language)}>{projectsCopy.openDraft}</Link>}
-                        <button type="button" className="business-project-card-link" onClick={() => setDetailProjectId(project.id)}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']}</button>
-                        
-                      </footer>
+                      {/* The card turns over on hover: information while
+                          resting, actions while pointed at — the way YouGov's
+                          recent-surveys card behaves. It is a real element, not
+                          display:none, so Tab reaches it and :focus-within
+                          turns the card over for keyboard users. */}
+                      <div className="business-project-card-actions" onClick={(event) => event.stopPropagation()}>
+                        {nextStep && (
+                          <button type="button" className="business-project-card-cta" onClick={() => runClientStep(project, nextStep.kind)} disabled={clientBusy === project.id}>
+                            {clientBusy === project.id ? <LoaderCircle className="animate-spin" size={14} /> : nextStep.label}
+                          </button>
+                        )}
+                        <button type="button" className="business-project-card-row" onClick={() => setDetailProjectId(project.id)}>
+                          {projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']} <ArrowRight size={14} aria-hidden="true" />
+                        </button>
+                        {released ? (
+                          <Link className="business-project-card-row" to={withLanguage(`/business/projects/${project.id}/results`, language)}>
+                            {projectsCopy.viewResults} <ArrowRight size={14} aria-hidden="true" />
+                          </Link>
+                        ) : project.questionnaire && (
+                          <Link className="business-project-card-row" to={withLanguage(`/business/projects/${project.id}`, language)}>
+                            {questionnaireLabel} <ArrowRight size={14} aria-hidden="true" />
+                          </Link>
+                        )}
+                        {canDeleteProject(project) && (
+                          <button type="button" className="business-project-card-row is-danger" onClick={() => deleteProject(project)}>
+                            {pick(language, '删除项目', 'Delete project', '刪除專案')} <Trash2 size={14} aria-hidden="true" />
+                          </button>
+                        )}
+                      </div>
                     </article>
                   );
                 })}
@@ -1066,7 +1143,7 @@ export default function BusinessWorkspace() {
           </section>
         </div>
       )}
-      {detailProjectId && <BusinessProjectSheet projectId={detailProjectId} onClose={() => setDetailProjectId('')} />}
+      {detailProjectId && <BusinessProjectSheet projectId={detailProjectId} onClose={() => setDetailProjectId('')} onClientAction={runClientStep} onChanged={() => setReloadKey((value) => value + 1)} />}
     </main>
   );
 }

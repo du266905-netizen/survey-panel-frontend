@@ -6,6 +6,7 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import { getBusinessProject, getBusinessQuestionnaireResponses } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import { isReportReleased } from '../content/projectStatus';
 import ResultsChart from '../components/ResultsChart';
 import './BusinessResultsDashboard.css';
 
@@ -17,7 +18,14 @@ const asNumber = (value) => {
   return Number.isFinite(parsed) ? parsed : null;
 };
 
-const answerLabel = (value) => (Array.isArray(value) ? value.join(', ') : String(value ?? '—'));
+const answerLabel = (value, otherLabel) => {
+  const text = Array.isArray(value) ? value.join(', ') : String(value ?? '—');
+  if (!otherLabel) return text;
+  /* Respondents' free text arrives as "Other: <text>"; a Chinese report should
+     not show the English prefix in front of every such answer. */
+  const separator = otherLabel === 'Other' ? ': ' : '：';
+  return text.replace(/Other:\s*/g, `${otherLabel}${separator}`);
+};
 
 const formatNumber = (value, language) => new Intl.NumberFormat(language).format(value);
 
@@ -121,8 +129,8 @@ function matchesFilter(response, questionId, value) {
   return String(answer ?? '') === value;
 }
 
-function csvCell(value) {
-  const text = answerLabel(value).replaceAll('"', '""');
+function csvCell(value, otherLabel) {
+  const text = answerLabel(value, otherLabel).replaceAll('"', '""');
   return `"${text}"`;
 }
 
@@ -131,7 +139,7 @@ function downloadCsv(questions, responses, filename, labels) {
   const lines = responses.map((response) => [
     csvCell(response.submittedAt),
     csvCell(response.qualityFlag ? labels.flagged : ''),
-    ...questions.map((question) => csvCell(response.answers?.[question.id] ?? '')),
+    ...questions.map((question) => csvCell(response.answers?.[question.id] ?? '', labels.other)),
   ].join(','));
   const csv = `\uFEFF${[header.map(csvCell).join(','), ...lines].join('\r\n')}`;
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
@@ -200,6 +208,12 @@ function QuestionCard({ question, index, responses, copy }) {
   const [display, setDisplay] = useState('chart');
 
   const choice = useMemo(() => (isChoice ? choiceRows(question, responses) : null), [isChoice, question, responses]);
+  /* Free-text "other" answers arrive as "Other: <text>"; the row labels go
+     through the same language mapping as the individual answers. */
+  const choiceRowsForDisplay = useMemo(
+    () => (choice ? choice.rows.map((row) => ({ ...row, label: answerLabel(row.label, copy.other) })) : []),
+    [choice, copy.other],
+  );
   const rating = useMemo(() => (question.type === 'RATING' ? ratingStats(question, responses) : null), [question, responses]);
   const numbers = useMemo(() => (question.type === 'NUMBER' ? numberStats(question, responses) : null), [question, responses]);
   const ranks = useMemo(() => (question.type === 'RANKING' ? rankingRows(question, responses) : null), [question, responses]);
@@ -210,7 +224,7 @@ function QuestionCard({ question, index, responses, copy }) {
     return responses
       .map((response) => ({ response, value: response.answers?.[question.id] }))
       .filter(({ value }) => value !== undefined && value !== null && value !== '')
-      .filter(({ value }) => !needle || answerLabel(value).toLowerCase().includes(needle));
+      .filter(({ value }) => !needle || answerLabel(value, copy.other).toLowerCase().includes(needle));
   }, [isText, query, question.id, responses]);
 
   const answered = isText ? texts.length : choice?.answered ?? rating?.answered ?? numbers?.answered ?? 0;
@@ -261,7 +275,7 @@ function QuestionCard({ question, index, responses, copy }) {
           {visible.map(({ response, value }) => (
             <div className="brd-answer" key={response.id}>
               <time>{formatDate(response.submittedAt, copy.language)}</time>
-              <p><Highlight text={answerLabel(value)} query={query} /></p>
+              <p><Highlight text={answerLabel(value, copy.other)} query={query} /></p>
             </div>
           ))}
           {hidden > 0 && (
@@ -290,9 +304,20 @@ function QuestionCard({ question, index, responses, copy }) {
         </div>
       ) : choice && choice.rows.length > 0 ? (
         display === 'chart'
-          ? <ResultsChart type={question.type} rows={choice.rows} otherLabel={copy.other || 'Other'} />
-          : <div className="brd-bars">
-            {choice.rows.map((row) => <BarRow key={row.label} row={row} total={choice.answered} />)}
+          ? <ResultsChart type={question.type} rows={choiceRowsForDisplay} otherLabel={copy.other || 'Other'} />
+          : <div className="brd-table" role="table" aria-label={copy.tableView || 'Table'}>
+            <div className="brd-table-head" role="row">
+              <span>{copy.language && String(copy.language).startsWith('zh') ? '选项' : 'Option'}</span>
+              <span>{copy.language && String(copy.language).startsWith('zh') ? '份数' : 'Count'}</span>
+              <span>{copy.language && String(copy.language).startsWith('zh') ? '占比' : 'Share'}</span>
+            </div>
+            {choiceRowsForDisplay.map((row) => (
+              <div className="brd-table-row" role="row" key={row.label}>
+                <span title={row.label}>{row.label}</span>
+                <span>{row.count}</span>
+                <strong>{Math.round(row.percent)}%</strong>
+              </div>
+            ))}
           </div>
       ) : numbers ? (
         <dl className="brd-figures">
@@ -332,7 +357,7 @@ function RecordRow({ response, questions, copy }) {
         {answered.map((question) => (
           <div key={question.id}>
             <dt>{question.prompt}</dt>
-            <dd>{answerLabel(response.answers[question.id])}</dd>
+            <dd>{answerLabel(response.answers[question.id], copy.other)}</dd>
           </div>
         ))}
       </dl>
@@ -387,7 +412,7 @@ export default function BusinessResultsDashboard({ preview }) {
      switches on the moment the field ships — it never locks people out by
      accident. RELEASED means APPROVED or SENT. */
   const deliveryStatus = project?.deliveryStatus || project?.delivery?.status;
-  const notReleased = Boolean(deliveryStatus) && !['APPROVED', 'SENT'].includes(deliveryStatus);
+  const notReleased = Boolean(deliveryStatus) && !isReportReleased(project);
   const withdrawn = deliveryStatus === 'REVOKED';
   const resultsLocked = notReleased || project?.questionnaire?.status !== 'PUBLISHED' || !responses.length;
   const target = Number(project?.targetParticipants) || 0;
@@ -460,6 +485,7 @@ export default function BusinessResultsDashboard({ preview }) {
               submitted: copy.csvSubmitted || 'Submitted at',
               quality: copy.csvQuality || 'Quality flag',
               flagged: copy.csvFlagged || 'flagged',
+              other: copy.other || 'Other',
             })}
           >
             <Download size={15} aria-hidden="true" /> {copy.exportCsv || 'Export CSV'}

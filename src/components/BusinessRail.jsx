@@ -20,6 +20,7 @@ import Logo from './Logo';
 import { useAuth } from './AuthContext';
 import BusinessLanguagePicker from './BusinessLanguagePicker';
 import { useLanguage, withLanguage } from './LanguageContext';
+import { pick } from '../content/projectStatus';
 import { useBusinessAvatar } from '../utils/businessAvatar';
 import './BusinessRail.css';
 
@@ -174,7 +175,7 @@ export default function BusinessRail({ activeId, onSelect, className = '', onRep
           onClick={() => navigate(withLanguage('/business/help', language))}
         >
           <LifeBuoy size={17} />
-          <span>{language && language.startsWith('zh') ? '帮助中心' : 'Help centre'}</span>
+          <span>{pick(language, '帮助中心', 'Help centre', '幫助中心')}</span>
         </button>
       </nav>
 

@@ -28,8 +28,44 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith('.js'))) {
   }
 }
 
+/* Page-level guards: one source for price and one for status. */
+const PAGES = readdirSync('src/pages').filter((f) => f.startsWith('Business') && f.endsWith('.jsx'));
+
+const PAGE_RULES = [
+  { re: /incidence\s*=\s*Math\./, msg: '自己算了 incidence，价格必须来自 content/rateCard.js' },
+  { re: /const\s+STEPS\s*=\s*\[/, msg: '自己定义了步骤表，用 content/projectStatus.js 的 CLIENT_STEPS' },
+  { re: /const\s+STATUS_TEXT\s*=/, msg: '自己定义了状态文案，用 statusLabel()' },
+  { re: /statuses\[[^\]]*\]\s*\|\|\s*status\b/, msg: '状态直接回落枚举，用 statusLabel()' },
+];
+
+for (const page of PAGES) {
+  const source = readFileSync(join('src/pages', page), 'utf8');
+  for (const rule of PAGE_RULES) {
+    if (rule.re.test(source)) {
+      console.error(`src/pages/${page}: ${rule.msg}`);
+      bad += 1;
+    }
+  }
+}
+
+/* One definition of "the report is released". Five places compared the status
+   to APPROVED, one accepted SENT too: a SENT report was readable at its URL but
+   hidden in the list and the sheet. */
+const RELEASE_RULE = { re: /deliveryStatus[^\n]*===\s*'APPROVED'/, msg: '直接比较 deliveryStatus，用 isReportReleased()' };
+const releaseFiles = [
+  ...readdirSync('src/pages').filter((f) => f.startsWith('Business') && f.endsWith('.jsx')).map((f) => join('src/pages', f)),
+  ...readdirSync('src/components').filter((f) => f.startsWith('Business') && f.endsWith('.jsx')).map((f) => join('src/components', f)),
+  join('src/components', 'businessNextStep.js'),
+];
+for (const file of releaseFiles) {
+  if (RELEASE_RULE.re.test(readFileSync(file, 'utf8'))) {
+    console.error(`${file}: ${RELEASE_RULE.msg}`);
+    bad += 1;
+  }
+}
+
 if (bad) {
-  console.error(`\n❌ 构建产物里有 ${bad} 处内部字段`);
+  console.error(`\n❌ 有 ${bad} 处问题`);
   process.exit(1);
 }
-console.log('✅ 构建产物没有内部字段');
+console.log('✅ 构建产物没有内部字段，客户页没有第二套价格/状态实现');

@@ -5511,6 +5511,15 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-custom-section h2,
 #root .business-custom-section-head h2 { font-family: var(--font-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
 #root .business-workspace-body { grid-template-columns: 236px minmax(0, 1fr); }
+/* The rule above carries an #root prefix, so it outranks the class-only
+   breakpoints earlier in this file. Restate them here or the rail stays 236px
+   on a phone and the page scrolls sideways. */
+@media (max-width: 1180px) {
+  #root .business-workspace-body { grid-template-columns: 212px minmax(0, 1fr); }
+}
+@media (max-width: 800px) {
+  #root .business-workspace-body { grid-template-columns: 64px minmax(0, 1fr); }
+}
 #root .business-projects { max-width: none; width: 100%; padding: 40px 48px 72px; }
 #root .business-projects-head { max-width: 1280px; }
 /* Draft card title is a card title, not a page heading. */
@@ -5739,15 +5748,27 @@ main.business-custom-request-page .business-workspace-rail {
    the brief is one click away and the row stays scannable. */
 .business-workspace .business-project-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
   margin-top: 18px;
+}
+
+/* Two across before the rail's desktop breakpoint, one on phones. Explicit
+   columns rather than auto-fill: auto-fill let a lone card sit in a 300px
+   track while the rest of the row stayed empty, which read as a broken table. */
+@media (max-width: 1180px) {
+  .business-workspace .business-project-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .business-workspace .business-project-cards { grid-template-columns: minmax(0, 1fr); }
 }
 
 .business-workspace .business-project-card {
   position: relative;
   display: flex;
   min-width: 0;
+  height: 100%;
   flex-direction: column;
   gap: 10px;
   border: 1px solid #e5e3dd;
@@ -5764,13 +5785,17 @@ main.business-custom-request-page .business-workspace-rail {
 }
 
 .business-workspace .business-project-card h2 {
+  display: -webkit-box;
   margin: 0;
+  overflow: hidden;
   color: #141413;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -.01em;
   line-height: 1.35;
   overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .business-workspace .business-project-card-meta {
@@ -5793,7 +5818,7 @@ main.business-custom-request-page .business-workspace-rail {
   align-items: center;
   gap: 14px;
   border-top: 1px solid #f0eee7;
-  margin-top: 4px;
+  margin-top: auto;
   padding-top: 10px;
 }
 
@@ -5811,7 +5836,7 @@ main.business-custom-request-page .business-workspace-rail {
 .business-workspace .business-project-card-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .business-workspace .business-project-card-action { margin-left: auto; border: 1px solid #141413; border-radius: 7px; padding: 6px 10px; }
 
-.business-workspace .business-project-card-more { display: grid; width: 26px; height: 26px; place-items: center; border: 0; border-radius: 6px; background: transparent; color: #6f6f68; cursor: pointer; }
+.business-workspace .business-project-card-more { position: relative; z-index: 3; display: grid; width: 26px; height: 26px; place-items: center; border: 0; border-radius: 6px; background: transparent; color: #6f6f68; cursor: pointer; }
 .business-workspace .business-project-card-more:hover { background: #f7f6f1; color: #141413; }
 
 .business-workspace .business-project-card-menu {
@@ -5832,3 +5857,113 @@ main.business-custom-request-page .business-workspace-rail {
 .business-workspace .business-project-card-menu button { display: flex; align-items: center; gap: 8px; border: 0; border-radius: 6px; background: transparent; color: #141413; cursor: pointer; font: 500 13px var(--font-sans); padding: 8px 9px; text-align: left; }
 .business-workspace .business-project-card-menu button:hover { background: #f7f6f1; }
 .business-workspace .business-project-card-menu button.is-danger { color: #8a3f2f; }
+
+/* On the icon rail the wordmark is wider than the column and spills over the
+   content edge; the mark alone carries the brand at that width. */
+@media (max-width: 800px) {
+  #root .business-workspace .business-workspace-rail .business-workspace-rail-brand { display: none; }
+}
+
+/* The ask bar and the balance chip cannot share a 326px content column; the
+   shortcut hint is desktop-only anyway, so the field goes first. */
+@media (max-width: 700px) {
+  #root .business-workspace .business-workspace-topbar .business-workspace-searchbar { display: none; }
+  #root .business-workspace .business-workspace-topbar { justify-content: flex-end; }
+}
+
+/* A report that is written but not released is shown as a state, not a link:
+   the results route would render the locked page and read as a broken link. */
+.business-workspace .business-project-open.is-pending { color: #9a988f; cursor: default; }
+.business-workspace .business-project-open.is-pending:hover { background: transparent; text-decoration: none; }
+.business-workspace .business-results-pending { align-self: center; color: #9a988f; font-size: 13px; }
+
+/* The card turns over on hover: information while resting, actions while
+   pointed at. The panel is a real element (not display:none), so Tab still
+   reaches it and :focus-within turns the card over for keyboard users. */
+.business-workspace .business-project-card { min-height: 186px; cursor: pointer; }
+
+.business-workspace .business-project-card-actions {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 12px;
+  background: #f2f1ec;
+  padding: 16px 18px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .13s ease;
+}
+
+.business-workspace .business-project-card:hover .business-project-card-actions,
+.business-workspace .business-project-card:focus-within .business-project-card-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.business-workspace .business-project-card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  border: 1px solid #d5d2c9;
+  border-radius: 8px;
+  background: #fff;
+  color: #141413;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  margin-bottom: 6px;
+  padding: 0 12px;
+}
+.business-workspace .business-project-card-cta:hover { background: #faf9f5; border-color: #141413; }
+.business-workspace .business-project-card-cta:disabled { opacity: .6; cursor: default; }
+
+.business-workspace .business-project-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #141413;
+  cursor: pointer;
+  font: 500 13px var(--font-sans);
+  padding: 7px 6px;
+  text-align: left;
+  text-decoration: none;
+}
+.business-workspace .business-project-card-row:hover { background: #e8e6df; }
+
+.business-workspace .business-project-card-title {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  padding: 0;
+  text-align: left;
+}
+
+/* Touch screens have no hover: show the actions under the card instead. */
+@media (hover: none) {
+  .business-workspace .business-project-card-actions {
+    position: static;
+    background: transparent;
+    padding: 10px 0 0;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .business-workspace .business-project-card { min-height: 0; }
+}
+
+.business-workspace .business-project-card-row.is-danger { color: #8a3f2f; }
+.business-workspace .business-project-card-row.is-danger:hover { background: #f6e7e2; }

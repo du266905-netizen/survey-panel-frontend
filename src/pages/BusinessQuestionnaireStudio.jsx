@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   AlertCircle, Archive, ArrowLeft, Check, CheckCircle2, ChevronDown, Copy, Eye, Gauge, GripVertical, LayoutTemplate, Sparkles, Undo2,
   ListChecks, LoaderCircle, MoreHorizontal, Plus, Receipt, Rocket, Send, Settings2, Star, Trash2, Users, X,
@@ -102,7 +102,7 @@ const copy = {
   'zh-CN': {
     back: '返回项目', draft: '草稿', published: '已发布',
     flow: '流程', stepAudience: '受众', stepQuestions: '问卷构建', stepQuote: '报价与付款', stepLaunch: '发布投放',
-    quality: '质量检查', summary: '问卷概况', questionsN: '题目', requiredN: '必答',
+    quality: '质量检查', summary: '问卷概况', questionsN: '题目', requiredN: '必答', sectionPrefix: '第 {n} 部分：', pageLabel: '第 1 页',
     minutes: '预计时长', minutesValue: '{n} 分钟', issues: '待处理', noIssues: '没有发现问题',
     issuePrompt: 'Q{n} 还没有题干', issueOptions: 'Q{n} 的选项少于 2 个',
     issueLogic: 'Q{n} 的显示条件指向了不存在的题', issueLogicValue: 'Q{n} 的显示条件取值不在选项里',
@@ -117,12 +117,12 @@ const copy = {
     qualityButton: '质量检查', qualityTitle: '质量检查',
     assist: 'AI', assistTitle: '让 AI 改这道题', assistPlaceholder: '想让它怎么改？例如：更中性、别诱导、缩短',
     assistRewrite: '改写题干', assistOptions: '生成选项', assistApply: '采用', assistUndo: '撤销',
-    assistThinking: '生成中…', assistFailed: 'AI 接口还没接上（后端待加 /assist）。', assistNoCredits: 'AI 次数已用完，去 AI 页加购。', assistMock: '开发环境示例结果，不是模型输出。',
+    assistThinking: '生成中…', assistFailed: 'AI 辅助暂时不可用，请手动修改。', assistNoCredits: 'AI 次数已用完，去 AI 页加购。', assistMock: '当前是示例结果，仅供预览。',
     assistEmpty: '先写一句要求，或直接点一个动作。',
     paging: '分页', pagingHint: '一页放几道题。设成分页后，受访者会看到进度条。',
     pagingOff: '一页到底', pagingOne: '一屏一题', pagingPerPage: '每页题数', pagingPages: '共 {n} 页，下面带题目地图', quotasTitle: '配额', quotasHint: '按题目答案划分格子，填每格需要多少份。相加就是总样本量。',
     quotaCell: '格子', quotaTarget: '目标份数', quotaAdd: '添加格子', quotaRemove: '删除', quotaEmpty: '还没有配额格子',
-    quotaEmptyHint: '先有单选、多选或下拉题，才能按答案划分格子。', quotaTotal: '合计目标', quotaEnforced: '进人判断在后端：页面上能配，接口接上后才真正限流。', templatesTitle: '从整卷模板开始', templatesHint: '插入后可以直接改题目和选项。', templatesApply: '插入', templatesFull: '题目数量会超过 30 题上限',
+    quotaEmptyHint: '先有单选、多选或下拉题，才能按答案划分格子。', quotaTotal: '合计目标', quotaEnforced: '配额会随问卷保存，投放时按此控制样本量。', templatesTitle: '从整卷模板开始', templatesHint: '插入后可以直接改题目和选项。', templatesApply: '插入', templatesFull: '题目数量会超过 30 题上限',
     archived: '已归档', copyDraft: '复制为新草稿', archive: '归档', deleteDraft: '删除草稿',
     deleteConfirm: '删除这份草稿？删除后不可恢复。',
     locked: '已发布：结构已锁定。如需修改，复制为新草稿。',
@@ -136,7 +136,7 @@ const copy = {
   en: {
     back: 'Back to project', draft: 'Draft', published: 'Published',
     flow: 'Flow', stepAudience: 'Audience', stepQuestions: 'Build', stepQuote: 'Quote and payment', stepLaunch: 'Launch',
-    quality: 'Quality check', summary: 'Summary', questionsN: 'Questions', requiredN: 'Required',
+    quality: 'Quality check', summary: 'Summary', questionsN: 'Questions', requiredN: 'Required', sectionPrefix: 'Section {n}: ', pageLabel: 'Page 1',
     minutes: 'Length', minutesValue: '{n} min', issues: 'To fix', noIssues: 'Nothing to fix',
     issuePrompt: 'Q{n} has no prompt', issueOptions: 'Q{n} has fewer than two options',
     issueLogic: 'Q{n} points at a question that no longer exists', issueLogicValue: 'Q{n} uses a value that is not an option',
@@ -151,12 +151,12 @@ const copy = {
     qualityButton: 'Quality check', qualityTitle: 'Quality check',
     assist: 'AI', assistTitle: 'Let AI rework this question', assistPlaceholder: 'How should it change? e.g. neutral, no leading, shorter',
     assistRewrite: 'Rewrite prompt', assistOptions: 'Suggest options', assistApply: 'Use', assistUndo: 'Undo',
-    assistThinking: 'Working…', assistFailed: 'The AI endpoint is not connected yet (backend needs /assist).', assistNoCredits: 'Out of AI credits — buy more on the AI page.', assistMock: 'Development fixture, not model output.',
+    assistThinking: 'Working…', assistFailed: 'AI assist is unavailable right now. Edit the question manually.', assistNoCredits: 'Out of AI credits — buy more on the AI page.', assistMock: 'Sample result for preview only.',
     assistEmpty: 'Write an instruction first, or pick an action.',
     paging: 'Paging', pagingHint: 'Questions per page. Once paged, respondents see a progress bar.',
     pagingOff: 'One page', pagingOne: 'One per screen', pagingPerPage: 'Per page', pagingPages: '{n} pages, with a question map', quotasTitle: 'Quotas', quotasHint: 'Split the sample by answers and set how many completes each cell needs; the sum is the total.', 
     quotaCell: 'Cell', quotaTarget: 'Target', quotaAdd: 'Add cell', quotaRemove: 'Remove', quotaEmpty: 'No quota cells yet', 
-    quotaEmptyHint: 'Add a single-choice, multiple-choice or dropdown question first.', quotaTotal: 'Total target', quotaEnforced: 'Enforcement is server-side: it can be configured here and takes effect once the API accepts it.', templatesTitle: 'Start from a whole questionnaire', templatesHint: 'Everything is editable once inserted.', templatesApply: 'Insert', templatesFull: 'This would pass the 30-question limit',
+    quotaEmptyHint: 'Add a single-choice, multiple-choice or dropdown question first.', quotaTotal: 'Total target', quotaEnforced: 'Quotas are saved with the questionnaire and applied when the study goes live.', templatesTitle: 'Start from a whole questionnaire', templatesHint: 'Everything is editable once inserted.', templatesApply: 'Insert', templatesFull: 'This would pass the 30-question limit',
     archived: 'Archived', copyDraft: 'Copy as a new draft', archive: 'Archive', deleteDraft: 'Delete draft',
     deleteConfirm: 'Delete this draft? This cannot be undone.',
     locked: 'Published: the structure is locked. Copy it to a new draft to change it.',
@@ -211,14 +211,14 @@ const savedSettings = (settings) => SAVE_SETTINGS.reduce((out, key) => {
   return out;
 }, {});
 
-function PreviewAnswer({ question }) {
+function PreviewAnswer({ question, otherLabel = 'Other', selectLabel = 'Select…' }) {
   if (question.type === 'LONG_TEXT') return <textarea className="sq-preview-input" rows={4} disabled placeholder="…" />;
   if (question.type === 'SHORT_TEXT' || question.type === 'NUMBER') return <input className="sq-preview-input" disabled placeholder="…" />;
   if (question.type === 'DATE') return <input className="sq-preview-input" type="date" disabled />;
   if (question.type === 'DROPDOWN') {
     return (
       <select className="sq-preview-input" disabled defaultValue="">
-        <option value="">请选择</option>
+        <option value="">{selectLabel}</option>
         {question.choices.map((choice) => <option key={choice} value={choice}>{choice}</option>)}
       </select>
     );
@@ -262,7 +262,7 @@ function PreviewAnswer({ question }) {
         </label>
       ))}
       {question.settings?.allowOther ? (
-        <label><input type={question.type === 'MULTIPLE_CHOICE' ? 'checkbox' : 'radio'} disabled /><span>其他</span></label>
+        <label><input type={question.type === 'MULTIPLE_CHOICE' ? 'checkbox' : 'radio'} disabled /><span>{otherLabel}</span></label>
       ) : null}
     </div>
   );
@@ -299,6 +299,7 @@ export default function BusinessQuestionnaireStudio() {
   const [cover, setCover] = useState('');
   const [moreOpen, setMoreOpen] = useState(false);
   const [sensitiveOpen, setSensitiveOpen] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
   const optionRefs = useRef({});
 
   const load = useCallback(async () => {
@@ -315,7 +316,9 @@ export default function BusinessQuestionnaireStudio() {
       setPageSize(next.questionnaire?.pageSize === undefined || next.questionnaire?.pageSize === null ? 1 : Number(next.questionnaire.pageSize));
       setQuestions((next.questionnaire?.questions || []).map(normalize));
     } catch {
-      setError(text.saveFailed);
+      /* A deleted or mistyped project id used to render an empty editor for a
+         project that does not exist. Say so and leave. */
+      setLoadFailed(true);
     }
   }, [projectId, text.saveFailed, navigate, language]);
 
@@ -323,6 +326,16 @@ export default function BusinessQuestionnaireStudio() {
 
   const status = project?.questionnaire?.status || 'DRAFT';
   const readOnly = status !== 'DRAFT' && status !== 'ARCHIVED';
+
+  /* Self-serve runs 受众 → 问卷构建 → 报价与付款 → 发布投放. The rail used to
+     be static: questions always active, quote always a dead label, so a client
+     who had built the questionnaire could not reach the payment step from here. */
+  const flowStage = (() => {
+    const value = String(project?.status || 'DRAFT');
+    if (['FUNDED', 'RECRUITING', 'LIVE', 'COMPLETED', 'DELIVERED', 'ACCEPTED'].includes(value)) return 'launch';
+    if (['QUOTE_REQUIRED', 'QUOTE_SENT', 'CLIENT_ACCEPTED', 'CONTRACT_SENT', 'CONTRACT_SIGNED'].includes(value)) return 'quote';
+    return 'questions';
+  })();
   const hasSensitive = questions.some((question) => question.section === 'PROFILE'
     && /(income|salary|gender|sex|ethnic|race|religion|health|disab)/i.test(question.prompt));
 
@@ -602,6 +615,16 @@ export default function BusinessQuestionnaireStudio() {
 
   const previewList = previewOpen ? questions : [];
 
+  if (loadFailed) {
+    const zh = String(language).startsWith('zh');
+    return (
+      <main className="business-builder-loading">
+        <strong>{zh ? '这个项目打不开，可能已被删除。' : 'This project cannot be opened. It may have been deleted.'}</strong>
+        <Link to={withLanguage('/business/workspace', language)}>{zh ? '返回工作区' : 'Back to workspace'}</Link>
+      </main>
+    );
+  }
+
   return (
     <main className={`sq-page${readOnly ? ' is-locked' : ''}`}>
       <header className="sq-top">
@@ -665,9 +688,11 @@ export default function BusinessQuestionnaireStudio() {
           <a href={withLanguage(`/business/projects/${projectId}/audience`, language)}>
             <Users size={16} aria-hidden="true" /> {text.stepAudience}
           </a>
-          <span className="is-active"><ListChecks size={16} aria-hidden="true" /> {text.stepQuestions}</span>
-          <span className="is-todo"><Receipt size={16} aria-hidden="true" /> {text.stepQuote}</span>
-          <span className="is-todo"><Rocket size={16} aria-hidden="true" /> {text.stepLaunch}</span>
+          <span className={flowStage === 'questions' ? 'is-active' : ''}><ListChecks size={16} aria-hidden="true" /> {text.stepQuestions}</span>
+          <a className={flowStage === 'quote' ? 'is-active' : ''} href={withLanguage(`/business/projects/${projectId}/quote`, language)}>
+            <Receipt size={16} aria-hidden="true" /> {text.stepQuote}
+          </a>
+          <span className={flowStage === 'launch' ? 'is-active' : ''}><Rocket size={16} aria-hidden="true" /> {text.stepLaunch}</span>
         </nav>
 
         <section className="sq-canvas">
@@ -703,14 +728,14 @@ export default function BusinessQuestionnaireStudio() {
           {grouped.map((group, groupIndex) => (
             <section className="sq-group" key={group.value}>
               <header className="sq-group-head">
-                <span className="sq-group-title">Section {groupIndex + 1}: {sectionLabel(group.value)}</span>
+                <span className="sq-group-title">{text.sectionPrefix.replace('{n}', groupIndex + 1)}{sectionLabel(group.value)}</span>
                 <Star size={14} aria-hidden="true" />
                 <button type="button" className="sq-icon" aria-label={text.addQuestion} onClick={() => addQuestion(group.value)}>
                   <Plus size={15} aria-hidden="true" />
                 </button>
               </header>
 
-              <div className="sq-page-label"><GripVertical size={13} aria-hidden="true" /> Page 1</div>
+              <div className="sq-page-label"><GripVertical size={13} aria-hidden="true" /> {text.pageLabel}</div>
 
               <div className="sq-cards">
                 {group.items.map((question) => {
@@ -757,6 +782,7 @@ export default function BusinessQuestionnaireStudio() {
                           type="button"
                           className={`sq-tool${assistFor === question.uid ? ' is-on' : ''}`}
                           title={text.assistTitle}
+                          aria-label={text.assistTitle}
                           onClick={() => {
                             setAssistFor((current) => (current === question.uid ? '' : question.uid));
                             setAssistResults([]);
@@ -766,14 +792,14 @@ export default function BusinessQuestionnaireStudio() {
                         >
                           <Sparkles size={15} aria-hidden="true" />
                         </button>
-                        <button type="button" className="sq-tool" title={text.duplicate} onClick={() => duplicateQuestion(question.uid)}>
+                        <button type="button" className="sq-tool" title={text.duplicate} aria-label={text.duplicate} aria-label={text.duplicate} onClick={() => duplicateQuestion(question.uid)}>
                           <Copy size={15} aria-hidden="true" />
                         </button>
                         <div className="sq-menu-wrap">
                           <button
                             type="button"
                             className="sq-tool"
-                            title={text.menu}
+                            title={text.menu} aria-label={text.menu} aria-label={text.menu}
                             aria-expanded={openMenu === question.uid}
                             onClick={() => setOpenMenu((current) => (current === question.uid ? null : question.uid))}
                           >
@@ -868,7 +894,7 @@ export default function BusinessQuestionnaireStudio() {
                                 className="sq-tool"
                                 onClick={() => update(question.uid, { choices: question.choices.filter((_, position) => position !== choiceIndex) })}
                                 disabled={question.choices.length <= 2}
-                                title={text.remove}
+                                title={text.remove} aria-label={text.remove}
                               >
                                 <X size={14} aria-hidden="true" />
                               </button>
@@ -905,7 +931,7 @@ export default function BusinessQuestionnaireStudio() {
                               <button
                                 type="button"
                                 className="sq-tool"
-                                title={text.remove}
+                                title={text.remove} aria-label={text.remove} aria-label={text.remove}
                                 disabled={(question.settings.matrixColumns || MATRIX_DEFAULT_COLUMNS).length <= 2}
                                 onClick={() => updateSettings(question.uid, {
                                   matrixColumns: (question.settings.matrixColumns || MATRIX_DEFAULT_COLUMNS).filter((_, position) => position !== columnIndex),
@@ -993,7 +1019,7 @@ export default function BusinessQuestionnaireStudio() {
                                       <button
                                         type="button"
                                         className="sq-tool"
-                                        title={text.remove}
+                                        title={text.remove} aria-label={text.remove} aria-label={text.remove}
                                         onClick={() => {
                                           const conditions = question.logic.conditions.filter((_, position) => position !== conditionIndex);
                                           update(question.uid, { logic: conditions.length ? { ...question.logic, conditions } : null });
@@ -1266,7 +1292,7 @@ export default function BusinessQuestionnaireStudio() {
               {previewList[previewStep] ? (
                 <div className="sq-preview-q">
                   <p>{previewList[previewStep].prompt || '—'}{previewList[previewStep].required ? <em>*</em> : null}</p>
-                  <PreviewAnswer question={previewList[previewStep]} />
+                  <PreviewAnswer question={previewList[previewStep]} otherLabel={language.startsWith('zh') ? '其他' : 'Other'} selectLabel={language.startsWith('zh') ? '请选择' : 'Select…'} />
                 </div>
               ) : <p className="sq-preview-empty">—</p>}
             </div>

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, ChevronDown, ListChecks, Receipt, Rocket, Trash2, Users } from 'lucide-react';
 import { getBusinessProject, updateBusinessAudience } from '../api/realApi';
+import { quoteFor, incidenceFor } from '../content/rateCard';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessQuestionnaireStudio.css';
 import './BusinessAudience.css';
@@ -91,7 +92,7 @@ const copy = {
     incidence: '符合比例',
     perComplete: '单份成本',
     total: '合计',
-    estimateNote: '示意价，按筛选条件与 {minutes} 分钟时长估算，正式报价以项目为准。',
+    estimateNote: '示意价，按筛选条件与 {minutes} 分钟时长估算，正式报价以项目为准。', notSelfServe: '这个人群太窄，自助不出价，需要人工报价。',
     next: '下一步：问卷',
     localOnly: '受众条件会随项目保存，换设备后仍可继续编辑。', save: '保存受众', saving: '保存中…', saveFailed: '受众条件未保存，请重试。',
     notSet: '未选择',
@@ -119,7 +120,7 @@ const copy = {
     incidence: 'Incidence',
     perComplete: 'Cost per complete',
     total: 'Total',
-    estimateNote: 'Indicative only, based on filters and a {minutes}-minute interview; the project quote is the record.',
+    estimateNote: 'Indicative only, based on filters and a {minutes}-minute interview; the project quote is the record.', notSelfServe: 'This audience is too narrow for self-serve pricing; it needs a manual quote.',
     next: 'Next: questionnaire',
     localOnly: 'Audience criteria are saved with this project and stay available on another device.', save: 'Save audience', saving: 'Saving…', saveFailed: 'Audience criteria could not be saved. Try again.',
     notSet: 'Not set',
@@ -182,12 +183,14 @@ export default function BusinessAudience() {
   )), [selection, language]);
 
   const chosenCount = chosen.length;
-  /* Indicative model: each condition narrows the pool; the price per complete
-     rises as the pool narrows. Replaced by the pricing service when it exists. */
-  const incidence = Math.max(0.02, 0.6 * (0.72 ** chosenCount));
+  /* Same rate card as the price page. An estimate that disagrees with the
+     number the client is asked to pay is worse than no estimate. */
+  const incidence = incidenceFor(chosenCount);
   const minutes = project?.estimatedMinutes || 8;
-  const perComplete = 1.1 + (1 / incidence) * 0.35 + minutes * 0.04;
-  const total = completes * perComplete;
+  const quotaCells = Array.isArray(project?.questionnaire?.quotas) && project.questionnaire.quotas.length ? project.questionnaire.quotas.length : 1;
+  const priced = quoteFor({ incidence, minutes, quotaCells, completes });
+  const perComplete = priced.selfServe ? priced.unitCents / 100 : null;
+  const total = priced.selfServe ? priced.totalCents / 100 : null;
 
   const toggleValue = (itemId, value) => {
     setSelection((current) => {
@@ -232,7 +235,9 @@ export default function BusinessAudience() {
           <button type="button" className="sq-btn" disabled={saving} onClick={saveAudience}>
             {saving ? text.saving : text.save}
           </button>
-          <button type="button" className="sq-btn is-primary" onClick={() => navigate(withLanguage(`/business/projects/${projectId}/quote`, language))}>
+          {/* The label says questionnaire, so it opens the questionnaire. It
+              used to jump straight to the price page, before any question existed. */}
+          <button type="button" className="sq-btn is-primary" onClick={() => navigate(withLanguage(`/business/projects/${projectId}`, language))}>
             {text.next}
           </button>
         </div>
@@ -404,10 +409,10 @@ export default function BusinessAudience() {
             <h2>{text.estimate}</h2>
             <dl>
               <div><dt>{text.incidence}</dt><dd>{Math.round(incidence * 100)}%</dd></div>
-              <div><dt>{text.perComplete}</dt><dd>{money(perComplete)}</dd></div>
-              <div className="is-total"><dt>{text.total}</dt><dd>{money(total)}</dd></div>
+              <div><dt>{text.perComplete}</dt><dd>{perComplete === null ? '—' : money(perComplete)}</dd></div>
+              <div className="is-total"><dt>{text.total}</dt><dd>{total === null ? '—' : money(total)}</dd></div>
             </dl>
-            <p>{text.estimateNote.replace('{minutes}', minutes)}</p>
+            <p>{priced.selfServe ? text.estimateNote.replace('{minutes}', minutes) : text.notSelfServe}</p>
           </div>
         </section>
       </div>

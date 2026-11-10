@@ -24,6 +24,10 @@ export const QUOTA_CAP = 1.3;
 
 const band = (incidence) => BANDS.find((item) => incidence >= item.min) || null;
 
+/* One decay for every surface. The audience step and the price page used
+   different curves (0.72 vs 0.82), so the same project showed two prices. */
+export const incidenceFor = (criteria = 0) => Math.max(0.02, 0.6 * Math.pow(0.82, Math.max(0, criteria)));
+
 export const isSelfServe = (incidence) => Boolean(band(incidence));
 
 export function pricePerCompleteCents(incidence, minutes = 8, quotaCells = 1) {

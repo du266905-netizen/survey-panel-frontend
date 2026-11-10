@@ -5,7 +5,7 @@ import NotificationBell from './NotificationBell';
 /* One top bar for the whole research end. The workspace owns the search state
    and passes it in; settings pages get the same chrome without a second header. */
 export default function BusinessTopBar({
-  query = '', onQueryChange, onSubmit, inputRef, placeholder = 'ask a question in guanyisearch',
+  query = '', onQueryChange, onSubmit, inputRef, placeholder = 'ask a question in guanyisearch', showBalance = true,
 }) {
   return (
     <header className="business-workspace-topbar">
@@ -14,7 +14,7 @@ export default function BusinessTopBar({
         <input ref={inputRef} type="search" value={query} onChange={(event) => onQueryChange?.(event.target.value)} placeholder={placeholder} aria-label={placeholder} />
         <kbd aria-hidden="true">⌘K</kbd>
       </form>
-      <BusinessBalanceChip />
+      {showBalance ? <BusinessBalanceChip /> : null}
       <NotificationBell className="business-workspace-notification" />
     </header>
   );

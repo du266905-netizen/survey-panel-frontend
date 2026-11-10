@@ -98,6 +98,7 @@
 .bq-note-small { margin: 10px 0 0; color: #8D948D; font-size: 11px; line-height: 1.6; }
 
 .bq-locked { margin: 10px 0 0; color: #B42318; font-size: 11px; line-height: 1.6; }
+.bq-error { margin: 10px 0 0; color: #B42318; font-size: 12px; line-height: 1.6; }
 
 .bq-balance { margin: 0 0 10px; color: #141413; font-size: 16px; font-variant-numeric: tabular-nums; }
 

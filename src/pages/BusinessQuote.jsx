@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Info, Lock, Wallet } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { getBusinessProject } from '../api/realApi';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { createBusinessPayment, getBusinessAccountBalance, getBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessQuote.css';
-import { quoteFor, isSelfServe } from '../content/rateCard';
+import { quoteFor, incidenceFor, isSelfServe } from '../content/rateCard';
 
 /* Step three: what the study costs and how it is paid.
  *
@@ -32,8 +32,9 @@ const copy = {
     notSelfServeCta: '联系报价',
     guarantees: '我们的承诺', g1: '收不满按实际完成收费', g2: '数据有问题免费补', g3: '价格锁定 7 天',
     balance: '账户余额', pay: '去付款', notEnough: '余额不足，先去充值', topUp: '充值',
+    payUnavailable: '在线付款暂时不可用，请稍后再试或联系我们。', payFailed: '付款没有完成，请重试。',
     lockLine: '这个价格锁到 {date}，期间不会变。',
-    locked: '项目已送审，报价不能再改。',
+    locked: '报价已锁定，不能再改。',
   },
   en: {
     back: 'Back to project', flow: 'Flow',
@@ -48,8 +49,9 @@ const copy = {
     notSelfServeCta: 'Request a quote',
     guarantees: 'What we commit to', g1: 'Pay for completes delivered', g2: 'Free replacements for bad data', g3: 'Price locked for seven days',
     balance: 'Account balance', pay: 'Pay', notEnough: 'Not enough balance — top up first', topUp: 'Top up',
+    payUnavailable: 'Online payment is unavailable right now. Try again later or contact us.', payFailed: 'The payment did not complete. Try again.',
     lockLine: 'This price holds until {date}.',
-    locked: 'The project is no longer a draft, so the quote cannot change.',
+    locked: 'The quote is locked and cannot change.',
   },
 };
 
@@ -59,7 +61,9 @@ const lockUntil = () => {
   return date;
 };
 
-const money = (value, language) => new Intl.NumberFormat(language === 'en' ? 'en-US' : 'zh-CN', {
+const isEnglish = (language) => String(language || '').toLowerCase().startsWith('en');
+
+const money = (value, language) => new Intl.NumberFormat(isEnglish(language) ? 'en-US' : 'zh-CN', {
   style: 'currency', currency: 'USD', maximumFractionDigits: 2,
 }).format(value);
 
@@ -70,17 +74,37 @@ export default function BusinessQuote() {
   const text = copy[language] || copy.en;
 
   const [project, setProject] = useState(null);
-  const lockDate = lockUntil().toLocaleDateString(language === 'en' ? 'en-GB' : 'zh-CN', { month: 'long', day: 'numeric' });
+  const [balance, setBalance] = useState(null);
+  const [payBusy, setPayBusy] = useState(false);
+  const [payError, setPayError] = useState('');
+  const [loadFailed, setLoadFailed] = useState(false);
+  const lockDate = lockUntil().toLocaleDateString(isEnglish(language) ? 'en-GB' : 'zh-CN', { month: 'long', day: 'numeric' });
 
   useEffect(() => {
-    getBusinessProject(projectId).then((response) => setProject(response.data.project)).catch(() => {});
+    getBusinessProject(projectId)
+      .then((response) => setProject(response.data.project))
+      .catch(() => setLoadFailed(true));
+    getBusinessAccountBalance()
+      .then((payload) => {
+        const amount = Number(payload?.balance?.balance);
+        if (Number.isFinite(amount)) setBalance(amount);
+      })
+      .catch(() => {});
   }, [projectId]);
 
   const criteria = useMemo(() => {
     const targeting = project?.targeting || {};
-    const named = ['age', 'industry', 'urbanity'].reduce((sum, key) => sum + (Array.isArray(targeting[key]) ? targeting[key].length : 0), 0);
-    const filters = Object.values(targeting.filters || {}).reduce((sum, values) => sum + (Array.isArray(values) ? values.length : 0), 0);
-    return named + filters;
+    /* Count distinct conditions. The targeting object can carry the same age /
+       industry value both at the top level and under filters; adding the two
+       lengths would price the same condition twice. */
+    const pairs = new Set();
+    ['age', 'industry', 'urbanity'].forEach((key) => {
+      (Array.isArray(targeting[key]) ? targeting[key] : []).forEach((value) => pairs.add(`${key}:${value}`));
+    });
+    Object.entries(targeting.filters || {}).forEach(([key, values]) => {
+      (Array.isArray(values) ? values : []).forEach((value) => pairs.add(`${key}:${value}`));
+    });
+    return pairs.size;
   }, [project]);
 
   const completes = Number(project?.targeting?.completes || project?.targetParticipants || 500);
@@ -89,13 +113,59 @@ export default function BusinessQuote() {
 
   /* Incidence falls as criteria accumulate; the price per complete rises with
      it. Same shape as the pricing service, kept here so the page is usable. */
-  const incidence = Math.max(0.02, 0.6 * (0.82 ** criteria));
+  const incidence = incidenceFor(criteria);
   const quotaCells = Array.isArray(project?.questionnaire?.quotas) ? project.questionnaire.quotas.length : 1;
   const priced = quoteFor({ incidence, minutes, quotaCells, completes });
   const unitPrice = priced.selfServe ? priced.unitCents / 100 : 0;
   const sampleCost = priced.selfServe ? priced.sampleCents / 100 : 0;
   const fee = priced.selfServe ? priced.feeCents / 100 : 0;
   const total = priced.selfServe ? priced.totalCents / 100 : 0;
+
+  /* Paying used to jump to the top-up page and stop there: the client topped
+     up, came back, and the button sent them to top up again. Now the button
+     charges the project; a short balance sends them to top up with the reason. */
+  const pay = async () => {
+    if (payBusy) return;
+    if (balance !== null && priced.selfServe && total > balance) {
+      navigate(withLanguage('/business/add-funds', language));
+      return;
+    }
+    setPayBusy(true);
+    setPayError('');
+    try {
+      const response = await createBusinessPayment(projectId);
+      const payment = response.data?.payment;
+      if (payment?.checkoutUrl) {
+        window.location.assign(payment.checkoutUrl);
+        return;
+      }
+      if (['PAID', 'SUCCEEDED', 'COMPLETED', 'CAPTURED'].includes(String(payment?.status || '').toUpperCase())) {
+        /* Paid means the next step is 发布投放, which lives in the studio. */
+        navigate(withLanguage(`/business/projects/${projectId}`, language));
+        return;
+      }
+      setPayError(text.payUnavailable);
+    } catch (error) {
+      const code = error?.response?.status;
+      if (code === 402 || code === 400) {
+        navigate(withLanguage('/business/add-funds', language));
+      } else {
+        setPayError(code === 404 ? text.payUnavailable : text.payFailed);
+      }
+    } finally {
+      setPayBusy(false);
+    }
+  };
+
+  if (loadFailed) {
+    const zh = String(language).startsWith('zh');
+    return (
+      <main className="business-builder-loading">
+        <strong>{zh ? '这个项目打不开，可能已被删除。' : 'This project cannot be opened. It may have been deleted.'}</strong>
+        <Link to={withLanguage('/business/workspace', language)}>{zh ? '返回工作区' : 'Back to workspace'}</Link>
+      </main>
+    );
+  }
 
   const status = project?.status || 'DRAFT';
   const locked = !['DRAFT', 'QUOTE_REQUIRED'].includes(status);
@@ -150,7 +220,7 @@ export default function BusinessQuote() {
             ) : (
             <dl>
               <div><dt>{text.unit}</dt><dd>{money(unitPrice, language)}</dd></div>
-              <div><dt>{text.count}</dt><dd>{completes.toLocaleString(language === 'en' ? 'en-US' : 'zh-CN')}</dd></div>
+              <div><dt>{text.count}</dt><dd>{completes.toLocaleString(isEnglish(language) ? 'en-US' : 'zh-CN')}</dd></div>
               <div><dt>{text.sample}</dt><dd>{money(sampleCost, language)}</dd></div>
               <div><dt>{text.fee}</dt><dd>{money(fee, language)}</dd></div>
               <div className="is-total"><dt>{text.total}</dt><dd>{money(total, language)}</dd></div>
@@ -178,7 +248,8 @@ export default function BusinessQuote() {
               <button
                 type="button"
                 className="sq-btn is-primary bq-pay"
-                onClick={() => navigate(withLanguage('/business/add-funds', language))}
+                onClick={pay}
+                disabled={payBusy}
               >
                 <Wallet size={15} aria-hidden="true" /> {text.pay} <ArrowRight size={15} aria-hidden="true" />
               </button>
@@ -187,12 +258,13 @@ export default function BusinessQuote() {
                 {text.notSelfServeCta} <ArrowRight size={15} aria-hidden="true" />
               </a>
             )}
+            {payError ? <p className="bq-error" role="alert">{payError}</p> : null}
             <p className="bq-note-small">{text.lockLine.replace('{date}', lockDate)}</p>
           </section>
 
           <section className="bq-side-block">
             <h2>{text.balance}</h2>
-            <p className="bq-balance">—</p>
+            <p className="bq-balance">{balance === null ? '—' : money(balance, language)}</p>
             <button type="button" className="sq-btn" onClick={() => navigate(withLanguage('/business/add-funds', language))}>
               {text.topUp}
             </button>

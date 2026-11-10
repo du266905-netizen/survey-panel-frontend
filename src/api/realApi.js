@@ -243,6 +243,22 @@ export const sendBusinessReport = async (projectId) => {
   return { data: response.data };
 };
 
+/* Client side of the same documents: sign, confirm, accept. */
+export const signBusinessContract = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/contract/sign`);
+  return { data: response.data };
+};
+
+export const approveBusinessQuestionnaire = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/questionnaire/client-approve`);
+  return { data: response.data };
+};
+
+export const acceptBusinessProject = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/accept`);
+  return { data: response.data };
+};
+
 export const releaseBusinessProjectReport = async (projectId, status) => {
   const response = await apiClient.patch(`/api/business/projects/${projectId}/report`, { status });
   return { data: response.data };

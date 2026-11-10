@@ -185,7 +185,7 @@ export default function BusinessAccount() {
                   setPasswordNote('密码已更新。');
                 } catch (failure) {
                   const missing = !failure?.response || failure.response.status === 404;
-                  setPasswordNote(missing ? '改密接口还没接上，可先用下面的重置邮件。' : (failure?.response?.data?.message || '改密失败，请检查旧密码。'));
+                  setPasswordNote(missing ? (String(language).startsWith('zh') ? '暂时无法在这里修改密码，请使用下方的重置邮件。' : 'Password change is unavailable right now. Use the reset email below.') : (failure?.response?.data?.message || '改密失败，请检查旧密码。'));
                 } finally {
                   setPasswordBusy(false);
                 }

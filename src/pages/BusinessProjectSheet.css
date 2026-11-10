@@ -52,7 +52,7 @@
 .bps-steps span { color: var(--bps-faint); font-size: 12px; }
 .bps-steps li.is-done span, .bps-steps li.is-current span { color: var(--bps-ink); }
 
-.bps-figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--bps-hair); border-bottom: 1px solid var(--bps-hair); margin: 24px 0 0; }
+.bps-figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--bps-hair); border-bottom: 1px solid var(--bps-hair); margin: 24px 0 0; }
 .bps-figures > div { display: grid; gap: 6px; border-left: 1px solid var(--bps-hair); padding: 14px 16px; }
 .bps-figures > div:first-child { border-left: 0; padding-left: 0; }
 .bps-figures span { color: var(--bps-muted); font-size: 12px; }

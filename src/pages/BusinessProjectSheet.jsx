@@ -2,25 +2,10 @@ import { useEffect, useState } from 'react';
 import { LoaderCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getBusinessProject } from '../api/realApi';
+import { clientNextStep, clientStepConfirm, clientStepNote, submitClientStep } from '../components/businessNextStep';
+import { CLIENT_STEPS, clientStepIndex, isReportReleased, statusLabel } from '../content/projectStatus';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './BusinessProjectSheet.css';
-
-/* A project is read top-down: where it is, what happens next, how far along,
-   the four numbers that decide everything else, then the two deliverables.
-   The list row stays a row; this page is the object itself. */
-const STEPS = [
-  { id: 'brief', zh: '需求', en: 'Brief', statuses: ['DRAFT', 'SUBMITTED_FOR_REVIEW'] },
-  { id: 'quote', zh: '报价', en: 'Quote', statuses: ['QUOTE_REQUIRED', 'QUOTE_SENT'] },
-  { id: 'pay', zh: '付款', en: 'Payment', statuses: ['CLIENT_ACCEPTED'] },
-  { id: 'field', zh: '问卷准备', en: 'Preparation', statuses: ['FUNDED'] },
-  { id: 'collect', zh: '回收', en: 'Collect', statuses: ['RECRUITING', 'LIVE'] },
-  { id: 'deliver', zh: '交付', en: 'Delivery', statuses: ['COMPLETED'] },
-];
-
-const stepIndex = (status) => {
-  const index = STEPS.findIndex((step) => step.statuses.includes(status));
-  return index === -1 ? 0 : index;
-};
 
 const money = (value, currency = 'USD') => {
   const amount = Number(value);
@@ -35,7 +20,7 @@ const date = (value, language) => {
   return new Intl.DateTimeFormat(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' }).format(parsed);
 };
 
-export default function BusinessProjectSheet({ projectId, preview, onClose }) {
+export default function BusinessProjectSheet({ projectId, preview, onClose, onClientAction, onChanged }) {
   const { language, publicCopy } = useLanguage();
   const zh = String(language).startsWith('zh');
   const t = (cn, en) => (zh ? cn : en);
@@ -45,6 +30,8 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [busy, setBusy] = useState('');
+  const [note, setNote] = useState('');
 
   useEffect(() => {
     const onKey = (event) => { if (event.key === 'Escape') onClose?.(); };
@@ -70,12 +57,13 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
   if (error || !project) return <main className="bpo-loading"><strong>{error || copy.loadError}</strong><Link to={withLanguage('/business/workspace', language)}>{copy.backToProjects}</Link></main>;
 
   const status = String(project.status || 'DRAFT');
-  const current = stepIndex(status);
+  const current = clientStepIndex(status);
   const quote = project.latestQuote || null;
   const questionnaire = project.questionnaire || null;
   const responseCount = Number(questionnaire?.responseCount || 0);
   const target = Number(project.targetParticipants || 0);
-  const released = (project.deliveryStatus || project.delivery?.status) === 'APPROVED';
+  const released = isReportReleased(project);
+  const nextStep = clientNextStep(project, language);
   const questionnaireLabel = !questionnaire ? t('还没建', 'Not created') : ({
     DRAFT: t('草稿', 'Draft'),
     PUBLISHED: t('已发布', 'Published'),
@@ -104,6 +92,27 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
     project.delivery?.approvedAt && { at: project.delivery.approvedAt, label: t('报告发布', 'Report published') },
   ].filter(Boolean).sort((a, b) => new Date(b.at) - new Date(a.at));
 
+  const runNext = async () => {
+    if (!nextStep) return;
+    if (nextStep.kind === 'quote' || nextStep.kind === 'pay') {
+      onClientAction?.(project, nextStep.kind);
+      return;
+    }
+    const confirmText = clientStepConfirm(nextStep.kind, language);
+    if (confirmText && !window.confirm(confirmText)) return;
+    setBusy(nextStep.kind);
+    setNote('');
+    try {
+      await submitClientStep(project, nextStep.kind);
+      setNote(clientStepNote(nextStep.kind, language));
+      onChanged?.();
+    } catch (err) {
+      setNote(clientStepNote(nextStep.kind, language, err));
+    } finally {
+      setBusy('');
+    }
+  };
+
   return (
     <div className="bps-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}>
       <section className="bps-sheet" role="dialog" aria-modal="true" aria-labelledby="bps-title">
@@ -111,7 +120,7 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
           <div>
             <h1 id="bps-title">{project.title}</h1>
             <p className="bps-meta">
-              <span className="bps-status">{publicCopy.workspace.business.projects.statuses[status] || status}</span>
+              <span className="bps-status">{statusLabel(status, language)}</span>
               <span>{project.questionnaire || project.studyFormat === 'SURVEY' ? t('问卷调研', 'Online survey') : t('定制研究', 'Managed research')}</span>
               {project.createdAt && <span>{date(project.createdAt, language)}</span>}
             </p>
@@ -123,7 +132,7 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
           <p className="bps-next">{nextLine}</p>
 
           <ol className="bps-steps">
-            {STEPS.map((step, index) => (
+            {CLIENT_STEPS.map((step, index) => (
               <li key={step.id} className={index < current ? 'is-done' : index === current ? 'is-current' : ''}>
                 <i aria-hidden="true" />
                 <span>{zh ? step.zh : step.en}</span>
@@ -135,7 +144,6 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
             <div><span>{t('样本目标', 'Target')}</span><strong>{target || '—'}</strong></div>
             <div><span>{t('已回收', 'Collected')}</span><strong>{responseCount}</strong></div>
             <div><span>{t('报价', 'Quote')}</span><strong>{money(quote?.amount)}</strong></div>
-            <div><span>{t('报告', 'Report')}</span><strong>{released ? t('已发布', 'Published') : t('整理中', 'In progress')}</strong></div>
           </section>
 
           {quote && (
@@ -179,16 +187,24 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
         </div>
 
         <footer className="bps-foot">
-          {questionnaire?.status === 'PUBLISHED' && (
+          {nextStep && (
+            <button type="button" className="bps-button" onClick={runNext} disabled={Boolean(busy)}>
+              {busy ? <LoaderCircle className="animate-spin" size={15} /> : nextStep.label}
+            </button>
+          )}
+          {/* Only link once the report is released. Before that the results
+              route renders the locked page, which reads as a broken link. */}
+          {released && questionnaire?.status === 'PUBLISHED' && (
             <Link className="bps-button bps-button--ghost" to={withLanguage(`/business/projects/${project.id}/results`, language)}>
               {t('查看结果', 'View results')}
             </Link>
           )}
           {questionnaire && (
-            <Link className="bps-button" to={withLanguage(`/business/projects/${project.id}`, language)}>
+            <Link className="bps-button bps-button--ghost" to={withLanguage(`/business/projects/${project.id}`, language)}>
               {t('打开问卷', 'Open questionnaire')}
             </Link>
           )}
+          {note && <p className="bps-note" role="status">{note}</p>}
         </footer>
       </section>
     </div>
