@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, LoaderCircle } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { LoaderCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { getBusinessProject } from '../api/realApi';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
-import './BusinessProjectOverview.css';
+import './BusinessProjectSheet.css';
 
 /* A project is read top-down: where it is, what happens next, how far along,
    the four numbers that decide everything else, then the two deliverables.
@@ -12,7 +12,7 @@ const STEPS = [
   { id: 'brief', zh: '需求', en: 'Brief', statuses: ['DRAFT', 'SUBMITTED_FOR_REVIEW'] },
   { id: 'quote', zh: '报价', en: 'Quote', statuses: ['QUOTE_REQUIRED'] },
   { id: 'pay', zh: '付款', en: 'Payment', statuses: ['QUOTE_SENT', 'CLIENT_ACCEPTED'] },
-  { id: 'field', zh: '建卷质检', en: 'Fieldwork', statuses: ['FUNDED'] },
+  { id: 'field', zh: '问卷准备', en: 'Preparation', statuses: ['FUNDED'] },
   { id: 'collect', zh: '回收', en: 'Collect', statuses: ['RECRUITING', 'LIVE'] },
   { id: 'deliver', zh: '交付', en: 'Delivery', statuses: ['COMPLETED'] },
 ];
@@ -35,12 +35,12 @@ const date = (value, language) => {
   return new Intl.DateTimeFormat(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' }).format(parsed);
 };
 
-export default function BusinessProjectOverview({ preview }) {
-  const { projectId } = useParams();
+export default function BusinessProjectSheet({ projectId, preview, onClose }) {
   const { language, publicCopy } = useLanguage();
   const zh = String(language).startsWith('zh');
   const t = (cn, en) => (zh ? cn : en);
   const copy = publicCopy.workspace.business.results.detail;
+  const close = onClose || (() => {});
 
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -84,8 +84,8 @@ export default function BusinessProjectOverview({ preview }) {
     CLIENT_ACCEPTED: t('报价已确认，等你付款。', 'Quote accepted; waiting for payment.'),
     FUNDED: t('款项已到，我们开始建卷和质检。', 'Funded. We are building and checking the questionnaire.'),
     RECRUITING: t('正在招募参与者。', 'Recruiting participants now.'),
-    LIVE: t('问卷在收，样本还在回收。', 'The questionnaire is live and collecting.'),
-    COMPLETED: released ? t('已完成，报告已放行。', 'Completed; the report has been released.') : t('已完成，报告待放行。', 'Completed; the report is waiting for release.'),
+    LIVE: t(`正在回收问卷：已收到 ${responseCount} 份，目标 ${target || '—'} 份。`, `Collecting responses: ${responseCount} of ${target || '—'} received.`),
+    COMPLETED: released ? t('研究已完成，报告已发布。', 'Completed. The report has been published.') : t('研究已完成，报告正在整理。', 'Completed. The report is being written up.'),
     CANCELLED: t('这个项目已取消。', 'This project was cancelled.'),
   }[status] || '';
 
@@ -99,77 +99,79 @@ export default function BusinessProjectOverview({ preview }) {
   ].filter(Boolean).sort((a, b) => new Date(b.at) - new Date(a.at));
 
   return (
-    <main className="bpo-page">
-      <header className="bpo-topbar">
-        <Link className="bpo-back" to={withLanguage('/business/workspace?view=projects', language)}>
-          <ArrowLeft size={16} aria-hidden="true" /> {copy.projects}
-        </Link>
-        <div className="bpo-actions">
+    <div className="bps-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}>
+      <section className="bps-sheet" role="dialog" aria-modal="true" aria-labelledby="bps-title">
+        <header className="bps-head">
+          <div>
+            <h1 id="bps-title">{project.title}</h1>
+            <p className="bps-meta">
+              <span className="bps-status">{publicCopy.workspace.business.projects.statuses[status] || status}</span>
+              <span>{project.studyFormat === 'SURVEY' ? t('问卷调研', 'Online survey') : t('定制研究', 'Managed research')}</span>
+              {project.createdAt && <span>{date(project.createdAt, language)}</span>}
+            </p>
+          </div>
+          <button type="button" className="bps-close" onClick={close} aria-label={t('关闭', 'Close')}>×</button>
+        </header>
+
+        <div className="bps-body">
+          <p className="bps-next">{nextLine}</p>
+
+          <ol className="bps-steps">
+            {STEPS.map((step, index) => (
+              <li key={step.id} className={index < current ? 'is-done' : index === current ? 'is-current' : ''}>
+                <i aria-hidden="true" />
+                <span>{zh ? step.zh : step.en}</span>
+              </li>
+            ))}
+          </ol>
+
+          <section className="bps-figures">
+            <div><span>{t('样本目标', 'Target')}</span><strong>{target || '—'}</strong></div>
+            <div><span>{t('已回收', 'Collected')}</span><strong>{responseCount}</strong></div>
+            <div><span>{t('报价', 'Quote')}</span><strong>{money(quote?.amount)}</strong></div>
+            <div><span>{t('报告', 'Report')}</span><strong>{released ? t('已发布', 'Published') : t('整理中', 'In progress')}</strong></div>
+          </section>
+
+          <section className="bps-block">
+            <h2>{t('交付物', 'Deliverables')}</h2>
+            <div className="bps-rows">
+              <div>
+                <span>{t('问卷', 'Questionnaire')}</span>
+                <b>{questionnaireLabel}</b>
+                <small>{questionnaire ? `${responseCount} / ${target || '—'}` : ''}</small>
+              </div>
+              <div>
+                <span>{t('报告', 'Report')}</span>
+                <b>{released ? t('已发布', 'Published') : t('整理中', 'In progress')}</b>
+                <small>{project.delivery?.approvedAt ? date(project.delivery.approvedAt, language) : ''}</small>
+              </div>
+            </div>
+          </section>
+
+          <section className="bps-block">
+            <h2>{t('记录', 'History')}</h2>
+            <ul className="bps-timeline">
+              {events.map((event) => (
+                <li key={event.label}><time>{date(event.at, language)}</time><span>{event.label}</span></li>
+              ))}
+              {!events.length && <li><span>{t('暂无记录。', 'Nothing recorded yet.')}</span></li>}
+            </ul>
+          </section>
+        </div>
+
+        <footer className="bps-foot">
           {questionnaire?.status === 'PUBLISHED' && (
-            <Link className="bpo-button bpo-button--ghost" to={withLanguage(`/business/projects/${project.id}/results`, language)}>
-              {t('查看结果', 'View results')} <ArrowUpRight size={15} aria-hidden="true" />
+            <Link className="bps-button bps-button--ghost" to={withLanguage(`/business/projects/${project.id}/results`, language)}>
+              {t('查看结果', 'View results')}
             </Link>
           )}
           {questionnaire && (
-            <Link className="bpo-button" to={withLanguage(`/business/projects/${project.id}`, language)}>
-              {t('打开问卷', 'Open questionnaire')} <ArrowRight size={15} aria-hidden="true" />
+            <Link className="bps-button" to={withLanguage(`/business/projects/${project.id}`, language)}>
+              {t('打开问卷', 'Open questionnaire')}
             </Link>
           )}
-        </div>
-      </header>
-
-      <div className="bpo-shell">
-        <h1 className="bpo-title">{project.title}</h1>
-        <p className="bpo-meta">
-          <span className="bpo-status">{publicCopy.workspace.business.projects.statuses[status] || status}</span>
-          <span>{project.studyFormat === 'SURVEY' ? t('问卷调研', 'Online survey') : t('定制研究', 'Managed research')}</span>
-          {project.createdAt && <span>{date(project.createdAt, language)}</span>}
-        </p>
-
-        <p className="bpo-next">{nextLine}</p>
-
-        <ol className="bpo-steps">
-          {STEPS.map((step, index) => (
-            <li key={step.id} className={index < current ? 'is-done' : index === current ? 'is-current' : ''}>
-              <i aria-hidden="true" />
-              <span>{zh ? step.zh : step.en}</span>
-            </li>
-          ))}
-        </ol>
-
-        <section className="bpo-figures">
-          <div><span>{t('样本目标', 'Target')}</span><strong>{target || '—'}</strong></div>
-          <div><span>{t('已回收', 'Collected')}</span><strong>{responseCount}</strong></div>
-          <div><span>{t('报价', 'Quote')}</span><strong>{money(quote?.amount)}</strong></div>
-          <div><span>{t('交付', 'Delivery')}</span><strong>{released ? t('已放行', 'Released') : t('未放行', 'Not yet')}</strong></div>
-        </section>
-
-        <section className="bpo-block">
-          <h2>{t('交付物', 'Deliverables')}</h2>
-          <div className="bpo-rows">
-            <div>
-              <span>{t('问卷', 'Questionnaire')}</span>
-              <b>{questionnaireLabel}</b>
-              <small>{questionnaire ? `${responseCount} / ${target || '—'}` : ''}</small>
-            </div>
-            <div>
-              <span>{t('报告', 'Report')}</span>
-              <b>{released ? t('已放行，客户可见', 'Released') : t('未放行，客户不可见', 'Not released')}</b>
-              <small>{project.delivery?.approvedAt ? date(project.delivery.approvedAt, language) : ''}</small>
-            </div>
-          </div>
-        </section>
-
-        <section className="bpo-block">
-          <h2>{t('记录', 'History')}</h2>
-          <ul className="bpo-timeline">
-            {events.map((event) => (
-              <li key={event.label}><time>{date(event.at, language)}</time><span>{event.label}</span></li>
-            ))}
-            {!events.length && <li><span>{t('还没有记录。', 'Nothing recorded yet.')}</span></li>}
-          </ul>
-        </section>
-      </div>
-    </main>
+        </footer>
+      </section>
+    </div>
   );
 }

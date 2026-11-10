@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import '@fontsource-variable/inter';
 import { LanguageProvider } from './components/LanguageContext';
-import BusinessProjectOverview from './pages/BusinessProjectOverview';
+import BusinessProjectSheet from './pages/BusinessProjectSheet';
 import './index.css';
 
 const preview = {
@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <MemoryRouter initialEntries={['/business/projects/preview/overview']}>
       <LanguageProvider>
         <Routes>
-          <Route path="/business/projects/:projectId/overview" element={<BusinessProjectOverview preview={preview} />} />
+          <Route path="/business/projects/:projectId/overview" element={<BusinessProjectSheet projectId="preview" preview={preview} onClose={() => {}} />} />
         </Routes>
       </LanguageProvider>
     </MemoryRouter>

@@ -209,6 +209,7 @@ export default function BusinessWorkspace() {
   const paypalReturnHandledRef = useRef('');
   const [message, setMessage] = useState('');
   const [releaseBusy, setReleaseBusy] = useState('');
+  const [detailProjectId, setDetailProjectId] = useState('');
   const [quoteProject, setQuoteProject] = useState(null);
   const [quoteDecision, setQuoteDecision] = useState('');
   const [declineReason, setDeclineReason] = useState('');
@@ -811,7 +812,7 @@ export default function BusinessWorkspace() {
                     </div>
 
                     <div className="business-project-cell is-actions">
-                      <Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}/overview`, language)}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']} <ArrowRight size={15} /></Link>
+                      <button type="button" className="business-project-open" onClick={() => setDetailProjectId(project.id)}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']} <ArrowRight size={15} /></button>
                       {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit}</button>}
                       {!project.questionnaire && project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote}</button>}
                       {!project.questionnaire && project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={Boolean(payingProjectId)} aria-busy={payingProjectId === project.id}>{payingProjectId === project.id ? <><LoaderCircle className="animate-spin" size={15} /> {ws.workspace.paymentPreparing}</> : <>{ws.workspace.continueToPayment}</>}</button>}
@@ -1079,6 +1080,7 @@ export default function BusinessWorkspace() {
           </section>
         </div>
       )}
+      {detailProjectId && <BusinessProjectSheet projectId={detailProjectId} onClose={() => setDetailProjectId('')} />}
     </main>
   );
 }
