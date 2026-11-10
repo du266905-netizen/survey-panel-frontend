@@ -31,7 +31,10 @@ export default function AdminList({ config, rows: givenRows, emptyNote }) {
     return () => { alive = false; };
   }, [config]);
 
-  const rows = givenRows ?? loaded ?? [];
+  const allRows = givenRows ?? loaded ?? [];
+  /* The tab strip used to only move the underline. Modules that know how to
+     filter say so with filterRows; the rest stay a plain list. */
+  const rows = config.filterRows ? config.filterRows(allRows, tab) : allRows;
 
   return (
     <div className="con-body">

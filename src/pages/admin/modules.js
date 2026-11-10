@@ -38,10 +38,22 @@ export const MODULES = {
       customer: project.client?.email || project.client?.name || '—',
       kind: project.studyFormat || project.researchGoal || '问卷',
       stage: STATUS_LABEL[project.status] || project.status || '草稿',
+      /* the tab strip filters on the raw status; the label alone cannot be mapped back */
+      status: project.status || 'DRAFT',
       amount: dollars(project.latestQuote?.amount),
       updatedAt: project.updatedAt ? String(project.updatedAt).slice(0, 10) : '—',
     }),
     tabs: ['全部', '进行中', '待付款', '已交付'],
+    filterRows: (rows, tab) => {
+      const byTab = [
+        null,
+        ['FUNDED', 'RECRUITING', 'LIVE', 'QUESTIONNAIRE_REVIEW', 'QUESTIONNAIRE_APPROVED', 'CONTRACT_SIGNED'],
+        ['QUOTE_SENT', 'CLIENT_ACCEPTED', 'CONTRACT_SENT'],
+        ['COMPLETED', 'DELIVERED', 'ACCEPTED'],
+      ];
+      const allowed = byTab[tab];
+      return allowed ? rows.filter((row) => allowed.includes(row.status)) : rows;
+    },
     primary: '新建项目',
     columns: [
       { key: 'title', label: '项目', width: '28%' },
