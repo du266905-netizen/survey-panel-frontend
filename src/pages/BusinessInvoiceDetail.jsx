@@ -91,13 +91,8 @@ export default function BusinessInvoiceDetail() {
   const statusKey = STATUS_LABEL[invoice?.status];
   const methodKey = METHOD_LABEL[invoice?.paymentMethod];
 
-  return <main className="business-account-page">
-    <BusinessRail activeId="billing" onSelect={handleRailSelect} />
-    <div className="business-account-pane">
-      <header>
-        <NotificationBell />
-      </header>
-
+  return (
+    <>
       <section className="business-billing-shell">
         <button
           className="business-invoice-back"
@@ -216,6 +211,7 @@ export default function BusinessInvoiceDetail() {
           </>
         )}
       </section>
-    </div>
-  </main>;
+    
+  </>
+  );
 }
