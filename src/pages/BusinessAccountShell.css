@@ -18,14 +18,14 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 288px;
+  width: 238px;
 }
 
 .business-account-pane {
   display: flex;
   min-height: 100svh;
   flex-direction: column;
-  padding-left: 288px;
+  padding-left: 238px;
 }
 
 /* Top bar: the way back and the bell, exactly the AI page's pair. */
