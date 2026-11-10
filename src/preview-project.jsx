@@ -21,12 +21,15 @@ const preview = {
   },
 };
 
+const minimal = new URLSearchParams(window.location.search).has('min');
+const active = minimal ? { project: { id: 'preview', title: 'Test', status: 'SUBMITTED_FOR_REVIEW' } } : preview;
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MemoryRouter initialEntries={['/business/projects/preview/overview']}>
       <LanguageProvider>
         <Routes>
-          <Route path="/business/projects/:projectId/overview" element={<BusinessProjectSheet projectId="preview" preview={preview} onClose={() => {}} />} />
+          <Route path="/business/projects/:projectId/overview" element={<BusinessProjectSheet projectId="preview" preview={active} onClose={() => {}} />} />
         </Routes>
       </LanguageProvider>
     </MemoryRouter>
