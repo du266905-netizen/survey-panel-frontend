@@ -13,7 +13,6 @@ import {
   Pencil,
   Plus,
   Search,
-  CheckCircle2,
   Sparkles,
   Trash2,
   UserRound,
@@ -22,7 +21,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, releaseBusinessProjectReport, requestQuestionnaireApproval, sendBusinessContract, sendBusinessReport, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
+import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, releaseBusinessProjectReport, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../components/BusinessBalanceChip';
 import BusinessPageLoader from '../components/BusinessPageLoader';
@@ -241,8 +240,8 @@ export default function BusinessWorkspace() {
   /* 项目阶段的中文与英文短名。英文不再把 SUBMITTED_FOR_REVIEW 整个摊开——
      它比列宽还长，会把下一列压重叠。 */
   const STATUS_TEXT = {
-    'zh-CN': { DRAFT: '草稿', SUBMITTED_FOR_REVIEW: '待审核', QUOTE_REQUIRED: '待报价', QUOTE_SENT: '报价已发', CLIENT_ACCEPTED: '待收款', FUNDED: '已付款', RECRUITING: '招募中', LIVE: '进行中', CONTRACT_SENT: '合同已发', CONTRACT_SIGNED: '合同已签', QUESTIONNAIRE_REVIEW: '问卷待确认', QUESTIONNAIRE_APPROVED: '问卷已确认', DELIVERED: '已交付', ACCEPTED: '已验收', COMPLETED: '已完成', CANCELLED: '已取消', PENDING_REVIEW: '待审核', APPROVED: '内容已通过', PUBLISHED: '已发布', ARCHIVED: '已归档' },
-    en: { DRAFT: 'Draft', SUBMITTED_FOR_REVIEW: 'In review', QUOTE_REQUIRED: 'Quote needed', QUOTE_SENT: 'Quote sent', CLIENT_ACCEPTED: 'Accepted', FUNDED: 'Funded', RECRUITING: 'Recruiting', LIVE: 'Live', CONTRACT_SENT: 'Contract sent', CONTRACT_SIGNED: 'Contract signed', QUESTIONNAIRE_REVIEW: 'Questionnaire in review', QUESTIONNAIRE_APPROVED: 'Questionnaire approved', DELIVERED: 'Delivered', ACCEPTED: 'Accepted', COMPLETED: 'Completed', CANCELLED: 'Cancelled', PENDING_REVIEW: 'In review', APPROVED: 'Approved', PUBLISHED: 'Published', ARCHIVED: 'Archived' },
+    'zh-CN': { DRAFT: '草稿', SUBMITTED_FOR_REVIEW: '待审核', QUOTE_REQUIRED: '待报价', QUOTE_SENT: '报价已发', CLIENT_ACCEPTED: '待收款', FUNDED: '已付款', RECRUITING: '招募中', LIVE: '进行中', COMPLETED: '已完成', CANCELLED: '已取消', PENDING_REVIEW: '待审核', APPROVED: '内容已通过', PUBLISHED: '已发布', ARCHIVED: '已归档' },
+    en: { DRAFT: 'Draft', SUBMITTED_FOR_REVIEW: 'In review', QUOTE_REQUIRED: 'Quote needed', QUOTE_SENT: 'Quote sent', CLIENT_ACCEPTED: 'Accepted', FUNDED: 'Funded', RECRUITING: 'Recruiting', LIVE: 'Live', COMPLETED: 'Completed', CANCELLED: 'Cancelled', PENDING_REVIEW: 'In review', APPROVED: 'Approved', PUBLISHED: 'Published', ARCHIVED: 'Archived' },
   };
   const workspaceStatusLabel = (status) => projectsCopy.statuses?.[status]
     || (language.startsWith('zh') ? STATUS_TEXT['zh-CN'] : STATUS_TEXT.en)[status]
@@ -666,29 +665,6 @@ export default function BusinessWorkspace() {
 
   /* Releasing the report is a staff decision; publishing the questionnaire alone
      must never make results visible to the client. */
-  /* Staff actions that move a project forward. Each one is a document we send
-     and the client accepts; until the endpoint exists the button says so. */
-  const runFlowAction = async (project, kind) => {
-    setReleaseBusy(project.id);
-    setMessage('');
-    try {
-      if (kind === 'contract') await sendBusinessContract(project.id);
-      if (kind === 'approval') await requestQuestionnaireApproval(project.id);
-      if (kind === 'report') await sendBusinessReport(project.id);
-      setMessage({
-        contract: projectsCopy.contractSentMessage || 'Contract sent to the client.',
-        approval: projectsCopy.approvalRequestedMessage || 'The questionnaire is waiting for the client to confirm.',
-        report: projectsCopy.reportSentMessage || 'Report sent to the client.',
-      }[kind]);
-    } catch (err) {
-      setMessage(err?.response?.status === 404
-        ? (projectsCopy.flowNotReadyMessage || 'This step has no backend endpoint yet, so nothing was saved.')
-        : (projectsCopy.releaseFailedMessage || 'Could not complete the action. Try again.'));
-    } finally {
-      setReleaseBusy('');
-    }
-  };
-
   const toggleReportRelease = async (project) => {
     const current = project.deliveryStatus || project.delivery?.status;
     const next = current === 'APPROVED' ? 'REVOKED' : 'APPROVED';
@@ -846,7 +822,7 @@ export default function BusinessWorkspace() {
                       <button type="button" onClick={() => setProjectMenuId((current) => current === project.id ? '' : project.id)} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={19} /></button>
                       {projectMenuId === project.id && (
                         <div>
-                          <button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> {projectsCopy.viewBrief}</button>{project.status === 'CLIENT_ACCEPTED' && <button type="button" onClick={() => { runFlowAction(project, 'contract'); setProjectMenuId(''); }} disabled={releaseBusy === project.id}><FileText size={14} /> {projectsCopy.sendContract || 'Send contract'}</button>}{project.status === 'FUNDED' && project.questionnaire && <button type="button" onClick={() => { runFlowAction(project, 'approval'); setProjectMenuId(''); }} disabled={releaseBusy === project.id}><CheckCircle2 size={14} /> {projectsCopy.requestApproval || 'Ask client to confirm'}</button>}{project.status === 'COMPLETED' && <button type="button" onClick={() => { runFlowAction(project, 'report'); setProjectMenuId(''); }} disabled={releaseBusy === project.id}><FileText size={14} /> {projectsCopy.sendReport || 'Send report'}</button>}
+                          <button type="button" onClick={() => { setBriefProject(project); setProjectMenuId(''); }}><FileText size={14} /> {projectsCopy.viewBrief}</button>
                           {project.status === 'DRAFT' && <button type="button" onClick={() => openEditProject(project)}><Pencil size={14} /> {projectsCopy.editBrief}</button>}
                           {project.status === 'DRAFT' && <button className="is-danger" type="button" onClick={() => deleteProject(project)}><Trash2 size={14} /> {projectsCopy.deleteDraft}</button>}
                         </div>
