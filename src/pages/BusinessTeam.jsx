@@ -180,8 +180,12 @@ export default function BusinessTeam() {
   };
 
   return (
-    <>
-      <section className="business-account-shell">
+    <main className="business-account-page">
+      <BusinessRail activeId="team" />
+      <div className="business-account-pane">
+        <header><NotificationBell /></header>
+
+        <section className="business-account-shell">
           <div>
             <h1>{text.title}</h1>
             <p>{text.intro}</p>
@@ -287,7 +291,7 @@ export default function BusinessTeam() {
         </section>
           </div>
         </section>
-      
-    </>
+      </div>
+    </main>
   );
 }

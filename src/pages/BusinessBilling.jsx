@@ -90,8 +90,13 @@ export default function BusinessBilling() {
     navigate(withLanguage(`/business/workspace?view=${id}`, language));
   };
 
-  return (
-    <>
+  return <main className="business-account-page">
+    <BusinessRail activeId="billing" onSelect={handleRailSelect} />
+    <div className="business-account-pane">
+      <header>
+        <NotificationBell />
+      </header>
+
       <section className="business-billing-shell">
         <div>
           <h1>{text.title}</h1>
@@ -210,7 +215,6 @@ export default function BusinessBilling() {
           </div>
         </div>
       </section>
-    
-  </>
-  );
+    </div>
+  </main>;
 }

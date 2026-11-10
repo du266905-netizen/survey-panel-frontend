@@ -242,8 +242,13 @@ export default function BusinessBudget() {
       : total
   ), { amount: 0, spent: 0 });
 
-  return (
-    <>
+  return <main className="business-account-page">
+    <BusinessRail activeId="budget" onSelect={handleRailSelect} />
+    <div className="business-account-pane">
+      <header>
+        <NotificationBell />
+      </header>
+
       <section className="business-budget-shell">
         <div className="business-budget-heading">
           <div className="business-budget-heading-copy">
@@ -357,6 +362,7 @@ export default function BusinessBudget() {
           ) : null}
         </div>
       </section>
+    </div>
 
     {endTarget && (
       <div className="business-budget-modal" role="dialog" aria-modal="true" aria-labelledby="budget-end-title">
@@ -456,6 +462,5 @@ export default function BusinessBudget() {
         </section>
       </div>
     )}
-  </>
-  );
+  </main>;
 }

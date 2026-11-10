@@ -85,7 +85,6 @@ import BusinessAudiencePlan from './pages/BusinessAudiencePlan';
 import BusinessCustomQuestionnaireRequest from './pages/BusinessCustomQuestionnaireRequest';
 import BusinessResearchSupportRequest from './pages/BusinessResearchSupportRequest';
 import BusinessAccount from './pages/BusinessAccount';
-import BusinessSettingsLayout from './pages/BusinessSettingsLayout';
 import BusinessTeam from './pages/BusinessTeam';
 import BusinessInvite from './pages/BusinessInvite';
 import BusinessBilling from './pages/BusinessBilling';
@@ -240,24 +239,22 @@ export default function App() {
         <Route path="/business/research-support" element={<BusinessRoute><BusinessResearchSupportRequest /></BusinessRoute>} />
         <Route path="/business/delivery-preview" element={<BusinessRoute><BusinessDeliveryPreview /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/results" element={<BusinessRoute><BusinessResultsDashboard /></BusinessRoute>} />
-        <Route element={<BusinessRoute><BusinessSettingsLayout /></BusinessRoute>}>
-          <Route path="/business/account" element={<BusinessAccount />} />
-          <Route path="/business/team" element={<BusinessTeam />} />
-          <Route path="/business/billing" element={<BusinessBilling />} />
-          <Route path="/business/billing/invoices/:id" element={<BusinessInvoiceDetail />} />
-          <Route path="/business/budget" element={<BusinessBudget />} />
-          <Route path="/business/help" element={<BusinessHelp />} />
-        </Route>
+        <Route path="/business/account" element={<BusinessRoute><BusinessAccount /></BusinessRoute>} />
+        <Route path="/business/team" element={<BusinessRoute><BusinessTeam /></BusinessRoute>} />
         <Route path="/business/plans" element={<BusinessRoute><BusinessPlans /></BusinessRoute>} />
         <Route path="/business/plans/checkout" element={<BusinessRoute><BusinessPlanCheckout /></BusinessRoute>} />
         <Route path="/business/invite" element={<BusinessInvite />} />
         <Route path="/business/team/invitations/:token" element={<BusinessInvite />} />
+        <Route path="/business/billing" element={<BusinessRoute><BusinessBilling /></BusinessRoute>} />
+        <Route path="/business/billing/invoices/:id" element={<BusinessRoute><BusinessInvoiceDetail /></BusinessRoute>} />
         <Route path="/business/add-funds" element={<BusinessRoute><BusinessAddFunds /></BusinessRoute>} />
         <Route path="/business/add-funds/bank-transfer" element={<BusinessRoute><BusinessBankTransfer /></BusinessRoute>} />
         {/* Public: the payer may not have an account here at all. */}
         <Route path="/pay/:token" element={<PublicPaymentLink />} />
         <Route path="/help" element={<HelpCenter />} />
         <Route path="/help/:slug" element={<HelpCenter />} />
+        <Route path="/business/budget" element={<BusinessRoute><BusinessBudget /></BusinessRoute>} />
+        <Route path="/business/help" element={<BusinessRoute><BusinessHelp /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireStudio /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/audience" element={<BusinessRoute><BusinessAudience /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/quote" element={<BusinessRoute><BusinessQuote /></BusinessRoute>} />

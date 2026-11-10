@@ -24,8 +24,10 @@ export default function BusinessHelp() {
   };
 
   return (
-    <>
-      <section className="business-help-shell">
+    <main className="business-account-page">
+      <BusinessRail activeId="help" onSelect={handleRailSelect} />
+      <div className="business-account-pane">
+        <section className="business-help-shell">
           <div className="business-help-hero">
             <h1>{zh ? '帮助中心' : 'Help centre'}</h1>
             <p>
@@ -39,7 +41,7 @@ export default function BusinessHelp() {
           </div>
 
         </section>
-      
-    </>
+      </div>
+    </main>
   );
 }
