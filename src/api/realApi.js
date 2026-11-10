@@ -225,6 +225,24 @@ export const deleteBusinessProject = async (projectId) => {
 
 /* Report release gate: the client only gets a results page after this returns
    APPROVED. Contract: docs/后端-报告放行-接口.md */
+/* Contract, questionnaire sign-off and report delivery all follow the same
+   pattern: we prepare the document, the client accepts it, the state moves.
+   Endpoints are specified in docs/流程审计-项目状态机.md. */
+export const sendBusinessContract = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/contract/send`);
+  return { data: response.data };
+};
+
+export const requestQuestionnaireApproval = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/questionnaire/submit-review`);
+  return { data: response.data };
+};
+
+export const sendBusinessReport = async (projectId) => {
+  const response = await apiClient.post(`/api/business/projects/${projectId}/report/send`);
+  return { data: response.data };
+};
+
 export const releaseBusinessProjectReport = async (projectId, status) => {
   const response = await apiClient.patch(`/api/business/projects/${projectId}/report`, { status });
   return { data: response.data };
