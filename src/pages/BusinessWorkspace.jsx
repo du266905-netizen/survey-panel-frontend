@@ -211,6 +211,7 @@ export default function BusinessWorkspace() {
   const [releaseBusy, setReleaseBusy] = useState('');
   const [detailProjectId, setDetailProjectId] = useState('');
   const [actionsProject, setActionsProject] = useState(null);
+  const [reloadKey, setReloadKey] = useState(0);
   const [quoteProject, setQuoteProject] = useState(null);
   const [quoteDecision, setQuoteDecision] = useState('');
   const [declineReason, setDeclineReason] = useState('');
@@ -377,7 +378,7 @@ export default function BusinessWorkspace() {
         if (active) setLoading(false);
       });
     return () => { active = false; };
-  }, [feedbackCopy.loadProjects, location.search, user]);
+  }, [feedbackCopy.loadProjects, location.search, user, reloadKey]);
 
   // PayPal appends ?token=... on return. Send only that token to the API; the
   // backend resolves it against the signed-in user and captures the order.
@@ -1082,7 +1083,7 @@ export default function BusinessWorkspace() {
         </div>
       )}
       {detailProjectId && <BusinessProjectSheet projectId={detailProjectId} onClose={() => setDetailProjectId('')} />}
-      {actionsProject && <BusinessProjectActions project={actionsProject} onClose={() => setActionsProject(null)} onDone={() => { setActionsProject(null); window.location.reload(); }} />}
+      {actionsProject && <BusinessProjectActions project={actionsProject} onClose={() => setActionsProject(null)} onDone={() => { setActionsProject(null); setReloadKey((value) => value + 1); }} />}
     </main>
   );
 }

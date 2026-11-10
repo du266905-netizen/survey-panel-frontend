@@ -120,13 +120,8 @@ export default function BusinessAccount() {
     navigate(withLanguage(`/business/workspace?view=${id}`, language));
   };
 
-  return <main className="business-account-page">
-    <BusinessRail activeId="personal" onSelect={handleRailSelect} />
-    <div className="business-account-pane">
-      <header>
-        <NotificationBell />
-      </header>
-
+  return (
+    <>
       <section className="business-account-shell">
       <div>
         <h1>{language === 'zh-CN' ? '个人设置' : language === 'zh-Hant' ? '個人設定' : ws.account.title}</h1>
@@ -249,7 +244,7 @@ export default function BusinessAccount() {
         </aside>
       </div>
       </section>
-    </div>
+    
 
     {cropSrc ? (
       <BusinessAvatarCropper
@@ -259,5 +254,6 @@ export default function BusinessAccount() {
         onConfirm={handleCropConfirm}
       />
     ) : null}
-  </main>;
+  </>
+  );
 }

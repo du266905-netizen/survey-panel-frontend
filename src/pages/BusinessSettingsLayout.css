@@ -1,0 +1,12 @@
+.business-settings-frame .business-account-pane > header.business-workspace-topbar { justify-content: flex-start; gap: 12px; background: #fff; padding: 0 clamp(20px, 3.4vw, 42px); }
+.business-settings-frame .business-account-pane > header.business-workspace-topbar .business-workspace-searchbar { width: min(100%, 560px); }
+.business-settings-frame .business-account-pane > header.business-workspace-topbar .business-workspace-notification { margin-left: auto; }
+.business-settings-frame .business-account-shell h1,
+.business-settings-frame .business-billing-shell h1,
+.business-settings-frame .business-budget-shell h1,
+.business-settings-frame .business-help-shell h1 { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.2; }
+.business-settings-frame .business-account-shell,
+.business-settings-frame .business-billing-shell,
+.business-settings-frame .business-budget-shell,
+.business-settings-frame .business-help-shell { padding-top: clamp(26px, 3.2vw, 40px); }
+@media (max-width: 800px) { .business-settings-frame .business-account-pane > header.business-workspace-topbar .business-workspace-searchbar { display: none; } }
