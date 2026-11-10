@@ -96,6 +96,7 @@ import HelpCenter from './pages/HelpCenter';
 import BusinessHelp from './pages/BusinessHelp';
 import BusinessBudget from './pages/BusinessBudget';
 import BusinessQuestionnaireStudio from './pages/BusinessQuestionnaireStudio';
+import BusinessProjectOverview from './pages/BusinessProjectOverview';
 import BusinessAudience from './pages/BusinessAudience';
 import BusinessQuote from './pages/BusinessQuote';
 import BusinessPlans from './pages/BusinessPlans';
@@ -256,6 +257,7 @@ export default function App() {
         <Route path="/business/budget" element={<BusinessRoute><BusinessBudget /></BusinessRoute>} />
         <Route path="/business/help" element={<BusinessRoute><BusinessHelp /></BusinessRoute>} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireStudio /></BusinessRoute>} />
+        <Route path="/business/projects/:projectId/overview" element={<BusinessRoute><BusinessProjectOverview /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/audience" element={<BusinessRoute><BusinessAudience /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/quote" element={<BusinessRoute><BusinessQuote /></BusinessRoute>} />
         <Route path="/business/s/:publicId" element={<PublicBusinessQuestionnaire />} />
