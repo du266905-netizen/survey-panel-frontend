@@ -236,6 +236,10 @@ export default function BusinessWorkspace() {
     if (!location.state?.customSubmitted) return;
     navigate(withLanguage('/business/workspace?view=projects', language), { replace: true, state: {} });
   }, []);
+  const tableLabels = String(language).startsWith('zh')
+    ? { status: '状态', format: '形式', collect: '回收', created: '创建' }
+    : { status: 'Status', format: 'Format', collect: 'Response', created: 'Created' };
+
   const studyFormatLabel = (format) => format === 'SURVEY'
     ? (language.startsWith('zh') ? '在线问卷' : 'Online survey')
     : briefCopy.methods.find(([value]) => value === format)?.[1] || String(format || '').replaceAll('_', ' ').toLowerCase();
@@ -779,10 +783,10 @@ export default function BusinessWorkspace() {
               <div className="business-project-table">
                 <div className="business-project-thead" aria-hidden="true">
                   <span>{projectsCopy.title}</span>
-                  <span>{projectsCopy.statusLabel || '状态'}</span>
-                  <span>{projectsCopy.formatLabel || '形式'}</span>
-                  <span>{projectsCopy.completesLabel || '回收'}</span>
-                  <span>{projectsCopy.createdLabel || '创建'}</span>
+                  <span>{projectsCopy.statusLabel || tableLabels.status}</span>
+                  <span>{projectsCopy.formatLabel || tableLabels.format}</span>
+                  <span>{projectsCopy.completesLabel || tableLabels.collect}</span>
+                  <span>{projectsCopy.createdLabel || tableLabels.created}</span>
                   <span />
                   <span />
                 </div>

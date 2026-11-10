@@ -5696,3 +5696,40 @@ main.business-custom-request-page .business-workspace-rail {
 .business-workspace .business-workspace-topbar {
   background: #ffffff;
 }
+
+/* Two-line rows: the name owns the first line, the metadata sits underneath and
+   the actions keep one column. Six columns on one line read as a spreadsheet. */
+.business-workspace .business-project-thead {
+  grid-template-columns: minmax(0, 1fr) 110px 100px 120px 150px 32px;
+}
+.business-workspace .business-project-thead > span:nth-child(2) { display: none; }
+
+.business-workspace .business-project-row {
+  grid-template-columns: minmax(0, 1fr) 110px 100px 120px 150px 32px;
+  grid-template-areas:
+    "name name name name actions menu"
+    "status format collects date actions menu";
+  row-gap: 6px;
+  align-items: start;
+  padding: 14px 10px;
+}
+
+.business-workspace .business-project-row .is-name { grid-area: name; }
+.business-workspace .business-project-row .is-status { grid-area: status; }
+.business-workspace .business-project-row .is-format { grid-area: format; }
+.business-workspace .business-project-row .is-completes { grid-area: collects; }
+.business-workspace .business-project-row .is-date { grid-area: date; }
+.business-workspace .business-project-row .is-actions { grid-area: actions; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.business-workspace .business-project-row .is-menu { grid-area: menu; }
+
+@media (max-width: 900px) {
+  .business-workspace .business-project-thead { display: none; }
+  .business-workspace .business-project-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "name actions"
+      "status status"
+      "format collects"
+      "date menu";
+  }
+}
