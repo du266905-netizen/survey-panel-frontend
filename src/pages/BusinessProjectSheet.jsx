@@ -10,8 +10,8 @@ import './BusinessProjectSheet.css';
    The list row stays a row; this page is the object itself. */
 const STEPS = [
   { id: 'brief', zh: '需求', en: 'Brief', statuses: ['DRAFT', 'SUBMITTED_FOR_REVIEW'] },
-  { id: 'quote', zh: '报价', en: 'Quote', statuses: ['QUOTE_REQUIRED'] },
-  { id: 'pay', zh: '付款', en: 'Payment', statuses: ['QUOTE_SENT', 'CLIENT_ACCEPTED'] },
+  { id: 'quote', zh: '报价', en: 'Quote', statuses: ['QUOTE_REQUIRED', 'QUOTE_SENT'] },
+  { id: 'pay', zh: '付款', en: 'Payment', statuses: ['CLIENT_ACCEPTED'] },
   { id: 'field', zh: '问卷准备', en: 'Preparation', statuses: ['FUNDED'] },
   { id: 'collect', zh: '回收', en: 'Collect', statuses: ['RECRUITING', 'LIVE'] },
   { id: 'deliver', zh: '交付', en: 'Delivery', statuses: ['COMPLETED'] },
@@ -106,7 +106,7 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
             <h1 id="bps-title">{project.title}</h1>
             <p className="bps-meta">
               <span className="bps-status">{publicCopy.workspace.business.projects.statuses[status] || status}</span>
-              <span>{project.studyFormat === 'SURVEY' ? t('问卷调研', 'Online survey') : t('定制研究', 'Managed research')}</span>
+              <span>{project.questionnaire || project.studyFormat === 'SURVEY' ? t('问卷调研', 'Online survey') : t('定制研究', 'Managed research')}</span>
               {project.createdAt && <span>{date(project.createdAt, language)}</span>}
             </p>
           </div>
@@ -132,7 +132,20 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
             <div><span>{t('报告', 'Report')}</span><strong>{released ? t('已发布', 'Published') : t('整理中', 'In progress')}</strong></div>
           </section>
 
-          <section className="bps-block">
+          {quote && (
+            <div className="bps-quote">
+              <span>{t('报价', 'Quote')}</span>
+              <b>{money(quote.amount)}</b>
+              <small>{{
+                SENT: t('已发出，等你确认', 'Sent, waiting for you'),
+                ACCEPTED: t('已确认', 'Accepted'),
+                DECLINED: t('已拒绝', 'Declined'),
+                DRAFT: t('准备中', 'Being prepared'),
+              }[quote.status] || quote.status}{quote.validUntil ? ` · ${t('有效期至', 'Valid until')} ${date(quote.validUntil, language)}` : ''}</small>
+            </div>
+          )}
+
+          {questionnaire && <section className="bps-block">
             <h2>{t('交付物', 'Deliverables')}</h2>
             <div className="bps-rows">
               <div>
@@ -146,7 +159,7 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
                 <small>{project.delivery?.approvedAt ? date(project.delivery.approvedAt, language) : ''}</small>
               </div>
             </div>
-          </section>
+          </section>}
 
           <section className="bps-block">
             <h2>{t('记录', 'History')}</h2>

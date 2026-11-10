@@ -82,3 +82,8 @@
   .bps-figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bps-rows > div { grid-template-columns: 1fr; gap: 4px; }
 }
+
+.bps-quote { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; border-top: 1px solid var(--bps-hair); border-bottom: 1px solid var(--bps-hair); margin-top: 24px; padding: 12px 0; }
+.bps-quote span { color: var(--bps-muted); font-size: 13px; }
+.bps-quote b { font-size: 15px; font-weight: 600; }
+.bps-quote small { color: var(--bps-faint); font-size: 12px; }
