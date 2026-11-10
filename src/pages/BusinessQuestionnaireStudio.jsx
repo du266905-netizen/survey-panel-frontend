@@ -503,6 +503,14 @@ export default function BusinessQuestionnaireStudio() {
       setSensitiveOpen(true);
       return;
     }
+    /* Payment is the gate, not the button: a questionnaire may not go live on
+       an accepted-but-unpaid project. */
+    if (publish && !['FUNDED', 'RECRUITING', 'LIVE', 'COMPLETED'].includes(String(project?.status))) {
+      setError(String(language).startsWith('zh')
+        ? '付款确认之后才能发布问卷。现在这个项目还没确认收款。'
+        : 'The questionnaire can be published once payment is confirmed.');
+      return;
+    }
     setSaving(publish ? 'publish' : 'save');
     setError('');
     setMessage('');
