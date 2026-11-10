@@ -40,6 +40,7 @@ export const MODULES = {
       stage: STATUS_LABEL[project.status] || project.status || '草稿',
       /* the tab strip filters on the raw status; the label alone cannot be mapped back */
       status: project.status || 'DRAFT',
+      raw: project,
       amount: dollars(project.latestQuote?.amount),
       updatedAt: project.updatedAt ? String(project.updatedAt).slice(0, 10) : '—',
     }),

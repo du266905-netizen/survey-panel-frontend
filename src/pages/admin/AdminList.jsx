@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import AdminDetail from './AdminDetail';
+import BusinessProjectActions from '../../components/BusinessProjectActions';
 import { isResearchPath } from '../../components/AdminRail';
 import { ArrowLeft, Download, Filter, Plus, Search } from 'lucide-react';
 import '../AdminConsole.css';
@@ -18,6 +19,7 @@ export default function AdminList({ config, rows: givenRows, emptyNote }) {
   const [selected, setSelected] = useState(null);
   const [loaded, setLoaded] = useState(null);
   const [loading, setLoading] = useState(Boolean(config.load));
+  const [actionsProject, setActionsProject] = useState(null);
 
   /* 模块带 load 就自己去取；不带就显示空表，不编数据。 */
   useEffect(() => {
@@ -96,7 +98,11 @@ export default function AdminList({ config, rows: givenRows, emptyNote }) {
                       : row[column.key]}
                   </td>
                 ))}
-                <td className="con-row-action" aria-hidden="true">···</td>
+                <td className="con-row-action">
+                  {row.raw ? (
+                    <button type="button" className="con-row-btn" onClick={(event) => { event.stopPropagation(); setActionsProject(row.raw); }}>操作</button>
+                  ) : '···'}
+                </td>
               </tr>
             )) : (
               <tr className="is-empty">
@@ -113,6 +119,14 @@ export default function AdminList({ config, rows: givenRows, emptyNote }) {
         <span>{rows.length} 条</span>
         <span>每页 50</span>
       </div>
+
+      {actionsProject && (
+        <BusinessProjectActions
+          project={actionsProject}
+          onClose={() => setActionsProject(null)}
+          onDone={() => { setActionsProject(null); window.location.reload(); }}
+        />
+      )}
 
       <AdminDetail
         open={Boolean(selected)}
