@@ -21,7 +21,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
+import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, releaseBusinessProjectReport, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../components/BusinessBalanceChip';
 import BusinessPageLoader from '../components/BusinessPageLoader';
@@ -208,6 +208,7 @@ export default function BusinessWorkspace() {
   const [payingProjectId, setPayingProjectId] = useState('');
   const paypalReturnHandledRef = useRef('');
   const [message, setMessage] = useState('');
+  const [releaseBusy, setReleaseBusy] = useState('');
   const [quoteProject, setQuoteProject] = useState(null);
   const [quoteDecision, setQuoteDecision] = useState('');
   const [declineReason, setDeclineReason] = useState('');
@@ -661,6 +662,31 @@ export default function BusinessWorkspace() {
   const onboardingTitleText = onboardingTitle.replace(/[?？]\s*$/, '');
   const onboardingTitleMark = /[?？]\s*$/.test(onboardingTitle) ? onboardingTitle.trim().slice(-1) : '';
 
+  /* Releasing the report is a staff decision; publishing the questionnaire alone
+     must never make results visible to the client. */
+  const toggleReportRelease = async (project) => {
+    const current = project.deliveryStatus || project.delivery?.status;
+    const next = current === 'APPROVED' ? 'REVOKED' : 'APPROVED';
+    setReleaseBusy(project.id);
+    setMessage('');
+    try {
+      await releaseBusinessProjectReport(project.id, next);
+      setWorkspace((state) => ({
+        ...state,
+        projects: state.projects.map((item) => (item.id === project.id ? { ...item, deliveryStatus: next } : item)),
+      }));
+      setMessage(next === 'APPROVED'
+        ? (projectsCopy.releasedMessage || 'Report released. The client can open the results page now.')
+        : (projectsCopy.retractedMessage || 'Report taken down. The client can no longer open it.'));
+    } catch (err) {
+      setMessage(err?.response?.status === 404
+        ? (projectsCopy.releaseNotReadyMessage || 'The backend has no release endpoint yet, so nothing was saved.')
+        : (projectsCopy.releaseFailedMessage || 'Could not change the release state. Try again.'));
+    } finally {
+      setReleaseBusy('');
+    }
+  };
+
   return (
     <main className={`business-workspace${activeView === 'questionnaires' ? ' business-workspace--questionnaire-hub' : ''}`}>
       <div className="business-workspace-body business-workspace-body--rail">
@@ -714,7 +740,7 @@ export default function BusinessWorkspace() {
                   <p>{stats}</p>
                   <div className="business-questionnaire-card-actions">
                     <Link className="business-project-open" to={withLanguage(`/business/projects/${project.id}`, language)}>{ui.openEditor} <ArrowRight size={15} /></Link>
-                    {questionnaire.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}
+                    {questionnaire.status === 'PUBLISHED' && <Link className="business-project-open business-project-results" to={withLanguage(`/business/projects/${project.id}/results`, language)}><BarChart3 size={15} /> {projectsCopy.viewResults}</Link>}{questionnaire.status === 'PUBLISHED' && <button type="button" className={`business-project-open business-project-release${(project.deliveryStatus || project.delivery?.status) === 'APPROVED' ? ' is-released' : ''}`} onClick={() => toggleReportRelease(project)} disabled={releaseBusy === project.id}>{(project.deliveryStatus || project.delivery?.status) === 'APPROVED' ? (projectsCopy.retractReport || 'Take down') : (projectsCopy.releaseReport || 'Release report')}</button>}
                     {project.status === 'DRAFT' && <button type="button" className="business-project-open business-project-delete" onClick={() => deleteProject(project)} disabled={submitting}><Trash2 size={15} /> {projectsCopy.deleteDraft}</button>}
                   </div>
                 </div>

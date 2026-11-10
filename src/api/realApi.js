@@ -223,6 +223,13 @@ export const deleteBusinessProject = async (projectId) => {
   await apiClient.delete(`/api/business/projects/${projectId}`);
 };
 
+/* Report release gate: the client only gets a results page after this returns
+   APPROVED. Contract: docs/后端-报告放行-接口.md */
+export const releaseBusinessProjectReport = async (projectId, status) => {
+  const response = await apiClient.patch(`/api/business/projects/${projectId}/report`, { status });
+  return { data: response.data };
+};
+
 export const getBusinessQuestionnaireResponses = async (projectId) => {
   const response = await apiClient.get(`/api/business/projects/${projectId}/questionnaire/responses`);
   return { data: response.data };
