@@ -1,0 +1,25 @@
+.bpa-overlay { position: fixed; z-index: 85; inset: 0; display: grid; place-items: center; background: rgba(20, 20, 19, .38); padding: 24px; }
+.bpa-panel { width: min(100%, 560px); max-height: 84svh; overflow-y: auto; border-radius: 14px; background: #fff; box-shadow: 0 24px 70px rgba(20, 20, 19, .22); color: #141413; font-family: var(--font-sans); padding: 22px 24px 20px; }
+.bpa-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.bpa-head h1 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+.bpa-head p { margin: 6px 0 0; color: #6f6f68; font-size: 13px; }
+.bpa-close { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid #e5e3dd; border-radius: 999px; background: #fff; color: #6f6f68; cursor: pointer; }
+
+.bpa-steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 20px 0 0; padding: 0; list-style: none; }
+.bpa-steps li { position: relative; display: grid; gap: 8px; padding-top: 14px; }
+.bpa-steps li::before { position: absolute; top: 4px; right: 0; left: 0; height: 1px; background: #e5e3dd; content: ""; }
+.bpa-steps i { position: absolute; top: 0; left: 0; width: 9px; height: 9px; border: 1px solid #9a9a92; border-radius: 50%; background: #fff; }
+.bpa-steps li.is-done i, .bpa-steps li.is-current i { border-color: #141413; background: #141413; }
+.bpa-steps li.is-current i { box-shadow: inset 0 0 0 2px #fff; }
+.bpa-steps li.is-done::before { background: #141413; }
+.bpa-steps span { color: #9a9a92; font-size: 11px; line-height: 1.3; }
+.bpa-steps li.is-done span, .bpa-steps li.is-current span { color: #141413; }
+
+.bpa-actions { display: grid; gap: 8px; margin-top: 22px; }
+.bpa-action { display: grid; gap: 3px; border: 1px solid #e5e3dd; border-radius: 10px; background: #fff; cursor: pointer; padding: 12px 14px; text-align: left; }
+.bpa-action:hover { border-color: #141413; }
+.bpa-action:disabled { cursor: not-allowed; opacity: .55; }
+.bpa-action strong { font-size: 13px; font-weight: 600; }
+.bpa-action small { color: #6f6f68; font-size: 12px; line-height: 1.45; }
+.bpa-empty { margin: 0; color: #6f6f68; font-size: 13px; }
+.bpa-note { margin: 14px 0 0; border-top: 1px solid #e5e3dd; padding-top: 12px; color: #4a4a45; font-size: 13px; }

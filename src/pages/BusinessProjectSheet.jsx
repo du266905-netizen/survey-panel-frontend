@@ -95,7 +95,7 @@ export default function BusinessProjectSheet({ projectId, preview, onClose }) {
     quote?.acceptedAt && { at: quote.acceptedAt, label: t('报价确认', 'Quote accepted') },
     project.latestPayment?.status === 'PAID' && { at: project.latestPayment.paidAt || project.latestPayment.updatedAt, label: t('付款完成', 'Payment received') },
     questionnaire?.publishedAt && { at: questionnaire.publishedAt, label: t('问卷发布', 'Questionnaire published') },
-    project.delivery?.approvedAt && { at: project.delivery.approvedAt, label: t('报告放行', 'Report released') },
+    project.delivery?.approvedAt && { at: project.delivery.approvedAt, label: t('报告发布', 'Report published') },
   ].filter(Boolean).sort((a, b) => new Date(b.at) - new Date(a.at));
 
   return (

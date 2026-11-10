@@ -210,6 +210,7 @@ export default function BusinessWorkspace() {
   const [message, setMessage] = useState('');
   const [releaseBusy, setReleaseBusy] = useState('');
   const [detailProjectId, setDetailProjectId] = useState('');
+  const [actionsProject, setActionsProject] = useState(null);
   const [quoteProject, setQuoteProject] = useState(null);
   const [quoteDecision, setQuoteDecision] = useState('');
   const [declineReason, setDeclineReason] = useState('');
@@ -812,7 +813,7 @@ export default function BusinessWorkspace() {
                     </div>
 
                     <div className="business-project-cell is-actions">
-                      <button type="button" className="business-project-open" onClick={() => setDetailProjectId(project.id)}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']} <ArrowRight size={15} /></button>
+                      <button type="button" className="business-project-open" onClick={() => setDetailProjectId(project.id)}>{projectViewDetailsCopy[language] || projectViewDetailsCopy['en-US']} <ArrowRight size={15} /></button><button type="button" className="business-project-open business-project-actions" onClick={() => setActionsProject(project)}>{projectsCopy.projectActions || (String(language).startsWith('zh') ? '操作' : 'Actions')}</button>
                       {!project.questionnaire && ['DRAFT', 'QUOTE_REQUIRED'].includes(project.status) && <button type="button" className="business-project-open" onClick={() => requestProposal(project)} disabled={submitting}>{submitting ? projectsCopy.submitting : projectsCopy.submit}</button>}
                       {!project.questionnaire && project.latestQuote?.status === 'SENT' && <button type="button" className="business-project-open" onClick={() => { setQuoteProject(project); setQuoteDecision(''); setDeclineReason(''); }}>{projectsCopy.reviewQuote}</button>}
                       {!project.questionnaire && project.status === 'CLIENT_ACCEPTED' && <button type="button" className="business-project-open" onClick={() => beginPayment(project)} disabled={Boolean(payingProjectId)} aria-busy={payingProjectId === project.id}>{payingProjectId === project.id ? <><LoaderCircle className="animate-spin" size={15} /> {ws.workspace.paymentPreparing}</> : <>{ws.workspace.continueToPayment}</>}</button>}
@@ -1081,6 +1082,7 @@ export default function BusinessWorkspace() {
         </div>
       )}
       {detailProjectId && <BusinessProjectSheet projectId={detailProjectId} onClose={() => setDetailProjectId('')} />}
+      {actionsProject && <BusinessProjectActions project={actionsProject} onClose={() => setActionsProject(null)} onDone={() => { setActionsProject(null); window.location.reload(); }} />}
     </main>
   );
 }
