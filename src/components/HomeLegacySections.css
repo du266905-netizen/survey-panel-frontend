@@ -545,13 +545,15 @@
   margin: 0;
   color: #141413;
   font-family: var(--font-reading);
-  font-size: clamp(26px, 2.7vw, 38px);
+  font-size: 38px;
   font-weight: 400;
   letter-spacing: -.01em;
   line-height: 1.32;
   text-wrap: pretty;
 }
 .home-statement-line { margin: 0 0 10px; }
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   .home-statement-inner { width: calc(100% - 40px); }
+  .home-statement-line,
+  .home-statement-body { font-size: 28px; }
 }
