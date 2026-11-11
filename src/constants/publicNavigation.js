@@ -90,10 +90,12 @@ export const publicNavigation = [
         pdf: { en: '/legal/guanyisearch-privacy-2026-09-en.pdf', zh: '/legal/guanyisearch-privacy-2026-09-zh.pdf' },
       },
       {
-        id: 'cookie',
-        title: 'Cookie notice',
-        note: 'How we use cookies',
-        pdf: { en: '/legal/guanyisearch-cookie-notice-2026-09-en.pdf', zh: '/legal/guanyisearch-cookie-notice-2026-09-zh.pdf' },
+        /* The old privacy page carried two documents: the policy and the
+           acceptable-use rules. Cookie notice was only a link inside it. */
+        id: 'acceptable-use',
+        title: 'Acceptable use',
+        note: 'What may be done on the platform',
+        pdf: { en: '/legal/guanyisearch-acceptable-use-2026-09-en.pdf', zh: '/legal/guanyisearch-acceptable-use-2026-09-zh.pdf' },
       },
       {
         id: 'terms',
