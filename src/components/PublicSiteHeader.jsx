@@ -189,7 +189,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
     <header className="psn">
       <div className="psn-bar">
         <Link className="psn-brand" to={withLanguage('/', language)} aria-label="GuanyiSearch home" onClick={closeAll}>
-          <Logo size="md" variant="light" />
+          <Logo size="md" />
         </Link>
 
         <nav className="psn-groups" aria-label="Primary navigation">

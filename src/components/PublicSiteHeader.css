@@ -409,3 +409,30 @@
 @media (prefers-reduced-motion: reduce) {
   .psn-signin-menu { animation: none; }
 }
+
+/* 2026-11-12: white top — a trial. The owner wants to see it against the page;
+   delete this block (and restore variant="light" on the logo) to go back to
+   the black bar. */
+.psn {
+  background: #fff;
+  color: #141413;
+  border-bottom: 1px solid #e5e3dd;
+}
+.psn-trigger { color: rgba(20, 20, 19, .78); }
+.psn-trigger:hover,
+.psn-trigger.is-open { color: #141413; }
+.psn-trigger.is-static { color: rgba(20, 20, 19, .4); }
+.psn-lang-trigger,
+.psn-signin { color: rgba(20, 20, 19, .78); }
+.psn-lang-trigger:hover,
+.psn-signin:hover,
+.psn-signin.is-open { color: #141413; }
+.psn-strip {
+  background: #f7f7f5;
+  border-bottom: 1px solid #e5e3dd;
+}
+.psn-strip-link { color: rgba(20, 20, 19, .62); }
+.psn-strip-link:hover { color: #141413; }
+.psn .psn-rotation-toggle { color: rgba(20, 20, 19, .72); }
+.psn .psn-rotation-toggle:hover { color: #141413; }
+.psn .psn-rotation-toggle.is-stopped { color: #141413; }
