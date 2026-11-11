@@ -75,20 +75,22 @@ export default function HomeAtlas() {
   const [heroStopped, setHeroStopped] = useState(false);
   const { hash } = useLocation();
 
-  /* /access redirects to /#join; React Router does not scroll hashes itself. */
+  /* /access hands over one flag; the glide starts after the page has painted so
+     the target has its final position. */
   useEffect(() => {
-    if (hash !== '#join') return undefined;
-    const frame = window.requestAnimationFrame(() => {
-      /* 2026-11-12: the Join button should glide to the block, not cut to it. */
-      const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    let requested = false;
+    try {
+      requested = window.sessionStorage.getItem('gs:scroll-to-join') === '1';
+      if (requested) window.sessionStorage.removeItem('gs:scroll-to-join');
+    } catch { /* storage blocked */ }
+    if (!requested) return undefined;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const timer = window.setTimeout(() => {
       document.getElementById('join')?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
-      /* 2026-11-12: /access sends people here once. Keep the scroll, but drop
-         the hash so a refresh starts at the top instead of pinning the page to
-         the sign-in block forever. */
-      window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search);
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, [hash]);
+    }, 80);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   const rotationLabel = heroStopped
     ? (publicCopy.chrome.header.playRotation || 'Play rotation')
     : (publicCopy.chrome.header.pauseRotation || 'Pause rotation');

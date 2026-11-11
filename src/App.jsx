@@ -66,6 +66,7 @@ import PageMotion from './components/PageMotion';
 import PublicSiteLayout from './components/PublicSiteLayout';
 import Terms from './pages/Terms';
 import LegalPdfRedirect from './pages/LegalPdfRedirect';
+import JoinRedirect from './pages/JoinRedirect';
 import TrafficConsole from './pages/TrafficConsole';
 import Wallet from './pages/Wallet';
 import WorkerDetail from './pages/WorkerDetail';
@@ -215,7 +216,7 @@ export default function App() {
         {/* /join 的两卡片页 2026-10-25 撤掉，入口统一走 /access；旧链接不断。 */}
         <Route path="/join" element={<Navigate to="/access" replace />} />
         {/* 2026-11-12: the chooser lives on the homepage; /access points at it. */}
-        <Route path="/access" element={<Navigate to="/#join" replace />} />
+        <Route path="/access" element={<JoinRedirect />} />
         <Route path="/business" element={<Business />} />
         <Route path="/china-market-insights" element={<ChinaMarketInsights />} />
         <Route path="/solutions/market-entry" element={<PublicPage><MarketEntry /></PublicPage>} />
