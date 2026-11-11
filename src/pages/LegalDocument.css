@@ -14,7 +14,7 @@
   padding: clamp(56px, 7vw, 104px) clamp(24px, 5vw, 88px) clamp(88px, 9vw, 144px);
 }
 
-.legal-doc-inner { width: min(100%, 720px); margin: 0 auto; }
+.legal-doc-inner { width: min(100%, 960px); margin: 0 auto; }
 
 .legal-doc-head {
   display: flex;
@@ -102,8 +102,8 @@
   font-family: var(--font-reading);
   font-size: 22px;
   font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.6;
+  letter-spacing: -.01em;
+  line-height: 1.45;
   color: #141413;
 }
 
