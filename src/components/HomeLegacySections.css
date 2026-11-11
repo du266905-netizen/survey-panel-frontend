@@ -492,12 +492,12 @@
 .home-global-band-text {
   max-width: 640px;
   margin: 0;
-  /* Reference body ink is black; Spectral's taller x-height reads like their
-     Meta Serif at the same 18px. */
+  /* Same ink and same body step as the rest of the site: 22px / 1.6, the size
+     the homepage description uses. */
   color: #000;
-  font-family: "Spectral", var(--font-reading);
-  font-size: 20px;
-  line-height: 1.55;
+  font-family: var(--font-reading);
+  font-size: 22px;
+  line-height: 1.6;
   /* Natural rag: "balance" was forcing short lines and hyphen breaks. */
   text-wrap: pretty;
   hyphens: none;

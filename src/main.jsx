@@ -5,8 +5,6 @@ import '@fontsource-variable/inter';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource-variable/source-serif-4';
-import '@fontsource/spectral/400.css';
-import '@fontsource/spectral/600.css';
 import App from './App';
 import { AuthProvider } from './components/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
