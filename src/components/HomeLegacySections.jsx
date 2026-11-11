@@ -254,11 +254,9 @@ export function HomeGlobalBand() {
   const bandSeparator = isCjk ? '' : ' ';
   return (
     <section className="home-global-band" aria-label={copy.title.replace(/\n/g, ' ')}>
-      <div className="home-global-band-inner">
-        {/* Continues the 38px passage above: same left edge, body step, no
-            second headline. */}
-        <p className="home-global-band-text">{copy.body}</p>
-      </div>
+      {/* 2026-11-12: the paragraph is withdrawn for now — it is kept in
+          globalBandCopy below for the next pass at this page. */}
+      <div className="home-global-band-inner" aria-hidden="true" />
       {/* 2026-11-12: the globe as a faint horizon under the copy — Stripe's
           treatment, not a ball beside the text. It still turns. */}
       <div className="home-global-band-arc" aria-hidden="true">

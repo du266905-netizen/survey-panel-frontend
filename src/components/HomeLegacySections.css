@@ -485,7 +485,7 @@
 /* Only the top arc of the sphere shows: a 1600px globe inside a short window. */
 .home-global-band-arc {
   position: relative;
-  height: clamp(260px, 30vw, 440px);
+  height: clamp(240px, 25vw, 360px);
   margin-top: clamp(16px, 1.6vw, 26px);
   overflow: hidden;
 }
@@ -493,12 +493,12 @@
   position: absolute;
   left: 50%;
   top: 12%;
-  --globe-size: clamp(1100px, 128vw, 1500px);
+  --globe-size: clamp(1100px, 118vw, 1400px);
   width: var(--globe-size);
   aspect-ratio: 1;
   /* The sphere is 43.6% of the canvas, so its top sits 6.4% in: pull it up so
      the horizon starts just under the copy. */
-  top: calc(14px - var(--globe-size) * 0.064 + 40px);
+  top: calc(14px - var(--globe-size) * 0.064 + 20px);
   transform: translateX(-50%);
   cursor: grab;
   transition: opacity .4s ease, transform .4s ease;

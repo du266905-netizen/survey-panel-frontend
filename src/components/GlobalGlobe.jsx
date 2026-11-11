@@ -72,8 +72,8 @@ export default function GlobalGlobe({ tone = 'light' }) {
     let isVisible = true;
     let isDragging = false;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let dragStart = { x: 0, y: 0, rotation: [-18, -19] };
-    let rotation = [-18, -19];
+    let dragStart = { x: 0, y: 0, rotation: [-108, -16] };
+    let rotation = [-108, -16];
     /* `horizon` is the faint line-only treatment: no fill, no dots. */
     const palette = tone === 'horizon' ? {
       sphere: 'rgba(0, 0, 0, 0)',
