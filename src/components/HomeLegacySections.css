@@ -487,8 +487,10 @@
 .home-global-band-text {
   max-width: 540px;
   margin: 0 auto;
-  color: #3a3a36;
-  font-family: var(--font-reading);
+  /* Reference body ink is black, not grey; Spectral's taller x-height reads
+     like their Meta Serif at the same 18px. */
+  color: #000;
+  font-family: "Spectral", var(--font-reading);
   font-size: 18px;
   /* Tighter leading and a narrower measure: same 18px as the reference, but the
      block reads as dense as theirs instead of light and airy. */
