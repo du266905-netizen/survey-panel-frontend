@@ -182,14 +182,14 @@
 /* 2026-11-12: the block read as oversized — every element was one step too
    big. Pull the title, note and card down a step and let the film sit smaller. */
 .home-choice-title {
-  font-size: clamp(30px, 3vw, 42px);
+  font-size: 56px;
   line-height: 1.08;
   letter-spacing: -.025em;
 }
 .home-choice-note {
-  margin: 12px 0 20px;
-  font-size: 15px;
-  line-height: 1.6;
+  margin: 16px 0 24px;
+  font-size: 22px;
+  line-height: 1.45;
 }
 .home-choice-card { padding: 20px 20px 18px; }
 .home-choice-film { max-width: 420px; }
