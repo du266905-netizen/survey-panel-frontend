@@ -103,7 +103,6 @@ import BusinessPlans from './pages/BusinessPlans';
 import BusinessPlanCheckout from './pages/BusinessPlanCheckout';
 import BusinessResultsDashboard from './pages/BusinessResultsDashboard';
 import PublicBusinessQuestionnaire from './pages/PublicBusinessQuestionnaire';
-import JoinEntry from './pages/JoinEntry';
 import ChinaMarketInsights from './pages/ChinaMarketInsights';
 import IndustryAutomotive from './pages/IndustryAutomotive';
 import IndustryTravel from './pages/IndustryTravel';
@@ -217,7 +216,8 @@ export default function App() {
         <Route path="/register" element={<PublicEntry><Landing initialAuthMode="register" authOnly /></PublicEntry>} />
         {/* /join 的两卡片页 2026-10-25 撤掉，入口统一走 /access；旧链接不断。 */}
         <Route path="/join" element={<Navigate to="/access" replace />} />
-        <Route path="/access" element={<PublicEntry><JoinEntry /></PublicEntry>} />
+        {/* 2026-11-12: the chooser lives on the homepage; /access points at it. */}
+        <Route path="/access" element={<Navigate to="/#join" replace />} />
         <Route path="/business" element={<Business />} />
         <Route path="/china-market-insights" element={<ChinaMarketInsights />} />
         <Route path="/solutions/market-entry" element={<PublicPage><MarketEntry /></PublicPage>} />

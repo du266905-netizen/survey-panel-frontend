@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import HomeHeroCarousel from '../components/HomeHeroCarousel';
+import HomeChoiceSection from '../components/HomeChoiceSection';
 import HeroRotationToggle from '../components/HeroRotationToggle';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
@@ -72,6 +73,16 @@ export default function HomeAtlas() {
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
   const [heroStopped, setHeroStopped] = useState(false);
+  const { hash } = useLocation();
+
+  /* /access redirects to /#join; React Router does not scroll hashes itself. */
+  useEffect(() => {
+    if (hash !== '#join') return undefined;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById('join')?.scrollIntoView({ block: 'start' });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [hash]);
   const rotationLabel = heroStopped
     ? (publicCopy.chrome.header.playRotation || 'Play rotation')
     : (publicCopy.chrome.header.pauseRotation || 'Pause rotation');
@@ -98,6 +109,12 @@ export default function HomeAtlas() {
         communityLabel={publicCopy.navigation.meetCommunity}
         stopped={heroStopped}
       />
+
+      {/* The sign-in chooser, back on the home page (2026-11-12). /access now
+          redirects here; the block is the same component either way. */}
+      <div id="join">
+        <HomeChoiceSection />
+      </div>
 
       <HomeLegacySections />
     </main>
