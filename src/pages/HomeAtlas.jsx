@@ -79,7 +79,9 @@ export default function HomeAtlas() {
   useEffect(() => {
     if (hash !== '#join') return undefined;
     const frame = window.requestAnimationFrame(() => {
-      document.getElementById('join')?.scrollIntoView({ block: 'start' });
+      /* 2026-11-12: the Join button should glide to the block, not cut to it. */
+      const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById('join')?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
       /* 2026-11-12: /access sends people here once. Keep the scroll, but drop
          the hash so a refresh starts at the top instead of pinning the page to
          the sign-in block forever. */
