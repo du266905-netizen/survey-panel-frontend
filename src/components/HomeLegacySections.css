@@ -459,35 +459,14 @@
 .home-global-band {
   position: relative;
   overflow: hidden;
-  border-top: 1px solid #e5e3dd;
   background: #fff;
   color: #141413;
-  padding: clamp(64px, 6vw, 96px) 0 0;
+  padding: clamp(16px, 1.6vw, 24px) 0 0;
 }
 .home-global-band-inner {
-  width: min(100% - 96px, 1120px);
+  /* Same container and left edge as the 38px passage above it. */
+  width: min(100% - 96px, 1280px);
   margin: 0 auto;
-}
-.home-global-band-label {
-  margin: 0 0 20px;
-  color: #7F848A;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .16em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-.home-global-band-title {
-  max-width: 900px;
-  margin: 0 0 20px;
-  color: #141413;
-  font-family: var(--font-reading);
-  font-size: 38px;
-  font-weight: 600;
-  letter-spacing: -.025em;
-  line-height: 1.12;
-  text-wrap: balance;
 }
 .home-global-band-text {
   max-width: 640px;
@@ -503,16 +482,20 @@
 /* Only the top arc of the sphere shows: a 1600px globe inside a short window. */
 .home-global-band-arc {
   position: relative;
-  height: clamp(200px, 24vw, 330px);
-  margin-top: clamp(24px, 2.4vw, 40px);
+  height: clamp(200px, 23vw, 310px);
+  margin-top: clamp(16px, 1.6vw, 26px);
   overflow: hidden;
 }
 .home-global-band-arc-globe {
   position: absolute;
   left: 50%;
   top: 12%;
-  width: clamp(1100px, 128vw, 1900px);
+  --globe-size: clamp(1100px, 128vw, 1900px);
+  width: var(--globe-size);
   aspect-ratio: 1;
+  /* The sphere is 43.6% of the canvas, so its top sits 6.4% in: pull it up so
+     the horizon starts just under the copy. */
+  top: calc(14px - var(--globe-size) * 0.064);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -521,9 +504,8 @@
 @media (max-width: 900px) {
   .home-global-band { padding: 56px 0 0; }
   .home-global-band-inner { width: calc(100% - 40px); }
-  .home-global-band-title { font-size: 30px; }
   .home-global-band-arc { height: 200px; }
-  .home-global-band-arc-globe { width: 820px; }
+  .home-global-band-arc-globe { --globe-size: 820px; }
 }
 
 /* 2026-10-27: the closing band is one centre axis — the typed line, then the
