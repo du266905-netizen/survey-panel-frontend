@@ -257,16 +257,10 @@
 }
 .home-footer-nav a:hover { background-size: 100% 1px; }
 
-/* groups rise in once, staggered, when the footer reaches the viewport */
-.home-footer-nav [data-reveal] { opacity: 0; transform: translateY(10px); }
-.home-footer-nav [data-reveal].is-in {
-  opacity: 1;
-  transform: none;
-  transition: opacity .5s ease, transform .5s ease;
-  transition-delay: calc(var(--i, 0) * 70ms);
-}
+/* 2026-11-12: the columns are always painted. The entrance animation hid them
+   at opacity 0 until an observer fired, and that observer missed after a
+   refresh or a language switch — the footer went blank. */
 @media (prefers-reduced-motion: reduce) {
-  .home-footer-nav [data-reveal] { opacity: 1; transform: none; transition: none; }
   .home-footer-nav a { transition: none; }
 }
 
