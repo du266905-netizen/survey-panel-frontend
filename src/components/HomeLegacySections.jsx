@@ -314,8 +314,11 @@ export function HomeStatement() {
   return (
     <section className="home-statement" aria-label={line || undefined}>
       <div className="home-statement-inner">
-        {line ? <p className="home-statement-line">{line}</p> : null}
-        {body ? <p className="home-statement-body">{body}</p> : null}
+        <p className="home-statement-body">
+          {line ? <strong className="home-statement-lead">{line}</strong> : null}
+          {line && body ? ' ' : null}
+          {body}
+        </p>
       </div>
     </section>
   );
@@ -326,8 +329,8 @@ export default function HomeLegacySections() {
   const copy = publicCopy.home;
   return (
     <div className="home-continuation">
-      <HomeGlobalBand />
       <HomeStatement />
+      <HomeGlobalBand />
 
       <HomeCommunityCta copy={copy} navigation={publicCopy.navigation} language={language} />
 
