@@ -201,16 +201,16 @@
   .home-choice { padding: 32px 0 40px; }
   .home-choice-inner { width: calc(100% - 40px); }
   .home-choice-entry { order: 0; }
-  .home-choice-title { font-size: 28px; text-align: left; }
-  .home-choice-note { text-align: left; }
+  .home-choice-title { font-size: 34px; text-align: left; }
+  .home-choice-note { font-size: 18px; text-align: left; }
 }
 
 /* 2026-11-12: film and form share one top and one bottom line. */
 .home-choice-inner { align-items: stretch; }
 .home-choice-film { max-width: 420px; height: 100%; }
 .home-choice-entry { display: flex; flex-direction: column; justify-content: center; }
-.home-choice-title { font-size: clamp(30px, 3vw, 40px); font-weight: 600; letter-spacing: normal; }
-.home-choice-note { font-family: var(--font-sans); font-weight: 400; letter-spacing: 0; color: #7f848a; }
+.home-choice-title { font-size: 56px; line-height: 1.05; font-weight: 600; letter-spacing: -.02em; }
+.home-choice-note { font-family: var(--font-sans); font-size: 22px; font-weight: 400; letter-spacing: 0; line-height: 1.45; color: #7f848a; }
 .home-choice-card .home-entry button,
 .home-choice-card button[type="submit"] { font-weight: 500; letter-spacing: 0; }
 .home-choice-card input, .home-choice-card button { font-weight: 400; }
