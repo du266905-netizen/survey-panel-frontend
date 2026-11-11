@@ -460,7 +460,7 @@
   border-bottom: 1px solid #e5e3dd;
   background: #fff;
   color: #141413;
-  padding: clamp(56px, 5vw, 84px) 0;
+  padding: clamp(32px, 3vw, 48px) 0 clamp(56px, 5vw, 84px);
 }
 .home-global-band-inner {
   display: grid;
@@ -533,7 +533,7 @@
    first sentence heavier. It sits directly above the globe. */
 .home-statement {
   background: #fff;
-  padding: clamp(72px, 7vw, 104px) 0 clamp(48px, 5vw, 80px);
+  padding: clamp(40px, 3.4vw, 56px) 0 clamp(20px, 2vw, 32px);
 }
 .home-statement-inner {
   width: min(100% - 96px, 1280px);
