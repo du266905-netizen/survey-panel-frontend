@@ -35,6 +35,7 @@ function buildFooterColumns(publicCopy, language) {
      not a site map — full lists stay in the header. */
   return [
     {
+      id: 'company',
       label: local.__company || groups.about || 'Company',
       blocks: [{
         links: [
@@ -45,6 +46,7 @@ function buildFooterColumns(publicCopy, language) {
       }],
     },
     {
+      id: 'solutions',
       label: groups.solutions || 'Solutions',
       blocks: [{
         links: [
@@ -55,10 +57,11 @@ function buildFooterColumns(publicCopy, language) {
       }],
     },
     {
+      id: 'services',
       label: t('服务', '服務', 'Services'),
       blocks: [{
         links: [
-          { label: t('在线研究', '線上研究', 'Online research'), to: '/how-it-works' },
+          { label: t('在线研究', '線上研究', 'Online research'), to: '/business/register' },
           find('solutions', '/solutions/quantitative'),
           find('solutions', '/solutions/qualitative'),
           find('solutions', '/solutions/mixed'),
@@ -66,6 +69,7 @@ function buildFooterColumns(publicCopy, language) {
       }],
     },
     {
+      id: 'participants',
       label: groups.participants || 'Participants',
       blocks: [{
         links: [
@@ -76,6 +80,7 @@ function buildFooterColumns(publicCopy, language) {
       }],
     },
     {
+      id: 'support',
       label: groups.support || 'Support',
       blocks: [{ links: (group('support')?.items || []).map(link) }],
     },
@@ -167,6 +172,7 @@ export function HumanManifesto({ headingLevel = 'h1' }) {
 }
 
 export function HomeFooter() {
+  const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
   /* 2026-11-12: two quiet interactions — the link underline sweeps in, and the
      page offers a way back up once you are past the first screen. */
   const navRef = useRef(null);
@@ -210,10 +216,10 @@ export function HomeFooter() {
         io.unobserve(entry.target);
       });
     }, { threshold: 0.2 });
-    root.querySelectorAll('[data-reveal]').forEach((node) => io.observe(node));
+    const nodes = [...root.querySelectorAll('[data-reveal]')].filter((node) => !node.classList.contains('is-in'));
+    nodes.forEach((node) => io.observe(node));
     return () => io.disconnect();
-  }, []);
-  const { language, languages, navigateToLanguage, publicCopy } = useLanguage();
+  }, [language]);
   const copy = publicCopy.home.footer;
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
   const footerColumns = buildFooterColumns(publicCopy, language);
@@ -287,7 +293,7 @@ export function HomeFooter() {
           </div>
           <p className="home-footer-intro">We are a cross-regional insight and research company, building an open, interconnected and sustainable research community. We connect participants, research commissioners and organisations across business, culture, everyday life and public questions, turning real voices into clear judgements — for better decisions, and for a better world.</p>
         </div>
-        <nav ref={navRef} className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column, columnIndex) => <details key={column.label} className="home-footer-group" data-reveal style={{ '--i': columnIndex }} open={desktop || undefined}><summary>{column.label}<ChevronDown size={14} strokeWidth={1.8} aria-hidden="true" /></summary>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => (item.external ? <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer">{item.label}</a> : <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>))}</div>)}</details>)}</nav>
+        <nav ref={navRef} className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column, columnIndex) => <details key={column.id} className="home-footer-group" data-reveal style={{ '--i': columnIndex }} open={desktop || undefined}><summary>{column.label}<ChevronDown size={14} strokeWidth={1.8} aria-hidden="true" /></summary>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => (item.external ? <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer">{item.label}</a> : <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>))}</div>)}</details>)}</nav>
       </div>
       <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a><button type="button" className={`home-footer-top${showTop ? ' is-on' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="回到顶部">
             <svg className="home-footer-top-ring" viewBox="0 0 40 40" aria-hidden="true">
