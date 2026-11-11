@@ -469,7 +469,11 @@
   margin: 0 auto;
 }
 .home-global-band-text {
-  max-width: 640px;
+  /* Fills the container: two 22px columns, not one narrow column with a blank
+     right half. */
+  max-width: none;
+  columns: 2;
+  column-gap: clamp(40px, 5vw, 72px);
   margin: 0;
   color: #141413;
   font-family: var(--font-reading);
@@ -497,14 +501,19 @@
      the horizon starts just under the copy. */
   top: calc(14px - var(--globe-size) * 0.064);
   transform: translateX(-50%);
-  pointer-events: none;
+  cursor: grab;
+  transition: opacity .4s ease, transform .4s ease;
 }
+/* The model is draggable and comes forward under the pointer. */
+.home-global-band-arc:hover .home-global-band-arc-globe { transform: translateX(-50%) translateY(-6px); }
+.home-global-band-arc-globe:active { cursor: grabbing; }
 .home-global-band-arc-globe .landing-global-globe,
 .home-global-band-arc-globe .landing-global-globe-canvas { width: 100%; height: 100%; }
 @media (max-width: 900px) {
   .home-global-band { padding: 56px 0 0; }
   .home-global-band-inner { width: calc(100% - 40px); }
   .home-global-band-arc { height: 200px; }
+  .home-global-band-text { columns: 1; }
   .home-global-band-arc-globe { --globe-size: 820px; }
 }
 

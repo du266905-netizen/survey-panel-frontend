@@ -77,18 +77,19 @@ export default function GlobalGlobe({ tone = 'light' }) {
     /* `horizon` is the faint line-only treatment: no fill, no dots. */
     const palette = tone === 'horizon' ? {
       sphere: 'rgba(0, 0, 0, 0)',
-      graticule: 'rgba(45, 45, 40, 0.10)',
-      landFill: 'rgba(0, 0, 0, 0)',
-      landStroke: 'rgba(45, 45, 40, 0.26)',
+      graticule: 'rgba(45, 45, 40, 0.18)',
+      landFill: 'rgba(45, 45, 40, 0.02)',
+      landStroke: 'rgba(45, 45, 40, 0.46)',
       dot: 'rgba(0, 0, 0, 0)',
-      connection: 'rgba(45, 45, 40, 0.14)',
-      markerHalo: 'rgba(45, 45, 40, 0.05)',
-      marker: 'rgba(45, 45, 40, 0.30)',
-      markerStroke: 'rgba(255, 255, 255, 0)',
+      connection: 'rgba(27, 58, 44, 0.22)',
+      markerHalo: 'rgba(27, 58, 44, 0.10)',
+      marker: 'rgba(27, 58, 44, 0.55)',
+      markerStroke: 'rgba(255, 255, 255, 0.9)',
       falloff0: 'rgba(255, 255, 255, 0)',
       falloff1: 'rgba(255, 255, 255, 0)',
       falloff2: 'rgba(255, 255, 255, 0)',
-      outline: 'rgba(45, 45, 40, 0.22)',
+      outline: 'rgba(45, 45, 40, 0.40)',
+      markerScale: 1.9,
     } : tone === 'dark' ? {
       sphere: '#2b2b2b',
       graticule: 'rgba(255, 255, 255, 0.14)',
@@ -209,7 +210,8 @@ export default function GlobalGlobe({ tone = 'light' }) {
         const projected = projectVisiblePoint(marker.coordinates);
         if (!projected) return;
         const [x, y] = projected;
-        const markerRadius = clamp(radius * 0.015, 2.6, 3.8);
+        const markerScale = palette.markerScale || 1;
+        const markerRadius = clamp(radius * 0.015, 2.6, 3.8) * markerScale;
 
         context.beginPath();
         context.arc(x, y, markerRadius * 1.95, 0, Math.PI * 2);
