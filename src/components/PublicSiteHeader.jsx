@@ -98,6 +98,12 @@ export default function PublicSiteHeader({ stripStart = null }) {
   /* Legal entries open a PDF rather than a page (2026-11-12). */
   const pdfHref = (item) => (item.pdf ? (/^zh/i.test(language) ? item.pdf.zh : item.pdf.en) : null);
 
+  /* The four legal PDFs carry their own Chinese titles. */
+  const isZh = /^zh/i.test(language || '');
+  const isZhHant = /^zh-hant/i.test(language || '');
+  const navTitle = (item, entry) => (isZhHant ? item.titleZhHant : isZh ? item.titleZh : null) || entry?.title || item.title;
+  const navNote = (item, entry) => (isZhHant ? item.noteZhHant : isZh ? item.noteZh : null) || entry?.note || item.note;
+
   const renderNavItem = (item) => {
     /* An item with an `id` is a new Solutions entry and must not inherit the
        copy of the page it temporarily points at. */
@@ -108,8 +114,8 @@ export default function PublicSiteHeader({ stripStart = null }) {
       return (
         <a className="psn-item" href={pdfHref(item)} target="_blank" rel="noopener noreferrer" key={key} onClick={closeAll}>
           <span>
-            <strong>{entry?.title || item.title}</strong>
-            <small>{entry?.note || item.note}</small>
+            <strong>{navTitle(item, entry)}</strong>
+            <small>{navNote(item, entry)}</small>
           </span>
           <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
         </a>
@@ -118,8 +124,8 @@ export default function PublicSiteHeader({ stripStart = null }) {
     return (
       <Link className="psn-item" to={withLanguage(item.to, language)} key={item.id || item.to} onClick={closeAll}>
         <span>
-          <strong>{entry?.title || local?.title || item.title}</strong>
-          <small>{entry?.note || local?.note || item.note}</small>
+          <strong>{navTitle(item, entry) || local?.title}</strong>
+          <small>{navNote(item, entry) || local?.note}</small>
         </span>
         <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
       </Link>
@@ -344,7 +350,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
               ) : mobileItems.length ? mobileItems.map((item) => (
                 item.pdf ? (
                   <a key={item.id} href={pdfHref(item)} target="_blank" rel="noopener noreferrer" onClick={closeAll}>
-                    {(chrome.items?.[item.id]?.title || item.title)}
+                    {navTitle(item, chrome.items?.[item.id])}
                     <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
                   </a>
                 ) : (
