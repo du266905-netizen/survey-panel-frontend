@@ -80,6 +80,10 @@ export default function HomeAtlas() {
     if (hash !== '#join') return undefined;
     const frame = window.requestAnimationFrame(() => {
       document.getElementById('join')?.scrollIntoView({ block: 'start' });
+      /* 2026-11-12: /access sends people here once. Keep the scroll, but drop
+         the hash so a refresh starts at the top instead of pinning the page to
+         the sign-in block forever. */
+      window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search);
     });
     return () => window.cancelAnimationFrame(frame);
   }, [hash]);
