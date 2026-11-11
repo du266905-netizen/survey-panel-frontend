@@ -34,7 +34,9 @@ export default function HomeChoiceSection({ headingLevel = 2 }) {
         </figure>
 
         <div className="home-choice-entry">
-          <Heading className="home-choice-title">{isChinese ? '独立思考，明辨是非' : 'Independent thinking.'}</Heading>
+          <Heading className="home-choice-title">
+            {isChinese ? (<>独立思考<br />明辨是非</>) : 'Independent thinking.'}
+          </Heading>
           <p className="home-choice-note">{isChinese ? '下一步，从这里开始。' : 'Your next step starts here.'}</p>
           <div className="home-choice-card">
             <HomeEntry audience={audience} onAudienceChange={setAudience} />
