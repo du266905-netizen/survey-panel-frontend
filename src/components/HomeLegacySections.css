@@ -158,7 +158,11 @@
 .home-social-links svg { width: 18px; height: 18px; }
 
 /* language is a quiet line, not a boxed control */
-.home-footer-lang { position: relative; margin-top: 6px; }
+.home-footer-lang { position: relative; }
+/* same trigger and panel as the header, opening upward from the footer row */
+.home-footer-lang .psn-lang-menu { top: 100%; bottom: auto; right: auto; left: 0; margin: 0; z-index: 40; }
+.home-footer-lang .psn-lang-trigger { color: rgba(255, 255, 255, 0.6); }
+.home-footer-lang .psn-lang-trigger:hover { color: #fff; }
 .home-footer-lang-btn {
   display: inline-flex;
   align-items: center;

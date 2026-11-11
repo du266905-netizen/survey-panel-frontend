@@ -48,8 +48,10 @@ function buildFooterColumns(publicCopy, language) {
       label: groups.participants || 'Participants',
       blocks: [{ links: (group('participants')?.items || []).map(link) }],
     },
-    /* 2026-11-12: the header already carries Support; the footer keeps only the
-       cookie entry, which sits in the legal row. */
+    {
+      label: groups.support || 'Support',
+      blocks: [{ links: (group('support')?.items || []).map(link) }],
+    },
   ];
 }
 
@@ -222,21 +224,37 @@ export function HomeFooter() {
             <img className="home-footer-wordmark" src="/guanyisearch-wordmark.png" alt="GuanyiSearch" />
             <div className="home-footer-quick">
               <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>
-              <div className="home-footer-lang" ref={langRef}>
-                <button type="button" className="home-footer-lang-btn" aria-haspopup="listbox" aria-expanded={langOpen} aria-label={languageLabel[language] || 'Choose language'} onClick={() => setLangOpen((open) => !open)}>
-                  <LanguageGlobe size={18} strokeWidth={1.75} aria-hidden="true" />
-                  {(languages.find((item) => item.code === language) || {}).label || language}
-                  <ChevronDown size={14} strokeWidth={1.8} aria-hidden="true" className={langOpen ? 'is-open' : ''} />
+              <div
+                className="home-footer-lang psn-lang"
+                ref={langRef}
+                onMouseEnter={() => setLangOpen(true)}
+                onMouseLeave={() => setLangOpen(false)}
+              >
+                <button
+                  type="button"
+                  className="psn-lang-trigger"
+                  aria-label={languageLabel[language] || 'Choose language'}
+                  aria-expanded={langOpen}
+                  aria-haspopup="listbox"
+                  onClick={() => setLangOpen((open) => !open)}
+                >
+                  <LanguageGlobe size={19} strokeWidth={1.7} aria-hidden="true" />
+                  <ChevronDown size={12} strokeWidth={1.9} aria-hidden="true" />
                 </button>
-                {langOpen && (
-                  <ul className="home-footer-lang-panel" role="listbox" aria-label={languageLabel[language] || 'Language'}>
-                    {languages.map((item) => (
-                      <li key={item.code}>
-                        <button type="button" role="option" aria-selected={item.code === language} onClick={() => { navigateToLanguage(item.code); setLangOpen(false); }}>{item.label}</button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div className={`psn-lang-menu${langOpen ? ' is-open' : ''}`} role="listbox" aria-label={languageLabel[language] || 'Language'}>
+                  {languages.map((item) => (
+                    <button
+                      key={item.code}
+                      type="button"
+                      role="option"
+                      aria-selected={item.code === language}
+                      className={item.code === language ? 'is-selected' : ''}
+                      onClick={() => { navigateToLanguage(item.code); setLangOpen(false); }}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -244,7 +262,7 @@ export function HomeFooter() {
         </div>
         <nav ref={navRef} className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column, columnIndex) => <details key={column.label} className="home-footer-group" data-reveal style={{ '--i': columnIndex }} open={desktop || undefined}><summary>{column.label}<ChevronDown size={14} strokeWidth={1.8} aria-hidden="true" /></summary>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => (item.external ? <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer">{item.label}</a> : <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>))}</div>)}</details>)}</nav>
       </div>
-      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a><button type="button" className={`home-footer-top${showTop ? ' is-on' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="回到顶部">
+      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a><button type="button" className={`home-footer-top${showTop ? ' is-on' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="回到顶部">
             <svg className="home-footer-top-ring" viewBox="0 0 40 40" aria-hidden="true">
               <circle className="home-footer-top-track" cx="20" cy="20" r="18" />
               <circle className="home-footer-top-bar" cx="20" cy="20" r="18" style={{ strokeDashoffset: 113.1 - 113.1 * progress }} />
