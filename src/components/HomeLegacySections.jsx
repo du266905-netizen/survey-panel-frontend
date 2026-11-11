@@ -302,12 +302,32 @@ export function HomeCommunityCta({
   );
 }
 
+/* The withdrawn hero statement, set the way the careers and China pages set a
+   passage: 38px, full measure, on paper. It sits under the rotating hero and
+   the globe, independent of both — the carousel never touches it. */
+export function HomeStatement() {
+  const { language, publicCopy } = useLanguage();
+  const hero = publicCopy.hero || {};
+  const line = (hero.lines && hero.lines[0]) || '';
+  const body = hero.description || '';
+  if (!line && !body) return null;
+  return (
+    <section className="home-statement" aria-label={line || undefined}>
+      <div className="home-statement-inner">
+        {line ? <p className="home-statement-line">{line}</p> : null}
+        {body ? <p className="home-statement-body">{body}</p> : null}
+      </div>
+    </section>
+  );
+}
+
 export default function HomeLegacySections() {
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
   return (
     <div className="home-continuation">
       <HomeGlobalBand />
+      <HomeStatement />
 
       <HomeCommunityCta copy={copy} navigation={publicCopy.navigation} language={language} />
 

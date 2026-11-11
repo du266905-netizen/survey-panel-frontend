@@ -527,3 +527,31 @@
 .home-community-cta .atlas-map-typewriter span { white-space: normal; }
 .home-community-cta-actions { margin-top: 40px; }
 .home-community-cta-button { margin-top: 0; }
+
+/* Statement under the globe: paper, 38px, full 1280 measure — the careers and
+   China pages' passage step. */
+.home-statement {
+  background: #fff;
+  border-top: 1px solid #e5e3dd;
+  padding: clamp(72px, 7vw, 120px) 0;
+}
+.home-statement-inner {
+  width: min(100% - 96px, 1280px);
+  margin: 0 auto;
+}
+.home-statement-line,
+.home-statement-body {
+  max-width: none;
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: clamp(26px, 2.7vw, 38px);
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.32;
+  text-wrap: pretty;
+}
+.home-statement-line { margin: 0 0 10px; }
+@media (max-width: 700px) {
+  .home-statement-inner { width: calc(100% - 40px); }
+}
