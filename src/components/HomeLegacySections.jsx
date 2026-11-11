@@ -257,8 +257,9 @@ export function HomeGlobalBand() {
       <div className="home-global-band-inner">
         <div className="home-global-band-visual" aria-hidden="true"><GlobalGlobe tone="light" /></div>
         <div className="home-global-band-copy">
-          {/* 2026-11-11: 标题与正文并成一段 18px 的文字，行宽拉齐。 */}
-          <p className="home-global-band-text"><strong className="home-global-band-lead">{bandLead}</strong>{bandSeparator}{copy.body}</p>
+          {/* 2026-11-12: 图与文五五开、顶对齐；标题回到 32 台阶，正文 22。 */}
+          <h2 className="home-global-band-title">{bandLead}</h2>
+          <p className="home-global-band-text">{copy.body}</p>
         </div>
       </div>
     </section>
