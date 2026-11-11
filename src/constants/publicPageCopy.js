@@ -498,7 +498,7 @@ export const accessEntryCopy = {
   },
   "en": {
     "title": "Your next step starts here.",
-    "note": "Let every judgement rest on evidence.",
+    "note": "Independent thinking, clear judgement.",
     "form": {
       "participant": "Participant",
       "researcher": "Researcher",
@@ -695,7 +695,7 @@ export const accessEntryCopy = {
   },
   "en-GB": {
     "title": "Your next step starts here.",
-    "note": "Let every judgement rest on evidence.",
+    "note": "Independent thinking, clear judgement.",
     "form": {
       "participant": "Participant",
       "researcher": "Researcher",
