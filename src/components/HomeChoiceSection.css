@@ -220,3 +220,25 @@
 .home-choice-card { padding: 18px; }
 .home-choice-card button, .home-choice-card input { font-size: 14px; font-weight: 400; }
 .home-choice-card button[type="submit"], .home-choice-card .home-entry-primary { font-weight: 500; min-height: 44px; }
+
+/* 2026-11-12: the home-atlas scope sizes every control for the hero (54px,
+   square fields). Inside the sign-in card the controls should read like a
+   product form, not like a poster: 44px, 8px radius, no oversized hit boxes.
+   Type sizes are untouched. */
+.home-choice-card { padding: 16px; }
+.home-choice-card button,
+.home-choice-card input,
+.home-choice-card .home-entry button,
+.home-choice-card a[role="button"] {
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  border-radius: 8px !important;
+  padding: 0 14px !important;
+}
+.home-choice-card [class*="switch"] button,
+.home-choice-card [class*="toggle"] button {
+  height: 42px !important;
+  min-height: 42px !important;
+}
+.home-choice-card > * + * { margin-top: 12px; }
