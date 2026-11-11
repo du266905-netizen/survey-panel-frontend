@@ -115,7 +115,6 @@ export default function PublicSiteHeader({ stripStart = null }) {
         <a className="psn-item" href={pdfHref(item)} target="_blank" rel="noopener noreferrer" key={key} onClick={closeAll}>
           <span>
             <strong>{navTitle(item, entry)}</strong>
-            <small>{navNote(item, entry)}</small>
           </span>
           <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
         </a>
@@ -125,7 +124,6 @@ export default function PublicSiteHeader({ stripStart = null }) {
       <Link className="psn-item" to={withLanguage(item.to, language)} key={item.id || item.to} onClick={closeAll}>
         <span>
           <strong>{navTitle(item, entry) || local?.title}</strong>
-          <small>{navNote(item, entry) || local?.note}</small>
         </span>
         <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
       </Link>
