@@ -454,23 +454,23 @@
 .home-atlas .home-reward-card p { color: #565A60; }
 .home-atlas .home-reward-card > div > span { color: #7F848A; }
 
-/* The globe page: the passage continues in one column on the left, and the
-   model sits in the right half — visible, turning, draggable, no column break
-   and no empty right side. */
+/* The globe page: copy on paper, then the globe as a faint horizon beneath it.
+   The model still turns; it is texture, not a hero. */
 .home-global-band {
+  position: relative;
+  overflow: hidden;
   background: #fff;
   color: #141413;
-  padding: clamp(16px, 1.6vw, 24px) 0 clamp(24px, 3vw, 40px);
+  padding: clamp(16px, 1.6vw, 24px) 0 0;
 }
 .home-global-band-inner {
-  display: grid;
+  /* Same container and left edge as the 38px passage above it. */
   width: min(100% - 96px, 1280px);
-  grid-template-columns: minmax(0, 720px) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(32px, 4vw, 64px);
   margin: 0 auto;
 }
 .home-global-band-text {
+  /* Fills the container: two 22px columns, not one narrow column with a blank
+     right half. */
   max-width: none;
   margin: 0;
   color: #141413;
@@ -481,35 +481,37 @@
   text-wrap: pretty;
   hyphens: none;
 }
-/* A window onto the sphere: tall enough that the dots are visible at once. */
-.home-global-band-visual {
+/* Only the top arc of the sphere shows: a 1600px globe inside a short window. */
+.home-global-band-arc {
   position: relative;
-  height: clamp(280px, 30vw, 400px);
+  height: clamp(260px, 30vw, 440px);
+  margin-top: clamp(16px, 1.6vw, 26px);
   overflow: hidden;
 }
-.home-global-band-globe {
-  /* The whole sphere fits the window: a small turning globe, not a crop. */
+.home-global-band-arc-globe {
   position: absolute;
-  top: 50%;
   left: 50%;
-  width: clamp(280px, 30vw, 400px);
+  top: 12%;
+  --globe-size: clamp(1100px, 128vw, 1500px);
+  width: var(--globe-size);
   aspect-ratio: 1;
-  transform: translate(-50%, -50%);
+  /* The sphere is 43.6% of the canvas, so its top sits 6.4% in: pull it up so
+     the horizon starts just under the copy. */
+  top: calc(14px - var(--globe-size) * 0.064 + 40px);
+  transform: translateX(-50%);
   cursor: grab;
-  transition: transform .45s cubic-bezier(.22, .72, .2, 1);
+  transition: opacity .4s ease, transform .4s ease;
 }
-.home-global-band-globe:hover { transform: translate(-50%, calc(-50% - 6px)); }
-.home-global-band-globe:active { cursor: grabbing; }
-.home-global-band-globe .landing-global-globe,
-.home-global-band-globe .landing-global-globe-canvas { width: 100%; height: 100%; }
+/* The model is draggable and comes forward under the pointer. */
+.home-global-band-arc:hover .home-global-band-arc-globe { transform: translateX(-50%) translateY(-6px); }
+.home-global-band-arc-globe:active { cursor: grabbing; }
+.home-global-band-arc-globe .landing-global-globe,
+.home-global-band-arc-globe .landing-global-globe-canvas { width: 100%; height: 100%; }
 @media (max-width: 900px) {
-  .home-global-band-inner {
-    width: calc(100% - 40px);
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
-  }
-  .home-global-band-visual { height: 260px; order: 2; }
-  .home-global-band-globe { width: 260px; }
+  .home-global-band { padding: 56px 0 0; }
+  .home-global-band-inner { width: calc(100% - 40px); }
+  .home-global-band-arc { height: 200px; }
+  .home-global-band-arc-globe { --globe-size: 820px; }
 }
 
 /* 2026-10-27: the closing band is one centre axis — the typed line, then the

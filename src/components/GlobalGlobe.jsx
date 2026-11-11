@@ -82,14 +82,14 @@ export default function GlobalGlobe({ tone = 'light' }) {
       landStroke: 'rgba(45, 45, 40, 0.46)',
       dot: 'rgba(0, 0, 0, 0)',
       connection: 'rgba(27, 58, 44, 0.22)',
-      markerHalo: 'rgba(27, 58, 44, 0.05)',
-      marker: 'rgba(27, 58, 44, 0.72)',
+      markerHalo: 'rgba(27, 58, 44, 0.10)',
+      marker: 'rgba(27, 58, 44, 0.55)',
       markerStroke: 'rgba(255, 255, 255, 0.9)',
       falloff0: 'rgba(255, 255, 255, 0)',
       falloff1: 'rgba(255, 255, 255, 0)',
       falloff2: 'rgba(255, 255, 255, 0)',
       outline: 'rgba(45, 45, 40, 0.40)',
-      markerScale: 1.15,
+      markerScale: 1.9,
     } : tone === 'dark' ? {
       sphere: '#2b2b2b',
       graticule: 'rgba(255, 255, 255, 0.14)',
@@ -211,10 +211,7 @@ export default function GlobalGlobe({ tone = 'light' }) {
         if (!projected) return;
         const [x, y] = projected;
         const markerScale = palette.markerScale || 1;
-        /* A slow breath, not a blink: each marker is offset by its index so the
-           group never pulses in unison. */
-        const breath = 1 + Math.sin(performance.now() / 900 + regionalMarkers.indexOf(marker)) * 0.12;
-        const markerRadius = clamp(radius * 0.015, 2.6, 3.8) * markerScale * breath;
+        const markerRadius = clamp(radius * 0.015, 2.6, 3.8) * markerScale;
 
         context.beginPath();
         context.arc(x, y, markerRadius * 1.95, 0, Math.PI * 2);

@@ -256,13 +256,13 @@ export function HomeGlobalBand() {
     <section className="home-global-band" aria-label={copy.title.replace(/\n/g, ' ')}>
       <div className="home-global-band-inner">
         {/* Continues the 38px passage above: same left edge, body step, no
-            second headline, no column break. */}
+            second headline. */}
         <p className="home-global-band-text">{copy.body}</p>
-        {/* The model sits in the right half so the line fills; it turns, and it
-            can be dragged. */}
-        <div className="home-global-band-visual">
-          <div className="home-global-band-globe"><GlobalGlobe tone="horizon" /></div>
-        </div>
+      </div>
+      {/* 2026-11-12: the globe as a faint horizon under the copy — Stripe's
+          treatment, not a ball beside the text. It still turns. */}
+      <div className="home-global-band-arc" aria-hidden="true">
+        <div className="home-global-band-arc-globe"><GlobalGlobe tone="horizon" /></div>
       </div>
     </section>
   );
