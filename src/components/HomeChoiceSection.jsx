@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Play } from 'lucide-react';
 import HomeEntry from './HomeEntry';
 import { useLanguage } from './LanguageContext';
-import poster from '../assets/home/participant-portrait-poster.jpg';
 import './HomeChoiceSection.css';
 
 /* Homepage, second screen: a portrait film frame on the left, the account
@@ -23,10 +21,16 @@ export default function HomeChoiceSection({ headingLevel = 2 }) {
     <section className="home-choice" aria-label="Join as a participant or run research">
       <div className="home-choice-inner">
         <figure className="home-choice-film">
-          <img src={poster} alt="" loading="lazy" decoding="async" />
-          <button className="home-choice-play" type="button" aria-label="Play the participant film">
-            <Play size={22} strokeWidth={2} fill="currentColor" aria-hidden="true" />
-          </button>
+          {/* 2026-11-12: the owner's film, in its own 16:9 frame. */}
+          <div className="home-choice-embed">
+            <iframe
+              src="https://player.mediadelivery.net/embed/806488/b0011748-5475-48cf-bd26-569e680483fc?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
+              title="GuanyiSearch participant film"
+              loading="lazy"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+            />
+          </div>
         </figure>
 
         <div className="home-choice-entry">
