@@ -16,37 +16,64 @@ function buildFooterColumns(publicCopy, language) {
   const chrome = publicCopy?.chrome || {};
   const groups = chrome.groups || {};
   const items = chrome.items || {};
-  const sections = chrome.sections || {};
   const group = (id) => publicNavigation.find((entry) => entry.id === id);
   const local = solutionNavCopy[language] || {};
+  const zh = /^zh/i.test(language || '');
+  const zhHant = /^zh-hant/i.test(language || '');
+  const t = (cn, hant, en) => (zhHant ? hant : zh ? cn : en);
   const link = (item) => (item.pdf
-    ? { label: items[item.id]?.title || item.title, to: /^zh/i.test(language || '') ? item.pdf.zh : item.pdf.en, external: true }
-    : { label: items[item.id]?.title || items[item.to]?.title || local[item.id]?.title || local[item.to]?.title || item.title, to: item.to });
-  const solutions = group('solutions');
+    ? { label: items[item.id]?.title || (zh ? item.titleZh : null) || item.title, to: zh ? item.pdf.zh : item.pdf.en, external: true }
+    : { label: item.label || items[item.id]?.title || items[item.to]?.title || local[item.id]?.title || local[item.to]?.title || item.title, to: item.to });
+  const allItems = (groupId) => {
+    const entry = group(groupId);
+    if (!entry) return [];
+    return entry.sections ? entry.sections.flatMap((section) => section.items) : (entry.items || []);
+  };
+  const find = (groupId, path) => allItems(groupId).find((item) => item.to === path);
+  const label = (path, fallback) => items[path]?.title || fallback;
+  /* 2026-11-12: five columns, five links at most each. The footer is a fallback,
+     not a site map — full lists stay in the header. */
   return [
     {
       label: local.__company || groups.about || 'Company',
       blocks: [{
         links: [
-          { label: local['/about']?.title || items['/about']?.title || 'About us', to: '/about' },
+          { label: label('/about', 'About us'), to: '/about' },
           { label: local.__jobSearch || 'Search jobs', to: '/careers' },
+          { label: label('/contact', 'Contact us'), to: '/contact' },
         ],
       }],
     },
     {
       label: groups.solutions || 'Solutions',
-      blocks: (solutions?.sections || []).map((section) => ({
-        label: sections[section.id] || section.label,
-        links: section.items.map(link),
-      })),
+      blocks: [{
+        links: [
+          find('solutions', '/solutions/market-entry'),
+          find('solutions', '/china-market-insights'),
+          { label: t('人工智能助手', '人工智慧助手', 'AI assistant'), to: '/business/ai-brief' },
+        ].filter(Boolean).map(link),
+      }],
     },
     {
-      label: groups.industries || 'Industries',
-      blocks: [{ links: (group('industries')?.items || []).map(link) }],
+      label: t('服务', '服務', 'Services'),
+      blocks: [{
+        links: [
+          { label: t('在线研究', '線上研究', 'Online research'), to: '/how-it-works' },
+          find('solutions', '/solutions/quantitative'),
+          find('solutions', '/solutions/qualitative'),
+          find('solutions', '/solutions/mixed'),
+        ].filter(Boolean).map(link),
+      }],
     },
     {
       label: groups.participants || 'Participants',
-      blocks: [{ links: (group('participants')?.items || []).map(link) }],
+      blocks: [{
+        links: [
+          find('participants', '/register'),
+          find('participants', '/partners'),
+          { label: t('帮助', '幫助', 'Help'), to: '/help' },
+        ].filter(Boolean).map(link),
+      }],
     },
     {
       label: groups.support || 'Support',
