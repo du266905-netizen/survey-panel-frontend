@@ -143,13 +143,36 @@ export function HomeFooter() {
   /* 2026-11-12: two quiet interactions — the link underline sweeps in, and the
      page offers a way back up once you are past the first screen. */
   const navRef = useRef(null);
+  const langRef = useRef(null);
   const [showTop, setShowTop] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [langOpen, setLangOpen] = useState(false);
+  const [desktop, setDesktop] = useState(true);
   useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > 600);
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setShowTop(window.scrollY > 600);
+      setProgress(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 901px)');
+    const sync = () => setDesktop(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+  useEffect(() => {
+    if (!langOpen) return undefined;
+    const onDown = (event) => { if (langRef.current && !langRef.current.contains(event.target)) setLangOpen(false); };
+    const onKey = (event) => { if (event.key === 'Escape') setLangOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey); };
+  }, [langOpen]);
   useEffect(() => {
     const root = navRef.current;
     if (!root || !('IntersectionObserver' in window)) return undefined;
@@ -202,11 +225,32 @@ export function HomeFooter() {
           </div>
           <div className="home-footer-about"><p className="home-footer-about-title"><Link to={withLanguage('/about', language)}>{identity.title}</Link></p><p>{identity.description}</p></div>
           <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>
-          <label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">{languageLabel[language] || 'Language'}</span><select value={language} onChange={(event) => navigateToLanguage(event.target.value)} aria-label={languageLabel[language] || 'Choose language'}>{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label>
+          <div className="home-footer-lang" ref={langRef}>
+            <button type="button" className="home-footer-lang-btn" aria-haspopup="listbox" aria-expanded={langOpen} aria-label={languageLabel[language] || 'Choose language'} onClick={() => setLangOpen((open) => !open)}>
+              <LanguageGlobe size={18} strokeWidth={1.75} aria-hidden="true" />
+              {(languages.find((item) => item.code === language) || {}).label || language}
+              <ChevronDown size={14} strokeWidth={1.8} aria-hidden="true" className={langOpen ? 'is-open' : ''} />
+            </button>
+            {langOpen && (
+              <ul className="home-footer-lang-panel" role="listbox" aria-label={languageLabel[language] || 'Language'}>
+                {languages.map((item) => (
+                  <li key={item.code}>
+                    <button type="button" role="option" aria-selected={item.code === language} onClick={() => { navigateToLanguage(item.code); setLangOpen(false); }}>{item.label}</button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
-        <nav ref={navRef} className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column, columnIndex) => <section key={column.label} data-reveal style={{ '--i': columnIndex }}><p>{column.label}</p>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => (item.external ? <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer">{item.label}</a> : <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>))}</div>)}</section>)}</nav>
+        <nav ref={navRef} className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column, columnIndex) => <details key={column.label} className="home-footer-group" data-reveal style={{ '--i': columnIndex }} open={desktop || undefined}><summary>{column.label}<ChevronDown size={14} strokeWidth={1.8} aria-hidden="true" /></summary>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => (item.external ? <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer">{item.label}</a> : <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>))}</div>)}</details>)}</nav>
       </div>
-      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a><button type="button" className={`home-footer-top${showTop ? ' is-on' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>回到顶部<span aria-hidden="true">↑</span></button></div></div>
+      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a><button type="button" className={`home-footer-top${showTop ? ' is-on' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="回到顶部">
+            <svg className="home-footer-top-ring" viewBox="0 0 40 40" aria-hidden="true">
+              <circle className="home-footer-top-track" cx="20" cy="20" r="18" />
+              <circle className="home-footer-top-bar" cx="20" cy="20" r="18" style={{ strokeDashoffset: 113.1 - 113.1 * progress }} />
+            </svg>
+            <span className="home-footer-top-arrow" aria-hidden="true">↑</span>
+          </button></div></div>
     </footer>
   );
 }
