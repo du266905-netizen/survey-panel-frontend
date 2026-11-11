@@ -258,7 +258,7 @@ export function HomeGlobalBand() {
         <div className="home-global-band-visual" aria-hidden="true"><GlobalGlobe tone="light" /></div>
         <div className="home-global-band-copy">
           {/* 2026-11-11: 标题与正文并成一段 18px 的文字，行宽拉齐。 */}
-          <p className="home-global-band-text">{bandLead}{bandSeparator}{copy.body}</p>
+          <p className="home-global-band-text"><strong className="home-global-band-lead">{bandLead}</strong>{bandSeparator}{copy.body}</p>
         </div>
       </div>
     </section>

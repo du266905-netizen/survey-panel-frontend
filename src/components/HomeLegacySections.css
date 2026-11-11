@@ -484,19 +484,23 @@
 .home-global-band-copy {
   text-align: left;
 }
+.home-global-band-lead {
+  /* One paragraph, but the opening sentence carries the weight so the block has
+     a top instead of reading as a wall. */
+  font-weight: 600;
+}
 .home-global-band-text {
-  max-width: 540px;
-  margin: 0 auto;
-  /* Reference body ink is black, not grey; Spectral's taller x-height reads
-     like their Meta Serif at the same 18px. */
+  max-width: 640px;
+  margin: 0;
+  /* Reference body ink is black; Spectral's taller x-height reads like their
+     Meta Serif at the same 18px. */
   color: #000;
   font-family: "Spectral", var(--font-reading);
   font-size: 18px;
-  /* Tighter leading and a narrower measure: same 18px as the reference, but the
-     block reads as dense as theirs instead of light and airy. */
-  line-height: 1.45;
-  /* Even line lengths without the loose punctuation that justify produces in CJK. */
-  text-wrap: balance;
+  line-height: 1.6;
+  /* Natural rag: "balance" was forcing short lines and hyphen breaks. */
+  text-wrap: pretty;
+  hyphens: none;
 }
 @media (max-width: 900px) {
   .home-global-band-inner { width: calc(100% - 40px); grid-template-columns: minmax(0, 1fr); gap: 28px; }
