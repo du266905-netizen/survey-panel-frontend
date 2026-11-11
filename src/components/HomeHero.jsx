@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useLanguage, withLanguage } from './LanguageContext';
-import heroImage from '../assets/home/hero-window.jpg';
+import heroImage from '../assets/home/hero-stars.jpg';
 import './HomeHero.css';
 
-/* Homepage hero, first frame.
+/* Homepage hero, first frame — the night sky.
 
    2026-11-12: the statement is centred and set at the page step (56px), with a
    sans note underneath and the same Learn more button. The earlier bottom-left

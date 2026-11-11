@@ -1,7 +1,7 @@
 /* Homepage hero — both rotating frames.
 
    2026-11-12: one centred composition for both frames, borrowed from the
-   careers "Be one of us" block: a 56px line, a small sans note underneath,
+   careers "Be one of us" block: an 80px line (the careers join step), a small sans note underneath,
    then one white button. The frames only differ by photograph. */
 
 .home-hero {
@@ -60,10 +60,10 @@
   margin: 0;
   color: #fff;
   font-family: var(--font-impact);
-  font-size: clamp(38px, 5vw, 56px);
+  font-size: clamp(44px, 6vw, 80px);
   font-weight: 500;
   letter-spacing: -.03em;
-  line-height: 1.06;
+  line-height: 1.02;
   text-shadow: 0 2px 44px rgba(0, 0, 0, .55);
   text-wrap: balance;
 }

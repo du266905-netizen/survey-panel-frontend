@@ -16,15 +16,15 @@ import './HomeAtlas.css';
    centred lines; English is the working translation until the copy is final. */
 const HERO_COPY = {
   en: {
-    one: { title: 'Think independently. Judge for yourself.', note: 'Every judgement grounded in evidence.' },
+    one: { title: 'Beyond the obvious.', note: 'Every judgement grounded in evidence.' },
     two: { title: 'Every voice has its echo.', note: 'Ready to join us? Together we build an open, interconnected and sustainable research ecosystem.' },
   },
   'zh-CN': {
-    one: { title: '独立思考，明辨是非', note: '让每一次判断都有事实依据' },
+    one: { title: '不止于表象', note: '让每一次判断都有事实依据' },
     two: { title: '每一个声音，都有回响', note: '准备好加入我们了吗？一起构建开放、互联、可持续的研究生态。' },
   },
   'zh-Hant': {
-    one: { title: '獨立思考，明辨是非', note: '讓每一次判斷都有事實依據' },
+    one: { title: '不止於表象', note: '讓每一次判斷都有事實依據' },
     two: { title: '每一個聲音，都有回響', note: '準備好加入我們了嗎？一起建構開放、互聯、可持續的研究生態。' },
   },
 };
