@@ -276,8 +276,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 26px 0 34px;
+  padding: 12px 0 20px;
 }
+.home-footer-legal { display: flex; align-items: center; gap: 28px; }
 /* the rule runs the full width of the window, the content stays in the column */
 .home-footer-bottom::before {
   content: '';
@@ -303,8 +304,8 @@
 .home-footer-top {
   position: relative;
   display: grid;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   place-items: center;
   border: 0;
   border-radius: 50%;
@@ -319,24 +320,24 @@
 }
 .home-footer-top.is-on { opacity: 1; transform: none; pointer-events: auto; }
 .home-footer-top:hover { color: #fff; }
-.home-footer-top-ring { position: absolute; inset: 0; width: 40px; height: 40px; transform: rotate(-90deg); }
-.home-footer-top-track { fill: none; stroke: rgba(255, 255, 255, .16); stroke-width: 1.5; }
-.home-footer-top-bar { fill: none; stroke: rgba(255, 255, 255, .7); stroke-width: 1.5; stroke-dasharray: 113.1; stroke-linecap: round; transition: stroke-dashoffset .15s linear; }
+.home-footer-top-ring { position: absolute; inset: 0; width: 32px; height: 32px; transform: rotate(-90deg); }
+.home-footer-top-track { fill: none; stroke: rgba(255, 255, 255, .14); stroke-width: 1; }
+.home-footer-top-bar { fill: none; stroke: rgba(255, 255, 255, .58); stroke-width: 1; stroke-dasharray: 106.8; stroke-linecap: round; transition: stroke-dashoffset .15s linear; }
 .home-footer-top-arrow { display: grid; place-items: center; transition: transform .22s ease; }
 .home-footer-top:hover .home-footer-top-arrow { transform: translateY(-2px); }
 .home-footer-top-label {
   position: absolute;
-  right: calc(100% + 10px);
-  top: 50%;
+  right: 0;
+  bottom: calc(100% + 6px);
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 13px;
+  font-size: 12px;
   opacity: 0;
-  transform: translateY(-50%) translateX(4px);
+  transform: translateY(4px);
   transition: opacity .2s ease, transform .2s ease;
   pointer-events: none;
 }
-.home-footer-top:hover .home-footer-top-label { opacity: 1; transform: translateY(-50%); }
+.home-footer-top:hover .home-footer-top-label { opacity: 1; transform: none; }
 @keyframes home-sprout-breathe { 0%, 100% { opacity: .68; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.05); } }
 @keyframes home-sprout-sway { 0%, 100% { transform: rotate(-2deg) scale(1); } 50% { transform: rotate(3deg) scale(1.03); } }
 @keyframes home-gift-open { 0%, 39%, 100% { transform: translateY(0) rotate(0); } 50%, 71% { transform: translateY(-13px) rotate(-8deg); } 85% { transform: translateY(-5px) rotate(-3deg); } }

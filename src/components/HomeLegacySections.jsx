@@ -300,53 +300,23 @@ export function HomeFooter() {
         </div>
         <nav ref={navRef} className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column, columnIndex) => <details key={column.id} className="home-footer-group" data-reveal style={{ '--i': columnIndex }} open={desktop || undefined}><summary>{column.label}<ChevronDown size={14} strokeWidth={1.8} aria-hidden="true" /></summary>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => (item.external ? <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer">{item.label}</a> : <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>))}</div>)}</details>)}</nav>
       </div>
-      <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a><button type="button" className={`home-footer-top${showTop ? ' is-on' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="回到顶部">
-            <svg className="home-footer-top-ring" viewBox="0 0 40 40" aria-hidden="true">
-              <circle className="home-footer-top-track" cx="20" cy="20" r="18" />
-              <circle className="home-footer-top-bar" cx="20" cy="20" r="18" style={{ strokeDashoffset: 113.1 - 113.1 * progress }} />
-            </svg>
-            <span className="home-footer-top-arrow" aria-hidden="true">
-              <svg viewBox="0 0 16 16" width="15" height="15"><path d="M8 12.5V4.2M4.2 8 8 4.2 11.8 8" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </span>
-            <span className="home-footer-top-label">{tr('回到顶部', '回到頂部', 'Back to top')}</span>
-          </button></div></div>
-    </footer>
-  );
-}
-
-const globalContent = {
-  en: {
-    label: 'Cross-regional consumer research',
-    title: 'Cross-regional research.\nShared insight, shared growth.',
-    body: 'Consumer behaviour, brands and culture move across borders. We connect research networks across Greater China, Asia-Pacific, the Middle East, Europe and North America—helping teams connect cross-regional opportunity with local action, and turn shared consumer signals into practical next steps for entry, collaboration and sustained growth.',
-  },
-  'zh-CN': {
-    label: '跨区域消费研究',
-    title: '跨区域消费，让洞察共享，让发展共进。',
-    body: '消费、品牌与文化不会止步于单一市场。我们连接大中华区、亚太、中东、欧洲与北美的研究网络，帮助团队将跨区域机会与本地行动连接起来，并把共享的消费信号转化为进入、协同与持续发展的下一步。',
-  },
-  'zh-Hant': {
-    label: '跨區域消費研究',
-    title: '跨區域消費，讓洞察共享，讓發展共進。',
-    body: '消費、品牌與文化不會止步於單一市場。我們連結大中華區、亞太、中東、歐洲與北美的研究網絡，協助團隊把跨區域機會與在地行動連結起來，並把共享的消費訊號轉化為進入、協同與持續發展的下一步。',
-  },
-};
-
-// the remaining languages live in constants/homepageTranslations.js
-Object.assign(globalContent, globalTranslations);
-Object.assign(footerIdentity, footerIdentityTranslations);
-
-export function HomeGlobalSection() {
-  const { language } = useLanguage();
-  const copy = globalContent[language] || globalContent.en;
-
-  return (
-    <section className="home-global-section" aria-labelledby="home-global-title">
-      <div className="home-continuation-container home-global-layout">
-        <div className="home-global-visual"><div className="home-globe-frame"><GlobalGlobe /></div></div>
-        <div className="home-global-copy"><h2 id="home-global-title">{copy.title}</h2><p>{copy.body}</p></div>
+      <div className="home-continuation-container home-footer-bottom">
+        <div className="home-footer-legal">
+          <p>{copy.rights}</p>
+          <a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a>
+        </div>
+        <button type="button" className={`home-footer-top${showTop ? ' is-on' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="回到顶部">
+          <svg className="home-footer-top-ring" viewBox="0 0 36 36" aria-hidden="true">
+            <circle className="home-footer-top-track" cx="18" cy="18" r="17" />
+            <circle className="home-footer-top-bar" cx="18" cy="18" r="17" style={{ strokeDashoffset: 106.8 - 106.8 * progress }} />
+          </svg>
+          <span className="home-footer-top-arrow" aria-hidden="true">
+            <svg viewBox="0 0 16 16" width="13" height="13"><path d="M8 12V4.4M4.4 8 8 4.4 11.6 8" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </span>
+          <span className="home-footer-top-label">{tr('回到顶部', '回到頂部', 'Back to top')}</span>
+        </button>
       </div>
-    </section>
+    </footer>
   );
 }
 
