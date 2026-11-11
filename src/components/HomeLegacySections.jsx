@@ -65,10 +65,10 @@ function buildFooterColumns(publicCopy, language) {
       blocks: [{
         links: [
           { label: t('在线研究', '線上研究', 'Online research'), to: '/business/register' },
-          { label: t('人工智能助手', '人工智慧助手', 'AI assistant'), to: '/business/register' },
           find('solutions', '/solutions/quantitative'),
           find('solutions', '/solutions/qualitative'),
           find('solutions', '/solutions/mixed'),
+          { label: t('人工智能助手', '人工智慧助手', 'AI assistant'), to: '/business/register' },
         ].filter(Boolean).map(link),
       }],
     },
@@ -225,6 +225,7 @@ export function HomeFooter() {
     return () => io.disconnect();
   }, [language]);
   const copy = publicCopy.home.footer;
+  const tr = (cn, hant, en) => (/^zh-hant/i.test(language || '') ? hant : /^zh/i.test(language || '') ? cn : en);
   const identity = footerIdentity[language] || { title: copy.about, description: copy.description };
   const footerColumns = buildFooterColumns(publicCopy, language);
   const cookieSettingsLabel = {
@@ -304,7 +305,10 @@ export function HomeFooter() {
               <circle className="home-footer-top-track" cx="20" cy="20" r="18" />
               <circle className="home-footer-top-bar" cx="20" cy="20" r="18" style={{ strokeDashoffset: 113.1 - 113.1 * progress }} />
             </svg>
-            <span className="home-footer-top-arrow" aria-hidden="true">↑</span>
+            <span className="home-footer-top-arrow" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="15" height="15"><path d="M8 12.5V4.2M4.2 8 8 4.2 11.8 8" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </span>
+            <span className="home-footer-top-label">{tr('回到顶部', '回到頂部', 'Back to top')}</span>
           </button></div></div>
     </footer>
   );
