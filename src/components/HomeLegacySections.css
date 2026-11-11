@@ -761,31 +761,3 @@
    gives up the full-screen height it had as a standalone page. */
 .home-join-section { background: #fff; padding: clamp(120px, 12vw, 200px) 0 clamp(96px, 9vw, 144px); }
 .home-join-section .home-choice { min-height: 0; padding: 0; }
-
-/* 2026-11-12: white footer — trial alongside the white bar. Delete this block
-   to return to the black ground (public-redesign.css pins the old ground with
-   !important, hence the override here). */
-.home-atlas .home-footer,
-.home-footer { background: #fff !important; color: rgba(20, 20, 19, .72) !important; border-top: 1px solid #e5e3dd; }
-.home-atlas .home-footer-wordmark, .home-footer-wordmark { filter: none !important; }
-.home-atlas .home-footer-intro { color: rgba(20, 20, 19, .62); }
-.home-atlas .home-footer .home-social-links a { color: rgba(20, 20, 19, .55); }
-.home-atlas .home-footer .home-social-links a:hover { color: #141413; }
-.home-atlas .home-footer-lang-btn { color: rgba(20, 20, 19, .65); }
-.home-atlas .home-footer-lang-btn:hover { color: #141413; }
-.home-atlas .home-footer-lang .psn-lang-trigger { color: rgba(20, 20, 19, .65); }
-.home-atlas .home-footer-lang .psn-lang-trigger:hover { color: #141413; }
-.home-atlas .home-footer-group summary { color: #141413; }
-.home-atlas .home-footer-nav a { color: rgba(20, 20, 19, .72); }
-.home-atlas .home-footer-nav a:hover { color: #141413; }
-.home-atlas .home-footer-nav .home-footer-sublabel { color: rgba(20, 20, 19, .42); }
-.home-atlas .home-footer-nav [data-reveal] { opacity: 1; transform: none; }
-.home-footer-bottom::before { background: #e5e3dd; }
-.home-atlas .home-footer-legal p { color: rgba(20, 20, 19, .55); }
-.home-atlas .home-footer-bottom a { color: rgba(20, 20, 19, .55); }
-.home-atlas .home-footer-bottom a:hover { color: #141413; }
-.home-atlas .home-footer-top { color: rgba(20, 20, 19, .55); }
-.home-atlas .home-footer-top:hover { color: #141413; }
-.home-atlas .home-footer-top-track { stroke: rgba(20, 20, 19, .14); }
-.home-atlas .home-footer-top-bar { stroke: rgba(20, 20, 19, .45); }
-.home-atlas .home-footer-top-label { color: rgba(20, 20, 19, .55); }
