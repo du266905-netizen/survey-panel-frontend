@@ -324,13 +324,17 @@ export function HomeStatement() {
   );
 }
 
-export default function HomeLegacySections() {
+export default function HomeLegacySections({ afterGlobe = null }) {
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
   return (
     <div className="home-continuation">
       <HomeStatement />
       <HomeGlobalBand />
+
+      {/* Slot: the home page passes the sign-in chooser in here, after the
+          globe. Keeping the import in the page avoids a provider cycle. */}
+      {afterGlobe}
 
       <HomeCommunityCta copy={copy} navigation={publicCopy.navigation} language={language} />
 

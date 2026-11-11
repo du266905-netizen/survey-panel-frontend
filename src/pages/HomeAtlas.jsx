@@ -110,13 +110,13 @@ export default function HomeAtlas() {
         stopped={heroStopped}
       />
 
-      {/* The sign-in chooser, back on the home page (2026-11-12). /access now
-          redirects here; the block is the same component either way. */}
-      <div id="join">
-        <HomeChoiceSection />
-      </div>
-
-      <HomeLegacySections />
+      <HomeLegacySections
+        afterGlobe={(
+          <div className="home-join-section" id="join">
+            <HomeChoiceSection />
+          </div>
+        )}
+      />
     </main>
   );
 }
