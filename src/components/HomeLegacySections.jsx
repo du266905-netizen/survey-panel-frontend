@@ -247,13 +247,18 @@ const globalBandCopy = {
 export function HomeGlobalBand() {
   const { language } = useLanguage();
   const copy = globalBandCopy[language] || globalBandCopy['en-US'];
+  /* CJK joins without a space; the newline in the title was a layout break, not
+     a separator. */
+  const isCjk = /^(zh|ja|ko)/i.test(language);
+  const bandLead = copy.title.replace(/\n/g, isCjk ? '' : ' ').trim();
+  const bandSeparator = isCjk ? '' : ' ';
   return (
-    <section className="home-global-band" aria-labelledby="home-global-band-title">
+    <section className="home-global-band" aria-label={copy.title.replace(/\n/g, ' ')}>
       <div className="home-global-band-inner">
-        <div className="home-global-band-visual" aria-hidden="true"><GlobalGlobe tone="dark" /></div>
+        <div className="home-global-band-visual" aria-hidden="true"><GlobalGlobe tone="light" /></div>
         <div className="home-global-band-copy">
-          <h2 id="home-global-band-title">{copy.title}</h2>
-          <p>{copy.body}</p>
+          {/* 2026-11-11: 标题与正文并成一段 18px 的文字，行宽拉齐。 */}
+          <p className="home-global-band-text">{bandLead}{bandSeparator}{copy.body}</p>
         </div>
       </div>
     </section>
