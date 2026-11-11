@@ -461,7 +461,7 @@
   overflow: hidden;
   background: #fff;
   color: #141413;
-  padding: clamp(16px, 1.6vw, 24px) 0 0;
+  padding: clamp(8px, 0.8vw, 12px) 0 0;
 }
 .home-global-band-inner {
   /* Same container and left edge as the 38px passage above it. */
@@ -475,9 +475,10 @@
   margin: 0;
   color: #141413;
   font-family: var(--font-reading);
-  font-size: 22px;
-  letter-spacing: 0;
-  line-height: 1.6;
+  /* Same step as the passage above: one continuous read, not a caption. */
+  font-size: 38px;
+  letter-spacing: -.01em;
+  line-height: 1.32;
   text-wrap: pretty;
   hyphens: none;
 }
@@ -541,7 +542,7 @@
    first sentence heavier. It sits directly above the globe. */
 .home-statement {
   background: #fff;
-  padding: clamp(40px, 3.4vw, 56px) 0 clamp(20px, 2vw, 32px);
+  padding: clamp(40px, 3.4vw, 56px) 0 clamp(12px, 1.2vw, 20px);
 }
 .home-statement-inner {
   width: min(100% - 96px, 1280px);
