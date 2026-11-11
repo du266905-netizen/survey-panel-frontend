@@ -61,13 +61,11 @@ import SurveyList from './pages/SurveyList';
 import SurveyComplete from './pages/SurveyComplete';
 import SurveyPartners from './pages/SurveyPartners';
 import Team from './pages/Team';
-import Privacy from './pages/Privacy';
 import RouteScrollManager from './components/RouteScrollManager';
 import PageMotion from './components/PageMotion';
 import PublicSiteLayout from './components/PublicSiteLayout';
 import Terms from './pages/Terms';
-import LegalDocument from './pages/LegalDocument';
-import PrivacyPolicy from './pages/PrivacyPolicy';
+import LegalPdfRedirect from './pages/LegalPdfRedirect';
 import TrafficConsole from './pages/TrafficConsole';
 import Wallet from './pages/Wallet';
 import WorkerDetail from './pages/WorkerDetail';
@@ -266,11 +264,12 @@ export default function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/business/forgot-password" element={<ForgotPassword />} />
         <Route path="/business/reset-password" element={<ResetPassword />} />
-        <Route path="/privacy" element={<PublicPage><PrivacyPolicy /></PublicPage>} />
-        <Route path="/terms" element={<PublicPage><LegalDocument slug="terms-of-service" /></PublicPage>} />
-        <Route path="/legal/acceptable-use" element={<Navigate to="/privacy" replace />} />
+        {/* 2026-11-12: legal pages removed — every old URL opens the PDF. */}
+        <Route path="/privacy" element={<LegalPdfRedirect en="/legal/guanyisearch-privacy-2026-09-en.pdf" zh="/legal/guanyisearch-privacy-2026-09-zh.pdf" />} />
+        <Route path="/terms" element={<LegalPdfRedirect en="/legal/guanyisearch-terms-of-service-2026-09-en.pdf" zh="/legal/guanyisearch-terms-of-service-2026-09-zh.pdf" />} />
+        <Route path="/legal/acceptable-use" element={<LegalPdfRedirect en="/legal/guanyisearch-acceptable-use-2026-09-en.pdf" zh="/legal/guanyisearch-acceptable-use-2026-09-zh.pdf" />} />
         <Route path="/email/unsubscribe" element={<MarketingUnsubscribe />} />
-        <Route path="/business/terms" element={<PublicPage><LegalDocument slug="research-terms" /></PublicPage>} />
+        <Route path="/business/terms" element={<LegalPdfRedirect en="/legal/guanyisearch-research-terms-2026-09-en.pdf" zh="/legal/guanyisearch-research-terms-2026-09-zh.pdf" />} />
         <Route path="/about" element={<PublicPage><About /></PublicPage>} />
         <Route path="/__icons" element={<IconBoard />} />
         <Route path="/rewards" element={<PublicPage><Rewards /></PublicPage>} />

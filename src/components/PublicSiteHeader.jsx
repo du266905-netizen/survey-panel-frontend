@@ -95,12 +95,26 @@ export default function PublicSiteHeader({ stripStart = null }) {
   /* One row of a panel. Solutions items carry their own `id` so the copy can be
      translated before the page behind them exists; the older groups key their
      translations by route, so both are looked up. */
+  /* Legal entries open a PDF rather than a page (2026-11-12). */
+  const pdfHref = (item) => (item.pdf ? (/^zh/i.test(language) ? item.pdf.zh : item.pdf.en) : null);
+
   const renderNavItem = (item) => {
     /* An item with an `id` is a new Solutions entry and must not inherit the
        copy of the page it temporarily points at. */
     const key = item.id || item.to;
     const entry = chrome.items?.[key];
     const local = solutionNavCopy[language]?.[key];
+    if (item.pdf) {
+      return (
+        <a className="psn-item" href={pdfHref(item)} target="_blank" rel="noopener noreferrer" key={key} onClick={closeAll}>
+          <span>
+            <strong>{entry?.title || item.title}</strong>
+            <small>{entry?.note || item.note}</small>
+          </span>
+          <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.7} />
+        </a>
+      );
+    }
     return (
       <Link className="psn-item" to={withLanguage(item.to, language)} key={item.id || item.to} onClick={closeAll}>
         <span>
@@ -328,10 +342,17 @@ export default function PublicSiteHeader({ stripStart = null }) {
                   <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
                 </Link>
               ) : mobileItems.length ? mobileItems.map((item) => (
-                <Link key={item.id || item.to} to={withLanguage(item.to, language)} onClick={closeAll}>
-                  {(chrome.items?.[item.id || item.to]?.title || solutionNavCopy[language]?.[item.id || item.to]?.title || item.title)}
-                  <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
-                </Link>
+                item.pdf ? (
+                  <a key={item.id} href={pdfHref(item)} target="_blank" rel="noopener noreferrer" onClick={closeAll}>
+                    {(chrome.items?.[item.id]?.title || item.title)}
+                    <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
+                  </a>
+                ) : (
+                  <Link key={item.id || item.to} to={withLanguage(item.to, language)} onClick={closeAll}>
+                    {(chrome.items?.[item.id || item.to]?.title || solutionNavCopy[language]?.[item.id || item.to]?.title || item.title)}
+                    <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.7} />
+                  </Link>
+                )
               )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}
             </div>
           );

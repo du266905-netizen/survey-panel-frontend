@@ -18,7 +18,9 @@ function buildFooterColumns(publicCopy, language) {
   const sections = chrome.sections || {};
   const group = (id) => publicNavigation.find((entry) => entry.id === id);
   const local = solutionNavCopy[language] || {};
-  const link = (item) => ({ label: items[item.id]?.title || items[item.to]?.title || local[item.id]?.title || local[item.to]?.title || item.title, to: item.to });
+  const link = (item) => (item.pdf
+    ? { label: items[item.id]?.title || item.title, to: /^zh/i.test(language || '') ? item.pdf.zh : item.pdf.en, external: true }
+    : { label: items[item.id]?.title || items[item.to]?.title || local[item.id]?.title || local[item.to]?.title || item.title, to: item.to });
   const solutions = group('solutions');
   return [
     {
@@ -178,7 +180,7 @@ export function HomeFooter() {
           <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>
           <label className="home-footer-language"><LanguageGlobe size={20} strokeWidth={1.75} aria-hidden="true" /><span className="sr-only">{languageLabel[language] || 'Language'}</span><select value={language} onChange={(event) => navigateToLanguage(event.target.value)} aria-label={languageLabel[language] || 'Choose language'}>{languages.map((item) => <option key={item.code} value={item.code}>{item.label}</option>)}</select><ChevronDown size={17} strokeWidth={1.8} aria-hidden="true" /></label>
         </div>
-        <nav className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column) => <section key={column.label}><p>{column.label}</p>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>)}</div>)}</section>)}</nav>
+        <nav className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column) => <section key={column.label}><p>{column.label}</p>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => (item.external ? <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer">{item.label}</a> : <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>))}</div>)}</section>)}</nav>
       </div>
       <div className="home-continuation-container home-footer-bottom"><p>{copy.rights}</p><div><Link to={withLanguage('/privacy', language)}>{copy.privacyPolicy}</Link><Link to={withLanguage('/terms', language)}>{copy.termsService}</Link><a href="#cookie-settings" onClick={openCookieSettings}>{cookieSettingsLabel}</a></div></div>
     </footer>

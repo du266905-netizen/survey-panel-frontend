@@ -77,12 +77,36 @@ export const publicNavigation = [
     ],
   },
   {
+    /* 2026-11-12: the legal pages are gone. Each entry opens its PDF in a new
+       tab; `pdf` carries the Chinese and English files, and the header picks
+       by the visitor's language. */
     id: 'support',
     label: 'Support',
     items: [
-      { to: '/privacy', title: 'Privacy', note: 'How we handle your information' },
-      { to: '/terms', title: 'Terms', note: 'Participation terms' },
-      { to: '/business/terms', title: 'Researcher terms', note: 'Terms for organisations and researchers' },
+      {
+        id: 'privacy',
+        title: 'Privacy',
+        note: 'How we handle your information',
+        pdf: { en: '/legal/guanyisearch-privacy-2026-09-en.pdf', zh: '/legal/guanyisearch-privacy-2026-09-zh.pdf' },
+      },
+      {
+        id: 'cookie',
+        title: 'Cookie notice',
+        note: 'How we use cookies',
+        pdf: { en: '/legal/guanyisearch-cookie-notice-2026-09-en.pdf', zh: '/legal/guanyisearch-cookie-notice-2026-09-zh.pdf' },
+      },
+      {
+        id: 'terms',
+        title: 'Terms of service',
+        note: 'The terms you agree to',
+        pdf: { en: '/legal/guanyisearch-terms-of-service-2026-09-en.pdf', zh: '/legal/guanyisearch-terms-of-service-2026-09-zh.pdf' },
+      },
+      {
+        id: 'research-terms',
+        title: 'Researcher terms',
+        note: 'Terms for organisations and researchers',
+        pdf: { en: '/legal/guanyisearch-research-terms-2026-09-en.pdf', zh: '/legal/guanyisearch-research-terms-2026-09-zh.pdf' },
+      },
     ],
   },
 ];
