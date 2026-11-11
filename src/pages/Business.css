@@ -1012,7 +1012,7 @@
   max-width: 420px;
   margin: 18px 0 0;
   color: var(--pub-body);
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 400;
   letter-spacing: -.005em;
@@ -1265,7 +1265,7 @@
 /* The four home shortcuts are row titles: 14 serif at 500, the reading weight,
    not the 670-750 the old theme stacked on them. */
 .business-workspace-home .business-dashboard-actions strong {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -.01em;
@@ -1273,7 +1273,7 @@
 
 #root .business-workspace .business-dashboard-actions strong,
 #root .business-workspace .business-dashboard-actions button strong {
-  font-family: var(--font-serif) !important;
+  font-family: var(--font-sans) !important;
   font-size: 14px !important;
   font-weight: 500 !important;
   letter-spacing: -.01em;

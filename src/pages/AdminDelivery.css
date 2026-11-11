@@ -17,7 +17,7 @@
 }
 
 .dl-pack { margin-top: 18px; }
-.dl-pack h3 { margin: 0 0 8px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.dl-pack h3 { margin: 0 0 8px; color: #141413; font-family: var(--font-sans); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
 .dl-pack ul { margin: 0; padding: 0; list-style: none; }
 
 .dl-pack li {

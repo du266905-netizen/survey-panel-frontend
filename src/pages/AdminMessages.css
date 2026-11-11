@@ -104,13 +104,13 @@
   text-align: center;
 }
 
-.msg-deliveries h2 { margin: 0 0 8px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.msg-deliveries h2 { margin: 0 0 8px; color: #141413; font-family: var(--font-sans); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
 
 /* ---- 交易邮件 ---- */
 
 .tx-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; margin-top: 18px; }
 
-.tx-form h2 { margin: 0 0 6px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.tx-form h2 { margin: 0 0 6px; color: #141413; font-family: var(--font-sans); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
 .tx-hint { margin: 0 0 12px; color: #8D948D; font: 400 12px/1.7 var(--font-sans); }
 
 .tx-count { color: #8D948D; font: 400 12px var(--font-sans); white-space: nowrap; }

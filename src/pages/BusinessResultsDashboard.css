@@ -566,7 +566,7 @@ mark { border-radius: 2px; background: #f0eee4; color: inherit; }
   background: #ffffff;
   color-scheme: light;
   color: var(--brd-muted, #6f6f68);
-  font-family: var(--font-sans, Inter, system-ui, sans-serif);
+  font-family: var(--font-sans);
   font-size: 14px;
 }
 

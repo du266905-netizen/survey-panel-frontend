@@ -113,7 +113,7 @@
 .news-reading-search-result:last-child { border-bottom: 0; }
 .news-reading-search-result:hover { background: #f4f2ea; }
 .news-reading-search-result span { color: #788375; font-size: 9.5px; font-weight: 830; letter-spacing: .1em; text-transform: uppercase; }
-.news-reading-search-result strong { color: #2a302a; font-family: var(--font-serif); font-size: 14px; font-weight: 650; letter-spacing: -.02em; line-height: 1.15; }
+.news-reading-search-result strong { color: #2a302a; font-family: var(--font-sans); font-size: 14px; font-weight: 650; letter-spacing: -.02em; line-height: 1.15; }
 .news-reading-search-empty { margin: 0; padding: 16px; color: #737169; font-size: 13px; font-weight: 620; }
 
 .news-reading-article,

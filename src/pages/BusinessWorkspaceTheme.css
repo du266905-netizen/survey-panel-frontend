@@ -919,7 +919,7 @@
 }
 
 .business-onboarding .business-onboarding-options strong {
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -.01em;
@@ -3327,7 +3327,7 @@ main.business-ai-brief-page {
 .business-builder .business-question-card textarea {
   border: 0;
   background: transparent;
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 19px;
   font-weight: 500;
   padding: 0;
@@ -3916,7 +3916,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 
 /* the line under it is reading type, not UI type */
 .business-workspace .business-dashboard-intro {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: clamp(15px, 1.15vw, 17px) !important;
   line-height: 1.62 !important;
   letter-spacing: -.005em !important;
@@ -3946,7 +3946,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
    and spacing, the way it does on the panelist side. */
 .business-workspace .business-dashboard-statistics h2,
 .business-workspace .business-dashboard-recent h2 {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-weight: 400 !important;
   font-size: 19px !important;
   letter-spacing: -.022em !important;
@@ -4060,7 +4060,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-workspace .business-dashboard-actions strong,
 .business-workspace .business-dashboard-actions > button:first-child strong,
 .business-workspace .business-dashboard-recent > div > button strong {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: 14px !important;
   font-weight: 500 !important;
   letter-spacing: -.01em !important;
@@ -4072,7 +4072,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-workspace .business-dashboard-actions > button:first-child small,
 .business-workspace .business-dashboard-statistics header p,
 .business-workspace .business-dashboard-recent header p {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: 13px !important;
   font-weight: 400 !important;
   line-height: 1.55 !important;
@@ -4081,7 +4081,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 }
 /* the response count under a project title is a caption, one step down */
 .business-workspace .business-dashboard-recent > div > button small {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: 13px !important;
   font-weight: 400 !important;
   color: var(--rs-mute) !important;
@@ -4246,7 +4246,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 .business-custom-request-page .business-custom-request-surface p,
 .delivery-preview-page .delivery-customer-heading span,
 .delivery-customer-page .delivery-customer-heading span {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: 15px !important;
   line-height: 1.6 !important;
 }
@@ -4309,7 +4309,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 /* the account page's own titles and values are content, so they are reading
    type; only the uppercase field labels stay on Inter */
 .business-account-page .business-account-settings h2 {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: 16px !important;
   font-weight: 500 !important;
   letter-spacing: -.018em !important;
@@ -4335,7 +4335,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 }
 /* the helper line under it is reading type, not chrome */
 .business-account-page .business-account-settings > span {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: 14.5px !important;
   line-height: 1.6 !important;
 }
@@ -4469,7 +4469,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   letter-spacing: -.02em !important;
 }
 .business-funds-modal .business-funds-head p {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: 14px !important;
 }
 
@@ -4729,7 +4729,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   padding: 15px 18px;
 }
 .business-avatar-crop-panel > header strong {
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 500;
   color: var(--rs-ink);
@@ -4975,7 +4975,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
   max-width: 330px;
   margin: 0 0 clamp(18px, 2.4vw, 28px);
   color: #141a17;
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -.016em;
@@ -5015,7 +5015,7 @@ main.business-custom-request-page .business-custom-intro-copy > div > button:fir
 
 .business-onboarding-rail-copy > strong {
   color: #141a17;
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -.012em;
@@ -5354,12 +5354,12 @@ main.business-custom-request-page .business-workspace-rail {
 .business-onboarding .business-onboarding-count strong { color: #141a17; font-weight: 600; }
 .business-onboarding .business-onboarding-count em { margin: 0 4px; font-style: normal; }
 
-.business-onboarding .business-onboarding-kicker { margin: 0; color: #9a9a97; font-family: var(--font-serif); font-size: 11px; font-weight: 600; letter-spacing: .14em; line-height: 1; text-transform: uppercase; }
+.business-onboarding .business-onboarding-kicker { margin: 0; color: #9a9a97; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .14em; line-height: 1; text-transform: uppercase; }
 .business-onboarding .business-onboarding-dialog h1 { max-width: 680px; margin: 12px 0 0; color: #141a17; font-family: var(--font-serif); font-size: clamp(30px, 3vw, 38px); font-weight: 400; letter-spacing: -.028em; line-height: 1.12; }
 /* 问号改小一号、换成无衬线并轻抬：衬线体 38px 那个钩会显得歪且重。
    和自定义问卷页 .business-custom-request-question-mark 同一套处理。 */
 .business-onboarding .business-onboarding-question-mark { display: inline-block; color: currentColor; font-family: var(--font-sans); font-size: 1em; font-weight: 400; font-style: normal; letter-spacing: 0; line-height: 1; margin-left: .02em; }
-.business-onboarding .business-onboarding-intro { max-width: 560px; margin: 12px 0 0; color: #5f6862; font-family: var(--font-serif); font-size: 14px; font-weight: 400; letter-spacing: -.005em; line-height: 1.6; }
+.business-onboarding .business-onboarding-intro { max-width: 560px; margin: 12px 0 0; color: #5f6862; font-family: var(--font-sans); font-size: 14px; font-weight: 400; letter-spacing: -.005em; line-height: 1.6; }
 
 .business-onboarding .business-onboarding-dialog .business-onboarding-options,
 .business-onboarding .business-onboarding-dialog .business-onboarding-options--two,
@@ -5399,8 +5399,8 @@ main.business-custom-request-page .business-workspace-rail {
 .business-onboarding .business-onboarding-dialog .business-onboarding-options button.is-selected { border-color: rgba(20, 26, 23, .12); background: rgba(20, 26, 23, .032); box-shadow: none; }
 
 .business-onboarding .business-onboarding-dialog .business-onboarding-option-icon { display: grid; width: 22px; height: 22px; grid-row: 1 / 3; grid-column: 1; place-items: center; background: transparent; color: #2a332d; }
-.business-onboarding .business-onboarding-dialog .business-onboarding-options strong { grid-row: 1; grid-column: 2; margin: 0; color: #141a17; font-family: var(--font-serif); font-size: 16px; font-weight: 400; letter-spacing: -.018em; line-height: 1.35; }
-.business-onboarding .business-onboarding-dialog .business-onboarding-options small { grid-row: 2; grid-column: 2; margin: 0; color: #5f6862; font-family: var(--font-serif); font-size: 13px; font-weight: 400; line-height: 1.5; }
+.business-onboarding .business-onboarding-dialog .business-onboarding-options strong { grid-row: 1; grid-column: 2; margin: 0; color: #141a17; font-family: var(--font-sans); font-size: 16px; font-weight: 400; letter-spacing: -.018em; line-height: 1.35; }
+.business-onboarding .business-onboarding-dialog .business-onboarding-options small { grid-row: 2; grid-column: 2; margin: 0; color: #5f6862; font-family: var(--font-sans); font-size: 13px; font-weight: 400; line-height: 1.5; }
 .business-onboarding .business-onboarding-dialog .business-onboarding-option-check { display: grid; width: 18px; height: 18px; grid-row: 1 / 3; grid-column: 3; place-items: center; color: #141a17; opacity: 0; transition: opacity .16s ease; }
 .business-onboarding .business-onboarding-dialog .business-onboarding-options button.is-selected .business-onboarding-option-check { opacity: 1; }
 

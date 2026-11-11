@@ -878,7 +878,7 @@
 .home-news-copy h2 {
   margin: 15px 0 0;
   color: #26332a;
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: clamp(20px, 1.65vw, 27px);
   font-weight: 680;
   letter-spacing: -.025em;

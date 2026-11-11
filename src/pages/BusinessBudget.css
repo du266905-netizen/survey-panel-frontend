@@ -167,7 +167,7 @@
 .business-budget-table td:not(:first-child) { white-space: nowrap; }
 
 .business-budget-table td:first-child {
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 500;
 }

@@ -17,7 +17,7 @@
 .br-block h2 {
   margin: 0 0 12px;
   color: #141413;
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -.01em;
@@ -273,7 +273,7 @@
 .br-history h2 {
   margin: 0 0 12px;
   color: #141413;
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -.01em;

@@ -13,7 +13,7 @@
 .support-chat-title { display: flex; align-items: center; gap: 9px; }
 .support-chat-title-mark { display: grid; width: 44px; height: 38px; place-items: center; color: #1f1f1b; }
 .support-chat-brand { width: 112px; height: auto; margin-bottom: 4px; }
-.support-chat-title strong { display: block; margin-top: 2px; color: #1f1f1b; font-family: var(--font-serif); font-size: 21px; font-weight: 720; letter-spacing: -.035em; }
+.support-chat-title strong { display: block; margin-top: 2px; color: #1f1f1b; font-family: var(--font-sans); font-size: 21px; font-weight: 720; letter-spacing: -.035em; }
 .support-chat-close { display: grid; width: 35px; height: 35px; place-items: center; border: 1px solid rgba(31,31,27,.15); border-radius: 50%; background: rgba(255,255,255,.16); color: #24463b; cursor: pointer; }
 .support-chat-close:hover { background: #e4dccd; }
 .support-chat-disclosure { border-bottom: 1px solid rgba(31,43,35,.1); background: rgba(235,240,234,.78); color: #647067; font-size: 10px; font-weight: 750; line-height: 1.45; padding: 8px 17px; }
@@ -34,7 +34,7 @@
 .support-request-form { margin: 3px 0 12px; border: 1px solid rgba(23,59,50,.3); border-radius: 15px; background: #e4ead7; padding: 13px; }
 .support-request-heading { display: flex; align-items: flex-start; gap: 8px; color: #23463a; }
 .support-request-heading span { display: block; font-size: 8px; font-weight: 900; letter-spacing: .13em; }
-.support-request-heading strong { display: block; margin-top: 1px; color: #1f1f1b; font-family: var(--font-serif); font-size: 17px; letter-spacing: -.025em; }
+.support-request-heading strong { display: block; margin-top: 1px; color: #1f1f1b; font-family: var(--font-sans); font-size: 17px; letter-spacing: -.025em; }
 .support-request-form > p { margin: 8px 0 11px; color: #4e6258; font-size: 11px; font-weight: 650; line-height: 1.48; }
 .support-request-form label { display: grid; gap: 5px; margin-top: 8px; color: #536259; font-size: 8px; font-weight: 900; letter-spacing: .1em; }
 .support-request-form input, .support-request-form select, .support-request-form textarea { width: 100%; border: 1px solid rgba(23,59,50,.23); border-radius: 8px; outline: none; background: #fffdf8; color: #1f1f1b; font: inherit; font-size: 12px; font-weight: 650; letter-spacing: 0; padding: 9px; }

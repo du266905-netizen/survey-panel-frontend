@@ -19,16 +19,16 @@
 /* 报价分组：每档一块，标题带计数。 */
 .ap-group { margin-top: 26px; }
 .ap-group-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
-.ap-group-head h2 { display: flex; align-items: baseline; gap: 8px; margin: 0; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.ap-group-head h2 { display: flex; align-items: baseline; gap: 8px; margin: 0; color: #141413; font-family: var(--font-sans); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
 .ap-group-head h2 em { color: #8D948D; font: 400 12px var(--font-sans); font-style: normal; }
 .ap-group-head span { color: #8D948D; font: 400 12px var(--font-sans); }
 .ap-scope { margin-top: 18px; }
-.ap-scope h3 { margin: 0 0 6px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; }
+.ap-scope h3 { margin: 0 0 6px; color: #141413; font-family: var(--font-sans); font-size: 16px; font-weight: 600; }
 .ap-scope p { margin: 0; color: #5F6862; font: 400 13px/1.7 var(--font-sans); white-space: pre-wrap; }
 
 /* AI 用量与供应商共用的段落标题 */
 .ai-section { margin-top: 26px; }
-.ai-section h2 { margin: 0 0 8px; color: #141413; font-family: var(--font-reading); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.ai-section h2 { margin: 0 0 8px; color: #141413; font-family: var(--font-sans); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
 
 .sup-steps { margin: 22px 0 0; padding: 0; list-style: none; max-width: 760px; }
 

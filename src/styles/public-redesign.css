@@ -76,7 +76,7 @@
    inventing their own measure. */
 .ps-reading {
   width: min(100%, var(--pub-reading));
-  font-family: var(--font-reading);
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.65;
 }

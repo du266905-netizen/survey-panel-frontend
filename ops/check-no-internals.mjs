@@ -64,6 +64,33 @@ for (const file of releaseFiles) {
   }
 }
 
+/* Typography rule: serif is for 22px and up. Below 22 the family must be sans. */
+function walk(dir) {
+  const out = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...walk(full));
+    else if (entry.name.endsWith('.css')) out.push(full);
+  }
+  return out;
+}
+const SERIF = /(--font-reading|--font-serif|Source Serif|Songti|STSong|SimSun|Georgia|serif\b)/;
+for (const file of walk('src')) {
+  const source = readFileSync(file, 'utf8');
+  for (const block of source.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const body = block[2];
+    if (body.includes('sans')) continue;
+    const family = /font-family:\s*([^;}]+)/.exec(body);
+    const size = /font-size:\s*([^;}]+)/.exec(body);
+    if (!family || !size || !SERIF.test(family[1])) continue;
+    const px = [...size[1].matchAll(/(\d+(?:\.\d+)?)px/g)].map((m) => Number(m[1]));
+    if (px.length && Math.min(...px) < 22) {
+      console.error(`${file}: 衬线字体不能小于 22px（这里是 ${Math.min(...px)}px）`);
+      bad += 1;
+    }
+  }
+}
+
 if (bad) {
   console.error(`\n❌ 有 ${bad} 处问题`);
   process.exit(1);

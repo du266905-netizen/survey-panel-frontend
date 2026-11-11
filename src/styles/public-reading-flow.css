@@ -16,7 +16,7 @@
 }
 .public-site-layout .how-standards-copy p, .public-site-layout .how-standard p, .public-site-layout .how-step p, .public-site-layout .how-reward-copy > p, .public-site-layout .approach-question-copy p, .public-site-layout .approach-network-copy p, .public-site-layout .legal-section-content > p, .public-site-layout .news-reading-copy > p {
   max-width: 66ch;
-  font-family: var(--font-serif) !important;
+  font-family: var(--font-sans) !important;
   font-size: 16px;
   line-height: 1.65;
 }

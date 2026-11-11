@@ -33,7 +33,7 @@
 .business-builder-title { font-family: var(--font-display); font-weight: 560; }
 .business-audience-modules { border: 1px solid rgba(36, 86, 67, .18); background: #f1f7ef; margin: 0 0 22px; padding: 18px; }.business-audience-modules > header { display: flex; align-items: start; justify-content: space-between; gap: 18px; }.business-audience-modules header > div > span { color: #547968; font: 850 9px var(--font-sans); letter-spacing: .14em; }.business-audience-modules h2 { margin: 5px 0 0; color: #234834; font: 650 21px/1.1 var(--font-reading); letter-spacing: -.035em; }.business-audience-modules header p { max-width: 510px; margin: 7px 0 0; color: #657a6b; font: 540 12px/1.5 var(--font-sans); }.business-audience-modules header > button { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; min-height: 34px; border: 1px solid rgba(36,86,67,.25); border-radius: 7px; background: #fffefa; color: #315a45; cursor: pointer; font: 800 11px var(--font-sans); padding: 0 10px; }.business-audience-modules header > button:disabled, .business-audience-module-grid button:disabled { cursor: not-allowed; opacity: .55; }.business-audience-module-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; border-top: 1px solid rgba(36,86,67,.13); margin-top: 16px; padding-top: 16px; }.business-audience-module-grid article { display: grid; grid-template-columns: minmax(0,1fr) auto; column-gap: 10px; align-items: start; border: 1px solid rgba(36,86,67,.14); background: rgba(255,254,250,.72); padding: 12px; }.business-audience-module-grid strong { color: #2d513d; font: 800 12px var(--font-sans); }.business-audience-module-grid span { color: #6b7e70; font: 540 11px/1.45 var(--font-sans); margin-top: 4px; }.business-audience-module-grid button { display: inline-flex; align-items: center; gap: 4px; border: 0; background: transparent; color: #2f6c4b; cursor: pointer; font: 800 11px var(--font-sans); padding: 3px 0; }.business-audience-modules > footer { display: flex; align-items: flex-start; gap: 7px; color: #63786a; font: 600 10px/1.45 var(--font-sans); margin-top: 13px; }.business-audience-modules > footer svg { flex: 0 0 auto; color: #7c8c55; margin-top: 1px; }
 .business-question-card { background: #e7f0e5; border-color: rgba(36, 86, 67, .16); }
-.business-question-card textarea { font-family: var(--font-reading); font-size: 18px; font-weight: 600; }
+.business-question-card textarea { font-family: var(--font-sans); font-size: 18px; font-weight: 600; }
 .business-question-card-head { font-weight: 750; }
 .business-question-controls select, .business-question-controls label, .business-question-choices input { font-weight: 550; }
 .business-builder-sidebar section { background: #eef5ec; }
@@ -243,7 +243,7 @@
 }
 .business-question-card textarea,
 .business-question-card-rich .business-question-prompt {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-sans) !important;
   font-size: 18px !important;
   font-weight: 600 !important;
 }
