@@ -74,7 +74,22 @@ export default function GlobalGlobe({ tone = 'light' }) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let dragStart = { x: 0, y: 0, rotation: [-18, -19] };
     let rotation = [-18, -19];
-    const palette = tone === 'dark' ? {
+    /* `wire` is the horizon treatment: no fill, no dots, faint line only. */
+    const palette = tone === 'wire' ? {
+      sphere: 'rgba(0, 0, 0, 0)',
+      graticule: 'rgba(45, 45, 40, 0.10)',
+      landFill: 'rgba(0, 0, 0, 0)',
+      landStroke: 'rgba(45, 45, 40, 0.26)',
+      dot: 'rgba(0, 0, 0, 0)',
+      connection: 'rgba(45, 45, 40, 0.14)',
+      markerHalo: 'rgba(45, 45, 40, 0.05)',
+      marker: 'rgba(45, 45, 40, 0.30)',
+      markerStroke: 'rgba(255, 255, 255, 0)',
+      falloff0: 'rgba(255, 255, 255, 0)',
+      falloff1: 'rgba(255, 255, 255, 0)',
+      falloff2: 'rgba(255, 255, 255, 0)',
+      outline: 'rgba(45, 45, 40, 0.22)',
+    } : tone === 'dark' ? {
       sphere: '#2b2b2b',
       graticule: 'rgba(255, 255, 255, 0.14)',
       landFill: 'rgba(255, 255, 255, 0.06)',

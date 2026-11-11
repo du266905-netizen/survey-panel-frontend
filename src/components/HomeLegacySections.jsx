@@ -255,13 +255,14 @@ export function HomeGlobalBand() {
   return (
     <section className="home-global-band" aria-label={copy.title.replace(/\n/g, ' ')}>
       <div className="home-global-band-inner">
-        <div className="home-global-band-visual"><GlobalGlobe tone="dark" /></div>
-        <div className="home-global-band-copy">
-          {/* 2026-11-12: 地球整个成为这一段的背景，文案压在左边。 */}
-          <p className="home-global-band-label">{copy.label}</p>
-          <h2 className="home-global-band-title">{bandLead}</h2>
-          <p className="home-global-band-text">{copy.body}</p>
-        </div>
+        <p className="home-global-band-label">{copy.label}</p>
+        <h2 className="home-global-band-title">{bandLead}</h2>
+        <p className="home-global-band-text">{copy.body}</p>
+      </div>
+      {/* 2026-11-12: the globe as a faint horizon under the copy — Stripe's
+          treatment, not a ball beside the text. It still turns. */}
+      <div className="home-global-band-arc" aria-hidden="true">
+        <div className="home-global-band-arc-globe"><GlobalGlobe tone="wire" /></div>
       </div>
     </section>
   );

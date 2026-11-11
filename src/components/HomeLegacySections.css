@@ -454,50 +454,23 @@
 .home-atlas .home-reward-card p { color: #565A60; }
 .home-atlas .home-reward-card > div > span { color: #7F848A; }
 
-/* The globe page: a dark band with the rotating globe running off the right
-   edge, copy on the left. The globe is the section, not an illustration in a
-   box — it turns, it can be dragged, and its markers are the coverage. */
+/* The globe page: copy on paper, then the globe as a faint horizon beneath it.
+   The model still turns; it is texture, not a hero. */
 .home-global-band {
   position: relative;
   overflow: hidden;
-  border-top: 1px solid #141413;
-  border-bottom: 1px solid #141413;
-  background: #141413;
-  color: #fff;
-  padding: clamp(72px, 7vw, 112px) 0;
+  border-top: 1px solid #e5e3dd;
+  background: #fff;
+  color: #141413;
+  padding: clamp(64px, 6vw, 96px) 0 0;
 }
 .home-global-band-inner {
-  position: relative;
-  z-index: 1;
   width: min(100% - 96px, 1120px);
   margin: 0 auto;
 }
-.home-global-band-visual {
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  right: clamp(-280px, -13vw, -120px);
-  width: clamp(520px, 54vw, 800px);
-  aspect-ratio: 1;
-  opacity: .95;
-  transform: translateY(-50%);
-  pointer-events: auto;
-}
-.home-global-band-visual .landing-global-globe,
-.home-global-band-visual .landing-global-globe-canvas { width: 100%; height: 100%; }
-/* Keeps the copy legible without dimming the globe itself. */
-.home-global-band::after {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  background: linear-gradient(90deg, #141413 0%, #141413 40%, rgba(20, 20, 19, .72) 56%, rgba(20, 20, 19, .12) 82%, rgba(20, 20, 19, 0) 100%);
-  content: '';
-  pointer-events: none;
-}
-.home-global-band-copy { max-width: 540px; }
 .home-global-band-label {
-  margin: 0 0 22px;
-  color: rgba(255, 255, 255, .5);
+  margin: 0 0 20px;
+  color: #7F848A;
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 500;
@@ -506,8 +479,9 @@
   text-transform: uppercase;
 }
 .home-global-band-title {
+  max-width: 900px;
   margin: 0 0 20px;
-  color: #fff;
+  color: #141413;
   font-family: var(--font-reading);
   font-size: 38px;
   font-weight: 600;
@@ -516,9 +490,9 @@
   text-wrap: balance;
 }
 .home-global-band-text {
-  max-width: 520px;
+  max-width: 640px;
   margin: 0;
-  color: rgba(255, 255, 255, .74);
+  color: #141413;
   font-family: var(--font-reading);
   font-size: 22px;
   letter-spacing: 0;
@@ -526,23 +500,30 @@
   text-wrap: pretty;
   hyphens: none;
 }
+/* Only the top arc of the sphere shows: a 1600px globe inside a short window. */
+.home-global-band-arc {
+  position: relative;
+  height: clamp(200px, 24vw, 330px);
+  margin-top: clamp(24px, 2.4vw, 40px);
+  overflow: hidden;
+}
+.home-global-band-arc-globe {
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  width: clamp(1100px, 128vw, 1900px);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.home-global-band-arc-globe .landing-global-globe,
+.home-global-band-arc-globe .landing-global-globe-canvas { width: 100%; height: 100%; }
 @media (max-width: 900px) {
-  .home-global-band { padding: 64px 0 56px; }
-  .home-global-band::after { display: none; }
+  .home-global-band { padding: 56px 0 0; }
   .home-global-band-inner { width: calc(100% - 40px); }
-  .home-global-band-copy { max-width: none; }
   .home-global-band-title { font-size: 30px; }
-  /* Keep the body at the 22px serif floor: below 22 it would have to go sans. */
-  .home-global-band-text { font-size: 22px; }
-  .home-global-band-visual {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: min(100%, 400px);
-    margin: 40px auto 0;
-    transform: none;
-    opacity: 1;
-  }
+  .home-global-band-arc { height: 200px; }
+  .home-global-band-arc-globe { width: 820px; }
 }
 
 /* 2026-10-27: the closing band is one centre axis — the typed line, then the
