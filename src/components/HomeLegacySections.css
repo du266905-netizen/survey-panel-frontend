@@ -485,12 +485,14 @@
   text-align: left;
 }
 .home-global-band-text {
-  max-width: 620px;
+  max-width: 540px;
   margin: 0 auto;
   color: #3a3a36;
   font-family: var(--font-reading);
   font-size: 18px;
-  line-height: 1.66;
+  /* Tighter leading and a narrower measure: same 18px as the reference, but the
+     block reads as dense as theirs instead of light and airy. */
+  line-height: 1.45;
   /* Even line lengths without the loose punctuation that justify produces in CJK. */
   text-wrap: balance;
 }
