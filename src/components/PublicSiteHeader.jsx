@@ -10,7 +10,11 @@ import { publicNavigation } from '../constants/publicNavigation';
 import { solutionNavCopy } from '../constants/solutionNavCopy';
 import './PublicSiteHeader.css';
 
-const CLOSE_DELAY = 160;
+/* 2026-11-12: a short wait before opening avoids the panel flickering while the
+   pointer crosses the bar; a longer wait before closing lets the pointer travel
+   the 44px down into the panel without losing it (Baymard: 300–500ms). */
+const OPEN_DELAY = 140;
+const CLOSE_DELAY = 320;
 
 /* One black bar for every public page.
 
@@ -81,9 +85,23 @@ export default function PublicSiteHeader({ stripStart = null }) {
     window.clearTimeout(closeTimer.current);
     closeTimer.current = null;
   };
+  const openTimer = useRef(null);
+  const clearOpenTimer = () => {
+    if (openTimer.current === null) return;
+    window.clearTimeout(openTimer.current);
+    openTimer.current = null;
+  };
   const closeAll = () => {
     clearTimer();
+    clearOpenTimer();
     setOpenMenu(null);
+  };
+  const scheduleOpen = (id) => {
+    clearOpenTimer();
+    openTimer.current = window.setTimeout(() => {
+      openTimer.current = null;
+      setOpenMenu(id);
+    }, OPEN_DELAY);
   };
   const scheduleClose = () => {
     clearTimer();
@@ -148,12 +166,21 @@ export default function PublicSiteHeader({ stripStart = null }) {
   useEffect(() => {
     const onKey = (event) => {
       if (event.key !== 'Escape') return;
+      const trigger = openMenu ? document.querySelector(`[aria-controls="psn-panel-${openMenu}"]`) : null;
       closeAll();
       setMobileOpen(false);
+      if (trigger) trigger.focus();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [openMenu]);
+  /* a panel should not stay open while the page moves under it */
+  useEffect(() => {
+    if (!openMenu) return undefined;
+    const onScroll = () => setOpenMenu(null);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [openMenu]);
 
   const workspaceHref = user ? withLanguage(isBusinessRole(user.role) ? '/business/workspace' : '/dashboard', language) : withLanguage('/access', language);
   const ctaLabel = user ? chrome.header.workspace : chrome.header.join;
@@ -175,7 +202,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
               <div
                 className="psn-group"
                 key={group.id}
-                onMouseEnter={() => { if (!hasItems) return; clearTimer(); setOpenMenu(group.id); }}
+                onMouseEnter={() => { if (!hasItems) return; clearTimer(); scheduleOpen(group.id); }}
                 onMouseLeave={() => { if (hasItems) scheduleClose(); }}
               >
                 {group.to ? (
@@ -233,7 +260,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
         <div className="psn-actions">
           <div
             className="psn-lang"
-            onMouseEnter={() => { clearTimer(); setOpenMenu('language'); }}
+            onMouseEnter={() => { clearTimer(); scheduleOpen('language'); }}
             onMouseLeave={scheduleClose}
           >
             <button
