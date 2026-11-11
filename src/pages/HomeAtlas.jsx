@@ -11,6 +11,31 @@ import newsWallIllustration from '../assets/home/news-wall-illustration.png';
 import surveyParticipationIllustration from '../assets/home/survey-participation-illustration.png';
 import './HomeAtlas.css';
 
+
+/* Homepage hero copy, one entry per frame. 2026-11-12: the owner set the two
+   centred lines; English is the working translation until the copy is final. */
+const HERO_COPY = {
+  en: {
+    one: { title: 'Think independently. Judge for yourself.', note: 'Every judgement grounded in evidence.' },
+    two: { title: 'Every voice has its echo.', note: 'Ready to join us? Together we build an open, interconnected and sustainable research ecosystem.' },
+  },
+  'zh-CN': {
+    one: { title: '独立思考，明辨是非', note: '让每一次判断都有事实依据' },
+    two: { title: '每一个声音，都有回响', note: '准备好加入我们了吗？一起构建开放、互联、可持续的研究生态。' },
+  },
+  'zh-Hant': {
+    one: { title: '獨立思考，明辨是非', note: '讓每一次判斷都有事實依據' },
+    two: { title: '每一個聲音，都有回響', note: '準備好加入我們了嗎？一起建構開放、互聯、可持續的研究生態。' },
+  },
+};
+
+function heroFor(language) {
+  const code = String(language || '').toLowerCase();
+  if (/hant|tw|hk/.test(code)) return HERO_COPY['zh-Hant'];
+  if (code.startsWith('zh')) return HERO_COPY['zh-CN'];
+  return HERO_COPY.en;
+}
+
 function AtlasNode({ name, className, to, eyebrow, title, image, onActive, onInactive, soon = false }) {
   const content = (
     <>
@@ -50,8 +75,7 @@ export default function HomeAtlas() {
   const rotationLabel = heroStopped
     ? (publicCopy.chrome.header.playRotation || 'Play rotation')
     : (publicCopy.chrome.header.pauseRotation || 'Pause rotation');
-  const [heroLead, ...heroRest] = publicCopy.hero.lines;
-  const heroLines = [heroLead, heroRest.join(['zh-CN', 'zh-Hant', 'ja', 'ko'].includes(language) ? '' : ' ')].filter(Boolean);
+  const hero = heroFor(language);
   return (
     <main className="home-atlas">
       <div className="home-atlas-frame" aria-hidden="true" />
@@ -65,15 +89,11 @@ export default function HomeAtlas() {
         )}
       />
 
-      {/* Photograph hero: statement bottom-left, one white action to its right.
-          The account chooser that used to sit below the hero moved out to its
-          own page (/access) on 2026-10-25; the home page no longer carries it. */}
+      {/* Photograph hero: two frames, both centred — 56px line, sans note, one
+          white action. The account chooser moved to /access on 2026-10-25. */}
       <HomeHeroCarousel
-        lead={heroLines[0]}
-        rest={heroLines[1]}
-        body={publicCopy.hero.description}
-        line={publicCopy.homeSlide.line}
-        note={publicCopy.homeSlide.note}
+        heroOne={hero.one}
+        heroTwo={hero.two}
         learnMore={publicCopy.homeSlide.learnMore}
         communityLabel={publicCopy.navigation.meetCommunity}
         stopped={heroStopped}
