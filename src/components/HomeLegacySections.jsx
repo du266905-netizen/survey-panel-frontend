@@ -41,7 +41,7 @@ function buildFooterColumns(publicCopy, language) {
         links: [
           { label: label('/about', 'About us'), to: '/about' },
           { label: local.__jobSearch || 'Search jobs', to: '/careers' },
-          { label: label('/contact', 'Contact us'), to: '/contact' },
+          { label: t('接触', '接觸', 'Contact'), to: '/business/access' },
         ],
       }],
     },
@@ -52,7 +52,10 @@ function buildFooterColumns(publicCopy, language) {
         links: [
           find('solutions', '/solutions/market-entry'),
           find('solutions', '/china-market-insights'),
-          { label: t('人工智能助手', '人工智慧助手', 'AI assistant'), to: '/business/ai-brief' },
+          find('solutions', '/solutions/audience'),
+          find('solutions', '/solutions/product-pricing'),
+          find('solutions', '/solutions/brand-comms'),
+          find('solutions', '/solutions/channel-retail'),
         ].filter(Boolean).map(link),
       }],
     },
@@ -62,6 +65,7 @@ function buildFooterColumns(publicCopy, language) {
       blocks: [{
         links: [
           { label: t('在线研究', '線上研究', 'Online research'), to: '/business/register' },
+          { label: t('人工智能助手', '人工智慧助手', 'AI assistant'), to: '/business/register' },
           find('solutions', '/solutions/quantitative'),
           find('solutions', '/solutions/qualitative'),
           find('solutions', '/solutions/mixed'),
@@ -75,7 +79,7 @@ function buildFooterColumns(publicCopy, language) {
         links: [
           find('participants', '/register'),
           find('participants', '/partners'),
-          { label: t('帮助', '幫助', 'Help'), to: '/help' },
+          { label: t('帮助', '幫助', 'Help'), to: '/contact' },
         ].filter(Boolean).map(link),
       }],
     },
