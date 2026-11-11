@@ -9,40 +9,40 @@ const graticule = geoGraticule().step([20, 20]);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
 const autoRotationDegreesPerSecond = 5.5;
 const regionalMarkers = [
-  { id: 'china-mainland', coordinates: [116.4, 39.9] },
-  { id: 'macau', coordinates: [113.5, 22.2] },
-  { id: 'hong-kong', coordinates: [114.2, 22.3] },
-  { id: 'thailand', coordinates: [100.5, 13.7] },
-  { id: 'malaysia', coordinates: [101.7, 3.1] },
-  { id: 'singapore', coordinates: [103.8, 1.35] },
-  { id: 'philippines', coordinates: [121, 14.6] },
-  { id: 'japan', coordinates: [139.7, 35.7] },
-  { id: 'south-korea', coordinates: [127, 37.5] },
-  { id: 'indonesia', coordinates: [106.8, -6.2] },
-  { id: 'vietnam', coordinates: [106.7, 10.8] },
-  { id: 'kazakhstan', coordinates: [71.4, 51.2] },
-  { id: 'pakistan', coordinates: [73.1, 33.7] },
-  { id: 'bangladesh', coordinates: [90.4, 23.8] },
-  { id: 'sri-lanka', coordinates: [79.9, 6.9] },
-  { id: 'turkiye', coordinates: [32.9, 39.9] },
-  { id: 'saudi-arabia', coordinates: [46.7, 24.7] },
-  { id: 'united-arab-emirates', coordinates: [55.3, 25.2] },
-  { id: 'qatar', coordinates: [51.5, 25.3] },
-  { id: 'egypt', coordinates: [31.2, 30] },
-  { id: 'kenya', coordinates: [36.8, -1.3] },
-  { id: 'south-africa', coordinates: [28.2, -26.2] },
-  { id: 'united-kingdom', coordinates: [-0.1, 51.5] },
-  { id: 'germany', coordinates: [13.4, 52.5] },
-  { id: 'france', coordinates: [2.35, 48.85] },
-  { id: 'spain', coordinates: [-3.7, 40.4] },
-  { id: 'italy', coordinates: [12.5, 41.9] },
-  { id: 'greece', coordinates: [23.7, 37.9] },
-  { id: 'netherlands', coordinates: [4.9, 52.4] },
-  { id: 'belgium', coordinates: [4.35, 50.8] },
-  { id: 'switzerland', coordinates: [7.4, 46.9] },
-  { id: 'poland', coordinates: [21, 52.2] },
-  { id: 'sweden', coordinates: [18, 59.3] },
-  { id: 'united-states', coordinates: [-74, 40.7] },
+  { id: 'china-mainland', label: 'China', coordinates: [116.4, 39.9] },
+  { id: 'macau', label: 'Macao SAR', coordinates: [113.5, 22.2] },
+  { id: 'hong-kong', label: 'Hong Kong SAR', coordinates: [114.2, 22.3] },
+  { id: 'thailand', label: 'Thailand', coordinates: [100.5, 13.7] },
+  { id: 'malaysia', label: 'Malaysia', coordinates: [101.7, 3.1] },
+  { id: 'singapore', label: 'Singapore', coordinates: [103.8, 1.35] },
+  { id: 'philippines', label: 'Philippines', coordinates: [121, 14.6] },
+  { id: 'japan', label: 'Japan', coordinates: [139.7, 35.7] },
+  { id: 'south-korea', label: 'South Korea', coordinates: [127, 37.5] },
+  { id: 'indonesia', label: 'Indonesia', coordinates: [106.8, -6.2] },
+  { id: 'vietnam', label: 'Vietnam', coordinates: [106.7, 10.8] },
+  { id: 'kazakhstan', label: 'Kazakhstan', coordinates: [71.4, 51.2] },
+  { id: 'pakistan', label: 'Pakistan', coordinates: [73.1, 33.7] },
+  { id: 'bangladesh', label: 'Bangladesh', coordinates: [90.4, 23.8] },
+  { id: 'sri-lanka', label: 'Sri Lanka', coordinates: [79.9, 6.9] },
+  { id: 'turkiye', label: 'Türkiye', coordinates: [32.9, 39.9] },
+  { id: 'saudi-arabia', label: 'Saudi Arabia', coordinates: [46.7, 24.7] },
+  { id: 'united-arab-emirates', label: 'UAE', coordinates: [55.3, 25.2] },
+  { id: 'qatar', label: 'Qatar', coordinates: [51.5, 25.3] },
+  { id: 'egypt', label: 'Egypt', coordinates: [31.2, 30] },
+  { id: 'kenya', label: 'Kenya', coordinates: [36.8, -1.3] },
+  { id: 'south-africa', label: 'South Africa', coordinates: [28.2, -26.2] },
+  { id: 'united-kingdom', label: 'United Kingdom', coordinates: [-0.1, 51.5] },
+  { id: 'germany', label: 'Germany', coordinates: [13.4, 52.5] },
+  { id: 'france', label: 'France', coordinates: [2.35, 48.85] },
+  { id: 'spain', label: 'Spain', coordinates: [-3.7, 40.4] },
+  { id: 'italy', label: 'Italy', coordinates: [12.5, 41.9] },
+  { id: 'greece', label: 'Greece', coordinates: [23.7, 37.9] },
+  { id: 'netherlands', label: 'Netherlands', coordinates: [4.9, 52.4] },
+  { id: 'belgium', label: 'Belgium', coordinates: [4.35, 50.8] },
+  { id: 'switzerland', label: 'Switzerland', coordinates: [7.4, 46.9] },
+  { id: 'poland', label: 'Poland', coordinates: [21, 52.2] },
+  { id: 'sweden', label: 'Sweden', coordinates: [18, 59.3] },
+  { id: 'united-states', label: 'United States', coordinates: [-74, 40.7] },
 ];
 const markersById = new Map(regionalMarkers.map((marker) => [marker.id, marker]));
 const regionalConnections = [
@@ -63,6 +63,23 @@ export default function GlobalGlobe({ tone = 'light' }) {
     const canvas = canvasRef.current;
     const context = canvas?.getContext('2d');
     if (!canvas || !context) return undefined;
+
+    /* Country on hover: nearest visible marker within 16px wins. */
+    const onPointerMove = (event) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      let best = null;
+      let bestDistance = 18;
+      markerScreen.forEach((point) => {
+        const distance = Math.hypot(point.x - x, point.y - y);
+        if (distance < bestDistance) { bestDistance = distance; best = point; }
+      });
+      hovered = best;
+    };
+    const onPointerLeave = () => { hovered = null; };
+    canvas.addEventListener('pointermove', onPointerMove);
+    canvas.addEventListener('pointerleave', onPointerLeave);
 
     let size = 0;
     let pixelRatio = 1;
@@ -119,6 +136,9 @@ export default function GlobalGlobe({ tone = 'light' }) {
       falloff2: 'rgba(45, 45, 40, 0.12)',
       outline: 'rgba(41, 42, 38, 0.66)',
     };
+
+    const markerScreen = [];
+    let hovered = null;
 
     const draw = () => {
       if (!size) return;
@@ -206,10 +226,12 @@ export default function GlobalGlobe({ tone = 'light' }) {
         context.stroke();
       });
 
+      markerScreen.length = 0;
       regionalMarkers.forEach((marker) => {
         const projected = projectVisiblePoint(marker.coordinates);
         if (!projected) return;
         const [x, y] = projected;
+        markerScreen.push({ id: marker.id, label: marker.label || marker.id, x, y });
         const markerScale = palette.markerScale || 1;
         const markerRadius = clamp(radius * 0.015, 2.6, 3.8) * markerScale;
 
@@ -234,6 +256,24 @@ export default function GlobalGlobe({ tone = 'light' }) {
       context.fillStyle = paperFalloff;
       context.fillRect(0, 0, size, size);
       context.restore();
+
+      if (hovered) {
+        const fontSize = Math.max(11, size * 0.0125);
+        context.font = `600 ${fontSize}px Inter, system-ui, sans-serif`;
+        const textWidth = context.measureText(hovered.label).width;
+        const boxW = textWidth + 18;
+        const boxH = fontSize + 12;
+        const boxX = hovered.x - boxW / 2;
+        const boxY = hovered.y - boxH - 12;
+        context.beginPath();
+        if (typeof context.roundRect === 'function') context.roundRect(boxX, boxY, boxW, boxH, 4);
+        else context.rect(boxX, boxY, boxW, boxH);
+        context.fillStyle = '#141413';
+        context.fill();
+        context.fillStyle = '#ffffff';
+        context.textBaseline = 'middle';
+        context.fillText(hovered.label, boxX + 9, boxY + boxH / 2 + 0.5);
+      }
 
       context.beginPath();
       path(sphere);
@@ -315,6 +355,8 @@ export default function GlobalGlobe({ tone = 'light' }) {
     frameId = window.requestAnimationFrame(render);
 
     return () => {
+      canvas.removeEventListener('pointermove', onPointerMove);
+      canvas.removeEventListener('pointerleave', onPointerLeave);
       window.cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
       visibilityObserver.disconnect();
