@@ -210,7 +210,7 @@
 .home-choice-film { max-width: 420px; height: auto; aspect-ratio: auto; }
 .home-choice-film iframe, .home-choice-film video { display: block; width: 100%; height: 100%; border: 0; object-fit: cover; }
 .home-choice-entry { display: flex; flex-direction: column; justify-content: flex-start; }
-.home-choice-title { font-size: 56px; line-height: 1.05; font-weight: 500; letter-spacing: -.03em; white-space: nowrap; }
+.home-choice-title { font-size: 56px; line-height: 1.05; font-weight: 500; letter-spacing: -.03em; }
 .home-choice-note { font-family: var(--font-sans); font-size: 18px; font-weight: 400; letter-spacing: 0; line-height: 1.5; color: #7f848a; }
 .home-choice-card .home-entry button,
 .home-choice-card button[type="submit"] { font-weight: 500; letter-spacing: 0; }
