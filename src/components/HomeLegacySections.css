@@ -571,5 +571,5 @@
 
 /* Sign-in chooser as a closing section: keeps its two-column composition but
    gives up the full-screen height it had as a standalone page. */
-.home-join-section { background: #fff; padding: clamp(64px, 6vw, 96px) 0; }
+.home-join-section { background: #fff; padding: clamp(104px, 9vw, 152px) 0 clamp(64px, 6vw, 96px); }
 .home-join-section .home-choice { min-height: 0; padding: 0; }

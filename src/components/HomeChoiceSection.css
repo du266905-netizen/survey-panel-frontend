@@ -178,3 +178,29 @@
 /* The title and subtitle carry deliberate line breaks. */
 .home-choice-title,
 .home-choice-note { white-space: pre-line; }
+
+/* 2026-11-12: the block read as oversized — every element was one step too
+   big. Pull the title, note and card down a step and let the film sit smaller. */
+.home-choice-title {
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+}
+.home-choice-note {
+  margin: 12px 0 20px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.home-choice-card { padding: 20px 20px 18px; }
+.home-choice-film { max-width: 420px; }
+
+@media (max-width: 900px) {
+  /* A phone cannot watch the film here and it pushes the form down; show the
+     form only, centred. */
+  .home-choice-film { display: none; }
+  .home-choice { padding: 32px 0 40px; }
+  .home-choice-inner { width: calc(100% - 40px); }
+  .home-choice-entry { order: 0; }
+  .home-choice-title { font-size: 28px; text-align: left; }
+  .home-choice-note { text-align: left; }
+}
