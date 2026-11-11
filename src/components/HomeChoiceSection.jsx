@@ -11,10 +11,9 @@ import './HomeChoiceSection.css';
 
 export default function HomeChoiceSection({ headingLevel = 2 }) {
   const [audience, setAudience] = useState('participant');
-  const { language, publicCopy } = useLanguage();
+  const { publicCopy } = useLanguage();
   const text = publicCopy.pages.access;
   /* 2026-11-12: the card opens with the idea, then the action, on two lines. */
-  const isChinese = /^(zh|ja|ko)/i.test(language || '');
   // On the home page this is a section heading; when the block is mounted as
   // a page (the /access entry) it is the page's one h1.
   const Heading = headingLevel === 1 ? 'h1' : 'h2';
@@ -30,7 +29,7 @@ export default function HomeChoiceSection({ headingLevel = 2 }) {
         </figure>
 
         <div className="home-choice-entry">
-          <Heading className="home-choice-title">{isChinese ? '独立思考，明辨是非' : 'Think independently. Judge for yourself.'}</Heading>
+          <Heading className="home-choice-title">{'独立思考，明辨是非'}</Heading>
           <p className="home-choice-note">{'Your next step starts here.'}</p>
           <div className="home-choice-card">
             <HomeEntry audience={audience} onAudienceChange={setAudience} />
