@@ -5,7 +5,6 @@ import { solutionNavCopy } from '../constants/solutionNavCopy';
 import usePageTitle from '../hooks/usePageTitle';
 import HomeFilmSection from '../components/HomeFilmSection';
 import { HomeCommunityCta } from '../components/HomeLegacySections';
-import cityRiver from '../assets/about/city-river-view.jpg';
 import './About.css';
 
 /* About GuanyiSearch —— 2026-10-27 重排。
@@ -93,7 +92,7 @@ export default function About() {
       </section>
 
       <section className="ab-film" aria-label="Film">
-        <HomeFilmSection poster={cityRiver} />
+        <HomeFilmSection />
       </section>
 
       <section className="ab-manifesto" aria-labelledby="ab-human">
