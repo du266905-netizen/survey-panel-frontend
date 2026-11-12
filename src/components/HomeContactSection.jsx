@@ -9,7 +9,7 @@ import { createSupportTicket } from '../api/supportApi';
 import { useLanguage } from './LanguageContext';
 import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '../constants/panelProfileOptions';
 
-export default function HomeContactSection({ hideHeading = false }) {
+export default function HomeContactSection({ hideHeading = false, source = 'PUBLIC_HOME_CONTACT' }) {
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.home;
   const regionNames = useMemo(() => {
@@ -51,7 +51,7 @@ export default function HomeContactSection({ hideHeading = false }) {
     setIsSubmittingContact(true);
     try {
       await createSupportTicket({
-        source: 'PUBLIC_HOME_CONTACT',
+        source,
         category: 'OTHER',
         subject,
         messages: [{
