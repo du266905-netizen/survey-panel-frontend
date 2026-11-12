@@ -41,13 +41,6 @@ function formatTime(value) {
   return value ? new Date(value).toLocaleString() : '-';
 }
 
-function matchingLabel(profile) {
-  const status = profile.respondentProfileStatus?.status || 'missing';
-  if (status === 'ready') return 'Ready';
-  if (status === 'blocked') return 'Needs correction';
-  return 'Needs completion';
-}
-
 export default function WorkerDetail() {
   const { workerId } = useParams();
   const [worker, setWorker] = useState(null);
@@ -162,11 +155,6 @@ export default function WorkerDetail() {
     { key: 'id', header: 'Environment ID' },
     { key: 'displayName', header: 'Name', render: (row) => row.displayName || '-' },
     { key: 'countryTag', header: 'Country', render: (row) => row.countryTag || '-' },
-    {
-      key: 'matching',
-      header: 'Matching profile',
-      render: (row) => <StatusPill value={row.respondentProfileStatus?.status || 'missing'} label={matchingLabel(row)} />,
-    },
     { key: 'status', header: 'Environment state', render: (row) => <StatusPill value={row.status} /> },
   ];
 
