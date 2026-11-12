@@ -143,6 +143,7 @@ export default function SupportChatWidget() {
     setIsCreatingTicket(true);
     try {
       await createSupportTicket({
+        source: 'PUBLIC_HELP_TICKET',
         category: ticketCategory,
         subject,
         messages: [{ role: 'user', content: description }],

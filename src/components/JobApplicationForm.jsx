@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Paperclip, X } from 'lucide-react';
 import { countryOptions } from '../constants/panelProfileOptions';
+import { createSupportTicket } from '../api/supportApi';
 import { useLanguage } from './LanguageContext';
 
 /* Application form for a single role.
@@ -29,7 +30,9 @@ const COPY = {
     salary: '您对这个职位的基本薪资期望是多少？',
     statement: '请简单描述你的经历，并说说对这个职位的看法。',
     submit: '提交申请',
-    sent: '已打开邮件客户端，请附上简历文件后发送。',
+    sent: '已收到你的申请。如需要简历文件，我们会回复向你索取。',
+    sending: '正在提交…',
+    failed: '提交失败，请稍后再试。',
     missing: '请填写所有必填项。',
     tooBig: '文件超过 10 MB。',
     wrongType: '只支持 PDF、DOC、DOCX、TXT、RTF。',
@@ -49,7 +52,9 @@ const COPY = {
     salary: '您對這個職位的基本薪資期望是多少？',
     statement: '請簡單描述你的經歷，並說說對這個職位的看法。',
     submit: '提交申請',
-    sent: '已開啟郵件用戶端，請附上履歷檔案後寄出。',
+    sent: '已收到你的申請。如需要履歷檔案，我們會回覆向你索取。',
+    sending: '正在提交…',
+    failed: '提交失敗，請稍後再試。',
     missing: '請填寫所有必填欄位。',
     tooBig: '檔案超過 10 MB。',
     wrongType: '只支援 PDF、DOC、DOCX、TXT、RTF。',
@@ -69,7 +74,9 @@ const COPY = {
     salary: 'What is your basic salary expectation for this role?',
     statement: 'Describe your experience in short, and what you make of this role.',
     submit: 'Submit application',
-    sent: 'Your mail client is open — attach the CV file and send.',
+    sent: 'Your application has been received. If we need the CV file, we will reply to ask for it.',
+    sending: 'Sending…',
+    failed: 'Could not send. Try again.',
     missing: 'Please fill in every required field.',
     tooBig: 'That file is larger than 10 MB.',
     wrongType: 'Only PDF, DOC, DOCX, TXT and RTF are accepted.',
@@ -89,7 +96,9 @@ const COPY = {
     salary: 'What is your basic salary expectation for this role?',
     statement: 'Describe your experience in short, and what you make of this role.',
     submit: 'Submit application',
-    sent: 'Your mail client is open — attach the CV file and send.',
+    sent: 'Your application has been received. If we need the CV file, we will reply to ask for it.',
+    sending: 'Sending…',
+    failed: 'Could not send. Try again.',
     missing: 'Please fill in every required field.',
     tooBig: 'That file is larger than 10 MB.',
     wrongType: 'Only PDF, DOC, DOCX, TXT and RTF are accepted.',
@@ -123,7 +132,7 @@ export default function JobApplicationForm({ role }) {
     if (fileInput.current) fileInput.current.value = '';
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     const required = [form.first, form.last, form.email, form.country, form.phone, form.linkedin, form.statement];
     if (required.some((value) => !String(value).trim()) || !file) {
@@ -143,8 +152,24 @@ export default function JobApplicationForm({ role }) {
       '',
       `CV attached as: ${file.name}`,
     ].filter(Boolean).join('\n');
-    window.location.href = `mailto:careers@guanyi-media.com?subject=${encodeURIComponent(`Application — ${role}`)}&body=${encodeURIComponent(body)}`;
-    setStatus(c.sent);
+    /* 2026-11-12: the application now goes to the support handoff like every
+       other site form, with its own source so the backend can route it to the
+       careers inbox. Attachments are not accepted yet (no object storage), so
+       the message names the file and the team asks for it on reply. */
+    try {
+      setStatus(c.sending || 'sending');
+      await createSupportTicket({
+        source: 'PUBLIC_JOB_APPLICATION',
+        category: 'OTHER',
+        subject: `Application — ${role}`,
+        contactName: `${form.first} ${form.last}`,
+        contactEmail: form.email,
+        messages: [{ role: 'user', content: body }],
+      });
+      setStatus(c.sent);
+    } catch {
+      setStatus(c.failed || 'failed');
+    }
   };
 
   return (
