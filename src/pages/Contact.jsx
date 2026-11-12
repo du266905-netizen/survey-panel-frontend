@@ -20,9 +20,7 @@ export default function Contact() {
         <h1 id="contact-title">{title}</h1>
         <p>{publicCopy.home.contactIntro}</p>
       </section>
-      {/* the /contact page is the participant help surface, so it carries its
-          own source instead of borrowing the homepage one */}
-      <HomeContactSection hideHeading source="PUBLIC_CONTACT_PAGE" />
+      <HomeContactSection hideHeading />
     </main>
   );
 }

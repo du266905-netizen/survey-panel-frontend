@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Paperclip, X } from 'lucide-react';
 import { countryOptions } from '../constants/panelProfileOptions';
-import { createSupportTicket } from '../api/supportApi';
+import { submitJobApplication } from '../api/realApi';
 import { useLanguage } from './LanguageContext';
 
 /* Application form for a single role.
@@ -30,12 +30,12 @@ const COPY = {
     salary: '您对这个职位的基本薪资期望是多少？',
     statement: '请简单描述你的经历，并说说对这个职位的看法。',
     submit: '提交申请',
-    sent: '已收到你的申请。如需要简历文件，我们会回复向你索取。',
+    sent: '已收到你的申请，我们会尽快联系你。',
     sending: '正在提交…',
     failed: '提交失败，请稍后再试。',
     missing: '请填写所有必填项。',
     tooBig: '文件超过 10 MB。',
-    wrongType: '只支持 PDF、DOC、DOCX、TXT、RTF。',
+    wrongType: '只支持 PDF、DOC、DOCX。',
   },
   'zh-Hant': {
     title: '申請這份工作',
@@ -52,12 +52,12 @@ const COPY = {
     salary: '您對這個職位的基本薪資期望是多少？',
     statement: '請簡單描述你的經歷，並說說對這個職位的看法。',
     submit: '提交申請',
-    sent: '已收到你的申請。如需要履歷檔案，我們會回覆向你索取。',
+    sent: '已收到你的申請，我們會盡快聯絡你。',
     sending: '正在提交…',
     failed: '提交失敗，請稍後再試。',
     missing: '請填寫所有必填欄位。',
     tooBig: '檔案超過 10 MB。',
-    wrongType: '只支援 PDF、DOC、DOCX、TXT、RTF。',
+    wrongType: '只支援 PDF、DOC、DOCX。',
   },
   'en-US': {
     title: 'Apply for this job',
@@ -74,12 +74,12 @@ const COPY = {
     salary: 'What is your basic salary expectation for this role?',
     statement: 'Describe your experience in short, and what you make of this role.',
     submit: 'Submit application',
-    sent: 'Your application has been received. If we need the CV file, we will reply to ask for it.',
+    sent: 'Your application has been received. We will be in touch.',
     sending: 'Sending…',
     failed: 'Could not send. Try again.',
     missing: 'Please fill in every required field.',
     tooBig: 'That file is larger than 10 MB.',
-    wrongType: 'Only PDF, DOC, DOCX, TXT and RTF are accepted.',
+    wrongType: 'Only PDF, DOC or DOCX files are accepted.',
   },
   'en-GB': {
     title: 'Apply for this job',
@@ -96,12 +96,12 @@ const COPY = {
     salary: 'What is your basic salary expectation for this role?',
     statement: 'Describe your experience in short, and what you make of this role.',
     submit: 'Submit application',
-    sent: 'Your application has been received. If we need the CV file, we will reply to ask for it.',
+    sent: 'Your application has been received. We will be in touch.',
     sending: 'Sending…',
     failed: 'Could not send. Try again.',
     missing: 'Please fill in every required field.',
     tooBig: 'That file is larger than 10 MB.',
-    wrongType: 'Only PDF, DOC, DOCX, TXT and RTF are accepted.',
+    wrongType: 'Only PDF, DOC or DOCX files are accepted.',
   },
 };
 
@@ -122,7 +122,7 @@ export default function JobApplicationForm({ role }) {
     const chosen = event.target.files?.[0];
     if (!chosen) return;
     if (chosen.size > MAX_BYTES) { setStatus(c.tooBig); return; }
-    if (!/\.(pdf|doc|docx|txt|rtf)$/i.test(chosen.name)) { setStatus(c.wrongType); return; }
+    if (!/\.(pdf|doc|docx)$/i.test(chosen.name)) { setStatus(c.wrongType); return; }
     setStatus('');
     setFile(chosen);
   };
@@ -152,19 +152,26 @@ export default function JobApplicationForm({ role }) {
       '',
       `CV attached as: ${file.name}`,
     ].filter(Boolean).join('\n');
-    /* 2026-11-12: the application now goes to the support handoff like every
-       other site form, with its own source so the backend can route it to the
-       careers inbox. Attachments are not accepted yet (no object storage), so
-       the message names the file and the team asks for it on reply. */
+    /* 2026-11-12: the application posts to /api/support/job-applications, which
+       accepts the CV as base64 (pdf/doc/docx, 6 MB) and routes it to careers@. */
     try {
       setStatus(c.sending || 'sending');
-      await createSupportTicket({
-        source: 'PUBLIC_JOB_APPLICATION',
-        category: 'OTHER',
-        subject: `Application — ${role}`,
+      const resume = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve({
+          filename: file.name,
+          contentType: file.type || 'application/pdf',
+          contentBase64: String(reader.result).split(',')[1] || '',
+        });
+        reader.onerror = () => reject(new Error('read-failed'));
+        reader.readAsDataURL(file);
+      });
+      await submitJobApplication({
         contactName: `${form.first} ${form.last}`,
         contactEmail: form.email,
-        messages: [{ role: 'user', content: body }],
+        subject: `Application — ${role}`,
+        coverLetter: [body].join('\n').slice(0, 1800),
+        resume,
       });
       setStatus(c.sent);
     } catch {

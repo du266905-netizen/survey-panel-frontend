@@ -371,6 +371,17 @@ export const submitBusinessInquiry = async ({ contactName, email, organizationTy
   return { data: response.data };
 };
 
+export const submitJobApplication = async ({ contactName, contactEmail, subject, coverLetter, resume }) => {
+  const response = await apiClient.post('/api/support/job-applications', {
+    contactName,
+    contactEmail,
+    subject,
+    coverLetter,
+    resume,
+  });
+  return { data: response.data };
+};
+
 export const sendEmailCode = async ({ email }) => {
   const response = await apiClient.post('/api/auth/send-email-code', { email });
   return { data: response.data };
