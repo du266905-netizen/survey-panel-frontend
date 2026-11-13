@@ -6,6 +6,7 @@
 const LABELS = {
   'zh-CN': {
     DRAFT: '草稿',
+    RECEIVED: '草稿',
     SUBMITTED_FOR_REVIEW: '待审核',
     QUOTE_REQUIRED: '待报价',
     QUOTE_SENT: '报价已发',
@@ -24,6 +25,7 @@ const LABELS = {
   },
   'zh-Hant': {
     DRAFT: '草稿',
+    RECEIVED: '草稿',
     SUBMITTED_FOR_REVIEW: '待審核',
     QUOTE_REQUIRED: '待報價',
     QUOTE_SENT: '報價已發',
@@ -42,6 +44,7 @@ const LABELS = {
   },
   en: {
     DRAFT: 'Draft',
+    RECEIVED: 'Draft',
     SUBMITTED_FOR_REVIEW: 'In review',
     QUOTE_REQUIRED: 'Quote needed',
     QUOTE_SENT: 'Quote sent',
@@ -99,12 +102,17 @@ export function isReportReleased(project) {
 }
 
 /* Paid projects are work in progress: they cannot be deleted from the client
-   side. Anything that has not been funded yet (draft, submitted, quoted,
-   accepted, contract) can. */
+   side. The deleteable set mirrors the backend; RECEIVED is a legacy copy
+   status that predates the lifecycle and is treated as a draft. */
 export const PAID_STATES = ['FUNDED', 'RECRUITING', 'LIVE', 'COMPLETED', 'DELIVERED', 'ACCEPTED'];
 
+export const DELETEABLE_PROJECT_STATUSES = new Set([
+  'RECEIVED', 'DRAFT', 'SUBMITTED_FOR_REVIEW', 'QUOTE_REQUIRED', 'QUOTE_SENT',
+  'CLIENT_ACCEPTED', 'CONTRACT_SENT', 'CONTRACT_SIGNED',
+]);
+
 export function canDeleteProject(project) {
-  return !PAID_STATES.includes(String(project?.status || '').toUpperCase());
+  return DELETEABLE_PROJECT_STATUSES.has(String(project?.status || '').toUpperCase());
 }
 
 export function clientStepIndex(status) {

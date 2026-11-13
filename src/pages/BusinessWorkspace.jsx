@@ -594,7 +594,10 @@ export default function BusinessWorkspace() {
       setQuestionnaireDrafts((current) => current.filter((item) => item.id !== project.id));
       setMessage(feedbackCopy.deleted);
     } catch (error) {
-      setMessage(feedbackCopy.deleteError);
+      const code = error?.response?.data?.code || '';
+      setMessage(code === 'BUSINESS_PROJECT_DELETE_LOCKED'
+        ? pick(language, '这个项目已经进入执行阶段，不能删除。', 'This project has started fieldwork and cannot be deleted.', '這個專案已經進入執行階段，不能刪除。')
+        : feedbackCopy.deleteError);
     } finally { setSubmitting(false); }
   };
 
