@@ -645,3 +645,11 @@ body:has(.hc) {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Section headings stay on one line on desktop; phones may wrap rather than
+   overflow the reading column. */
+@media (min-width: 901px) {
+  .hc-body h2 {
+    white-space: nowrap;
+  }
+}
