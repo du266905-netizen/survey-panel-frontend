@@ -38,19 +38,18 @@ body:has(.hc) {
 /* --- bar ----------------------------------------------------------------- */
 
 .hc-top {
-  position: sticky;
+  position: absolute;
   top: 0;
-  z-index: 30;
+  right: 0;
+  left: 0;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  height: 64px;
+  height: 72px;
   padding: 0 24px;
-  border-bottom: 1px solid var(--hc-rule);
-  background: rgba(255, 255, 255, .94);
-  backdrop-filter: saturate(1.4) blur(10px);
-  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  background: transparent;
 }
 
 .hc-brand {
@@ -66,16 +65,16 @@ body:has(.hc) {
   width: 34px;
   height: 34px;
   flex: none;
-  border: 1px solid var(--hc-rule);
+  border: 1px solid rgba(255, 255, 255, .4);
   border-radius: 50%;
-  background: #FFFFFF;
-  color: var(--hc-muted);
+  background: rgba(255, 255, 255, .08);
+  color: #FFFFFF;
   cursor: pointer;
 }
 
 .hc-back:hover {
-  background: var(--hc-wash);
-  color: var(--hc-ink);
+  background: rgba(255, 255, 255, .18);
+  color: #FFFFFF;
 }
 
 .hc-wordmark {
@@ -88,17 +87,18 @@ body:has(.hc) {
   display: block;
   width: 122px;
   height: auto;
+  filter: invert(1);
 }
 
 .hc-brand-rule {
   width: 1px;
   height: 18px;
   flex: none;
-  background: var(--hc-rule);
+  background: rgba(255, 255, 255, .3);
 }
 
 .hc-brand-title {
-  color: var(--hc-ink);
+  color: #FFFFFF;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -.01em;
@@ -120,18 +120,18 @@ body:has(.hc) {
   gap: 6px;
   height: 34px;
   padding: 0 10px;
-  border: 1px solid var(--hc-rule);
+  border: 1px solid rgba(255, 255, 255, .38);
   border-radius: 6px;
-  background: #FFFFFF;
-  color: var(--hc-muted);
+  background: rgba(255, 255, 255, .1);
+  color: #FFFFFF;
   font-family: var(--font-sans);
   font-size: 13px;
   cursor: pointer;
 }
 
 .hc-lang:hover {
-  background: var(--hc-wash);
-  color: var(--hc-ink);
+  background: rgba(255, 255, 255, .2);
+  color: #FFFFFF;
 }
 
 .hc-login {
@@ -139,8 +139,9 @@ body:has(.hc) {
   align-items: center;
   height: 34px;
   padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, .55);
   border-radius: 6px;
-  background: var(--hc-ink);
+  background: transparent;
   color: #FFFFFF;
   font-size: 13px;
   font-weight: 500;
@@ -149,7 +150,8 @@ body:has(.hc) {
 }
 
 .hc-login:hover {
-  background: #2A2A28;
+  background: #FFFFFF;
+  color: var(--hc-ink);
 }
 
 /* --- hero ---------------------------------------------------------------- */
@@ -158,8 +160,8 @@ body:has(.hc) {
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 420px;
-  padding: 64px 24px 72px;
+  min-height: 440px;
+  padding: 104px 24px 80px;
   background-color: #2B2118;
   background-repeat: no-repeat;
   background-position: center 44%;
@@ -427,6 +429,14 @@ body:has(.hc) {
   background: var(--hc-wash);
 }
 
+.hc-group-toggle span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .hc-group-chevron {
   flex: none;
   color: var(--hc-faint);
@@ -461,10 +471,13 @@ body:has(.hc) {
   display: block;
   padding: 7px 12px 7px 24px;
   border-radius: 6px;
+  overflow: hidden;
   color: var(--hc-body);
   font-size: 14px;
   line-height: 1.45;
   text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hc-group a:hover {
@@ -551,7 +564,7 @@ body:has(.hc) {
 
 @media (max-width: 1080px) {
   .hc-layout {
-    grid-template-columns: 220px minmax(0, 1fr);
+    grid-template-columns: 260px minmax(0, 1fr);
     gap: 40px;
   }
 
@@ -591,8 +604,8 @@ body:has(.hc) {
 
 
   .hc-hero {
-    min-height: 360px;
-    padding: 48px 20px 56px;
+    min-height: 380px;
+    padding: 92px 20px 56px;
   }
 
   .hc-top {

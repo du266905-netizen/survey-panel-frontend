@@ -134,6 +134,12 @@ export default function HelpCenter() {
 
   return (
     <div className="hc">
+      <section
+        className="hc-hero"
+        style={{
+          backgroundImage: `radial-gradient(ellipse at center, rgba(20,20,19,.22) 0%, rgba(20,20,19,0) 62%), linear-gradient(180deg, rgba(20,20,19,.58) 0%, rgba(20,20,19,.38) 44%, rgba(20,20,19,.56) 100%), url(${helpHero})`,
+        }}
+      >
       <header className="hc-top">
         <div className="hc-brand">
           <button
@@ -179,12 +185,6 @@ export default function HelpCenter() {
         </div>
       </header>
 
-      <section
-        className="hc-hero"
-        style={{
-          backgroundImage: `radial-gradient(ellipse at center, rgba(20,20,19,.22) 0%, rgba(20,20,19,0) 62%), linear-gradient(180deg, rgba(20,20,19,.58) 0%, rgba(20,20,19,.38) 44%, rgba(20,20,19,.56) 100%), url(${helpHero})`,
-        }}
-      >
         <div className="hc-hero-inner">
           <h1>{copyFor(lang, '帮助中心', 'Help centre')}</h1>
           <p className="hc-hero-sub">
@@ -266,6 +266,7 @@ export default function HelpCenter() {
                     onClick={() => toggleGroup(group.id)}
                     aria-expanded={isOpen}
                     aria-controls={`hc-group-${group.id}`}
+                    title={t(group, lang)}
                   >
                     <span>{t(group, lang)}</span>
                     <ChevronDown size={16} className="hc-group-chevron" aria-hidden="true" />
@@ -281,6 +282,7 @@ export default function HelpCenter() {
                                 to={`/help/${entry.slug}`}
                                 className={active ? 'is-active' : ''}
                                 aria-current={active ? 'page' : undefined}
+                                title={t(entry, lang).title}
                               >
                                 {t(entry, lang).title}
                               </Link>
