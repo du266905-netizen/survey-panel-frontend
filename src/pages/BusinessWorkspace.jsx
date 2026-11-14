@@ -805,10 +805,6 @@ export default function BusinessWorkspace() {
               />
             </div>
           </section>
-          <div className="business-dashboard-actions">
-            <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{workspaceText[1]}</strong><small>{workspaceText[2]}</small></div><ArrowRight size={17} /></button>
-            <button type="button" onClick={() => selectWorkspaceView('questionnaires')}><span className="is-green"><ClipboardList size={21} /></span><div><strong>{workspaceText[5]}</strong><small>{workspaceText[6]}</small></div><ArrowRight size={17} /></button>
-          </div>
           {message && <p className="business-workspace-message">{message}</p>}
           <div className="business-dashboard-grid">
             
