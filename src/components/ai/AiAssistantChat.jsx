@@ -120,7 +120,7 @@ export default function AiAssistantChat({
         {messages.filter((message) => !message.opening || !hasStarted).map((message, index) => (
           message.opening ? (
             <article key={`${message.id}-${index}`} className="is-guide is-opening">
-              <h1><span><Sprout size={64} className="business-ai-opening-sprout" aria-hidden="true" /> {message.content}</span></h1>
+              <h1><span>{message.content}</span></h1>
             </article>
           ) : (
             <article key={`${message.id}-${index}`} className={message.role === 'user' ? 'is-user' : 'is-guide'}>

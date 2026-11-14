@@ -857,3 +857,53 @@ body:has(.business-ai-brief-page) .business-support-chat {
   pointer-events: none;
   transition: opacity .15s ease, visibility 0s linear .15s;
 }
+
+/* ── 2026-11-15 · empty state, Claude-like ──────────────────────────────────
+   No sprout beside the question, 38/400 serif, and the composer sits directly
+   under it at a smaller size instead of pinned to the bottom of the screen. */
+.business-ai-brief-page .business-ai-conversation.is-waiting .is-opening h1 {
+  font: 400 38px/1.15 var(--font-reading, var(--font-serif)) !important;
+  letter-spacing: -.02em !important;
+}
+
+.business-ai-brief-page .business-ai-conversation.is-waiting {
+  grid-template-rows: auto auto 1fr !important;
+}
+
+.business-ai-brief-page .business-ai-conversation.is-waiting .business-ai-conversation-log {
+  /* flex, not grid: the log stops absorbing the viewport, so the composer
+     follows the question instead of sitting on the bottom edge. */
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  padding-top: clamp(24px, 11vh, 110px) !important;
+  padding-bottom: 8px !important;
+}
+
+.business-ai-brief-page .business-ai-conversation.is-waiting .business-ai-dock {
+  width: min(720px, 100%) !important;
+  margin: 0 auto !important;
+  left: 0 !important;
+  padding-top: 0 !important;
+}
+
+.business-ai-brief-page .business-ai-conversation.is-waiting .is-opening h1 {
+  max-width: 720px !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+}
+
+.business-ai-brief-page .business-ai-conversation.is-waiting .business-ai-dock::before {
+  background: none !important;
+}
+
+.business-ai-brief-page .business-ai-conversation.is-waiting .business-ai-composer textarea {
+  min-height: 46px !important;
+  padding: 12px 14px !important;
+}
+
+/* In the conversation the assistant's mark is ink; lime was the only coloured
+   mark left in the transcript. */
+.business-ai-brief-page .business-ai-guide-mark,
+.business-ai-brief-page .business-ai-guide-mark .business-ai-sprout {
+  color: #141413 !important;
+}
