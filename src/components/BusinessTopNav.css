@@ -287,141 +287,119 @@
   }
 }
 
-/* Home: the greeting photograph keeps its size; the research overview moves
-   into the empty column beside it. */
-.business-workspace-body.business-workspace-body--topnav {
+/* Language menu — the compact white sheet used by the top bar. Replaces the
+   old green glass picker that only made sense inside the rail. */
+.business-language-picker-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: auto;
+  display: grid;
+  width: 200px;
+  max-height: min(360px, calc(100svh - 100px));
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid #E5E3DD;
+  border-radius: 9px;
+  background: #FFFFFF;
+  box-shadow: 0 16px 38px rgba(20, 20, 19, .12);
+  transform: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.business-language-picker-menu > p {
+  margin: 0;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid #F0EEE8;
+  color: #8D948D;
+  font: 600 11px/1.3 var(--font-sans);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.business-language-picker-menu > div {
+  overflow-y: auto;
+  padding: 5px;
+  scrollbar-width: thin;
+}
+
+.business-language-picker-menu > div > button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #3F4642;
+  cursor: pointer;
+  font: 500 13px/1.3 var(--font-sans);
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.business-language-picker-menu > div > button:hover,
+.business-language-picker-menu > div > button:focus-visible {
+  background: #FAF9F5;
+  color: #141413;
+  outline: 0;
+}
+
+.business-language-picker-menu > div > button.is-selected {
+  background: #141413;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* The old rail layout is a two-column grid. The top-nav page is a normal
+   flowing document with a centred content column. */
+#root .business-workspace-body.business-workspace-body--topnav {
   display: block;
   min-height: calc(100svh - 72px);
 }
 
-.business-home-hero-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.62fr) minmax(320px, 0.9fr);
-  gap: 16px;
-  align-items: stretch;
-  margin-bottom: 18px;
-}
-
-.business-home-hero-row .business-dashboard-header {
-  height: 100%;
-  min-height: 340px;
-  margin: 0;
-}
-
-.business-home-stats {
-  display: flex;
-  min-width: 0;
-}
-
-.business-home-stats .business-dashboard-statistics {
-  display: flex;
+#root .business-workspace-body.business-workspace-body--topnav > section {
   width: 100%;
-  height: 100%;
-  flex-direction: column;
-  padding: 26px 24px;
-}
-
-.business-home-stats .business-dashboard-stats {
-  display: grid;
-  flex: 1;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 20px;
-  align-content: space-between;
-}
-
-.business-home-stats .business-dashboard-stats article {
-  min-height: 0;
-}
-
-.business-home-stats .business-dashboard-stats strong {
-  font-size: clamp(34px, 3vw, 46px);
-  line-height: 1;
 }
 
 .business-workspace-home .business-dashboard-grid {
   grid-template-columns: minmax(0, 1fr);
 }
 
-@media (max-width: 1100px) {
-  .business-home-hero-row {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .business-home-stats .business-dashboard-stats {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 700px) {
-  .business-home-stats .business-dashboard-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .business-home-hero-row .business-dashboard-header {
-    min-height: 320px;
-  }
-}
-
-/* --- home overview card: two columns of metrics inside the right card ----- */
-#root .business-home-stats .business-dashboard-statistics {
-  border: 1px solid #E5E3DD;
-  border-radius: 14px;
-  background: #FFFFFF;
-  box-shadow: 0 10px 28px rgba(20, 20, 19, .04);
-}
-
-#root .business-home-stats .business-dashboard-statistics > header {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-#root .business-home-stats .business-dashboard-statistics > header > button {
-  flex: none;
-  white-space: nowrap;
-}
-
-#root .business-home-stats .business-dashboard-stats {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  gap: 22px 20px;
-}
-
-#root .business-home-stats .business-dashboard-stats article {
-  border-left: 0 !important;
-  padding-left: 0 !important;
-}
-
-#root .business-home-stats .business-dashboard-stats small {
-  white-space: normal !important;
-  font-size: 11px !important;
-  line-height: 1.35 !important;
-  letter-spacing: .08em !important;
-}
-
-#root .business-home-stats .business-dashboard-stats strong {
-  margin-top: 8px;
-}
-
-/* The language trigger is a globe in the top bar; the full EN-US label made
-   the 38px control stack its own text. */
+/* The language control in the top bar is a compact globe, not the old
+   two-row grid with the EN-US code under it. */
 #root .business-topnav-actions .business-language-picker > button {
-  white-space: nowrap;
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #5F6862;
+}
+
+#root .business-topnav-actions .business-language-picker > button:hover,
+#root .business-topnav-actions .business-language-picker > button:focus-visible,
+#root .business-topnav-actions .business-language-picker > button[aria-expanded='true'] {
+  border-color: #E5E3DD;
+  background: #FAF9F5;
+  color: #141413;
 }
 
 #root .business-topnav-actions .business-language-picker > button > span {
-  display: none;
+  display: none !important;
 }
 
-@media (max-width: 1100px) {
-  #root .business-home-stats .business-dashboard-stats {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  }
+#root .business-topnav-actions .business-language-picker > button > svg:first-child {
+  width: 18px;
+  height: 18px;
 }
 
-@media (max-width: 700px) {
-  #root .business-home-stats .business-dashboard-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
+#root .business-topnav-actions .business-language-picker > button > svg:last-child {
+  width: 9px;
+  height: 9px;
 }
