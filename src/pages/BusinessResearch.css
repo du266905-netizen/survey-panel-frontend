@@ -1,0 +1,267 @@
+.business-research {
+  min-height: 100svh;
+  background: #FFFFFF;
+  color: #141413;
+}
+
+.business-research-inner {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 24px 0 64px;
+}
+
+.business-research-services {
+  margin-top: 0;
+}
+
+.business-research-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.business-research-card {
+  display: flex;
+  position: relative;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border: 1px solid #E5E3DD;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  padding: 20px;
+  text-align: left;
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.business-research-card:hover {
+  border-color: #CFCBC1;
+  box-shadow: 0 10px 24px rgba(20, 20, 19, .05);
+  transform: translateY(-1px);
+}
+
+.business-research-card h3 {
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading, var(--font-serif));
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.25;
+}
+
+.business-research-card-copy {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 13px;
+  border-top: 1px solid #F0EEE8;
+}
+
+.business-research-card p {
+  margin: 0;
+  color: #5F6862;
+  font: 400 13px/1.55 var(--font-sans);
+}
+
+.business-research-ai {
+  margin-top: 34px;
+}
+
+.business-research-modal {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgba(20, 20, 19, .38);
+  padding: 24px;
+}
+
+.business-research-dialog {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: calc(100svh - 48px);
+  overflow-y: auto;
+  border: 1px solid #E5E3DD;
+  border-radius: 12px;
+  background: #FFFFFF !important;
+  box-shadow: 0 24px 70px rgba(20, 20, 19, .16);
+  padding: 28px;
+  opacity: 1;
+}
+
+.business-research-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+}
+
+.business-research-close:hover {
+  background: #FAF9F5;
+  color: #141413;
+}
+
+.business-research-dialog h2 {
+  max-width: calc(100% - 36px);
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading, var(--font-serif));
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.3;
+}
+
+.business-research-dialog-lede {
+  margin: 12px 0 0;
+  color: #5F6862;
+  font: 400 14px/1.65 var(--font-sans);
+}
+
+.business-research-dialog-meta {
+  margin: 12px 0 0;
+  color: #8D948D;
+  font: 400 13px/1.5 var(--font-sans);
+}
+
+.business-research-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.business-research-dialog-actions button {
+  min-height: 40px;
+  border: 1px solid #D8D5CD;
+  border-radius: 6px;
+  background: #FFFFFF;
+  color: #141413;
+  cursor: pointer;
+  font: 500 13px/1 var(--font-sans);
+  padding: 0 14px;
+}
+
+.business-research-dialog-actions button:hover {
+  border-color: #141413;
+  background: #FAF9F5;
+}
+
+.business-research-dialog-actions button.is-solid {
+  border-color: #141413;
+  background: #141413;
+  color: #FFFFFF;
+}
+
+.business-research-dialog-actions button.is-solid:hover {
+  background: #2B2B2B;
+}
+
+@media (max-width: 900px) {
+  .business-research-inner {
+    width: calc(100% - 32px);
+    padding: 24px 0 56px;
+  }
+
+  .business-research-entries {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .business-research-services > header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .business-research-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .business-research-head h1 {
+    font-size: 32px;
+  }
+
+  .business-research-entries,
+  .business-research-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .business-research-entries button {
+    min-height: 50px;
+  }
+
+  .business-research-card {
+    min-height: 0;
+  }
+
+  .business-research-modal {
+    align-items: end;
+    padding: 0;
+  }
+
+  .business-research-dialog {
+    width: 100%;
+    max-height: 88svh;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 12px 12px 0 0;
+    padding: 24px 20px;
+  }
+}
+
+
+.business-research-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.business-research-index {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  color: #C4C1B8;
+  font: 500 11px/1 var(--font-sans);
+  letter-spacing: .08em;
+}
+
+@media (max-width: 1000px) {
+  .business-research-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .business-research-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .business-research-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

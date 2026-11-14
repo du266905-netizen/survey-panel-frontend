@@ -3,6 +3,7 @@ import {
   BarChart3,
   ChevronDown,
   ClipboardList,
+  Compass,
   FileText,
   Home,
   LifeBuoy,
@@ -92,6 +93,7 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
       id: 'research',
       label: t('研究', 'Research'),
       items: [
+        { id: 'research', label: t('研究服务', 'Research services'), icon: Compass, to: '/business/research' },
         { id: 'ai', label: t('AI 研究引导', 'AI research guide'), icon: Sprout, to: '/business/ai-brief' },
         { id: 'questionnaires', label: t('问卷编辑器', 'Questionnaire editor'), icon: ClipboardList, to: '/business/questionnaires' },
       ],
