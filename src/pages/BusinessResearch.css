@@ -24,10 +24,8 @@
   display: flex;
   position: relative;
   width: 100%;
-  max-width: 250px;
   min-height: 0;
   aspect-ratio: 1 / 1;
-  justify-self: center;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
@@ -276,8 +274,3 @@
 }
 
 
-@media (max-width: 480px) {
-  .business-research-card {
-    max-width: none;
-  }
-}

@@ -111,7 +111,7 @@ export default function BusinessResearch() {
   ];
 
   return (
-    <main className="business-research">
+    <main className="business-research business-workspace">
       <BusinessTopNav activeId="research" />
       <div className="business-research-inner">
         <h1 className="business-research-title">{pick(language, '探索场景', 'Explore scenarios', '探索場景')}</h1>
