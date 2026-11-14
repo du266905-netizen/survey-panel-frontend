@@ -5998,3 +5998,20 @@ main.business-custom-request-page .business-workspace-rail {
 
 .business-workspace .business-project-card-row.is-danger { color: #8a3f2f; }
 .business-workspace .business-project-card-row.is-danger:hover { background: #f6e7e2; }
+
+/* Recent projects shares the AI block's heading scale: same family, size,
+   weight and tracking, so the two panels read as one page. */
+.business-workspace .business-dashboard-recent h2 {
+  color: #141413;
+  font-family: var(--font-reading, var(--font-serif));
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.business-workspace .business-dashboard-recent header p {
+  margin-top: 5px;
+  color: #5F6862;
+  font: 400 13px/1.55 var(--font-sans);
+}
