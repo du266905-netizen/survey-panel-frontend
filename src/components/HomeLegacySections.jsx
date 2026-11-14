@@ -237,7 +237,12 @@ export function HomeFooter() {
   }[language] || 'Cookie settings';
   const openCookieSettings = (event) => {
     event.preventDefault();
-    if (typeof window !== 'undefined' && typeof window.Cookiebot?.renew === 'function') {
+    if (typeof window === 'undefined') return;
+    if (typeof window.CookieConsent?.showPreferences === 'function') {
+      window.CookieConsent.showPreferences();
+      return;
+    }
+    if (typeof window.Cookiebot?.renew === 'function') {
       window.Cookiebot.renew();
     }
   };

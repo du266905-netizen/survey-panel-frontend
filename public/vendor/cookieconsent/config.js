@@ -11,10 +11,10 @@
 (function () {
   var zh = {
     consentModal: {
-      title: '本网站的 Cookie',
-      description: '我们使用 Cookie 让网站和服务正常工作。这些 Cookie 是必要的，会自动设置。<br><br>我们还希望使用一些可选的 Cookie，用来：<ul><li>让访问更贴近你的需要</li><li>根据你的使用方式改进网站</li><li>支持我们的市场沟通</li></ul>你可以接受或拒绝这些可选 Cookie，也可以在「Cookie 设置」里逐项选择。详情见下方链接。',
+      title: '我们使用 Cookie',
+      description: '必要的 Cookie 让网站正常工作；可选的分析和营销 Cookie 只有在你同意后才会启用。',
       acceptAllBtn: '全部接受',
-      acceptNecessaryBtn: '全部拒绝',
+      acceptNecessaryBtn: '仅必要',
       showPreferencesBtn: 'Cookie 设置',
       footer: '<a href="/legal/guanyisearch-cookie-notice-2026-09-zh.pdf" target="_blank" rel="noopener">Cookie 政策</a><a href="/privacy">隐私政策</a>'
     },
@@ -34,10 +34,10 @@
 
   var en = {
     consentModal: {
-      title: 'Cookies on this website',
-      description: 'We use cookies to help keep our website and services working properly. These cookies are necessary and are set automatically.<br><br>We would also like to use some optional cookies that:<ul><li>make your visit more personal</li><li>improve our website based on how you use it</li><li>support our marketing</li></ul>You can accept or reject these cookies, or choose which types to accept under Cookie settings. See the links below for detail.',
+      title: 'Cookies on this site',
+      description: 'Necessary cookies keep the site working. Optional analytics and marketing cookies stay off until you allow them.',
       acceptAllBtn: 'Accept all',
-      acceptNecessaryBtn: 'Reject all',
+      acceptNecessaryBtn: 'Necessary only',
       showPreferencesBtn: 'Cookie settings',
       footer: '<a href="/legal/guanyisearch-cookie-notice-2026-09-en.pdf" target="_blank" rel="noopener">Cookie policy</a><a href="/privacy">Privacy policy</a>'
     },
@@ -57,8 +57,8 @@
 
   window.CookieConsent.run({
     guiOptions: {
-      consentModal: { layout: 'bar', position: 'bottom', equalWeightButtons: true, flipButtons: false },
-      preferencesModal: { layout: 'box', position: 'right', equalWeightButtons: true, flipButtons: false }
+      consentModal: { layout: 'box', position: 'bottom left', equalWeightButtons: true, flipButtons: false },
+      preferencesModal: { layout: 'box', position: 'middle', equalWeightButtons: true, flipButtons: false }
     },
     categories: {
       necessary: { enabled: true, readOnly: true },
@@ -69,6 +69,16 @@
       default: 'en',
       autoDetect: 'document',
       translations: { en: en, zh: zh }
+    },
+    onModalReady: function (detail) {
+      /* Preferences read better as a list of visible categories, not three
+         collapsed rows that hide the explanation. */
+      if (!detail || detail.modalName !== 'preferencesModal') return;
+      document.querySelectorAll('#cc-main .pm__section--toggle').forEach(function (section) {
+        section.classList.add('is-expanded');
+        var title = section.querySelector('.pm__section-title');
+        if (title) title.setAttribute('aria-expanded', 'true');
+      });
     },
     onConsent: function () {
       /* Load analytics or marketing here, and only here, once such a service exists. */
