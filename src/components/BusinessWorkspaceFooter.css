@@ -61,23 +61,7 @@
   display: flex;
   flex: none;
   align-items: center;
-  gap: 12px;
-}
-
-.business-workspace-footer-contact {
-  height: 38px;
-  border: 0;
-  border-radius: 3px;
-  background: #DEEF24;
-  color: #141413;
-  cursor: pointer;
-  font: 500 13px/1 var(--font-sans);
-  padding: 0 18px;
-  transition: background .16s ease;
-}
-
-.business-workspace-footer-contact:hover {
-  background: #c9db10;
+  margin-left: auto;
 }
 
 .business-workspace-footer-top {
@@ -114,6 +98,6 @@
 
   .business-workspace-footer-actions {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 }

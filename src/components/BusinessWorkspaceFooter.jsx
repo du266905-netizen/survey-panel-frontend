@@ -33,9 +33,6 @@ export default function BusinessWorkspaceFooter() {
           </nav>
         </div>
         <div className="business-workspace-footer-actions">
-          <button type="button" className="business-workspace-footer-contact" onClick={() => navigate(withLanguage('/business/access', language))}>
-            {pick(language, '联系我们', 'Contact us', '聯絡我們')}
-          </button>
           <button
             type="button"
             className="business-workspace-footer-top"
