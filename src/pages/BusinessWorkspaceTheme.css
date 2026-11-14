@@ -6002,12 +6002,12 @@ main.business-custom-request-page .business-workspace-rail {
 /* Recent projects shares the AI block's heading scale: same family, size,
    weight and tracking, so the two panels read as one page. */
 .business-workspace .business-dashboard-recent h2 {
-  color: #141413;
-  font-family: var(--font-reading, var(--font-serif));
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.2;
+  color: #141413 !important;
+  font-family: var(--font-reading, var(--font-serif)) !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  letter-spacing: -.02em !important;
+  line-height: 1.2 !important;
 }
 
 .business-workspace .business-dashboard-recent header p {
