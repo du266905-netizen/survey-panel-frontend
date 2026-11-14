@@ -6,6 +6,10 @@
   padding-left: 0;
 }
 
+.business-settings-frame .business-account-page {
+  min-height: calc(100svh - 72px);
+}
+
 .business-settings-frame .business-account-shell h1,
 .business-settings-frame .business-billing-shell h1,
 .business-settings-frame .business-budget-shell h1,
@@ -15,3 +19,18 @@
 .business-settings-frame .business-billing-shell,
 .business-settings-frame .business-budget-shell,
 .business-settings-frame .business-help-shell { padding-top: clamp(26px, 3.2vw, 40px); }
+
+/* The account and billing pages were drawn on a 750–800 weight scale; the
+   workspace reads at 400–600 on the same sizes. Bring the settings content
+   onto that scale — sizes, spacing and colour stay as they were. */
+.business-settings-frame .business-account-details dd,
+.business-settings-frame .business-account-person small,
+.business-settings-frame .business-account-settings label,
+.business-settings-frame .business-account-signout { font-weight: 500; }
+
+.business-settings-frame .business-account-person strong,
+.business-settings-frame .business-account-settings h2 { font-weight: 600; }
+
+.business-settings-frame .business-billing-tabs button { font-weight: 500; }
+.business-settings-frame .business-billing-tabs button.is-active { font-weight: 600; }
+.business-settings-frame .business-billing-empty p { font-weight: 500; }

@@ -2039,14 +2039,39 @@ main.business-workspace {
   margin-top: 18px;
 }
 
+/* Two lines, not three: the status chip sits beside the title, and the meta
+   line carries responses, category and last update — the fields Qualtrics and
+   YouGov put on a project row. */
 .business-workspace .business-dashboard-recent > div > button {
-  grid-template-columns: minmax(0, 1fr) 30px;
-  gap: 6px 12px;
+  grid-template-columns: auto minmax(0, 1fr) 30px;
+  align-items: center;
+  gap: 3px 10px;
   border: 1px solid var(--rs-line);
   border-radius: 18px;
   background: var(--rs-card);
-  padding: 15px 17px;
+  padding: 13px 16px;
   transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.business-workspace .business-dashboard-recent > div > button .business-status {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.business-workspace .business-dashboard-recent > div > button strong {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.business-workspace .business-dashboard-recent > div > button small {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.business-workspace .business-dashboard-recent > div > button > svg {
+  grid-column: 3;
+  grid-row: 1 / span 2;
 }
 
 .business-workspace .business-dashboard-recent > div > button:hover {

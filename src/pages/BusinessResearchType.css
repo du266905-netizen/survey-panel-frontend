@@ -745,3 +745,47 @@
   font: 500 12px var(--font-sans);
   padding: 0 12px;
 }
+
+/* Search in the projects header: the list can be long, and both Qualtrics and
+   Glowfeed put a find-a-project field above the list rather than behind a tab. */
+.business-workspace .business-project-search {
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e5e3dd;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #8d948d;
+  padding: 0 12px;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+.business-workspace .business-project-search:focus-within {
+  border-color: #141413;
+  box-shadow: 0 0 0 3px rgba(20, 20, 19, .06);
+}
+
+.business-workspace .business-project-search input {
+  width: 180px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #141413;
+  font: 400 13px/1 var(--font-sans);
+  padding: 0;
+}
+
+.business-workspace .business-project-search input::placeholder {
+  color: #8d948d;
+}
+
+.business-workspace .business-project-search input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .business-workspace .business-project-search input {
+    width: 130px;
+  }
+}

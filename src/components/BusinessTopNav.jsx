@@ -1,21 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  BarChart3,
-  ChevronDown,
-  ClipboardList,
-  Compass,
-  FileText,
-  Home,
-  LifeBuoy,
-  LogOut,
-  Receipt,
-  Settings,
-  Sparkles,
-  Sprout,
-  UserRound,
-  Users,
-  Wallet,
-} from 'lucide-react';
+import { ChevronDown, Home, LifeBuoy, LogOut, Sparkles, UserRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { useBusinessAvatar } from '../utils/businessAvatar';
@@ -108,18 +92,18 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
       id: 'delivery',
       label: t('交付', 'Delivery'),
       items: [
-        { id: 'projects', label: t('项目', 'Projects'), icon: FileText, to: '/business/projects' },
-        { id: 'results', label: t('结果', 'Results'), icon: BarChart3, to: '/business/results' },
+        { id: 'projects', label: t('项目', 'Projects'), to: '/business/projects' },
+        { id: 'results', label: t('结果', 'Results'), to: '/business/results' },
       ],
     },
     {
       id: 'settings',
       label: t('设置', 'Settings'),
       items: [
-        { id: 'account', label: t('个人设置', 'Personal settings'), icon: UserRound, to: '/business/account' },
-        { id: 'team', label: t('团队设置', 'Team settings'), icon: Users, to: '/business/team' },
-        { id: 'billing', label: t('账单与发票', 'Invoices and billing'), icon: Receipt, to: '/business/billing' },
-        { id: 'budget', label: t('账户预算', 'Account budget'), icon: Wallet, to: '/business/budget' },
+        { id: 'account', label: t('个人设置', 'Personal settings'), to: '/business/account' },
+        { id: 'team', label: t('团队设置', 'Team settings'), to: '/business/team' },
+        { id: 'billing', label: t('账单与发票', 'Invoices and billing'), to: '/business/billing' },
+        { id: 'budget', label: t('账户预算', 'Account budget'), to: '/business/budget' },
       ],
     },
   ];
@@ -169,15 +153,11 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
                   <ChevronDown size={13} strokeWidth={1.8} aria-hidden="true" />
                 </button>
                 <div className="business-topnav-menu" role="menu" aria-hidden={!isOpen}>
-                  {group.items.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <button key={item.id} type="button" role="menuitem" tabIndex={isOpen ? 0 : -1} onClick={() => go(item.to)}>
-                        <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
-                        <span>{item.label}</span>
-                      </button>
-                    );
-                  })}
+                  {group.items.map((item) => (
+                    <button key={item.id} type="button" role="menuitem" tabIndex={isOpen ? 0 : -1} onClick={() => go(item.to)}>
+                      <span>{item.label}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
             );

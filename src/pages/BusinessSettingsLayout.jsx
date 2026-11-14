@@ -17,9 +17,12 @@ export default function BusinessSettingsLayout() {
   const { pathname } = useLocation();
 
   return (
-    <main className="business-workspace business-account-page business-settings-frame">
+    <main className="business-workspace business-settings-frame">
       <BusinessTopNav activeId={activeIdFor(pathname)} />
-      <div className="business-account-pane">
+      {/* The account-page class carries the content styles. It sits on the pane,
+          not on <main>, so its "first child header" rules cannot reach the top
+          navigation and restyle it. */}
+      <div className="business-account-page business-account-pane">
         <Outlet />
       </div>
     </main>

@@ -224,6 +224,7 @@ export default function BusinessWorkspace() {
   const [activeView, setActiveView] = useState(() => viewFromLocation(window.location.pathname, window.location.search));
   const [projectType, setProjectType] = useState('questionnaire');
   const [activeFilter, setActiveFilter] = useState('ALL');
+  const [projectQuery, setProjectQuery] = useState('');
   const [form, setForm] = useState(emptyProject);
   const [submitting, setSubmitting] = useState(false);
   const [payingProjectId, setPayingProjectId] = useState('');
@@ -282,9 +283,19 @@ export default function BusinessWorkspace() {
     { value: 'CUSTOM_RESEARCH', label: categoryLabels.CUSTOM_RESEARCH, count: projectPool.filter((project) => projectCategory(project) === 'CUSTOM_RESEARCH').length },
     { value: 'QUALITATIVE_SUPPORT', label: categoryLabels.QUALITATIVE_SUPPORT, count: projectPool.filter((project) => projectCategory(project) === 'QUALITATIVE_SUPPORT').length },
   ];
-  const visibleProjects = activeFilter === 'ALL'
+  const filteredByCategory = activeFilter === 'ALL'
     ? projectPool
     : projectPool.filter((project) => projectCategory(project) === activeFilter);
+  /* Search across the title and the category, the way the project lists in
+     Qualtrics and Glowfeed let you find a study without scanning tabs. */
+  const normalizedQuery = projectQuery.trim().toLowerCase();
+  const visibleProjects = normalizedQuery
+    ? filteredByCategory.filter((project) => [
+      project.title,
+      project.questionnaire?.title,
+      categoryLabels[projectCategory(project)],
+    ].some((value) => String(value || '').toLowerCase().includes(normalizedQuery)))
+    : filteredByCategory;
   const questionnaireProjects = allProjects.filter((project) => project.questionnaire);
   /* Results are written by us and released to the client by hand. Only a
      released report shows up here; an unreleased one is not a result yet. */
@@ -801,7 +812,7 @@ export default function BusinessWorkspace() {
           {message && <p className="business-workspace-message">{message}</p>}
           <div className="business-dashboard-grid">
             
-            <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
+            <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses} · {categoryLabels[projectCategory(project)]} · {pick(language, '更新于 ', 'Updated ', '更新於 ')}{new Date(project.updatedAt || project.createdAt || Date.now()).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
           </div>
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
           <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
@@ -858,6 +869,18 @@ export default function BusinessWorkspace() {
               <p>{projectsCopy.intro}</p>
             </div>
             <div className="business-project-head-actions">
+              {projectPool.length > 0 && (
+                <label className="business-project-search">
+                  <Search size={15} strokeWidth={1.8} aria-hidden="true" />
+                  <input
+                    type="search"
+                    value={projectQuery}
+                    onChange={(event) => setProjectQuery(event.target.value)}
+                    placeholder={pick(language, '搜索项目', 'Search projects', '搜尋專案')}
+                    aria-label={pick(language, '搜索项目', 'Search projects', '搜尋專案')}
+                  />
+                </label>
+              )}
               <button className="business-button" type="button" onClick={openNewProject}>{pick(language, '开展一项研究', 'Start a study', '開展一項研究')} <ArrowRight size={17} /></button>
             </div>
           </div>
@@ -912,7 +935,7 @@ export default function BusinessWorkspace() {
                             QUALITATIVE_SUPPORT: pick(language, '定性支持', 'Qualitative support', '質性支持'),
                           })[projectCategory(project)]}<span>·</span>
                         {studyFormatLabel(project.studyFormat)}<span>·</span>
-                        {project.createdAt ? new Date(project.createdAt).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
+                        {pick(language, '更新于 ', 'Updated ', '更新於 ')}{project.updatedAt || project.createdAt ? new Date(project.updatedAt || project.createdAt).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
                       </p>
                       <div className="business-project-card-progress">
                         <span>{collected} / {target || '—'}</span>
@@ -952,7 +975,9 @@ export default function BusinessWorkspace() {
                 })}
                 {!visibleProjects.length && (
                   <div className="business-project-filter-empty">
-                    <strong>{pick(language, '暂无项目', 'No projects yet', '暫無項目')}</strong>
+                    <strong>{normalizedQuery
+                      ? pick(language, '没有匹配的项目', 'No matching projects', '沒有符合的專案')
+                      : pick(language, '暂无项目', 'No projects yet', '暫無項目')}</strong>
                   </div>
                 )}
               </div>
