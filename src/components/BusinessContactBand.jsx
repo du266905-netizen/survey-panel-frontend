@@ -22,7 +22,7 @@ export default function BusinessContactBand() {
       'Tell us the decision and the audience. A researcher replies within 12 hours.',
       '把你的決定和目標人群告訴我們，研究員會在 12 小時內回覆。',
     ),
-    cta: pick(language, '与研究人谈', 'Talk to a researcher', '與研究人談'),
+    cta: pick(language, '联系我们', 'Contact us', '聯絡我們'),
     facts: [
       { icon: Globe2, text: pick(language, '大中华、亚太、中东、欧洲、北美 5 个区域', 'Five regions: Greater China, Asia-Pacific, the Middle East, Europe, North America', '大中華、亞太、中東、歐洲、北美 5 個區域') },
       { icon: MapPin, text: pick(language, '34 个国家与地区', '34 countries and territories', '34 個國家與地區') },

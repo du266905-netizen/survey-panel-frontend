@@ -1,8 +1,10 @@
-/* Legal footer of the research workspace: one dark row under everything,
-   aligned with the content column above it. */
+/* Legal footer of the research workspace: one light row under everything,
+   aligned with the content column above it. White, like the page — the band
+   above it already ends on a photograph. */
 .business-workspace-footer {
-  background: #141413;
-  color: rgba(255, 255, 255, .62);
+  border-top: 1px solid #E5E3DD;
+  background: #FFFFFF;
+  color: #5F6862;
 }
 
 .business-workspace-footer-inner {
@@ -25,6 +27,7 @@
 }
 
 .business-workspace-footer-copy {
+  color: #8D948D;
   font: 400 12px/1.4 var(--font-sans);
   white-space: nowrap;
 }
@@ -39,19 +42,19 @@
 .business-workspace-footer-links button {
   border: 0;
   background: transparent;
-  color: rgba(255, 255, 255, .78);
+  color: #3F4642;
   cursor: pointer;
   font: 400 12px/1.4 var(--font-sans);
   padding: 0;
   text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, .28);
+  text-decoration-color: #D9D6CC;
   text-underline-offset: 3px;
   transition: color .14s ease, text-decoration-color .14s ease;
 }
 
 .business-workspace-footer-links button:hover {
-  color: #ffffff;
-  text-decoration-color: #DEEF24;
+  color: #141413;
+  text-decoration-color: #141413;
 }
 
 .business-workspace-footer-actions {
@@ -82,18 +85,18 @@
   width: 38px;
   height: 38px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, .28);
+  border: 1px solid #E5E3DD;
   border-radius: 50%;
-  background: transparent;
-  color: rgba(255, 255, 255, .82);
+  background: #FFFFFF;
+  color: #141413;
   cursor: pointer;
   padding: 0;
-  transition: border-color .16s ease, color .16s ease;
+  transition: border-color .16s ease, background-color .16s ease;
 }
 
 .business-workspace-footer-top:hover {
-  border-color: #ffffff;
-  color: #ffffff;
+  border-color: #141413;
+  background: #FAF9F5;
 }
 
 @media (max-width: 760px) {

@@ -19,16 +19,6 @@ export default function BusinessWorkspaceFooter() {
     { label: pick(language, '可接受使用', 'Acceptable use', '可接受使用'), to: '/legal/acceptable-use' },
   ];
 
-  const openCookieSettings = (event) => {
-    event.preventDefault();
-    if (typeof window === 'undefined') return;
-    if (typeof window.CookieConsent?.showPreferences === 'function') {
-      window.CookieConsent.showPreferences();
-      return;
-    }
-    if (typeof window.Cookiebot?.renew === 'function') window.Cookiebot.renew();
-  };
-
   return (
     <footer className="business-workspace-footer">
       <div className="business-workspace-footer-inner">
@@ -40,7 +30,6 @@ export default function BusinessWorkspaceFooter() {
             {links.map((link) => (
               <button key={link.to} type="button" onClick={() => navigate(withLanguage(link.to, language))}>{link.label}</button>
             ))}
-            <button type="button" onClick={openCookieSettings}>{pick(language, 'Cookie 设置', 'Cookie settings', 'Cookie 設定')}</button>
           </nav>
         </div>
         <div className="business-workspace-footer-actions">
