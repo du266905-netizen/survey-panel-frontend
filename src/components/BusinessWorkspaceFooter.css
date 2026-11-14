@@ -39,7 +39,7 @@
   flex-wrap: wrap;
 }
 
-.business-workspace-footer-links button {
+.business-workspace-footer-links a {
   border: 0;
   background: transparent;
   color: #3F4642;
@@ -52,7 +52,7 @@
   transition: color .14s ease, text-decoration-color .14s ease;
 }
 
-.business-workspace-footer-links button:hover {
+.business-workspace-footer-links a:hover {
   color: #141413;
   text-decoration-color: #141413;
 }

@@ -1,6 +1,5 @@
 import { ArrowUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useLanguage, withLanguage } from './LanguageContext';
+import { useLanguage } from './LanguageContext';
 import { pick } from '../content/projectStatus';
 import './BusinessWorkspaceFooter.css';
 
@@ -10,13 +9,15 @@ import './BusinessWorkspaceFooter.css';
    entries are the existing PDF routes, not new pages. */
 export default function BusinessWorkspaceFooter() {
   const { language } = useLanguage();
-  const navigate = useNavigate();
+  const zh = /^zh/i.test(language || '');
 
+  /* Each entry is the PDF itself, opened in a new tab: the workspace keeps its
+     state, and there is no SPA history entry that comes back blank. */
   const links = [
-    { label: pick(language, '研究服务条款', 'Research terms', '研究服務條款'), to: '/business/terms' },
-    { label: pick(language, '隐私政策', 'Privacy policy', '隱私政策'), to: '/privacy' },
-    { label: pick(language, '使用条款', 'Terms of service', '使用條款'), to: '/terms' },
-    { label: pick(language, '可接受使用', 'Acceptable use', '可接受使用'), to: '/legal/acceptable-use' },
+    { label: pick(language, '研究服务条款', 'Research terms', '研究服務條款'), pdf: zh ? '/legal/guanyisearch-research-terms-2026-09-zh.pdf' : '/legal/guanyisearch-research-terms-2026-09-en.pdf' },
+    { label: pick(language, '隐私政策', 'Privacy policy', '隱私政策'), pdf: zh ? '/legal/guanyisearch-privacy-2026-09-zh.pdf' : '/legal/guanyisearch-privacy-2026-09-en.pdf' },
+    { label: pick(language, '使用条款', 'Terms of service', '使用條款'), pdf: zh ? '/legal/guanyisearch-terms-of-service-2026-09-zh.pdf' : '/legal/guanyisearch-terms-of-service-2026-09-en.pdf' },
+    { label: pick(language, '可接受使用', 'Acceptable use', '可接受使用'), pdf: zh ? '/legal/guanyisearch-acceptable-use-2026-09-zh.pdf' : '/legal/guanyisearch-acceptable-use-2026-09-en.pdf' },
   ];
 
   return (
@@ -28,7 +29,7 @@ export default function BusinessWorkspaceFooter() {
           </span>
           <nav className="business-workspace-footer-links" aria-label={pick(language, '法务', 'Legal', '法務')}>
             {links.map((link) => (
-              <button key={link.to} type="button" onClick={() => navigate(withLanguage(link.to, language))}>{link.label}</button>
+              <a key={link.pdf} href={link.pdf} target="_blank" rel="noopener noreferrer">{link.label}</a>
             ))}
           </nav>
         </div>
