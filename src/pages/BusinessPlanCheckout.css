@@ -9,12 +9,28 @@
   padding: clamp(16px, 3vw, 40px) clamp(16px, 3vw, 40px) 72px;
 }
 
+/* The two panels are the frame; a square border on the sheet around two
+   rounded panels read as a double edge, and the 12px grid gap left a white
+   slit between the form and the order column. They now meet on one hairline. */
 .business-topup-screen.is-page .business-topup-card {
   margin: 0 auto;
   max-height: none;
   overflow: visible;
-  border: 1px solid #E5E3DD;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   box-shadow: none;
+  gap: 0;
+}
+
+.business-topup-screen.is-page .business-topup-main {
+  border: 1px solid #E5E3DD;
+  border-right: 0;
+  border-radius: 14px 0 0 14px;
+}
+
+.business-topup-screen.is-page .business-topup-summary {
+  border: 1px solid #E5E3DD;
 }
 
 .business-topup-screen.is-page .business-topup-main {
