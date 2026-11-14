@@ -310,7 +310,18 @@
 
 .psn-strip {
   height: 36px;
+  overflow: hidden;
   background: #2b2b2b;
+  opacity: 1;
+  transition:
+    height .34s cubic-bezier(.22, 1, .36, 1),
+    opacity .22s ease;
+}
+
+/* 下层只服务首屏轮换，滚动时整层收起，不参与主栏的收缩。 */
+.psn.is-condensed .psn-strip {
+  height: 0;
+  opacity: 0;
 }
 .psn-strip-inner {
   display: flex;
@@ -457,6 +468,10 @@
   .psn.is-condensed {
     width: calc(100% - 24px);
     box-shadow: 0 12px 30px rgba(17, 17, 19, .14);
+  }
+
+  .psn.is-condensed .psn-mobile {
+    top: 64px;
   }
 }
 
