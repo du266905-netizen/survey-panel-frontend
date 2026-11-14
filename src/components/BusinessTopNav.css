@@ -644,3 +644,189 @@
   flex-direction: column;
   gap: 0;
 }
+
+/* AI prompt — the old "Start with AI" row and the retired top search box
+   become one composer. The submit path is the same /business/ai-brief flow. */
+.business-ai-prompt {
+  margin: 0 0 20px;
+  padding: 22px 24px 20px;
+  border: 1px solid #E5E3DD;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 10px 28px rgba(20, 20, 19, .04);
+}
+
+.business-ai-prompt-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.business-ai-prompt-head > svg {
+  flex: none;
+  margin-top: 2px;
+  color: #141413;
+}
+
+.business-ai-prompt-head h2 {
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading, var(--font-serif));
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.business-ai-prompt-head p {
+  margin: 5px 0 0;
+  color: #5F6862;
+  font: 400 13px/1.55 var(--font-sans);
+}
+
+.business-ai-prompt-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 56px;
+  margin-top: 17px;
+  padding: 5px 6px 5px 16px;
+  border: 1px solid #D8D5CD;
+  border-radius: 9px;
+  background: #FFFFFF;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+.business-ai-prompt-form:focus-within {
+  border-color: #141413;
+  box-shadow: 0 0 0 3px rgba(20, 20, 19, .06);
+}
+
+.business-ai-prompt-form input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #141413;
+  font: 400 14px/1.4 var(--font-sans);
+}
+
+.business-ai-prompt-form input::placeholder {
+  color: #9A9F99;
+}
+
+.business-ai-prompt-form > button {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #141413;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background .14s ease, color .14s ease;
+}
+
+.business-ai-prompt-form > button:hover:not(:disabled) {
+  background: #2B2B2B;
+}
+
+.business-ai-prompt-form > button:disabled {
+  background: #F1F0EB;
+  color: #B4B1A8;
+  cursor: default;
+}
+
+.business-ai-prompt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.business-ai-prompt-chips button {
+  border: 1px solid #E5E3DD;
+  border-radius: 6px;
+  background: #FAF9F5;
+  color: #5F6862;
+  cursor: pointer;
+  font: 400 12px/1.4 var(--font-sans);
+  padding: 8px 10px;
+  text-align: left;
+  transition: border-color .14s ease, background-color .14s ease, color .14s ease;
+}
+
+.business-ai-prompt-chips button:hover {
+  border-color: #CFCBC1;
+  background: #FFFFFF;
+  color: #141413;
+}
+
+@media (max-width: 700px) {
+  .business-ai-prompt {
+    padding: 18px;
+  }
+
+  .business-ai-prompt-head h2 {
+    font-size: 16px;
+  }
+
+  .business-ai-prompt-form {
+    height: 52px;
+    padding-left: 12px;
+  }
+
+  .business-ai-prompt-form > button {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+.business-ai-prompt-examples {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+  margin-top: 12px;
+}
+
+.business-ai-prompt-examples .atlas-map-typewriter {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 5px;
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  transform: none;
+  color: #8D948D;
+  font: 400 12px/1.5 var(--font-sans);
+  text-align: left;
+}
+
+.business-ai-prompt-examples .atlas-map-typewriter span {
+  color: #9A9F99;
+  white-space: nowrap;
+}
+
+.business-ai-prompt-examples .atlas-map-typewriter strong {
+  color: #5F6862;
+  font-weight: 500;
+  white-space: normal;
+}
+
+.business-ai-prompt-examples .atlas-map-typewriter i {
+  width: 1px;
+  height: 1em;
+  margin-left: 2px;
+  background: #5F6862;
+  animation: business-ai-caret .9s steps(1, end) infinite;
+}
+
+@keyframes business-ai-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
