@@ -41,6 +41,7 @@ import '../components/BusinessRail.css';
 import BusinessTopNav from '../components/BusinessTopNav';
 import BusinessAiPrompt from '../components/BusinessAiPrompt';
 import BusinessContactBand from '../components/BusinessContactBand';
+import BusinessWorkspaceFooter from '../components/BusinessWorkspaceFooter';
 import AtlasTypewriter from '../components/AtlasTypewriter';
 import BusinessTour from '../components/BusinessTour';
 import './BusinessWorkspaceTheme.css';
@@ -993,6 +994,7 @@ export default function BusinessWorkspace() {
         </section>}
       </div>
 
+      {activeView === 'home' && <BusinessWorkspaceFooter />}
 
       {customSubmitted && (
         <div className="business-custom-submission" role="dialog" aria-modal="true" aria-labelledby="business-custom-submission-title">

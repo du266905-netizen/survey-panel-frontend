@@ -1,0 +1,116 @@
+/* Legal footer of the research workspace: one dark row under everything,
+   aligned with the content column above it. */
+.business-workspace-footer {
+  background: #141413;
+  color: rgba(255, 255, 255, .62);
+}
+
+.business-workspace-footer-inner {
+  display: flex;
+  width: min(1440px, calc(100% - 48px));
+  min-height: 88px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 auto;
+  padding: 18px 0;
+}
+
+.business-workspace-footer-legal {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(18px, 3vw, 40px);
+  flex-wrap: wrap;
+}
+
+.business-workspace-footer-copy {
+  font: 400 12px/1.4 var(--font-sans);
+  white-space: nowrap;
+}
+
+.business-workspace-footer-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 26px);
+  flex-wrap: wrap;
+}
+
+.business-workspace-footer-links button {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, .78);
+  cursor: pointer;
+  font: 400 12px/1.4 var(--font-sans);
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, .28);
+  text-underline-offset: 3px;
+  transition: color .14s ease, text-decoration-color .14s ease;
+}
+
+.business-workspace-footer-links button:hover {
+  color: #ffffff;
+  text-decoration-color: #DEEF24;
+}
+
+.business-workspace-footer-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+}
+
+.business-workspace-footer-contact {
+  height: 38px;
+  border: 0;
+  border-radius: 3px;
+  background: #DEEF24;
+  color: #141413;
+  cursor: pointer;
+  font: 500 13px/1 var(--font-sans);
+  padding: 0 18px;
+  transition: background .16s ease;
+}
+
+.business-workspace-footer-contact:hover {
+  background: #c9db10;
+}
+
+.business-workspace-footer-top {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, .82);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color .16s ease, color .16s ease;
+}
+
+.business-workspace-footer-top:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+@media (max-width: 760px) {
+  .business-workspace-footer-inner {
+    width: calc(100% - 32px);
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 0 24px;
+  }
+
+  .business-workspace-footer-legal {
+    gap: 12px;
+  }
+
+  .business-workspace-footer-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
