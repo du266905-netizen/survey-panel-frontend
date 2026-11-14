@@ -190,8 +190,6 @@ export default function BusinessAiBriefTurn() {
   const [generateError, setGenerateError] = useState('');
   const [docResult, setDocResult] = useState(null);
   const [docInputs, setDocInputs] = useState({ decision: '', audience: '' });
-  const [manualOpen, setManualOpen] = useState(false);
-  const [manual, setManual] = useState({ decision: '', audience: '', market: '', sample: '' });
   const [assistantOpen, setAssistantOpen] = useState(true);
 
   const busyRef = useRef(false);
@@ -267,7 +265,12 @@ export default function BusinessAiBriefTurn() {
       try {
         const created = await createConversation();
         activeConversationId = created?.id || null;
-        if (activeConversationId) setConversationId(activeConversationId);
+        if (activeConversationId) {
+          setConversationId(activeConversationId);
+          /* The list is server state; a new conversation has to show up in the
+             left column straight away, not after the 30s stale window. */
+          void conversationList.refetch();
+        }
       } catch { /* 建不出来就退回纯内存对话，至少别白屏 */ }
     }
 
@@ -429,27 +432,6 @@ export default function BusinessAiBriefTurn() {
     }
   };
 
-  const handleRestart = () => {
-    if (!hasStarted && isEmptyDraft(draft)) {
-      resetLocal();
-      return;
-    }
-    sendMessage(mockCommand('restart', copy.restartCommand));
-  };
-
-  const handleManualSubmit = (event) => {
-    event.preventDefault();
-    const parts = [
-      manual.decision ? `${copy.manualDecision}: ${manual.decision}` : '',
-      manual.audience ? `${copy.manualAudience}: ${manual.audience}` : '',
-      manual.market ? `${copy.manualMarket}: ${manual.market}` : '',
-      manual.sample ? `${copy.manualSample}: ${manual.sample}` : '',
-    ].filter(Boolean);
-    if (!parts.length) return;
-    setManualOpen(false);
-    sendMessage(parts.join('; '));
-  };
-
   const openConversation = async (entry) => {
     setConversationId(entry.id);
     setDraft(emptyDraft());
@@ -568,26 +550,6 @@ export default function BusinessAiBriefTurn() {
               onDocumentError={handleDocumentError}
               composerRef={composerRef}
               autoOpenDocument={new URLSearchParams(location.search).get('attach') === 'document'}
-              footer={<>
-              <div className="business-ai-turn-secondary">
-                <button type="button" onClick={handleRestart}>{copy.restart}</button>
-                {AI_BRIEF_MODE !== 'mock' && (
-                  <button type="button" onClick={() => setManualOpen((value) => !value)}>{copy.manual}</button>
-                )}
-              </div>
-              {manualOpen && AI_BRIEF_MODE !== 'mock' && (
-                <form className="business-ai-turn-manual" onSubmit={handleManualSubmit}>
-                  <p>{copy.manualHint}</p>
-                  <label>{copy.manualDecision}<input value={manual.decision} onChange={(event) => setManual({ ...manual, decision: event.target.value })} /></label>
-                  <label>{copy.manualAudience}<input value={manual.audience} onChange={(event) => setManual({ ...manual, audience: event.target.value })} /></label>
-                  <div>
-                    <label>{copy.manualMarket}<input value={manual.market} onChange={(event) => setManual({ ...manual, market: event.target.value })} /></label>
-                    <label>{copy.manualSample}<input value={manual.sample} onChange={(event) => setManual({ ...manual, sample: event.target.value })} /></label>
-                  </div>
-                  <button type="submit" className="business-button" disabled={!manual.decision.trim() || !manual.audience.trim()}>{copy.manualSubmit} <ArrowRight size={16} /></button>
-                </form>
-              )}
-              </>}
             >
               {AI_BRIEF_MODE === 'mock' && (!hasStarted || error === copy.mockUnsupported) && (
                 <section className="business-ai-turn-mock" aria-label={copy.mock}>
