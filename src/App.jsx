@@ -94,7 +94,6 @@ import BusinessBankTransfer from './pages/BusinessBankTransfer';
 import BusinessAddFunds from './pages/BusinessAddFunds';
 import PublicPaymentLink from './pages/PublicPaymentLink';
 import HelpCenter from './pages/HelpCenter';
-import BusinessHelp from './pages/BusinessHelp';
 import BusinessBudget from './pages/BusinessBudget';
 import BusinessQuestionnaireStudio from './pages/BusinessQuestionnaireStudio';
 import BusinessAudience from './pages/BusinessAudience';
@@ -250,7 +249,6 @@ export default function App() {
           <Route path="/business/billing" element={<BusinessBilling />} />
           <Route path="/business/billing/invoices/:id" element={<BusinessInvoiceDetail />} />
           <Route path="/business/budget" element={<BusinessBudget />} />
-          <Route path="/business/help" element={<BusinessHelp />} />
         </Route>
         <Route path="/business/plans" element={<BusinessRoute><BusinessPlans /></BusinessRoute>} />
         <Route path="/business/plans/checkout" element={<BusinessRoute><BusinessPlanCheckout /></BusinessRoute>} />
@@ -261,6 +259,9 @@ export default function App() {
         {/* Public: the payer may not have an account here at all. */}
         <Route path="/pay/:token" element={<PublicPaymentLink />} />
         <Route path="/help" element={<HelpCenter />} />
+        {/* The old workspace help landing was a transition page in front of the
+            centre; the entry now goes straight to the articles. */}
+        <Route path="/business/help" element={<Navigate to="/help" replace />} />
         <Route path="/help/:slug" element={<HelpCenter />} />
         <Route path="/business/projects/:projectId" element={<BusinessRoute><BusinessQuestionnaireStudio /></BusinessRoute>} />
         <Route path="/business/projects/:projectId/audience" element={<BusinessRoute><BusinessAudience /></BusinessRoute>} />

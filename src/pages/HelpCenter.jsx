@@ -18,8 +18,8 @@ import './HelpCenter.css';
  *   column   summary, then the prose (no "in this article" rail)
  *
  * There is no table-of-contents page: /help opens the first article, and the
- * rail plus the search are the way around. The workspace entry lives at
- * /business/help.
+ * rail plus the search are the way around. The old workspace landing at
+ * /business/help is a redirect here, so the entry goes straight in.
  */
 
 const t = (entry, lang) => entry[lang] || entry.en;
