@@ -10,9 +10,11 @@
 .business-contact-band {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  /* The fact column is capped so the long English region line wraps there
+     instead of squeezing the heading onto two lines. */
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
   align-items: center;
-  gap: clamp(24px, 4vw, 64px);
+  gap: clamp(24px, 3vw, 40px);
   overflow: hidden;
   border-radius: 3px;
   background-color: #14161a;
