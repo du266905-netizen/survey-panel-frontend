@@ -2143,6 +2143,22 @@ export function LanguageProvider({ children }) {
     }
   }, [language]);
 
+  /* The consent script mounts before React and reads <html lang> too early;
+     keep its copy on the same language as the page. */
+  useEffect(() => {
+    const next = /^zh/i.test(language) ? 'zh' : 'en';
+    const sync = () => {
+      try {
+        window.CookieConsent?.setLanguage?.(next);
+      } catch {
+        /* the consent script may not have started yet; the retry below covers it */
+      }
+    };
+    sync();
+    const retry = window.setTimeout(sync, 500);
+    return () => window.clearTimeout(retry);
+  }, [language]);
+
   const value = useMemo(() => ({
     language,
     setLanguage,
