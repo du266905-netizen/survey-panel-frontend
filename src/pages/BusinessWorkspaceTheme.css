@@ -2567,29 +2567,29 @@ main.business-ai-brief-page {
 
 /* --- panels: no boxes, one rule across, one rule between ------------------ */
 
+/* The recent list is one panel on this page, not the right half of a
+   two-column split: the old left rule and its 44px gutter framed one side
+   only. It is a closed card now, like the AI block above it. */
 .business-workspace .business-dashboard-grid {
   align-items: stretch;
   gap: 0;
-  border-top: 1px solid var(--rs-hair);
+  border-top: 0;
 }
 
-.business-workspace .business-dashboard-statistics,
-.business-workspace .business-dashboard-recent {
+.business-workspace .business-dashboard-statistics {
   border: 0;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  padding: 26px 0 0;
-}
-
-.business-workspace .business-dashboard-statistics {
-  border-right: 0;
-  padding-right: 44px;
+  padding: 0;
 }
 
 .business-workspace .business-dashboard-recent {
-  border-left: 1px solid var(--rs-hair);
-  padding-left: 44px;
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-r-xl);
+  background: var(--rs-card);
+  box-shadow: none;
+  padding: 24px 26px;
 }
 
 .business-workspace .business-dashboard-grid header {

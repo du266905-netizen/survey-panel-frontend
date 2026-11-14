@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Home, LifeBuoy, LogOut, Sparkles, UserRound } from 'lucide-react';
+import { ChevronDown, LogOut, Sparkles, UserRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { useBusinessAvatar } from '../utils/businessAvatar';
@@ -120,7 +120,6 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
 
         <nav className="business-topnav-links" aria-label={t('工作区导航', 'Workspace navigation')}>
           <button type="button" className={`business-topnav-link${activeId === 'home' ? ' is-active' : ''}`} onClick={() => go('/business/workspace')}>
-            <Home size={16} strokeWidth={1.8} aria-hidden="true" />
             <span>Home</span>
           </button>
 
@@ -164,7 +163,6 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
           })}
 
           <button type="button" className={`business-topnav-link${activeId === 'help' ? ' is-active' : ''}`} onClick={() => go('/help')}>
-            <LifeBuoy size={16} strokeWidth={1.8} aria-hidden="true" />
             <span>{t('帮助', 'Help')}</span>
           </button>
         </nav>
