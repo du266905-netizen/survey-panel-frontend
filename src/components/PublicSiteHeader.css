@@ -18,8 +18,9 @@
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   transition:
-    width .34s cubic-bezier(.22, 1, .36, 1),
-    box-shadow .34s ease;
+    width .46s cubic-bezier(.22, 1, .36, 1),
+    margin .46s cubic-bezier(.22, 1, .36, 1),
+    box-shadow .46s cubic-bezier(.22, 1, .36, 1);
 }
 
 /* 下滑后整条白色导航收成长方形；底色与顶部相同，不透明。 */
@@ -313,8 +314,8 @@
   background: #2b2b2b;
   opacity: 1;
   transition:
-    height .28s cubic-bezier(.22, 1, .36, 1),
-    opacity .18s ease;
+    height .34s cubic-bezier(.22, 1, .36, 1),
+    opacity .22s ease;
 }
 
 /* 下层只服务首屏轮换，滚动时整层收起，不参与主栏的收缩。 */
