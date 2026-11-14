@@ -1,157 +1,76 @@
-/* 2026-11-15：联系我们页改成「一屏照片 + 一张居中的表单卡」。
-   左边的编辑栏整段去掉，标题只用一句话，表单是页面唯一的内容。 */
-.contact-page {
-  position: relative;
-  display: flex;
-  min-height: calc(100svh - 90px);
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: clamp(40px, 6vh, 84px) 24px;
-  background: #121815;
-  isolation: isolate;
+/* 2026-10-26：表单是白色，页面底色用淡鼠尾草骨白，把白表单托起来。 */
+.contact-page { background: #f2f3ec; color: #141413; }
+.contact-hero {
+  width: calc(100% - 80px);
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 64px 0 8px;
 }
-
-/* The photograph sits behind a blur; inset and scaled so the blur cannot
-   show a soft edge at the viewport border. */
-.contact-page::before {
-  position: absolute;
-  z-index: -2;
-  inset: -32px;
-  background: url('../assets/contact/contact-planning.jpg') center / cover no-repeat;
-  content: '';
-  filter: blur(14px) saturate(.85) brightness(.78);
-  transform: scale(1.05);
-}
-
-.contact-page::after {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: radial-gradient(120% 90% at 50% 0%, rgba(14, 20, 17, .22), rgba(14, 20, 17, .6));
-  content: '';
-}
-
-.contact-shell {
-  width: min(100%, 780px);
-}
-
-.contact-card {
-  border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 34px 90px rgba(8, 12, 10, .34);
-  padding: clamp(24px, 3vw, 40px);
-}
-
-.contact-card h1 {
-  margin: 0 0 24px;
+.contact-hero h1 {
+  max-width: 860px;
+  margin: 0;
   color: #141413;
+  font-family: var(--font-impact);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.06;
+}
+.contact-hero p {
+  max-width: 680px;
+  margin: 24px 0 0;
+  color: #565a60;
   font-family: var(--font-reading);
-  font-size: clamp(21px, 2.1vw, 28px);
-  font-weight: 500;
-  letter-spacing: -.02em;
-  line-height: 1.34;
+  font-size: 22px;
+  line-height: 1.6;
 }
 
-/* The form component was built for the homepage band; inside the card it is
-   just the fields — no photo, no panel, no outer padding. */
+/* The form component was built for the homepage band; on a page it becomes
+   one white panel under the heading. The section id carries the homepage's
+   photo background, so these have to outrank it. */
 .contact-page #atlas-contact {
   display: block !important;
   min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
+  padding: 24px 0 80px !important;
+  /* 页面底色是淡鼠尾草骨白，这一外层不能再用白色盖住；白的是那张表单面板。 */
   background: transparent !important;
   background-image: none !important;
-  overflow: visible !important;
 }
-
-.contact-page #atlas-contact::after {
-  display: none !important;
-}
-
+.contact-page #atlas-contact::after { display: none !important; }
 .contact-page #atlas-contact .atlas-contact-panel {
-  width: 100% !important;
+  width: min(100% - 80px, 760px) !important;
   max-width: none !important;
-  margin: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  padding: 0 !important;
-  box-shadow: none !important;
+  margin: 0 auto !important;
+  border: 1px solid var(--pub-hair, rgba(17, 17, 19, .12)) !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  padding: 24px !important;
 }
-
 .contact-page #atlas-contact .atlas-contact-form {
+  background: #fff !important;
   border: 0 !important;
-  background: transparent !important;
   padding: 0 !important;
 }
 
-.contact-page .atlas-contact-form {
-  row-gap: 16px;
-  column-gap: 16px;
+@media (max-width: 900px) {
+  .contact-hero { width: calc(100% - 40px); padding-top: 40px; }
+  .contact-hero h1 { font-size: 38px; }
+  .contact-hero p { font-size: 16px; }
+  .contact-page #atlas-contact .atlas-contact-panel { width: calc(100% - 40px) !important; padding: 16px !important; }
 }
 
-.contact-page .atlas-contact-form label > span {
-  font-size: 12px;
-  font-weight: 500;
-  color: #141413;
-}
-
-/* The homepage band draws borderless fields; on a white card they need the
-   outline back. */
+/* The homepage form is drawn for its dark band, where the fields lose their
+   border; on a white page they need the outline back. */
 .contact-page #atlas-contact .atlas-contact-form input,
 .contact-page #atlas-contact .atlas-contact-form select,
 .contact-page #atlas-contact .atlas-contact-form textarea {
-  height: 46px;
   border: 1px solid rgba(17, 17, 19, .18) !important;
-  border-radius: 8px !important;
+  border-radius: 6px !important;
   background: #fff !important;
   color: #141413 !important;
-  font-size: 14px;
-  padding: 0 13px;
 }
-
-.contact-page #atlas-contact .atlas-contact-form textarea {
-  height: auto;
-  min-height: 132px;
-  padding: 12px 13px;
-  line-height: 1.55;
-}
-
 .contact-page #atlas-contact .atlas-contact-form input:focus,
 .contact-page #atlas-contact .atlas-contact-form select:focus,
 .contact-page #atlas-contact .atlas-contact-form textarea:focus {
   border-color: #141413 !important;
-  outline: 0;
-}
-
-.contact-page #atlas-contact .atlas-contact-submit,
-.contact-page #atlas-contact .atlas-contact-status {
-  grid-column: 1 / -1;
-}
-
-.contact-page #atlas-contact .atlas-contact-submit {
-  width: 100% !important;
-  height: 50px;
-  justify-content: center;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-@media (max-width: 760px) {
-  .contact-page {
-    min-height: calc(100svh - 72px);
-    padding: 28px 16px 40px;
-  }
-
-  .contact-card {
-    border-radius: 14px;
-    padding: 20px;
-  }
-
-  .contact-card h1 {
-    margin-bottom: 18px;
-  }
 }

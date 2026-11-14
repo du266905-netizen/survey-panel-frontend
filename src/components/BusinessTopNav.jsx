@@ -45,11 +45,20 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
 
   const t = (cn, en) => pick(language, cn, en, cn);
 
+  /* Two thresholds, not one: at a single cut-off the bar flickered between its
+     full and condensed widths when the scroll sat on the boundary (each switch
+     changes the page geometry under the pointer). It now condenses at 48px and
+     only expands again below 12px. */
+  const condensedRef = useRef(false);
   useEffect(() => {
     let frame = 0;
     const update = () => {
       frame = 0;
-      setCondensed(window.scrollY > 24);
+      const y = window.scrollY;
+      const next = condensedRef.current ? y > 12 : y > 48;
+      if (next === condensedRef.current) return;
+      condensedRef.current = next;
+      setCondensed(next);
     };
     const onScroll = () => {
       if (!frame) frame = window.requestAnimationFrame(update);

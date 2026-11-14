@@ -9,6 +9,7 @@ import { countryFlag, countryLabel, countryOptions, phoneCountryOptions } from '
 import researcherRegistrationTeam from '../assets/business/researcher-registration-team.jpg';
 import { HomeFooter } from '../components/HomeLegacySections';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
+import { pick } from '../content/projectStatus';
 import './Business.css';
 
 const initialForm = { content: '', email: '', name: '', organizationType: '', phoneCountry: 'US', phone: '', region: 'US' };
@@ -18,6 +19,13 @@ export default function BusinessAccess() {
   const location = useLocation();
   const { language, publicCopy } = useLanguage();
   const copy = publicCopy.workspace.business.access;
+  /* 2026-11-15：研究端联系页只剩这一句标题，左侧的栏目与说明撤销。 */
+  const contactTitle = pick(
+    language,
+    '分享你的问题或想法。我们会通过你的联系方式跟进。',
+    'Share your question or idea. We will follow up using the contact details you provide.',
+    '分享你的問題或想法。我們會透過你提供的聯絡方式跟進。',
+  );
   // Copy that used to be hardcoded English in this file now comes from the
   // language library, keyed by language.
   const workspaceStaticMap = publicCopy?.workspace?.business?.workspaceStatic || {};
@@ -81,12 +89,8 @@ export default function BusinessAccess() {
     <main className="business-access-page business-contact-page">
       <PublicSiteHeader />
       <section className="business-contact-shell">
-        <div className="business-contact-columns">
-          <div className="business-contact-intro">
-            <p className="business-eyebrow">{ws.access.contactEyebrow}</p>
-            <h1>{ws.access.contactTitle}</h1>
-            <p className="business-contact-lede">{ws.access.contactIntro}</p>
-          </div>
+        <div className="business-contact-card">
+          <h1 className="business-contact-title">{contactTitle}</h1>
           <form className="business-contact-form" onSubmit={submit}>
           <label>{ws.access.questionLabel}<textarea name="content" value={form.content} onChange={update} placeholder={ws.access.questionPlaceholder} minLength="20" maxLength="1800" required /></label>
           <div className="business-contact-grid"><label>{ws.access.contactEmail}<input name="email" type="email" autoComplete="email" value={form.email} onChange={update} placeholder={ws.access.emailPlaceholder} required /></label><label>{ws.access.nameLabel}<input name="name" autoComplete="name" value={form.name} onChange={update} placeholder={ws.access.namePlaceholder} required /></label><label>{ws.access.organisationType}<select name="organizationType" value={form.organizationType} onChange={update} required><option value="">{ws.access.selectOne}</option><option value="Business">{ws.access.orgBusiness}</option><option value="Research or education">{ws.access.orgResearch}</option><option value="Nonprofit or public organisation">{ws.access.orgNonprofit}</option><option value="Independent researcher">{ws.access.orgIndependent}</option></select></label><label>{ws.access.regionLabel}<select name="region" autoComplete="country" value={form.region} onChange={update} required>{countryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label}</option>)}</select></label><label className="business-contact-phone-field"><span className="business-contact-phone-label">{ws.access.phoneLabel} <em>{ws.access.optional}</em></span><span className="business-phone-input"><select name="phoneCountry" value={form.phoneCountry} onChange={update} aria-label={ws.access.phoneCountryAria}>{phoneCountryOptions.map((country) => <option key={country.value} value={country.value}>{countryFlag(country.value)} {country.label} ({country.dialCode})</option>)}</select><input name="phone" type="tel" inputMode="tel" autoComplete="tel-national" value={form.phone} onChange={update} placeholder={ws.access.phonePlaceholder} maxLength="32" /></span></label></div>
