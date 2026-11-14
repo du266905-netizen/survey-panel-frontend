@@ -40,6 +40,7 @@ import './Business.css';
 import '../components/BusinessRail.css';
 import BusinessTopNav from '../components/BusinessTopNav';
 import BusinessAiPrompt from '../components/BusinessAiPrompt';
+import BusinessContactBand from '../components/BusinessContactBand';
 import AtlasTypewriter from '../components/AtlasTypewriter';
 import BusinessTour from '../components/BusinessTour';
 import './BusinessWorkspaceTheme.css';
@@ -814,6 +815,7 @@ export default function BusinessWorkspace() {
             
             <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses} · {categoryLabels[projectCategory(project)]} · {pick(language, '更新于 ', 'Updated ', '更新於 ')}{new Date(project.updatedAt || project.createdAt || Date.now()).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
           </div>
+          <BusinessContactBand />
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
           <div className="business-projects-head"><div><p className="business-eyebrow">{ui.questionnaireEyebrow}</p><h1>{workspaceText[11]}</h1><p>{ui.questionnaireIntro}</p></div><button className="business-button" type="button" onClick={() => navigate(withLanguage('/business/audience-plan', language))}><Plus size={16} /> {ui.planAudience}</button></div>
           {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : draftsError ? <div className="business-questionnaire-load-error" role="alert"><strong>{language.startsWith('zh') ? '草稿加载失败' : 'Could not load drafts'}</strong><p>{language.startsWith('zh') ? '这不代表草稿被删除。请重试。' : 'Your drafts are not deleted. Try again.'}</p><button type="button" onClick={() => setDraftsReload((value) => value + 1)}>{language.startsWith('zh') ? '重试' : 'Retry'}</button></div> : questionnaireDrafts.length ? <div className="business-questionnaire-hub-list">{questionnaireDrafts.map((project) => {
