@@ -91,6 +91,32 @@
   border-radius: 9px;
   background: #FFFFFF;
   box-shadow: 0 18px 44px rgba(20, 20, 19, .12);
+  /* Kept in the DOM so the panel can fade instead of pop: hidden panels are
+     visibility:hidden, which also keeps their buttons out of the tab order. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity .16s ease, transform .16s ease, visibility 0s linear .16s;
+}
+
+/* A transparent bridge over the 8px gap: without it the pointer leaves the
+   group on its way down and the menu closes under the cursor. */
+.business-topnav-menu::before {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  left: 0;
+  height: 10px;
+  content: '';
+}
+
+.business-topnav-group.is-open > .business-topnav-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity .16s ease, transform .16s ease, visibility 0s;
 }
 
 .business-topnav-menu button {
@@ -425,6 +451,7 @@
 
 .business-topnav-group {
   display: flex;
+  align-self: stretch;
 }
 
 .business-topnav-link {

@@ -233,6 +233,9 @@ export default function App() {
         <Route path="/business/login" element={<BusinessAccess />} />
         <Route path="/business/register" element={<BusinessAccess />} />
         <Route path="/business/workspace" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
+        {/* Delivery: real routes, one merged project list, and delivered reports. */}
+        <Route path="/business/projects" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
+        <Route path="/business/results" element={<BusinessRoute><BusinessWorkspace /></BusinessRoute>} />
         <Route path="/business/research" element={<BusinessRoute><BusinessResearch /></BusinessRoute>} />
         <Route path="/business/ai-brief" element={<BusinessRoute><BusinessAiBrief /></BusinessRoute>} />
         <Route path="/business/audience-plan" element={<BusinessRoute><BusinessAudiencePlan /></BusinessRoute>} />

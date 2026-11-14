@@ -95,6 +95,17 @@ const legacyVisibleInProjects = (project) => {
   return String(project.status || '').toUpperCase() !== 'CANCELLED';
 };
 
+/* /business/projects and /business/results are real routes (the Delivery menu
+   points at them). ?view= stays as the older address for the same views, plus
+   the questionnaire hub that the 24-hour survey entry still uses. */
+const viewFromLocation = (pathname, search) => {
+  const path = String(pathname || '').replace(/\/+$/, '');
+  if (path.endsWith('/business/projects')) return 'projects';
+  if (path.endsWith('/business/results')) return 'results';
+  const requested = new URLSearchParams(search || '').get('view');
+  return ['home', 'questionnaires', 'projects', 'results'].includes(requested) ? requested : 'home';
+};
+
 const projectTypes = {
   questionnaire: {
     eyebrow: 'QUESTIONNAIRE DESIGN',
@@ -210,7 +221,7 @@ export default function BusinessWorkspace() {
   const [openChooser, setOpenChooser] = useState(false);
   const [customSubmitted, setCustomSubmitted] = useState(() => Boolean(location.state?.customSubmitted));
   const [openForm, setOpenForm] = useState(false);
-  const [activeView, setActiveView] = useState('home');
+  const [activeView, setActiveView] = useState(() => viewFromLocation(window.location.pathname, window.location.search));
   const [projectType, setProjectType] = useState('questionnaire');
   const [activeFilter, setActiveFilter] = useState('ALL');
   const [form, setForm] = useState(emptyProject);
@@ -257,7 +268,14 @@ export default function BusinessWorkspace() {
   const workspaceStatusLabel = (status) => statusLabel(status, language);
   const isQuestionnaire = projectType === 'questionnaire';
   const categoryLabels = projectCategoryCopy[language] || projectCategoryCopy['en-US'];
-  const projectPool = workspace.projects.filter((project) => project.visibleInProjects ?? legacyVisibleInProjects(project));
+  /* One list for the Projects page: projects from the workspace plus every
+     questionnaire draft. The projects endpoint leaves drafts out on purpose,
+     so a self-serve draft used to exist only in the old questionnaire hub. */
+  const allProjects = [
+    ...workspace.projects,
+    ...questionnaireDrafts.filter((draft) => draft && draft.id && !workspace.projects.some((project) => project.id === draft.id)),
+  ];
+  const projectPool = allProjects.filter((project) => project.visibleInProjects ?? legacyVisibleInProjects(project));
   const projectCategories = [
     { value: 'ALL', label: categoryLabels.ALL, count: projectPool.length },
     { value: 'SURVEY', label: categoryLabels.SURVEY, count: projectPool.filter((project) => projectCategory(project) === 'SURVEY').length },
@@ -267,8 +285,10 @@ export default function BusinessWorkspace() {
   const visibleProjects = activeFilter === 'ALL'
     ? projectPool
     : projectPool.filter((project) => projectCategory(project) === activeFilter);
-  const questionnaireProjects = workspace.projects.filter((project) => project.questionnaire);
-  const resultProjects = questionnaireProjects.filter((project) => project.questionnaire?.status === 'PUBLISHED');
+  const questionnaireProjects = allProjects.filter((project) => project.questionnaire);
+  /* Results are written by us and released to the client by hand. Only a
+     released report shows up here; an unreleased one is not a result yet. */
+  const resultProjects = questionnaireProjects.filter((project) => isReportReleased(project));
   const responseCount = questionnaireProjects.reduce((total, project) => total + Number(project.questionnaire?.responseCount || 0), 0);
   const questionnaireDraftCount = questionnaireProjects.filter((project) => project.questionnaire?.status === 'DRAFT').length;
   const planningCount = workspace.projects.filter((project) => ['SUBMITTED_FOR_REVIEW', 'QUOTE_REQUIRED', 'QUOTE_SENT', 'CLIENT_ACCEPTED'].includes(project.status)).length;
@@ -297,12 +317,15 @@ export default function BusinessWorkspace() {
   }, [wizardOpen]);
 
   useEffect(() => {
-    const requestedView = new URLSearchParams(location.search).get('view');
-    setActiveView(['home', 'questionnaires', 'projects', 'results'].includes(requestedView) ? requestedView : 'home');
-  }, [location.search]);
+    setActiveView(viewFromLocation(location.pathname, location.search));
+  }, [location.pathname, location.search]);
 
   const selectWorkspaceView = (view) => {
-    const target = view === 'home' ? '/business/workspace' : `/business/workspace?view=${view}`;
+    const target = ({
+      projects: '/business/projects',
+      results: '/business/results',
+      questionnaires: '/business/workspace?view=questionnaires',
+    })[view] || '/business/workspace';
     setActiveView(view);
     navigate(withLanguage(target, language));
   };
@@ -825,10 +848,8 @@ export default function BusinessWorkspace() {
             );
           })}</div> : <p className="business-questionnaire-empty">{ui.noDraftsTitle}</p>}
         </section> : activeView === 'results' ? <section className="business-projects business-results-index">
-          <div className="business-projects-head"><div><p className="business-eyebrow">{copy.results.eyebrow}</p><h1>{copy.results.indexTitle}</h1><p>{copy.results.indexIntro}</p></div><button className="business-button" type="button" onClick={() => selectWorkspaceView('home')}>{copy.rail.services} <ArrowRight size={16} /></button></div>
-          {loading ? <BusinessPageLoader label={feedbackCopy.loadingResults} /> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div>{isReportReleased(project)
-              ? <Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link>
-              : <span className="business-results-pending">{pick(language, '报告整理中', 'Report in progress', '報告整理中')}</span>}</article>)}</div> : <p className="business-results-empty-line">{copy.results.noResultsTitle}</p>}
+          <div className="business-projects-head"><div><h1>{pick(language, '结果', 'Results', '結果')}</h1></div></div>
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingResults} /> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <p className="business-results-empty-line">{pick(language, '暂无结果', 'No results yet', '暫無結果')}</p>}
         </section> : <section className="business-projects">
           <div className="business-projects-head">
             <div>
@@ -837,7 +858,7 @@ export default function BusinessWorkspace() {
               <p>{projectsCopy.intro}</p>
             </div>
             <div className="business-project-head-actions">
-              <Link className="business-button" to={withLanguage('/business/access', language)}>{projectsCopy.contactSales} <ArrowRight size={17} /></Link>
+              <button className="business-button" type="button" onClick={openNewProject}>{pick(language, '开展一项研究', 'Start a study', '開展一項研究')} <ArrowRight size={17} /></button>
             </div>
           </div>
 
@@ -931,18 +952,15 @@ export default function BusinessWorkspace() {
                 })}
                 {!visibleProjects.length && (
                   <div className="business-project-filter-empty">
-                    <ClipboardList size={22} />
-                    <strong>{projectsCopy.noProjects}</strong>
-                    <span>{projectsCopy.chooseAnother}</span>
+                    <strong>{pick(language, '暂无项目', 'No projects yet', '暫無項目')}</strong>
                   </div>
                 )}
               </div>
             </>
           ) : (
             <section className="business-projects-empty">
-              <button className="business-projects-empty-icon" type="button" onClick={openNewProject} aria-label={projectsCopy.prepareBrief} title={projectsCopy.prepareBrief}><Plus size={24} /></button>
-              <h2>{projectsCopy.prepareBrief}</h2>
-              <p>{projectsCopy.startDecision}</p>
+              <h2>{pick(language, '暂无项目', 'No projects yet', '暫無項目')}</h2>
+              <button className="business-button" type="button" onClick={openNewProject}>{pick(language, '开展一项研究', 'Start a study', '開展一項研究')}</button>
             </section>
           )}
         </section>}

@@ -5748,7 +5748,9 @@ main.business-custom-request-page .business-workspace-rail {
    the brief is one click away and the row stays scannable. */
 .business-workspace .business-project-cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* The left rail is gone: the list owns the full canvas now, so the same
+     cards fit four across instead of three. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   margin-top: 18px;
 }
@@ -5757,6 +5759,10 @@ main.business-custom-request-page .business-workspace-rail {
    columns rather than auto-fill: auto-fill let a lone card sit in a 300px
    track while the rest of the row stayed empty, which read as a broken table. */
 @media (max-width: 1180px) {
+  .business-workspace .business-project-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
   .business-workspace .business-project-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 

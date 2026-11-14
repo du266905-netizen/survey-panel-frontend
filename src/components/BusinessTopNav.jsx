@@ -45,6 +45,19 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
   const [condensed, setCondensed] = useState(false);
   const [fundsOpen, setFundsOpen] = useState(false);
   const accountRef = useRef(null);
+  /* Hover opens the group menus: leave a 140ms grace period so the pointer can
+     cross the gap between the trigger and the panel without the menu closing.
+     Clicking the trigger also opens it, which is what touch and keyboard use. */
+  const closeTimer = useRef(0);
+  const openGroup = (id) => {
+    window.clearTimeout(closeTimer.current);
+    setOpen(id);
+  };
+  const closeGroup = () => {
+    window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setOpen(null), 140);
+  };
+  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
 
   const t = (cn, en) => pick(language, cn, en, cn);
 
@@ -96,7 +109,7 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
       label: t('交付', 'Delivery'),
       items: [
         { id: 'projects', label: t('项目', 'Projects'), icon: FileText, to: '/business/projects' },
-        { id: 'results', label: t('问卷结果', 'Questionnaire results'), icon: BarChart3, to: '/business/results' },
+        { id: 'results', label: t('结果', 'Results'), icon: BarChart3, to: '/business/results' },
       ],
     },
     {
@@ -135,30 +148,37 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
             const isOpen = open === group.id;
             const isActive = groupForActive?.id === group.id;
             return (
-              <div className={`business-topnav-group${isOpen ? ' is-open' : ''}`} key={group.id}>
+              <div
+                className={`business-topnav-group${isOpen ? ' is-open' : ''}`}
+                key={group.id}
+                onMouseEnter={() => openGroup(group.id)}
+                onMouseLeave={closeGroup}
+                onFocus={() => openGroup(group.id)}
+                onBlur={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget)) setOpen(null);
+                }}
+              >
                 <button
                   type="button"
                   className={`business-topnav-link${isActive ? ' is-active' : ''}`}
                   aria-expanded={isOpen}
                   aria-haspopup="menu"
-                  onClick={() => setOpen((current) => (current === group.id ? null : group.id))}
+                  onClick={() => openGroup(group.id)}
                 >
                   <span>{group.label}</span>
                   <ChevronDown size={13} strokeWidth={1.8} aria-hidden="true" />
                 </button>
-                {isOpen && (
-                  <div className="business-topnav-menu" role="menu">
-                    {group.items.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <button key={item.id} type="button" role="menuitem" onClick={() => go(item.to)}>
-                          <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
-                          <span>{item.label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+                <div className="business-topnav-menu" role="menu" aria-hidden={!isOpen}>
+                  {group.items.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <button key={item.id} type="button" role="menuitem" tabIndex={isOpen ? 0 : -1} onClick={() => go(item.to)}>
+                        <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
+                        <span>{item.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
