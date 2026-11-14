@@ -36,7 +36,7 @@ import Logo from '../components/Logo';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './Business.css';
 import '../components/BusinessRail.css';
-import BusinessRail from '../components/BusinessRail';
+import BusinessTopNav from '../components/BusinessTopNav';
 import BusinessTour from '../components/BusinessTour';
 import './BusinessWorkspaceTheme.css';
 import './BusinessResearchType.css';
@@ -722,21 +722,12 @@ export default function BusinessWorkspace() {
 
   return (
     <main className={`business-workspace${activeView === 'questionnaires' ? ' business-workspace--questionnaire-hub' : ''}`}>
-      <div className="business-workspace-body business-workspace-body--rail">
-        <BusinessRail activeId={activeView} onSelect={handleRailSelect} onReplayTour={replayTour} />
-
-        <header className="business-workspace-topbar">
-          <form className="business-workspace-searchbar" role="search" aria-label={pick(language, '在 guanyisearch 提问', 'ask a question in guanyisearch', '在 guanyisearch 提問')} data-tour="search" onSubmit={submitWorkspaceQuestion}>
-            <Search size={17} aria-hidden="true" />
-            <input ref={workspaceSearchRef} type="search" value={workspaceQuery} onChange={(event) => setWorkspaceQuery(event.target.value)} placeholder={pick(language, '在 guanyisearch 提问', 'ask a question in guanyisearch', '在 guanyisearch 提問')} aria-label={pick(language, '在 guanyisearch 提问', 'ask a question in guanyisearch', '在 guanyisearch 提問')} />
-            <kbd aria-hidden="true">⌘K</kbd>
-          </form>
-          <BusinessBalanceChip />
-          <NotificationBell className="business-workspace-notification" />
-        </header>
-
+      <BusinessTopNav activeId={activeView} onReplayTour={replayTour} />
+      <div className="business-workspace-body business-workspace-body--topnav">
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
-          <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, greetingIsReturning)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p><button className="business-hero-cta" type="button" data-tour="primary" onClick={() => openNewProject()}>{workspaceText[1]}<ArrowRight size={16} /></button></div></header>
+          <div className="business-home-hero-row"><header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, greetingIsReturning)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p><button className="business-hero-cta" type="button" data-tour="primary" onClick={() => openNewProject()}>{workspaceText[1]}<ArrowRight size={16} /></button></div></header>
+          <aside className="business-home-stats"><section className="business-dashboard-statistics"><header><div><h2>{workspaceText[7]}</h2><p>{workspaceText[8]}</p></div><button type="button" onClick={() => selectWorkspaceView('results')}>{workspaceText[9]}</button></header><div className="business-dashboard-stats"><article><span><ClipboardList size={17} /></span><small>{workspaceText[10]}</small><strong>{workspace.projects.length}</strong></article><article><span><Pencil size={17} /></span><small>{workspaceText[11]}</small><strong>{questionnaireDraftCount}</strong></article><article><span><FileText size={17} /></span><small>{workspaceText[12]}</small><strong>{planningCount}</strong></article><article><span><BarChart3 size={17} /></span><small>{workspaceText[13]}</small><strong>{responseCount}</strong></article></div></section></aside>
+          </div>
           <div className="business-dashboard-actions">
             <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{workspaceText[1]}</strong><small>{workspaceText[2]}</small></div><ArrowRight size={17} /></button>
             <button type="button" onClick={() => navigate(withLanguage('/business/ai-brief', language))}><span className="is-amber"><Sparkles size={21} /></span><div><strong>{workspaceText[3]}</strong><small>{workspaceText[4]}</small></div><ArrowRight size={17} /></button>
@@ -744,7 +735,7 @@ export default function BusinessWorkspace() {
           </div>
           {message && <p className="business-workspace-message">{message}</p>}
           <div className="business-dashboard-grid">
-            <section className="business-dashboard-statistics"><header><div><h2>{workspaceText[7]}</h2><p>{workspaceText[8]}</p></div><button type="button" onClick={() => selectWorkspaceView('results')}>{workspaceText[9]}</button></header><div className="business-dashboard-stats"><article><span><ClipboardList size={17} /></span><small>{workspaceText[10]}</small><strong>{workspace.projects.length}</strong></article><article><span><Pencil size={17} /></span><small>{workspaceText[11]}</small><strong>{questionnaireDraftCount}</strong></article><article><span><FileText size={17} /></span><small>{workspaceText[12]}</small><strong>{planningCount}</strong></article><article><span><BarChart3 size={17} /></span><small>{workspaceText[13]}</small><strong>{responseCount}</strong></article></div></section>
+            
             <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
           </div>
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">

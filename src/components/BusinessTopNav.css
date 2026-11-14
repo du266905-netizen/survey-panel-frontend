@@ -1,0 +1,427 @@
+/* Top navigation for the research workspace.
+ * One row: wordmark + destinations on the left, account controls on the right.
+ * Replaces the old left rail for this page; other pages can adopt it in turn. */
+
+.business-topnav {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5E3DD;
+}
+
+.business-topnav-inner {
+  display: flex;
+  width: min(1440px, calc(100% - 48px));
+  height: 72px;
+  margin: 0 auto;
+  align-items: center;
+  gap: 30px;
+}
+
+.business-topnav-brand {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.business-topnav-brand img {
+  display: block;
+  width: auto;
+  height: 25px;
+}
+
+.business-topnav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.business-topnav-group {
+  position: relative;
+}
+
+.business-topnav-link {
+  display: inline-flex;
+  height: 38px;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 14px/1 var(--font-sans);
+  padding: 0 12px;
+  white-space: nowrap;
+  transition: background-color .14s ease, color .14s ease;
+}
+
+.business-topnav-link:hover,
+.business-topnav-group.is-open > .business-topnav-link {
+  background: #FAF9F5;
+  color: #141413;
+}
+
+.business-topnav-link.is-active {
+  background: #F2F1EC;
+  color: #141413;
+}
+
+.business-topnav-group.is-open > .business-topnav-link svg {
+  transform: rotate(180deg);
+}
+
+.business-topnav-link svg {
+  transition: transform .16s ease;
+}
+
+.business-topnav-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 238px;
+  padding: 6px;
+  border: 1px solid #E5E3DD;
+  border-radius: 9px;
+  background: #FFFFFF;
+  box-shadow: 0 18px 44px rgba(20, 20, 19, .12);
+}
+
+.business-topnav-menu button {
+  display: flex;
+  width: 100%;
+  min-height: 38px;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #3F4642;
+  cursor: pointer;
+  font: 500 13px/1.3 var(--font-sans);
+  padding: 0 10px;
+  text-align: left;
+}
+
+.business-topnav-menu button:hover {
+  background: #FAF9F5;
+  color: #141413;
+}
+
+.business-topnav-menu button svg {
+  flex: none;
+  color: #8D948D;
+}
+
+.business-topnav-actions.business-workspace-topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  grid-column: auto;
+  grid-row: auto;
+}
+
+#root .business-topnav-actions.business-workspace-topbar > .business-workspace-balance {
+  margin-left: 0;
+}
+
+.business-topnav-account {
+  position: relative;
+  flex: none;
+}
+
+.business-topnav-avatar {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #E5E3DD;
+  border-radius: 50%;
+  background: #141413;
+  color: #FFFFFF;
+  cursor: pointer;
+  padding: 0;
+}
+
+.business-topnav-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.business-topnav-avatar:hover {
+  border-color: #141413;
+}
+
+.business-topnav-account-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  min-width: 220px;
+  gap: 5px;
+  padding: 10px;
+  border: 1px solid #E5E3DD;
+  border-radius: 9px;
+  background: #FFFFFF;
+  box-shadow: 0 18px 44px rgba(20, 20, 19, .12);
+}
+
+.business-topnav-account-menu strong {
+  color: #141413;
+  font: 600 13px/1.3 var(--font-sans);
+  padding: 2px 6px;
+}
+
+.business-topnav-account-menu > span {
+  overflow: hidden;
+  color: #8D948D;
+  font: 400 12px/1.3 var(--font-sans);
+  padding: 0 6px 5px;
+  text-overflow: ellipsis;
+}
+
+.business-topnav-account-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #3F4642;
+  cursor: pointer;
+  font: 500 13px/1.3 var(--font-sans);
+  padding: 9px 8px;
+  text-align: left;
+}
+
+.business-topnav-account-menu button:hover {
+  background: #FAF9F5;
+  color: #141413;
+}
+
+/* The old topbar carried the balance/bell styling through this class.
+   Keep its descendants styled, but not its old bar geometry. */
+.business-topnav-actions .business-workspace-notification > button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #5F6862;
+}
+
+.business-topnav-actions .business-workspace-notification > button:hover,
+.business-topnav-actions .business-workspace-notification > button.is-open {
+  border-color: #E5E3DD;
+  background: #FAF9F5;
+  color: #141413;
+}
+
+.business-topnav-actions .business-workspace-notification > button > span {
+  border-color: #FFFFFF;
+}
+
+@media (max-width: 1100px) {
+  .business-topnav-inner {
+    width: calc(100% - 32px);
+    gap: 18px;
+  }
+
+  .business-topnav-links {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .business-topnav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .business-topnav-link {
+    padding: 0 9px;
+    font-size: 13px;
+  }
+
+  .business-topnav-actions .business-workspace-balance {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .business-topnav-inner {
+    height: 64px;
+    gap: 10px;
+  }
+
+  .business-topnav-brand img {
+    height: 21px;
+  }
+
+  .business-topnav-link {
+    height: 34px;
+    padding: 0 7px;
+    font-size: 12px;
+  }
+
+  .business-topnav-link span {
+    display: none;
+  }
+
+  .business-topnav-actions {
+    gap: 4px;
+  }
+
+  .business-topnav-account-menu {
+    right: -5px;
+  }
+}
+
+/* Home: the greeting photograph keeps its size; the research overview moves
+   into the empty column beside it. */
+.business-workspace-body.business-workspace-body--topnav {
+  display: block;
+  min-height: calc(100svh - 72px);
+}
+
+.business-home-hero-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.62fr) minmax(320px, 0.9fr);
+  gap: 16px;
+  align-items: stretch;
+  margin-bottom: 18px;
+}
+
+.business-home-hero-row .business-dashboard-header {
+  height: 100%;
+  min-height: 340px;
+  margin: 0;
+}
+
+.business-home-stats {
+  display: flex;
+  min-width: 0;
+}
+
+.business-home-stats .business-dashboard-statistics {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  padding: 26px 24px;
+}
+
+.business-home-stats .business-dashboard-stats {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+  align-content: space-between;
+}
+
+.business-home-stats .business-dashboard-stats article {
+  min-height: 0;
+}
+
+.business-home-stats .business-dashboard-stats strong {
+  font-size: clamp(34px, 3vw, 46px);
+  line-height: 1;
+}
+
+.business-workspace-home .business-dashboard-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .business-home-hero-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .business-home-stats .business-dashboard-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .business-home-stats .business-dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .business-home-hero-row .business-dashboard-header {
+    min-height: 320px;
+  }
+}
+
+/* --- home overview card: two columns of metrics inside the right card ----- */
+#root .business-home-stats .business-dashboard-statistics {
+  border: 1px solid #E5E3DD;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 10px 28px rgba(20, 20, 19, .04);
+}
+
+#root .business-home-stats .business-dashboard-statistics > header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#root .business-home-stats .business-dashboard-statistics > header > button {
+  flex: none;
+  white-space: nowrap;
+}
+
+#root .business-home-stats .business-dashboard-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 22px 20px;
+}
+
+#root .business-home-stats .business-dashboard-stats article {
+  border-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+#root .business-home-stats .business-dashboard-stats small {
+  white-space: normal !important;
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  letter-spacing: .08em !important;
+}
+
+#root .business-home-stats .business-dashboard-stats strong {
+  margin-top: 8px;
+}
+
+/* The language trigger is a globe in the top bar; the full EN-US label made
+   the 38px control stack its own text. */
+#root .business-topnav-actions .business-language-picker > button {
+  white-space: nowrap;
+}
+
+#root .business-topnav-actions .business-language-picker > button > span {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  #root .business-home-stats .business-dashboard-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #root .business-home-stats .business-dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
