@@ -389,7 +389,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
           );
         })}
         <div className="psn-mobile-lang">
-          <p>Language</p>
+          <p>{/^zh-hant/i.test(language) ? '語言' : /^zh/i.test(language) ? '语言' : 'Language'}</p>
           <div role="listbox" aria-label="Choose language">
             {languages.map((item) => (
               <button

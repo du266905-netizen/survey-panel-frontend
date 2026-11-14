@@ -283,7 +283,7 @@ export function HomeFooter() {
               </div>
             </div>
           </div>
-          <p className="home-footer-intro">We are a cross-regional insight and research company, building an open, interconnected and sustainable research community. We connect participants, research commissioners and organisations across business, culture, everyday life and public questions, turning real voices into clear judgements — for better decisions, and for a better world.</p>
+          <p className="home-footer-intro">{identity.description}</p>
         </div>
         <nav ref={navRef} className="home-footer-nav" aria-label="Footer navigation">{footerColumns.map((column, columnIndex) => <details key={column.id} className="home-footer-group" open={desktop || undefined}><summary>{column.label}<ChevronDown size={14} strokeWidth={1.8} aria-hidden="true" /></summary>{column.blocks.map((block, index) => <div className="home-footer-block" key={block.label || index}>{block.label && <p className="home-footer-sublabel">{block.label}</p>}{block.links.map((item) => (item.external ? <a key={item.to} href={item.to} target="_blank" rel="noopener noreferrer">{item.label}</a> : <Link key={item.to} to={withLanguage(item.to, language)}>{item.label}</Link>))}</div>)}</details>)}</nav>
       </div>
