@@ -34,9 +34,8 @@
 .business-contact-band-copy h2 {
   margin: 0;
   color: #ffffff;
-  /* 38 / 600 in the reading serif — the step this page uses for a section
-     title, not the greeting's display size. */
-  font: 600 38px/1.08 var(--font-reading, var(--font-serif));
+  /* Same as the greeting: 38px in the reading serif at weight 400. */
+  font: 400 38px/1.08 var(--font-reading, var(--font-serif));
   font-optical-sizing: auto;
   letter-spacing: -.028em;
 }
@@ -49,6 +48,7 @@
 }
 
 .business-contact-band-cta {
+  white-space: nowrap;
   min-height: 46px;
   margin-top: 28px;
   border: 0;
@@ -73,6 +73,7 @@
 
 .business-contact-band-facts {
   display: grid;
+  min-width: 0;
   gap: 14px;
   margin: 0;
   padding: 0;

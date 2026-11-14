@@ -633,6 +633,10 @@
 
 .business-topup-modal .business-topup-main {
   overflow-y: auto;
+  /* The two panels scroll inside the sheet. Capping each column at the sheet's
+     own height is what makes the wheel work: the grid row is content-sized, so
+     overflow on the item alone never gets a smaller box to scroll within. */
+  max-height: calc(100svh - 48px);
   border: 0;
   border-radius: 0;
 }
@@ -640,6 +644,7 @@
 .business-topup-modal .business-topup-summary {
   position: static;
   overflow-y: auto;
+  max-height: calc(100svh - 48px);
   border: 0;
   border-left: 1px solid #E5E3DD;
   border-radius: 0;
