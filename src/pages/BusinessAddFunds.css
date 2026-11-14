@@ -495,3 +495,190 @@
   .business-topup-secure { gap: 6px; padding-top: 10px; }
   .business-topup-fineprint { display: none; }
 }
+
+/* Top-up is a page in the workspace, not a dialog over whichever page the
+   account happened to be on. Same top bar as Home, no old rail, no scrim. */
+.business-topup-screen {
+  min-height: 100svh;
+  background: #FFFFFF;
+}
+
+.business-topup-dialog {
+  position: static;
+  inset: auto;
+  display: block;
+  padding: clamp(22px, 3vw, 34px) clamp(20px, 4vw, 48px) 64px;
+}
+
+.business-topup-card {
+  width: min(100%, 1120px);
+  max-height: none;
+  margin: 0 auto;
+  grid-template-rows: auto;
+  overflow: visible;
+  border: 1px solid #E5E3DD;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(20, 20, 19, .05);
+}
+
+.business-topup-main {
+  overflow: visible;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+.business-topup-summary {
+  overflow: visible;
+}
+
+@media (max-width: 800px) {
+  .business-topup-dialog {
+    padding: 18px 16px 48px;
+  }
+
+  .business-topup-card {
+    max-height: none;
+  }
+
+  .business-topup-main,
+  .business-topup-summary {
+    overflow: visible;
+    max-height: none;
+  }
+}
+
+/* The shared account stylesheet treats the first child header as the old
+   account header: 47px wordmark and its own flex row. Undo that for the
+   workspace top nav so it uses the same logo and spacing as Home. */
+.business-account-page > header.business-topnav {
+  display: block;
+  min-height: 0;
+  justify-content: initial;
+  border-bottom: 1px solid #E5E3DD;
+  padding: 0;
+}
+
+.business-account-page > header.business-topnav img {
+  width: auto;
+  height: 25px;
+  object-fit: contain;
+}
+
+/* Keep the order summary next to the amount instead of stretching it down the
+   whole billing form. */
+.business-topup-summary {
+  position: sticky;
+  top: 92px;
+  align-self: start;
+}
+
+@media (max-width: 800px) {
+  .business-topup-summary {
+    position: static;
+  }
+}
+
+/* Two separate panels: the form and the order summary. The old single sheet
+   left a tall empty column under the summary. */
+.business-topup-card {
+  align-items: start;
+  gap: 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.business-topup-main,
+.business-topup-summary {
+  border: 1px solid #E5E3DD;
+  border-radius: 12px;
+  background: #FFFFFF;
+}
+
+/* The top-up dialog sits on the current page. The page behind it stays there
+   and is blurred; no route change, no old rail. */
+.business-topup-modal {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgba(20, 20, 19, .32);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 24px;
+}
+
+.business-topup-modal .business-topup-dialog {
+  position: static;
+  display: block;
+  width: min(100%, 1120px);
+  padding: 0;
+}
+
+.business-topup-modal .business-topup-card {
+  display: grid;
+  max-height: calc(100svh - 48px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid #E5E3DD;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 28px 80px rgba(20, 20, 19, .24);
+}
+
+.business-topup-modal .business-topup-main {
+  overflow-y: auto;
+  border: 0;
+  border-radius: 0;
+}
+
+.business-topup-modal .business-topup-summary {
+  position: static;
+  overflow-y: auto;
+  border: 0;
+  border-left: 1px solid #E5E3DD;
+  border-radius: 0;
+}
+
+@media (max-width: 800px) {
+  .business-topup-modal {
+    align-items: end;
+    padding: 0;
+  }
+
+  .business-topup-modal .business-topup-dialog {
+    width: 100%;
+  }
+
+  .business-topup-modal .business-topup-card {
+    display: flex;
+    max-height: 90svh;
+    flex-direction: column;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .business-topup-modal .business-topup-main {
+    overflow-y: auto;
+  }
+
+  .business-topup-modal .business-topup-summary {
+    flex: 0 0 auto;
+    max-height: 46svh;
+    overflow-y: auto;
+    border-top: 1px solid #E5E3DD;
+    border-left: 0;
+  }
+}
+
+.business-topup-modal .business-topup-summary {
+  align-self: start;
+  background: #FAF9F5;
+}

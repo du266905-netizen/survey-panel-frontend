@@ -22,6 +22,7 @@ import { useBusinessAvatar } from '../utils/businessAvatar';
 import { useLanguage, withLanguage } from './LanguageContext';
 import { pick } from '../content/projectStatus';
 import BusinessBalanceChip from './BusinessBalanceChip';
+import BusinessAddFundsDialog from '../pages/BusinessAddFundsDialog';
 import BusinessLanguagePicker from './BusinessLanguagePicker';
 import NotificationBell from './NotificationBell';
 import Logo from './Logo';
@@ -42,6 +43,7 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
   const [open, setOpen] = useState(null);
   const [accountOpen, setAccountOpen] = useState(false);
   const [condensed, setCondensed] = useState(false);
+  const [fundsOpen, setFundsOpen] = useState(false);
   const accountRef = useRef(null);
 
   const t = (cn, en) => pick(language, cn, en, cn);
@@ -90,15 +92,6 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
 
   const groups = [
     {
-      id: 'research',
-      label: t('研究', 'Research'),
-      items: [
-        { id: 'research', label: t('研究服务', 'Research services'), icon: Compass, to: '/business/research' },
-        { id: 'ai', label: t('AI 研究引导', 'AI research guide'), icon: Sprout, to: '/business/ai-brief' },
-        { id: 'questionnaires', label: t('问卷编辑器', 'Questionnaire editor'), icon: ClipboardList, to: '/business/questionnaires' },
-      ],
-    },
-    {
       id: 'delivery',
       label: t('交付', 'Delivery'),
       items: [
@@ -121,6 +114,7 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
   const groupForActive = groups.find((group) => group.items.some((item) => item.id === activeId));
 
   return (
+    <>
     <header className={`business-topnav${condensed ? ' is-condensed' : ''}`}>
       <div className="business-topnav-inner">
         <button type="button" className="business-topnav-brand" onClick={() => go('/business/workspace')} aria-label="GuanyiSearch workspace home">
@@ -131,6 +125,10 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
           <button type="button" className={`business-topnav-link${activeId === 'home' ? ' is-active' : ''}`} onClick={() => go('/business/workspace')}>
             <Home size={16} strokeWidth={1.8} aria-hidden="true" />
             <span>Home</span>
+          </button>
+
+          <button type="button" className={`business-topnav-link${activeId === 'research' ? ' is-active' : ''}`} onClick={() => go('/business/research')}>
+            <span>{t('研究', 'Research')}</span>
           </button>
 
           {groups.map((group) => {
@@ -172,7 +170,7 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
         </nav>
 
         <div className="business-topnav-actions business-workspace-topbar">
-          <BusinessBalanceChip />
+          <BusinessBalanceChip onAddFunds={() => setFundsOpen(true)} />
           <NotificationBell className="business-workspace-notification" />
           <BusinessLanguagePicker />
           <div className="business-topnav-account" ref={accountRef}>
@@ -191,5 +189,7 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
         </div>
       </div>
     </header>
+    {fundsOpen && <BusinessAddFundsDialog onClose={() => setFundsOpen(false)} />}
+    </>
   );
 }

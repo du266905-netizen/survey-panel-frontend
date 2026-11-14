@@ -29,7 +29,7 @@ function formatAmount(value, currency = 'USD') {
   }
 }
 
-export default function BusinessBalanceChip({ className = '' }) {
+export default function BusinessBalanceChip({ className = '', onAddFunds }) {
   const { language, publicCopy } = useLanguage();
   const navigate = useNavigate();
   const uiMap = publicCopy?.workspace?.business?.workspaceUi || {};
@@ -73,7 +73,7 @@ export default function BusinessBalanceChip({ className = '' }) {
       type="button"
       className={`business-workspace-balance ${className}`.trim()}
       data-tour="balance"
-      onClick={() => navigate(withLanguage('/business/add-funds', language))}
+      onClick={() => { if (onAddFunds) onAddFunds(); else navigate(withLanguage('/business/add-funds', language)); }}
       aria-label={label}
     >
       <span className="business-workspace-balance-figure">

@@ -99,11 +99,11 @@ export default function NotificationBell({ className = '', presentation = 'popov
       <Bell size={18} />
       {unreadCount > 0 && <span>{unreadCount > 9 ? '9+' : unreadCount}</span>}
     </button>
-    {open && <section className={`notification-popover${presentation === 'modal' ? ' notification-popover--modal' : ''}`} aria-label="通知">
+    {open && <section className={`notification-popover${presentation === 'modal' ? ' notification-popover--modal' : ''}${notifications.length ? '' : ' is-empty'}`} aria-label="通知">
       <header>
         <div>
           <strong>通知</strong>
-          <small>{unreadCount ? `${unreadCount} 条未读` : '都读完了'}</small>
+          {unreadCount > 0 && <small>{`${unreadCount} 条未读`}</small>}
         </div>
         {unreadCount > 0 && <button type="button" onClick={readAll}><CheckCheck size={14} /> 全部已读</button>}
       </header>
@@ -143,7 +143,7 @@ export default function NotificationBell({ className = '', presentation = 'popov
               </div>
             ))}
           </div>
-        )) : <p className="nb-empty">还没有通知。项目有进展、钱到账时，这里会出现一条。</p>}
+        )) : <p className="nb-empty">暂无通知</p>}
       </div>
     </section>}
   </div>;

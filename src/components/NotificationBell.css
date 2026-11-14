@@ -163,14 +163,11 @@
 }
 
 .nb-empty {
-  display: grid;
-  min-height: 160px;
   margin: 0;
-  place-content: center;
   color: #8D948D;
-  font: 400 13px/1.6 var(--font-sans);
-  padding: 28px 24px;
-  text-align: center;
+  font: 400 13px/1.5 var(--font-sans);
+  padding: 20px 22px 24px;
+  text-align: left;
 }
 
 /* 工作台里以“弹窗”而不是“下拉”呈现时，贴着右上角。 */
@@ -183,4 +180,14 @@
 @media (max-width: 560px) {
   .notification-popover { width: calc(100vw - 20px); }
   .nb-item { padding: 14px; }
+}
+
+
+/* An empty inbox should look like a small status, not a 640px blank sheet. */
+.notification-popover.is-empty {
+  width: min(360px, calc(100vw - 24px));
+}
+
+.notification-popover.is-empty header {
+  padding-bottom: 2px;
 }
