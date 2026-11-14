@@ -61,9 +61,27 @@ export default function PublicSiteHeader({ stripStart = null }) {
   const { pathname } = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [condensed, setCondensed] = useState(false);
   /* 登录下拉：只有点击才展开（2026-10-26 用户要求）。 */
   const [signInOpen, setSignInOpen] = useState(false);
   const signInRef = useRef(null);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setCondensed(window.scrollY > 24);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     if (!signInOpen) return undefined;
@@ -186,7 +204,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
   const ctaLabel = user ? chrome.header.workspace : chrome.header.join;
 
   return (
-    <header className="psn">
+    <header className={`psn${condensed ? ' is-condensed' : ''}`}>
       <div className="psn-bar">
         <Link className="psn-brand" to={withLanguage('/', language)} aria-label="GuanyiSearch home" onClick={closeAll}>
           <Logo size="md" />
