@@ -22,14 +22,9 @@ Disallow: /workers
 Disallow: /orbit
 
 # Client workspace (behind sign-in) and its flows.
-Disallow: /business/workspace
-Disallow: /business/projects
-Disallow: /business/ai-brief
-Disallow: /business/audience-plan
-Disallow: /business/custom-questionnaire
-Disallow: /business/account
-Disallow: /business/delivery-preview
-Disallow: /business/s/
+# Every path under /business/ needs an account to show anything, so the whole
+# prefix stays out of search results — no need to enumerate pages one by one.
+Disallow: /business/
 
 # One-off flows and tokens.
 Disallow: /email/unsubscribe

@@ -373,7 +373,6 @@ export default function PublicSiteHeader({ stripStart = null }) {
           {stripStart ? <div className="psn-strip-start">{stripStart}</div> : null}
           <Link className="psn-strip-link" to={withLanguage('/careers', language)}>{solutionNavCopy[language]?.__jobSearch || jobSearchLabels[language] || jobSearchLabels.en}</Link>
           <Link className="psn-strip-link" to={withLanguage('/business/access', language)}>{chrome.header.contactSales}</Link>
-          <Link className="psn-strip-link" to={withLanguage('/how-it-works', language)}>{chrome.header.helpCentre}</Link>
         </div>
       </div>
 

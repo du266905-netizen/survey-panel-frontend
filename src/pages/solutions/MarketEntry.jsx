@@ -46,7 +46,7 @@ const copy = {
     methods: [
       { label: 'Qualitative', to: '/solutions/qualitative' },
       { label: 'Quantitative', to: '/solutions/quantitative' },
-      { label: 'Mixed methods', to: '/how-it-works' },
+      { label: 'Mixed methods', to: '/solutions/mixed' },
     ],
   },
   'en-GB': {
@@ -69,7 +69,7 @@ const copy = {
     methods: [
       { label: 'Qualitative', to: '/solutions/qualitative' },
       { label: 'Quantitative', to: '/solutions/quantitative' },
-      { label: 'Mixed methods', to: '/how-it-works' },
+      { label: 'Mixed methods', to: '/solutions/mixed' },
     ],
   },
   'zh-CN': {
@@ -92,7 +92,7 @@ const copy = {
     methods: [
       { label: '定性', to: '/solutions/qualitative' },
       { label: '定量', to: '/solutions/quantitative' },
-      { label: '混合', to: '/how-it-works' },
+      { label: '混合', to: '/solutions/mixed' },
     ],
   },
   'zh-Hant': {
@@ -115,7 +115,7 @@ const copy = {
     methods: [
       { label: '定性', to: '/solutions/qualitative' },
       { label: '定量', to: '/solutions/quantitative' },
-      { label: '混合', to: '/how-it-works' },
+      { label: '混合', to: '/solutions/mixed' },
     ],
   },
   "de": {
@@ -169,7 +169,7 @@ const copy = {
     },
     {
       "label": "Mixed Methods",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -224,7 +224,7 @@ const copy = {
     },
     {
       "label": "Méthodes mixtes",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -279,7 +279,7 @@ const copy = {
     },
     {
       "label": "Gemengde methoden",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -334,7 +334,7 @@ const copy = {
     },
     {
       "label": "Mixed methods",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -389,7 +389,7 @@ const copy = {
     },
     {
       "label": "Métodos mixtos",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -444,7 +444,7 @@ const copy = {
     },
     {
       "label": "Monimenetelmä",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -499,7 +499,7 @@ const copy = {
     },
     {
       "label": "Metodi misti",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -554,7 +554,7 @@ const copy = {
     },
     {
       "label": "ミックスメソッド",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -609,7 +609,7 @@ const copy = {
     },
     {
       "label": "혼합 방법",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -664,7 +664,7 @@ const copy = {
     },
     {
       "label": "Mixed methods",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -719,7 +719,7 @@ const copy = {
     },
     {
       "label": "Métodos mistos",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -774,7 +774,7 @@ const copy = {
     },
     {
       "label": "Смешанные методы",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -829,7 +829,7 @@ const copy = {
     },
     {
       "label": "Blandade metoder",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 },
@@ -884,7 +884,7 @@ const copy = {
     },
     {
       "label": "Karma yöntem",
-      "to": "/how-it-works"
+      "to": "/solutions/mixed"
     }
   ]
 }

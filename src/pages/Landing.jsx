@@ -22,7 +22,6 @@ const landingNavigationGroups = [
     id: 'discover',
     label: 'Discover',
     items: [
-      { label: 'How it works', description: 'A clear path from participation to reward.', to: '/how-it-works' },
       { label: 'News Wall', description: 'Stories, signals, and community perspectives.', to: '/news' },
       { label: 'Our approach', description: 'The human-first principle behind the panel.', href: '#human-manifesto' },
     ],

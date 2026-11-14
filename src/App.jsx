@@ -46,7 +46,6 @@ import Careers from './pages/Careers';
 import JobDetail from './pages/JobDetail';
 import Contact from './pages/Contact';
 import Rewards from './pages/Rewards';
-import HowItWorks from './pages/HowItWorks';
 import HomeAtlas from './pages/HomeAtlas';
 import Landing from './pages/Landing';
 import NewsWall from './pages/NewsWall';
@@ -76,7 +75,6 @@ import SupportChatWidget from './components/SupportChatWidget';
 import ChatwootWidget from './components/ChatwootWidget';
 import { isAdminRole, isPanelistRole } from './utils/roles';
 import { isBusinessRole } from './utils/roles';
-import Business from './pages/Business';
 import BusinessAccess from './pages/BusinessAccess';
 import BusinessWorkspace from './pages/BusinessWorkspace';
 import BusinessResearch from './pages/BusinessResearch';
@@ -217,7 +215,6 @@ export default function App() {
         <Route path="/join" element={<Navigate to="/access" replace />} />
         {/* 2026-11-12: the chooser lives on the homepage; /access points at it. */}
         <Route path="/access" element={<JoinRedirect />} />
-        <Route path="/business" element={<Business />} />
         <Route path="/china-market-insights" element={<ChinaMarketInsights />} />
         <Route path="/solutions/market-entry" element={<PublicPage><MarketEntry /></PublicPage>} />
         <Route path="/solutions/qualitative" element={<PublicPage><Qualitative /></PublicPage>} />
@@ -281,7 +278,6 @@ export default function App() {
         <Route path="/__icons" element={<IconBoard />} />
         <Route path="/rewards" element={<PublicPage><Rewards /></PublicPage>} />
         <Route path="/contact" element={<PublicPage><Contact /></PublicPage>} />
-        <Route path="/how-it-works" element={<PublicPage><HowItWorks /></PublicPage>} />
         <Route path="/our-approach" element={<Navigate to="/about" replace />} />
         <Route path="/industries/automotive" element={<PublicPage><IndustryAutomotive /></PublicPage>} />
         <Route path="/industries/travel" element={<PublicPage><IndustryTravel /></PublicPage>} />
