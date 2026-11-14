@@ -2831,7 +2831,7 @@ main.business-ai-brief-page {
   padding: 56px clamp(30px, 3.6vw, 58px) 52px;
   background-color: #14161a;
   background-image:
-    linear-gradient(96deg, rgba(12, 14, 17, .90) 0%, rgba(12, 14, 17, .74) 44%, rgba(12, 14, 17, .30) 74%, rgba(12, 14, 17, .06) 100%),
+    linear-gradient(96deg, rgba(12, 14, 17, .64) 0%, rgba(12, 14, 17, .42) 42%, rgba(12, 14, 17, .14) 72%, rgba(12, 14, 17, .02) 100%),
     url('../assets/business/hero-video.jpg');
   background-position: center, center 42%;
   background-repeat: no-repeat;

@@ -40,9 +40,27 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [condensed, setCondensed] = useState(false);
   const accountRef = useRef(null);
 
   const t = (cn, en) => pick(language, cn, en, cn);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setCondensed(window.scrollY > 24);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     const onDown = (event) => {
@@ -101,7 +119,7 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
   const groupForActive = groups.find((group) => group.items.some((item) => item.id === activeId));
 
   return (
-    <header className="business-topnav">
+    <header className={`business-topnav${condensed ? ' is-condensed' : ''}`}>
       <div className="business-topnav-inner">
         <button type="button" className="business-topnav-brand" onClick={() => go('/business/workspace')} aria-label="GuanyiSearch workspace home">
           <Logo size="sm" />
