@@ -56,7 +56,7 @@
   background: transparent;
   color: #5F6862;
   cursor: pointer;
-  font: 500 14px/1 var(--font-sans);
+  font: 500 13px/1 var(--font-sans);
   padding: 0 12px;
   white-space: nowrap;
   transition: background-color .14s ease, color .14s ease;
@@ -497,4 +497,150 @@
   .business-topnav {
     transition: none;
   }
+}
+
+/* Research overview — four KPI cards under the hero, not a side panel. */
+.business-overview {
+  margin: 26px 0 30px;
+}
+
+.business-overview-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.business-overview-head h2 {
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading, var(--font-serif));
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.business-overview-head p {
+  margin: 5px 0 0;
+  color: #8D948D;
+  font: 400 13px/1.5 var(--font-sans);
+}
+
+.business-overview-head > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  border: 0;
+  background: transparent;
+  color: #5F6862;
+  cursor: pointer;
+  font: 500 13px/1 var(--font-sans);
+  padding: 0;
+}
+
+.business-overview-head > button:hover {
+  color: #141413;
+}
+
+.business-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.business-overview-grid > button {
+  position: relative;
+  display: flex;
+  min-height: 96px;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #E5E3DD;
+  border-radius: 11px;
+  background: #FFFFFF;
+  cursor: pointer;
+  padding: 16px 18px;
+  text-align: left;
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.business-overview-grid > button:hover {
+  border-color: #CFCBC1;
+  box-shadow: 0 12px 28px rgba(20, 20, 19, .06);
+  transform: translateY(-1px);
+}
+
+.business-overview-icon {
+  display: grid;
+  width: auto;
+  height: auto;
+  flex: none;
+  place-items: center;
+  border-radius: 0;
+  background: transparent;
+  color: #8D948D;
+}
+
+.business-overview-grid small {
+  margin: 0;
+  color: #8D948D;
+  font: 600 11px/1.3 var(--font-sans);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.business-overview-grid strong {
+  margin: 1px 0 0;
+  color: #141413;
+  font-family: var(--font-reading, var(--font-serif));
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+
+.business-overview-arrow {
+  position: absolute;
+  top: 18px;
+  right: 16px;
+  color: #B4B1A8;
+  transition: color .16s ease, transform .16s ease;
+}
+
+.business-overview-grid > button:hover .business-overview-arrow {
+  color: #141413;
+  transform: translateX(2px);
+}
+
+@media (max-width: 900px) {
+  .business-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .business-overview-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .business-overview-grid > button {
+    min-height: 128px;
+    padding: 15px;
+  }
+
+  .business-overview-grid strong {
+    font-size: 36px;
+  }
+}
+
+
+.business-overview-body {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0;
 }

@@ -163,7 +163,7 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
             );
           })}
 
-          <button type="button" className={`business-topnav-link${activeId === 'help' ? ' is-active' : ''}`} onClick={() => go('/business/help')}>
+          <button type="button" className={`business-topnav-link${activeId === 'help' ? ' is-active' : ''}`} onClick={() => go('/help')}>
             <LifeBuoy size={16} strokeWidth={1.8} aria-hidden="true" />
             <span>{t('帮助', 'Help')}</span>
           </button>

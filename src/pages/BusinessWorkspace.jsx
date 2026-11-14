@@ -726,6 +726,50 @@ export default function BusinessWorkspace() {
       <div className="business-workspace-body business-workspace-body--topnav">
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
           <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, greetingIsReturning)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p><button className="business-hero-cta" type="button" data-tour="primary" onClick={() => openNewProject()}>{workspaceText[1]}<ArrowRight size={16} /></button></div></header>
+          <section className="business-overview" aria-label={workspaceText[7]}>
+            <header className="business-overview-head">
+              <div>
+                <h2>{workspaceText[7]}</h2>
+              </div>
+              <button type="button" onClick={() => selectWorkspaceView('results')}>
+                {workspaceText[9]} <ArrowRight size={14} aria-hidden="true" />
+              </button>
+            </header>
+            <div className="business-overview-grid">
+              <button type="button" onClick={() => selectWorkspaceView('projects')}>
+                <span className="business-overview-icon"><ClipboardList size={17} /></span>
+                <span className="business-overview-body">
+                  <small>{workspaceText[10]}</small>
+                  <strong>{workspace.projects.length}</strong>
+                </span>
+                <ArrowRight className="business-overview-arrow" size={15} aria-hidden="true" />
+              </button>
+              <button type="button" onClick={() => selectWorkspaceView('questionnaires')}>
+                <span className="business-overview-icon"><Pencil size={17} /></span>
+                <span className="business-overview-body">
+                  <small>{workspaceText[11]}</small>
+                  <strong>{questionnaireDraftCount}</strong>
+                </span>
+                <ArrowRight className="business-overview-arrow" size={15} aria-hidden="true" />
+              </button>
+              <button type="button" onClick={() => selectWorkspaceView('projects')}>
+                <span className="business-overview-icon"><FileText size={17} /></span>
+                <span className="business-overview-body">
+                  <small>{workspaceText[12]}</small>
+                  <strong>{planningCount}</strong>
+                </span>
+                <ArrowRight className="business-overview-arrow" size={15} aria-hidden="true" />
+              </button>
+              <button type="button" onClick={() => selectWorkspaceView('results')}>
+                <span className="business-overview-icon"><BarChart3 size={17} /></span>
+                <span className="business-overview-body">
+                  <small>{workspaceText[13]}</small>
+                  <strong>{responseCount}</strong>
+                </span>
+                <ArrowRight className="business-overview-arrow" size={15} aria-hidden="true" />
+              </button>
+            </div>
+          </section>
           <div className="business-dashboard-actions">
             <button type="button" onClick={() => openNewProject()}><span className="is-purple"><Plus size={21} /></span><div><strong>{workspaceText[1]}</strong><small>{workspaceText[2]}</small></div><ArrowRight size={17} /></button>
             <button type="button" onClick={() => navigate(withLanguage('/business/ai-brief', language))}><span className="is-amber"><Sparkles size={21} /></span><div><strong>{workspaceText[3]}</strong><small>{workspaceText[4]}</small></div><ArrowRight size={17} /></button>
