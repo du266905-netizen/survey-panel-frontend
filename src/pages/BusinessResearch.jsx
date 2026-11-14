@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import BusinessAiPrompt from '../components/BusinessAiPrompt';
+import BusinessContactBand from '../components/BusinessContactBand';
 import BusinessTopNav from '../components/BusinessTopNav';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { pick } from '../content/projectStatus';
@@ -132,6 +133,8 @@ export default function BusinessResearch() {
         <div className="business-research-ai">
           <BusinessAiPrompt />
         </div>
+
+        <BusinessContactBand />
       </div>
 
       {active && (

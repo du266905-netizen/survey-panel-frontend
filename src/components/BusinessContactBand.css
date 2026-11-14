@@ -34,10 +34,11 @@
 .business-contact-band-copy h2 {
   margin: 0;
   color: #ffffff;
-  /* Same scale as the greeting above: 300 weight, clamp(38, 4vw, 54),
-     line-height 1.08, -0.03em. */
-  font: 300 clamp(38px, 4vw, 54px)/1.08 var(--font-sans);
-  letter-spacing: -.03em;
+  /* 38 / 600 in the reading serif — the step this page uses for a section
+     title, not the greeting's display size. */
+  font: 600 38px/1.08 var(--font-reading, var(--font-serif));
+  font-optical-sizing: auto;
+  letter-spacing: -.028em;
 }
 
 .business-contact-band-sub {
