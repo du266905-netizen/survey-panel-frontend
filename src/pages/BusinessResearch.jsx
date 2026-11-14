@@ -114,7 +114,7 @@ export default function BusinessResearch() {
     <main className="business-research">
       <BusinessTopNav activeId="research" />
       <div className="business-research-inner">
-        <h1 className="business-research-sr-only">{pick(language, '研究服务', 'Research services', '研究服務')}</h1>
+        <h1 className="business-research-title">{pick(language, '探索场景', 'Explore scenarios', '探索場景')}</h1>
         <section className="business-research-services">
           <div className="business-research-grid">
             {services.map((service) => (

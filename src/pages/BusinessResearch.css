@@ -5,9 +5,9 @@
 }
 
 .business-research-inner {
-  width: min(1120px, calc(100% - 48px));
+  width: min(1200px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 24px 0 64px;
+  padding: 30px 0 64px;
 }
 
 .business-research-services {
@@ -17,14 +17,17 @@
 .business-research-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: 30px 24px;
 }
 
 .business-research-card {
   display: flex;
   position: relative;
+  width: 100%;
+  max-width: 250px;
   min-height: 0;
   aspect-ratio: 1 / 1;
+  justify-self: center;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
@@ -222,6 +225,16 @@
 }
 
 
+.business-research-title {
+  margin: 0 0 20px;
+  color: #141413;
+  font-family: var(--font-reading, var(--font-serif));
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+}
+
 .business-research-sr-only {
   position: absolute;
   width: 1px;
@@ -260,4 +273,11 @@
 .business-research-card-meta {
   color: #8D948D;
   font: 400 11px/1.5 var(--font-sans);
+}
+
+
+@media (max-width: 480px) {
+  .business-research-card {
+    max-width: none;
+  }
 }
