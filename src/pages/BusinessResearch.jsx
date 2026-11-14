@@ -117,13 +117,13 @@ export default function BusinessResearch() {
         <h1 className="business-research-sr-only">{pick(language, '研究服务', 'Research services', '研究服務')}</h1>
         <section className="business-research-services">
           <div className="business-research-grid">
-            {services.map((service, index) => (
+            {services.map((service) => (
               <button key={service.id} type="button" className="business-research-card" onClick={() => setActive(service)} aria-haspopup="dialog">
-                <span className="business-research-index">{String(index + 1).padStart(2, '0')}</span>
                 <div className="business-research-card-copy">
                   <h3>{service.title}</h3>
                   <p>{service.body}</p>
                 </div>
+                <span className="business-research-card-meta">{service.meta}</span>
               </button>
             ))}
           </div>

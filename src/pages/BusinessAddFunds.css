@@ -682,3 +682,76 @@
   align-self: start;
   background: #FAF9F5;
 }
+
+/* Restore the original 1060px sheet: centred, two columns, white summary,
+   internal scrolling. The overlay only supplies the blur behind it. */
+.business-topup-modal {
+  padding: clamp(16px, 3vw, 40px);
+}
+
+.business-topup-modal .business-topup-dialog {
+  display: grid;
+  width: 100%;
+  place-items: center;
+}
+
+.business-topup-modal .business-topup-card {
+  display: grid;
+  width: min(100%, 1060px);
+  max-height: min(92svh, 880px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 28px 80px rgba(20, 20, 19, .24);
+}
+
+.business-topup-modal .business-topup-main {
+  overflow-y: auto;
+  border: 0;
+  border-radius: 0;
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+}
+
+.business-topup-modal .business-topup-summary {
+  position: static;
+  align-self: auto;
+  overflow-y: auto;
+  border: 0;
+  border-left: 1px solid #E5E3DD;
+  border-radius: 0;
+  background: #FFFFFF;
+}
+
+@media (max-width: 800px) {
+  .business-topup-modal {
+    align-items: end;
+    padding: 0;
+  }
+
+  .business-topup-modal .business-topup-card {
+    display: flex;
+    width: 100%;
+    max-height: 94svh;
+    flex-direction: column;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .business-topup-modal .business-topup-main {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+
+  .business-topup-modal .business-topup-summary {
+    flex: 0 0 auto;
+    max-height: 46svh;
+    overflow-y: auto;
+    border-top: 1px solid #E5E3DD;
+    border-left: 0;
+    background: #FFFFFF;
+  }
+}
