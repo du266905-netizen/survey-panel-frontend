@@ -168,7 +168,7 @@
   flex: 1 1 0;
   justify-content: center;
   min-height: 46px;
-  border: 1px solid #D8D5CD;
+  border: 1px solid #141413;
   border-radius: 6px;
   background: #FFFFFF;
   color: #141413;
@@ -183,14 +183,13 @@
 }
 
 .business-research-dialog-actions button.is-solid {
-  border-color: #DEEF24;
-  background: #DEEF24;
-  color: #141413;
+  border-color: #141413;
+  background: #141413;
+  color: #FFFFFF;
 }
 
 .business-research-dialog-actions button.is-solid:hover {
-  border-color: #c9db10;
-  background: #c9db10;
+  background: #2B2B2B;
 }
 
 @media (max-width: 900px) {
