@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import sceneConsumer from '../assets/research/scene-consumer.webp';
 import sceneProduct from '../assets/research/scene-product.webp';
+import sceneBrand from '../assets/research/scene-brand.webp';
 import BusinessAiPrompt from '../components/BusinessAiPrompt';
 import BusinessContactBand from '../components/BusinessContactBand';
 import BusinessTopNav from '../components/BusinessTopNav';
@@ -61,17 +62,34 @@ export default function BusinessResearch() {
     },
     {
       id: 'brand',
+      image: sceneBrand,
       title: pick(language, '品牌与传播', 'Brand & communications', '品牌與傳播'),
       body: pick(language, '评估品牌认知、传播效果与 campaign 方向。', 'Measure brand perception, campaign effect and direction.', '評估品牌認知、傳播效果與 campaign 方向。'),
+      story: [
+        pick(language, '看清品牌在真实人群心里的位置，以及一次传播到底改变了什么。',
+          'See where the brand actually sits with real audiences, and what a campaign really changed.',
+          '看清品牌在真實人群心裡的位置，以及一次傳播到底改變了什麼。'),
+        pick(language, '从品牌认知、考虑与购买意向的追踪，到广告记忆与说服力测试，再到传播前后与竞品的对照，我们把「有没有用」说清楚。',
+          'From tracking awareness, consideration and purchase intent, to ad recall and persuasion testing, to before-and-after comparison against competitors, whether it worked is answered plainly.',
+          '從品牌認知、考慮與購買意向的追蹤，到廣告記憶與說服力測試，再到傳播前後與競品的對照，我們把「有沒有用」說清楚。'),
+      ],
       detail: pick(language, '看品牌在真实受众心里的位置，以及一次传播究竟改变了什么。', 'See where the brand sits in real audiences, and what a campaign actually changed.', '看品牌在真實受眾心裡的位置，以及一次傳播究竟改變了什麼。'),
-      meta: pick(language, '品牌认知 · 传播诊断 · 态度变化', 'Brand perception · communication diagnosis · attitude shift', '品牌認知 · 傳播診斷 · 態度變化'),
+      meta: pick(language, '品牌追踪 · 广告前测 · 传播效果评估 等', 'Brand tracking · Ad pre-testing · Campaign evaluation', '品牌追蹤 · 廣告前測 · 傳播效果評估 等'),
     },
     {
       id: 'cx',
       title: pick(language, '客户体验', 'Customer experience', '客戶體驗'),
       body: pick(language, '沿着真实旅程找摩擦点、断点与改进优先级。', 'Find friction, drop-off and priorities across the real journey.', '沿著真實旅程找摩擦點、斷點與改進優先級。'),
+      story: [
+        pick(language, '看清客户从第一次接触、下单到复购或流失，究竟卡在哪一步。',
+          'See where customers actually stall, from first contact and purchase to repeat or churn.',
+          '看清客戶從第一次接觸、下單到復購或流失，究竟卡在哪一步。'),
+        pick(language, '从旅程梳理与触点诊断，到满意度、NPS 与流失原因，再到改进优先级的排序，我们把「先修哪一段」说清楚。',
+          'From journey mapping and touchpoint diagnosis, to satisfaction, NPS and churn reasons, to a ranked list of what to fix first, the next repair is named.',
+          '從旅程梳理與觸點診斷，到滿意度、NPS 與流失原因，再到改進優先級的排序，我們把「先修哪一段」說清楚。'),
+      ],
       detail: pick(language, '从第一次接触到复购或流失，按真实路径还原体验，而不是只看满意度分数。', 'Reconstruct the experience from first touch to repeat or churn, not just a satisfaction score.', '從第一次接觸到復購或流失，按真實路徑還原體驗，而不是只看滿意度分數。'),
-      meta: pick(language, '旅程地图 · 摩擦点 · 优先级', 'Journey map · friction points · priorities', '旅程地圖 · 摩擦點 · 優先級'),
+      meta: pick(language, '旅程研究 · 触点诊断 · 满意度与 NPS 等', 'Journey research · Touchpoint diagnosis · NPS', '旅程研究 · 觸點診斷 · 滿意度與 NPS 等'),
     },
     {
       id: 'cati',
