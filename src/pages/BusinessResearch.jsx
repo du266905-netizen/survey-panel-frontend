@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import sceneConsumer from '../assets/research/scene-consumer.webp';
 import sceneProduct from '../assets/research/scene-product.webp';
 import sceneBrand from '../assets/research/scene-brand.webp';
+import sceneExperience from '../assets/research/scene-experience.webp';
 import BusinessAiPrompt from '../components/BusinessAiPrompt';
 import BusinessContactBand from '../components/BusinessContactBand';
 import BusinessTopNav from '../components/BusinessTopNav';
@@ -78,6 +79,7 @@ export default function BusinessResearch() {
     },
     {
       id: 'cx',
+      image: sceneExperience,
       title: pick(language, '客户体验', 'Customer experience', '客戶體驗'),
       body: pick(language, '沿着真实旅程找摩擦点、断点与改进优先级。', 'Find friction, drop-off and priorities across the real journey.', '沿著真實旅程找摩擦點、斷點與改進優先級。'),
       story: [
