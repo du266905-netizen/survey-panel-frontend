@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import sceneConsumer from '../assets/research/scene-consumer.webp';
+import sceneProduct from '../assets/research/scene-product.webp';
 import BusinessAiPrompt from '../components/BusinessAiPrompt';
 import BusinessContactBand from '../components/BusinessContactBand';
 import BusinessTopNav from '../components/BusinessTopNav';
@@ -44,6 +45,7 @@ export default function BusinessResearch() {
     },
     {
       id: 'product',
+      image: sceneProduct,
       title: pick(language, '产品、定价与概念测试', 'Product, pricing & concept testing', '產品、定價與概念測試'),
       body: pick(language, '比较概念、包装、价格与组合的市场接受度。', 'Test concepts, packs, prices and bundles.', '比較概念、包裝、價格與組合的市場接受度。'),
       story: [
