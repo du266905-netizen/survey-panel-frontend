@@ -244,7 +244,15 @@
     border-bottom: 0;
     border-left: 0;
     border-radius: 12px 12px 0 0;
-    padding: 24px 20px;
+    padding: 0;
+  }
+
+  .business-research-dialog-body {
+    padding: 22px 20px 24px;
+  }
+
+  .business-research-dialog-actions {
+    flex-direction: column-reverse;
   }
 }
 
