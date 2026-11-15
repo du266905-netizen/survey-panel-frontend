@@ -21,7 +21,7 @@
   background-image:
     linear-gradient(270deg, rgba(12, 14, 17, .58) 0%, rgba(12, 14, 17, .3) 26%, rgba(12, 14, 17, 0) 54%),
     linear-gradient(96deg, rgba(12, 14, 17, .64) 0%, rgba(12, 14, 17, .42) 42%, rgba(12, 14, 17, .14) 72%, rgba(12, 14, 17, .02) 100%),
-    url('../assets/contact/research-sales-meeting.jpg');
+    url('../assets/contact/band-office.webp');
   background-position: center, center, center 42%;
   background-repeat: no-repeat;
   background-size: cover, cover, cover;
@@ -149,7 +149,7 @@
     gap: 26px;
     background-image:
       linear-gradient(180deg, rgba(12, 14, 17, .62) 0%, rgba(12, 14, 17, .46) 45%, rgba(12, 14, 17, .68) 100%),
-      url('../assets/contact/research-sales-meeting.jpg');
+      url('../assets/contact/band-office.webp');
     background-position: center, center 40%;
     background-size: cover, cover;
     padding: 32px 24px;
