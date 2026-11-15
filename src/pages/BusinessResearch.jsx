@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import sceneConsumer from '../assets/research/scene-consumer.webp';
 import BusinessAiPrompt from '../components/BusinessAiPrompt';
 import BusinessContactBand from '../components/BusinessContactBand';
 import BusinessTopNav from '../components/BusinessTopNav';
@@ -29,8 +30,20 @@ export default function BusinessResearch() {
       id: 'consumer',
       title: pick(language, '消费者与市场反应', 'Consumer & market response', '消費者與市場反應'),
       body: pick(language, '理解人们对产品、品牌与传播的真实反应。', 'What people actually think, feel and do.', '理解人們對產品、品牌與傳播的真實反應。'),
+      image: sceneConsumer,
+      story: [
+        pick(language, '了解一个品类里谁在用、为什么用、用完还买不买，是判断下一步的前提。',
+          'Knowing who uses a category, why they use it, and whether they come back is what the next decision rests on.',
+          '了解一個品類裡誰在用、為什麼用、用完還買不買，是判斷下一步的前提。'),
+        pick(language, '无论你在推新品、调价格，还是刚投完一轮传播，我们都可以用综合调查或定制目标调查，覆盖五个区域、三十四个国家与地区，给出可比较的数据，最快 24 小时拿到第一轮结果。',
+          'Whether you are launching, repricing or just finished a campaign, a syndicated or targeted survey covers five regions and 34 countries and territories, with comparable data and a first read within 24 hours.',
+          '無論你在推新品、調價格，還是剛投完一輪傳播，我們都可以用綜合調查或定製目標調查，覆蓋五個區域、三十四個國家與地區，給出可比較的數據，最快 24 小時拿到第一輪結果。'),
+        pick(language, '需要解释「为什么」时，再由研究人员用访谈和小组补上。',
+          'Where the why matters, researchers follow up with interviews and groups.',
+          '需要解釋「為什麼」時，再由研究人員用訪談和小組補上。'),
+      ],
       detail: pick(language, '先听真实用户怎么描述一个新品类、一次传播或一个市场假设，再决定下一步。', 'Hear how real people describe a new category, a campaign or a market assumption before deciding the next move.', '先聽真實用戶怎麼描述一個新品類、一次傳播或一個市場假設，再決定下一步。'),
-      meta: pick(language, '深度访谈 · 在线社区 · 主题分析', 'In-depth interviews · online community · thematic analysis', '深度訪談 · 在線社區 · 主題分析'),
+      meta: pick(language, 'U&A 调查 · 品牌追踪 · 焦点小组 等', 'U&A survey · Brand tracking · Focus groups', 'U&A 調查 · 品牌追蹤 · 焦點小組 等'),
     },
     {
       id: 'product',
@@ -143,12 +156,32 @@ export default function BusinessResearch() {
             <button type="button" className="business-research-close" onClick={() => setActive(null)} aria-label={pick(language, '关闭', 'Close', '關閉')}>
               <X size={18} strokeWidth={1.8} aria-hidden="true" />
             </button>
-            <h2 id="business-research-dialog-title">{active.title}</h2>
-            <p className="business-research-dialog-lede">{active.detail}</p>
-            <p className="business-research-dialog-meta">{active.meta}</p>
-            <div className="business-research-dialog-actions">
-              <button type="button" onClick={() => go('/business/custom-questionnaire')}>{pick(language, '定制研究', 'Custom research', '定製研究')}</button>
-              <button type="button" className="is-solid" onClick={() => go('/business/workspace?view=questionnaires')}>{pick(language, '调查 × 24h', 'Survey × 24h', '調查 × 24h')}</button>
+            {active.image && (
+              <figure className="business-research-dialog-figure">
+                <img src={active.image} alt="" loading="lazy" decoding="async" />
+              </figure>
+            )}
+            <div className="business-research-dialog-body">
+              <h2 id="business-research-dialog-title">{active.title}</h2>
+              {(active.story || [active.detail]).map((paragraph) => (
+                <p key={paragraph} className="business-research-dialog-lede">{paragraph}</p>
+              ))}
+              <p className="business-research-dialog-meta">
+                <span>{pick(language, '方法论', 'Methodology', '方法論')}</span>
+                {active.meta}
+              </p>
+              <div className="business-research-dialog-actions">
+                <button
+                  type="button"
+                  className="is-solid"
+                  onClick={() => { setActive(null); navigate(withLanguage('/business/workspace?new=1', language)); }}
+                >
+                  {pick(language, '开展研究', 'Start a study', '開展研究')}
+                </button>
+                <button type="button" onClick={() => { setActive(null); go('/business/access'); }}>
+                  {pick(language, '联系我们', 'Contact us', '聯絡我們')}
+                </button>
+              </div>
             </div>
           </section>
         </div>

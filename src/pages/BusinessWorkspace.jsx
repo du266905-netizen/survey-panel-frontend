@@ -333,6 +333,14 @@ export default function BusinessWorkspace() {
     setActiveView(viewFromLocation(location.pathname, location.search));
   }, [location.pathname, location.search]);
 
+  /* /business/workspace?new=1 is how every surface reaches the new-project
+     chooser (the greeting button opens it in place; research sends a route). */
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get('new') !== '1') return;
+    setOpenChooser(true);
+    navigate(withLanguage('/business/workspace', language), { replace: true });
+  }, [location.search]);
+
   const selectWorkspaceView = (view) => {
     const target = ({
       projects: '/business/projects',

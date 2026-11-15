@@ -79,15 +79,31 @@
 
 .business-research-dialog {
   position: relative;
-  width: min(560px, 100%);
+  width: min(760px, 100%);
   max-height: calc(100svh - 48px);
   overflow-y: auto;
   border: 1px solid #E5E3DD;
   border-radius: 12px;
   background: #FFFFFF !important;
   box-shadow: 0 24px 70px rgba(20, 20, 19, .16);
-  padding: 28px;
+  padding: 0;
   opacity: 1;
+}
+
+/* Notion-style: a 16:9 cover at the top, the copy below it. */
+.business-research-dialog-figure {
+  margin: 0;
+}
+
+.business-research-dialog-figure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.business-research-dialog-body {
+  padding: 28px 32px 30px;
 }
 
 .business-research-close {
@@ -99,19 +115,21 @@
   height: 30px;
   place-items: center;
   border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: #5F6862;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .92);
+  color: #141413;
+  box-shadow: 0 2px 10px rgba(20, 20, 19, .18);
   cursor: pointer;
 }
 
 .business-research-close:hover {
-  background: #FAF9F5;
+  background: #FFFFFF;
   color: #141413;
 }
 
 .business-research-dialog h2 {
   max-width: calc(100% - 36px);
+  padding-right: 36px;
   margin: 0;
   color: #141413;
   font-family: var(--font-reading, var(--font-serif));
@@ -128,21 +146,28 @@
 }
 
 .business-research-dialog-meta {
-  margin: 12px 0 0;
+  margin: 16px 0 0;
   color: #8D948D;
   font: 400 13px/1.5 var(--font-sans);
+}
+
+.business-research-dialog-meta span {
+  margin-right: 10px;
+  color: #141413;
+  font-weight: 500;
 }
 
 .business-research-dialog-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 22px;
+  gap: 10px;
+  margin-top: 26px;
 }
 
 .business-research-dialog-actions button {
-  min-height: 40px;
+  flex: 1 1 0;
+  justify-content: center;
+  min-height: 46px;
   border: 1px solid #D8D5CD;
   border-radius: 6px;
   background: #FFFFFF;
@@ -158,13 +183,14 @@
 }
 
 .business-research-dialog-actions button.is-solid {
-  border-color: #141413;
-  background: #141413;
-  color: #FFFFFF;
+  border-color: #DEEF24;
+  background: #DEEF24;
+  color: #141413;
 }
 
 .business-research-dialog-actions button.is-solid:hover {
-  background: #2B2B2B;
+  border-color: #c9db10;
+  background: #c9db10;
 }
 
 @media (max-width: 900px) {
