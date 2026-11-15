@@ -5,6 +5,14 @@ import sceneConsumer from '../assets/research/scene-consumer.webp';
 import sceneProduct from '../assets/research/scene-product.webp';
 import sceneBrand from '../assets/research/scene-brand.webp';
 import sceneExperience from '../assets/research/scene-experience.webp';
+import sceneCati from '../assets/research/scene-cati.webp';
+import sceneQual from '../assets/research/scene-qual.webp';
+import sceneB2b from '../assets/research/scene-b2b.webp';
+import sceneHealth from '../assets/research/scene-health.webp';
+import sceneAcademic from '../assets/research/scene-academic.webp';
+import sceneAdvertising from '../assets/research/scene-advertising.webp';
+import sceneSample from '../assets/research/scene-sample.webp';
+import sceneLongitudinal from '../assets/research/scene-longitudinal.webp';
 import BusinessAiPrompt from '../components/BusinessAiPrompt';
 import BusinessContactBand from '../components/BusinessContactBand';
 import BusinessTopNav from '../components/BusinessTopNav';
@@ -95,59 +103,99 @@ export default function BusinessResearch() {
     },
     {
       id: 'cati',
+      image: sceneCati,
       title: pick(language, 'CATI 电话访问', 'CATI telephone interviewing', 'CATI 電話訪問'),
       body: pick(language, '通过计算机辅助电话访问触达难触达人群。', 'Reach harder-to-reach audiences through computer-assisted telephone interviewing.', '透過電腦輔助電話訪問觸達難觸達人群。'),
-      detail: pick(language, '需要电话覆盖、固定样本或特定地区人群时，由访员按结构化问卷执行访问。', 'When a study needs telephone coverage, a fixed sample or a specific region, interviewers run a structured questionnaire.', '需要電話覆蓋、固定樣本或特定地區人群時，由訪員按結構化問卷執行訪問。'),
-      meta: pick(language, '电话访问 · 结构化问卷 · 访员执行', 'Telephone interviews · structured questionnaire · interviewer-led', '電話訪問 · 結構化問卷 · 訪員執行'),
+      story: [
+        pick(language, '用电话触达线上样本覆盖不到的人。', 'Reach the people online panels miss.', '用電話觸達線上樣本覆蓋不到的人。'),
+        pick(language, '从按地区与人群抽号，到访员按结构化问卷执行，再到完成率与质量的逐条核查，电话这一路补齐的是「人找不到」的部分。', 'From drawing numbers by region and audience, to interviewers running a structured questionnaire, to checking completion and quality case by case, the telephone route covers the people who cannot be found online.', '從按地區與人群抽號，到訪員按結構化問卷執行，再到完成率與質量的逐條核查，電話這一路補齊的是「人找不到」的部分。'),
+      ],
+      meta: pick(language, '电话访问 · 结构化问卷 · 配额抽样 等', 'Telephone interviews · Structured questionnaire · Quota sampling', '電話訪問 · 結構化問卷 · 配額抽樣 等'),
+
     },
     {
       id: 'qual',
+      image: sceneQual,
       title: pick(language, '定性研究', 'Qualitative research', '定性研究'),
       body: pick(language, '用深度访谈、焦点小组和可用性测试解释“为什么”。', 'Explain the “why” through interviews, groups and usability work.', '用深度訪談、焦點小組和可用性測試解釋「為什麼」。'),
-      detail: pick(language, '数字说明发生了什么，访谈和焦点小组解释为什么发生、还有哪些可能。', 'Numbers show what happened; interviews and focus groups explain why and what else is possible.', '數字說明發生了什麼，訪談和焦點小組解釋為什麼發生、還有哪些可能。'),
-      meta: pick(language, '深度访谈 · 焦点小组 · 可用性测试', 'In-depth interviews · focus groups · usability tests', '深度訪談 · 焦點小組 · 可用性測試'),
+      story: [
+        pick(language, '在数字解释不了的地方，用对话把原因问出来。', 'Where numbers stop explaining, ask people directly.', '在數字解釋不了的地方，用對話把原因問出來。'),
+        pick(language, '从一对一的深度访谈，到小组讨论，再到可用性测试里看人怎么操作，我们把「为什么」补齐。', 'From one-to-one interviews, to group discussions, to watching how people actually use something in usability sessions, the why gets filled in.', '從一對一的深度訪談，到小組討論，再到可用性測試裡看人怎麼操作，我們把「為什麼」補齊。'),
+      ],
+      meta: pick(language, '深度访谈 · 焦点小组 · 可用性测试 等', 'In-depth interviews · Focus groups · Usability tests', '深度訪談 · 焦點小組 · 可用性測試 等'),
+
     },
     {
       id: 'b2b',
+      image: sceneB2b,
       title: pick(language, 'B2B 与专家研究', 'B2B & expert research', 'B2B 與專家研究'),
       body: pick(language, '访谈商业决策者、专家与渠道伙伴。', 'Interview business decision-makers, experts and channel partners.', '訪談商業決策者、專家與渠道夥伴。'),
-      detail: pick(language, '面向企业、机构与渠道的决策链，弄清采购标准、预算和真正的采用障碍。', 'Work through the decision chain across businesses, institutions and channels to find buying criteria, budgets and real adoption barriers.', '面向企業、機構與渠道的決策鏈，弄清採購標準、預算和真正的採用障礙。'),
-      meta: pick(language, '决策者 · 专家 · 渠道伙伴', 'Decision-makers · experts · channel partners', '決策者 · 專家 · 渠道夥伴'),
+      story: [
+        pick(language, '走进企业、机构与渠道，问清采购与采用是怎么决定的。', 'Find out how businesses, institutions and channels actually decide.', '走進企業、機構與渠道，問清採購與採用是怎麼決定的。'),
+        pick(language, '从决策链上的角色分工，到采购标准与预算，再到渠道与落地的障碍，我们把企业侧的判断问清楚。', 'From who does what along the decision chain, to buying criteria and budgets, to channel and adoption barriers, the business-side judgement is made explicit.', '從決策鏈上的角色分工，到採購標準與預算，再到渠道與落地的障礙，我們把企業側的判斷問清楚。'),
+      ],
+      meta: pick(language, '决策者研究 · 专家访谈 · 渠道研究 等', 'Decision-maker research · Expert interviews · Channel research', '決策者研究 · 專家訪談 · 渠道研究 等'),
+
     },
     {
       id: 'health',
+      image: sceneHealth,
       title: pick(language, '医疗健康与生命科学', 'Healthcare & life sciences', '醫療健康與生命科學'),
       body: pick(language, '面向患者、照护者与临床团队的研究设计。', 'Research with patients, caregivers and clinical teams.', '面向患者、照護者與臨床團隊的研究設計。'),
-      detail: pick(language, '在合规与伦理边界内，理解患者路径、治疗体验和临床沟通。', 'Understand patient pathways, treatment experience and clinical communication within ethical and regulatory boundaries.', '在合規與倫理邊界內，理解患者路徑、治療體驗與臨床溝通。'),
-      meta: pick(language, '患者 · 照护者 · 临床团队', 'Patients · caregivers · clinical teams', '患者 · 照護者 · 臨床團隊'),
+      story: [
+        pick(language, '面向患者、照护者与临床团队做研究设计。', 'Research designed around patients, caregivers and clinical teams.', '面向患者、照護者與臨床團隊做研究設計。'),
+        pick(language, '从患者路径与治疗体验，到合规边界内的问卷执行，再到结果的可复核性，这一行的特殊性我们照顾到。', 'From patient pathways and treatment experience, to fieldwork inside ethical and regulatory limits, to results that can be reviewed, the specifics of this field are built in.', '從患者路徑與治療體驗，到合規邊界內的問卷執行，再到結果的可複核性，這一行的特殊性我們照顧到。'),
+      ],
+      meta: pick(language, '患者研究 · 临床团队调查 · 合规抽样 等', 'Patient research · Clinical team surveys · Compliant sampling', '患者研究 · 臨床團隊調查 · 合規抽樣 等'),
+
     },
     {
       id: 'academic',
+      image: sceneAcademic,
       title: pick(language, '学术与公共政策研究', 'Academic & public policy research', '學術與公共政策研究'),
       body: pick(language, '为学术、公共政策与社会议题提供可引用证据。', 'Evidence for academic, public-policy and social questions.', '為學術、公共政策與社會議題提供可引用證據。'),
-      detail: pick(language, '为需要严谨样本、可复核方法和可引用结论的学术或公共议题提供证据。', 'Evidence for academic or public questions that need rigorous sampling, reviewable methods and citable conclusions.', '為需要嚴謹樣本、可複核方法和可引用結論的學術或公共議題提供證據。'),
-      meta: pick(language, '严谨抽样 · 可复核方法 · 可引用结论', 'Rigorous sampling · reviewable methods · citable conclusions', '嚴謹抽樣 · 可複核方法 · 可引用結論'),
+      story: [
+        pick(language, '为学术、公共政策与社会议题提供可引用的证据。', 'Citable evidence for academic, public-policy and social questions.', '為學術、公共政策與社會議題提供可引用的證據。'),
+        pick(language, '从抽样与配额设计，到可复核的问卷与数据说明，再到能被引用的结论，方法写清楚，别人才敢引。', 'From sampling and quota design, to reviewable questionnaires and data notes, to conclusions others can cite, the method is written down so it can be checked.', '從抽樣與配額設計，到可複核的問卷與數據說明，再到能被引用的結論，方法寫清楚，別人才敢引。'),
+      ],
+      meta: pick(language, '抽样设计 · 可复核方法 · 数据说明 等', 'Sampling design · Reviewable methods · Data notes', '抽樣設計 · 可複核方法 · 數據說明 等'),
+
     },
     {
       id: 'advertising',
+      image: sceneAdvertising,
       title: pick(language, '广告效果测试', 'Advertising effectiveness', '廣告效果測試'),
       body: pick(language, '测量广告记忆、说服力与投放后的行为变化。', 'Measure ad recall, persuasion and post-campaign behaviour.', '測量廣告記憶、說服力與投放後的行為變化。'),
-      detail: pick(language, '在投放前筛选方向，或在投放后判断广告是否真的改变了认知与行为。', 'Screen directions before launch, or judge whether a campaign actually changed perception and behaviour.', '在投放前篩選方向，或在投放後判斷廣告是否真的改變了認知與行為。'),
-      meta: pick(language, '前测 · 记忆 · 说服力', 'Pre-testing · recall · persuasion', '前測 · 記憶 · 說服力'),
+      story: [
+        pick(language, '测量广告记忆、说服力与投放后的变化。', 'Measure ad recall, persuasion and what changed after launch.', '測量廣告記憶、說服力與投放後的變化。'),
+        pick(language, '从投放前的创意筛选，到投放中的记忆与态度，再到投放后与竞品的对照，我们把「有没有用」量出来。', 'From creative screening before launch, to recall and attitude during the campaign, to the comparison against competitors afterwards, whether it worked is measured.', '從投放前的創意篩選，到投放中的記憶與態度，再到投放後與競品的對照，我們把「有沒有用」量出來。'),
+      ],
+      meta: pick(language, '广告前测 · 记忆与说服力 · 品牌提升 等', 'Ad pre-testing · Recall and persuasion · Brand lift', '廣告前測 · 記憶與說服力 · 品牌提升 等'),
+
     },
     {
       id: 'sample',
+      image: sceneSample,
       title: pick(language, '样本与招募', 'Sample & recruitment', '樣本與招募'),
       body: pick(language, '按人群、地区与条件招募真实受访者。', 'Recruit real respondents by audience, geography and criteria.', '按人群、地區與條件招募真實受訪者。'),
-      detail: pick(language, '按人群、地区与配额招募受访者，从普通消费者到难触达的专业人群。', 'Recruit respondents by audience, geography and quota, from general consumers to hard-to-reach professionals.', '按人群、地區與配額招募受訪者，從普通消費者到難觸達的專業人群。'),
-      meta: pick(language, '人群 · 地区 · 配额', 'Audience · geography · quotas', '人群 · 地區 · 配額'),
+      story: [
+        pick(language, '按人群、地区与条件招募真实受访者。', 'Recruit real respondents by audience, region and criteria.', '按人群、地區與條件招募真實受訪者。'),
+        pick(language, '从配额设计，到多渠道招募与身份核查，再到超发与拒付的验收口径，样本这一层做实。', 'From quota design, to multi-channel recruitment and identity checks, to the acceptance rules for over-quota and rejected interviews, the sample is held to a standard.', '從配額設計，到多渠道招募與身份核查，再到超發與拒付的驗收口徑，樣本這一層做實。'),
+      ],
+      meta: pick(language, '配额抽样 · 多渠道招募 · 质量核查 等', 'Quota sampling · Multi-channel recruitment · Quality checks', '配額抽樣 · 多渠道招募 · 質量核查 等'),
+
     },
     {
       id: 'longitudinal',
+      image: sceneLongitudinal,
       title: pick(language, '纵向追踪与再访', 'Longitudinal & re-contact research', '縱向追蹤與再訪'),
       body: pick(language, '对同一批人重复访问，观察随时间的变化。', 'Return to the same people over time to see what changes.', '對同一批人重複訪問，觀察隨時間的變化。'),
-      detail: pick(language, '对同一批人重复访问，看认知、行为或关系随时间怎么变。', 'Return to the same people over time to see how perception, behaviour or relationships change.', '對同一批人重複訪問，看認知、行為或關係隨時間怎麼變。'),
-      meta: pick(language, '固定样本 · 波次对比 · 再访', 'Fixed sample · wave comparison · re-contact', '固定樣本 · 波次對比 · 再訪'),
+      story: [
+        pick(language, '对同一批人重复访问，看时间带来的变化。', 'Return to the same people over time and see what moves.', '對同一批人重複訪問，看時間帶來的變化。'),
+        pick(language, '从固定样本的建立，到分波复访与流失控制，再到跨波次的可比口径，我们把「变了多少」量出来。', 'From building a fixed sample, to wave-by-wave re-contact and attrition control, to a comparable measure across waves, how much changed is quantified.', '從固定樣本的建立，到分波複訪與流失控制，再到跨波次的可比口徑，我們把「變了多少」量出來。'),
+      ],
+      meta: pick(language, '固定样本 · 波次复访 · 追踪分析 等', 'Fixed sample · Wave re-contact · Tracking analysis', '固定樣本 · 波次複訪 · 追蹤分析 等'),
+
     },
   ];
 
