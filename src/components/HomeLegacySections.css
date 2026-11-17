@@ -766,7 +766,7 @@
 .home-global-clock {
   width: min(100% - 96px, 1280px);
   margin: clamp(20px, 2.4vw, 34px) auto 0;
-  padding: clamp(18px, 2vw, 26px) 0 clamp(56px, 6vw, 92px);
+  padding: clamp(18px, 2vw, 26px) 0 clamp(18px, 2vw, 22px);
   list-style: none;
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -848,32 +848,30 @@
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: none; }
 }
-.home-global-clock-more {
+.home-global-clock-foot {
+  width: min(100% - 96px, 1280px);
+  margin: 0 auto;
+  padding: 14px 0 clamp(56px, 6vw, 92px);
   display: flex;
-  align-items: flex-start;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(20, 20, 19, .1);
 }
 .home-global-clock-more-button {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 4px;
-  padding: 0 0 3px;
+  gap: 8px;
+  padding: 0;
   border: 0;
-  border-bottom: 1px solid rgba(20, 20, 19, .22);
   background: none;
-  color: #6F6A5E;
+  color: #141413;
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.2;
-  letter-spacing: .02em;
-  text-align: left;
-  transition: color .2s ease, border-color .2s ease;
+  letter-spacing: .04em;
+  transition: opacity .2s ease;
 }
-.home-global-clock-more-button:hover {
-  color: #141413;
-  border-bottom-color: #141413;
-}
+.home-global-clock-more-button:hover { opacity: .55; }
 .home-global-clock-more-arrow {
   transition: transform .2s ease;
 }

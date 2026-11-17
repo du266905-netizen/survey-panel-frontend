@@ -110,19 +110,19 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
           </li>
         );
       })}
-      <li className="home-global-clock-more">
-        <button
-          type="button"
-          className="home-global-clock-more-button"
-          aria-expanded={expanded}
-          aria-controls="world-clock-grid"
-          onClick={() => setExpanded((value) => !value)}
-        >
-          {expanded ? '收起' : `${cities.length - PRIMARY_COUNT} 个市场`}
-          <span aria-hidden="true" className="home-global-clock-more-arrow">{expanded ? '↑' : '→'}</span>
-        </button>
-      </li>
     </ul>
+    <div className="home-global-clock-foot">
+      <button
+        type="button"
+        className="home-global-clock-more-button"
+        aria-expanded={expanded}
+        aria-controls="world-clock-grid"
+        onClick={() => setExpanded((value) => !value)}
+      >
+        {expanded ? '收起' : `${cities.length - PRIMARY_COUNT} 个市场`}
+        <span aria-hidden="true" className="home-global-clock-more-arrow">{expanded ? '↑' : '→'}</span>
+      </button>
+    </div>
     </div>
   );
 }
