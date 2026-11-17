@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlobalGlobe from './GlobalGlobe';
+import WorldClockGrid from './WorldClockGrid';
 import brandMarkLight from '../assets/home/guanyi-brand-mark-light.png';
 import { footerIdentityTranslations, globalTranslations, navigationLabels } from '../constants/homepageTranslations';
 import { publicNavigation } from '../constants/publicNavigation';
@@ -353,6 +354,7 @@ export function HomeGlobalBand() {
       <div className="home-global-band-arc" aria-hidden="true">
         <div className="home-global-band-arc-globe"><GlobalGlobe tone="horizon" /></div>
       </div>
+      <WorldClockGrid />
     </section>
   );
 }

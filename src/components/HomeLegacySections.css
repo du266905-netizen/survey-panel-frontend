@@ -761,3 +761,55 @@
    gives up the full-screen height it had as a standalone page. */
 .home-join-section { background: #fff; padding: clamp(120px, 12vw, 200px) 0 clamp(96px, 9vw, 144px); }
 .home-join-section .home-choice { min-height: 0; padding: 0; }
+/* 2026-11-17: the world clock under the globe arc. Six columns, four rows,
+   Beijing first, then west to east. Times are live and share one timer. */
+.home-global-clock {
+  width: min(100% - 96px, 1280px);
+  margin: clamp(20px, 2.4vw, 34px) auto 0;
+  padding: clamp(18px, 2vw, 26px) 0 clamp(56px, 6vw, 92px);
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: clamp(14px, 1.8vw, 26px);
+  row-gap: clamp(24px, 2.4vw, 34px);
+  border-top: 1px solid rgba(20, 20, 19, .1);
+}
+.home-global-clock-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.home-global-clock-city {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: .005em;
+  color: #141413;
+  white-space: nowrap;
+}
+.home-global-clock-time {
+  font-family: var(--font-reading);
+  font-size: 22px;
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  color: #141413;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  white-space: nowrap;
+}
+.home-global-clock-seconds {
+  font-size: .5em;
+  letter-spacing: .01em;
+  color: #9c9587;
+  margin-left: 2px;
+}
+@media (max-width: 900px) {
+  .home-global-clock {
+    width: calc(100% - 40px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 20px;
+  }
+}
