@@ -772,7 +772,6 @@
   grid-template-columns: repeat(7, minmax(0, 1fr));
   column-gap: clamp(14px, 1.8vw, 26px);
   row-gap: clamp(24px, 2.4vw, 34px);
-  border-top: 1px solid rgba(20, 20, 19, .1);
 }
 .home-global-clock-cell {
   display: flex;
@@ -782,8 +781,9 @@
 }
 .home-global-clock-city {
   font-family: var(--font-sans);
-  font-size: 22px;
-  line-height: 1.15;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.2;
   letter-spacing: .005em;
   color: #141413;
   white-space: nowrap;
