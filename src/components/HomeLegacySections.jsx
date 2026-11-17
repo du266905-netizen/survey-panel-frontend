@@ -338,6 +338,7 @@ const globalBandCopy = {
 
 export function HomeGlobalBand() {
   const { language } = useLanguage();
+  const [activeMarker, setActiveMarker] = useState(null);
   const copy = globalBandCopy[language] || globalBandCopy['en-US'];
   /* CJK joins without a space; the newline in the title was a layout break, not
      a separator. */
@@ -352,9 +353,9 @@ export function HomeGlobalBand() {
       {/* 2026-11-12: the globe as a faint horizon under the copy — Stripe's
           treatment, not a ball beside the text. It still turns. */}
       <div className="home-global-band-arc" aria-hidden="true">
-        <div className="home-global-band-arc-globe"><GlobalGlobe tone="horizon" /></div>
+        <div className="home-global-band-arc-globe"><GlobalGlobe tone="horizon" activeMarkerId={activeMarker} /></div>
       </div>
-      <WorldClockGrid />
+      <WorldClockGrid onActiveMarkerChange={setActiveMarker} />
     </section>
   );
 }

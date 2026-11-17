@@ -813,3 +813,23 @@
     row-gap: 20px;
   }
 }
+
+/* 2026-11-18: who is at their desk. Cities outside 9–18 local recede; the rest
+   keep ink. Hovering a cell lights its country dot on the globe above. */
+.home-global-clock-cell {
+  transition: color .2s ease;
+}
+.home-global-clock-cell.is-away .home-global-clock-city,
+.home-global-clock-cell.is-away .home-global-clock-time {
+  color: #8C867A;
+}
+.home-global-clock-cell.is-away .home-global-clock-seconds {
+  color: #CFC9BA;
+}
+.home-global-clock-cell:hover .home-global-clock-city,
+.home-global-clock-cell:focus-visible .home-global-clock-city {
+  color: #000;
+}
+.home-global-clock-cell:focus-visible {
+  outline: none;
+}

@@ -56,8 +56,11 @@ const regionalConnections = [
   ['germany', 'switzerland'], ['germany', 'poland'], ['germany', 'sweden'], ['germany', 'france'], ['france', 'united-kingdom'], ['france', 'united-states'],
 ].map(([from, to]) => ({ type: 'LineString', coordinates: [markersById.get(from).coordinates, markersById.get(to).coordinates] }));
 
-export default function GlobalGlobe({ tone = 'light' }) {
+export default function GlobalGlobe({ tone = 'light', activeMarkerId = null }) {
   const canvasRef = useRef(null);
+  const activeRef = useRef(activeMarkerId);
+  const targetRef = useRef(null);
+  const drawRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -227,27 +230,41 @@ export default function GlobalGlobe({ tone = 'light' }) {
       });
 
       markerScreen.length = 0;
+      const activeId = activeRef.current;
       regionalMarkers.forEach((marker) => {
         const projected = projectVisiblePoint(marker.coordinates);
         if (!projected) return;
         const [x, y] = projected;
         markerScreen.push({ id: marker.id, label: marker.label || marker.id, x, y });
         const markerScale = palette.markerScale || 1;
-        const markerRadius = clamp(radius * 0.015, 2.6, 3.8) * markerScale;
+        const isActive = Boolean(activeId) && marker.id === activeId;
+        const isDimmed = Boolean(activeId) && !isActive;
+        const markerRadius = clamp(radius * 0.015, 2.6, 3.8) * markerScale * (isActive ? 1.45 : 1);
+
+        context.globalAlpha = isDimmed ? 0.28 : 1;
 
         context.beginPath();
-        context.arc(x, y, markerRadius * 1.95, 0, Math.PI * 2);
-        context.fillStyle = palette.markerHalo;
+        context.arc(x, y, markerRadius * (isActive ? 2.1 : 1.95), 0, Math.PI * 2);
+        context.fillStyle = isActive ? 'rgba(20, 20, 19, 0.16)' : palette.markerHalo;
         context.fill();
+
+        if (isActive) {
+          context.beginPath();
+          context.arc(x, y, markerRadius * 1.55, 0, Math.PI * 2);
+          context.strokeStyle = 'rgba(20, 20, 19, 0.55)';
+          context.lineWidth = 1.1;
+          context.stroke();
+        }
 
         context.beginPath();
         context.arc(x, y, markerRadius, 0, Math.PI * 2);
-        context.fillStyle = palette.marker;
+        context.fillStyle = isActive ? '#141413' : palette.marker;
         context.fill();
-        context.strokeStyle = palette.markerStroke;
-        context.lineWidth = 1.15;
+        context.strokeStyle = isActive ? '#ffffff' : palette.markerStroke;
+        context.lineWidth = isActive ? 1.6 : 1.15;
         context.stroke();
       });
+      context.globalAlpha = 1;
 
       const paperFalloff = context.createRadialGradient(center - radius * 0.26, center - radius * 0.28, radius * 0.08, center, center, radius * 1.04);
       paperFalloff.addColorStop(0, palette.falloff0);
@@ -289,10 +306,21 @@ export default function GlobalGlobe({ tone = 'light' }) {
       }
       const elapsed = Math.min(timestamp - lastFrame || 16, 40);
       lastFrame = timestamp;
-      if (!prefersReducedMotion && !isDragging && timestamp - lastDraw >= 16) {
-        rotation[0] += elapsed * (autoRotationDegreesPerSecond / 1000);
-        draw();
-        lastDraw = timestamp;
+      if (timestamp - lastDraw >= 16) {
+        const target = targetRef.current;
+        if (target && !isDragging) {
+          /* Turn the sphere until the hovered country faces us. Shortest path
+             on the longitude so it never spins the long way round. */
+          let delta = ((target[0] - rotation[0] + 540) % 360) - 180;
+          rotation[0] += delta * 0.12;
+          rotation[1] += (target[1] - rotation[1]) * 0.12;
+          draw();
+          lastDraw = timestamp;
+        } else if (!prefersReducedMotion && !isDragging) {
+          rotation[0] += elapsed * (autoRotationDegreesPerSecond / 1000);
+          draw();
+          lastDraw = timestamp;
+        }
       }
       frameId = window.requestAnimationFrame(render);
     };
@@ -351,6 +379,7 @@ export default function GlobalGlobe({ tone = 'light' }) {
     canvas.addEventListener('pointermove', pointerMove);
     canvas.addEventListener('pointerup', pointerUp);
     canvas.addEventListener('pointercancel', pointerUp);
+    drawRef.current = draw;
     resize();
     frameId = window.requestAnimationFrame(render);
 
@@ -366,6 +395,13 @@ export default function GlobalGlobe({ tone = 'light' }) {
       canvas.removeEventListener('pointercancel', pointerUp);
     };
   }, [tone]);
+
+  useEffect(() => {
+    activeRef.current = activeMarkerId;
+    const marker = activeMarkerId ? markersById.get(activeMarkerId) : null;
+    targetRef.current = marker ? [-marker.coordinates[0], -marker.coordinates[1]] : null;
+    drawRef.current?.();
+  }, [activeMarkerId]);
 
   return (
     <div className="landing-global-globe">
