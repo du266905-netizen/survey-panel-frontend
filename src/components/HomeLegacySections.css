@@ -838,3 +838,37 @@
 .home-global-clock-cell:focus-visible {
   outline: none;
 }
+
+/* 2026-11-18: the +14 cell. It sits in the same grid as the cities — plain
+   text, no button chrome — and expands the remaining markets in place. */
+.home-global-clock-cell {
+  animation: clock-cell-in .32s ease both;
+}
+@keyframes clock-cell-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+.home-global-clock-more {
+  display: flex;
+  align-items: flex-start;
+}
+.home-global-clock-more-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #141413;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: .005em;
+  text-align: left;
+  transition: opacity .2s ease;
+}
+.home-global-clock-more-button:hover {
+  opacity: .55;
+}
+.home-global-clock-more-button:focus-visible {
+  outline: 1px solid #141413;
+  outline-offset: 4px;
+}
