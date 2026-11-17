@@ -819,12 +819,17 @@
 .home-global-clock-cell {
   transition: color .2s ease;
 }
-.home-global-clock-cell.is-away .home-global-clock-city,
-.home-global-clock-cell.is-away .home-global-clock-time {
-  color: #8C867A;
-}
-.home-global-clock-cell.is-away .home-global-clock-seconds {
-  color: #CFC9BA;
+/* Every city keeps ink. Being at a desk is marked with a dot, not by
+   greying out two thirds of the world. */
+.home-global-clock-cell:not(.is-away) .home-global-clock-city::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #141413;
+  vertical-align: 2px;
 }
 .home-global-clock-cell:hover .home-global-clock-city,
 .home-global-clock-cell:focus-visible .home-global-clock-city {

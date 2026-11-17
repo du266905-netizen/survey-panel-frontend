@@ -239,9 +239,9 @@ export default function GlobalGlobe({ tone = 'light', activeMarkerId = null }) {
         const markerScale = palette.markerScale || 1;
         const isActive = Boolean(activeId) && marker.id === activeId;
         const isDimmed = Boolean(activeId) && !isActive;
-        const markerRadius = clamp(radius * 0.015, 2.6, 3.8) * markerScale * (isActive ? 1.45 : 1);
+        const markerRadius = clamp(radius * 0.015, 2.6, 3.8) * markerScale;
 
-        context.globalAlpha = isDimmed ? 0.28 : 1;
+        context.globalAlpha = isDimmed ? 0.5 : 1;
 
         context.beginPath();
         context.arc(x, y, markerRadius * (isActive ? 2.1 : 1.95), 0, Math.PI * 2);
@@ -258,10 +258,10 @@ export default function GlobalGlobe({ tone = 'light', activeMarkerId = null }) {
 
         context.beginPath();
         context.arc(x, y, markerRadius, 0, Math.PI * 2);
-        context.fillStyle = isActive ? '#141413' : palette.marker;
+        context.fillStyle = palette.marker;
         context.fill();
-        context.strokeStyle = isActive ? '#ffffff' : palette.markerStroke;
-        context.lineWidth = isActive ? 1.6 : 1.15;
+        context.strokeStyle = palette.markerStroke;
+        context.lineWidth = 1.15;
         context.stroke();
       });
       context.globalAlpha = 1;
@@ -399,7 +399,12 @@ export default function GlobalGlobe({ tone = 'light', activeMarkerId = null }) {
   useEffect(() => {
     activeRef.current = activeMarkerId;
     const marker = activeMarkerId ? markersById.get(activeMarkerId) : null;
-    targetRef.current = marker ? [-marker.coordinates[0], -marker.coordinates[1]] : null;
+    /* Only the top cap of the sphere is on screen, so the sphere centre is far
+       below the fold. Aim the country 40° above the centre line instead of
+       centring it, otherwise it turns out of view. */
+    targetRef.current = marker
+      ? [-marker.coordinates[0], clamp(40 - marker.coordinates[1], -70, 70)]
+      : null;
     drawRef.current?.();
   }, [activeMarkerId]);
 
