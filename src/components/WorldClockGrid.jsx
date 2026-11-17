@@ -31,7 +31,7 @@ const cities = [
   /* The other fourteen markets behind the +14 cell. */
   { id: 'macau', zh: '澳门', en: 'Macau', timeZone: 'Asia/Macau', marker: 'macau' },
   { id: 'manila', zh: '马尼拉', en: 'Manila', timeZone: 'Asia/Manila', marker: 'philippines' },
-  { id: 'ho-chi-minh', zh: '胡志明市', en: 'Ho Chi Minh City', timeZone: 'Asia/Ho_Chi_Minh', marker: 'vietnam' },
+  { id: 'ho-chi-minh', zh: '胡志明市', en: 'Ho Chi Minh', timeZone: 'Asia/Ho_Chi_Minh', marker: 'vietnam' },
   { id: 'almaty', zh: '阿拉木图', en: 'Almaty', timeZone: 'Asia/Almaty', marker: 'kazakhstan' },
   { id: 'karachi', zh: '卡拉奇', en: 'Karachi', timeZone: 'Asia/Karachi', marker: 'pakistan' },
   { id: 'dhaka', zh: '达卡', en: 'Dhaka', timeZone: 'Asia/Dhaka', marker: 'bangladesh' },

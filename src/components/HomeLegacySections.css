@@ -769,7 +769,7 @@
   padding: clamp(18px, 2vw, 26px) 0 clamp(18px, 2vw, 22px);
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   column-gap: clamp(14px, 1.8vw, 26px);
   row-gap: clamp(24px, 2.4vw, 34px);
   border-top: 1px solid rgba(20, 20, 19, .1);
