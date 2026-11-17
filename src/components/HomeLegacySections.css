@@ -853,20 +853,32 @@
   align-items: flex-start;
 }
 .home-global-clock-more-button {
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+  padding: 0 0 3px;
   border: 0;
+  border-bottom: 1px solid rgba(20, 20, 19, .22);
   background: none;
-  color: #141413;
+  color: #6F6A5E;
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 22px;
-  line-height: 1.15;
-  letter-spacing: .005em;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: .02em;
   text-align: left;
-  transition: opacity .2s ease;
+  transition: color .2s ease, border-color .2s ease;
 }
 .home-global-clock-more-button:hover {
-  opacity: .55;
+  color: #141413;
+  border-bottom-color: #141413;
+}
+.home-global-clock-more-arrow {
+  transition: transform .2s ease;
+}
+.home-global-clock-more-button:hover .home-global-clock-more-arrow {
+  transform: translateX(2px);
 }
 .home-global-clock-more-button:focus-visible {
   outline: 1px solid #141413;

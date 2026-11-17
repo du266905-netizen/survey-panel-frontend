@@ -118,7 +118,8 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
           aria-controls="world-clock-grid"
           onClick={() => setExpanded((value) => !value)}
         >
-          {expanded ? '收起' : `+${cities.length - PRIMARY_COUNT}`}
+          {expanded ? '收起' : `${cities.length - PRIMARY_COUNT} 个市场`}
+          <span aria-hidden="true" className="home-global-clock-more-arrow">{expanded ? '↑' : '→'}</span>
         </button>
       </li>
     </ul>
