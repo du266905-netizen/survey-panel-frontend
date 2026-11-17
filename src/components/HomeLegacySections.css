@@ -871,7 +871,20 @@
   letter-spacing: .04em;
   transition: opacity .2s ease;
 }
-.home-global-clock-more-button:hover { opacity: .55; }
+.home-global-clock-more-button {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+.home-global-clock-more-button:hover,
+.home-global-clock-more-button:focus-visible {
+  border-bottom-color: rgba(20, 20, 19, .45);
+}
+.home-global-clock-more-button:hover .home-global-clock-more-arrow {
+  transform: translateX(3px);
+}
+.home-global-clock-more-button[aria-expanded='true']:hover .home-global-clock-more-arrow {
+  transform: translateY(-3px);
+}
 .home-global-clock-more-arrow {
   transition: transform .2s ease;
 }
