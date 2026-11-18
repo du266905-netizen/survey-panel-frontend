@@ -183,3 +183,16 @@
 @media (max-width: 520px) {
   .join-back { top: 16px; left: 16px; width: 34px; height: 34px; }
 }
+
+/* One radius for every control in the card: 10. The Google button arrives as
+   a 999px pill from the shared auth component, which read as a different
+   design next to the 10px Continue. */
+.join-card .google-field,
+.join-card .google-field-visual,
+.join-card .public-auth-google,
+.join-card .home-auth-google-wrap > * ,
+.join-card .home-auth-email input,
+.join-card .home-auth-email button,
+.join-card button[type='submit'] {
+  border-radius: 10px !important;
+}
