@@ -99,3 +99,20 @@
   background: transparent;
   box-shadow: none;
 }
+
+/* The panel slides in from the side the switch moved towards. */
+.auth-panel-wrap { will-change: transform, opacity; }
+.auth-panel-wrap.is-next { animation: auth-slide-next .28s cubic-bezier(.22, 1, .36, 1) both; }
+.auth-panel-wrap.is-prev { animation: auth-slide-prev .28s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes auth-slide-next {
+  from { opacity: 0; transform: translateX(26px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes auth-slide-prev {
+  from { opacity: 0; transform: translateX(-26px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-panel-wrap.is-next,
+  .auth-panel-wrap.is-prev { animation: none; }
+}
