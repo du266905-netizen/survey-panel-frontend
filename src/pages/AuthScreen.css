@@ -66,3 +66,36 @@
 }
 .join-card--auth .public-auth-eyebrow { display: none; }
 .join-card--auth .public-auth-content h2 { margin-top: 0; }
+
+/* The panel inherits the site's reading serif for body copy; inside the card
+   everything is sans. Wider card, and the tabs get a real sliding thumb. */
+.join-card--auth { width: min(460px, 100%); }
+.join-card--auth .public-auth-panel,
+.join-card--auth .public-auth-panel * {
+  font-family: var(--font-sans) !important;
+}
+.join-card--auth .public-auth-intro,
+.join-card--auth .public-auth-consent,
+.join-card--auth .public-auth-secondary,
+.join-card--auth label { font-weight: 400; }
+
+.join-card--auth .public-auth-tabs { position: relative; }
+.join-card--auth .public-auth-tabs::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(20, 20, 19, .14), 0 0 0 1px rgba(20, 20, 19, .04);
+  transition: transform .22s cubic-bezier(.22, 1, .36, 1);
+}
+.join-card--auth .public-auth-tabs:has(button:nth-of-type(2).is-active)::before {
+  transform: translateX(100%);
+}
+.join-card--auth .public-auth-tabs button.is-active {
+  background: transparent;
+  box-shadow: none;
+}
