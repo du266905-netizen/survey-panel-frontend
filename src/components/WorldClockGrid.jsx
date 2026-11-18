@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from './LanguageContext';
 
 /* 21 cities of the 34 markers on the globe. Beijing leads: it is where we are.
@@ -53,6 +53,9 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
   const { language } = useLanguage();
   const [now, setNow] = useState(() => new Date());
   const [expanded, setExpanded] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const listRef = useRef(null);
+  const buttonRef = useRef(null);
   const locale = isCjk(language) ? 'zh-CN' : 'en-GB';
 
   useEffect(() => {
@@ -80,11 +83,58 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
         .map((part) => [part.type, part.value]),
     );
 
-  const visible = expanded ? cities : cities.slice(0, PRIMARY_COUNT);
+  const visible = expanded || closing ? cities : cities.slice(0, PRIMARY_COUNT);
+
+  /* Expand smooths the list height; collapse fades the extra rows out first,
+     then shrinks — otherwise the page jumps from a full block to a short one
+     in a single frame. */
+  const toggle = () => {
+    const list = listRef.current;
+    const button = buttonRef.current;
+    if (!list) return;
+    const finish = () => {
+      list.style.height = '';
+      list.style.transition = '';
+      if (button) {
+        const rect = button.getBoundingClientRect();
+        const drift = rect.top - Number(button.dataset.anchorTop || rect.top);
+        if (drift) window.scrollBy(0, drift);
+      }
+    };
+    if (!expanded) {
+      const from = list.offsetHeight;
+      list.style.height = `${from}px`;
+      list.style.transition = 'height .28s cubic-bezier(.22, 1, .36, 1)';
+      setExpanded(true);
+      window.requestAnimationFrame(() => {
+        list.style.height = `${list.scrollHeight}px`;
+        list.addEventListener('transitionend', finish, { once: true });
+      });
+      return;
+    }
+    if (button) button.dataset.anchorTop = String(button.getBoundingClientRect().top);
+    setClosing(true);
+    window.setTimeout(() => {
+      const from = list.offsetHeight;
+      list.style.transition = 'none';
+      list.style.height = `${from}px`;
+      setExpanded(false);
+      setClosing(false);
+      window.requestAnimationFrame(() => {
+        list.style.transition = 'height .28s cubic-bezier(.22, 1, .36, 1)';
+        list.style.height = `${list.scrollHeight}px`;
+        list.addEventListener('transitionend', finish, { once: true });
+      });
+    }, 190);
+  };
 
   return (
     <div className="home-global-clock-wrap">
-    <ul className="home-global-clock" id="world-clock-grid">
+    <ul
+      className={`home-global-clock${closing ? ' is-closing' : ''}`}
+      id="world-clock-grid"
+      ref={listRef}
+    >
       {visible.map((city, index) => {
         const time = parts(city.timeZone);
         const hour = Number(time.hour);
@@ -94,7 +144,7 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
         return (
           <li
             key={city.id}
-            className={`home-global-clock-cell${awake ? '' : ' is-away'}`}
+            className={`home-global-clock-cell${awake ? '' : ' is-away'}${index >= PRIMARY_COUNT ? ' is-extra' : ''}`}
             onMouseEnter={() => onActiveMarkerChange?.(city.marker)}
             onMouseLeave={() => onActiveMarkerChange?.(null)}
             onFocus={() => onActiveMarkerChange?.(city.marker)}
@@ -117,7 +167,8 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
         className="home-global-clock-more-button"
         aria-expanded={expanded}
         aria-controls="world-clock-grid"
-        onClick={() => setExpanded((value) => !value)}
+        ref={buttonRef}
+        onClick={toggle}
       >
         {expanded
           ? (isCjk(language) ? '收起' : 'Show less')

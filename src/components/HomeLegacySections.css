@@ -141,6 +141,8 @@
 }
 
 .home-footer-identity { display: grid; justify-items: start; }
+.home-footer-lockup { display: inline-flex; align-items: center; gap: 10px; }
+.home-footer-lockup .home-footer-mark { width: auto; height: 34px; }
 .home-footer-mark { width: 88px; height: auto; transition: transform .35s ease; }
 .home-footer-mark:hover { transform: scale(1.03) rotate(-1.5deg); }
 
@@ -888,10 +890,25 @@
 .home-global-clock-more-arrow {
   transition: transform .2s ease;
 }
-.home-global-clock-more-button:hover .home-global-clock-more-arrow {
-  transform: translateX(2px);
-}
 .home-global-clock-more-button:focus-visible {
   outline: 1px solid #141413;
   outline-offset: 4px;
+}
+
+/* 2026-11-19: expanding and collapsing both move. The extra rows fade out
+   first; the list height follows on a curve, so the page never jumps. */
+.home-global-clock {
+  overflow: hidden;
+}
+.home-global-clock-cell.is-extra {
+  transition: opacity .18s ease, transform .18s ease;
+}
+.home-global-clock.is-closing .home-global-clock-cell.is-extra {
+  animation: none;
+  opacity: 0;
+  transform: translateY(-6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-global-clock { transition: none !important; }
+  .home-global-clock-cell.is-extra { transition: none; }
 }
