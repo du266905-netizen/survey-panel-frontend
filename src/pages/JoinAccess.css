@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 20px;
   overflow: hidden;
   background: #141413;
   padding: 80px 24px;
@@ -25,27 +25,13 @@
   background: radial-gradient(circle at 50% 45%, rgba(20, 20, 19, .35), rgba(20, 20, 19, .78));
 }
 
-.join-brand {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: #fff;
-  font-family: var(--font-sans);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -.01em;
-}
-.join-brand img { display: block; }
-
-/* The card is the whole surface: 380 wide, tight, one rhythm. */
 .join-card {
   position: relative;
   z-index: 1;
-  width: min(380px, 100%);
+  width: min(400px, 100%);
+  border-radius: 14px;
   background: #fff;
-  padding: 26px 24px 22px;
+  padding: 28px 26px 24px;
   text-align: center;
   box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
 }
@@ -66,6 +52,73 @@
   font-weight: 400;
   line-height: 1.5;
 }
+
+/* Two-way switch: one track, one sliding thumb. */
+.join-switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-bottom: 18px;
+  padding: 3px;
+  border-radius: 10px;
+  background: #f1f0ec;
+}
+.join-switch button {
+  position: relative;
+  z-index: 1;
+  min-height: 36px;
+  border: 0;
+  background: none;
+  border-radius: 8px;
+  color: #6f747a;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  transition: color .2s ease;
+}
+.join-switch button.is-on { color: #141413; }
+.join-switch-thumb {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(20, 20, 19, .14), 0 0 0 1px rgba(20, 20, 19, .04);
+  transition: transform .22s cubic-bezier(.22, 1, .36, 1);
+}
+.join-switch-thumb.is-right { transform: translateX(100%); }
+
+/* The shared form, re-framed for the card. */
+.join-card .home-auth-form { text-align: left; }
+.join-card .home-auth-google-wrap { margin: 0 0 4px; }
+.join-card .home-auth-or { margin: 14px 0; }
+.join-card .home-auth-or span { color: #a0a49f; font-size: 12px; }
+.join-card .home-auth-email { display: grid; gap: 10px; }
+.join-card .home-auth-email input {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid #e3e1da;
+  padding: 0 14px;
+  font-size: 14px;
+}
+.join-card .home-auth-email button,
+.join-card button[type='submit'] {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 10px;
+  background: #141413;
+  border-color: #141413;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+.join-card .home-auth-terms { display: none; }
+
 .join-card-switch {
   margin: 18px 0 0;
   color: #6f747a;
@@ -79,7 +132,7 @@
 .join-terms {
   position: relative;
   z-index: 1;
-  max-width: 380px;
+  max-width: 400px;
   margin: 0;
   color: rgba(255, 255, 255, .55);
   font-family: var(--font-sans);
@@ -90,30 +143,7 @@
 }
 .join-terms a { color: rgba(255, 255, 255, .75); }
 
-/* Form keeps its behaviour; the frame follows the card. */
-.join-card .home-entry,
-.join-card .home-entry-inner { width: 100%; }
-.join-card .home-entry { padding: 0; }
-.join-card .home-entry-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 16px; }
-.join-card .video-hero-cta { border-radius: 0; box-shadow: none; font-size: 13px; min-height: 40px; }
-.join-card .home-auth-email { display: grid; gap: 8px; }
-.join-card .home-auth-email input,
-.join-card .home-auth-email button { width: 100%; }
-.join-card .home-auth-email button,
-.join-card button[type='submit'] {
-  min-height: 42px;
-  background: #141413;
-  border-color: #141413;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-}
-
 @media (max-width: 520px) {
   .join-screen { padding: 56px 16px; }
-  .join-card { padding: 22px 18px 18px; }
+  .join-card { padding: 24px 20px 20px; }
 }
-
-/* The reference keeps the legal line outside the card; the form's own copy is
-   the same sentence, so it steps aside. */
-.join-card .home-auth-terms { display: none; }
