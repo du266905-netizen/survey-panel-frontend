@@ -61,6 +61,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
   const { pathname } = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState(null);
   const [condensed, setCondensed] = useState(false);
   /* 登录下拉：只有点击才展开（2026-10-26 用户要求）。 */
   const [signInOpen, setSignInOpen] = useState(false);
@@ -382,8 +383,18 @@ export default function PublicSiteHeader({ stripStart = null }) {
             ? group.sections.flatMap((section) => section.items)
             : (group.items || []);
           return (
-            <div className="psn-mobile-group" key={group.id}>
-              <p>{chrome.groups[group.id] || group.label}</p>
+            <div className={`psn-mobile-group${openGroup === group.id ? ' is-open' : ''}`} key={group.id}>
+              <button
+                type="button"
+                className="psn-mobile-toggle"
+                aria-expanded={openGroup === group.id}
+                aria-controls={`psn-mobile-${group.id}`}
+                onClick={() => setOpenGroup((current) => (current === group.id ? null : group.id))}
+              >
+                <span>{chrome.groups[group.id] || group.label}</span>
+                <ChevronDown aria-hidden="true" size={18} strokeWidth={1.7} />
+              </button>
+              <div className="psn-mobile-panel" id={`psn-mobile-${group.id}`}>
               {group.to ? (
                 <Link to={withLanguage(group.to, language)} onClick={closeAll}>
                   {chrome.groups[group.id] || group.label}
@@ -402,6 +413,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
                   </Link>
                 )
               )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}
+              </div>
             </div>
           );
         })}

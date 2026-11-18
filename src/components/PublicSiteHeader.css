@@ -52,6 +52,7 @@
   position: relative;
   display: inline-flex;
   height: 64px;
+  white-space: nowrap;
   align-items: center;
   gap: 6px;
   border: 0;
@@ -245,6 +246,12 @@
   cursor: pointer;
 }
 
+@media (max-width: 1400px) {
+  .psn-bar { gap: 28px; padding: 0 24px; }
+  .psn-groups { gap: 18px; }
+  .psn-cta { padding: 0 14px; }
+}
+
 /* ---- mobile sheet ------------------------------------------------------- */
 
 .psn-mobile {
@@ -263,7 +270,25 @@
 .psn-mobile.is-open { display: block; }
 .psn-mobile-group { border-top: 1px solid rgba(255, 255, 255, .14); padding: 20px 0 16px; }
 .psn-mobile-group:first-child { border-top: 0; padding-top: 4px; }
-.psn-mobile-group > p,
+.psn-mobile-toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  font: 500 18px/1.3 var(--font-sans);
+  letter-spacing: -.015em;
+  text-align: left;
+}
+.psn-mobile-toggle svg { opacity: .6; transition: transform .2s ease; }
+.psn-mobile-group.is-open .psn-mobile-toggle svg { transform: rotate(180deg); }
+.psn-mobile-panel { display: none; padding-top: 6px; }
+.psn-mobile-group.is-open .psn-mobile-panel { display: block; }
 .psn-mobile-lang > p {
   margin: 0 0 12px;
   color: rgba(255, 255, 255, .5);
@@ -295,13 +320,13 @@
 }
 .psn-mobile-lang button.is-selected { border-color: #fff; color: #fff; }
 
-@media (max-width: 900px) {
+@media (max-width: 1180px) {
   .psn-bar { width: 100%; height: 64px; gap: 0; padding: 0 20px; }
   .psn-brand img { height: 23px; }
   .psn-groups,
   .psn-lang,
-  .psn-signin { display: none; }
-  .psn-burger { display: grid; }
+  .psn-bar .psn-signin-wrap { display: none; }
+  .psn-burger { display: grid; color: #141413; }
   .psn-actions { gap: 10px; }
   .psn-cta { height: 38px; font-size: 12px; padding: 0 13px; }
 }
@@ -464,7 +489,7 @@
 
 /* Keep the condensed rectangle compact on small screens; the mobile sheet
    remains full-width below the bar. */
-@media (max-width: 900px) {
+@media (max-width: 1180px) {
   .psn.is-condensed {
     width: calc(100% - 24px);
     box-shadow: 0 12px 30px rgba(17, 17, 19, .14);
