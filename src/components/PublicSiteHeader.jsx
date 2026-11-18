@@ -395,6 +395,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
                 <ChevronDown aria-hidden="true" size={18} strokeWidth={1.7} />
               </button>
               <div className="psn-mobile-panel" id={`psn-mobile-${group.id}`}>
+                <div className="psn-mobile-panel-inner">
               {group.to ? (
                 <Link to={withLanguage(group.to, language)} onClick={closeAll}>
                   {chrome.groups[group.id] || group.label}
@@ -413,6 +414,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
                   </Link>
                 )
               )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}
+                </div>
               </div>
             </div>
           );
