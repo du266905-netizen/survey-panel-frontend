@@ -254,7 +254,12 @@ export default function PublicSiteHeader({ stripStart = null }) {
                 )}
 
                 {hasItems && (
-                  <div id={`psn-panel-${group.id}`} className={`psn-panel${isOpen ? ' is-open' : ''}${isWide ? ' is-wide' : ''}`}>
+                  <div
+                    id={`psn-panel-${group.id}`}
+                    className={`psn-panel${isOpen ? ' is-open' : ''}${isWide ? ' is-wide' : ''}`}
+                    onMouseEnter={clearTimer}
+                    onMouseLeave={scheduleClose}
+                  >
                     <div className="psn-panel-inner">
                       {/* A panel with sections (Solutions) names each column instead
                           of repeating the trigger's own word at the top. */}

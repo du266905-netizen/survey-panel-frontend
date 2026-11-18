@@ -521,3 +521,30 @@
     transition: none;
   }
 }
+
+/* 2026-11-19: the desktop panel is a wide sheet under the whole bar, the way
+   Mastercard's sits, not a narrow card hanging off one nav word. Ours keeps
+   square corners; the shadow does the separating. */
+.psn-panel {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  width: min(1200px, calc(100vw - 80px));
+  max-height: calc(100vh - 150px);
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 30px 70px rgba(17, 17, 19, .16);
+  transform: translate(-50%, -8px);
+}
+.psn-panel.is-open { transform: translate(-50%, 0); }
+.psn-panel.is-wide {
+  width: min(1200px, calc(100vw - 80px));
+  left: 50%;
+  transform: translate(-50%, -8px);
+}
+.psn-panel.is-wide.is-open { transform: translate(-50%, 0); }
+.psn.is-condensed .psn-panel { top: 64px; }
+.psn-panel-inner { padding: 34px 40px 30px; border-radius: 0; }
+.psn-item { padding: 16px 8px; }
+.psn-item strong { font-size: 15px; }
