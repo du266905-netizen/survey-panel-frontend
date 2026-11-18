@@ -1,0 +1,68 @@
+/* The panel was built for the old split page: a 31–42px serif heading, 50px
+   underline tabs, 999px pills. Inside the card it borrows the card's scale. */
+.join-card--auth { text-align: left; padding: 26px 26px 24px; }
+.join-card--auth .public-auth-panel { width: 100%; }
+
+.join-card--auth .public-auth-tabs {
+  height: auto;
+  border: 0;
+  gap: 0;
+  padding: 3px;
+  border-radius: 10px;
+  background: #f1f0ec;
+  margin-bottom: 20px;
+}
+.join-card--auth .public-auth-tabs button {
+  height: 36px;
+  border-radius: 8px;
+  color: #6f747a;
+  font-size: 13px;
+  font-weight: 500;
+}
+.join-card--auth .public-auth-tabs button:after { display: none; }
+.join-card--auth .public-auth-tabs button.is-active {
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(20, 20, 19, .14), 0 0 0 1px rgba(20, 20, 19, .04);
+  color: #141413;
+  font-weight: 600;
+}
+
+.join-card--auth .public-auth-eyebrow { font-size: 11px; font-weight: 500; color: #7f848a; }
+.join-card--auth .public-auth-content { padding-top: 0; }
+.join-card--auth .public-auth-content h2 {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+.join-card--auth .public-auth-intro { font-size: 13px; line-height: 1.55; color: #6f747a; }
+
+/* Round the fields and the action, and take the lime off the button. */
+.join-card--auth input,
+.join-card--auth select,
+.join-card--auth .public-auth-google,
+.join-card--auth .public-auth-google-disabled { border-radius: 10px !important; }
+.join-card--auth button[type='submit'],
+.join-card--auth .public-auth-submit {
+  min-height: 44px;
+  border-radius: 10px;
+  background: #141413;
+  border-color: #141413;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+.join-card--auth .public-auth-consent { font-size: 11px; color: #7f848a; }
+
+/* The panel's own frame: round the wrappers, not just the inner inputs, and
+   drop the redundant eyebrow above the heading. */
+.join-card--auth .public-auth-input,
+.join-card--auth .public-auth-submit,
+.join-card--auth .public-auth-email-cta,
+.join-card--auth .google-field,
+.join-card--auth .google-field-visual {
+  border-radius: 10px !important;
+}
+.join-card--auth .public-auth-eyebrow { display: none; }
+.join-card--auth .public-auth-content h2 { margin-top: 0; }
