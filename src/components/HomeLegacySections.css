@@ -141,6 +141,8 @@
 }
 
 .home-footer-identity { display: grid; justify-items: start; }
+.home-footer-lockup { display: inline-flex; align-items: center; gap: 10px; }
+.home-footer-lockup .home-footer-mark { width: auto; height: 34px; }
 .home-footer-mark { width: 88px; height: auto; transition: transform .35s ease; }
 .home-footer-mark:hover { transform: scale(1.03) rotate(-1.5deg); }
 
@@ -270,7 +272,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 12px 0 20px;
+  padding: 8px 0 10px;
 }
 .home-footer-legal { display: flex; align-items: center; gap: 28px; }
 /* the rule runs the full width of the window, the content stays in the column */
@@ -284,9 +286,9 @@
   background: rgba(255, 255, 255, 0.12);
   transform: translateX(-50%);
 }
-.home-footer-bottom p { margin: 0; color: rgba(255, 255, 255, 0.5); font-size: 13px; font-weight: 400; }
+.home-footer-bottom p { margin: 0; color: rgba(255, 255, 255, 0.5); font-family: var(--font-sans); font-size: 13px; font-weight: 400; }
 .home-footer-bottom div { display: flex; gap: 26px; }
-.home-footer-bottom a { color: rgba(255, 255, 255, 0.62); font-size: 13px; font-weight: 400; text-decoration: none; text-underline-offset: 3px; }
+.home-footer-bottom a { color: rgba(255, 255, 255, 0.62); font-family: var(--font-sans); font-size: 13px; font-weight: 400; text-decoration: none; text-underline-offset: 3px; }
 .home-footer-bottom a {
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
@@ -314,7 +316,7 @@
 }
 .home-footer-top.is-on { opacity: 1; transform: none; pointer-events: auto; }
 .home-footer-top:hover { color: #fff; }
-.home-footer-top-ring { position: absolute; inset: 0; width: 32px; height: 32px; transform: rotate(-90deg); }
+.home-footer-top-ring { display: none; }
 .home-footer-top-track { fill: none; stroke: rgba(255, 255, 255, .14); stroke-width: 1; }
 .home-footer-top-bar { fill: none; stroke: rgba(255, 255, 255, .58); stroke-width: 1; stroke-dasharray: 106.8; stroke-linecap: round; transition: stroke-dashoffset .15s linear; }
 .home-footer-top-arrow { display: grid; place-items: center; transition: transform .22s ease; }
@@ -841,13 +843,6 @@
 
 /* 2026-11-18: the +14 cell. It sits in the same grid as the cities — plain
    text, no button chrome — and expands the remaining markets in place. */
-.home-global-clock-cell {
-  animation: clock-cell-in .32s ease both;
-}
-@keyframes clock-cell-in {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: none; }
-}
 .home-global-clock-foot {
   width: min(100% - 96px, 1280px);
   margin: 0 auto;
@@ -888,10 +883,25 @@
 .home-global-clock-more-arrow {
   transition: transform .2s ease;
 }
-.home-global-clock-more-button:hover .home-global-clock-more-arrow {
-  transform: translateX(2px);
-}
 .home-global-clock-more-button:focus-visible {
   outline: 1px solid #141413;
   outline-offset: 4px;
+}
+
+/* 2026-11-19: expanding and collapsing both move. The extra rows fade out
+   first; the list height follows on a curve, so the page never jumps. */
+.home-global-clock {
+  overflow: hidden;
+}
+.home-global-clock-cell.is-extra {
+  transition: opacity .18s ease, transform .18s ease;
+}
+.home-global-clock.is-closing .home-global-clock-cell.is-extra {
+  animation: none;
+  opacity: 0;
+  transform: translateY(-6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-global-clock { transition: none !important; }
+  .home-global-clock-cell.is-extra { transition: none; }
 }

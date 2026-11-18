@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from './LanguageContext';
 
 /* 21 cities of the 34 markers on the globe. Beijing leads: it is where we are.
@@ -28,7 +28,7 @@ const cities = [
   { id: 'tokyo', zh: '东京', en: 'Tokyo', timeZone: 'Asia/Tokyo', marker: 'japan' },
   { id: 'seoul', zh: '首尔', en: 'Seoul', timeZone: 'Asia/Seoul', marker: 'south-korea' },
 
-  /* The other fourteen markets behind the +14 cell. */
+  /* The other fourteen markets behind the more link. */
   { id: 'macau', zh: '澳门', en: 'Macau', timeZone: 'Asia/Macau', marker: 'macau' },
   { id: 'manila', zh: '马尼拉', en: 'Manila', timeZone: 'Asia/Manila', marker: 'philippines' },
   { id: 'ho-chi-minh', zh: '胡志明市', en: 'Ho Chi Minh', timeZone: 'Asia/Ho_Chi_Minh', marker: 'vietnam' },
@@ -46,6 +46,7 @@ const cities = [
 ];
 
 const PRIMARY_COUNT = 21;
+const COLUMNS = 7;
 
 const isCjk = (language) => /^(zh|ja|ko)/i.test(language || '');
 
@@ -53,12 +54,13 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
   const { language } = useLanguage();
   const [now, setNow] = useState(() => new Date());
   const [expanded, setExpanded] = useState(false);
-  const locale = isCjk(language) ? 'zh-CN' : 'en-GB';
+  const [closing, setClosing] = useState(false);
+  const listRef = useRef(null);
+  const buttonRef = useRef(null);
+  const frozenRef = useRef(false);
 
   useEffect(() => {
-    /* One timer for the whole grid: the wall clock only needs to move once a
-       minute, and every cell reads the same instant. */
-    const tick = () => setNow(new Date());
+    const tick = () => { if (!frozenRef.current) setNow(new Date()); };
     tick();
     const timer = window.setInterval(tick, 1000);
     return () => window.clearInterval(timer);
@@ -66,7 +68,7 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
 
   const parts = (timeZone) =>
     Object.fromEntries(
-      new Intl.DateTimeFormat(locale, {
+      new Intl.DateTimeFormat(isCjk(language) ? 'zh-CN' : 'en-GB', {
         timeZone,
         hour: '2-digit',
         minute: '2-digit',
@@ -80,53 +82,110 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
         .map((part) => [part.type, part.value]),
     );
 
-  const visible = expanded ? cities : cities.slice(0, PRIMARY_COUNT);
+  const visible = expanded || closing ? cities : cities.slice(0, PRIMARY_COUNT);
+
+  /* One motion per toggle. The extra rows fade while the list height moves to
+     its target, so the box never stutters through two separate phases. */
+  const toggle = () => {
+    const list = listRef.current;
+    const button = buttonRef.current;
+    if (!list) return;
+    const gap = parseFloat(window.getComputedStyle(list).rowGap) || 0;
+    const cell = list.querySelector('.home-global-clock-cell');
+    const rowHeight = cell ? cell.offsetHeight : 0;
+    const extraRows = Math.ceil((cities.length - PRIMARY_COUNT) / COLUMNS);
+    const from = list.offsetHeight;
+    const curve = 'height .3s cubic-bezier(.22, 1, .36, 1)';
+    const anchorTop = button ? button.getBoundingClientRect().top : 0;
+
+    const settle = () => {
+      frozenRef.current = false;
+      list.style.height = '';
+      list.style.transition = '';
+      if (button) {
+        const drift = button.getBoundingClientRect().top - anchorTop;
+        if (drift) window.scrollBy(0, drift);
+      }
+    };
+
+    frozenRef.current = true;
+
+    if (!expanded) {
+      list.style.height = `${from}px`;
+      setExpanded(true);
+      window.requestAnimationFrame(() => {
+        list.style.transition = curve;
+        list.style.height = `${list.scrollHeight}px`;
+        list.addEventListener('transitionend', settle, { once: true });
+      });
+      return;
+    }
+
+    const target = Math.max(0, from - extraRows * (rowHeight + gap));
+    list.style.height = `${from}px`;
+    void list.offsetHeight;
+    list.style.transition = curve;
+    setClosing(true);
+    window.requestAnimationFrame(() => {
+      list.style.height = `${target}px`;
+    });
+    window.setTimeout(() => {
+      setExpanded(false);
+      setClosing(false);
+      settle();
+    }, 320);
+  };
 
   return (
     <div className="home-global-clock-wrap">
-    <ul className="home-global-clock" id="world-clock-grid">
-      {visible.map((city, index) => {
-        const time = parts(city.timeZone);
-        const hour = Number(time.hour);
-        /* 9 to 18 local is "at their desk". Everything else stays readable but
-           recedes, so the grid answers "who is awake" at a glance. */
-        const awake = hour >= 9 && hour < 18;
-        return (
-          <li
-            key={city.id}
-            className={`home-global-clock-cell${awake ? '' : ' is-away'}`}
-            onMouseEnter={() => onActiveMarkerChange?.(city.marker)}
-            onMouseLeave={() => onActiveMarkerChange?.(null)}
-            onFocus={() => onActiveMarkerChange?.(city.marker)}
-            onBlur={() => onActiveMarkerChange?.(null)}
-            tabIndex={0}
-            style={index >= PRIMARY_COUNT ? { animationDelay: `${(index - PRIMARY_COUNT) * 40}ms` } : undefined}
-          >
-            <span className="home-global-clock-city">{isCjk(language) ? city.zh : city.en}</span>
-            <time className="home-global-clock-time" dateTime={now.toISOString()}>
-              {time.hour}:{time.minute}
-              <span className="home-global-clock-seconds">:{time.second}</span>
-            </time>
-          </li>
-        );
-      })}
-    </ul>
-    <div className="home-global-clock-foot">
-      <button
-        type="button"
-        className="home-global-clock-more-button"
-        aria-expanded={expanded}
-        aria-controls="world-clock-grid"
-        onClick={() => setExpanded((value) => !value)}
+      <ul
+        className={`home-global-clock${closing ? ' is-closing' : ''}`}
+        id="world-clock-grid"
+        ref={listRef}
       >
-        {expanded
-          ? (isCjk(language) ? '收起' : 'Show less')
-          : (isCjk(language)
-            ? `展开其余 ${cities.length - PRIMARY_COUNT} 个市场`
-            : `Show ${cities.length - PRIMARY_COUNT} more markets`)}
-        <span aria-hidden="true" className="home-global-clock-more-arrow">{expanded ? '↑' : '→'}</span>
-      </button>
-    </div>
+        {visible.map((city, index) => {
+          const time = parts(city.timeZone);
+          const hour = Number(time.hour);
+          /* 9 to 18 local is "at their desk"; that city keeps a dot. */
+          const awake = hour >= 9 && hour < 18;
+          const extra = index >= PRIMARY_COUNT;
+          return (
+            <li
+              key={city.id}
+              className={`home-global-clock-cell${awake ? '' : ' is-away'}${extra ? ' is-extra' : ''}`}
+              style={extra ? { animationDelay: `${(index - PRIMARY_COUNT) * 40}ms` } : undefined}
+              onMouseEnter={() => onActiveMarkerChange?.(city.marker)}
+              onMouseLeave={() => onActiveMarkerChange?.(null)}
+              onFocus={() => onActiveMarkerChange?.(city.marker)}
+              onBlur={() => onActiveMarkerChange?.(null)}
+              tabIndex={0}
+            >
+              <span className="home-global-clock-city">{isCjk(language) ? city.zh : city.en}</span>
+              <time className="home-global-clock-time" dateTime={now.toISOString()}>
+                {time.hour}:{time.minute}
+                <span className="home-global-clock-seconds">:{time.second}</span>
+              </time>
+            </li>
+          );
+        })}
+      </ul>
+      <div className="home-global-clock-foot">
+        <button
+          type="button"
+          className="home-global-clock-more-button"
+          aria-expanded={expanded}
+          aria-controls="world-clock-grid"
+          ref={buttonRef}
+          onClick={toggle}
+        >
+          {expanded
+            ? (isCjk(language) ? '收起' : 'Show less')
+            : (isCjk(language)
+              ? `展开其余 ${cities.length - PRIMARY_COUNT} 个市场`
+              : `Show ${cities.length - PRIMARY_COUNT} more markets`)}
+          <span aria-hidden="true" className="home-global-clock-more-arrow">{expanded ? '↑' : '→'}</span>
+        </button>
+      </div>
     </div>
   );
 }

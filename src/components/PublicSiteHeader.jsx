@@ -61,6 +61,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
   const { pathname } = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState(null);
   const [condensed, setCondensed] = useState(false);
   /* 登录下拉：只有点击才展开（2026-10-26 用户要求）。 */
   const [signInOpen, setSignInOpen] = useState(false);
@@ -182,6 +183,15 @@ export default function PublicSiteHeader({ stripStart = null }) {
     return () => { document.body.style.overflow = previous; };
   }, [mobileOpen]);
   useEffect(() => {
+    /* Widening past the burger breakpoint must not leave the sheet hanging
+       over the desktop bar. */
+    const wide = window.matchMedia('(min-width: 1181px)');
+    const onChange = () => { if (wide.matches) setMobileOpen(false); };
+    wide.addEventListener('change', onChange);
+    return () => wide.removeEventListener('change', onChange);
+  }, []);
+
+  useEffect(() => {
     const onKey = (event) => {
       if (event.key !== 'Escape') return;
       const trigger = openMenu ? document.querySelector(`[aria-controls="psn-panel-${openMenu}"]`) : null;
@@ -244,7 +254,12 @@ export default function PublicSiteHeader({ stripStart = null }) {
                 )}
 
                 {hasItems && (
-                  <div id={`psn-panel-${group.id}`} className={`psn-panel${isOpen ? ' is-open' : ''}${isWide ? ' is-wide' : ''}`}>
+                  <div
+                    id={`psn-panel-${group.id}`}
+                    className={`psn-panel${isOpen ? ' is-open' : ''}${isWide ? ' is-wide' : ''}`}
+                    onMouseEnter={clearTimer}
+                    onMouseLeave={scheduleClose}
+                  >
                     <div className="psn-panel-inner">
                       {/* A panel with sections (Solutions) names each column instead
                           of repeating the trigger's own word at the top. */}
@@ -382,8 +397,19 @@ export default function PublicSiteHeader({ stripStart = null }) {
             ? group.sections.flatMap((section) => section.items)
             : (group.items || []);
           return (
-            <div className="psn-mobile-group" key={group.id}>
-              <p>{chrome.groups[group.id] || group.label}</p>
+            <div className={`psn-mobile-group${openGroup === group.id ? ' is-open' : ''}`} key={group.id}>
+              <button
+                type="button"
+                className="psn-mobile-toggle"
+                aria-expanded={openGroup === group.id}
+                aria-controls={`psn-mobile-${group.id}`}
+                onClick={() => setOpenGroup((current) => (current === group.id ? null : group.id))}
+              >
+                <span>{chrome.groups[group.id] || group.label}</span>
+                <ChevronDown aria-hidden="true" size={18} strokeWidth={1.7} />
+              </button>
+              <div className="psn-mobile-panel" id={`psn-mobile-${group.id}`}>
+                <div className="psn-mobile-panel-inner">
               {group.to ? (
                 <Link to={withLanguage(group.to, language)} onClick={closeAll}>
                   {chrome.groups[group.id] || group.label}
@@ -402,6 +428,8 @@ export default function PublicSiteHeader({ stripStart = null }) {
                   </Link>
                 )
               )) : <span className="psn-mobile-empty">{'Coming soon'}</span>}
+                </div>
+              </div>
             </div>
           );
         })}

@@ -20734,7 +20734,7 @@ export const chromeCopy = {
     },
     "header": {
       "signIn": "Sign in",
-      "join": "Join us",
+      "join": "Sign up",
       "workspace": "Workspace",
       "contactSales": "Contact sales",
       "helpCentre": "Help centre",
@@ -20837,7 +20837,7 @@ export const chromeCopy = {
     },
     "header": {
       "signIn": "Sign in",
-      "join": "Join us",
+      "join": "Sign up",
       "workspace": "Workspace",
       "contactSales": "Contact sales",
       "helpCentre": "Help centre",
@@ -20940,7 +20940,7 @@ export const chromeCopy = {
     },
     "header": {
       "signIn": "Sign in",
-      "join": "Join us",
+      "join": "Sign up",
       "workspace": "Workspace",
       "contactSales": "Contact sales",
       "helpCentre": "Help centre",
@@ -21065,7 +21065,7 @@ export const chromeCopy = {
     },
     "header": {
       "signIn": "登录",
-      "join": "加入我们",
+      "join": "注册",
       "workspace": "工作区",
       "contactSales": "联系销售",
       "helpCentre": "帮助中心",
@@ -21190,7 +21190,7 @@ export const chromeCopy = {
     },
     "header": {
       "signIn": "登入",
-      "join": "加入我們",
+      "join": "註冊",
       "workspace": "工作區",
       "contactSales": "聯絡業務",
       "helpCentre": "幫助中心",
