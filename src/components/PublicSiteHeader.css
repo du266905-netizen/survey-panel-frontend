@@ -315,12 +315,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #fff;
-  font: 500 18px/1.4 var(--font-sans);
-  letter-spacing: -.015em;
-  padding: 10px 0;
+  color: rgba(255, 255, 255, .78);
+  font: 400 15px/1.45 var(--font-sans);
+  letter-spacing: -.005em;
+  padding: 8px 0;
   text-decoration: none;
 }
+.psn-mobile-group a:hover { color: #fff; }
 .psn-mobile-empty { color: rgba(255, 255, 255, .46); font: 400 14px/1.5 var(--font-sans); }
 .psn-mobile-lang { border-top: 1px solid rgba(255, 255, 255, .14); padding-top: 20px; }
 .psn-mobile-lang > div { display: flex; flex-wrap: wrap; gap: 8px; }

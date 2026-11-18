@@ -843,13 +843,6 @@
 
 /* 2026-11-18: the +14 cell. It sits in the same grid as the cities — plain
    text, no button chrome — and expands the remaining markets in place. */
-.home-global-clock-cell {
-  animation: clock-cell-in .32s ease both;
-}
-@keyframes clock-cell-in {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: none; }
-}
 .home-global-clock-foot {
   width: min(100% - 96px, 1280px);
   margin: 0 auto;
