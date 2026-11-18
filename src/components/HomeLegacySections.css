@@ -272,7 +272,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 12px 0 20px;
+  padding: 8px 0 10px;
 }
 .home-footer-legal { display: flex; align-items: center; gap: 28px; }
 /* the rule runs the full width of the window, the content stays in the column */
@@ -316,7 +316,7 @@
 }
 .home-footer-top.is-on { opacity: 1; transform: none; pointer-events: auto; }
 .home-footer-top:hover { color: #fff; }
-.home-footer-top-ring { position: absolute; inset: 0; width: 32px; height: 32px; transform: rotate(-90deg); }
+.home-footer-top-ring { display: none; }
 .home-footer-top-track { fill: none; stroke: rgba(255, 255, 255, .14); stroke-width: 1; }
 .home-footer-top-bar { fill: none; stroke: rgba(255, 255, 255, .58); stroke-width: 1; stroke-dasharray: 106.8; stroke-linecap: round; transition: stroke-dashoffset .15s linear; }
 .home-footer-top-arrow { display: grid; place-items: center; transition: transform .22s ease; }

@@ -183,6 +183,15 @@ export default function PublicSiteHeader({ stripStart = null }) {
     return () => { document.body.style.overflow = previous; };
   }, [mobileOpen]);
   useEffect(() => {
+    /* Widening past the burger breakpoint must not leave the sheet hanging
+       over the desktop bar. */
+    const wide = window.matchMedia('(min-width: 1181px)');
+    const onChange = () => { if (wide.matches) setMobileOpen(false); };
+    wide.addEventListener('change', onChange);
+    return () => wide.removeEventListener('change', onChange);
+  }, []);
+
+  useEffect(() => {
     const onKey = (event) => {
       if (event.key !== 'Escape') return;
       const trigger = openMenu ? document.querySelector(`[aria-controls="psn-panel-${openMenu}"]`) : null;
