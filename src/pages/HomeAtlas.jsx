@@ -4,6 +4,7 @@ import HomeLegacySections from '../components/HomeLegacySections';
 import { useLanguage } from '../components/LanguageContext';
 import PublicSiteHeader from '../components/PublicSiteHeader';
 import HomeHeroCarousel from '../components/HomeHeroCarousel';
+import HomeChoiceSection from '../components/HomeChoiceSection';
 import HeroRotationToggle from '../components/HeroRotationToggle';
 import communityIllustration from '../assets/home/community-illustration.png';
 import businessHandshake from '../assets/illustrations/business-handshake.jpg';
@@ -117,9 +118,13 @@ export default function HomeAtlas() {
         stopped={heroStopped}
       />
 
-      {/* 2026-11-19: the account chooser lives on /access now; the home page
-          no longer carries the old film-plus-card block. */}
-      <HomeLegacySections />
+      <HomeLegacySections
+        afterGlobe={(
+          <div className="home-join-section" id="join">
+            <HomeChoiceSection />
+          </div>
+        )}
+      />
     </main>
   );
 }
