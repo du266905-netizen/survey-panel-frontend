@@ -548,3 +548,32 @@
 .psn-panel-inner { padding: 34px 40px 30px; border-radius: 0; }
 .psn-item { padding: 16px 8px; }
 .psn-item strong { font-size: 15px; }
+
+/* 2026-11-19: at the top of the page the panel is a full-height sheet, the way
+   Visa opens; once the bar condenses into its floating rectangle the panel is
+   the wide card below it. */
+.psn:not(.is-condensed) .psn-panel,
+.psn:not(.is-condensed) .psn-panel.is-wide {
+  top: 64px;
+  left: 0;
+  right: 0;
+  width: auto;
+  max-height: none;
+  height: calc(100vh - 64px);
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+  background: #fff;
+}
+.psn:not(.is-condensed) .psn-panel.is-open,
+.psn:not(.is-condensed) .psn-panel.is-wide.is-open { transform: none; }
+.psn:not(.is-condensed) .psn-panel-inner {
+  width: min(1200px, 100% - 96px);
+  margin: 0 auto;
+  padding: 64px 0 48px;
+  border-radius: 0;
+}
+.psn:not(.is-condensed) .psn-item { padding: 20px 10px; }
+.psn:not(.is-condensed) .psn-item strong { font-size: 18px; }
