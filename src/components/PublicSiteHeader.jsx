@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { isBusinessRole } from '../utils/roles';
 import Logo from './Logo';
+import AuthDialog from './AuthDialog';
 import LanguageGlobe from './LanguageGlobe';
 import { useLanguage, withLanguage } from './LanguageContext';
 import { publicNavigation } from '../constants/publicNavigation';
@@ -65,6 +66,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
   const [condensed, setCondensed] = useState(false);
   /* 登录下拉：只有点击才展开（2026-10-26 用户要求）。 */
   const [signInOpen, setSignInOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
   const signInRef = useRef(null);
 
   useEffect(() => {
@@ -340,7 +342,12 @@ export default function PublicSiteHeader({ stripStart = null }) {
               </button>
               {signInOpen && (
                 <div className="psn-signin-menu" role="menu">
-                  <Link role="menuitem" to={withLanguage('/login', language)} onClick={() => setSignInOpen(false)}>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="psn-signin-item"
+                    onClick={() => { setSignInOpen(false); setAuthOpen(true); }}
+                  >
                     <span className="psn-signin-avatar" aria-hidden="true">
                       <CircleUserRound size={18} strokeWidth={1.6} />
                     </span>
@@ -349,7 +356,7 @@ export default function PublicSiteHeader({ stripStart = null }) {
                       <span className="psn-signin-desc">{signInCopy.participantHint}</span>
                     </span>
                     <ArrowUpRight className="psn-signin-arrow" aria-hidden="true" size={14} strokeWidth={1.7} />
-                  </Link>
+                  </button>
                   <Link role="menuitem" to={withLanguage('/business/login', language)} onClick={() => setSignInOpen(false)}>
                     <span className="psn-signin-avatar" aria-hidden="true">
                       <BriefcaseBusiness size={18} strokeWidth={1.6} />
@@ -451,6 +458,8 @@ export default function PublicSiteHeader({ stripStart = null }) {
           </div>
         </div>
       </div>
+
+      <AuthDialog open={authOpen} initialMode="login" onClose={() => setAuthOpen(false)} />
     </header>
   );
 }
