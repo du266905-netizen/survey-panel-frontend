@@ -197,49 +197,38 @@
   border-radius: 10px !important;
 }
 
-/* The sheet follows the contact-sales block: a wide 820 card, 16 radius, two
-   columns — words left, form right. A 460 card with everything stacked read
-   as one narrow strip. */
-.join-card:has(.join-grid) {
-  width: min(820px, 100%);
-  border-radius: 16px;
-  padding: clamp(24px, 3vw, 40px);
-  text-align: left;
-}
-.join-grid {
-  display: grid;
-  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-  gap: clamp(24px, 4vw, 56px);
-  align-items: start;
-}
-.join-grid-copy { text-align: left; }
-.join-grid-copy .join-card-note { margin-bottom: 22px; }
-.join-grid-form .join-card-switch { margin-top: 16px; }
 
-@media (max-width: 820px) {
-  .join-card:has(.join-grid) { padding: 22px 18px; }
-  .join-grid { grid-template-columns: 1fr; gap: 18px; }
+/* shadcn login tokens, literally: max-w-sm 384, rounded-xl 12, p-6, title
+   text-2xl/700, description text-sm muted, controls h-9 (36) rounded-md (6). */
+.join-card {
+  width: min(384px, 100%);
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
-
-/* Wide sheet, following the contact-sales block: 820, 16 radius, two columns. */
-.join-card--wide {
-  width: min(820px, 100%);
-  border-radius: 16px;
-  padding: clamp(24px, 3vw, 40px);
-  text-align: left;
+.join-card-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  text-align: center;
 }
-.join-grid {
-  display: grid;
-  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
-  gap: clamp(24px, 4vw, 56px);
-  align-items: start;
+.join-card-note {
+  margin: 8px 0 20px;
+  font-size: 14px;
+  text-align: center;
+  color: #71717a;
 }
-.join-grid-copy { text-align: left; }
-.join-grid-copy .join-card-title { text-align: left; }
-.join-grid-copy .join-card-note { text-align: left; margin-bottom: 22px; }
-.join-grid-form .join-card-switch { text-align: left; margin-top: 16px; }
-
-@media (max-width: 820px) {
-  .join-card--wide { padding: 22px 18px; }
-  .join-grid { grid-template-columns: 1fr; gap: 18px; }
+.join-switch { border-radius: 6px; padding: 3px; }
+.join-switch button { min-height: 30px; border-radius: 4px; font-size: 13px; }
+.join-switch-thumb { border-radius: 4px; }
+.join-card .home-auth-email input,
+.join-card .google-field,
+.join-card .google-field-visual,
+.join-card button[type='submit'] {
+  min-height: 36px !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
 }
+.join-card-switch { font-size: 14px; text-align: center; }

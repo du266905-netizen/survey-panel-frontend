@@ -17,8 +17,7 @@ export default function JoinAccess() {
 
   return (
     <AuthShell
-      cardClassName="join-card--wide"
-      footer={(
+            footer={(
         <p className="join-terms">
           {isCjk ? '继续即表示同意' : 'By continuing you agree to the '}
           <Link to={withLanguage('/terms', language)}>{isCjk ? '服务条款' : 'Terms of Service'}</Link>
@@ -28,8 +27,7 @@ export default function JoinAccess() {
         </p>
       )}
     >
-      <div className="join-grid">
-        <div className="join-grid-copy">
+      <div className="join-stack">
           <h1 id="join-title" className="join-card-title">{text.title}</h1>
           <p className="join-card-note">{text.note}</p>
 
@@ -54,15 +52,11 @@ export default function JoinAccess() {
               {form.researcher}
             </button>
           </div>
-        </div>
-
-        <div className="join-grid-form">
-          <HomeAuthForm audience={audience} />
+        <HomeAuthForm audience={audience} />
           <p className="join-card-switch">
             {isCjk ? '已有账号？' : 'Already have an account? '}
             <Link to={withLanguage('/login', language)}>{isCjk ? '登录' : 'Sign in'}</Link>
-          </p>
-        </div>
+        </p>
       </div>
     </AuthShell>
   );
