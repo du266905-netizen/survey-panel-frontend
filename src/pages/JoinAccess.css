@@ -5,7 +5,7 @@
   place-items: center;
   overflow: hidden;
   background: #141413;
-  padding: 120px 40px 80px;
+  padding: 120px 24px 80px;
 }
 .join-screen-bg {
   position: absolute;
@@ -22,43 +22,36 @@
   background: linear-gradient(180deg, rgba(20, 20, 19, .55), rgba(20, 20, 19, .72));
 }
 
-/* Words on the photograph, form on the sheet. */
-.join-wrap {
+/* One card. Sans throughout, centred, 480 wide. */
+.join-sheet {
   position: relative;
   z-index: 1;
-  display: grid;
-  width: min(1120px, 100%);
-  grid-template-columns: minmax(0, 1fr) 420px;
-  align-items: center;
-  gap: clamp(40px, 6vw, 96px);
-}
-.join-copy-title {
-  margin: 0;
-  color: #fff;
-  font-family: var(--font-reading);
-  font-size: clamp(38px, 4.6vw, 60px);
-  font-weight: 400;
-  letter-spacing: -.025em;
-  line-height: 1.06;
-}
-.join-copy-note {
-  max-width: 460px;
-  margin: 20px 0 0;
-  color: rgba(255, 255, 255, .72);
-  font-family: var(--font-sans);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.65;
-}
-
-.join-sheet {
-  width: 100%;
+  width: min(480px, 100%);
   background: #fff;
-  padding: 30px 28px 26px;
+  padding: 36px 32px 30px;
+  text-align: center;
   box-shadow: 0 30px 80px rgba(0, 0, 0, .3);
 }
+.join-sheet-title {
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-sans);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -.015em;
+  line-height: 1.2;
+}
+.join-sheet-note {
+  margin: 8px 0 24px;
+  color: #6f747a;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+.join-sheet-form { text-align: left; }
 
-/* The form keeps its behaviour, only its frame and rhythm change. */
+/* The form keeps its behaviour; only its frame, rhythm and colour change. */
 .join-sheet .home-entry { padding: 0; }
 .join-sheet .home-entry-inner { width: 100%; }
 .join-sheet .home-entry-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
@@ -68,14 +61,9 @@
   font-size: 14px;
   min-height: 44px;
 }
-.join-sheet .home-auth-email {
-  display: grid;
-  gap: 10px;
-}
+.join-sheet .home-auth-email { display: grid; gap: 10px; }
 .join-sheet .home-auth-email input,
-.join-sheet .home-auth-email button {
-  width: 100%;
-}
+.join-sheet .home-auth-email button { width: 100%; }
 .join-sheet .home-auth-email button,
 .join-sheet button[type='submit'] {
   min-height: 46px;
@@ -83,12 +71,15 @@
   border-color: #141413;
   color: #fff;
 }
-.join-sheet .home-auth-terms { margin-top: 18px; }
+.join-sheet .home-auth-terms {
+  margin-top: 16px;
+  color: #6f747a;
+  font-size: 12px;
+  text-align: center;
+}
 
-@media (max-width: 900px) {
-  .join-screen { padding: 96px 20px 48px; }
-  .join-wrap { grid-template-columns: 1fr; gap: 28px; }
-  .join-copy-title { font-size: clamp(30px, 8vw, 40px); }
-  .join-copy-note { font-size: 15px; }
-  .join-sheet { padding: 24px 20px 22px; }
+@media (max-width: 520px) {
+  .join-screen { padding: 96px 16px 40px; }
+  .join-sheet { padding: 26px 20px 24px; }
+  .join-sheet-title { font-size: 22px; }
 }
