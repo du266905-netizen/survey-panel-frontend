@@ -57,9 +57,10 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
   const [closing, setClosing] = useState(false);
   const listRef = useRef(null);
   const buttonRef = useRef(null);
+  const frozenRef = useRef(false);
 
   useEffect(() => {
-    const tick = () => setNow(new Date());
+    const tick = () => { if (!frozenRef.current) setNow(new Date()); };
     tick();
     const timer = window.setInterval(tick, 1000);
     return () => window.clearInterval(timer);
@@ -98,6 +99,7 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
     const anchorTop = button ? button.getBoundingClientRect().top : 0;
 
     const settle = () => {
+      frozenRef.current = false;
       list.style.height = '';
       list.style.transition = '';
       if (button) {
@@ -105,6 +107,8 @@ export default function WorldClockGrid({ onActiveMarkerChange }) {
         if (drift) window.scrollBy(0, drift);
       }
     };
+
+    frozenRef.current = true;
 
     if (!expanded) {
       list.style.height = `${from}px`;

@@ -5,7 +5,7 @@
   place-items: center;
   overflow: hidden;
   background: #141413;
-  padding: 96px 24px 64px;
+  padding: 120px 40px 80px;
 }
 .join-screen-bg {
   position: absolute;
@@ -13,51 +13,82 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(10px) brightness(.5) saturate(.9);
-  transform: scale(1.06);
+  filter: blur(7px) brightness(.42) saturate(.85);
+  transform: scale(1.05);
 }
 .join-screen-veil {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 40%, rgba(20, 20, 19, .25), rgba(20, 20, 19, .65));
-}
-.join-sheet {
-  position: relative;
-  z-index: 1;
-  width: min(520px, 100%);
-  background: #fff;
-  padding: clamp(26px, 4vw, 40px) clamp(22px, 4vw, 40px) clamp(24px, 3.4vw, 32px);
-  box-shadow: 0 40px 90px rgba(0, 0, 0, .32);
-}
-.join-sheet-title {
-  margin: 0;
-  color: #141413;
-  font-family: var(--font-reading);
-  font-size: clamp(30px, 4vw, 40px);
-  font-weight: 400;
-  letter-spacing: -.02em;
-  line-height: 1.1;
-}
-.join-sheet-note {
-  margin: 12px 0 26px;
-  color: #6f747a;
-  font-family: var(--font-sans);
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.6;
+  background: linear-gradient(180deg, rgba(20, 20, 19, .55), rgba(20, 20, 19, .72));
 }
 
-/* The sheet inherits the form; only its frame changes: tighter, square, and
-   the primary action goes ink until the palette is settled. */
-.join-sheet-form .home-entry { padding: 0; }
-.join-sheet-form .home-entry-inner { width: 100%; }
-.join-sheet-form .home-entry-form,
-.join-sheet-form .home-auth-card,
-.join-sheet-form .home-auth-form { border: 0; box-shadow: none; padding: 0; }
-.join-sheet-form .video-hero-cta { border-radius: 0; }
-.join-sheet-form .home-auth-submit,
-.join-sheet-form button[type='submit'] {
+/* Words on the photograph, form on the sheet. */
+.join-wrap {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(1120px, 100%);
+  grid-template-columns: minmax(0, 1fr) 420px;
+  align-items: center;
+  gap: clamp(40px, 6vw, 96px);
+}
+.join-copy-title {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-reading);
+  font-size: clamp(38px, 4.6vw, 60px);
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: 1.06;
+}
+.join-copy-note {
+  max-width: 460px;
+  margin: 20px 0 0;
+  color: rgba(255, 255, 255, .72);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.join-sheet {
+  width: 100%;
+  background: #fff;
+  padding: 30px 28px 26px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .3);
+}
+
+/* The form keeps its behaviour, only its frame and rhythm change. */
+.join-sheet .home-entry { padding: 0; }
+.join-sheet .home-entry-inner { width: 100%; }
+.join-sheet .home-entry-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.join-sheet .video-hero-cta {
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 14px;
+  min-height: 44px;
+}
+.join-sheet .home-auth-email {
+  display: grid;
+  gap: 10px;
+}
+.join-sheet .home-auth-email input,
+.join-sheet .home-auth-email button {
+  width: 100%;
+}
+.join-sheet .home-auth-email button,
+.join-sheet button[type='submit'] {
+  min-height: 46px;
   background: #141413;
   border-color: #141413;
   color: #fff;
+}
+.join-sheet .home-auth-terms { margin-top: 18px; }
+
+@media (max-width: 900px) {
+  .join-screen { padding: 96px 20px 48px; }
+  .join-wrap { grid-template-columns: 1fr; gap: 28px; }
+  .join-copy-title { font-size: clamp(30px, 8vw, 40px); }
+  .join-copy-note { font-size: 15px; }
+  .join-sheet { padding: 24px 20px 22px; }
 }
