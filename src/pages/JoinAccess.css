@@ -1,0 +1,63 @@
+.join-screen {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  overflow: hidden;
+  background: #141413;
+  padding: 96px 24px 64px;
+}
+.join-screen-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(10px) brightness(.5) saturate(.9);
+  transform: scale(1.06);
+}
+.join-screen-veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(20, 20, 19, .25), rgba(20, 20, 19, .65));
+}
+.join-sheet {
+  position: relative;
+  z-index: 1;
+  width: min(520px, 100%);
+  background: #fff;
+  padding: clamp(26px, 4vw, 40px) clamp(22px, 4vw, 40px) clamp(24px, 3.4vw, 32px);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, .32);
+}
+.join-sheet-title {
+  margin: 0;
+  color: #141413;
+  font-family: var(--font-reading);
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+}
+.join-sheet-note {
+  margin: 12px 0 26px;
+  color: #6f747a;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* The sheet inherits the form; only its frame changes: tighter, square, and
+   the primary action goes ink until the palette is settled. */
+.join-sheet-form .home-entry { padding: 0; }
+.join-sheet-form .home-entry-inner { width: 100%; }
+.join-sheet-form .home-entry-form,
+.join-sheet-form .home-auth-card,
+.join-sheet-form .home-auth-form { border: 0; box-shadow: none; padding: 0; }
+.join-sheet-form .video-hero-cta { border-radius: 0; }
+.join-sheet-form .home-auth-submit,
+.join-sheet-form button[type='submit'] {
+  background: #141413;
+  border-color: #141413;
+  color: #fff;
+}
