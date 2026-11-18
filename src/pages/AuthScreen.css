@@ -132,8 +132,10 @@
 }
 .auth-track.is-register { transform: translateX(-50%); }
 .auth-slide { width: 50%; flex: none; }
+/* The slide is the affordance here; it stays even when motion is reduced,
+   only the height easing is dropped. */
 @media (prefers-reduced-motion: reduce) {
-  .auth-track, .auth-viewport { transition: none; }
+  .auth-viewport { transition: none; }
 }
 
 /* Fill the slide so the off-screen panel cannot peek at the card's edge. */
@@ -160,3 +162,24 @@
   border-radius: 6px !important;
   font-size: 14px !important;
 }
+
+/* Edge-to-edge slider: the padding belongs to each slide, so the incoming
+   panel is not clipped by the card's inset while it travels. */
+.join-card--auth { padding: 0; }
+.join-card--auth .auth-slide { padding: 24px; }
+
+/* Keyframe instead of a track transform: a remount always runs it. */
+.join-card--auth { overflow: hidden; }
+.auth-enter.is-next { animation: auth-in-next .32s cubic-bezier(.22, 1, .36, 1) both; }
+.auth-enter.is-prev { animation: auth-in-prev .32s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes auth-in-next {
+  from { opacity: 0; transform: translateX(22px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes auth-in-prev {
+  from { opacity: 0; transform: translateX(-22px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* The card keeps its padding; only the panel travels inside it. */
+.join-card--auth { padding: 24px; }
