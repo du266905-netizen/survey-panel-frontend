@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HomeAuthForm from '../components/HomeAuthForm';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import './JoinAccess.css';
@@ -9,6 +9,7 @@ import './JoinAccess.css';
    title, a two-way switch, the third-party button, the email field. */
 export default function JoinAccess() {
   const [audience, setAudience] = useState('participant');
+  const navigate = useNavigate();
   const { publicCopy, language } = useLanguage();
   const text = publicCopy.pages.access;
   const form = text.form;
@@ -19,6 +20,22 @@ export default function JoinAccess() {
     <main className="join-screen">
       <img className="join-screen-bg" src="/access-bg.jpg" alt="" aria-hidden="true" />
       <div className="join-screen-veil" aria-hidden="true" />
+
+      <button
+        type="button"
+        className="join-back"
+        aria-label={isCjk ? '返回' : 'Back'}
+        onClick={() => { if (window.history.length > 1) navigate(-1); else navigate(withLanguage('/', language)); }}
+      >
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M11.5 4.5 6 10l5.5 5.5" />
+          <path d="M6 10h8.5" />
+        </svg>
+      </button>
+
+      <Link className="join-brand" to={withLanguage('/', language)} aria-label="guanyisearch">
+        <img src="/guanyisearch-wordmark.png" alt="guanyisearch" />
+      </Link>
 
       <section className="join-card" aria-labelledby="join-title">
         <h1 id="join-title" className="join-card-title">{text.title}</h1>

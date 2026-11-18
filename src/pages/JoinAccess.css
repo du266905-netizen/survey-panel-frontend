@@ -147,3 +147,39 @@
   .join-screen { padding: 56px 16px; }
   .join-card { padding: 24px 20px 20px; }
 }
+
+/* Back out, and the wordmark the rest of the site uses — white on the photo. */
+.join-back {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 2;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 50%;
+  background: rgba(20, 20, 19, .28);
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+.join-back:hover { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .5); }
+.join-back:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.join-brand {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 4px;
+}
+.join-brand img {
+  display: block;
+  width: clamp(120px, 12vw, 148px);
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+@media (max-width: 520px) {
+  .join-back { top: 16px; left: 16px; width: 34px; height: 34px; }
+}
