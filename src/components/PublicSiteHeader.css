@@ -577,3 +577,32 @@
 }
 .psn:not(.is-condensed) .psn-item { padding: 20px 10px; }
 .psn:not(.is-condensed) .psn-item strong { font-size: 18px; }
+
+/* 2026-11-19: ink CTA instead of lime; the palette is not settled yet. */
+.psn-cta { background: #141413; color: #fff; }
+.psn-cta:hover { background: #2f2f2c; }
+.psn-cta:focus-visible { outline: 2px solid #141413; outline-offset: 3px; }
+
+/* Eyebrows are explanations, not decoration: sentence case, sans, a little
+   heavier, no tracking. */
+.psn-panel-label,
+.psn-section-label {
+  text-transform: none;
+  letter-spacing: .01em;
+  font: 600 12px/1.3 var(--font-sans);
+  color: #6f747a;
+}
+
+/* Align the sheet's left edge with the wordmark, not an inner grid. */
+.psn:not(.is-condensed) .psn-panel-inner {
+  width: min(1200px, 100% - 80px);
+}
+
+/* The open state used to be marked in lime; with the CTA in ink, that was the
+   last lime on the bar. Same 2px, ink. */
+.psn-trigger.is-open::after { background: #141413; }
+
+/* The sheet's left edge lines up with the wordmark. */
+.psn:not(.is-condensed) .psn-panel-inner {
+  width: min(1360px, 100% - 80px);
+}
