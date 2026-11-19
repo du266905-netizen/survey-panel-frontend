@@ -167,6 +167,10 @@ function storeWorkspaceWelcome(user) {
 /* The tour follows the welcome card and is stored per account for the same
    reason the welcome flag is: one person's first visit must not silence the
    introduction for everyone on that browser (D-15). */
+/* 2026-11-20：布局改版期间停用首访引导。新外壳拿掉了其中几个锚点（`search` 已不存在），
+   引导会在首访时把整页压在遮罩下。等版式定稿后重做，再把这个开关打开。 */
+const BUSINESS_TOUR_ENABLED = false;
+
 function tourStorageKey(user) {
   const identity = String(user?.id || user?.email || '').trim().toLowerCase();
   return identity ? `guanyi-business-tour:${identity}` : '';
@@ -404,7 +408,7 @@ export default function BusinessWorkspace() {
            because the flag is per user, not per browser. A first visit still
            walks the onboarding wizard first; the tour opens from saveOnboarding
            once that is finished. */
-        if (onboarded && !hasSeenBusinessTour(user)) setTourOpen(true);
+        if (BUSINESS_TOUR_ENABLED && onboarded && !hasSeenBusinessTour(user)) setTourOpen(true);
         const savedOrganizationType = organizationTypeOptions.some((option) => option.value === response.data.profile?.organizationType)
           ? response.data.profile.organizationType
           : savedOnThisDevice?.organizationType || '';
@@ -555,13 +559,13 @@ export default function BusinessWorkspace() {
       setWorkspace((current) => ({ ...current, profile: response.data.profile }));
       await saveBusinessOnboarding({ researchRole: onboarding.researchRole, researchIntent: onboarding.researchIntent }).catch(() => {});
       setOnboardingComplete(true);
-      if (!hasSeenBusinessTour(user)) setTourOpen(true);
+      if (BUSINESS_TOUR_ENABLED && !hasSeenBusinessTour(user)) setTourOpen(true);
     } catch (error) {
       const status = error.response?.status;
       if (!status || status >= 500 || [404, 405, 501].includes(status)) {
         await saveBusinessOnboarding({ researchRole: onboarding.researchRole, researchIntent: onboarding.researchIntent }).catch(() => {});
         setOnboardingComplete(true);
-        if (!hasSeenBusinessTour(user)) setTourOpen(true);
+        if (BUSINESS_TOUR_ENABLED && !hasSeenBusinessTour(user)) setTourOpen(true);
         setMessage(feedbackCopy.preferencesSaved);
       } else {
         /* Inside the dialog: the page-level banner sits behind the dimmed
@@ -771,7 +775,7 @@ export default function BusinessWorkspace() {
 
   return (
     <main className={`business-workspace${activeView === 'questionnaires' ? ' business-workspace--questionnaire-hub' : ''}`}>
-      <BusinessTopNav activeId={activeView} onReplayTour={replayTour} />
+      <BusinessTopNav activeId={activeView} onReplayTour={BUSINESS_TOUR_ENABLED ? replayTour : undefined} />
       <div className="business-workspace-body business-workspace-body--topnav">
         {activeView === 'home' ? <section className="business-projects business-workspace-home">
           <header className="business-dashboard-header"><div><p className="business-dashboard-hero-line">{publicCopy.hero.lines.slice(1).join(' ')}</p><h1><span>{workspaceGreeting(language, greetingIsReturning)}</span><strong>{displayName}.</strong></h1><p className="business-dashboard-intro">{workspaceText[0]}</p><button className="business-hero-cta" type="button" data-tour="primary" onClick={() => openNewProject()}>{workspaceText[1]}<ArrowRight size={16} /></button></div></header>
@@ -1158,7 +1162,7 @@ export default function BusinessWorkspace() {
       {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label={projectsCopy.briefDialog.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.briefDialog.eyebrow}</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>{projectsCopy.briefDialog.audience}</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>{projectsCopy.briefDialog.format}</dt><dd>{studyFormatLabel(briefProject.studyFormat)}</dd></div>{briefProject.countries && <div><dt>{projectsCopy.briefDialog.market}</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>{projectsCopy.briefDialog.languages}</dt><dd>{briefProject.languages}</dd></div>}{briefProject.targetParticipants && <div><dt>{projectsCopy.briefDialog.participants}</dt><dd>{briefProject.targetParticipants}</dd></div>}{briefProject.estimatedMinutes && <div><dt>{briefProject.studyFormat === 'SURVEY' ? projectsCopy.briefDialog.completionTime : projectsCopy.briefDialog.sessionTime}</dt><dd>{projectsCopy.briefDialog.minutes.replace('{minutes}', briefProject.estimatedMinutes)}</dd></div>}{briefProject.timeline && <div><dt>{projectsCopy.briefDialog.timing}</dt><dd>{briefProject.timeline}</dd></div>}<div><dt>{projectsCopy.briefDialog.incentives}</dt><dd>{projectsCopy.briefDialog.incentiveLabels[briefProject.incentiveBudget] || projectsCopy.briefDialog.incentiveLabels.NEED_GUIDANCE}</dd></div></dl>{briefProject.additionalContext && <section><strong>{projectsCopy.briefDialog.additional}</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>{projectsCopy.briefDialog.close}</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>{projectsCopy.briefDialog.edit} <Pencil size={15} /></button>}</div></section></div>}
       {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.quote.eyebrow}</p><h2 id="business-quote-title">{projectsCopy.quote.title}</h2><p className="business-form-intro">{projectsCopy.quote.intro}</p><dl><div><dt>{projectsCopy.quote.project}</dt><dd>{quoteProject.title}</dd></div><div><dt>{projectsCopy.quote.quote}</dt><dd>{new Intl.NumberFormat(language, { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>{projectsCopy.quote.validUntil}</dt><dd>{new Intl.DateTimeFormat(language, { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>{projectsCopy.quote.scope}</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>{projectsCopy.quote.terms}</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">{projectsCopy.quote.declineQuestion}<textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder={projectsCopy.quote.declinePlaceholder} /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>{projectsCopy.quote.keepReviewing}</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.declineQuote}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>{projectsCopy.quote.decline}</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.accept} <Check size={16} /></button></>}</div></section></div>}
       {editorStarterOpen && <div className="business-project-modal business-editor-starter-modal" role="dialog" aria-modal="true" aria-labelledby="business-editor-starter-title"><form onSubmit={createEditorDraft}><button className="business-modal-close" type="button" onClick={() => setEditorStarterOpen(false)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{ui.editorStarterEyebrow}</p><h2 id="business-editor-starter-title">{ui.editorStarterTitle}</h2><p className="business-form-intro">{ui.editorStarterIntro}</p><label>{ui.editorStarterName}<input required minLength="3" value={editorStarter.title} onChange={(event) => setEditorStarter((current) => ({ ...current, title: event.target.value }))} placeholder={ui.editorStarterNamePlaceholder} /></label><label>{ui.editorStarterGoal}<textarea required minLength="20" value={editorStarter.researchGoal} onChange={(event) => setEditorStarter((current) => ({ ...current, researchGoal: event.target.value }))} placeholder={ui.editorStarterGoalPlaceholder} /></label><label>{ui.editorStarterAudience}<textarea required minLength="10" value={editorStarter.audienceDescription} onChange={(event) => setEditorStarter((current) => ({ ...current, audienceDescription: event.target.value }))} placeholder={ui.editorStarterAudiencePlaceholder} /></label><button className="business-button" type="submit" disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : ui.editorStarterSubmit} {!submitting && <ArrowRight size={16} />}</button></form></div>}
-      {tourOpen && <BusinessTour open language={language} onClose={closeTour} onFinish={finishTour} />}
+      {BUSINESS_TOUR_ENABLED && tourOpen && <BusinessTour open language={language} onClose={closeTour} onFinish={finishTour} />}
       {/* 引导：压在模糊工作区上的大弹窗（用户 2026-10-17，参照 YouGov）。
           背景是真工作区，答完这几问才关掉它并弹出欢迎弹窗。
           版式：顶部通栏进度条 → 字标 + 01/03 → 大标题 → 说明 → 卡片（图标砖 + 选中勾）→ 页脚按钮。 */}
