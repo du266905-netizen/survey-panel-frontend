@@ -170,6 +170,9 @@ function storeWorkspaceWelcome(user) {
 /* 2026-11-20：布局改版期间停用首访引导。新外壳拿掉了其中几个锚点（`search` 已不存在），
    引导会在首访时把整页压在遮罩下。等版式定稿后重做，再把这个开关打开。 */
 const BUSINESS_TOUR_ENABLED = false;
+/* 2026-11-20：首访三问向导暂时关闭。新版式下它只剩一层深色模糊遮罩，
+   新账号一进来整页被压暗且看不到弹窗；等版式定稿后重做，再把开关打开。 */
+const ONBOARDING_WIZARD_ENABLED = false;
 
 function tourStorageKey(user) {
   const identity = String(user?.id || user?.email || '').trim().toLowerCase();
@@ -314,7 +317,7 @@ export default function BusinessWorkspace() {
   const displayName = String(user?.displayName || user?.email?.split('@')[0] || (ui.displayNameFallback)).trim();
   // True exactly when the wizard below renders. The welcome card can also be up
   // on its own, after the wizard closes.
-  const wizardOpen = !loading && Boolean(workspace.profile) && !onboardingComplete && !tourOpen;
+  const wizardOpen = ONBOARDING_WIZARD_ENABLED && !loading && Boolean(workspace.profile) && !onboardingComplete && !tourOpen;
 
   /* Both overlays are full-screen, but the document behind them stays
      scrollable: wheel over the (short) dialog chains to the page, and Space /
@@ -1166,7 +1169,7 @@ export default function BusinessWorkspace() {
       {/* 引导：压在模糊工作区上的大弹窗（用户 2026-10-17，参照 YouGov）。
           背景是真工作区，答完这几问才关掉它并弹出欢迎弹窗。
           版式：顶部通栏进度条 → 字标 + 01/03 → 大标题 → 说明 → 卡片（图标砖 + 选中勾）→ 页脚按钮。 */}
-      {!loading && workspace.profile && !onboardingComplete && !tourOpen && (
+      {wizardOpen && (
         <div className="business-onboarding" role="dialog" aria-modal="true" aria-labelledby="business-onboarding-title">
           <section className="business-onboarding-dialog">
             {/* 字标是品牌，独占顶部一条，不和序号/正文排在一起。 */}
