@@ -119,7 +119,7 @@ const jobContent = {
   },
 };
 
-export default function JobDetail() {
+export default function JobDetail({ chrome = null }) {
   const { language } = useLanguage();
   const { slug } = useParams();
   const copy = careersCopy[language] || careersCopy['en-US'];
@@ -212,7 +212,7 @@ export default function JobDetail() {
         </section>
       )}
 
-      <HomeFooter />
+      {chrome?.footer ?? <HomeFooter />}
     </main>
   );
 }

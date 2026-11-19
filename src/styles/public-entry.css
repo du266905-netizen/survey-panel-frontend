@@ -11,7 +11,7 @@ body:has(.landing-page--auth-only) { background: #FFFFFF; }
   box-shadow: none;
   padding-top: 96px;
 }
-.landing-page--auth-only .landing-brand { background: #141413; }
+.landing-page--auth-only .landing-brand { background: #000000; }
 .landing-page--auth-only .landing-brand:before { display: none; }
 .landing-page--auth-only .landing-brand-content h1 {
   color: #FFFFFF;
@@ -57,7 +57,7 @@ body:has(.landing-page--auth-only) { background: #FFFFFF; }
   height: 50px;
   border: 1px solid #141413;
   border-radius: 0;
-  background: #141413;
+  background: #000000;
   color: #FFFDF8;
   font-family: var(--font-sans);
   font-size: 16px;
@@ -121,7 +121,7 @@ body:has(.landing-page--auth-only) { background: #FFFFFF; }
   padding: clamp(28px, 4vw, 42px);
 }
 .join-choice-page .join-choice-card--participant { background: #FFFFFF; color: #141413; }
-.join-choice-page .join-choice-card--business { background: #141413; color: #FFFFFF; }
+.join-choice-page .join-choice-card--business { background: #000000; color: #FFFFFF; }
 .join-choice-page .join-choice-icon {
   border: 0;
   background: #F5F5F3;
@@ -167,7 +167,7 @@ body:has(.landing-page--auth-only) { background: #FFFFFF; }
   min-height: 50px;
   border: 1px solid #141413;
   border-radius: 0;
-  background: #141413;
+  background: #000000;
   color: #FFFDF8;
   font-family: var(--font-sans);
   font-size: 16px;
@@ -205,7 +205,7 @@ body:has(.landing-page--auth-only) { background: #FFFFFF; }
   min-height: 50px;
   border: 1px solid #141413;
   border-radius: 0;
-  background: #141413;
+  background: #000000;
   color: #FFFDF8;
   font-size: 16px;
   font-weight: 500;

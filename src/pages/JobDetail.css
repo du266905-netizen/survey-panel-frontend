@@ -96,7 +96,7 @@
   min-height: 48px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   font-family: var(--font-sans);
   font-size: 14px;
@@ -237,7 +237,7 @@
   min-height: 50px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   cursor: pointer;
   font-family: var(--font-sans);

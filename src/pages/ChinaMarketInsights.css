@@ -42,7 +42,7 @@
   height: calc(100svh - 100px);
   min-height: 460px;
   overflow: hidden;
-  background: #141413;
+  background: #000000;
 }
 .china-market-hero > img {
   position: absolute;
@@ -211,7 +211,7 @@
   overflow: visible;
   margin: 0;
   border-radius: 0;
-  background: #141413;
+  background: #000000;
   padding: 96px 0;
 }
 .china-market-cta::after { display: none; }
@@ -228,7 +228,7 @@
   gap: 9px;
   border: 1px solid #141413;
   border-radius: 0;
-  background: #141413;
+  background: #000000;
   color: #FFFDF8;
   font-family: var(--font-sans);
   font-size: 16px;

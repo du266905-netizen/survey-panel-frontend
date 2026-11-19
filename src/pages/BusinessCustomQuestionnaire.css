@@ -44,7 +44,7 @@
   width: 100%;
   height: clamp(320px, 42vh, 460px);
   overflow: hidden;
-  background: #141413;
+  background: #000000;
 }
 
 .business-custom-hero img {
@@ -228,7 +228,7 @@
   gap: 8px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   cursor: pointer;
   font: 500 14px var(--font-sans);

@@ -55,7 +55,7 @@
 
 /* 标题区：深色块，给这条公告一个“封面”。 */
 .ann-hero {
-  background: #141413;
+  background: #000000;
   padding: 40px 36px 32px;
 }
 
@@ -96,7 +96,7 @@
 .ann-primary {
   border: 1px solid #141413;
   border-radius: 9px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   cursor: pointer;
   font: 500 13px var(--font-sans);

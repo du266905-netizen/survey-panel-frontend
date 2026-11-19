@@ -4,7 +4,8 @@
 
 .plans-page {
   min-height: 80svh;
-  background: #1F1F1F;
+  /* 2026-11-19 深色页三档：页面 #000000 / 卡片 #1F1F1F / 推荐卡 #2B2B2B */
+  background: #000000;
   color: #FFFFFF;
   padding: clamp(64px, 8vw, 104px) clamp(24px, 5vw, 64px) clamp(80px, 9vw, 128px);
 }
@@ -61,11 +62,11 @@
   flex-direction: column;
   align-items: flex-start;
   border-radius: 14px;
-  background: #2B2B2B;
+  background: #1F1F1F;
   padding: 32px 30px 30px;
 }
 
-.plans-page .pl-card--lead { background: #333333; }
+.plans-page .pl-card--lead { background: #2B2B2B; }
 
 .plans-page .pl-card > svg { color: #FFFFFF; }
 

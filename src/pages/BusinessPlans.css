@@ -49,7 +49,7 @@
   color: #5F6862; cursor: pointer; font: 400 12px var(--font-sans); padding: 7px 16px;
 }
 
-.pl-toggle button.is-active { background: #141413; color: #FFFFFF; }
+.pl-toggle button.is-active { background: #000000; color: #FFFFFF; }
 
 .pl-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
 

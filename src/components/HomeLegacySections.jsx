@@ -252,7 +252,7 @@ export function HomeFooter() {
       <div className="home-continuation-container home-footer-main">
         <div className="home-footer-brand">
           <div className="home-footer-topline">
-            <img className="home-footer-wordmark" src="/guanyisearch-wordmark.png" alt="GuanyiSearch" />
+            <span className="home-footer-lockup"><img className="home-footer-mark" src="/brand-mark-warm.png" alt="" /><img className="home-footer-wordmark" src="/guanyisearch-wordmark.png" alt="GuanyiSearch" /></span>
             <div className="home-footer-quick">
               <nav className="home-social-links" aria-label="GuanyiSearch social links">{socialLinks.map((social) => <a key={social.id} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}><SocialGlyph id={social.id} /></a>)}</nav>
               <div

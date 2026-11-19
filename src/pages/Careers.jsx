@@ -208,7 +208,7 @@ export const careersCopy = {
   },
 };
 
-export default function Careers() {
+export default function Careers({ chrome = null }) {
   const { language } = useLanguage();
   const t = careersCopy[language] || careersCopy['en-US'];
   usePageTitle('Careers');
@@ -235,7 +235,7 @@ export default function Careers() {
 
   return (
     <main className="careers-page">
-      <PublicSiteHeader />
+      {chrome?.header ?? <PublicSiteHeader />}
 
       <section className="careers-intro">
         <div className="careers-container">
@@ -320,7 +320,7 @@ export default function Careers() {
         </div>
       </section>
 
-      <HomeFooter />
+      {chrome?.footer ?? <HomeFooter />}
     </main>
   );
 }

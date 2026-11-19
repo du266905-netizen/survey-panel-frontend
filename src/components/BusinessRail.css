@@ -141,7 +141,7 @@
 
 .business-workspace-navitem.is-active {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #ffffff;
   font-weight: 500;
 }
@@ -283,7 +283,7 @@
 }
 
 .business-workspace-rail .business-language-picker-menu > div > button.is-selected {
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   font-weight: 500;
 }

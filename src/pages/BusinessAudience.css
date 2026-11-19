@@ -91,7 +91,7 @@
 
 .aud-chip:hover { border-color: #8D948D; }
 
-.aud-chip.is-on { border-color: #141413; background: #141413; color: #FFFFFF; }
+.aud-chip.is-on { border-color: #141413; background: #000000; color: #FFFFFF; }
 
 .aud-chip input {
   position: absolute;

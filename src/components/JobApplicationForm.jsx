@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Paperclip, X } from 'lucide-react';
-import { countryOptions } from '../constants/panelProfileOptions';
+import { countryOptionsFor } from '../constants/panelProfileOptions';
 import { submitJobApplication } from '../api/realApi';
 import { useLanguage } from './LanguageContext';
 
@@ -111,6 +111,7 @@ const MAX_BYTES = 10 * 1024 * 1024;
 export default function JobApplicationForm({ role }) {
   const { language } = useLanguage();
   const c = COPY[language] || COPY['en-US'];
+  const countryOptions = countryOptionsFor(language);
   const fileInput = useRef(null);
   const [form, setForm] = useState({ first: '', last: '', email: '', country: 'CN', phone: '', linkedin: '', salary: '', statement: '' });
   const [file, setFile] = useState(null);

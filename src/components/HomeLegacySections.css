@@ -112,7 +112,7 @@
    2026-11-12: black ground, and the layout is the only thing that changed.
    Two levels of type (group label + link), one line for legal, and the air
    comes from spacing instead of borders. */
-.home-footer { background: #141413; color: rgba(255, 255, 255, 0.72); }
+.home-footer { background: #000000; color: rgba(255, 255, 255, 0.72); }
 .home-footer .home-continuation-container { width: min(100% - 96px, 1280px); }
 
 .home-footer-main {
@@ -364,7 +364,7 @@
 .home-community-cta {
   /* The header is sticky at 100px; keep the anchor landing below it. */
   scroll-margin-top: 100px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   padding: clamp(80px, 9vw, 132px) clamp(24px, 5vw, 64px);
 }
@@ -830,7 +830,7 @@
   height: 5px;
   margin-right: 7px;
   border-radius: 50%;
-  background: #141413;
+  background: #000000;
   vertical-align: 2px;
 }
 .home-global-clock-cell:hover .home-global-clock-city,
@@ -905,3 +905,32 @@
   .home-global-clock { transition: none !important; }
   .home-global-clock-cell.is-extra { transition: none; }
 }
+
+/* 2026-11-19 · 页脚法务带：按用户给的 Visa 截图一比一复刻
+   参考实测（1338 宽视口，2x 截图）：带高 90px、底色 #F7F7F7、正文 #5E5E5E 12px、
+   左右留白 42px、上下约 27px、没有上边框。页面底同时改成纯白。 */
+.home-footer-bottom {
+  align-items: center;
+  gap: 40px;
+  min-height: 64px;
+  padding: 14px 0;
+  background: #f7f7f7;
+  box-shadow: 0 0 0 100vmax #f7f7f7;
+  clip-path: inset(0 -100vmax);
+}
+.home-footer-bottom::before { display: none; }
+.home-footer-bottom p,
+.home-footer-bottom a {
+  max-width: 1180px;
+  color: #5e5e5e;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+.home-footer-bottom a:hover { color: #141413; }
+.home-footer-top { align-self: center; color: #5e5e5e; }
+.home-footer-top:hover { color: #141413; }
+.home-footer-top-label { color: #5e5e5e; }
+.home-footer-top-track { stroke: rgba(0, 0, 0, .12); }
+.home-footer-top-bar { stroke: rgba(0, 0, 0, .45); }

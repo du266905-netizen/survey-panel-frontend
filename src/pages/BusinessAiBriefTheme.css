@@ -329,7 +329,7 @@
   gap: 6px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #ffffff;
   cursor: pointer;
   font: 500 14px var(--font-sans);
@@ -525,7 +525,7 @@
 
 .business-ai-brief-page .business-ai-brief-assistant-list > div.is-current .business-ai-brief-assistant-open::before {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
 }
 
 .business-ai-brief-page .business-ai-brief-assistant-open > strong {

@@ -5473,7 +5473,7 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-brief-dialog section p { color: #5f6862; font-size: 13px; }
 #root .business-brief-dialog-actions { border-top: 1px solid #E5E3DD; margin-top: 24px; padding-top: 16px; }
 #root .business-brief-dialog-actions > button { border: 1px solid #E5E3DD; border-radius: 8px; background: #FFFFFF; color: #141413; font-size: 13px; font-weight: 500; padding: 9px 14px; }
-#root .business-brief-dialog-actions > .business-button { border-color: #141413; background: #141413; color: #FFFFFF; }
+#root .business-brief-dialog-actions > .business-button { border-color: #141413; background: #000000; color: #FFFFFF; }
 #root .business-modal-close { border: 1px solid #E5E3DD; border-radius: 8px; color: #141413; }
 
 #root .business-project-menu > div { border: 1px solid #E5E3DD; border-radius: 10px; background: #FFFFFF; box-shadow: 0 12px 32px rgba(20, 20, 19, .12); padding: 6px; }
@@ -5493,7 +5493,7 @@ main.business-custom-request-page .business-workspace-rail {
 #root .business-start-card h2 { color: #141413; font-family: var(--font-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
 #root .business-start-card > span { color: #5f6862; }
 #root .business-start-card ul { color: #5f6862; }
-#root .business-start-card li::before { background: #141413; }
+#root .business-start-card li::before { background: #000000; }
 
 #root .business-project-modal--chooser > section { background: #FFFFFF; border: 1px solid #E5E3DD; border-radius: 16px; box-shadow: none; }
 #root .business-project-modal--chooser h2 { color: #141413; font-family: var(--font-sans); font-size: 32px; font-weight: 600; letter-spacing: -.01em; }
@@ -5609,7 +5609,7 @@ main.business-custom-request-page .business-workspace-rail {
   min-height: 44px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   cursor: pointer;
   font-family: var(--font-sans);
@@ -5710,7 +5710,7 @@ main.business-custom-request-page .business-workspace-rail {
 /* 插入 in the template dialog is the one decisive action there: keep it ink. */
 .sq-template .sq-btn {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
 }
 
@@ -5841,7 +5841,7 @@ main.business-custom-request-page .business-workspace-rail {
 .business-workspace .business-project-card-progress { display: grid; gap: 6px; margin-top: 2px; }
 .business-workspace .business-project-card-progress > span { color: #141413; font-size: 12px; font-variant-numeric: tabular-nums; }
 .business-workspace .business-project-card-progress > i { display: block; height: 4px; overflow: hidden; border-radius: 999px; background: #f2f1ec; }
-.business-workspace .business-project-card-progress b { display: block; height: 100%; border-radius: inherit; background: #141413; }
+.business-workspace .business-project-card-progress b { display: block; height: 100%; border-radius: inherit; background: #000000; }
 
 .business-workspace .business-project-card > footer {
   display: flex;
