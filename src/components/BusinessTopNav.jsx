@@ -140,6 +140,10 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
             <span>{t('研究', 'Research')}</span>
           </button>
 
+          <button type="button" className={`business-topnav-link${activeId === 'ai' ? ' is-active' : ''}`} onClick={() => go('/business/ai-brief')}>
+            <span>AI</span>
+          </button>
+
           {groups.map((group) => {
             const isOpen = open === group.id;
             const isActive = groupForActive?.id === group.id;

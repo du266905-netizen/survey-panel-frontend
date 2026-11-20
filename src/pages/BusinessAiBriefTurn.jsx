@@ -532,7 +532,7 @@ export default function BusinessAiBriefTurn() {
           <header className="business-ai-brief-header">
             <div className="business-ai-brief-brand">
               <img className="business-ai-brief-wordmark" src="/guanyisearch-wordmark.png" alt="guanyisearch" />
-              {<><span aria-hidden="true">/</span><strong>{hasStarted ? title : 'AI'}</strong></>}
+              {hasStarted && <><span aria-hidden="true">/</span><strong>{title}</strong></>}
             </div>
             <div className="business-ai-brief-tools"><NotificationBell className="business-workspace-notification" /></div>
           </header>
