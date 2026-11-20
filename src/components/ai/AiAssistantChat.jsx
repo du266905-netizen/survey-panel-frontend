@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { PromptInput, PromptInputBody, PromptInputButton, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from '../ai-elements/prompt-input';
 import { ArrowRight, LoaderCircle, Paperclip, Send, Sprout, X } from 'lucide-react';
 import { AI_DOCUMENT_MODE, analyzeDocumentIntake } from '../../ai/documentIntakeClient';
 import { DOCUMENT_MOCK_CASES, analyzeDocumentMock } from '../../ai/documentIntakeMock';
@@ -150,38 +151,42 @@ export default function AiAssistantChat({
 
       <div className="business-ai-dock">
         {error && <p className="business-ai-brief-error" role="alert">{error}</p>}
-        <form className="business-ai-composer" onSubmit={submit}>
-          <textarea
-            ref={composerRef}
-            value={reply}
-            disabled={busy}
-            onChange={(event) => setReply(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent?.isComposing) {
-                event.preventDefault();
-                if (reply.trim() && !busy) {
-                  setReply('');
-                  onSend(reply);
-                }
-              }
-            }}
-            placeholder={copy.placeholder}
-            aria-label={copy.placeholder}
+        <PromptInput className="business-ai-composer is-shadcn" onSubmit={submit}>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+            className="business-ai-document-input"
+            onChange={handleDocumentFile}
           />
-          <div className="business-ai-composer-bar">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
-              className="business-ai-document-input"
-              onChange={handleDocumentFile}
+          <PromptInputBody>
+            <PromptInputTextarea
+              ref={composerRef}
+              value={reply}
+              disabled={busy}
+              onChange={(event) => setReply(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent?.isComposing) {
+                  event.preventDefault();
+                  if (reply.trim() && !busy) {
+                    setReply('');
+                    onSend(reply);
+                  }
+                }
+              }}
+              placeholder={copy.placeholder}
+              aria-label={copy.placeholder}
             />
-            <button type="button" className="business-ai-attach" onClick={openDocumentPicker} disabled={docAnalyzing} title={copy.documentTitle} aria-label={copy.documentTitle}><Paperclip size={17} /></button>
-            <button type="submit" disabled={!reply.trim() || busy} aria-label={copy.send} title={copy.send}>
-              {busy ? <LoaderCircle className="animate-spin" size={17} /> : <Send size={17} />}
-            </button>
-          </div>
-        </form>
+          </PromptInputBody>
+          <PromptInputFooter>
+            <PromptInputTools>
+              <PromptInputButton onClick={openDocumentPicker} disabled={docAnalyzing} tooltip={copy.documentTitle} aria-label={copy.documentTitle}>
+                <Paperclip size={16} />
+              </PromptInputButton>
+            </PromptInputTools>
+            <PromptInputSubmit status={busy ? 'submitted' : 'ready'} disabled={!reply.trim() || busy} />
+          </PromptInputFooter>
+        </PromptInput>
         {footer}
       </div>
 

@@ -919,3 +919,36 @@ body:has(.business-ai-brief-page) .business-support-chat {
 .business-ai-brief-page .business-ai-guide-mark .business-ai-sprout {
   color: #141413 !important;
 }
+
+/* 2026-11-20 · the composer is the AI Elements PromptInput now; the old form
+   chrome (its own border/padding) must not double up on the component's. */
+.business-ai-brief-page .business-ai-composer.is-shadcn {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.business-ai-brief-page .business-ai-composer.is-shadcn {
+  display: block !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.business-ai-brief-page .business-ai-composer.is-shadcn button {
+  width: auto !important;
+  height: 32px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #141413 !important;
+  padding: 0 10px !important;
+}
+.business-ai-brief-page .business-ai-composer.is-shadcn button[type="submit"] {
+  background: #141413 !important;
+  color: #ffffff !important;
+}
+.business-ai-brief-page .business-ai-composer.is-shadcn button:disabled { opacity: .45; }
+.business-ai-brief-page .business-ai-composer.is-shadcn textarea { resize: none !important; }

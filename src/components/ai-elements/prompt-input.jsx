@@ -1,4 +1,5 @@
 import { ArrowUpIcon, PaperclipIcon, SquareIcon, XIcon } from 'lucide-react';
+import { forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
@@ -24,8 +25,9 @@ export const PromptInputBody = ({ className, children, ...props }) => (
   </div>
 );
 
-export const PromptInputTextarea = ({ className, ...props }) => (
+export const PromptInputTextarea = forwardRef(({ className, ...props }, ref) => (
   <textarea
+    ref={ref}
     className={cn(
       'ai-prose min-h-[46px] w-full resize-none border-0 bg-transparent px-1 py-1 outline-none placeholder:text-muted-foreground',
       className,
@@ -33,7 +35,7 @@ export const PromptInputTextarea = ({ className, ...props }) => (
     rows={2}
     {...props}
   />
-);
+));
 
 export const PromptInputFooter = ({ className, children, ...props }) => (
   <div className={cn('flex items-center justify-between gap-2 px-2 pb-2', className)} {...props}>
