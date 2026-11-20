@@ -27,6 +27,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
@@ -1093,7 +1095,7 @@ export default function BusinessWorkspace() {
 
             <label>
               {selectedTypeCopy.projectLabel}
-              <input name="title" value={form.title} onChange={update} placeholder={selectedTypeCopy.projectPlaceholder} required />
+              <Input name="title" value={form.title} onChange={update} placeholder={selectedTypeCopy.projectPlaceholder} required />
             </label>
             <section className="business-brief-section">
               <p>{briefCopy.decisionKicker}</p>
@@ -1102,22 +1104,22 @@ export default function BusinessWorkspace() {
             </section>
             <label>
               {briefCopy.decisionLabel}
-              <textarea name="researchGoal" value={form.researchGoal} onChange={update} placeholder={briefCopy.decisionPlaceholder} required />
+              <Textarea name="researchGoal" value={form.researchGoal} onChange={update} placeholder={briefCopy.decisionPlaceholder} required />
             </label>
             <label>
               {briefCopy.audienceLabel}
-              <textarea name="audienceDescription" value={form.audienceDescription} onChange={update} placeholder={briefCopy.audiencePlaceholder} required />
+              <Textarea name="audienceDescription" value={form.audienceDescription} onChange={update} placeholder={briefCopy.audiencePlaceholder} required />
             </label>
 
             <div className="business-form-grid">
               <label>
                 {briefCopy.marketLabel}
-                <input name="countries" value={form.countries} onChange={update} placeholder={briefCopy.marketPlaceholder} />
+                <Input name="countries" value={form.countries} onChange={update} placeholder={briefCopy.marketPlaceholder} />
                 <small>{briefCopy.marketHelp}</small>
               </label>
               <label>
                 {briefCopy.languagesLabel}
-                <input name="languages" value={form.languages} onChange={update} placeholder={briefCopy.languagesPlaceholder} />
+                <Input name="languages" value={form.languages} onChange={update} placeholder={briefCopy.languagesPlaceholder} />
                 <small>{briefCopy.languagesHelp}</small>
               </label>
             </div>
@@ -1131,7 +1133,7 @@ export default function BusinessWorkspace() {
               {isQuestionnaire ? (
                 <label>
                   {selectedTypeCopy.timeLabel}
-                  <input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
+                  <Input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
                 </label>
               ) : (
                 <>
@@ -1143,18 +1145,18 @@ export default function BusinessWorkspace() {
                   </label>
                   <label>
                     {selectedTypeCopy.timeLabel}
-                    <input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
+                    <Input name="estimatedMinutes" type="number" min="1" value={form.estimatedMinutes} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
                   </label>
                 </>
               )}
               <label>
                 {briefCopy.participantsLabel}
-                <input name="targetParticipants" type="number" min="1" value={form.targetParticipants} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
+                <Input name="targetParticipants" type="number" min="1" value={form.targetParticipants} onChange={update} placeholder={briefCopy.optionalPlaceholder} />
                 <small>{briefCopy.participantsHelp}</small>
               </label>
               <label>
                 {briefCopy.timelineLabel}
-                <input name="timeline" value={form.timeline} onChange={update} placeholder={briefCopy.timelinePlaceholder} />
+                <Input name="timeline" value={form.timeline} onChange={update} placeholder={briefCopy.timelinePlaceholder} />
               </label>
               <label>
                 {briefCopy.incentiveLabel}
@@ -1175,7 +1177,7 @@ export default function BusinessWorkspace() {
 
             <label>
               {briefCopy.contextLabel}
-              <textarea name="additionalContext" value={form.additionalContext} onChange={update} placeholder={selectedTypeCopy.contextPlaceholder} />
+              <Textarea name="additionalContext" value={form.additionalContext} onChange={update} placeholder={selectedTypeCopy.contextPlaceholder} />
             </label>
             <button className="business-button" type="submit" disabled={submitting}>
               {submitting ? <LoaderCircle className="animate-spin" size={17} /> : editingProject ? briefCopy.saveChanges : briefCopy.save}
@@ -1185,8 +1187,8 @@ export default function BusinessWorkspace() {
         </div>
       )}
       {briefProject && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-brief-title"><section className="business-brief-dialog"><button className="business-modal-close" type="button" onClick={() => setBriefProject(null)} aria-label={projectsCopy.briefDialog.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.briefDialog.eyebrow}</p><h2 id="business-brief-title">{briefProject.title}</h2><p>{briefProject.researchGoal}</p><dl><div><dt>{projectsCopy.briefDialog.audience}</dt><dd>{briefProject.audienceDescription}</dd></div><div><dt>{projectsCopy.briefDialog.format}</dt><dd>{studyFormatLabel(briefProject.studyFormat)}</dd></div>{briefProject.countries && <div><dt>{projectsCopy.briefDialog.market}</dt><dd>{briefProject.countries}</dd></div>}{briefProject.languages && <div><dt>{projectsCopy.briefDialog.languages}</dt><dd>{briefProject.languages}</dd></div>}{briefProject.targetParticipants && <div><dt>{projectsCopy.briefDialog.participants}</dt><dd>{briefProject.targetParticipants}</dd></div>}{briefProject.estimatedMinutes && <div><dt>{briefProject.studyFormat === 'SURVEY' ? projectsCopy.briefDialog.completionTime : projectsCopy.briefDialog.sessionTime}</dt><dd>{projectsCopy.briefDialog.minutes.replace('{minutes}', briefProject.estimatedMinutes)}</dd></div>}{briefProject.timeline && <div><dt>{projectsCopy.briefDialog.timing}</dt><dd>{briefProject.timeline}</dd></div>}<div><dt>{projectsCopy.briefDialog.incentives}</dt><dd>{projectsCopy.briefDialog.incentiveLabels[briefProject.incentiveBudget] || projectsCopy.briefDialog.incentiveLabels.NEED_GUIDANCE}</dd></div></dl>{briefProject.additionalContext && <section><strong>{projectsCopy.briefDialog.additional}</strong><p>{briefProject.additionalContext}</p></section>}<div className="business-brief-dialog-actions"><button type="button" onClick={() => setBriefProject(null)}>{projectsCopy.briefDialog.close}</button>{briefProject.status === 'DRAFT' && <button type="button" className="business-button" onClick={() => { setBriefProject(null); openEditProject(briefProject); }}>{projectsCopy.briefDialog.edit} <Pencil size={15} /></button>}</div></section></div>}
-      {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.quote.eyebrow}</p><h2 id="business-quote-title">{projectsCopy.quote.title}</h2><p className="business-form-intro">{projectsCopy.quote.intro}</p><dl><div><dt>{projectsCopy.quote.project}</dt><dd>{quoteProject.title}</dd></div><div><dt>{projectsCopy.quote.quote}</dt><dd>{new Intl.NumberFormat(language, { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>{projectsCopy.quote.validUntil}</dt><dd>{new Intl.DateTimeFormat(language, { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>{projectsCopy.quote.scope}</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>{projectsCopy.quote.terms}</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">{projectsCopy.quote.declineQuestion}<textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder={projectsCopy.quote.declinePlaceholder} /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>{projectsCopy.quote.keepReviewing}</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.declineQuote}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>{projectsCopy.quote.decline}</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.accept} <Check size={16} /></button></>}</div></section></div>}
-      {editorStarterOpen && <div className="business-project-modal business-editor-starter-modal" role="dialog" aria-modal="true" aria-labelledby="business-editor-starter-title"><form onSubmit={createEditorDraft}><button className="business-modal-close" type="button" onClick={() => setEditorStarterOpen(false)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{ui.editorStarterEyebrow}</p><h2 id="business-editor-starter-title">{ui.editorStarterTitle}</h2><p className="business-form-intro">{ui.editorStarterIntro}</p><label>{ui.editorStarterName}<input required minLength="3" value={editorStarter.title} onChange={(event) => setEditorStarter((current) => ({ ...current, title: event.target.value }))} placeholder={ui.editorStarterNamePlaceholder} /></label><label>{ui.editorStarterGoal}<textarea required minLength="20" value={editorStarter.researchGoal} onChange={(event) => setEditorStarter((current) => ({ ...current, researchGoal: event.target.value }))} placeholder={ui.editorStarterGoalPlaceholder} /></label><label>{ui.editorStarterAudience}<textarea required minLength="10" value={editorStarter.audienceDescription} onChange={(event) => setEditorStarter((current) => ({ ...current, audienceDescription: event.target.value }))} placeholder={ui.editorStarterAudiencePlaceholder} /></label><button className="business-button" type="submit" disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : ui.editorStarterSubmit} {!submitting && <ArrowRight size={16} />}</button></form></div>}
+      {quoteProject?.latestQuote && <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-quote-title"><section className="business-quote-dialog"><button className="business-modal-close" type="button" onClick={() => setQuoteProject(null)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{projectsCopy.quote.eyebrow}</p><h2 id="business-quote-title">{projectsCopy.quote.title}</h2><p className="business-form-intro">{projectsCopy.quote.intro}</p><dl><div><dt>{projectsCopy.quote.project}</dt><dd>{quoteProject.title}</dd></div><div><dt>{projectsCopy.quote.quote}</dt><dd>{new Intl.NumberFormat(language, { style: 'currency', currency: quoteProject.latestQuote.currency || 'USD' }).format(quoteProject.latestQuote.amount || 0)}</dd></div>{quoteProject.latestQuote.validUntil && <div><dt>{projectsCopy.quote.validUntil}</dt><dd>{new Intl.DateTimeFormat(language, { dateStyle: 'medium' }).format(new Date(quoteProject.latestQuote.validUntil))}</dd></div>}</dl><section className="business-quote-scope"><strong>{projectsCopy.quote.scope}</strong><p>{quoteProject.latestQuote.scope}</p>{quoteProject.latestQuote.terms && <><strong>{projectsCopy.quote.terms}</strong><p>{quoteProject.latestQuote.terms}</p></>}</section>{quoteDecision === 'DECLINE' && <label className="business-quote-decline">{projectsCopy.quote.declineQuestion}<Textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} maxLength={800} placeholder={projectsCopy.quote.declinePlaceholder} /></label>}<div className="business-quote-actions">{quoteDecision === 'DECLINE' ? <><button type="button" onClick={() => setQuoteDecision('')}>{projectsCopy.quote.keepReviewing}</button><button type="button" className="business-quote-decline-button" disabled={submitting} onClick={() => decideQuote('DECLINE')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.declineQuote}</button></> : <><button type="button" onClick={() => setQuoteDecision('DECLINE')}>{projectsCopy.quote.decline}</button><button type="button" className="business-button" disabled={submitting} onClick={() => decideQuote('ACCEPT')}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : projectsCopy.quote.accept} <Check size={16} /></button></>}</div></section></div>}
+      {editorStarterOpen && <div className="business-project-modal business-editor-starter-modal" role="dialog" aria-modal="true" aria-labelledby="business-editor-starter-title"><form onSubmit={createEditorDraft}><button className="business-modal-close" type="button" onClick={() => setEditorStarterOpen(false)} aria-label={briefCopy.close}><X size={18} /></button><p className="business-eyebrow">{ui.editorStarterEyebrow}</p><h2 id="business-editor-starter-title">{ui.editorStarterTitle}</h2><p className="business-form-intro">{ui.editorStarterIntro}</p><label>{ui.editorStarterName}<Input required minLength="3" value={editorStarter.title} onChange={(event) => setEditorStarter((current) => ({ ...current, title: event.target.value }))} placeholder={ui.editorStarterNamePlaceholder} /></label><label>{ui.editorStarterGoal}<Textarea required minLength="20" value={editorStarter.researchGoal} onChange={(event) => setEditorStarter((current) => ({ ...current, researchGoal: event.target.value }))} placeholder={ui.editorStarterGoalPlaceholder} /></label><label>{ui.editorStarterAudience}<Textarea required minLength="10" value={editorStarter.audienceDescription} onChange={(event) => setEditorStarter((current) => ({ ...current, audienceDescription: event.target.value }))} placeholder={ui.editorStarterAudiencePlaceholder} /></label><button className="business-button" type="submit" disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" size={16} /> : ui.editorStarterSubmit} {!submitting && <ArrowRight size={16} />}</button></form></div>}
       <AlertDialog open={Boolean(pendingDelete)} onOpenChange={(open) => { if (!open) setPendingDelete(null); }}>
         <AlertDialogContent>
           <AlertDialogHeader>
