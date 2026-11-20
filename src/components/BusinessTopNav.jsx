@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, LogOut, Sparkles, UserRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useAuth } from './AuthContext';
 import { useBusinessAvatar } from '../utils/businessAvatar';
 import { useLanguage, withLanguage } from './LanguageContext';
