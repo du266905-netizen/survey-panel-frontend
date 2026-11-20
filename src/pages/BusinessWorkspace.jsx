@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -829,7 +830,7 @@ export default function BusinessWorkspace() {
             </div>
           </section>
           <BusinessAiPrompt />
-          {message && <p className="business-workspace-message">{message}</p>}
+          {message && <Alert className="mt-6"><AlertTitle>{message}</AlertTitle></Alert>}
           <div className="business-dashboard-grid">
             
             <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses} · {categoryLabels[projectCategory(project)]} · {pick(language, '更新于 ', 'Updated ', '更新於 ')}{new Date(project.updatedAt || project.createdAt || Date.now()).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
@@ -906,7 +907,7 @@ export default function BusinessWorkspace() {
             </div>
           </div>
 
-          {message && <p className="business-workspace-message">{message}</p>}
+          {message && <Alert className="mt-6"><AlertTitle>{message}</AlertTitle></Alert>}
 
           {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : projectPool.length ? (
             <>

@@ -47,4 +47,13 @@ const AlertDescription = React.forwardRef(({ className, ...props }, ref) => (
 ))
 AlertDescription.displayName = "AlertDescription"
 
-export { Alert, AlertTitle, AlertDescription }
+const AlertAction = React.forwardRef(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("absolute right-2 top-2", className)}
+    {...props}
+  />
+))
+AlertAction.displayName = "AlertAction"
+
+export { Alert, AlertTitle, AlertDescription, AlertAction }
