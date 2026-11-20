@@ -26,6 +26,7 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertTitle } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
@@ -280,6 +281,15 @@ export default function BusinessWorkspace() {
   /* 项目阶段的中文与英文短名。英文不再把 SUBMITTED_FOR_REVIEW 整个摊开——
      它比列宽还长，会把下一列压重叠。 */
   const workspaceStatusLabel = (status) => statusLabel(status, language);
+  /* Badge variants: ink for a funded/live project, outline while it waits on us
+     or the client, muted for drafts, red only for a cancelled project. */
+  const statusBadgeVariant = (status) => {
+    const value = String(status || '').toUpperCase();
+    if (['FUNDED', 'RECRUITING', 'LIVE', 'COMPLETED', 'DELIVERED', 'ACCEPTED', 'QUESTIONNAIRE_APPROVED', 'PAID'].includes(value)) return 'default';
+    if (value === 'CANCELLED') return 'destructive';
+    if (['QUOTE_SENT', 'CLIENT_ACCEPTED', 'QUESTIONNAIRE_REVIEW'].includes(value)) return 'outline';
+    return 'secondary';
+  };
   const isQuestionnaire = projectType === 'questionnaire';
   const categoryLabels = projectCategoryCopy[language] || projectCategoryCopy['en-US'];
   /* One list for the Projects page: projects from the workspace plus every
@@ -833,7 +843,7 @@ export default function BusinessWorkspace() {
           {message && <Alert className="mt-6"><AlertTitle>{message}</AlertTitle></Alert>}
           <div className="business-dashboard-grid">
             
-            <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses} · {categoryLabels[projectCategory(project)]} · {pick(language, '更新于 ', 'Updated ', '更新於 ')}{new Date(project.updatedAt || project.createdAt || Date.now()).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
+            <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><Badge variant={statusBadgeVariant(project.status)}>{workspaceStatusLabel(project.status)}</Badge><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses} · {categoryLabels[projectCategory(project)]} · {pick(language, '更新于 ', 'Updated ', '更新於 ')}{new Date(project.updatedAt || project.createdAt || Date.now()).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
           </div>
           <BusinessContactBand />
         </section> : activeView === 'questionnaires' ? <section className="business-projects business-questionnaire-hub">
@@ -866,7 +876,7 @@ export default function BusinessWorkspace() {
                   <span className="business-questionnaire-card-preview-choice" />
                 </div>
                 <div className="business-questionnaire-card-body">
-                  <span className={`business-status status-${status.toLowerCase()}`}>{statusLabel}</span>
+                  <Badge variant={statusBadgeVariant(status)}>{statusLabel}</Badge>
                   <h2>{questionnaire.title || project.title}</h2>
                   <p>{stats}</p>
                   <div className="business-questionnaire-card-actions">
@@ -936,7 +946,7 @@ export default function BusinessWorkspace() {
                       onClick={() => setDetailProjectId(project.id)}
                     >
                       <header>
-                        <span className={`business-status status-${String(project.status).toLowerCase()}`}>{workspaceStatusLabel(project.status)}</span>
+                        <Badge variant={statusBadgeVariant(project.status)}>{workspaceStatusLabel(project.status)}</Badge>
                         <button type="button" className="business-project-card-more" onClick={(event) => { event.stopPropagation(); setProjectMenuId((current) => current === project.id ? '' : project.id); }} aria-label={projectsCopy.actions.replace('{title}', project.title)} aria-expanded={projectMenuId === project.id}><MoreHorizontal size={17} /></button>
                         {projectMenuId === project.id && (
                           <div className="business-project-card-menu">
