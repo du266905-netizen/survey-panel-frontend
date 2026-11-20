@@ -29,6 +29,8 @@ import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -652,7 +654,7 @@ export default function BusinessWorkspace() {
         navigate(withLanguage(`/business/projects/${response.data.project.id}`, language));
         return;
       }
-      setMessage(editingProject ? feedbackCopy.briefUpdated : isQuestionnaire ? feedbackCopy.questionnaireReady : feedbackCopy.briefReady);
+      toast.success(editingProject ? feedbackCopy.briefUpdated : isQuestionnaire ? feedbackCopy.questionnaireReady : feedbackCopy.briefReady);
     } catch (error) {
       setMessage(feedbackCopy.createError);
     } finally {
@@ -674,7 +676,7 @@ export default function BusinessWorkspace() {
       await deleteBusinessProject(project.id);
       setWorkspace((current) => ({ ...current, projects: current.projects.filter((item) => item.id !== project.id) }));
       setQuestionnaireDrafts((current) => current.filter((item) => item.id !== project.id));
-      setMessage(feedbackCopy.deleted);
+      toast.success(feedbackCopy.deleted);
     } catch (error) {
       const code = error?.response?.data?.code || '';
       setMessage(code === 'BUSINESS_PROJECT_DELETE_LOCKED'
@@ -689,7 +691,7 @@ export default function BusinessWorkspace() {
     try {
       const response = await submitBusinessProject(project.id);
       setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? response.data.project : item) }));
-      setMessage(feedbackCopy.submitted);
+      toast.success(feedbackCopy.submitted);
     } catch (error) {
       setMessage(feedbackCopy.submitError);
     } finally { setSubmitting(false); }
@@ -1197,6 +1199,7 @@ export default function BusinessWorkspace() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <Toaster position="top-right" />
       {BUSINESS_TOUR_ENABLED && tourOpen && <BusinessTour open language={language} onClose={closeTour} onFinish={finishTour} />}
       {/* 引导：压在模糊工作区上的大弹窗（用户 2026-10-17，参照 YouGov）。
           背景是真工作区，答完这几问才关掉它并弹出欢迎弹窗。
