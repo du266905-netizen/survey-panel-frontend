@@ -1005,7 +1005,7 @@ export default function BusinessWorkspace() {
             </>
           ) : (
             <Empty className="business-projects-empty">
-              <EmptyHeader><EmptyMedia variant="icon"><FolderPlus size={24} /></EmptyMedia><EmptyTitle>{pick(language, '暂无项目', 'No projects yet', '暫無項目')}</EmptyTitle><EmptyDescription>{pick(language, '先建一个项目，再决定是自助问卷还是定制研究。', 'Create a project first, then choose a self-serve questionnaire or managed research.', '先建一個專案，再決定是自助問卷還是客製研究。')}</EmptyDescription></EmptyHeader>
+              <EmptyHeader><EmptyMedia variant="icon"><FolderPlus size={24} /></EmptyMedia><EmptyTitle>{pick(language, '暂无项目', 'No projects yet', '暫無項目')}</EmptyTitle><EmptyDescription>{pick(language, '您尚未创建任何项目。立即创建您的第一个项目吧！', 'You have not created any project yet. Create your first project now.', '您尚未建立任何專案。立即建立您的第一個專案吧！')}</EmptyDescription></EmptyHeader>
               <EmptyContent><Button type="button" onClick={openNewProject}>{pick(language, '开展一项研究', 'Start a study', '開展一項研究')}</Button></EmptyContent>
             </Empty>
           )}
