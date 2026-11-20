@@ -8,6 +8,7 @@ import {
   archiveBusinessQuestionnaire, deleteBusinessProject, duplicateBusinessQuestionnaire,
   getBusinessProject, publishBusinessQuestionnaire, saveBusinessQuestionnaire,
 } from '../api/realApi';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useLanguage, withLanguage } from '../components/LanguageContext';
 import { assistQuestion } from '../ai/questionAssistClient';
 import AiCreditsBadge from '../components/AiCredits';
@@ -775,8 +776,8 @@ export default function BusinessQuestionnaireStudio() {
                           <ChevronDown size={13} aria-hidden="true" />
                         </label>
                         <label className="sq-required" title={text.required}>
-                          <input type="checkbox" checked={question.required} onChange={(event) => update(question.uid, { required: event.target.checked })} />
-                          <span>{text.required}</span>
+                          <Checkbox checked={question.required} onCheckedChange={(value) => update(question.uid, { required: Boolean(value) })} />
+                          <span onClick={() => update(question.uid, { required: !question.required })}>{text.required}</span>
                         </label>
                         <button
                           type="button"

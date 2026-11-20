@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { LoaderCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { getBusinessProject } from '../api/realApi';
 import { clientNextStep, clientStepConfirm, clientStepNote, submitClientStep } from '../components/businessNextStep';
 import { CLIENT_STEPS, clientStepIndex, isReportReleased, statusLabel } from '../content/projectStatus';
@@ -114,8 +115,10 @@ export default function BusinessProjectSheet({ projectId, preview, onClose, onCl
   };
 
   return (
-    <div className="bps-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}>
-      <section className="bps-sheet" role="dialog" aria-modal="true" aria-labelledby="bps-title">
+    <Sheet open onOpenChange={(open) => { if (!open) close(); }}>
+      <SheetContent side="right" hideClose className="w-full p-0 sm:max-w-[920px]">
+      <SheetHeader className="sr-only"><SheetTitle>{project.title}</SheetTitle><SheetDescription>{statusLabel(status, language)}</SheetDescription></SheetHeader>
+      <section className="bps-sheet bps-sheet--drawer" aria-labelledby="bps-title">
         <header className="bps-head">
           <div>
             <h1 id="bps-title">{project.title}</h1>
@@ -207,6 +210,7 @@ export default function BusinessProjectSheet({ projectId, preview, onClose, onCl
           {note && <p className="bps-note" role="status">{note}</p>}
         </footer>
       </section>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 }

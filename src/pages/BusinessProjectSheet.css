@@ -87,3 +87,14 @@
 .bps-quote span { color: var(--bps-muted); font-size: 13px; }
 .bps-quote b { font-size: 15px; font-weight: 600; }
 .bps-quote small { color: var(--bps-faint); font-size: 12px; }
+
+/* 2026-11-20 · the sheet is now a right-side drawer (shadcn Sheet):
+   the panel fills the drawer, so its own card frame goes away. */
+.bps-sheet--drawer {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
