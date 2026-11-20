@@ -2407,7 +2407,7 @@ textarea {
 /* ────────────────────────────────────────────────────────────────
    shadcn/ui 令牌（2026-11-19）
    只在 .ui-scope 内生效，不覆盖现有页面。
-   :root 的 --primary 保留旧青色（Team 开关在用），.ui-scope 内改墨黑。
+   :root 的 --primary 也是墨黑；旧青色已停用，Team 开关跟着变成墨黑。
    全部颜色来自 14 色卡，不新增色值。
    ──────────────────────────────────────────────────────────────── */
 :root {
@@ -2417,7 +2417,7 @@ textarea {
   --card-foreground: 60 2% 8%;
   --popover: 0 0% 100%;
   --popover-foreground: 60 2% 8%;
-  --primary: 189 94% 43%;
+  --primary: 60 2% 8%;
   --primary-foreground: 0 0% 100%;
   --secondary: 0 0% 97%;
   --secondary-foreground: 60 2% 8%;
