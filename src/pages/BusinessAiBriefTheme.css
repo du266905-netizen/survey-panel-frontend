@@ -774,12 +774,24 @@
   line-height: 1.02 !important;
   letter-spacing: -.03em !important;
 }
+/* 窄屏不再把整条左栏藏掉：收成 58px 图标条，返回和折叠都还在。 */
 @media (max-width: 1180px) {
   .business-ai-brief-page .business-ai-brief-shell.has-assistant,
   .business-ai-brief-page .business-ai-brief-shell.has-assistant.is-collapsed {
-    padding-left: 0 !important;
+    padding-left: 58px !important;
   }
-  .business-ai-brief-page .business-ai-brief-assistant { display: none !important; }
+  .business-ai-brief-page .business-ai-brief-assistant {
+    display: flex !important;
+    width: 58px !important;
+    padding: 12px 8px !important;
+    align-items: stretch;
+  }
+  .business-ai-brief-page .business-ai-brief-assistant > header { justify-content: center; }
+  .business-ai-brief-page .business-ai-brief-assistant > header strong { display: none !important; }
+  .business-ai-brief-page .business-ai-brief-assistant-brand img { width: 34px; height: 22px; object-fit: contain; }
+  .business-ai-brief-page .business-ai-brief-assistant-actions button { justify-content: center; font-size: 0 !important; gap: 0 !important; padding: 8px 0 !important; }
+  .business-ai-brief-page .business-ai-brief-assistant-section,
+  .business-ai-brief-page .business-ai-brief-assistant-list { display: none !important; }
 }
 @media (max-width: 620px) {
   .business-ai-brief-page .business-ai-brief-shell.has-assistant,
