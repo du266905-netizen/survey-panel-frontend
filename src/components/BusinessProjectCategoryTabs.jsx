@@ -4,21 +4,19 @@
  * Kept independent of the Projects page so the same tab treatment can be
  * reused by the future Help Centre.
  */
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 export default function BusinessProjectCategoryTabs({ items, value, onChange, ariaLabel }) {
   return (
-    <div className="business-project-toolbar" role="tablist" aria-label={ariaLabel}>
-      {items.map((item) => (
-        <button
-          key={item.value}
-          type="button"
-          role="tab"
-          aria-selected={value === item.value}
-          className={value === item.value ? 'is-active' : ''}
-          onClick={() => onChange(item.value)}
-        >
-          {item.label} <span>{item.count}</span>
-        </button>
-      ))}
-    </div>
+    <Tabs value={value} onValueChange={onChange}>
+      <TabsList aria-label={ariaLabel} className="mb-6">
+        {items.map((item) => (
+          <TabsTrigger key={item.value} value={item.value}>
+            {item.label}
+            <span className="ml-1.5 text-xs tabular-nums opacity-60">{item.count}</span>
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   );
 }
