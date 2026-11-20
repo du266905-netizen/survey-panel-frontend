@@ -3,7 +3,7 @@
 .home-hero-carousel {
   position: relative;
   min-height: calc(100svh - 100px);
-  background: #141413;
+  background: #000000;
 }
 
 /* The lime line under the header is the rotation's clock: it fills over the
@@ -23,7 +23,8 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: var(--pub-lime, #deef24);
+  /* 2026-11-19 色卡 v1：荧光黄不在五个色里，轮播进度改白 */
+  background: #ffffff;
   transform: scaleX(0);
   transform-origin: left center;
   /* Its own layer: the bar is written every frame and must not repaint the

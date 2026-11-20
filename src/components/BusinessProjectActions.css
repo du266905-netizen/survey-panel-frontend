@@ -9,9 +9,9 @@
 .bpa-steps li { position: relative; display: grid; gap: 8px; padding-top: 14px; }
 .bpa-steps li::before { position: absolute; top: 4px; right: 0; left: 0; height: 1px; background: #e5e3dd; content: ""; }
 .bpa-steps i { position: absolute; top: 0; left: 0; width: 9px; height: 9px; border: 1px solid #9a9a92; border-radius: 50%; background: #fff; }
-.bpa-steps li.is-done i, .bpa-steps li.is-current i { border-color: #141413; background: #141413; }
+.bpa-steps li.is-done i, .bpa-steps li.is-current i { border-color: #141413; background: #000000; }
 .bpa-steps li.is-current i { box-shadow: inset 0 0 0 2px #fff; }
-.bpa-steps li.is-done::before { background: #141413; }
+.bpa-steps li.is-done::before { background: #000000; }
 .bpa-steps span { color: #9a9a92; font-size: 12px; line-height: 1.3; }
 .bpa-steps li.is-done span, .bpa-steps li.is-current span { color: #141413; }
 

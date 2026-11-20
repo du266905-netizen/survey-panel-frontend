@@ -47,7 +47,7 @@
   padding: 6px 14px;
 }
 
-.br-seg button.is-active { background: #141413; color: #FFFFFF; }
+.br-seg button.is-active { background: #000000; color: #FFFFFF; }
 .br-seg-wide { display: flex; width: 220px; }
 .br-seg-wide button { flex: 1; justify-content: center; }
 
@@ -164,7 +164,7 @@
   opacity: .38;
 }
 
-.br .con-btn.is-primary:disabled { background: #141413; border-color: #141413; }
+.br .con-btn.is-primary:disabled { background: #000000; border-color: #141413; }
 
 /* ---- 右侧预览 ---- */
 
@@ -198,7 +198,7 @@
 }
 
 .br-bell-head { display: flex; align-items: baseline; gap: 8px; }
-.br-bell-head i { width: 6px; height: 6px; border-radius: 999px; background: #141413; transform: translateY(-2px); }
+.br-bell-head i { width: 6px; height: 6px; border-radius: 999px; background: #000000; transform: translateY(-2px); }
 
 .br-bell-head > span {
   overflow: hidden;
@@ -257,7 +257,7 @@
   align-items: center;
   margin-top: 16px;
   border-radius: 8px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   font: 500 13px var(--font-sans);
   padding: 9px 16px;
@@ -332,7 +332,7 @@
   align-items: center;
   gap: 12px;
   border-radius: 10px;
-  background: #141413;
+  background: #000000;
   box-shadow: 0 12px 32px rgba(20, 20, 19, .24);
   color: #FFFFFF;
   font: 400 13px var(--font-sans);

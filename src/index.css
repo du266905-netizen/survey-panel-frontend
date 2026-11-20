@@ -52,7 +52,8 @@ div#CybotCookiebotDialogPoweredByText,
   --color-cyan-muted: #a8c6b6;
   --color-shell-line: rgba(28, 43, 34, .12);
   color: #1b2821;
-  background: #f7f7f3;
+  /* 2026-11-19 用户定：页面底用纯白（原先 #f7f7f3 暖底，白卡片压上去发黄）。 */
+  background: #ffffff;
   font-family: var(--font-sans);
 }
 
@@ -127,7 +128,7 @@ textarea {
   min-width: 320px;
   min-height: 100svh;
   overflow: hidden;
-  background: #141413;
+  background: #000000;
   color: #f0ede6;
 }
 .recovery-page::before {
@@ -2402,3 +2403,101 @@ textarea {
 }
 
 .app-topbar-preview:hover { background: #FAF9F5; }
+
+/* ────────────────────────────────────────────────────────────────
+   shadcn/ui 令牌（2026-11-19）
+   只在 .ui-scope 内生效，不覆盖现有页面。
+   :root 的 --primary 保留旧青色（Team 开关在用），.ui-scope 内改墨黑。
+   全部颜色来自 14 色卡，不新增色值。
+   ──────────────────────────────────────────────────────────────── */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 60 2% 8%;
+  --card: 0 0% 100%;
+  --card-foreground: 60 2% 8%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 60 2% 8%;
+  --primary: 189 94% 43%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 97%;
+  --secondary-foreground: 60 2% 8%;
+  --muted: 0 0% 97%;
+  --muted-foreground: 140 5% 39%;
+  --accent: 30 10% 90%;
+  --accent-foreground: 60 2% 8%;
+  --destructive: 4 76% 40%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 40 11% 88%;
+  --input: 40 11% 88%;
+  --ring: 18 82% 36%;
+  --radius: 0.625rem;
+}
+
+.ui-scope {
+  --primary: 60 2% 8%;
+  --primary-foreground: 0 0% 100%;
+  --ring: 18 82% 36%;
+}
+
+/* 研究端同样用墨黑主色：:root 的青色只留给旧 Team 开关。
+   不包 .business-workspace 的话，shadcn 按钮会取到 :root 的青色。 */
+.business-workspace {
+  --primary: 60 2% 8%;
+  --primary-foreground: 0 0% 100%;
+}
+
+/* AI 文案字阶（RULES §1.1 / §1.2） */
+.ai-prose {
+  font-family: var(--font-reading);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #141413;
+}
+.ai-title {
+  font-family: var(--font-reading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #141413;
+}
+.ai-ui {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+/* 按钮：RULES §1.2 —— Inter，600 */
+.ai-button {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+}
+.ai-meta {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8D948D;
+}
+.ai-code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@keyframes ai-shimmer {
+  from { background-position: 100% center; }
+  to { background-position: 0% center; }
+}
+.ai-shimmer {
+  display: inline-block;
+  background-image: linear-gradient(90deg, rgba(20, 20, 19, .35) 0%, #141413 50%, rgba(20, 20, 19, .35) 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ai-shimmer 2s linear infinite;
+}

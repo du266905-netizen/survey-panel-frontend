@@ -1143,7 +1143,7 @@ body:has(.app-shell-admin) { background: #FFFFFF; }
 .app-shell-admin .app-sidebar-label { color: #8D948D; font-family: var(--font-sans); font-size: 9px; font-weight: 900; letter-spacing: .14em; }
 .app-shell-admin .app-nav-link { border-radius: 4px; color: #5F6862; font-family: var(--font-sans); font-size: 13px; font-weight: 720; }
 .app-shell-admin .app-nav-link:hover { background: #FAF9F5; color: #141413; }
-.app-shell-admin .app-nav-link.is-active { background: #141413; box-shadow: none; color: #FFFFFF; }
+.app-shell-admin .app-nav-link.is-active { background: #000000; box-shadow: none; color: #FFFFFF; }
 .app-shell-admin .app-nav-link.is-active svg { color: #FFFFFF; }
 .app-shell-admin .app-sidebar-foot { border-top-color: #E5E3DD; color: #8D948D; font-family: var(--font-sans); }
 .app-main-admin { min-height: calc(100vh - 76px); background: #FFFFFF; }
@@ -1153,7 +1153,7 @@ body:has(.app-shell-admin) { background: #FFFFFF; }
 .app-main-admin .app-page-header p { max-width: 650px; color: #5F6862 !important; font-family: var(--font-sans); font-size: 14px; font-weight: 540; line-height: 1.6; }
 .app-main-admin .card { border-color: #E5E3DD; border-radius: 4px; background: #FFFFFF; box-shadow: none; backdrop-filter: none; }
 .app-main-admin .field { border-color: #E5E3DD; border-radius: 4px; background: #FFFFFF; color: #141413; font-family: var(--font-sans); }
-.app-main-admin .btn-primary { border-color: #141413; background: #141413; color: #FFFFFF; }
+.app-main-admin .btn-primary { border-color: #141413; background: #000000; color: #FFFFFF; }
 .app-main-admin .btn-primary:hover { border-color: #141413; background: #2B2B2B; }
 .app-main-admin .btn-secondary { border-color: #E5E3DD; border-radius: 4px; background: #FFFFFF; color: #141413; }
 .app-main-admin .app-data-table { border-color: #E5E3DD; border-radius: 4px; box-shadow: none; }

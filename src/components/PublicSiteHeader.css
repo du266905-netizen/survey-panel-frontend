@@ -493,7 +493,8 @@
 .psn-signin:hover,
 .psn-signin.is-open { color: #141413; }
 .psn-strip {
-  background: #f7f7f5;
+  /* 2026-11-19 色卡 v1：第二栏用纸色 #F7F7F7 */
+  background: #f7f7f7;
   border-bottom: 1px solid #e5e3dd;
 }
 .psn-strip-link { color: rgba(20, 20, 19, .62); }
@@ -579,7 +580,7 @@
 .psn:not(.is-condensed) .psn-item strong { font-size: 18px; }
 
 /* 2026-11-19: ink CTA instead of lime; the palette is not settled yet. */
-.psn-cta { background: #141413; color: #fff; }
+.psn-cta { background: #000000; color: #fff; }
 .psn-cta:hover { background: #2f2f2c; }
 .psn-cta:focus-visible { outline: 2px solid #141413; outline-offset: 3px; }
 
@@ -600,7 +601,7 @@
 
 /* The open state used to be marked in lime; with the CTA in ink, that was the
    last lime on the bar. Same 2px, ink. */
-.psn-trigger.is-open::after { background: #141413; }
+.psn-trigger.is-open::after { background: #000000; }
 
 /* The sheet's left edge lines up with the wordmark. */
 .psn:not(.is-condensed) .psn-panel-inner {

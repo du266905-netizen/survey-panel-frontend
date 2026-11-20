@@ -154,7 +154,7 @@
   gap: 6px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #ffffff;
   font: 500 13px var(--font-sans);
   padding: 0 16px;
@@ -295,7 +295,7 @@
   min-height: 38px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #ffffff;
   font: 500 13px var(--font-sans);
   padding: 0 14px;
@@ -465,7 +465,7 @@
   min-height: 40px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   font: 500 13px var(--font-sans);
   padding: 0 16px;
@@ -585,7 +585,7 @@
   min-height: 36px;
   border: 1px solid #141413;
   border-radius: 6px;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
   cursor: pointer;
   font: 500 12px var(--font-sans);

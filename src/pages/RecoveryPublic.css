@@ -142,7 +142,7 @@
 .recovery-page--public .recovery-strength-head { color: #6F6A5F; font-size: 14px; font-weight: 500; }
 .recovery-page--public .recovery-strength-head strong { color: #141413; font-weight: 500; }
 .recovery-page--public .recovery-strength-meter span { background: rgba(20, 20, 19, .12); }
-.recovery-page--public .recovery-strength-meter span.is-passed { background: #141413; }
+.recovery-page--public .recovery-strength-meter span.is-passed { background: #000000; }
 .recovery-page--public .recovery-strength-list span { color: #8A8578; font-size: 9.5px; font-weight: 400; }
 .recovery-page--public .recovery-strength-list span.is-passed { color: #141413; }
 .recovery-page--public .recovery-strength-list svg { color: #8A8578; }
@@ -157,7 +157,7 @@
   margin-top: 24px;
   border: 1px solid #141413;
   border-radius: 0;
-  background: #141413;
+  background: #000000;
   color: #FFFDF8;
   box-shadow: none;
   font-size: 16px;
@@ -194,7 +194,7 @@
 .recovery-page:not(.recovery-page--public) .recovery-field-group > span:first-child { color: rgba(20, 20, 19, .58); }
 .recovery-page:not(.recovery-page--public) .recovery-submit {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   box-shadow: none;
   color: #fffdf7;
 }

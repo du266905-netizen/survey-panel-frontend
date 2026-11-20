@@ -25,7 +25,7 @@
 
 .chg-filters button.is-active {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FFFFFF;
 }
 
@@ -113,7 +113,7 @@
 
 .chg-kind.is-new i { background: #DEEF24; }
 .chg-kind.is-improved i { background: #8D948D; }
-.chg-kind.is-fixed i { background: #141413; }
+.chg-kind.is-fixed i { background: #000000; }
 .chg-kind.is-data i { background: #5F6862; }
 
 .chg-entry > p {

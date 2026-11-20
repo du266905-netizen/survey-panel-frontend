@@ -1320,7 +1320,7 @@
 .home-atlas .atlas-mobile-group > p { color: #6F6A5F; }
 .home-atlas .atlas-register {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FBFAF6;
 }
 .home-atlas .atlas-register:hover {
@@ -1430,10 +1430,10 @@
 .home-atlas .home-manifesto-card--voices { background: #FFFFFF; }
 .home-atlas .home-manifesto-card--technology { background: #F0EEE6; }
 .home-atlas .home-manifesto-principle {
-  background: #141413;
+  background: #000000;
   color: #FBFAF6;
 }
-.home-atlas .home-footer { background: #141413; }
+.home-atlas .home-footer { background: #000000; }
 
 /* ---------------------------------------------------------------------------
    Homepage palette: warm bone-grey page, cards a touch deeper, the long-form
@@ -1493,7 +1493,7 @@
 .home-atlas .atlas-mobile-group > p { color: #6F6A5F; }
 .home-atlas .atlas-register {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FAF7F0;
 }
 .home-atlas .atlas-register:hover {
@@ -1517,7 +1517,7 @@
 /* Every filled action is black; the inactive mode stays an outline. */
 .home-atlas .video-hero-actions .video-hero-cta:not(.video-hero-cta--outline) {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FAF7F0;
   --syringe-fill: #2B2A28;
 }
@@ -1539,7 +1539,7 @@
 }
 .home-atlas .home-auth-email button {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FAF7F0;
 }
 .home-atlas .home-auth-email button:hover {
@@ -1548,7 +1548,7 @@
 }
 .home-atlas .community-hub-primary-action {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FAF7F0;
 }
 .home-atlas .community-hub-primary-action:hover {
@@ -1557,7 +1557,7 @@
 }
 .home-atlas .home-rewards-cta {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FAF7F0;
 }
 .home-atlas .home-rewards-cta:hover {
@@ -1617,10 +1617,10 @@
 .home-atlas .home-manifesto-card--voices { background: #FFFFFF; }
 .home-atlas .home-manifesto-card--technology { background: #E4E0D6; }
 .home-atlas .home-manifesto-principle {
-  background: #141413;
+  background: #000000;
   color: #FAF7F0;
 }
-.home-atlas .home-footer { background: #141413; }
+.home-atlas .home-footer { background: #000000; }
 
 /* ---------------------------------------------------------------------------
    Type pass: the 89.3 hero moves to the heavy upright serif; section H2s use
@@ -2127,7 +2127,7 @@
 .home-atlas .atlas-register,
 .home-atlas .atlas-register:hover {
   border-color: #141413;
-  background: #141413;
+  background: #000000;
   color: #FAF7F0;
   box-shadow: none;
 }

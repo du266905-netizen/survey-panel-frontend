@@ -22,7 +22,7 @@
   width: 5px;
   height: 16px;
   border-radius: 3px;
-  background: #141413;
+  background: #000000;
   animation: business-page-loader-pulse 1.05s ease-in-out infinite;
 }
 .business-page-loader-mark > i:nth-child(2) { height: 27px; animation-delay: .14s; }

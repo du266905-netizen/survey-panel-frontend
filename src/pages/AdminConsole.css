@@ -69,7 +69,7 @@
   padding: 7px 0;
 }
 
-.con-envs button.is-active { background: #141413; color: #FFFFFF; }
+.con-envs button.is-active { background: #000000; color: #FFFFFF; }
 
 .con-caption {
   margin: 10px 8px 0;
@@ -305,8 +305,8 @@
 
 .con-btn:hover { background: #FAF9F5; }
 .con-btn:disabled { cursor: not-allowed; opacity: .4; }
-.con-btn.is-primary { border-color: #141413; background: #141413; color: #FFFFFF; }
-.con-btn.is-primary:hover { background: #141413; }
+.con-btn.is-primary { border-color: #141413; background: #000000; color: #FFFFFF; }
+.con-btn.is-primary:hover { background: #000000; }
 
 .con-figures {
   display: grid;

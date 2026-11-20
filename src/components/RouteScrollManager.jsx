@@ -18,7 +18,10 @@ export default function RouteScrollManager() {
     }
 
     const frame = window.requestAnimationFrame(() => {
-      document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: 'start' });
+      /* 2026-11-12: an in-page target (the Join button lands on #join) glides
+         rather than cuts — this is the only place that scrolls for a hash. */
+      const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
     });
 
     return () => window.cancelAnimationFrame(frame);
