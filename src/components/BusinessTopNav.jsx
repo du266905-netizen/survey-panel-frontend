@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, LogOut, Sparkles, UserRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { useAuth } from './AuthContext';
 import { useBusinessAvatar } from '../utils/businessAvatar';
 import { useLanguage, withLanguage } from './LanguageContext';
@@ -180,18 +182,32 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
           <BusinessBalanceChip onAddFunds={() => setFundsOpen(true)} />
           <NotificationBell className="business-workspace-notification" />
           <BusinessLanguagePicker />
-          <div className="business-topnav-account" ref={accountRef}>
-            <button type="button" className="business-topnav-avatar" onClick={() => setAccountOpen((value) => !value)} aria-expanded={accountOpen} aria-label={t('账户菜单', 'Account menu')}>
-              {avatar ? <img src={avatar} alt="" /> : <UserRound size={18} />}
-            </button>
-            {accountOpen && (
-              <div className="business-topnav-account-menu">
-                <strong>{user?.displayName || t('客户账户', 'Client account')}</strong>
-                <span>{user?.email}</span>
-                {onReplayTour && <button type="button" onClick={() => { setAccountOpen(false); onReplayTour(); }}><Sparkles size={15} /> {t('重新查看引导', 'Show the tour again')}</button>}
-                <button type="button" onClick={() => { setAccountOpen(false); logout(); navigate(withLanguage('/business/login', language)); }}><LogOut size={15} /> {t('退出登录', 'Sign out')}</button>
-              </div>
-            )}
+          <div className="business-topnav-account">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button type="button" className="business-topnav-avatar" aria-label={t('账户菜单', 'Account menu')}>
+                  <Avatar className="h-full w-full">
+                    {avatar ? <AvatarImage src={avatar} alt="" /> : null}
+                    <AvatarFallback>{(user?.displayName || user?.email || '?').slice(0, 1).toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-60">
+                <DropdownMenuLabel className="flex flex-col gap-0.5">
+                  <strong className="text-sm font-semibold">{user?.displayName || t('客户账户', 'Client account')}</strong>
+                  <span className="text-xs font-normal text-muted-foreground">{user?.email}</span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {onReplayTour && (
+                  <DropdownMenuItem onSelect={() => onReplayTour()}>
+                    <Sparkles size={15} /> {t('重新查看引导', 'Show the tour again')}
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuItem onSelect={() => { logout(); navigate(withLanguage('/business/login', language)); }}>
+                  <LogOut size={15} /> {t('退出登录', 'Sign out')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

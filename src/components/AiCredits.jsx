@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ChevronRight, ChevronUp, CreditCard, Sparkles, User, X } from 'lucide-react';
 import { apiClient } from '../api/client';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useBusinessAvatar } from '../utils/businessAvatar';
 import './AiCredits.css';
 
@@ -73,43 +75,39 @@ export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
   const planLabel = plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : 'Free';
 
   return (
-    <div className={`ai-menu${open ? ' is-open' : ''}`}>
-      {open ? (
-        <div className="ai-menu-pop" role="menu">
+    <div className="ai-menu">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button type="button" className="ai-menu-trigger">
+            <span className="ai-menu-avatar" aria-hidden="true">
+              <Avatar className="h-full w-full">
+                {avatar ? <AvatarImage src={avatar} alt="" /> : null}
+                <AvatarFallback className="bg-transparent"><User size={13} /></AvatarFallback>
+              </Avatar>
+            </span>
+            <span className="ai-menu-plan">{planLabel}</span>
+            <ChevronUp size={14} aria-hidden="true" className="ai-menu-chevron" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent side="top" align="start" className="ai-menu-pop w-56">
           <div className="ai-menu-balance">
             <span>{text.label}</span>
             <strong>{unavailable ? '—' : (credits ?? '—')} {text.unit}</strong>
           </div>
-          <button type="button" role="menuitem" className="ai-menu-row" onClick={() => go('/business/plans')}>
+          <DropdownMenuItem onSelect={() => go('/business/plans')}>
             <span>{text.upgrade}</span>
-            <ChevronRight size={13} aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            role="menuitem"
-            className="ai-menu-row"
-            aria-expanded={moreOpen}
-            onClick={() => setMoreOpen((value) => !value)}
-          >
-            <span>{text.learnMore}</span>
-            <ChevronRight size={13} aria-hidden="true" className={moreOpen ? 'is-open' : ''} />
-          </button>
-          {moreOpen ? (
-            <div className="ai-menu-more">
-              <button type="button" onClick={() => go('/privacy')}>{text.privacy}</button>
-              <button type="button" onClick={() => go('/terms')}>{text.terms}</button>
-              <button type="button" onClick={() => go('/help')}>{text.help}</button>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-      <button type="button" className="ai-menu-trigger" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
-        <span className="ai-menu-avatar" aria-hidden="true">
-          {avatar ? <img src={avatar} alt="" /> : <User size={13} />}
-        </span>
-        <span className="ai-menu-plan">{planLabel}</span>
-        <ChevronUp size={14} aria-hidden="true" className={`ai-menu-chevron${open ? ' is-open' : ''}`} />
-      </button>
+            <ChevronRight size={13} aria-hidden="true" className="ml-auto" />
+          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>{text.learnMore}</DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onSelect={() => go('/privacy')}>{text.privacy}</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => go('/terms')}>{text.terms}</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => go('/help')}>{text.help}</DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }
