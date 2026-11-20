@@ -194,34 +194,17 @@ export default function BusinessTopNav({ activeId, onReplayTour }) {
                   </Avatar>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-64">
-                <DropdownMenuLabel className="flex flex-col gap-0.5 px-2 py-1.5">
+              <DropdownMenuContent align="end" className="w-60">
+                <DropdownMenuLabel className="flex flex-col gap-0.5">
                   <strong className="text-sm font-semibold">{user?.displayName || t('客户账户', 'Client account')}</strong>
                   <span className="truncate text-xs font-normal text-muted-foreground">{user?.email}</span>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => navigate(withLanguage('/business/account', language))}>
-                  <UserRound size={15} /> {t('个人设置', 'Account')}
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => navigate(withLanguage('/business/team', language))}>
-                  <UsersRound size={15} /> {t('团队', 'Team')}
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => navigate(withLanguage('/business/plans', language))}>
-                  <Sparkles size={15} /> {t('套餐', 'Plans')}
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => navigate(withLanguage('/business/billing', language))}>
-                  <Receipt size={15} /> {t('账单与发票', 'Billing and invoices')}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => navigate(withLanguage('/business/help', language))}>
-                  <HelpCircle size={15} /> {t('帮助中心', 'Help centre')}
-                </DropdownMenuItem>
                 {onReplayTour && (
                   <DropdownMenuItem onSelect={() => onReplayTour()}>
                     <Sparkles size={15} /> {t('重新查看引导', 'Show the tour again')}
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={() => { logout(); navigate(withLanguage('/business/login', language)); }}>
                   <LogOut size={15} /> {t('退出登录', 'Sign out')}
                 </DropdownMenuItem>

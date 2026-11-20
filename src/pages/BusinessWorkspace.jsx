@@ -120,7 +120,7 @@ const viewFromLocation = (pathname, search) => {
   if (path.endsWith('/business/projects')) return 'projects';
   if (path.endsWith('/business/results')) return 'results';
   const requested = new URLSearchParams(search || '').get('view');
-  return ['home', 'questionnaires', 'projects', 'results'].includes(requested) ? requested : 'home';
+  return ['home', 'projects', 'results'].includes(requested) ? requested : 'home';
 };
 
 const projectTypes = {
@@ -381,9 +381,9 @@ export default function BusinessWorkspace() {
     const target = ({
       projects: '/business/projects',
       results: '/business/results',
-      questionnaires: '/business/workspace?view=questionnaires',
+      questionnaires: '/business/projects',
     })[view] || '/business/workspace';
-    setActiveView(view);
+    setActiveView(view === 'questionnaires' ? 'projects' : view);
     navigate(withLanguage(target, language));
   };
 
@@ -830,7 +830,7 @@ export default function BusinessWorkspace() {
             <div className="business-overview-grid">
               {[
                 { id: 'projects', icon: ClipboardList, label: workspaceText[10], value: workspace.projects.length, target: 'projects' },
-                { id: 'questionnaires', icon: Pencil, label: workspaceText[11], value: questionnaireDraftCount, target: 'questionnaires' },
+                { id: 'questionnaires', icon: Pencil, label: workspaceText[11], value: questionnaireDraftCount, target: 'projects' },
                 { id: 'planning', icon: FileText, label: workspaceText[12], value: planningCount, target: 'projects' },
                 { id: 'results', icon: BarChart3, label: workspaceText[13], value: responseCount, target: 'results' },
               ].map((stat) => {
