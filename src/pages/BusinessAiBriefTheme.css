@@ -755,7 +755,6 @@
   min-height: 44px;
   padding: 0 4px 16px;
 }
-.business-ai-brief-page .business-ai-brief-assistant-mark { display: none; }
 .business-ai-brief-page .business-ai-brief-assistant-brand img {
   display: block;
   width: 52px;
@@ -789,10 +788,7 @@
   }
   .business-ai-brief-page .business-ai-brief-assistant > header { justify-content: center; }
   .business-ai-brief-page .business-ai-brief-assistant > header strong { display: none !important; }
-  .business-ai-brief-page .business-ai-brief-assistant-brand > img:first-child { display: none !important; }
-  .business-ai-brief-page .business-ai-brief-assistant-brand .business-ai-brief-assistant-mark {
-    display: block !important; width: 26px; height: 26px; object-fit: contain; border-radius: 6px;
-  }
+  .business-ai-brief-page .business-ai-brief-assistant-brand { display: none !important; }
   .business-ai-brief-page .business-ai-brief-assistant-actions button { justify-content: center; font-size: 0 !important; gap: 0 !important; padding: 8px 0 !important; }
   .business-ai-brief-page .business-ai-brief-assistant-section,
   .business-ai-brief-page .business-ai-brief-assistant-list { display: none !important; }
