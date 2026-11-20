@@ -30,6 +30,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Toaster } from '@/components/ui/sonner';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -805,6 +806,7 @@ export default function BusinessWorkspace() {
   const onboardingTitleMark = /[?？]\s*$/.test(onboardingTitle) ? onboardingTitle.trim().slice(-1) : '';
 
   return (
+    <TooltipProvider delayDuration={300}>
     <main className={`business-workspace${activeView === 'questionnaires' ? ' business-workspace--questionnaire-hub' : ''}`}>
       <BusinessTopNav activeId={activeView} onReplayTour={BUSINESS_TOUR_ENABLED ? replayTour : undefined} />
       <div className="business-workspace-body business-workspace-body--topnav">
@@ -1078,7 +1080,7 @@ export default function BusinessWorkspace() {
       {openForm && (
         <div className="business-project-modal" role="dialog" aria-modal="true" aria-labelledby="business-project-title">
           <form onSubmit={submit}>
-            <button className="business-modal-close" type="button" onClick={() => setOpenForm(false)} aria-label={briefCopy.close}><X size={18} /></button>
+            <Tooltip><TooltipTrigger asChild><button className="business-modal-close" type="button" onClick={() => setOpenForm(false)} aria-label={briefCopy.close}><X size={18} /></button></TooltipTrigger><TooltipContent>{pick(language, '关闭', 'Close', '關閉')}</TooltipContent></Tooltip>
             <p className="business-eyebrow">{editingProject ? briefCopy.editKicker : selectedTypeCopy.eyebrow}</p>
             <h2 id="business-project-title">{editingProject ? briefCopy.editTitle : selectedTypeCopy.modalTitle}</h2>
             <p className="business-form-intro">
@@ -1279,5 +1281,6 @@ export default function BusinessWorkspace() {
       )}
       {detailProjectId && <BusinessProjectSheet projectId={detailProjectId} onClose={() => setDetailProjectId('')} onClientAction={runClientStep} onChanged={() => setReloadKey((value) => value + 1)} />}
     </main>
+    </TooltipProvider>
   );
 }
