@@ -28,6 +28,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -1128,9 +1129,12 @@ export default function BusinessWorkspace() {
                 <>
                   <label>
                     {briefCopy.methodLabel}
-                    <select name="studyFormat" value={form.studyFormat} onChange={update}>
-                      {briefCopy.methods.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-                    </select>
+                    <Select value={form.studyFormat} onValueChange={(value) => setForm((current) => ({ ...current, studyFormat: value }))}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {briefCopy.methods.map(([value, label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
                   </label>
                   <label>
                     {selectedTypeCopy.timeLabel}
@@ -1149,9 +1153,12 @@ export default function BusinessWorkspace() {
               </label>
               <label>
                 {briefCopy.incentiveLabel}
-                <select name="incentiveBudget" value={form.incentiveBudget} onChange={update}>
-                  {briefCopy.incentives.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-                </select>
+                <Select value={form.incentiveBudget} onValueChange={(value) => setForm((current) => ({ ...current, incentiveBudget: value }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {briefCopy.incentives.map(([value, label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}
+                  </SelectContent>
+                </Select>
               </label>
             </div>
 
