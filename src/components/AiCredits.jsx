@@ -92,7 +92,7 @@ export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
             <ChevronUp size={14} aria-hidden="true" className="ai-menu-chevron" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="top" align="start" className="ai-menu-pop w-56">
+        <DropdownMenuContent side="top" align="start" className="w-56">
           <div className="ai-menu-balance">
             <span>{text.label}</span>
             <strong>{unavailable ? '—' : (credits ?? '—')} {text.unit}</strong>
