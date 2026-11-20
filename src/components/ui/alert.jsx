@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const alertVariants = cva(
-  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[16px_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[16px_1fr] has-[>svg]:gap-x-3 has-[>[data-slot=alert-action]]:grid-cols-[0_1fr_auto] has-[>svg]:has-[>[data-slot=alert-action]]:grid-cols-[16px_1fr_auto] [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
   {
     variants: {
       variant: {
@@ -57,7 +57,7 @@ const AlertAction = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
     data-slot="alert-action"
-    className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)}
+    className={cn("col-start-3 row-span-2 row-start-1 self-start justify-self-end", className)}
     {...props}
   />
 ))
