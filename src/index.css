@@ -2439,6 +2439,21 @@ textarea {
   --ring: 18 82% 36%;
 }
 
+/* shadcn 浮层与控件一律无衬线（RULES §1.2：用的用无衬线）。
+   portal 挂在 body 上，取不到研究端的 serif，但也不该取到 serif。 */
+[role="menu"],
+[role="menuitem"],
+[role="menuitemcheckbox"],
+[role="menuitemradio"],
+[role="dialog"],
+[role="alertdialog"],
+[role="listbox"],
+[role="option"],
+[role="tooltip"],
+[data-radix-popper-content-wrapper] {
+  font-family: var(--font-sans);
+}
+
 /* 研究端同样用墨黑主色：:root 的青色只留给旧 Team 开关。
    不包 .business-workspace 的话，shadcn 按钮会取到 :root 的青色。 */
 .business-workspace {
