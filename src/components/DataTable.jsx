@@ -1,10 +1,13 @@
+import { Skeleton } from './ui/skeleton';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
+
 export default function DataTable({ columns, rows, loading, emptyMessage = 'No data available.' }) {
   if (loading) {
     return (
-      <div className="app-data-table card overflow-hidden">
-        <div className="space-y-3 p-4">
+      <div className="overflow-hidden rounded-xl border border-[#E5E3DD] bg-white">
+        <div className="space-y-2 p-4">
           {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} className="h-10 animate-pulse rounded-lg bg-slate-100" />
+            <Skeleton key={index} className="h-9 w-full" />
           ))}
         </div>
       </div>
@@ -13,38 +16,34 @@ export default function DataTable({ columns, rows, loading, emptyMessage = 'No d
 
   if (!rows?.length) {
     return (
-      <div className="app-data-table card flex min-h-44 items-center justify-center p-8 text-center text-sm text-slate-500">
+      <div className="flex min-h-44 items-center justify-center rounded-xl border border-[#E5E3DD] bg-white p-8 text-center text-sm text-[#5F6862]">
         {emptyMessage}
       </div>
     );
   }
 
   return (
-    <div className="app-data-table card overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse">
-          <thead className="table-head">
-            <tr>
-              {columns.map((column) => (
-                <th key={column.key} className="px-4 py-3">
-                  {column.header}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
-            {rows.map((row, rowIndex) => (
-              <tr key={row.id || row.surveyId || row.surveyNumber || rowIndex} className="transition hover:bg-cyan-50/60">
-                {columns.map((column) => (
-                  <td key={column.key} className="table-cell">
-                    {column.render ? column.render(row) : row[column.key]}
-                  </td>
-                ))}
-              </tr>
+    <div className="overflow-hidden rounded-xl border border-[#E5E3DD] bg-white">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {columns.map((column) => (
+              <TableHead key={column.key}>{column.header}</TableHead>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row, rowIndex) => (
+            <TableRow key={row.id || row.surveyId || row.surveyNumber || rowIndex}>
+              {columns.map((column) => (
+                <TableCell key={column.key}>
+                  {column.render ? column.render(row) : row[column.key]}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
