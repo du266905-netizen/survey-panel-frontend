@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 import LanguageGlobe from './LanguageGlobe';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 export default function BusinessLanguagePicker() {
   const { activeLanguage, language, languages, navigateToLanguage, publicCopy } = useLanguage();
@@ -10,22 +11,6 @@ export default function BusinessLanguagePicker() {
   const workspaceStaticMap = publicCopy?.workspace?.business?.workspaceStatic || {};
   const ws = workspaceStaticMap[language] || workspaceStaticMap['en-GB'] || {};
   const [open, setOpen] = useState(false);
-  const pickerRef = useRef(null);
-
-  useEffect(() => {
-    const closeWhenLeaving = (event) => {
-      if (!pickerRef.current?.contains(event.target)) setOpen(false);
-    };
-    const closeOnEscape = (event) => {
-      if (event.key === 'Escape') setOpen(false);
-    };
-    document.addEventListener('pointerdown', closeWhenLeaving);
-    document.addEventListener('keydown', closeOnEscape);
-    return () => {
-      document.removeEventListener('pointerdown', closeWhenLeaving);
-      document.removeEventListener('keydown', closeOnEscape);
-    };
-  }, []);
 
   const selectLanguage = (code) => {
     setOpen(false);
@@ -37,17 +22,32 @@ export default function BusinessLanguagePicker() {
     tr: 'Dil', ko: '언어', ja: '言語',
   }[language] || ws.picker.languageTitle;
 
-  return <div className="business-language-picker" ref={pickerRef}>
-    <button type="button" title={ws.picker.chooseLanguage} aria-label={ws.picker.chooseLanguage} aria-expanded={open} aria-haspopup="listbox" onClick={() => setOpen((current) => !current)}>
-      <LanguageGlobe size={19} strokeWidth={1.8} aria-hidden="true" />
-      <span>{activeLanguage.shortLabel}</span>
-      <ChevronDown className={open ? 'is-open' : ''} size={13} aria-hidden="true" />
-    </button>
-    {open && <div className="business-language-picker-menu" role="listbox" aria-label={ws.picker.chooseLanguage}>
-      <p>{languageTitle}</p>
-      <div>
-        {languages.map((item) => <button key={item.code} type="button" role="option" aria-selected={language === item.code} className={language === item.code ? 'is-selected' : ''} onClick={() => selectLanguage(item.code)}><span>{item.label}</span></button>)}
-      </div>
-    </div>}
-  </div>;
+  return <div className="business-language-picker">
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button type="button" title={ws.picker.chooseLanguage} aria-label={ws.picker.chooseLanguage} aria-haspopup="listbox">
+          <LanguageGlobe size={19} strokeWidth={1.8} aria-hidden="true" />
+          <span>{activeLanguage.shortLabel}</span>
+          <ChevronDown className={open ? 'is-open' : ''} size={13} aria-hidden="true" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="end" className="w-52 p-2" role="listbox" aria-label={ws.picker.chooseLanguage}>
+        <p className="mb-1.5 px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8D948D]">{languageTitle}</p>
+        <div className="grid gap-0.5">
+          {languages.map((item) => (
+            <button
+              key={item.code}
+              type="button"
+              role="option"
+              aria-selected={language === item.code}
+              onClick={() => selectLanguage(item.code)}
+              className={`flex w-full items-center rounded-sm px-2 py-1.5 text-left text-sm transition-colors hover:bg-accent ${language === item.code ? 'bg-accent font-medium' : ''}`}
+            >
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </PopoverContent>
+    </Popover>
+  </div>
 }

@@ -191,3 +191,12 @@
 .notification-popover.is-empty header {
   padding-bottom: 2px;
 }
+
+/* Inside a Popover the panel is positioned by the popper, not by itself. */
+.notification-popover.is-floating {
+  position: static;
+  top: auto;
+  right: auto;
+  width: 100%;
+  z-index: auto;
+}

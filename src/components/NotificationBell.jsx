@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Bell, CheckCheck } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { useNavigate } from 'react-router-dom';
 import { getNotifications, markAllNotificationsRead, markNotificationRead } from '../api/realApi';
 import './NotificationBell.css';
@@ -39,7 +40,6 @@ const groupLabel = (value) => {
 
 export default function NotificationBell({ className = '', presentation = 'popover' }) {
   const navigate = useNavigate();
-  const ref = useRef(null);
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -57,9 +57,7 @@ export default function NotificationBell({ className = '', presentation = 'popov
   useEffect(() => {
     load();
     const interval = window.setInterval(load, 45000);
-    const close = (event) => { if (!ref.current?.contains(event.target)) setOpen(false); };
-    document.addEventListener('pointerdown', close);
-    return () => { window.clearInterval(interval); document.removeEventListener('pointerdown', close); };
+    return () => { window.clearInterval(interval); };
   }, []);
 
   const openNotification = async (notification) => {
@@ -94,12 +92,16 @@ export default function NotificationBell({ className = '', presentation = 'popov
     return list;
   }, []);
 
-  return <div ref={ref} className={`notification-bell ${className}`}>
-    <button type="button" className={open ? 'is-open' : ''} onClick={() => setOpen((value) => !value)} aria-label={unreadCount ? `通知，${unreadCount} 条未读` : '通知'} aria-expanded={open}>
-      <Bell size={18} />
-      {unreadCount > 0 && <span>{unreadCount > 9 ? '9+' : unreadCount}</span>}
-    </button>
-    {open && <section className={`notification-popover${presentation === 'modal' ? ' notification-popover--modal' : ''}${notifications.length ? '' : ' is-empty'}`} aria-label="通知">
+  return <div className={`notification-bell ${className}`}>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button type="button" className={open ? 'is-open' : ''} aria-label={unreadCount ? `通知，${unreadCount} 条未读` : '通知'}>
+          <Bell size={18} />
+          {unreadCount > 0 && <span>{unreadCount > 9 ? '9+' : unreadCount}</span>}
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="end" sideOffset={12} className="w-[min(640px,calc(100vw-24px))] border-0 bg-transparent p-0 shadow-none">
+    <section className={`notification-popover is-floating${presentation === 'modal' ? ' notification-popover--modal' : ''}${notifications.length ? '' : ' is-empty'}`} aria-label="通知">
       <header>
         <div>
           <strong>通知</strong>
@@ -145,6 +147,8 @@ export default function NotificationBell({ className = '', presentation = 'popov
           </div>
         )) : <p className="nb-empty">暂无通知</p>}
       </div>
-    </section>}
+    </section>
+      </PopoverContent>
+    </Popover>
   </div>;
 }
