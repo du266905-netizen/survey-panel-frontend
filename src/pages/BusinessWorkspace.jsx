@@ -31,6 +31,7 @@ import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Toaster } from '@/components/ui/sonner';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -980,7 +981,7 @@ export default function BusinessWorkspace() {
                       </p>
                       <div className="business-project-card-progress">
                         <span>{collected} / {target || '—'}</span>
-                        <i aria-hidden="true"><b style={{ width: `${percent}%` }} /></i>
+                        <Progress value={percent} className="h-1 bg-[#f2f1ec]" />
                       </div>
                       {/* The card turns over on hover: information while
                           resting, actions while pointed at — the way YouGov's

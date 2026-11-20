@@ -1,12 +1,13 @@
+import * as React from "react"
+
 import { cn } from "@/lib/utils"
 
-function Skeleton({
-  className,
-  ...props
-}) {
+/* Fog #F7F7F7 is the only loading placeholder tone in the colour card. */
+function Skeleton({ className, ...props }) {
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-primary/10", className)}
+      data-slot="skeleton"
+      className={cn("animate-pulse rounded-md bg-[#F7F7F7]", className)}
       {...props}
     />
   )

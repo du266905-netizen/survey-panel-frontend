@@ -1,4 +1,5 @@
 import './BusinessPageLoader.css';
+import { Spinner } from './ui/spinner';
 
 /**
  * Shared business-page loading state.
@@ -9,9 +10,7 @@ import './BusinessPageLoader.css';
 export default function BusinessPageLoader({ label, full = false }) {
   return (
     <div className={`business-page-loader${full ? ' is-full' : ''}`} role="status" aria-live="polite">
-      <span className="business-page-loader-mark" aria-hidden="true">
-        <i /><i /><i />
-      </span>
+      <Spinner className="size-5 text-[#141414]" />
       <span className="business-page-loader-label">{label}</span>
     </div>
   );

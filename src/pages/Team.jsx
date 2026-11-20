@@ -3,6 +3,7 @@ import { Edit3, Eye, Plus, Trash2, X } from 'lucide-react';
 import DataTable from '../components/DataTable';
 import PageHeader from '../components/PageHeader';
 import { createEmployee, deleteEmployee, getAdminUserProfile, getEmployees, updateEmployee } from '../api/realApi';
+import { Switch } from '@/components/ui/switch';
 import { useAuth } from '../components/AuthContext';
 
 const emptyForm = {
@@ -330,17 +331,12 @@ export default function Team() {
         key: 'isActive',
         header: 'Active',
         render: (row) => (
-          <button
-            className={`relative h-6 w-11 rounded-full transition disabled:cursor-not-allowed disabled:opacity-40 ${row.isActive ? 'bg-primary' : 'bg-slate-300'}`}
-            type="button"
-            onClick={() => handleToggle(row)}
+          <Switch
+            checked={row.isActive}
+            onCheckedChange={() => handleToggle(row)}
             disabled={row.id === user?.id}
             aria-label={`${row.isActive ? 'Deactivate' : 'Activate'} ${row.name}`}
-          >
-            <span
-              className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow-sm transition ${row.isActive ? 'left-6' : 'left-1'}`}
-            />
-          </button>
+          />
         ),
       },
       {
