@@ -270,6 +270,7 @@ export default function BusinessWorkspace() {
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
+  const [messageIsError, setMessageIsError] = useState(false);
   const [greetingIsReturning, setGreetingIsReturning] = useState(false);
 
   const selectedTypeCopy = briefCopy[projectType];
@@ -292,6 +293,9 @@ export default function BusinessWorkspace() {
   const workspaceStatusLabel = (status) => statusLabel(status, language);
   /* Badge variants: ink for a funded/live project, outline while it waits on us
      or the client, muted for drafts, red only for a cancelled project. */
+  /* 提示只有两种：错误留在页面里（红色），其余都走右上角 toast。 */
+  const showError = (text) => { setMessageIsError(true); setMessage(text); };
+
   const statusBadgeVariant = (status) => {
     const value = String(status || '').toUpperCase();
     if (['FUNDED', 'RECRUITING', 'LIVE', 'COMPLETED', 'DELIVERED', 'ACCEPTED', 'QUESTIONNAIRE_APPROVED', 'PAID'].includes(value)) return 'default';
@@ -453,7 +457,7 @@ export default function BusinessWorkspace() {
         if (briefTarget) setBriefProject(briefTarget);
       })
       .catch(() => {
-        if (active) setMessage(feedbackCopy.loadProjects);
+        if (active) showError(feedbackCopy.loadProjects);
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -477,12 +481,12 @@ export default function BusinessWorkspace() {
            without this the client came back from PayPal to an unchanged page
            and could not tell whether the money had gone through. */
         setReloadKey((value) => value + 1);
-        setMessage(language.startsWith('zh') ? '付款已收到，正在更新项目状态。' : 'Payment received. Refreshing the project.');
+        toast.success(language.startsWith('zh') ? '付款已收到，正在更新项目状态。' : 'Payment received. Refreshing the project.');
       })
       .catch(() => {
         if (!active) return;
         clearPaypalReturnFromUrl();
-        setMessage(ui.paymentFailed || 'We could not start this payment. Please try again.');
+        showError(ui.paymentFailed || 'We could not start this payment. Please try again.');
       });
     return () => { active = false; };
   }, [location.search, ui.paymentFailed]);
@@ -561,7 +565,7 @@ export default function BusinessWorkspace() {
       setEditorStarter({ title: '', researchGoal: '', audienceDescription: '' });
       navigate(withLanguage(`/business/projects/${response.data.project.id}`, language));
     } catch {
-      setMessage(feedbackCopy.createError);
+      showError(feedbackCopy.createError);
     } finally { setSubmitting(false); }
   };
 
@@ -657,7 +661,7 @@ export default function BusinessWorkspace() {
       }
       toast.success(editingProject ? feedbackCopy.briefUpdated : isQuestionnaire ? feedbackCopy.questionnaireReady : feedbackCopy.briefReady);
     } catch (error) {
-      setMessage(feedbackCopy.createError);
+      showError(feedbackCopy.createError);
     } finally {
       setSubmitting(false);
     }
@@ -680,7 +684,7 @@ export default function BusinessWorkspace() {
       toast.success(feedbackCopy.deleted);
     } catch (error) {
       const code = error?.response?.data?.code || '';
-      setMessage(code === 'BUSINESS_PROJECT_DELETE_LOCKED'
+      showError(code === 'BUSINESS_PROJECT_DELETE_LOCKED'
         ? pick(language, '这个项目已经进入执行阶段，不能删除。', 'This project has started fieldwork and cannot be deleted.', '這個專案已經進入執行階段，不能刪除。')
         : feedbackCopy.deleteError);
     } finally { setSubmitting(false); setPendingDelete(null); }
@@ -694,7 +698,7 @@ export default function BusinessWorkspace() {
       setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? response.data.project : item) }));
       toast.success(feedbackCopy.submitted);
     } catch (error) {
-      setMessage(feedbackCopy.submitError);
+      showError(feedbackCopy.submitError);
     } finally { setSubmitting(false); }
   };
 
@@ -707,9 +711,9 @@ export default function BusinessWorkspace() {
       const response = await decideBusinessProjectQuote(project.id, quote.id, { decision, ...(decision === 'DECLINE' && declineReason.trim() ? { declineReason: declineReason.trim() } : {}) });
       setWorkspace((current) => ({ ...current, projects: current.projects.map((item) => item.id === project.id ? response.data.project : item) }));
       setQuoteProject(null); setQuoteDecision(''); setDeclineReason('');
-      setMessage(decision === 'ACCEPT' ? feedbackCopy.quoteAccepted : feedbackCopy.quoteDeclined);
+      toast.success(decision === 'ACCEPT' ? feedbackCopy.quoteAccepted : feedbackCopy.quoteDeclined);
     } catch (error) {
-      setMessage(feedbackCopy.quoteError);
+      showError(feedbackCopy.quoteError);
     } finally { setSubmitting(false); }
   };
 
@@ -725,11 +729,11 @@ export default function BusinessWorkspace() {
     setMessage('');
     try {
       await submitClientStep(project, kind);
-      setMessage(clientStepNote(kind, language));
+      toast.success(clientStepNote(kind, language));
       setDetailProjectId('');
       setReloadKey((value) => value + 1);
     } catch (error) {
-      setMessage(clientStepNote(kind, language, error));
+      showError(clientStepNote(kind, language, error));
     } finally {
       setClientBusy('');
     }
@@ -766,13 +770,13 @@ export default function BusinessWorkspace() {
          settled. Treating that as "unavailable" told a charged client their
          payment had failed. */
       if (['PAID', 'SUCCEEDED', 'COMPLETED', 'CAPTURED'].includes(String(payment.status || '').toUpperCase())) {
-        setMessage(language.startsWith('zh') ? '付款已确认，项目继续。' : 'Payment confirmed. The project moves on.');
+        toast.success(language.startsWith('zh') ? '付款已确认，项目继续。' : 'Payment confirmed. The project moves on.');
         setReloadKey((value) => value + 1);
         return;
       }
-      setMessage(ws.workspace.paymentUnavailable);
+      showError(ws.workspace.paymentUnavailable);
     } catch (error) {
-      setMessage(error.response?.data?.message || ws.workspace.paymentUnavailable);
+      showError(error.response?.data?.message || ws.workspace.paymentUnavailable);
     } finally { setPayingProjectId(''); }
   };
 
@@ -845,7 +849,7 @@ export default function BusinessWorkspace() {
             </div>
           </section>
           <BusinessAiPrompt />
-          {message && <Alert className="mt-6"><AlertTitle>{message}</AlertTitle></Alert>}
+          {message && <Alert variant={messageIsError ? 'destructive' : 'default'} className="mt-6"><AlertTitle>{message}</AlertTitle></Alert>}
           <div className="business-dashboard-grid">
             
             <section className="business-dashboard-recent"><header><div><h2>{workspaceText[14]}</h2><p>{workspaceText[15]}</p></div><button type="button" onClick={() => selectWorkspaceView('projects')}>{workspaceText[16]}</button></header>{recentProjects.length ? <div>{recentProjects.map((project) => <button key={project.id} type="button" onClick={() => selectWorkspaceView('projects')}><Badge variant={statusBadgeVariant(project.status)}>{workspaceStatusLabel(project.status)}</Badge><strong>{project.title}</strong><small>{project.questionnaire?.responseCount || 0} {copy.results.responses} · {categoryLabels[projectCategory(project)]} · {pick(language, '更新于 ', 'Updated ', '更新於 ')}{new Date(project.updatedAt || project.createdAt || Date.now()).toLocaleDateString(language.startsWith('zh') ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}</small><ArrowRight size={15} /></button>)}</div> : <div className="business-dashboard-empty"><ClipboardList size={24} /><strong>{workspaceText[17]}</strong><button type="button" onClick={openNewProject}>{projectsCopy.getStarted}</button></div>}</section>
@@ -922,7 +926,7 @@ export default function BusinessWorkspace() {
             </div>
           </div>
 
-          {message && <Alert className="mt-6"><AlertTitle>{message}</AlertTitle></Alert>}
+          {message && <Alert variant={messageIsError ? 'destructive' : 'default'} className="mt-6"><AlertTitle>{message}</AlertTitle></Alert>}
 
           {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : projectPool.length ? (
             <>
