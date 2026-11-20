@@ -151,7 +151,7 @@ export default function AiAssistantChat({
 
       <div className="business-ai-dock">
         {error && <p className="business-ai-brief-error" role="alert">{error}</p>}
-        <PromptInput className="business-ai-composer is-shadcn" onSubmit={submit}>
+        <PromptInput className="ai-composer-elements" onSubmit={submit}>
           <input
             ref={fileInputRef}
             type="file"
