@@ -3,6 +3,7 @@ import { ChevronRight, ChevronUp, CreditCard, Sparkles, User, X } from 'lucide-r
 import { apiClient } from '../api/client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { withLanguage } from './LanguageContext';
 import { useBusinessAvatar } from '../utils/businessAvatar';
 import './AiCredits.css';
 
@@ -72,6 +73,8 @@ export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
   }, []);
 
   const go = (path) => { setOpen(false); onNavigate?.(path); };
+  /* 政策与帮助是公开页：另开一个标签页，别把 AI 页面的会话顶掉。 */
+  const openTab = (path) => { window.open(withLanguage(path, language), '_blank', 'noopener,noreferrer'); };
   const planLabel = plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : 'Free';
 
   return (
@@ -101,9 +104,9 @@ export function AiCreditsMenu({ language = 'zh-CN', onNavigate }) {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>{text.learnMore}</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              <DropdownMenuItem onSelect={() => go('/privacy')}>{text.privacy}</DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => go('/terms')}>{text.terms}</DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => go('/help')}>{text.help}</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => openTab('/privacy')}>{text.privacy}</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => openTab('/terms')}>{text.terms}</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => openTab('/help')}>{text.help}</DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         </DropdownMenuContent>
