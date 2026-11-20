@@ -497,7 +497,7 @@ export default function BusinessAiBriefTurn() {
     <main className="business-ai-brief-page notranslate" translate="no" data-translate="no">
       <div className={`business-ai-brief-shell has-assistant${assistantOpen ? '' : ' is-collapsed'}`}>
         <aside className={`business-ai-brief-assistant${assistantOpen ? '' : ' is-collapsed'}`} aria-label={copy.title}>
-          <div className="business-ai-brief-assistant-brand"><img src="/guanyisearch-wordmark.png" alt="GuanyiSearch" /></div>
+          <div className="business-ai-brief-assistant-brand"><img src="/guanyisearch-wordmark.png" alt="GuanyiSearch" /><img className="business-ai-brief-assistant-mark" src="/guanyisearch-favicon.png" alt="" aria-hidden="true" /></div>
           <header>
             <button
               type="button"
