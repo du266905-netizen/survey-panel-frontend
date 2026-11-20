@@ -27,6 +27,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -816,38 +817,26 @@ export default function BusinessWorkspace() {
               </button>
             </header>
             <div className="business-overview-grid">
-              <button type="button" onClick={() => selectWorkspaceView('projects')}>
-                <span className="business-overview-icon"><ClipboardList size={17} /></span>
-                <span className="business-overview-body">
-                  <small>{workspaceText[10]}</small>
-                  <strong>{workspace.projects.length}</strong>
-                </span>
-                <ArrowRight className="business-overview-arrow" size={15} aria-hidden="true" />
-              </button>
-              <button type="button" onClick={() => selectWorkspaceView('questionnaires')}>
-                <span className="business-overview-icon"><Pencil size={17} /></span>
-                <span className="business-overview-body">
-                  <small>{workspaceText[11]}</small>
-                  <strong>{questionnaireDraftCount}</strong>
-                </span>
-                <ArrowRight className="business-overview-arrow" size={15} aria-hidden="true" />
-              </button>
-              <button type="button" onClick={() => selectWorkspaceView('projects')}>
-                <span className="business-overview-icon"><FileText size={17} /></span>
-                <span className="business-overview-body">
-                  <small>{workspaceText[12]}</small>
-                  <strong>{planningCount}</strong>
-                </span>
-                <ArrowRight className="business-overview-arrow" size={15} aria-hidden="true" />
-              </button>
-              <button type="button" onClick={() => selectWorkspaceView('results')}>
-                <span className="business-overview-icon"><BarChart3 size={17} /></span>
-                <span className="business-overview-body">
-                  <small>{workspaceText[13]}</small>
-                  <strong>{responseCount}</strong>
-                </span>
-                <ArrowRight className="business-overview-arrow" size={15} aria-hidden="true" />
-              </button>
+              {[
+                { id: 'projects', icon: ClipboardList, label: workspaceText[10], value: workspace.projects.length, target: 'projects' },
+                { id: 'questionnaires', icon: Pencil, label: workspaceText[11], value: questionnaireDraftCount, target: 'questionnaires' },
+                { id: 'planning', icon: FileText, label: workspaceText[12], value: planningCount, target: 'projects' },
+                { id: 'results', icon: BarChart3, label: workspaceText[13], value: responseCount, target: 'results' },
+              ].map((stat) => {
+                const StatIcon = stat.icon;
+                return (
+                  <Card key={stat.id} className="shadow-none transition-colors hover:border-[#CFCBC1]">
+                    <button type="button" className="flex min-h-[96px] w-full items-center gap-3 px-[18px] py-4 text-left" onClick={() => selectWorkspaceView(stat.target)}>
+                      <span className="business-overview-icon"><StatIcon size={17} /></span>
+                      <span className="business-overview-body">
+                        <small>{stat.label}</small>
+                        <strong>{stat.value}</strong>
+                      </span>
+                      <ArrowRight className="business-overview-arrow ml-auto" size={15} aria-hidden="true" />
+                    </button>
+                  </Card>
+                );
+              })}
             </div>
           </section>
           <BusinessAiPrompt />
