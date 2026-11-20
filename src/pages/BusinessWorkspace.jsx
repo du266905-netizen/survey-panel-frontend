@@ -32,6 +32,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Toaster } from '@/components/ui/sonner';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Progress } from '@/components/ui/progress';
+import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -929,7 +930,22 @@ export default function BusinessWorkspace() {
 
           {message && <Alert variant={messageIsError ? 'destructive' : 'default'} className="mt-6"><AlertTitle>{message}</AlertTitle></Alert>}
 
-          {loading ? <BusinessPageLoader label={feedbackCopy.loadingProjects} /> : projectPool.length ? (
+          {loading ? (
+            <div className="business-project-cards" aria-busy="true" aria-label={feedbackCopy.loadingProjects}>
+              {[0, 1, 2].map((index) => (
+                <Card key={index} className="shadow-none p-5">
+                  <div className="flex items-start justify-between gap-6">
+                    <div className="flex-1 space-y-3">
+                      <Skeleton className="h-4 w-[42%]" />
+                      <Skeleton className="h-3 w-[68%]" />
+                      <Skeleton className="h-3 w-[30%]" />
+                    </div>
+                    <Skeleton className="h-6 w-16 rounded-full" />
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : projectPool.length ? (
             <>
               <BusinessProjectCategoryTabs
                 items={projectCategories}
