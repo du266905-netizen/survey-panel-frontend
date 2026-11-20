@@ -2439,6 +2439,13 @@ textarea {
   --ring: 18 82% 36%;
 }
 
+/* 研究端同样用墨黑主色：:root 的青色只留给旧 Team 开关。
+   不包 .business-workspace 的话，shadcn 按钮会取到 :root 的青色。 */
+.business-workspace {
+  --primary: 60 2% 8%;
+  --primary-foreground: 0 0% 100%;
+}
+
 /* AI 文案字阶（RULES §1.1 / §1.2） */
 .ai-prose {
   font-family: var(--font-reading);

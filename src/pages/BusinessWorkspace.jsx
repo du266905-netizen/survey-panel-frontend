@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Empty, EmptyContent, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
 import { capturePaypalReturn, completeBusinessResearchOnboarding, createBusinessPayment, createBusinessProject, decideBusinessProjectQuote, deleteBusinessProject, getBusinessOnboarding, getBusinessQuestionnaireDrafts, getBusinessWorkspace, saveBusinessOnboarding, submitBusinessProject, updateBusinessProject } from '../api/realApi';
 import { useAuth } from '../components/AuthContext';
 import BusinessBalanceChip, { BUSINESS_BALANCE_REFRESH_EVENT } from '../components/BusinessBalanceChip';
@@ -879,7 +880,7 @@ export default function BusinessWorkspace() {
           })}</div> : <p className="business-questionnaire-empty">{ui.noDraftsTitle}</p>}
         </section> : activeView === 'results' ? <section className="business-projects business-results-index">
           <div className="business-projects-head"><div><h1>{pick(language, '结果', 'Results', '結果')}</h1></div></div>
-          {loading ? <BusinessPageLoader label={feedbackCopy.loadingResults} /> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <section className="business-projects-empty business-results-empty"><h2>{pick(language, '暂无结果', 'No results yet', '暫無結果')}</h2><Button className="ai-button mt-5" type="button" onClick={openNewProject}>{pick(language, '开展一项研究', 'Start a study', '開展一項研究')}</Button></section>}
+          {loading ? <BusinessPageLoader label={feedbackCopy.loadingResults} /> : resultProjects.length ? <div className="business-results-index-list">{resultProjects.map((project) => <article key={project.id}><div><h2>{project.questionnaire?.title || project.title}</h2><span>{project.questionnaire?.responseCount || 0} {copy.results.responses}</span></div><Link className="business-button" to={withLanguage(`/business/projects/${project.id}/results`, language)}>{copy.results.view} <ArrowRight size={16} /></Link></article>)}</div> : <Empty className="business-results-empty"><EmptyHeader><EmptyTitle>{pick(language, '暂无结果', 'No results yet', '暫無結果')}</EmptyTitle></EmptyHeader><EmptyContent><Button type="button" onClick={openNewProject}>{pick(language, '开展一项研究', 'Start a study', '開展一項研究')}</Button></EmptyContent></Empty>}
         </section> : <section className="business-projects">
           <div className="business-projects-head">
             <div>
@@ -1002,10 +1003,10 @@ export default function BusinessWorkspace() {
               </div>
             </>
           ) : (
-            <section className="business-projects-empty">
-              <h2>{pick(language, '暂无项目', 'No projects yet', '暫無項目')}</h2>
-              <Button className="ai-button" type="button" onClick={openNewProject}>{pick(language, '开展一项研究', 'Start a study', '開展一項研究')}</Button>
-            </section>
+            <Empty className="business-projects-empty">
+              <EmptyHeader><EmptyTitle>{pick(language, '暂无项目', 'No projects yet', '暫無項目')}</EmptyTitle></EmptyHeader>
+              <EmptyContent><Button type="button" onClick={openNewProject}>{pick(language, '开展一项研究', 'Start a study', '開展一項研究')}</Button></EmptyContent>
+            </Empty>
           )}
         </section>}
       </div>
