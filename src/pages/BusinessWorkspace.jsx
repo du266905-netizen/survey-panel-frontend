@@ -32,6 +32,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Toaster } from '@/components/ui/sonner';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Progress } from '@/components/ui/progress';
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
@@ -272,6 +273,7 @@ export default function BusinessWorkspace() {
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
+  const [projectPage, setProjectPage] = useState(1);
   const [messageIsError, setMessageIsError] = useState(false);
   const [greetingIsReturning, setGreetingIsReturning] = useState(false);
 
@@ -334,6 +336,10 @@ export default function BusinessWorkspace() {
       categoryLabels[projectCategory(project)],
     ].some((value) => String(value || '').toLowerCase().includes(normalizedQuery)))
     : filteredByCategory;
+  const PROJECTS_PER_PAGE = 9;
+  const projectPageCount = Math.max(1, Math.ceil(visibleProjects.length / PROJECTS_PER_PAGE));
+  const pagedProjects = visibleProjects.slice((projectPage - 1) * PROJECTS_PER_PAGE, projectPage * PROJECTS_PER_PAGE);
+  useEffect(() => { setProjectPage(1); }, [activeFilter, normalizedQuery]);
   const questionnaireProjects = allProjects.filter((project) => project.questionnaire);
   /* Results are written by us and released to the client by hand. Only a
      released report shows up here; an unreleased one is not a result yet. */
@@ -955,7 +961,7 @@ export default function BusinessWorkspace() {
               />
 
               <div className="business-project-cards">
-                {visibleProjects.map((project) => {
+                {pagedProjects.map((project) => {
                   const collected = Number(project.questionnaire?.responseCount || 0);
                   const target = Number(project.targetParticipants || 0);
                   const percent = target ? Math.min((collected / target) * 100, 100) : 0;
@@ -1039,6 +1045,37 @@ export default function BusinessWorkspace() {
                   </div>
                 )}
               </div>
+              {projectPageCount > 1 && (
+                <Pagination className="mt-8">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href="#"
+                        onClick={(event) => { event.preventDefault(); setProjectPage((page) => Math.max(1, page - 1)); }}
+                        className={projectPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                      />
+                    </PaginationItem>
+                    {Array.from({ length: projectPageCount }, (_, index) => index + 1).map((page) => (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          href="#"
+                          isActive={page === projectPage}
+                          onClick={(event) => { event.preventDefault(); setProjectPage(page); }}
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    <PaginationItem>
+                      <PaginationNext
+                        href="#"
+                        onClick={(event) => { event.preventDefault(); setProjectPage((page) => Math.min(projectPageCount, page + 1)); }}
+                        className={projectPage === projectPageCount ? 'pointer-events-none opacity-50' : ''}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              )}
             </>
           ) : (
             <Empty className="business-projects-empty">
